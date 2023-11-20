@@ -14,7 +14,7 @@ from .core import Agent, \
     Model, \
     ModelConfig
 from .core.datamodels import *
-from .utils import LocalMASAgency, MultiProcessingMAS, LocalCloneMAPAgency
+from .utils.multi_agent_system import LocalMASAgency, MultiProcessingMAS, LocalCloneMAPAgency
 
 __version__ = "0.6.0"
 

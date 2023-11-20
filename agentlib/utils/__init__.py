@@ -13,7 +13,6 @@ from pathlib import Path
 from .local_broker import LocalBroker
 from .local_broadcast_broker import LocalBroadcastBroker
 from .multi_processing_broker import MultiProcessingBroker
-from .multi_agent_system import LocalMASAgency, MultiProcessingMAS, LocalCloneMAPAgency
 
 
 def custom_injection(config: dict, module_name: str = None):
