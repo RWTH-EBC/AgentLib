@@ -68,9 +68,9 @@ pandas==2.1.2
     # via agentlib (setup.py)
 pillow==10.1.0
     # via matplotlib
-pydantic==2.4.2
+pydantic==2.5.1
     # via agentlib (setup.py)
-pydantic-core==2.10.1
+pydantic-core==2.14.3
     # via pydantic
 pyparsing==3.1.1
     # via matplotlib
@@ -106,3 +106,4 @@ urllib3==2.0.7
     #   requests
 zipp==3.17.0
     # via importlib-resources
+scipy==1.11.4
