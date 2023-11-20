@@ -1,15 +1,14 @@
 stages:
-  - docker_build
-  - release
-  - test
-  - doc
-  - code_quality
-  - build
-  - deploy
-
+ - test
+ - docker_build
+ - doc
+ - code_quality
+ - build
+ - release
+ - deploy
 
 run_example:
-  image: registry.git.rwth-aachen.de/ebc/ebc_all/gitlab_ci/templates:python_3.8
+  image: registry.git.rwth-aachen.de/ebc/ebc_all/gitlab_ci/templates:python_3.9
   stage: test
   before_script:
     - pip install --upgrade pip
@@ -23,22 +22,31 @@ run_example:
     - allow_failure: true
 
 variables:
-  EXCLUDE_PYTHON: 37, 311
+  EXCLUDE_PYTHON: 37
+  COVERAGE_TYPE: "NotDymola"
+  PAGES_BRANCH: main
+  PYTHON_VERSION: "registry.git.rwth-aachen.de/ebc/ebc_all/gitlab_ci/templates:python_3.9"
+  PYTHON_PACKAGE_NAME: "agentlib"
   TEST_ENGINE: unittest
-  PYTHON_VERSION: registry.git.rwth-aachen.de/ebc/ebc_all/gitlab_ci/templates:python_3.8
+  GIT_REPO: "RWTH-EBC/AgentLib"
 
 include:
   - local: '/ci/docker_build.gitlab-ci.yml'
-  - project: 'ebc/ebc-general/templates/gitlab-ci'
-    file: 'python/build/build.gitlab-ci.yml'
-  - project: 'ebc/ebc-general/templates/gitlab-ci'
+  - project: 'EBC/EBC_all/gitlab_ci/templates'
     file: 'python/code-quality/pylint.gitlab-ci.yml'
-  - project: 'ebc/ebc-general/templates/gitlab-ci'
+  - project: 'EBC/EBC_all/gitlab_ci/templates'
     file: 'python/doc/sphinxdoc.gitlab-ci.yml'
-  - project: 'ebc/ebc-general/templates/gitlab-ci'
+  - project: 'EBC/EBC_all/gitlab_ci/templates'
+    file: 'python/build/build.gitlab-ci.yml'
+  - project: 'EBC/EBC_all/gitlab_ci/templates'
     file: 'pages/gl-pages.gitlab-ci.yml'
-  - project: 'ebc/ebc-general/templates/gitlab-ci'
+  - project: 'EBC/EBC_all/gitlab_ci/templates'
+    file: 'pages/gh-pages.gitlab-ci.yml'
+  - project: 'EBC/EBC_all/gitlab_ci/templates'
     file: 'python/tests/tests.gitlab-ci.yml'
-  - project: 'ebc/ebc-general/templates/gitlab-ci'
+  - project: 'EBC/EBC_all/gitlab_ci/templates'
     file: 'python/tests/coverage.gitlab-ci.yml'
-
+  - project: 'EBC/EBC_all/gitlab_ci/templates'
+    file: 'python/pypi-release/release.gitlab-ci.yml'
+  - template: Dependency-Scanning.gitlab-ci.yml
+  - template: SAST.gitlab-ci.yml

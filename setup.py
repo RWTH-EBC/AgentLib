@@ -37,7 +37,9 @@ setuptools.setup(
     long_description=long_description,
     author="Associates of the AGENT project",
     author_email="AGENT.Projekt@eonerc.rwth-aachen.de",
-    description="",  # TODO: Update
+    description="Framework for development and execution "
+                "of agents for control and simulation of "
+                "energy systems.",
     packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3.8",
