@@ -1,0 +1,41 @@
+{
+    "config":{
+        "name":"test",
+        "agentsperagency":2,
+        "mqtt":{
+            "active":true
+        },
+        "df":{
+            "active":false
+        },
+        "logger":{
+            "active":false,
+            "app":true,
+            "debug":true
+        }
+    },
+    "imagegroups":[
+        {
+            "config": {
+                "image":"agentlib",
+                "secret":"agentlib"
+            },
+            "agents":[
+                {
+                    "nodeid":0,
+                    "name":"FirstAgent",
+                    "custom":"{\"id\":\"FirstAgent\", \"modules\":[{\"module_id\":\"AgCom\", \"type\":\"clonemap\", \"subscriptions\":[\"SecondAgent\"], \"log_level\": \"DEBUG\"}]}"
+                },
+                {
+                    "nodeid":0,
+                    "name":"SecondAgent",
+                    "custom":"{\"id\":\"SecondAgent\", \"modules\":[{\"module_id\":\"Ag2Com\", \"type\":\"clonemap\", \"subscriptions\":[\"FirstAgent\"]}]}"
+                }
+            ]
+        }
+    ],
+    "graph":{
+        "node":null,
+        "edge":null
+    }
+}

@@ -1,0 +1,17 @@
+__pycache__/
+.idea/*
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+agentlib.egg-info/*
+.venv/*
+.vscode/launch.json
+examples/models/agentlib_model_fmu_model_internal.mat
+.vscode/settings.json
+/playground.py
+venv/*
+*.log
+docs/source/_build/
+.env

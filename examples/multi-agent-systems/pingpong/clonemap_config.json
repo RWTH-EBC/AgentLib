@@ -1,0 +1,30 @@
+{
+    "config":{
+        "name":"test",
+        "agentsperagency":1,
+        "mqtt":{
+            "active":true
+        },
+        "df":{
+            "active":false
+        },
+        "logger":{
+            "active":true,
+            "msg":true,
+            "app":true,
+            "status":true,
+            "debug":true
+        }
+    },
+    "imagegroups":[
+        {
+            "config": {
+                "image":"agentlibtest"
+            }
+        }
+    ],
+    "graph":{
+        "node":null,
+        "edge":null
+    }
+}

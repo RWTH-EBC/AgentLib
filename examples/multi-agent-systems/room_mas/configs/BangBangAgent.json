@@ -1,0 +1,29 @@
+{
+  "id": "BangBangAgent",
+  "modules": [
+    {
+      "module_id": "myBangBang",
+      "type": "BangBang",
+      "ub": 294.15,
+      "lb": 292.15,
+      "gain": 1000,
+      "input": {
+          "name": "u",
+          "alias": "T_air",
+          "value": 293.15
+        },
+      "output":
+        {
+          "name": "y",
+          "alias": "Q_flow_heat",
+          "shared": true
+        }
+    },
+    {
+      "module_id": "ComLocal",
+      "type": "local",
+      "parse_json": true,
+      "subscriptions": ["Room2Agent"]
+    }
+  ]
+}

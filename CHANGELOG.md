@@ -1,0 +1,28 @@
+- v0.1.0:
+  - First implementation fixed by project milestone
+- v0.2.0:
+  - Restructure modules by using separate Config and Function classes
+- v0.2.1:
+  - Change Cache to DataBroker
+  - Separate Module and ModuleConfig
+- v0.2.2:
+  - Enable real time and as fast as possible callbacks
+- v0.2.3:
+  - Remove causalities
+- v0.2.4:
+  - Add fiware modules
+- v0.2.5:
+  - Add coordinated ADMM
+  - update the way as fast as possible callbacks work
+- 0.2.6
+  - Make modular import possible (#121)
+- 0.2.7
+  - Remove string injection (#142)
+  - Remove deprecated code
+- 0.2.8
+  - Use unified subscription field for all communicators (#151)
+- 0.6.0
+  - Restructure module to better use the configs for schema parsing
+  - Make compatible with pydantic v2
+  - Significant performance improvements
+  - Make many dependencies optional

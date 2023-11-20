@@ -1,0 +1,16 @@
+{
+  "id": "TRYSensorAgent",
+  "modules": [
+    {
+      "module_id": "sensor",
+      "type": "TRYSensor",
+      "t_sample": 60,
+      "filename": "data/TRY2015_Aachen_Jahr.dat"
+    },
+    {
+      "module_id": "ComLocal",
+      "type": "local",
+      "parse_json": true
+    }
+  ]
+}

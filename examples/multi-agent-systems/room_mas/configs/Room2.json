@@ -1,0 +1,39 @@
+{
+  "id": "Room2Agent",
+  "modules": [
+    {
+      "module_id": "room",
+      "type": "simulator",
+      "model": {
+        "type": "fmu",
+        "path": "models/SimpleRoom.fmu"
+      },
+      "t_sample": 50,
+      "save_results": true,
+      "measurement_uncertainty": {
+        "T_air": 0.0001
+      },
+      "inputs": [
+        {
+          "name": "Q_flow_heat",
+          "value": 0
+        },
+        {
+          "name": "T_oda",
+          "value": 273.15
+        }
+      ],
+      "outputs": [
+        {
+          "name": "T_air"
+        }
+      ]
+    },
+    {
+      "module_id": "ComLocal",
+      "type": "local",
+      "subscriptions": ["BangBangAgent", "TRYSensorAgent"],
+      "parse_json": true
+    }
+  ]
+}
