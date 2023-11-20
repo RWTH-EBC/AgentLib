@@ -9,9 +9,11 @@ from agentlib.core.errors import ConfigurationError
 ConfigT = TypeVar("ConfigT", bound=BaseModel)
 
 
-def load_config(config: Union[ConfigT, FilePath, str, dict], config_type: Type[ConfigT]) -> ConfigT:
+def load_config(
+    config: Union[ConfigT, FilePath, str, dict], config_type: Type[ConfigT]
+) -> ConfigT:
     """Generic config loader, either accepting a path to a json file, a json string, a
-     dict or passing through a valid config object."""
+    dict or passing through a valid config object."""
 
     if isinstance(config, (str, Path)):
         # if we have a str / path, we need to check whether it is a file or a json string

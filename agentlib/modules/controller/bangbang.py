@@ -40,7 +40,7 @@ class BangBang(SISOController):
     def loop_sim(self):
         out_val = None
         while True:
-            inp = (yield out_val)
+            inp = yield out_val
             out_val = self.do_step(inp_var=inp)
             self.last_out_val = out_val
             out_val *= self.gain

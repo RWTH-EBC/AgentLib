@@ -32,18 +32,24 @@ def _load_core_modules() -> None:
     global _LOADED_CORE_MODULES, _MODULE_TYPES
     # Communicator
     import agentlib.modules.communicator as communicator
+
     _MODULE_TYPES.update(communicator.MODULE_TYPES)
     # Controller
     import agentlib.modules.controller as controller
+
     _MODULE_TYPES.update(controller.MODULE_TYPES)
     # Utils
     import agentlib.modules.utils as utils
+
     _MODULE_TYPES.update(utils.MODULE_TYPES)
     # Simulator
-    _MODULE_TYPES.update({'simulator': plugin_import.ModuleImport(
-        import_path="agentlib.modules.simulator",
-        class_name="Simulator")
-    })
+    _MODULE_TYPES.update(
+        {
+            "simulator": plugin_import.ModuleImport(
+                import_path="agentlib.modules.simulator", class_name="Simulator"
+            )
+        }
+    )
     _LOADED_CORE_MODULES = True
 
 
@@ -64,7 +70,7 @@ def get_module_type(module_type) -> Union[Dict, Iterable]:
         plugin_import.load_plugin(
             name=module_type.split(".")[0],
             loaded_classes=_MODULE_TYPES,
-            plugin_types_name="MODULE_TYPES"
+            plugin_types_name="MODULE_TYPES",
         )
     # Load the core and plugin modules
     module_types = _import_modules()
@@ -73,8 +79,10 @@ def get_module_type(module_type) -> Union[Dict, Iterable]:
     # Raise error if still here
 
     matches = fuzzy_match(target=module_type, choices=module_types.keys())
-    msg = f"Given module_type '{module_type}' is neither in the AgentLib nor in " \
-          f"installed plugins. "
+    msg = (
+        f"Given module_type '{module_type}' is neither in the AgentLib nor in "
+        f"installed plugins. "
+    )
     if matches:
         msg += f"Did you mean one of these? {', '.join(matches)}"
 
@@ -97,9 +105,7 @@ def get_all_module_types(plugins: List[str] = None):
     """
     for plugin in plugins:
         plugin_import.load_plugin(
-            name=plugin,
-            loaded_classes=_MODULE_TYPES,
-            plugin_types_name="MODULE_TYPES"
+            name=plugin, loaded_classes=_MODULE_TYPES, plugin_types_name="MODULE_TYPES"
         )
     module_types = _import_modules()
     return module_types

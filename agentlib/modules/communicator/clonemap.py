@@ -9,7 +9,10 @@ from typing import Union, List
 from pydantic import Field, field_validator
 from agentlib.core.datamodels import AgentVariable
 from agentlib.core.errors import OptionalDependencyError
-from agentlib.modules.communicator.communicator import Communicator, SubscriptionCommunicatorConfig
+from agentlib.modules.communicator.communicator import (
+    Communicator,
+    SubscriptionCommunicatorConfig,
+)
 from agentlib.core import Agent, Environment
 from agentlib.utils.validators import convert_to_list
 
@@ -41,7 +44,7 @@ def set_and_get_cmap_config(agent_config: dict, cagent: clonemapyagent.Agent):
             Log-level of config
     """
     env_factor = 1
-    _default_lvl = os.environ.get('CLONEMAP_LOG_LEVEL', "ERROR")
+    _default_lvl = os.environ.get("CLONEMAP_LOG_LEVEL", "ERROR")
     log_level = _default_lvl
     found_clonemap_module = False
     module_types = []
@@ -52,14 +55,17 @@ def set_and_get_cmap_config(agent_config: dict, cagent: clonemapyagent.Agent):
             continue
         module_types.append(_type)
         if module["type"] == "clonemap":
-            module.update({
-                "cagent": cagent,
-            })
+            module.update(
+                {
+                    "cagent": cagent,
+                }
+            )
             env_factor = module.get("env_factor", 1)
             log_level = module.get("log_level", _default_lvl)
             found_clonemap_module = True
     if not found_clonemap_module:
         from agentlib.core.errors import ConfigurationError
+
         raise ConfigurationError(
             "Each agents needs a clonemap communicator "
             "module to be executed on clonemap. You passed the modules:"
@@ -72,18 +78,20 @@ class CloneMAPClientConfig(SubscriptionCommunicatorConfig):
     """
     clonemap communicator settings
     """
-    cagent: clonemapyagent.Agent = Field(default=None,
-                        description="Agent object of CloneMAP")
-    subtopics: Union[List[str], str] = Field(default=[],
-                                             description="Topics to that the agent "
-                                                         "subscribes")
-    prefix: str = Field(default="/agentlib",
-                        description="Prefix for MQTT-Topic")
-    env_factor: float = Field(default=1,
-                              description="Specify Environment Variable Factor")
+
+    cagent: clonemapyagent.Agent = Field(
+        default=None, description="Agent object of CloneMAP"
+    )
+    subtopics: Union[List[str], str] = Field(
+        default=[], description="Topics to that the agent " "subscribes"
+    )
+    prefix: str = Field(default="/agentlib", description="Prefix for MQTT-Topic")
+    env_factor: float = Field(
+        default=1, description="Specify Environment Variable Factor"
+    )
 
     # Add validator
-    check_subtopics = field_validator('subtopics')(convert_to_list)
+    check_subtopics = field_validator("subtopics")(convert_to_list)
 
 
 class CloneMAPClient(Communicator):
@@ -98,7 +106,9 @@ class CloneMAPClient(Communicator):
         self._subscribe()
         behavior = self.config.cagent.new_mqtt_default_behavior(self._message_callback)
         behavior.start()
-        behavior = self.config.cagent.new_custom_update_behavior(self._config_update_callback)
+        behavior = self.config.cagent.new_custom_update_behavior(
+            self._config_update_callback
+        )
         behavior.start()
 
     @cached_property
@@ -112,10 +122,10 @@ class CloneMAPClient(Communicator):
         configs prefix
         """
         if subscription:
-            topic = '/'.join([self.prefix, agent_id, "#"])
+            topic = "/".join([self.prefix, agent_id, "#"])
         else:
-            topic = '/'.join([self.prefix, agent_id])
-        topic.replace('//', '/')
+            topic = "/".join([self.prefix, agent_id])
+        topic.replace("//", "/")
         return topic
 
     @property
@@ -124,11 +134,9 @@ class CloneMAPClient(Communicator):
         For MAS with id 0 and default config it's:
         /mas_0/agentlib
         """
-        return "/".join([
-            "",
-            f"mas_{self.config.cagent.masid}",
-            self.config.prefix.strip("/")
-        ])
+        return "/".join(
+            ["", f"mas_{self.config.cagent.masid}", self.config.prefix.strip("/")]
+        )
 
     # The callback for when the client receives a CONNACK response from the server.
     def _subscribe(self):
@@ -142,13 +150,18 @@ class CloneMAPClient(Communicator):
 
     def _message_callback(self, msg):
         variable = AgentVariable.from_json(msg.payload)
-        self.logger.debug("Received variable %s from %s", variable.alias, variable.source)
+        self.logger.debug(
+            "Received variable %s from %s", variable.alias, variable.source
+        )
         self.agent.data_broker.send_variable(variable)
 
     def _send(self, payload: AgentVariable):
-        self.logger.debug("Publishing variable %s over mqtt to %s",
-                          payload["alias"], self.pubtopic)
-        self.config.cagent.mqtt.publish(topic=self.pubtopic, payload=self.to_json(payload))
+        self.logger.debug(
+            "Publishing variable %s over mqtt to %s", payload["alias"], self.pubtopic
+        )
+        self.config.cagent.mqtt.publish(
+            topic=self.pubtopic, payload=self.to_json(payload)
+        )
 
     def _config_update_callback(self, new_config: str):
         """Set the new agent config and thus update all modules -
@@ -165,6 +178,7 @@ class CustomLogger(logging.Handler):
     """
     custom logger to route all logs to the cloneMAP logger module
     """
+
     def __init__(self, cagent: clonemapyagent.Agent):
         logging.Handler.__init__(self)
         self._cagent = cagent
@@ -198,7 +212,7 @@ class CloneMAPAgent(clonemapyagent.Agent):
         agent_config, env_factor, log_level = set_and_get_cmap_config(
             agent_config=agent_config, cagent=self
         )
-        
+
         cl = CustomLogger(self)
         logger = logging.getLogger()
         cl.setLevel(logging.DEBUG)

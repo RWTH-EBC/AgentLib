@@ -93,6 +93,7 @@ class Variability(str, Enum):
 # Custom Field types
 ###############################################################################
 
+
 class AttrsToPydanticAdaptor(abc.ABC):
     """
     Class to use the attrs-based class in pydantic models.
@@ -126,12 +127,12 @@ class AttrsToPydanticAdaptor(abc.ABC):
         """Tells pydantic how to instantiate and validate this class."""
         return core_schema.no_info_after_validator_function(
             cls.create,  # validator
-            core_schema.any_schema(ref=cls.__name__),   # what to call before validator
+            core_schema.any_schema(ref=cls.__name__),  # what to call before validator
             serialization=core_schema.plain_serializer_function_ser_schema(
                 cls._serialize,
                 info_arg=True,
                 return_schema=core_schema.any_schema(),
-            )  # serialization
+            ),  # serialization
         )
 
     @classmethod
@@ -163,7 +164,7 @@ class AttrsToPydanticAdaptor(abc.ABC):
                 bool: "boolean",
                 int: "integer",
                 float: "number",
-                list: "array"
+                list: "array",
             }
             if issubclass(_type, AttrsToPydanticAdaptor):
                 return {"$ref": f"#/definitions/{_type.__name__}"}, _type.__name__
@@ -204,7 +205,10 @@ class AttrsToPydanticAdaptor(abc.ABC):
                     refs.append(_ref)
                     _any_of_types.append(_any_of_type)
                 return {"anyOf": _any_of_types}, refs
-            raise TypeError(f"Given type '{_type}' is not supported for JSONSchema export")
+            raise TypeError(
+                f"Given type '{_type}' is not supported for JSONSchema export"
+            )
+
         field_schemas = {}
         required = []
         all_refs = []
@@ -225,8 +229,10 @@ class AttrsToPydanticAdaptor(abc.ABC):
             "type": "object",
             "properties": field_schemas,
             "required": required,
-            "definitions": [f"$defs/{ref}" for ref in set([r for r in list(all_refs) if r])],
-            "additionalProperties": False
+            "definitions": [
+                f"$defs/{ref}" for ref in set([r for r in list(all_refs) if r])
+            ],
+            "additionalProperties": False,
         }
 
         return schema
@@ -382,17 +388,11 @@ class BaseVariable(AttrsToPydanticAdaptor):
     )
     unit: str = field(
         default="Not defined",
-        metadata={
-            "title": "Unit",
-            "description": "Unit of the variable"
-        },
+        metadata={"title": "Unit", "description": "Unit of the variable"},
     )
     description: str = field(
         default="Not defined",
-        metadata={
-            "title": "Description",
-            "description": "Description of the variable"
-        },
+        metadata={"title": "Description", "description": "Description of the variable"},
     )
     ub: Union[float, int] = field(
         default=math.inf,
@@ -427,22 +427,18 @@ class BaseVariable(AttrsToPydanticAdaptor):
         default=[],
         metadata={
             "title": "Allowed values",
-            "description":
-                "If provided, the value may only "
-                "be any value inside the given set "
-                "of allowed values. "
-                "Example would be to only allow only "
-                "the string options 'Create', 'Update' and "
-                "'Delete'. Then you should pass "
-                "allowed_values=['Create', 'Update', 'Delete']",
+            "description": "If provided, the value may only "
+            "be any value inside the given set "
+            "of allowed values. "
+            "Example would be to only allow only "
+            "the string options 'Create', 'Update' and "
+            "'Delete'. Then you should pass "
+            "allowed_values=['Create', 'Update', 'Delete']",
         },
     )
     value: Any = field(
         default=None,
-        metadata={
-            "title": "Value",
-            "description": "The value of the variable"
-        },
+        metadata={"title": "Value", "description": "The value of the variable"},
     )
 
     @classmethod
@@ -509,10 +505,12 @@ class BaseVariable(AttrsToPydanticAdaptor):
         if type_string is None or not self.allowed_values:
             return
         if _TYPE_MAP[type_string] == pd.Series:
-            logger.error("The filed allowed_values is not "
-                         "supported for pd.Series objects. "
-                         "Equality is not proof-able in a clear way."
-                         "Going to ignore the setting.")
+            logger.error(
+                "The filed allowed_values is not "
+                "supported for pd.Series objects. "
+                "Equality is not proof-able in a clear way."
+                "Going to ignore the setting."
+            )
             self.allowed_values = []
             return
 
@@ -589,8 +587,11 @@ class BaseVariable(AttrsToPydanticAdaptor):
         if not exclude:
             dump = {slot: self.__getattribute__(slot) for slot in slots}
         else:
-            dump = {slot: self.__getattribute__(slot) for slot in slots if
-                slot not in exclude}
+            dump = {
+                slot: self.__getattribute__(slot)
+                for slot in slots
+                if slot not in exclude
+            }
         if isinstance(self.value, pd.Series):
             dump["value"] = self.value.to_dict()
         return dump
@@ -656,7 +657,7 @@ class AgentVariable(BaseVariable):
     source: Union[Source, str] = field(
         default=Source(),
         metadata={"title": "Place where the variable has been generated"},
-        converter=Source.create
+        converter=Source.create,
     )
     shared: bool = field(
         default=False,
@@ -750,7 +751,7 @@ class BaseModelVariable(BaseVariable):
         metadata={
             "title": "Type",
             "description": "Name the type of the variable using a string. For model "
-                           "variables, this is float by default.",
+            "variables, this is float by default.",
         },
     )
 
@@ -921,6 +922,7 @@ class ModelState(ModelVariable):
     - ModelVariable: The fields unique to a ModelVariable.
     - BaseModelVariable: All fields associated with any model variable.
     """
+
     def __attrs_post_init__(self):
         self.causality: Causality = Causality.local
         self.variability: Variability = Variability.continuous
@@ -935,6 +937,7 @@ class ModelParameter(ModelVariable):
     - BaseParameter: The causality and variability associated with a parameter
     - ModelVariable: The fields unique to a ModelVariable.
     """
+
     def __attrs_post_init__(self):
         self.causality: Causality = Causality.parameter
         self.variability: Variability = Variability.tunable

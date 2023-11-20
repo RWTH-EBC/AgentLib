@@ -135,7 +135,6 @@ class MultiProcessingBroker(Broker):
         signup_queue = m.get_queue()
 
         while True:
-
             try:
                 client = signup_queue.get()
             except ConnectionResetError:

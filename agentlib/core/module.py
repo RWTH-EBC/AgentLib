@@ -6,8 +6,15 @@ import json
 import logging
 from copy import deepcopy
 from typing import (
-    TYPE_CHECKING, List, Dict, Union, Any, TypeVar,
-    Optional, get_type_hints, Type
+    TYPE_CHECKING,
+    List,
+    Dict,
+    Union,
+    Any,
+    TypeVar,
+    Optional,
+    get_type_hints,
+    Type,
 )
 
 import pydantic
@@ -16,11 +23,20 @@ from pydantic_core import core_schema
 from pydantic.json_schema import GenerateJsonSchema
 
 from agentlib.core.errors import ConfigurationError
-from agentlib.core.datamodels import AgentVariable, Source, AgentVariables, AttrsToPydanticAdaptor
+from agentlib.core.datamodels import (
+    AgentVariable,
+    Source,
+    AgentVariables,
+    AttrsToPydanticAdaptor,
+)
 from agentlib.core import datamodels
 from agentlib.utils.fuzzy_matching import fuzzy_match
-from agentlib.utils.validators import include_defaults_in_root, \
-    update_default_agent_variable, is_list_of_agent_variables, is_valid_agent_var_config
+from agentlib.utils.validators import (
+    include_defaults_in_root,
+    update_default_agent_variable,
+    is_list_of_agent_variables,
+    is_valid_agent_var_config,
+)
 
 if TYPE_CHECKING:
     # this avoids circular import
@@ -34,39 +50,40 @@ class BaseModuleConfig(BaseModel):
     """
     Pydantic data model for basic module configuration
     """
+
     # The type is relevant to load the correct module class.
     type: Union[str, Dict[str, str]] = Field(
         title="Type",
         description="The type of the Module. Used to find the Python-Object "
-                    "from all agentlib-core and plugin Module options. If a dict is given,"
-                    "it must contain the keys 'file' and 'class_name'. "
-                    "'file' is the filepath of a python file containing the Module."
-                    "'class_name' is the name of the Module class within this file."
+        "from all agentlib-core and plugin Module options. If a dict is given,"
+        "it must contain the keys 'file' and 'class_name'. "
+        "'file' is the filepath of a python file containing the Module."
+        "'class_name' is the name of the Module class within this file.",
     )
     # A module is uniquely identified in the MAS using agent_id and module_id.
     # The module_id should be unique inside one agent.
     # This is checked inside the agent-class.
     module_id: str = Field(
         description="The unqiue id of the module within an agent, "
-                    "used only to communicate withing the agent."
+        "used only to communicate withing the agent."
     )
     validate_incoming_values: Optional[bool] = Field(
         default=True,
         title="Validate Incoming Values",
         description="If true, the validator of the AgentVariable value is called when "
-                    "receiving a new value from the DataBroker.",
+        "receiving a new value from the DataBroker.",
     )
     log_level: Optional[str] = Field(
         default=None,
         description="The log level for this Module. "
-                    "Default uses the root-loggers level."
-                    "Options: DEBUG; INFO; WARNING; ERROR; CRITICAL"
+        "Default uses the root-loggers level."
+        "Options: DEBUG; INFO; WARNING; ERROR; CRITICAL",
     )
     shared_variable_fields: List[str] = Field(
         default=[],
         description="A list of strings with each string being a field of the Modules configs. "
-                    "The field must be or contain an AgentVariable. If the field is added to this list, "
-                    "all shared attributes of the AgentVariables will be set to True.",
+        "The field must be or contain an AgentVariable. If the field is added to this list, "
+        "all shared attributes of the AgentVariables will be set to True.",
         validate_default=True,
     )
     # Aggregation of all instances of an AgentVariable in this Config
@@ -78,7 +95,12 @@ class BaseModuleConfig(BaseModel):
     # Is also useful to debug validators and the general BaseModuleConfig.
     _user_config: dict = PrivateAttr(default=None)
 
-    model_config = ConfigDict(arbitrary_types_allowed=True, validate_assignment=True, extra="forbid", frozen=True)
+    model_config = ConfigDict(
+        arbitrary_types_allowed=True,
+        validate_assignment=True,
+        extra="forbid",
+        frozen=True,
+    )
 
     def get_variables(self):
         """Return the private attribute with all AgentVariables"""
@@ -103,15 +125,15 @@ class BaseModuleConfig(BaseModel):
             """
 
             def default_schema(self, schema: core_schema.WithDefaultSchema):
-                if 'default' in schema:
-                    _default = schema['default']
+                if "default" in schema:
+                    _default = schema["default"]
                     if isinstance(_default, AttrsToPydanticAdaptor):
-                        schema['default'] = _default.json()
+                        schema["default"] = _default.json()
                 return super().default_schema(schema=schema)
 
         kwargs["schema_generator"] = CustomGenerateJsonSchema
         schema = super().model_json_schema(*args, **kwargs)
-        definitions = schema.get('$defs', {})
+        definitions = schema.get("$defs", {})
         definitions_out = {}
         for class_name, metadata in definitions.items():
             if class_name in datamodels.ATTRS_MODELS:
@@ -136,7 +158,8 @@ class BaseModuleConfig(BaseModel):
                 names.remove(name)
             raise ValueError(
                 f"{cls.__name__} contains variables with the same name. The "
-                f"following appear at least twice: {' ,'.join(names)}")
+                f"following appear at least twice: {' ,'.join(names)}"
+            )
 
     @field_validator("shared_variable_fields")
     @classmethod
@@ -145,7 +168,9 @@ class BaseModuleConfig(BaseModel):
         Check if the shared_variables_fields are valid
         fields.
         """
-        wrong_public_fields = set(shared_variables_fields).difference(cls.model_fields.keys())
+        wrong_public_fields = set(shared_variables_fields).difference(
+            cls.model_fields.keys()
+        )
         if wrong_public_fields:
             raise ConfigurationError(
                 f"Public fields {wrong_public_fields} do not exist. Maybe you "
@@ -165,16 +190,17 @@ class BaseModuleConfig(BaseModel):
         if not isinstance(logging.getLevelName(log_level), int):
             raise ValueError(
                 f"Given log level '{log_level}' is not "
-                f"supported by logging library.")
+                f"supported by logging library."
+            )
         return log_level
 
     @classmethod
     def merge_variables(
-            cls,
-            pre_validated_instance: BaseModuleConfig,
-            user_config: dict,
-            agent_id: str,
-            shared_variable_fields: List[str]
+        cls,
+        pre_validated_instance: BaseModuleConfig,
+        user_config: dict,
+        agent_id: str,
+        shared_variable_fields: List[str],
     ):
         """
         Merge, rigorously check and validate the input of
@@ -196,16 +222,17 @@ class BaseModuleConfig(BaseModel):
             # we need the type if plugins subclass the AgentVariable
 
             if isinstance(pre_merged_attr, AgentVariable):
-
                 update_var_with = user_config.get(field_name, {})
 
                 make_shared = field_name in shared_variable_fields
 
-                var = update_default_agent_variable(default_var=field.default,
-                                                    user_data=update_var_with,
-                                                    make_shared=make_shared,
-                                                    agent_id=agent_id,
-                                                    field_name=field_name)
+                var = update_default_agent_variable(
+                    default_var=field.default,
+                    user_data=update_var_with,
+                    make_shared=make_shared,
+                    agent_id=agent_id,
+                    field_name=field_name,
+                )
                 _vars.append(var)
                 pre_validated_instance.__setattr__(field_name, var)
 
@@ -213,8 +240,9 @@ class BaseModuleConfig(BaseModel):
                 user_config_var_dicts = user_config.get(field_name, [])
                 type_ = pre_merged_attr[0].__class__
                 update_vars_with = [
-                    conf for conf in user_config_var_dicts if
-                    is_valid_agent_var_config(conf, field_name, type_)
+                    conf
+                    for conf in user_config_var_dicts
+                    if is_valid_agent_var_config(conf, field_name, type_)
                 ]
 
                 make_shared = field_name in shared_variable_fields
@@ -224,7 +252,7 @@ class BaseModuleConfig(BaseModel):
                     type_=type_,  # subtype of AgentVariable
                     make_shared=make_shared,
                     agent_id=agent_id,
-                    field_name=field_name
+                    field_name=field_name,
                 )
 
                 _vars.extend(variables)
@@ -238,12 +266,15 @@ class BaseModuleConfig(BaseModel):
 
         for _var in _vars:
             # case the agent id is a different agent
-            if ((_var.source.agent_id != agent_id) and
-                    (_var.source.module_id is not None)):
+            if (_var.source.agent_id != agent_id) and (
+                _var.source.module_id is not None
+            ):
                 logger.warning(
                     "Setting given module_id '%s' in variable '%s' to None. "
                     "You can not specify module_ids of other agents.",
-                    _var.source.module_id, _var.name)
+                    _var.source.module_id,
+                    _var.name,
+                )
                 _var.source = Source(agent_id=_var.source.agent_id)
 
         return _vars
@@ -265,14 +296,16 @@ class BaseModuleConfig(BaseModel):
             pre_validated_instance=self,
             user_config=_user_config,
             agent_id=_agent_id,
-            shared_variable_fields=self.shared_variable_fields
+            shared_variable_fields=self.shared_variable_fields,
         )
         self._user_config = _user_config
         # Disable mutation
         self.model_config["frozen"] = True
 
     @classmethod
-    def _improve_extra_field_error_messages(cls, e: pydantic.ValidationError) -> pydantic.ValidationError:
+    def _improve_extra_field_error_messages(
+        cls, e: pydantic.ValidationError
+    ) -> pydantic.ValidationError:
         """Checks the validation errors for invalid fields and adds suggestions for
         correct field names to the error message."""
         error_list = e.errors()
@@ -285,14 +318,18 @@ class BaseModuleConfig(BaseModel):
             # pydantic automatically prints the __dict__ of an error, so it is
             # sufficient to just assign the suggestions to an arbitrary attribute of
             # the error
-            suggestions = fuzzy_match(target=error["loc"][0], choices=cls.model_fields.keys())
+            suggestions = fuzzy_match(
+                target=error["loc"][0], choices=cls.model_fields.keys()
+            )
             if suggestions:
                 error["ctx"] = {
                     "expected": f"a valid Field name. Field '{error['loc'][0]}' does "
-                                f"not exist. Did you mean any of {suggestions}?"
+                    f"not exist. Did you mean any of {suggestions}?"
                 }
 
-        return pydantic.ValidationError.from_exception_data(title=e.title, line_errors=error_list)
+        return pydantic.ValidationError.from_exception_data(
+            title=e.title, line_errors=error_list
+        )
 
 
 BaseModuleConfigClass = TypeVar("BaseModuleConfigClass", bound=BaseModuleConfig)
@@ -368,8 +405,9 @@ class BaseModule(abc.ABC):
         at runtime. Not all modules may need this, hence it is
         not an abstract method.
         """
-        self.logger.info('Successfully terminated module %s in agent %s',
-                         self.id, self.agent.id)
+        self.logger.info(
+            "Successfully terminated module %s in agent %s", self.id, self.agent.id
+        )
 
     ############################################################################
     # Properties
@@ -419,7 +457,8 @@ class BaseModule(abc.ABC):
                         "Log level '%s' is below root loggers level '%s'. "
                         "Without calling logging.basicConfig, "
                         "logs will not be printed.",
-                        self.config.log_level, logging.getLevelName(_root_lvl_int)
+                        self.config.log_level,
+                        logging.getLevelName(_root_lvl_int),
                     )
             self.logger.setLevel(self.config.log_level)
 
@@ -452,7 +491,7 @@ class BaseModule(abc.ABC):
                 alias=var.alias,
                 source=var.source,
                 callback=self._callback_config_vars,
-                name=name
+                name=name,
             )
         for name, var in self._variables_dict.items():
             self.agent.data_broker.register_callback(
@@ -503,9 +542,11 @@ class BaseModule(abc.ABC):
         try:
             return self._variables_dict[name].copy()
         except KeyError as err:
-            raise KeyError(f"'{self.__class__.__name__}' has "
-                           f"no AgentVariable with the name '{name}' "
-                           f"in the configs variables.") from err
+            raise KeyError(
+                f"'{self.__class__.__name__}' has "
+                f"no AgentVariable with the name '{name}' "
+                f"in the configs variables."
+            ) from err
 
     def get_value(self, name: str) -> Any:
         """
@@ -523,9 +564,11 @@ class BaseModule(abc.ABC):
         try:
             return deepcopy(self._variables_dict[name].value)
         except KeyError as err:
-            raise KeyError(f"'{self.__class__.__name__}' has "
-                           f"no AgentVariable with the name '{name}' "
-                           f"in the configs variables.") from err
+            raise KeyError(
+                f"'{self.__class__.__name__}' has "
+                f"no AgentVariable with the name '{name}' "
+                f"in the configs variables."
+            ) from err
 
     def set(self, name: str, value: Any, timestamp: float = None):
         """
@@ -545,17 +588,14 @@ class BaseModule(abc.ABC):
         # var = self.get(name)
         var = self._variables_dict[name]
         var = self._update_relevant_values(
-            variable=var,
-            value=value,
-            timestamp=timestamp)
+            variable=var, value=value, timestamp=timestamp
+        )
         self.agent.data_broker.send_variable(
             variable=var.copy(update={"source": self.source}),
             copy=False,
         )
 
-    def update_variables(self,
-                         variables: List[AgentVariable],
-                         timestamp: float = None):
+    def update_variables(self, variables: List[AgentVariable], timestamp: float = None):
         """
         Updates the given list of variables in the current data_broker.
         If a given Variable is not in the config of the module, an
@@ -572,19 +612,20 @@ class BaseModule(abc.ABC):
 
         for v in variables:
             if v.name not in self._variables_dict:
-                raise ValueError(f"'{self.__class__.__name__}' has "
-                                 f"no AgentVariable with the name '{v.name}' "
-                                 f"in the config.")
+                raise ValueError(
+                    f"'{self.__class__.__name__}' has "
+                    f"no AgentVariable with the name '{v.name}' "
+                    f"in the config."
+                )
             self.set(name=v.name, value=v.value, timestamp=timestamp)
 
     ############################################################################
     # Private and or static class methods
     ############################################################################
 
-    def _update_relevant_values(self,
-                                variable: AgentVariable,
-                                value: Any,
-                                timestamp: float = None):
+    def _update_relevant_values(
+        self, variable: AgentVariable, value: Any, timestamp: float = None
+    ):
         """
         Update the given variables fields
         with the given value (and possibly timestamp)
@@ -598,7 +639,7 @@ class BaseModule(abc.ABC):
             AgentVariable: The updated variable
         """
         # Update value
-        variable.value=value
+        variable.value = value
         # Update timestamp
         if timestamp is None:
             timestamp = self.env.time
@@ -652,9 +693,7 @@ def create_logger(agent: Agent, module_id: str) -> CustomLogger:
     custom_logger.setLevel(logging.root.getEffectiveLevel())
 
     # Create a formatter
-    formatter = logging.Formatter(
-        '%(env_time)s %(levelname)s: %(name)s: %(message)s'
-    )
+    formatter = logging.Formatter("%(env_time)s %(levelname)s: %(name)s: %(message)s")
 
     # Create a StreamHandler and add it to the logger
     stream_handler = logging.StreamHandler()
@@ -666,14 +705,26 @@ def create_logger(agent: Agent, module_id: str) -> CustomLogger:
 class CustomLogger(logging.Logger):
     """Subclass of Logger that adds the env_time to the record, allowing it to print
     the current time."""
+
     def __init__(self, name, env: Environment, level=logging.NOTSET):
         super().__init__(name, level)
         self.env = env
 
-    def makeRecord(self, name, level, fn, lno, msg, args, exc_info, func=None,
-                   extra=None, sinfo=None):
-        record = super().makeRecord(name, level, fn, lno, msg, args, exc_info,
-                                    func,
-                                    extra, sinfo)
+    def makeRecord(
+        self,
+        name,
+        level,
+        fn,
+        lno,
+        msg,
+        args,
+        exc_info,
+        func=None,
+        extra=None,
+        sinfo=None,
+    ):
+        record = super().makeRecord(
+            name, level, fn, lno, msg, args, exc_info, func, extra, sinfo
+        )
         record.env_time = self.env.pretty_time()
         return record

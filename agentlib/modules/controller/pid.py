@@ -80,7 +80,6 @@ class PID(SISOController):
     config: PIDConfig
 
     def __init__(self, *, config, agent):
-
         self.integral: float = 0
         self.e_last: float = 0
         self.last_time: float = 0

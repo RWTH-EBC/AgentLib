@@ -17,6 +17,7 @@ from agentlib.core.datamodels import (
 
 logger = logging.getLogger(__name__)
 
+
 def convert_to_list(obj):
     """Function to convert an object to a list.
     Either is is already a list.
@@ -58,11 +59,13 @@ def include_defaults_in_root(
             continue
         var_to_update_with = user_variables_dict[var.name]
         variables.remove(var_to_update_with)
-        default[i] = update_default_agent_variable(default_var=var,
-                                                   user_data=var_to_update_with,
-                                                   make_shared=make_shared,
-                                                   agent_id=agent_id,
-                                                   field_name=field_name)
+        default[i] = update_default_agent_variable(
+            default_var=var,
+            user_data=var_to_update_with,
+            make_shared=make_shared,
+            agent_id=agent_id,
+            field_name=field_name,
+        )
 
     # add new variables and check if they are shared
     for var_dict in variables:
@@ -76,8 +79,13 @@ def include_defaults_in_root(
     return default
 
 
-def update_default_agent_variable(default_var: AgentVariable, user_data: dict,
-                                  make_shared: bool, agent_id: str, field_name: str):
+def update_default_agent_variable(
+    default_var: AgentVariable,
+    user_data: dict,
+    make_shared: bool,
+    agent_id: str,
+    field_name: str,
+):
     """Update a variable based on it's default"""
 
     if is_valid_agent_var_config(user_data, field_name):
@@ -106,12 +114,12 @@ def update_default_agent_variable(default_var: AgentVariable, user_data: dict,
 
 def is_list_of_agent_variables(ls: Any):
     # TODO move somewhere more appropriate
-    return (isinstance(ls, list) and
-            (len(ls) > 0) and
-            isinstance(ls[0], AgentVariable))
+    return isinstance(ls, list) and (len(ls) > 0) and isinstance(ls[0], AgentVariable)
 
 
-def is_valid_agent_var_config(data: dict, field_name: str, type_: AgentVariable = AgentVariable):
+def is_valid_agent_var_config(
+    data: dict, field_name: str, type_: AgentVariable = AgentVariable
+):
     if data == {}:
         return True
     try:
@@ -121,6 +129,8 @@ def is_valid_agent_var_config(data: dict, field_name: str, type_: AgentVariable 
         logger.error(
             "Could not update the default config of field '%s'. "
             "You most probably used some validator on this field. "
-            "Error message: %s", err, field_name
+            "Error message: %s",
+            err,
+            field_name,
         )
         return False

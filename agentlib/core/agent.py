@@ -30,35 +30,37 @@ class AgentConfig(BaseModel):
 
     Contains just two fields, id and modules.
     """
+
     id: Union[str, int] = Field(
         title="id",
         description="The ID of the Agent, should be unique in "
-                    "the multi-agent-system the agent is living in."
+        "the multi-agent-system the agent is living in.",
     )
     modules: List[Union[Dict, FilePath]] = None
     check_alive_interval: float = Field(
         title="check_alive_interval",
         default=-1,
         description="Check every other check_alive_interval second "
-                    "if the thread of the agent are still alive."
-                    "If that's not the case, exit the main thread of the "
-                    "agent. If interval equals -1, no health check is "
-                    "performed. Updating this value at runtime will "
-                    "not work as all processes have already been started."
+        "if the thread of the agent are still alive."
+        "If that's not the case, exit the main thread of the "
+        "agent. If interval equals -1, no health check is "
+        "performed. Updating this value at runtime will "
+        "not work as all processes have already been started.",
     )
 
-    @field_validator('check_alive_interval')
+    @field_validator("check_alive_interval")
     @classmethod
     def check_correct_value(cls, check_alive_interval):
         """Check if check_alive_interval is positive or -1"""
-        if ((check_alive_interval > 0) or
-                (check_alive_interval == -1)):
+        if (check_alive_interval > 0) or (check_alive_interval == -1):
             return check_alive_interval
-        raise ValueError("check_alive_interval needs to be positive "
-                         "or equal to -1 to disable the health check."
-                         f"Current value: {check_alive_interval}")
+        raise ValueError(
+            "check_alive_interval needs to be positive "
+            "or equal to -1 to disable the health check."
+            f"Current value: {check_alive_interval}"
+        )
 
-    @field_validator('modules')
+    @field_validator("modules")
     @classmethod
     def check_modules(cls, modules: List):
         """Validator to ensure all modules are in dict-format."""
@@ -94,9 +96,7 @@ class Agent:
         self.is_alive = True
         if env.config.rt:
             self._data_broker = RTDataBroker(env=env)
-            self.register_thread(
-                thread=self._data_broker.thread
-            )
+            self.register_thread(thread=self._data_broker.thread)
         else:
             self._data_broker = LocalDataBroker(env=env)
         self.config = config
@@ -210,12 +210,14 @@ class Agent:
         """
         name = thread.name
         if name in self._threads:
-            raise KeyError(f"Given thread with name '{name}' is already a registered thread")
+            raise KeyError(
+                f"Given thread with name '{name}' is already a registered thread"
+            )
         if not thread.daemon:
             self.logger.warning(
                 "'%s' is not a daemon thread. "
                 "If the agent raises an error, the thread will keep running.",
-                name
+                name,
             )
         self._threads[name] = thread
 
@@ -242,9 +244,7 @@ class Agent:
         """
         updated_modules = []
         for module_config in self.config.modules:
-            module_cls = get_module_class(
-                module_config=module_config
-            )
+            module_cls = get_module_class(module_config=module_config)
             _module_id = module_config.get("module_id", module_cls.__name__)
 
             # Insert default module id if it did not exist:
@@ -316,9 +316,7 @@ def get_module_class(module_config):
 
     if isinstance(_type, str):
         # Get the module-class from the agentlib
-        module_cls = agentlib.modules.get_module_type(
-            module_type=_type.casefold()
-        )
+        module_cls = agentlib.modules.get_module_type(module_type=_type.casefold())
     elif isinstance(_type, dict):
         # Load module class
         module_cls = custom_injection(config=_type)

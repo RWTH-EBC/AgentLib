@@ -37,7 +37,7 @@ class Controller(BaseModule):
         self._step = step
 
     def process(self):
-        """"Only called on run() to initialize the step."""
+        """ "Only called on run() to initialize the step."""
         # pylint: disable=stop-iteration-return
         next(self.step)
         yield self.env.event()
@@ -64,19 +64,15 @@ class SISOControllerConfig(BaseModuleConfig):
 
     input: AgentVariable = AgentVariable(name="u", type="float", value=0)
     output: AgentVariable = AgentVariable(name="y", type="float", value=0)
-    ub: float = Field(title="Upper bound",
-                      default=inf)
-    lb: float = Field(title="Lower bound",
-                      default=-inf)
-    reverse: bool = Field(title="Change of sign",
-                          default=False)
+    ub: float = Field(title="Upper bound", default=inf)
+    lb: float = Field(title="Lower bound", default=-inf)
+    reverse: bool = Field(title="Change of sign", default=False)
 
     @field_validator("lb")
     @classmethod
     def check_bounds(cls, lb, info: FieldValidationInfo):
         """Check if upper and lower bound values are correct"""
-        assert info.data["ub"] > lb, \
-            'Upper limit must be greater than lower limit'
+        assert info.data["ub"] > lb, "Upper limit must be greater than lower limit"
         return lb
 
     @field_validator("output", "input")
@@ -116,7 +112,7 @@ class SISOController(Controller):
             alias=inp.alias,
             source=inp.source,
             callback=self._siso_callback,
-            name=inp.name
+            name=inp.name,
         )
 
     def _siso_callback(self, inp: AgentVariable, name: str):
@@ -127,8 +123,4 @@ class SISOController(Controller):
         else:
             out_name = self.config.output.name
             self.logger.debug("Sending output %s=%s", out_name, out_val)
-            self.set(
-                name=out_name,
-                value=out_val,
-                timestamp=inp.timestamp
-            )
+            self.set(name=out_name, value=out_val, timestamp=inp.timestamp)

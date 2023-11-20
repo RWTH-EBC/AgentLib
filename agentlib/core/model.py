@@ -11,12 +11,17 @@ import numpy as np
 from pydantic.fields import PrivateAttr
 from pydantic_core.core_schema import FieldValidationInfo
 
-from agentlib.core.datamodels import \
-    ModelVariable, \
-    ModelInputs, \
-    ModelStates, \
-    ModelOutputs, \
-    ModelParameters, ModelState, ModelParameter, ModelOutput, ModelInput
+from agentlib.core.datamodels import (
+    ModelVariable,
+    ModelInputs,
+    ModelStates,
+    ModelOutputs,
+    ModelParameters,
+    ModelState,
+    ModelParameter,
+    ModelOutput,
+    ModelInput,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -25,22 +30,23 @@ class ModelConfig(BaseModel):
     """
     Pydantic data model for controller configuration parser
     """
+
     user_config: dict = Field(
         default=None,
         description="The config given by the user to instantiate this class."
-                    "Will be stored to enable a valid overwriting of the "
-                    "default config and to better restart modules."
-                    "Is also useful to debug validators and the general BaseModuleConfig."
+        "Will be stored to enable a valid overwriting of the "
+        "default config and to better restart modules."
+        "Is also useful to debug validators and the general BaseModuleConfig.",
     )
     name: Optional[str] = Field(default=None, validate_default=True)
     description: str = Field(default="You forgot to document your model!")
     sim_time: float = Field(default=0, title="Current simulation time")
-    dt: Union[float, int] = Field(default=1, title='time increment')
+    dt: Union[float, int] = Field(default=1, title="time increment")
     validate_variables: bool = Field(
         default=True,
         title="Validate Variables",
         description="If true, the validator of a variables value is called whenever a "
-                    "new value is set. Disabled by default for performance reasons.",
+        "new value is set. Disabled by default for performance reasons.",
     )
 
     inputs: ModelInputs = Field(default=list())
@@ -53,12 +59,14 @@ class ModelConfig(BaseModel):
             "inputs": ModelInput,
             "outputs": ModelOutput,
             "states": ModelState,
-            "parameters": ModelParameter
+            "parameters": ModelParameter,
         }
     )
-    model_config = ConfigDict(validate_assignment=True, arbitrary_types_allowed=True, extra="forbid")
+    model_config = ConfigDict(
+        validate_assignment=True, arbitrary_types_allowed=True, extra="forbid"
+    )
 
-    @field_validator('name')
+    @field_validator("name")
     @classmethod
     def check_name(cls, name):
         """
@@ -72,7 +80,7 @@ class ModelConfig(BaseModel):
     @field_validator("parameters", "inputs", "outputs", "states", mode="after")
     @classmethod
     def include_default_model_variables(
-            cls, _: List[ModelVariable], info: FieldValidationInfo
+        cls, _: List[ModelVariable], info: FieldValidationInfo
     ):
         """
         Validator building block to merge default variables with config variables in a standard validator.
@@ -94,14 +102,19 @@ class ModelConfig(BaseModel):
                 var_dict = var.dict()
                 var_dict.update(var_to_update_with)
                 variables[i] = cls._types.get_default()[info.field_name](**var_dict)
-        variables.extend([cls._types.get_default()[info.field_name](**var) for var in user_config])
+        variables.extend(
+            [cls._types.get_default()[info.field_name](**var) for var in user_config]
+        )
         return variables
 
     def get_variable_names(self):
         """
         Returns the names of every variable as list
         """
-        return [var.name for var in self.inputs + self.outputs + self.states + self.parameters]
+        return [
+            var.name
+            for var in self.inputs + self.outputs + self.states + self.parameters
+        ]
 
     def __init__(self, **kwargs):
         kwargs["user_config"] = kwargs.copy()
@@ -142,8 +155,10 @@ class Model(abc.ABC):
             t_sample: increment of solver integration
         Returns:
         """
-        raise NotImplementedError("The Model class does not implement this "
-                                  "because it is individual to the subclasses")
+        raise NotImplementedError(
+            "The Model class does not implement this "
+            "because it is individual to the subclasses"
+        )
 
     @abc.abstractmethod
     def initialize(self, **kwargs):
@@ -151,8 +166,10 @@ class Model(abc.ABC):
         Abstract method to define what to
         do in order to initialize the model in use.
         """
-        raise NotImplementedError("The Model class does not implement this "
-                                  "because it is individual to the subclasses")
+        raise NotImplementedError(
+            "The Model class does not implement this "
+            "because it is individual to the subclasses"
+        )
 
     def terminate(self):
         """Terminate the model if applicable by subclass."""
@@ -166,7 +183,9 @@ class Model(abc.ABC):
             return self._parameters.get(item)
         if item in self._states:
             return self._states.get(item)
-        raise AttributeError(f"'{self.__class__.__name__}' object has no attribute '{item}'")
+        raise AttributeError(
+            f"'{self.__class__.__name__}' object has no attribute '{item}'"
+        )
 
     def generate_variables_config(self, filename: str = None, **kwargs) -> str:
         """
@@ -187,7 +206,7 @@ class Model(abc.ABC):
             "inputs": [inp.dict() for inp in self.inputs],
             "outputs": [out.dict() for out in self.outputs],
             "states": [sta.dict() for sta in self.states],
-            "parameters": [par.dict() for par in self.parameters]
+            "parameters": [par.dict() for par in self.parameters],
         }
         with open(filename, "w") as file:
             json.dump(obj=model_config, fp=file, **kwargs)
@@ -232,7 +251,9 @@ class Model(abc.ABC):
     def description(self):
         """Delete model description. Default is then used."""
         # todo fwu do we have a use for this, or should we just get rid of deleters, and these properties alltogether?
-        self.config.description = self.get_config_type().model_fields["description"].default
+        self.config.description = (
+            self.get_config_type().model_fields["description"].default
+        )
 
     @property
     def name(self):
@@ -276,10 +297,11 @@ class Model(abc.ABC):
     @property
     def variables(self):
         """Get all model variables as a list"""
-        return list(chain.from_iterable([self.inputs,
-                                         self.outputs,
-                                         self.parameters,
-                                         self.states]))
+        return list(
+            chain.from_iterable(
+                [self.inputs, self.outputs, self.parameters, self.states]
+            )
+        )
 
     @property
     def inputs(self) -> ModelInputs:
@@ -370,7 +392,9 @@ class Model(abc.ABC):
         """Just used internally to write output values"""
         self._set_output_values(names=[name], values=[value])
 
-    def _set_output_values(self, names: List[str], values: List[Union[float, int, bool]]):
+    def _set_output_values(
+        self, names: List[str], values: List[Union[float, int, bool]]
+    ):
         """Just used internally to write output values"""
         self.__setter(variables=self._outputs, values=values, names=names)
 
@@ -378,7 +402,9 @@ class Model(abc.ABC):
         """Just used internally to write state values"""
         self._set_state_values(names=[name], values=[value])
 
-    def _set_state_values(self, names: List[str], values: List[Union[float, int, bool]]):
+    def _set_state_values(
+        self, names: List[str], values: List[Union[float, int, bool]]
+    ):
         """Just used internally to write state values"""
         self.__setter(variables=self._states, values=values, names=names)
 
@@ -386,24 +412,35 @@ class Model(abc.ABC):
         """Used externally to write new parameter values from e.g. a calibration process"""
         self.set_parameter_values(names=[name], values=[value])
 
-    def set_parameter_values(self, names: List[str], values: List[Union[float, int, bool]]):
+    def set_parameter_values(
+        self, names: List[str], values: List[Union[float, int, bool]]
+    ):
         """Used externally to write new parameter values from e.g. a calibration process"""
         self.__setter(variables=self._parameters, values=values, names=names)
 
-    def __setter(self, variables: Dict[str, ModelVariable],
-                 values: List[Union[float, int, bool]],
-                 names: List[str]):
+    def __setter(
+        self,
+        variables: Dict[str, ModelVariable],
+        values: List[Union[float, int, bool]],
+        names: List[str],
+    ):
         """General setter of model values."""
-        assert len(names) == len(values), \
-            "Length of names has to equal length of values"
+        assert len(names) == len(
+            values
+        ), "Length of names has to equal length of values"
         for name, value in zip(names, values):
             if value is None:
                 logger.warning(
                     "Tried to override variable '%s' in model '%s' "
                     "with None. Keeping the previous value of %s",
-                    name, self.name, variables[name].value)
+                    name,
+                    self.name,
+                    variables[name].value,
+                )
                 continue
-            variables[name].set_value(value=value, validate=self.config.validate_variables)
+            variables[name].set_value(
+                value=value, validate=self.config.validate_variables
+            )
 
     def get(self, name: str) -> ModelVariable:
         """
@@ -426,9 +463,11 @@ class Model(abc.ABC):
             return self._parameters[name]
         if name in self._states:
             return self._states[name]
-        raise ValueError(f"'{self.__class__.__name__}' has "
-                         f"no ModelVariable with the name '{name}' "
-                         f"in the config.")
+        raise ValueError(
+            f"'{self.__class__.__name__}' has "
+            f"no ModelVariable with the name '{name}' "
+            f"in the config."
+        )
 
     def set(self, name: str, value: Any):
         """
@@ -451,9 +490,11 @@ class Model(abc.ABC):
         elif name in self._states:
             self._set_state_value(name=name, value=value)
         else:
-            raise ValueError(f"'{self.__class__.__name__}' has "
-                             f"no ModelVariable with the name '{name}' "
-                             f"in the config.")
+            raise ValueError(
+                f"'{self.__class__.__name__}' has "
+                f"no ModelVariable with the name '{name}' "
+                f"in the config."
+            )
 
     def get_input_names(self):
         """

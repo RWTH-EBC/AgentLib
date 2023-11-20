@@ -136,6 +136,7 @@ class FmuModel(Model):
             callbacks.freeMemory = fmpy.fmi2.fmi2CallbackFreeMemoryTYPE(fmpy.free)
             from fmpy.logging import addLoggerProxy
             from ctypes import byref
+
             addLoggerProxy(byref(callbacks))
         except Exception as err:
             logger.error("Could not setup custom logger in FMU model: %s", err)
@@ -262,7 +263,9 @@ class FmuModel(Model):
             "parameters": _vars[Causality.parameter]
             + _vars[Causality.calculatedParameter],
             "states": _vars[Causality.local] + _vars[Causality.independent],
-            **self.config.model_dump(exclude={"inputs", "outputs", "states", "parameters"}),
+            **self.config.model_dump(
+                exclude={"inputs", "outputs", "states", "parameters"}
+            ),
         }
         return _system
 

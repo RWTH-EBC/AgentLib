@@ -1,6 +1,9 @@
 from agentlib.core.datamodels import AgentVariable
-from agentlib.modules.communicator.communicator import CommunicationDict, \
-    LocalCommunicatorConfig, LocalCommunicator
+from agentlib.modules.communicator.communicator import (
+    CommunicationDict,
+    LocalCommunicatorConfig,
+    LocalCommunicator,
+)
 from agentlib.utils import LocalBroadcastBroker
 
 
@@ -11,6 +14,7 @@ class LocalBroadcastClient(LocalCommunicator):
     Note: The broker is implemented as singleton. This means that all agents must
     be in the same process!
     """
+
     broker: LocalBroadcastBroker
     config: LocalCommunicatorConfig
 

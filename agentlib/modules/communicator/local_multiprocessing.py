@@ -7,8 +7,11 @@ from ipaddress import IPv4Address
 
 from agentlib.core import Agent
 from agentlib.core.datamodels import AgentVariable
-from agentlib.modules.communicator.communicator import Communicator, CommunicationDict, \
-    CommunicatorConfig
+from agentlib.modules.communicator.communicator import (
+    Communicator,
+    CommunicationDict,
+    CommunicatorConfig,
+)
 from agentlib.utils import multi_processing_broker
 
 
@@ -18,7 +21,8 @@ class MultiProcessingBroadcastClientConfig(CommunicatorConfig):
         description="IP Address for the communication server. Defaults to localhost.",
     )
     port: int = Field(
-        default=50_000, description="Port for setting up the connection with the broker."
+        default=50_000,
+        description="Port for setting up the connection with the broker.",
     )
     authkey: bytes = Field(
         default=b"useTheAgentlib",
@@ -79,7 +83,6 @@ class MultiProcessingBroadcastClient(Communicator):
     def _message_handler(self):
         """Reads messages that were put in the message queue."""
         while True:
-
             try:
                 msg = self._client_read.recv()
             except EOFError:

@@ -17,14 +17,19 @@ import logging
 import threading
 import queue
 from typing import (
-    List, Callable, Dict, Tuple,
-    Optional, Protocol, runtime_checkable, Any
+    List,
+    Callable,
+    Dict,
+    Tuple,
+    Optional,
+    Protocol,
+    runtime_checkable,
+    Any,
 )
 
 from pydantic import BaseModel, field_validator, model_validator, ConfigDict
 
-from agentlib.core.datamodels import AgentVariable, \
-    Source
+from agentlib.core.datamodels import AgentVariable, Source
 from agentlib.core.environment import Environment
 
 logger = logging.getLogger()
@@ -33,8 +38,10 @@ logger = logging.getLogger()
 @runtime_checkable
 class CallbackFunction(Protocol):
     """Protocol defining the signature of a valid Callback Function"""
+
     def __call__(self, variable: AgentVariable, **kwargs: Any) -> None:
         ...
+
     __name__: str
 
 
@@ -61,6 +68,7 @@ class NoCopyBrokerCallback(BaseModel):
     >>> )
 
     """
+
     # pylint: disable=too-few-public-methods
     callback: CallbackFunction
     alias: Optional[str] = None
@@ -74,19 +82,32 @@ class NoCopyBrokerCallback(BaseModel):
         """Ensures the callback function signature is valid."""
         func_params = dict(inspect.signature(data["callback"]).parameters)
         par = func_params.pop(next(iter(func_params)))
-        if par.annotation is not par.empty and par.annotation not in ("AgentVariable", AgentVariable):
-            raise RuntimeError("Defined callback Function does not take an "
-                               "AgentVariable as first parameter")
+        if par.annotation is not par.empty and par.annotation not in (
+            "AgentVariable",
+            AgentVariable,
+        ):
+            raise RuntimeError(
+                "Defined callback Function does not take an "
+                "AgentVariable as first parameter"
+            )
 
         if not list(data["kwargs"]) == list(func_params):
-            kwargs_not_in_function_args = set(list(data["kwargs"])).difference(list(func_params))
-            function_args_not_in_kwargs = set(list(func_params)).difference(list(data["kwargs"]))
+            kwargs_not_in_function_args = set(list(data["kwargs"])).difference(
+                list(func_params)
+            )
+            function_args_not_in_kwargs = set(list(func_params)).difference(
+                list(data["kwargs"])
+            )
             if function_args_not_in_kwargs:
-                missing_kwargs = "Missing arguments in kwargs: " + ", ".join(function_args_not_in_kwargs)
+                missing_kwargs = "Missing arguments in kwargs: " + ", ".join(
+                    function_args_not_in_kwargs
+                )
             else:
                 missing_kwargs = ""
             if kwargs_not_in_function_args:
-                missing_func_args = "Missing kwargs in function call: " + ", ".join(kwargs_not_in_function_args)
+                missing_func_args = "Missing kwargs in function call: " + ", ".join(
+                    kwargs_not_in_function_args
+                )
             else:
                 missing_func_args = ""
             raise RuntimeError(
@@ -101,10 +122,11 @@ class NoCopyBrokerCallback(BaseModel):
         Check equality to another callback using equality of all fields
         and the name of the callback function
         """
-        return (
-                (self.alias, self.source, self.kwargs, self.callback.__name__)
-                ==
-                (other.alias, other.source, other.kwargs, other.callback.__name__)
+        return (self.alias, self.source, self.kwargs, self.callback.__name__) == (
+            other.alias,
+            other.source,
+            other.kwargs,
+            other.callback.__name__,
         )
 
 
@@ -116,12 +138,15 @@ class BrokerCallback(NoCopyBrokerCallback):
     only get's the values and is not able to alter
     the AgentVariable for other modules.
     """
+
     @field_validator("callback")
     @classmethod
     def auto_copy(cls, callback_func: CallbackFunction):
         """Automatically supply the callback function with a copy"""
+
         def callback_copy(variable: AgentVariable, **kwargs):
             callback_func(variable.copy(deep=True), **kwargs)
+
         callback_copy.__name__ = callback_func.__name__
         return callback_copy
 
@@ -208,20 +233,24 @@ class DataBroker(abc.ABC):
         callbacks = self._unmapped_callbacks
         # First filter source
         source = map_tuple[1]
-        callbacks = [cb for cb in callbacks
-                     if (cb.source is None) or (cb.source.matches(source))]
+        callbacks = [
+            cb for cb in callbacks if (cb.source is None) or (cb.source.matches(source))
+        ]
         # Now alias
-        callbacks = [cb for cb in callbacks
-                     if (cb.alias is None) or (cb.alias == map_tuple[0])]
+        callbacks = [
+            cb for cb in callbacks if (cb.alias is None) or (cb.alias == map_tuple[0])
+        ]
 
         return callbacks
 
-    def register_callback(self,
-                          callback: Callable,
-                          alias: str = None,
-                          source: Source = None,
-                          _unsafe_no_copy: bool = False,
-                          **kwargs):
+    def register_callback(
+        self,
+        callback: Callable,
+        alias: str = None,
+        source: Source = None,
+        _unsafe_no_copy: bool = False,
+        **kwargs,
+    ):
         """
         Register a callback to the data_broker.
 
@@ -236,15 +265,13 @@ class DataBroker(abc.ABC):
                 wrong and difficult to debug behaviour in other modules (default False)
         """
         if _unsafe_no_copy:
-            callback = NoCopyBrokerCallback(alias=alias,
-                                            source=source,
-                                            callback=callback,
-                                            kwargs=kwargs)
+            callback = NoCopyBrokerCallback(
+                alias=alias, source=source, callback=callback, kwargs=kwargs
+            )
         else:
-            callback = BrokerCallback(alias=alias,
-                                      source=source,
-                                      callback=callback,
-                                      kwargs=kwargs)
+            callback = BrokerCallback(
+                alias=alias, source=source, callback=callback, kwargs=kwargs
+            )
         _map_tuple = (alias, source)
         if self.any_is_none(alias=alias, source=source):
             self._unmapped_callbacks.append(callback)
@@ -253,11 +280,9 @@ class DataBroker(abc.ABC):
         else:
             self._mapped_callbacks[_map_tuple] = [callback]
 
-    def deregister_callback(self,
-                            callback: Callable,
-                            alias: str = None,
-                            source: Source = None,
-                            **kwargs):
+    def deregister_callback(
+        self, callback: Callable, alias: str = None, source: Source = None, **kwargs
+    ):
         """
         Deregister the given callback based on given
         alias and source.
@@ -269,10 +294,9 @@ class DataBroker(abc.ABC):
             kwargs dict: Kwargs of the callback function
         """
         try:
-            callback = BrokerCallback(alias=alias,
-                                      source=source,
-                                      callback=callback,
-                                      kwargs=kwargs)
+            callback = BrokerCallback(
+                alias=alias, source=source, callback=callback, kwargs=kwargs
+            )
             _map_tuple = (alias, source)
             if self.any_is_none(alias=alias, source=source):
                 self._unmapped_callbacks.remove(callback)
@@ -296,10 +320,10 @@ class DataBroker(abc.ABC):
                 The Source of the callback
         """
         return (
-                (alias is None)
-                or (source is None)
-                or (source.agent_id is None)
-                or (source.module_id is None)
+            (alias is None)
+            or (source is None)
+            or (source.agent_id is None)
+            or (source.module_id is None)
         )
 
 
@@ -348,9 +372,7 @@ class RTDataBroker(DataBroker):
         """
         super().__init__()
         self.thread = threading.Thread(
-            target=self._callback_thread,
-            daemon=True,
-            name="DataBroker"
+            target=self._callback_thread, daemon=True, name="DataBroker"
         )
 
         env.process(self._start_executing_callbacks(env))

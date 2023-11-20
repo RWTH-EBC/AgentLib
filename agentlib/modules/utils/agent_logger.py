@@ -11,8 +11,7 @@ from pydantic import field_validator, Field
 import pandas as pd
 
 from agentlib import AgentVariable
-from agentlib.core import BaseModule, Agent, \
-    BaseModuleConfig
+from agentlib.core import BaseModule, Agent, BaseModuleConfig
 
 
 logger = logging.getLogger(__name__)
@@ -24,24 +23,23 @@ class AgentLoggerConfig(BaseModuleConfig):
     filename: str = Field(
         title="filename",
         default=None,  # Set later when agent_id is available
-        description="The filename where the log is stored."
+        description="The filename where the log is stored.",
     )
     t_sample: Union[float, int] = Field(
-        title='t_sample',
+        title="t_sample",
         default=300,
-        description="The log is saved "
-                    "every other t_sample seconds."
+        description="The log is saved " "every other t_sample seconds.",
     )
     values_only: bool = Field(
-        title='values_only',
+        title="values_only",
         default=True,
         description="If True, only the values are logged. Else, all"
-                    "fields in the AgentVariable are logged."
+        "fields in the AgentVariable are logged.",
     )
     clean_up: bool = Field(
-        title='clean_up',
+        title="clean_up",
         default=True,
-        description="If True, file is deleted once load_log is called."
+        description="If True, file is deleted once load_log is called.",
     )
 
     @field_validator("filename")
@@ -50,8 +48,10 @@ class AgentLoggerConfig(BaseModuleConfig):
         """Checks whether the file already exists."""
         # pylint: disable=no-self-argument,no-self-use
         if os.path.exists(filename):
-            logger.error("Specified filename already exists. "
-                         "The AgentLogger will append to the file.")
+            logger.error(
+                "Specified filename already exists. "
+                "The AgentLogger will append to the file."
+            )
         return filename
 
 
@@ -69,8 +69,9 @@ class AgentLogger(BaseModule):
         super().__init__(config=config, agent=agent)
         self._filename = self.config.filename
         if self._filename is None:
-            self._filename = os.path.join(os.getcwd(),
-                                          f"Agent_{self.agent.id}_Logger.log")
+            self._filename = os.path.join(
+                os.getcwd(), f"Agent_{self.agent.id}_Logger.log"
+            )
         self._variables_to_log = {}
 
     @property
@@ -87,11 +88,11 @@ class AgentLogger(BaseModule):
 
     def register_callbacks(self):
         """Callbacks trigger the log_cache function"""
-        callback = self._callback_values if self.config.values_only else self._callback_full
+        callback = (
+            self._callback_values if self.config.values_only else self._callback_full
+        )
         self.agent.data_broker.register_callback(
-            alias=None,
-            source=None,
-            callback=callback
+            alias=None, source=None, callback=callback
         )
 
     def _callback_values(self, variable: AgentVariable):
@@ -116,7 +117,9 @@ class AgentLogger(BaseModule):
             file.write("\n")
 
     @classmethod
-    def load_from_file(cls, filename: str, values_only: bool = True, merge_sources: bool = True) -> pd.DataFrame:
+    def load_from_file(
+        cls, filename: str, values_only: bool = True, merge_sources: bool = True
+    ) -> pd.DataFrame:
         """Loads the log file and consolidates it as a pandas DataFrame.
 
         Args:
@@ -140,21 +143,25 @@ class AgentLogger(BaseModule):
         df.columns = pd.MultiIndex.from_tuples(columns)
 
         if not values_only:
+
             def _load_agent_variable(var):
                 try:
                     return AgentVariable.validate_data(var)
                 except TypeError:
                     pass
+
             df = df.applymap(_load_agent_variable)
 
         if merge_sources:
             df = df.droplevel(1, axis=1)
-            df = df.loc[:, ~df.columns.duplicated(keep='first')]
+            df = df.loc[:, ~df.columns.duplicated(keep="first")]
         return df.sort_index()
 
     def get_results(self) -> pd.DataFrame:
         """Load the own filename"""
-        return self.load_from_file(filename=self.filename, values_only=self.config.values_only)
+        return self.load_from_file(
+            filename=self.filename, values_only=self.config.values_only
+        )
 
     def cleanup_results(self):
         """Deletes the log if wanted."""

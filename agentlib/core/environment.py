@@ -3,17 +3,25 @@ import json
 import logging
 import time
 from datetime import datetime
-from typing import Union,  Any, Optional
+from typing import Union, Any, Optional
 import simpy
 from pathlib import Path
 from simpy.core import SimTime, Event
-from pydantic import field_validator, ConfigDict, PositiveFloat, BaseModel, FilePath, Field
+from pydantic import (
+    field_validator,
+    ConfigDict,
+    PositiveFloat,
+    BaseModel,
+    FilePath,
+    Field,
+)
 
 logger = logging.getLogger(name=__name__)
 
 
 class EnvironmentConfig(BaseModel):
     """Config for the Environment"""
+
     rt: bool = False
     factor: PositiveFloat = 1.0
     strict: bool = False
@@ -22,18 +30,20 @@ class EnvironmentConfig(BaseModel):
         title="t_sample",
         default=1,
         description="Used to increase the now-time of"
-                    "the environment using the clock function.",
+        "the environment using the clock function.",
     )
     offset: float = Field(
         title="offset",
         default=0,
         description="Used to offset the now-time of"
-                    "the environment using the clock function.",
+        "the environment using the clock function.",
     )
     clock: bool = False
-    model_config = ConfigDict(validate_assignment=True, arbitrary_types_allowed=True, extra="forbid")
+    model_config = ConfigDict(
+        validate_assignment=True, arbitrary_types_allowed=True, extra="forbid"
+    )
 
-    @field_validator('initial_time')
+    @field_validator("initial_time")
     @classmethod
     def check_time(cls, initial_time):
         """Check if initial time is correct"""
@@ -102,12 +112,18 @@ class Environment(simpy.RealtimeEnvironment):
         """
         if self.config.rt:
             logger.info("Initializing real time runtime environment...")
-            simpy.RealtimeEnvironment.__init__(self, factor=self.config.factor, initial_time=self.config.initial_time, strict=self.config.strict)
+            simpy.RealtimeEnvironment.__init__(
+                self,
+                factor=self.config.factor,
+                initial_time=self.config.initial_time,
+                strict=self.config.strict,
+            )
             self.pretty_time = self.rt_time
         else:
             logger.info("Initializing runtime environment...")
-            simpy.Environment.__init__(self, **self.config.model_dump(include={
-                'initial_time'}))
+            simpy.Environment.__init__(
+                self, **self.config.model_dump(include={"initial_time"})
+            )
             self.pretty_time = self.sim_time
         # regularily print sim time, if clock is on, and log level is sufficient
         if self.config.clock and logger.level <= logging.INFO:
@@ -152,8 +168,7 @@ class Environment(simpy.RealtimeEnvironment):
     def rt_time(self) -> str:
         """Returns the current real time in datetime format, based on unix timestamp."""
         try:
-            return datetime.fromtimestamp(self.time).strftime(
-                "%d-%b-%Y %H:%M:%S")
+            return datetime.fromtimestamp(self.time).strftime("%d-%b-%Y %H:%M:%S")
         except TypeError:
             # when the rt environment has not yet started, we cannot have a time
             return ""

@@ -5,64 +5,76 @@ from typing import Union, List
 from pydantic import FilePath, Field, validator
 import numpy as np
 import pandas as pd
-from agentlib.core import BaseModule, Agent, AgentVariable, \
-    BaseModuleConfig, AgentVariables
+from agentlib.core import (
+    BaseModule,
+    Agent,
+    AgentVariable,
+    BaseModuleConfig,
+    AgentVariables,
+)
 
 
 class TRYSensorConfig(BaseModuleConfig):
     """Define parameters for the TRYSensor"""
 
     outputs: AgentVariables = [
-        AgentVariable(name="T_oda",
-                      unit="K",
-                      description="Air temperature 2m over ground [K]"),
-        AgentVariable(name="pressure",
-                      unit="hPa",
-                      description="Air pressure in standard height [hPa]"),
-        AgentVariable(name="wind_direction",
-                      unit="°",
-                      description="Wind direction 10 m above gorund "
-                                  "[Grad] {0..360;999}"),
-        AgentVariable(name="wind_speed",
-                      unit="m/s",
-                      description="Wind speed 10 m above ground [m/s]"),
-        AgentVariable(name="coverage",
-                      unit="eighth",
-                      description="[eighth]  {0..8;9}"),
-        AgentVariable(name="absolute_humidity",
-                      unit="g/kg",
-                      description="[g/kg]"),
-        AgentVariable(name="relative_humidity",
-                      unit="%",
-                      description="Relative humidity 2 m above ground "
-                                  "[%] {1..100}"),
-        AgentVariable(name="beam_direct",
-                      unit="W/m^2",
-                      description="Direct beam of sun (hor. plane) "
-                                  "[W/m^2] downwards: positive"),
-        AgentVariable(name="beam_diffuse",
-                      unit="/m^2",
-                      description="Diffuse beam of sun (hor. plane) "
-                                  "[W/m^2] downwards: positive"),
-        AgentVariable(name="beam_atm",
-                      unit="/m^2",
-                      description="Beam of atmospheric heat (hor. plane) "
-                                  "[W/m^2] downwards: positive"),
-        AgentVariable(name="beam_terr",
-                      unit="/m^2",
-                      description="Beam of terrestrial heat "
-                                  "[W/m^2] upwards: negative"),
+        AgentVariable(
+            name="T_oda", unit="K", description="Air temperature 2m over ground [K]"
+        ),
+        AgentVariable(
+            name="pressure",
+            unit="hPa",
+            description="Air pressure in standard height [hPa]",
+        ),
+        AgentVariable(
+            name="wind_direction",
+            unit="°",
+            description="Wind direction 10 m above gorund " "[Grad] {0..360;999}",
+        ),
+        AgentVariable(
+            name="wind_speed",
+            unit="m/s",
+            description="Wind speed 10 m above ground [m/s]",
+        ),
+        AgentVariable(name="coverage", unit="eighth", description="[eighth]  {0..8;9}"),
+        AgentVariable(name="absolute_humidity", unit="g/kg", description="[g/kg]"),
+        AgentVariable(
+            name="relative_humidity",
+            unit="%",
+            description="Relative humidity 2 m above ground " "[%] {1..100}",
+        ),
+        AgentVariable(
+            name="beam_direct",
+            unit="W/m^2",
+            description="Direct beam of sun (hor. plane) "
+            "[W/m^2] downwards: positive",
+        ),
+        AgentVariable(
+            name="beam_diffuse",
+            unit="/m^2",
+            description="Diffuse beam of sun (hor. plane) "
+            "[W/m^2] downwards: positive",
+        ),
+        AgentVariable(
+            name="beam_atm",
+            unit="/m^2",
+            description="Beam of atmospheric heat (hor. plane) "
+            "[W/m^2] downwards: positive",
+        ),
+        AgentVariable(
+            name="beam_terr",
+            unit="/m^2",
+            description="Beam of terrestrial heat " "[W/m^2] upwards: negative",
+        ),
     ]
 
     filename: FilePath = Field(
-        title="filename",
-        description="The filepath to the data."
+        title="filename", description="The filepath to the data."
     )
     t_sample: Union[float, int] = Field(
-        title='t_sample',
+        title="t_sample",
         default=1,
-        description="Sample time of sensor. As TRY are hourly, "
-                    "default is 1 h"
+        description="Sample time of sensor. As TRY are hourly, " "default is 1 h",
     )
     shared_variable_fields: List[str] = ["outputs"]
 
@@ -84,6 +96,7 @@ class TRYSensor(BaseModule):
     - beam_atm:            Beam of atmospheric heat (hor. plane)    [W/m^2] downwards: positive
     - beam_terr:           Beam of terrestrial heat [W/m^2] upwards: negative
     """
+
     config: TRYSensorConfig
 
     def __init__(self, *, config: dict, agent: Agent):
@@ -98,8 +111,10 @@ class TRYSensor(BaseModule):
         # Check if outputs match the _data:
         _names = [v.name for v in self.variables]
         if set(self._data.columns).difference(_names):
-            raise KeyError("The internal variables differ from the "
-                           "supported data in a TRY dataset.")
+            raise KeyError(
+                "The internal variables differ from the "
+                "supported data in a TRY dataset."
+            )
 
     @property
     def filename(self):
@@ -145,7 +160,7 @@ def read_dat_file(dat_file):
 
     """
     # pylint: disable=raise-missing-from
-    _sep = r'\s+'
+    _sep = r"\s+"
 
     with open(dat_file, "r") as file:
         # First try for 2012 dataset:
@@ -177,7 +192,7 @@ def read_dat_file(dat_file):
         "B": "beam_direct",
         "D": "beam_diffuse",
         "A:": "beam_atm",
-        "E": "beam_terr"
+        "E": "beam_terr",
     }
     # Rename df for easier later usage.
     df.rename(columns=_key_map, inplace=True)

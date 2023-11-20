@@ -11,6 +11,7 @@ class ModuleImport(BaseModel):
     from ``import_path`` and load the given
     ``class_name``
     """
+
     import_path: str
     class_name: str
 

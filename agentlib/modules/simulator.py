@@ -13,9 +13,13 @@ import pandas as pd
 from pydantic_core.core_schema import FieldValidationInfo
 
 from agentlib.core import (
-    BaseModule, BaseModuleConfig,
-    Agent, Causality, AgentVariable,
-    AgentVariables, ModelVariable
+    BaseModule,
+    BaseModuleConfig,
+    Agent,
+    Causality,
+    AgentVariable,
+    AgentVariables,
+    ModelVariable,
 )
 from agentlib.core import Model
 from agentlib.core.errors import OptionalDependencyError
@@ -26,6 +30,7 @@ from agentlib.utils import custom_injection
 @dataclass
 class SimulatorResults:
     """Class to organize in-memory simulator results."""
+
     index: List[float]
     columns: pd.MultiIndex
     data: List[List[float]]
@@ -45,12 +50,16 @@ class SimulatorResults:
         |...
         """
         self.columns = pd.MultiIndex.from_arrays(
-            arrays=np.array([
-                [_var.causality for _var in variables],
-                [_var.name for _var in variables],
-                [_var.type for _var in variables]]),
+            arrays=np.array(
+                [
+                    [_var.causality for _var in variables],
+                    [_var.name for _var in variables],
+                    [_var.type for _var in variables],
+                ]
+            ),
             sortorder=0,
-            names=['causality', 'name', 'type'])
+            names=["causality", "name", "type"],
+        )
         self.index = []
         self.data = []
 
@@ -78,139 +87,135 @@ class SimulatorConfig(BaseModuleConfig):
     """
     Pydantic data model for simulator configuration parser
     """
+
     parameters: AgentVariables = []
     inputs: AgentVariables = []
     outputs: AgentVariables = []
     states: AgentVariables = []
-    shared_variable_fields: List[str] = ['outputs']
+    shared_variable_fields: List[str] = ["outputs"]
     model: Dict
 
     t_start: Union[float, int] = Field(
-        title='t_start',
-        default=0.0,
-        ge=0,
-        description='Simulation start time'
+        title="t_start", default=0.0, ge=0, description="Simulation start time"
     )
     t_stop: Union[float, int] = Field(
-        title='t_stop',
-        default=inf,
-        ge=0,
-        description='Simulation stop time'
+        title="t_stop", default=inf, ge=0, description="Simulation stop time"
     )
     t_sample: Union[float, int] = Field(
-        title='t_sample',
-        default=1,
-        ge=0,
-        description='Simulation sample time'
+        title="t_sample", default=1, ge=0, description="Simulation sample time"
     )
     # Model results
     save_results: bool = Field(
-        title='save_results',
+        title="save_results",
         default=False,
-        description='If True, results are created and stored'
+        description="If True, results are created and stored",
     )
     overwrite_result_file: bool = Field(
-        title='overwrite_result',
+        title="overwrite_result",
         default=False,
-        description='If True, and the result file already exists, the file is overwritten.'
+        description="If True, and the result file already exists, the file is overwritten.",
     )
     result_filename: Optional[str] = Field(
-        title='result_filename',
+        title="result_filename",
         default=None,
-        description='If not None, results are stored in that filename.'
-                    'Needs to be a .csv file'
+        description="If not None, results are stored in that filename."
+        "Needs to be a .csv file",
     )
     result_sep: str = Field(
-        title='result_sep',
-        default=',',
-        description='Separator in the .csv file. Only relevant if '
-                    'result_filename is passed'
+        title="result_sep",
+        default=",",
+        description="Separator in the .csv file. Only relevant if "
+        "result_filename is passed",
     )
     result_causalities: List[Causality] = Field(
-        title='result_causalities',
+        title="result_causalities",
         default=[Causality.input, Causality.output],
-        description='List of causalities to store. Default stores '
-                    'only inputs and outputs'
+        description="List of causalities to store. Default stores "
+        "only inputs and outputs",
     )
     write_results_delay: Optional[float] = Field(
-        title='Write Results Delay',
+        title="Write Results Delay",
         default=None,
-        description='Sampling interval for which the results are written to disc in seconds.',
+        description="Sampling interval for which the results are written to disc in seconds.",
         validate_default=True,
-        gt=0
+        gt=0,
     )
     update_inputs_on_callback: bool = Field(
-        title='update_inputs_on_callback',
+        title="update_inputs_on_callback",
         default=True,
-        description='If True, model inputs are updated if they are updated in data_broker.'
-                    'Else, the model inputs are updated before each simulation.'
+        description="If True, model inputs are updated if they are updated in data_broker."
+        "Else, the model inputs are updated before each simulation.",
     )
     measurement_uncertainty: Union[Dict[str, float], float] = Field(
         title="measurement_uncertainty",
         default=0,
         description="Either pass a float and add the percentage uncertainty "
-                    "to all measurements from the model."
-                    "Or pass a Dict and specify the model variable name as key"
-                    "and the associated uncertainty as a float"
+        "to all measurements from the model."
+        "Or pass a Dict and specify the model variable name as key"
+        "and the associated uncertainty as a float",
     )
     validate_incoming_values: Optional[bool] = Field(
         default=False,  # we overwrite the default True in base, to be more efficient
         title="Validate Incoming Values",
         description="If true, the validator of the AgentVariable value is called when "
-                    "receiving a new value from the DataBroker. In the simulator, this "
-                    "is False by default, as we expect to receive a lot of measurements"
-                    " and want to be efficient.",
+        "receiving a new value from the DataBroker. In the simulator, this "
+        "is False by default, as we expect to receive a lot of measurements"
+        " and want to be efficient.",
     )
 
-    @field_validator('result_filename')
+    @field_validator("result_filename")
     @classmethod
     def check_nonexisting_csv(cls, result_filename, info: FieldValidationInfo):
         """Check if the result_filename is a .csv file or an hf
         and assert that it does not exist."""
-        if not info.data.get('save_results', False):
+        if not info.data.get("save_results", False):
             # No need to check as filename will never be used anyways
             return None
         if result_filename is None:
             return result_filename
-        if not result_filename.endswith('.csv'):
-            raise TypeError(f'Given result_filename ends with '
-                            f'{result_filename.split(".")[-1]} '
-                            f'but should be a .csv file')
+        if not result_filename.endswith(".csv"):
+            raise TypeError(
+                f"Given result_filename ends with "
+                f'{result_filename.split(".")[-1]} '
+                f"but should be a .csv file"
+            )
         if os.path.isfile(result_filename):
             # remove result file, so a new one can be created
-            if info.data['overwrite_result_file']:
+            if info.data["overwrite_result_file"]:
                 os.remove(result_filename)
                 return result_filename
-            raise FileExistsError(f"Given result_filename at {result_filename} "
-                                  f"already exists. We won't overwrite it automatically. "
-                                  f"You can use the key word 'overwrite_result_file' to "
-                                  f"activate automatic overwrite.")
+            raise FileExistsError(
+                f"Given result_filename at {result_filename} "
+                f"already exists. We won't overwrite it automatically. "
+                f"You can use the key word 'overwrite_result_file' to "
+                f"activate automatic overwrite."
+            )
         # Create path in case it does not exist
         fpath = os.path.dirname(result_filename)
         if fpath:
             os.makedirs(fpath, exist_ok=True)
         return result_filename
 
-    @field_validator('t_stop')
+    @field_validator("t_stop")
     @classmethod
     def check_t_stop(cls, t_stop, info: FieldValidationInfo):
         """Check if stop is greater than start time"""
         t_start = info.data.get("t_start")
-        assert (t_stop > t_start), \
-            "t_stop must be greater than t_start"
+        assert t_stop > t_start, "t_stop must be greater than t_start"
         return t_stop
 
-    @field_validator('t_sample')
+    @field_validator("t_sample")
     @classmethod
     def check_t_sample(cls, t_sample, info: FieldValidationInfo):
         """Check if t_sample is smaller than stop-start time"""
         t_start = info.data.get("t_start")
         t_stop = info.data.get("t_stop")
-        assert (t_start + t_sample <= t_stop), \
-            "t_stop-t_start must be greater than t_sample"
+        assert (
+            t_start + t_sample <= t_stop
+        ), "t_stop-t_start must be greater than t_sample"
         return t_sample
 
-    @field_validator('write_results_delay')
+    @field_validator("write_results_delay")
     @classmethod
     def set_default_t_sample(cls, write_results_delay, info: FieldValidationInfo):
         t_sample = info.data["t_sample"]
@@ -219,11 +224,13 @@ class SimulatorConfig(BaseModuleConfig):
             # soon as possible to disk with saving file I/O overhead
             return 5 * t_sample
         if write_results_delay < t_sample:
-            raise ValueError("Saving results more frequently than you simulate makes no sense. "
-                             "Increase write_results_delay above t_sample.")
+            raise ValueError(
+                "Saving results more frequently than you simulate makes no sense. "
+                "Increase write_results_delay above t_sample."
+            )
         return write_results_delay
 
-    @field_validator('model')
+    @field_validator("model")
     @classmethod
     def check_model(cls, model, info: FieldValidationInfo):
         """Validate the model input"""
@@ -231,9 +238,10 @@ class SimulatorConfig(BaseModuleConfig):
         inputs = info.data.get("inputs")
         outputs = info.data.get("outputs")
         states = info.data.get("states")
-        if 'type' not in model:
-            raise KeyError("Given model config does not "
-                           "contain key 'type' (type of the model).")
+        if "type" not in model:
+            raise KeyError(
+                "Given model config does not " "contain key 'type' (type of the model)."
+            )
         _type = model.pop("type")
         if isinstance(_type, dict):
             custom_cls = custom_injection(config=_type)
@@ -243,14 +251,14 @@ class SimulatorConfig(BaseModuleConfig):
                 raise OptionalDependencyError(
                     dependency_name=_type,
                     dependency_install=UNINSTALLED_MODEL_TYPES[_type],
-                    class_type="model"
+                    class_type="model",
                 )
             model = get_model_type(_type)(
                 **model,
                 parameters=convert_agent_vars_to_list_of_dicts(parameters),
                 inputs=convert_agent_vars_to_list_of_dicts(inputs),
                 outputs=convert_agent_vars_to_list_of_dicts(outputs),
-                states=convert_agent_vars_to_list_of_dicts(states)
+                states=convert_agent_vars_to_list_of_dicts(states),
             )
         # Check if model was correctly initialized
         assert isinstance(model, Model)
@@ -272,7 +280,8 @@ class Simulator(BaseModule):
         self._model = None
         self.model = self.config.model
         self._result: SimulatorResults = SimulatorResults(
-            variables=self._get_result_model_variables())
+            variables=self._get_result_model_variables()
+        )
         self._save_count: int = 1  # tracks, how often results have been saved
         if self.config.update_inputs_on_callback:
             self._register_input_callbacks()
@@ -302,16 +311,15 @@ class Simulator(BaseModule):
             model (agentlib.core.model.Model): model to set as current simulation model
         """
         if not isinstance(model, Model):
-            self.logger.error("You forgot to pass a valid model to the simulator module!")
+            self.logger.error(
+                "You forgot to pass a valid model to the simulator module!"
+            )
             raise TypeError(
                 f"Given model is of type {type(model)} "
                 f"but should be an instance of Model or a valid subclass"
             )
         self._model = model
-        self.model.initialize(
-            t_start=self.config.t_start,
-            t_stop=self.config.t_stop
-        )
+        self.model.initialize(t_start=self.config.t_start, t_stop=self.config.t_stop)
         self.logger.info("Model successfully loaded model: %s", self.model.name)
 
     def run(self, until=None):
@@ -321,7 +329,7 @@ class Simulator(BaseModule):
         all scheduled process will be started in this environment.
         """
         if until is None:
-            self.env.run(until=self.config.t_stop-self.config.t_start)
+            self.env.run(until=self.config.t_stop - self.config.t_start)
         else:
             self.env.run(until=until)
 
@@ -334,22 +342,27 @@ class Simulator(BaseModule):
         # Outputs and states are always the result of the model
         # "Complicated" double for-loop to avoid boilerplate code
         for _type, model_var_names, ag_vars, callback in zip(
-                ["input", "parameter"],
-                [self.model.get_input_names(), self.model.get_parameter_names()],
-                [self.config.inputs, self.config.parameters],
-                [self._callback_update_model_input, self._callback_update_model_parameter]
+            ["input", "parameter"],
+            [self.model.get_input_names(), self.model.get_parameter_names()],
+            [self.config.inputs, self.config.parameters],
+            [self._callback_update_model_input, self._callback_update_model_parameter],
         ):
             for var in ag_vars:
                 if var.name in model_var_names:
-                    self.logger.info("Registered callback for model %s %s ",
-                                     _type, var.name)
+                    self.logger.info(
+                        "Registered callback for model %s %s ", _type, var.name
+                    )
                     self.agent.data_broker.register_callback(
-                        alias=var.alias, source=var.source,
-                        callback=callback, name=var.name
+                        alias=var.alias,
+                        source=var.source,
+                        callback=callback,
+                        name=var.name,
                     )
                 # Case for variable overwriting
                 if var.value is not None:
-                    self.logger.debug("Updating model %s %s=%s", _type, var.name, var.value)
+                    self.logger.debug(
+                        "Updating model %s %s=%s", _type, var.name, var.value
+                    )
                     self.model.set(name=var.name, value=var.value)
 
     def _callback_update_model_input(self, inp: AgentVariable, name: str):
@@ -396,8 +409,9 @@ class Simulator(BaseModule):
         # Specify simulation end time
         _end_time_simulation = self.env.time + self.config.t_sample
         # Simulate
-        self.model.do_step(t_start=(self.env.now + self.env.offset),
-                           t_sample=self.config.t_sample)
+        self.model.do_step(
+            t_start=(self.env.now + self.env.offset), t_sample=self.config.t_sample
+        )
         # Update the results and outputs
         self._update_results(_end_time_simulation)
         self.update_module_vars(timestamp=_end_time_simulation)
@@ -409,7 +423,9 @@ class Simulator(BaseModule):
         Internal method to write current data_broker to simulation model.
         Only update values, not other module_types.
         """
-        model_input_names = self.model.get_input_names() + self.model.get_parameter_names()
+        model_input_names = (
+            self.model.get_input_names() + self.model.get_parameter_names()
+        )
         for inp in self.variables:
             if inp.name in model_input_names:
                 self.logger.debug("Updating model variable %s=%s", inp.name, inp.value)
@@ -422,9 +438,9 @@ class Simulator(BaseModule):
         """
         # pylint: disable=logging-fstring-interpolation
         for _type, model_get, agent_vars in zip(
-                ["state", "output"],
-                [self.model.get_state, self.model.get_output],
-                [self.config.states, self.config.outputs]
+            ["state", "output"],
+            [self.model.get_state, self.model.get_output],
+            [self.config.states, self.config.outputs],
         ):
             for var in agent_vars:
                 mo_var = model_get(var.name)
@@ -471,8 +487,8 @@ class Simulator(BaseModule):
         self._result.index.append(timestamp)
         self._result.data.append(values)
         if (
-                self.config.result_filename is not None and
-                timestamp // (self.config.write_results_delay * self._save_count) > 0
+            self.config.result_filename is not None
+            and timestamp // (self.config.write_results_delay * self._save_count) > 0
         ):
             self._save_count += 1
             self._result.write_results(self.config.result_filename)
@@ -490,16 +506,18 @@ class Simulator(BaseModule):
                 _variables.extend(self.model.outputs)
             elif causality == Causality.local:
                 _variables.extend(self.model.states)
-            elif causality in [Causality.parameter,
-                               Causality.calculatedParameter]:
+            elif causality in [Causality.parameter, Causality.calculatedParameter]:
                 _variables.extend(self.model.parameters)
         return _variables
+
 
 def convert_agent_vars_to_list_of_dicts(var: AgentVariables) -> List[Dict]:
     """
     Function to convert AgentVariables to a list of dictionaries containing information for
     ModelVariables.
     """
-    var_dict_list = [agent_var.dict(exclude={"source", "alias", "shared", "rdf_class"})
-                     for agent_var in var]
+    var_dict_list = [
+        agent_var.dict(exclude={"source", "alias", "shared", "rdf_class"})
+        for agent_var in var
+    ]
     return var_dict_list

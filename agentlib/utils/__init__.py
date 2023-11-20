@@ -35,15 +35,17 @@ def custom_injection(config: dict, module_name: str = None):
     Returns:
         class (object): The class object specified by class_name
     """
-    assert 'file' in config, \
-        "For custom module injection, the config type dict has to " \
+    assert "file" in config, (
+        "For custom module injection, the config type dict has to "
         "contain a 'file'-key with an existing python file as value"
-    assert 'class_name' in config, \
-        "For custom module injection, the config type dict has to " \
-        "contain a 'class_name'-key with a string as value " \
+    )
+    assert "class_name" in config, (
+        "For custom module injection, the config type dict has to "
+        "contain a 'class_name'-key with a string as value "
         "specifying the class to inject"
-    file = config.get('file')
-    class_name = config.get('class_name')
+    )
+    file = config.get("file")
+    class_name = config.get("class_name")
     if not isinstance(file, (str, Path)):
         raise TypeError(f"Given file is not a string but {type(file)}")
     # Convert to Path object
@@ -74,7 +76,8 @@ def custom_injection(config: dict, module_name: str = None):
             "Could not inject given module due to import error. "
             "Carefully check for circular imports and partially "
             "imported objects based on the following error message: "
-            f"{err}") from err
+            f"{err}"
+        ) from err
     try:
         return custom_module.__dict__[class_name]
     except KeyError:

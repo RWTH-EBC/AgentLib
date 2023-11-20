@@ -11,7 +11,6 @@ MOD_ID = str
 Alias = str
 
 
-
 def create_configs(configs) -> List[AgentConfig]:
     mas = LocalMASAgency(configs=configs, env={"rt": False})
     configs = []
@@ -29,14 +28,15 @@ def order_vars_by_alias(vars_by_module):
 
 
 def create_comm_list(configs):
-
-
     configs_: List[AgentConfig] = create_configs(configs)
-    vars_by_module: Dict[AG_ID, Dict[MOD_ID, List[AgentVariable]]] = collect_vars(configs_)
+    vars_by_module: Dict[AG_ID, Dict[MOD_ID, List[AgentVariable]]] = collect_vars(
+        configs_
+    )
 
     # tuple is (name, shared, comm_conf)
-    vars_by_alias: Dict[Alias, List[Tuple[str, bool, Optional[CommunicatorConfig]]]] = order_vars_by_alias(vars_by_module)
-
+    vars_by_alias: Dict[
+        Alias, List[Tuple[str, bool, Optional[CommunicatorConfig]]]
+    ] = order_vars_by_alias(vars_by_module)
 
 
 def create_graph(vars_by_module):
@@ -49,8 +49,3 @@ def create_graph(vars_by_module):
             for var in ag_vars:
                 g.add_node(var.name, type="variable")
                 g.add_edge(mod_id, var.name, relation="has_variable")
-
-
-
-
-

@@ -11,7 +11,14 @@ import threading
 from pathlib import Path
 from typing import List, Dict, Union, Any
 
-from pydantic import field_validator, ConfigDict, BaseModel, PrivateAttr, Field, FilePath
+from pydantic import (
+    field_validator,
+    ConfigDict,
+    BaseModel,
+    PrivateAttr,
+    Field,
+    FilePath,
+)
 import pandas as pd
 
 from agentlib.core import Agent, Environment
@@ -23,18 +30,19 @@ logger = logging.getLogger(__name__)
 
 class MAS(BaseModel):
     """Parent class for all MAS"""
+
     model_config = ConfigDict(arbitrary_types_allowed=True)
 
     agent_configs: List[Union[dict, FilePath, str]]
     env: Union[Environment, dict, FilePath] = Field(
         default_factory=Environment,
         title="env",
-        description="The environment for the agents."
+        description="The environment for the agents.",
     )
     variable_logging: bool = Field(
         default=False,
         title="variable_logging",
-        description="Enable variable logging in all agents with sampling rate of environment."
+        description="Enable variable logging in all agents with sampling rate of environment.",
     )
     _agent_configs: Dict[str, AgentConfig] = PrivateAttr(default={})
 
@@ -44,7 +52,7 @@ class MAS(BaseModel):
         for agent_config in self.agent_configs:
             self.add_agent(config=agent_config)
 
-    @field_validator('agent_configs')
+    @field_validator("agent_configs")
     @classmethod
     def setup_agents(cls, agent_configs):
         """Load agent configs and add them."""
@@ -64,11 +72,13 @@ class MAS(BaseModel):
 
         if self.variable_logging:
             if isinstance(self.env, dict):
-                config = self.add_agent_logger(config=config,
-                                               sampling=self.env.get("t_sample", 1))
+                config = self.add_agent_logger(
+                    config=config, sampling=self.env.get("t_sample", 1)
+                )
             else:
-                config = self.add_agent_logger(config=config,
-                                               sampling=self.env.config.t_sample)
+                config = self.add_agent_logger(
+                    config=config, sampling=self.env.config.t_sample
+                )
         self._agent_configs[config.id] = config.model_copy()
         logger.info("Registered agent %s in agency", config.id)
 
@@ -85,7 +95,7 @@ class MAS(BaseModel):
             "module_id": "AgentLogger",
             "type": "AgentLogger",
             "t_sample": sampling,
-            "values_only": True
+            "values_only": True,
         }
         config.modules.append(cfg)
         return config
@@ -108,9 +118,10 @@ class LocalMASAgency(MAS):
     Local LocalMASAgency agency class which holds the agents in a common environment,
     executes and terminates them.
     """
+
     _agents: Dict[str, Agent] = PrivateAttr(default={})
 
-    @field_validator('env')
+    @field_validator("env")
     @classmethod
     def setup_env(cls, env):
         """Setup the env if a config is given."""
@@ -154,8 +165,7 @@ class LocalMASAgency(MAS):
     def setup_agent(self, id: str) -> Agent:
         """Setup the agent matching the given id"""
         # pylint: disable=redefined-builtin
-        agent = Agent(env=self.env,
-                      config=self._agent_configs[id])
+        agent = Agent(env=self.env, config=self._agent_configs[id])
         self._agents[agent.id] = agent
         return agent
 
@@ -188,6 +198,7 @@ class LocalCloneMAPAgency(LocalMASAgency):
     Local LocalMASAgency agency class which tries to mimic cloneMAP
     behaviour for the local execution.
     """
+
     # todo-fwu delete or add to clonemap example. But I dont think we need the threads, since we have simpy
 
     def run(self, until=None):
@@ -202,26 +213,28 @@ class LocalCloneMAPAgency(LocalMASAgency):
 
         # pylint: disable=redefined-builtin
         def _get_ag(env, ag_config):
-            ag = Agent(env=Environment(config=env),
-                       config=ag_config)
+            ag = Agent(env=Environment(config=env), config=ag_config)
             ag.env.run()
             return ag
 
-        thread = threading.Thread(target=_get_ag,
-                                  kwargs={"env": self.env.config.model_copy(),
-                                          "ag_config": self._agent_configs[id].copy(),
-                                          })
+        thread = threading.Thread(
+            target=_get_ag,
+            kwargs={
+                "env": self.env.config.model_copy(),
+                "ag_config": self._agent_configs[id].copy(),
+            },
+        )
         thread.start()
         self._agents[id] = thread
 
 
 def agent_process(
-        agent_config: Union[dict, FilePath],
-        until: float,
-        env: Union[dict, FilePath],
-        results_dict: dict,
-        cleanup=True,
-        log_level=logging.ERROR,
+    agent_config: Union[dict, FilePath],
+    until: float,
+    env: Union[dict, FilePath],
+    results_dict: dict,
+    cleanup=True,
+    log_level=logging.ERROR,
 ):
     """
     Function to initialize and start an agent in its own process.
@@ -252,25 +265,24 @@ class MultiProcessingMAS(MAS):
     """
     Helper class to conveniently run multi-agent-systems in separate processes.
     """
+
     env: Union[dict, FilePath] = Field(
         default_factory=lambda: Environment(config={"rt": True}),
         title="env",
-        description="The environment for the agents."
+        description="The environment for the agents.",
     )
     cleanup: bool = Field(
         default=False,
-        description="Whether agents should clean the results files after "
-                    "running."
+        description="Whether agents should clean the results files after " "running.",
     )
     log_level: int = Field(
-        default=logging.ERROR,
-        description="Loglevel to set for the processes."
+        default=logging.ERROR, description="Loglevel to set for the processes."
     )
 
     _processes: List[multiprocessing.Process] = PrivateAttr(default=[])
     _results_dict: Dict[str, pd.DataFrame] = PrivateAttr(default={})
 
-    @field_validator('env')
+    @field_validator("env")
     @classmethod
     def setup_env(cls, env):
         """Setup the env if a config is given."""
@@ -280,8 +292,10 @@ class MultiProcessingMAS(MAS):
             if Path(env).exists():
                 with open(env, "r") as f:
                     env = json.load(f)
-        assert env.setdefault('rt', True), "Synchronization between processes relies on time, RealTimeEnvironment " \
-              "is required."
+        assert env.setdefault("rt", True), (
+            "Synchronization between processes relies on time, RealTimeEnvironment "
+            "is required."
+        )
         return env
 
     def __init__(self, **data: Any) -> None:
@@ -293,15 +307,17 @@ class MultiProcessingMAS(MAS):
         """Execute the multi-agent-system in parallel and terminate it after
         run is finished"""
         for agent in self._agent_configs.values():
-            kwargs = {'agent_config': agent,
-                      'until': until,
-                      'env': self.env,
-                      'results_dict': self._results_dict,
-                      'cleanup': self.cleanup,
-                      'log_level': self.log_level}
-            process = multiprocessing.Process(target=agent_process,
-                                              name=agent.id,
-                                              kwargs=kwargs)
+            kwargs = {
+                "agent_config": agent,
+                "until": until,
+                "env": self.env,
+                "results_dict": self._results_dict,
+                "cleanup": self.cleanup,
+                "log_level": self.log_level,
+            }
+            process = multiprocessing.Process(
+                target=agent_process, name=agent.id, kwargs=kwargs
+            )
             self._processes.append(process)
             process.start()
         for process in self._processes:

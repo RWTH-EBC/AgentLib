@@ -8,6 +8,7 @@ import threading
 
 class Singleton(type):
     """Global singleton to ensure only one broker exists"""
+
     _instances = {}
 
     def __call__(cls, *args, **kwargs):

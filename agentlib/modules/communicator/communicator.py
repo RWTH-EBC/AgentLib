@@ -29,7 +29,7 @@ class CommunicatorConfig(BaseModuleConfig):
         title="Use orjson",
         default=False,
         description="If true, the faster orjson library will be used for serialization "
-                    "deserialization. Requires the optional dependency."
+        "deserialization. Requires the optional dependency.",
     )
 
 
@@ -37,9 +37,9 @@ class SubscriptionCommunicatorConfig(CommunicatorConfig):
     subscriptions: Union[List[str], str] = Field(
         title="Subscriptions",
         default=[],
-        description="List of agent-id strings to subscribe to"
+        description="List of agent-id strings to subscribe to",
     )
-    check_subscriptions = field_validator('subscriptions')(convert_to_list)
+    check_subscriptions = field_validator("subscriptions")(convert_to_list)
 
 
 class Communicator(BaseModule):
@@ -64,15 +64,20 @@ class Communicator(BaseModule):
 
             def _to_orjson(payload: CommunicationDict) -> bytes:
                 return orjson.dumps(payload, option=orjson.OPT_SERIALIZE_NUMPY)
+
             self.to_json = _to_orjson
         else:
+
             def _to_json_builtin(payload: CommunicationDict) -> str:
                 return json.dumps(payload)
+
             self.to_json = _to_json_builtin
 
     def register_callbacks(self):
         """Register all outputs to the callback function"""
-        self.agent.data_broker.register_callback(callback=self._send_only_shared_variables, _unsafe_no_copy=True)
+        self.agent.data_broker.register_callback(
+            callback=self._send_only_shared_variables, _unsafe_no_copy=True
+        )
 
     def process(self):
         yield self.env.event()
@@ -83,34 +88,33 @@ class Communicator(BaseModule):
             return
 
         payload = self.short_dict(variable)
-        self.logger.debug("Sending variable %s=%s",
-                          variable.alias,
-                          variable.value)
+        self.logger.debug("Sending variable %s=%s", variable.alias, variable.value)
         self._send(payload=payload)
 
     def _variable_can_be_send(self, variable):
-        return (variable.shared and
-                ((variable.source.agent_id is None) or
-                 (variable.source.agent_id == self.agent.id))
-                )
+        return variable.shared and (
+            (variable.source.agent_id is None)
+            or (variable.source.agent_id == self.agent.id)
+        )
 
     @abc.abstractmethod
     def _send(self, payload: CommunicationDict):
-        raise NotImplementedError("This method needs to be implemented "
-                                  "individually for each communicator")
+        raise NotImplementedError(
+            "This method needs to be implemented " "individually for each communicator"
+        )
 
     def short_dict(self, variable: AgentVariable) -> CommunicationDict:
         """Creates a short dict serialization of the Variable.
 
-         Only contains attributes of the AgentVariable, that are relevant for other
-         modules or agents. For performance and privacy reasons, this function should
-         be called for communicators."""
+        Only contains attributes of the AgentVariable, that are relevant for other
+        modules or agents. For performance and privacy reasons, this function should
+        be called for communicators."""
         return CommunicationDict(
             alias=variable.alias,
             value=variable.value,
             timestamp=variable.timestamp,
             type=variable.type,
-            source=self.agent.id
+            source=self.agent.id,
         )
 
     def to_json(self, payload: CommunicationDict) -> Union[bytes, str]:
@@ -127,9 +131,9 @@ class Communicator(BaseModule):
 class LocalCommunicatorConfig(CommunicatorConfig):
     parse_json: bool = Field(
         title="Indicate whether variables are converted to json before sending. "
-              "Increasing computing time but makes MAS more close to later stages"
-              "which use MQTT or similar.",
-        default=False
+        "Increasing computing time but makes MAS more close to later stages"
+        "which use MQTT or similar.",
+        default=False,
     )
 
 
@@ -173,8 +177,9 @@ class LocalCommunicator(Communicator):
     def setup_broker(self):
         """Function to set up the broker object.
         Needs to return a valid broker option."""
-        raise NotImplementedError("This method needs to be implemented "
-                                  "individually for each communicator")
+        raise NotImplementedError(
+            "This method needs to be implemented " "individually for each communicator"
+        )
 
     def _process(self):
         """Waits for new messages, sends them to the broker."""
@@ -182,8 +187,9 @@ class LocalCommunicator(Communicator):
 
     def _process_realtime(self):
         """Only start the loop once the env is running."""
-        self._loop = threading.Thread(target=self._message_handler,
-                                      name=str(self.source))
+        self._loop = threading.Thread(
+            target=self._message_handler, name=str(self.source)
+        )
         self._loop.daemon = True  # Necessary to enable terminations of scripts
         self._loop.start()
         self.agent.register_thread(thread=self._loop)

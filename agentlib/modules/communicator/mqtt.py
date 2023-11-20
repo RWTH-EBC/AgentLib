@@ -6,7 +6,10 @@ from typing import Union, List
 
 from pydantic import AnyUrl, Field, ValidationError, field_validator
 
-from agentlib.modules.communicator.communicator import Communicator, SubscriptionCommunicatorConfig
+from agentlib.modules.communicator.communicator import (
+    Communicator,
+    SubscriptionCommunicatorConfig,
+)
 from agentlib.core import Agent
 from agentlib.core.datamodels import AgentVariable
 from agentlib.core.errors import InitializationError
@@ -19,7 +22,7 @@ try:
         MQTTv5,
         MQTT_CLEAN_START_FIRST_ONLY,
         MQTT_LOG_ERR,
-        MQTT_LOG_WARNING
+        MQTT_LOG_WARNING,
     )
 except ImportError as err:
     raise OptionalDependencyError(
@@ -30,74 +33,58 @@ except ImportError as err:
 class BaseMQTTClientConfig(SubscriptionCommunicatorConfig):
     keepalive: int = Field(
         default=60,
-        description='Maximum period in seconds between '
-                    'communications with the broker. '
-                    'If no other messages are being '
-                    'exchanged, this controls the '
-                    'rate at which the client will '
-                    'send ping messages to the '
-                    'broker.'
+        description="Maximum period in seconds between "
+        "communications with the broker. "
+        "If no other messages are being "
+        "exchanged, this controls the "
+        "rate at which the client will "
+        "send ping messages to the "
+        "broker.",
     )
     clean_start: bool = Field(
         default=True,
         description="True, False or "
-                    "MQTT_CLEAN_START_FIRST_ONLY."
-                    "Sets the MQTT v5.0 clean_start "
-                    "flag always, never or on the "
-                    "first successful connect "
-                    "only, respectively.  "
-                    "MQTT session data (such as "
-                    "outstanding messages and "
-                    "subscriptions) is cleared "
-                    "on successful connect when "
-                    "the clean_start flag is set."
+        "MQTT_CLEAN_START_FIRST_ONLY."
+        "Sets the MQTT v5.0 clean_start "
+        "flag always, never or on the "
+        "first successful connect "
+        "only, respectively.  "
+        "MQTT session data (such as "
+        "outstanding messages and "
+        "subscriptions) is cleared "
+        "on successful connect when "
+        "the clean_start flag is set.",
     )
     subtopics: Union[List[str], str] = Field(
-        default=[],
-        description="Topics to that the agent subscribes"
+        default=[], description="Topics to that the agent subscribes"
     )
-    prefix: str = Field(
-        default="/agentlib",
-        description="Prefix for MQTT-Topic"
-    )
-    qos: int = Field(
-        default=0,
-        description='Quality of Service',
-        ge=0,
-        le=2
-    )
+    prefix: str = Field(default="/agentlib", description="Prefix for MQTT-Topic")
+    qos: int = Field(default=0, description="Quality of Service", ge=0, le=2)
     connection_timeout: float = Field(
         default=10,
         description="Number of seconds to wait for the initial connection "
-                    "until throwing an Error."
+        "until throwing an Error.",
     )
-    username: str = Field(
-        default=None,
-        title="Username to login"
-    )
-    password: str = Field(
-        default=None,
-        title="Password to login"
-    )
+    username: str = Field(default=None, title="Username to login")
+    password: str = Field(default=None, title="Password to login")
 
     # Add validator
-    check_subtopics = field_validator('subtopics')(convert_to_list)
+    check_subtopics = field_validator("subtopics")(convert_to_list)
 
 
 class MQTTClientConfig(BaseMQTTClientConfig):
     url: AnyUrl = Field(
-        title='Host',
-        description='Host is the hostname or IP address '
-                    'of the remote broker.'
+        title="Host",
+        description="Host is the hostname or IP address " "of the remote broker.",
     )
 
-    @field_validator('url')
+    @field_validator("url")
     @classmethod
     def check_url(cls, url):
-        if url.scheme in ['mqtts', 'mqtt']:
+        if url.scheme in ["mqtts", "mqtt"]:
             return url
         if url.scheme is None:
-            url.scheme = 'mqtt'
+            url.scheme = "mqtt"
             return url
         raise ValidationError
 
@@ -129,13 +116,11 @@ class BaseMqttClient(Communicator):
     def __init__(self, config: dict, agent: Agent):
         super().__init__(config=config, agent=agent)
         self._subcribed_topics = 0
-        self._mqttc = self.mqttc_type(client_id=str(uuid.uuid4()),
-                                      protocol=MQTTv5)
+        self._mqttc = self.mqttc_type(client_id=str(uuid.uuid4()), protocol=MQTTv5)
         if self.config.username is not None:
             self.logger.debug("Setting password and username")
             self._mqttc.username_pw_set(
-                username=self.config.username,
-                password=self.config.password
+                username=self.config.username, password=self.config.password
             )
             # Add TLS-Settings
             self._mqttc.tls_set()
@@ -149,12 +134,15 @@ class BaseMqttClient(Communicator):
 
         self.connect()
 
-        self.logger.info("Agent %s waits for mqtt connections to be ready ...",
-                          self.agent.id)
+        self.logger.info(
+            "Agent %s waits for mqtt connections to be ready ...", self.agent.id
+        )
         started_wait = time.time()
         while True:
-            if (self._mqttc.is_connected() and
-                    self._subcribed_topics == self.topics_size):
+            if (
+                self._mqttc.is_connected()
+                and self._subcribed_topics == self.topics_size
+            ):
                 break
             if time.time() - started_wait > self.config.connection_timeout:
                 raise InitializationError("Could not connect to MQTT broker.")
@@ -171,8 +159,7 @@ class BaseMqttClient(Communicator):
         super().terminate()
 
     # The callback for when the client receives a CONNACK response from the server.
-    def _connect_callback(self, client, userdata, flags, reasonCode,
-                          properties):
+    def _connect_callback(self, client, userdata, flags, reasonCode, properties):
         if reasonCode != 0:
             err_msg = f"Connection failed with error code: '{reasonCode}'"
             self.logger.error(err_msg)
@@ -181,13 +168,16 @@ class BaseMqttClient(Communicator):
 
     def disconnect(self, reasoncode=None, properties=None):
         """Trigger the disconnect"""
-        self._mqttc.disconnect(reasoncode=reasoncode,
-                               properties=properties)
+        self._mqttc.disconnect(reasoncode=reasoncode, properties=properties)
 
     def _disconnect_callback(self, client, userdata, reasonCode, properties):
         """Stop the loop as a result of the disconnect"""
-        self.logger.warning("Disconnected with result code: %s | userdata: %s | properties: %s",
-                          reasonCode, userdata, properties)
+        self.logger.warning(
+            "Disconnected with result code: %s | userdata: %s | properties: %s",
+            reasonCode,
+            userdata,
+            properties,
+        )
         self.logger.info("Active: %s", self._mqttc.is_connected())
 
     def _message_callback(self, client, userdata, msg):
@@ -196,19 +186,24 @@ class BaseMqttClient(Communicator):
         received from the server.
         """
         agent_inp = AgentVariable.from_json(msg.payload)
-        self.logger.debug("Received variable %s = %s from source %s",
-                          agent_inp.alias, agent_inp.value, agent_inp.source)
+        self.logger.debug(
+            "Received variable %s = %s from source %s",
+            agent_inp.alias,
+            agent_inp.value,
+            agent_inp.source,
+        )
         self.agent.data_broker.send_variable(agent_inp)
 
-    def _subscribe_callback(self, client, userdata, mid, reasonCodes,
-                            properties):
+    def _subscribe_callback(self, client, userdata, mid, reasonCodes, properties):
         """Log if the subscription was successful"""
         for reason_code in reasonCodes:
             if reason_code == self.config.qos:
                 self._subcribed_topics += 1
-                self.logger.info("Subscribed to topic %s/%s",
-                                 self._subcribed_topics,
-                                 self.topics_size)
+                self.logger.info(
+                    "Subscribed to topic %s/%s",
+                    self._subcribed_topics,
+                    self.topics_size,
+                )
             else:
                 msg = f"{self.agent.id}'s subscription failed: {reason_code}"
                 self.logger.error(msg)
@@ -236,10 +231,10 @@ class MqttClient(BaseMqttClient):
         configs prefix
         """
         if subscription:
-            topic = '/'.join([self.config.prefix, agent_id, "#"])
+            topic = "/".join([self.config.prefix, agent_id, "#"])
         else:
-            topic = '/'.join([self.config.prefix, agent_id])
-        topic.replace('//', '/')
+            topic = "/".join([self.config.prefix, agent_id])
+        topic.replace("//", "/")
         return topic
 
     def connect(self):
@@ -248,13 +243,15 @@ class MqttClient(BaseMqttClient):
             port = 1883
         else:
             port = int(port)
-        self._mqttc.connect(host=self.config.url.host,
-                            port=port,
-                            keepalive=self.config.keepalive,
-                            bind_address="",
-                            bind_port=0,
-                            clean_start=MQTT_CLEAN_START_FIRST_ONLY,
-                            properties=None)
+        self._mqttc.connect(
+            host=self.config.url.host,
+            port=port,
+            keepalive=self.config.keepalive,
+            bind_address="",
+            bind_port=0,
+            clean_start=MQTT_CLEAN_START_FIRST_ONLY,
+            properties=None,
+        )
 
     def _get_all_topics(self):
         """
@@ -267,17 +264,14 @@ class MqttClient(BaseMqttClient):
         topics.update(set(self.config.subtopics))
         return topics
 
-    def _connect_callback(self,
-                          client,
-                          userdata,
-                          flags,
-                          reasonCode,
-                          properties):
-        super()._connect_callback(client=client,
-                                  userdata=userdata,
-                                  flags=flags,
-                                  reasonCode=reasonCode,
-                                  properties=properties)
+    def _connect_callback(self, client, userdata, flags, reasonCode, properties):
+        super()._connect_callback(
+            client=client,
+            userdata=userdata,
+            flags=flags,
+            reasonCode=reasonCode,
+            properties=properties,
+        )
         # Subscribing in on_connect() means that if we lose the connection and
         # reconnect then subscriptions will be renewed.
         self._subcribed_topics = 0  # Reset counter as well
@@ -288,9 +282,11 @@ class MqttClient(BaseMqttClient):
 
     def _send(self, payload: dict):
         """Publish the given output"""
-        topic = '/'.join([self.pubtopic, payload["alias"]])
-        self._mqttc.publish(topic=topic,
-                            payload=self.to_json(payload),
-                            qos=self.config.qos,
-                            retain=False,
-                            properties=None)
+        topic = "/".join([self.pubtopic, payload["alias"]])
+        self._mqttc.publish(
+            topic=topic,
+            payload=self.to_json(payload),
+            qos=self.config.qos,
+            retain=False,
+            properties=None,
+        )
