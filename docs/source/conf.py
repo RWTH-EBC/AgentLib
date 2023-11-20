@@ -96,7 +96,7 @@ html_theme_options = {
     'color_accent': 'red',
 
     # Set the repo location to get a badge with stats
-    'repo_url': 'https://git-ce.rwth-aachen.de/ebc/projects/ebc_acs0017_bmwi_agent/agents_python/agentlib',
+    'repo_url': 'https://github.com/RWTH-EBC/AgentLib',
     'repo_name': 'Agent Library for Python',
 
     # Visible levels of the global TOC; -1 means unlimited

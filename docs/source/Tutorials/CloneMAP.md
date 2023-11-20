@@ -25,7 +25,7 @@ If you have implemented your own modules, you have to build a new image, which c
 Here is an example how a corresponding Dockerfile could look like:
 
 ```Docker
-FROM registry.git-ce.rwth-aachen.de/ebc/projects/ebc_acs0017_bmwi_agent/agents_python/agentlib:latest
+FROM registry.git.rwth-aachen.de/ebc/ebc_all/github_ci/agentlib:latest
 
 COPY my_module.py my_module.py
 CMD ["python", "-u", "agentlib/modules/communicator/clonemap.py"]
