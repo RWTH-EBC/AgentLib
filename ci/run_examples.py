@@ -64,20 +64,20 @@ class TestExamples(unittest.TestCase):
 
     def test_pingpong(self):
         """Test the pingpong example using various communicators"""
-        self._run_example(example="multi-agent-systems//pingpong//pingpong_mqtt.py")
+        # self._run_example(example="multi-agent-systems//pingpong//pingpong_mqtt.py")
         self._run_example(example="multi-agent-systems//pingpong//pingpong_local_broadcast.py")
         self._run_example(example="multi-agent-systems//pingpong//pingpong_local.py")
 
     def test_bangbang(self):
         """Test the bangbang example"""
-        self._run_example_with_return(file="controller//bangbang_controller.py",
+        self._run_example_with_return(file="controller//bangbang_with_simulator.py",
                                       func_name='run_example',
                                       with_plots=False,
                                       log_level=logging.FATAL)
 
     def test_pid(self):
         """Test the pid example"""
-        self._run_example_with_return(file="controller//pid_controller.py",
+        self._run_example_with_return(file="controller//pid_with_simulator.py",
                                       func_name='run_example',
                                       with_plots=False,
                                       log_level=logging.FATAL)

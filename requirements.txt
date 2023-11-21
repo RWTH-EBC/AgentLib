@@ -44,7 +44,7 @@ lxml==4.9.3
     # via fmpy
 markupsafe==2.1.3
     # via jinja2
-matplotlib==3.8.1
+matplotlib >= 3.7 # relax to 3.7 for python 38 ==3.8.1
     # via agentlib (setup.py)
 msgpack==1.0.7
     # via fmpy

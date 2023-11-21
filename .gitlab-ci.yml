@@ -19,7 +19,6 @@ run_example:
   rules:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
       when: never
-    - allow_failure: true
 
 variables:
   EXCLUDE_PYTHON: 37
