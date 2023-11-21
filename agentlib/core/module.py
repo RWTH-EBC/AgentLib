@@ -30,7 +30,7 @@ from agentlib.core.datamodels import (
     AttrsToPydanticAdaptor,
 )
 from agentlib.core import datamodels
-from agentlib.utils.fuzzy_matching import fuzzy_match
+from agentlib.utils.fuzzy_matching import fuzzy_match, RAPIDFUZZ_IS_INSTALLED
 from agentlib.utils.validators import (
     include_defaults_in_root,
     update_default_agent_variable,
@@ -308,6 +308,9 @@ class BaseModuleConfig(BaseModel):
     ) -> pydantic.ValidationError:
         """Checks the validation errors for invalid fields and adds suggestions for
         correct field names to the error message."""
+        if not RAPIDFUZZ_IS_INSTALLED:
+            return e
+
         error_list = e.errors()
         for error in error_list:
             if not error["type"] == "extra_forbidden":
