@@ -1,6 +1,6 @@
 stages:
  - test
- - docker_build
+ #- docker_build
  - doc
  - code_quality
  - build
@@ -32,7 +32,7 @@ variables:
   EXTRA_REQUIREMENTS_PIP: "[full]"
 
 include:
-  - local: '/ci/docker_build.gitlab-ci.yml'
+  #- local: '/ci/docker_build.gitlab-ci.yml'
   - project: 'EBC/EBC_all/gitlab_ci/templates'
     file: 'python/code-quality/pylint.gitlab-ci.yml'
   - project: 'EBC/EBC_all/gitlab_ci/templates'
