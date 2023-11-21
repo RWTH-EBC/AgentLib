@@ -28,6 +28,8 @@ variables:
   PYTHON_PACKAGE_NAME: "agentlib"
   TEST_ENGINE: unittest
   GIT_REPO: "RWTH-EBC/AgentLib"
+  INSTALL_REQUIREMENTS_TXT: "false"
+  EXTRA_REQUIREMENTS_PIP: "[full]"
 
 include:
   - local: '/ci/docker_build.gitlab-ci.yml'
