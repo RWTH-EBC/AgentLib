@@ -5,7 +5,6 @@ stages:
 
 variables:
     DEVELOPMENT_IMAGE: registry.git.rwth-aachen.de/ebc/ebc_all/github_ci/agentlib:latest
-    CLONEMAP_IMAGE: registry.git.rwth-aachen.de/ebc/ebc_all/github_ci/agentlib:clonemap
     DOCKER_DRIVER: overlay
 
 before_script:
@@ -18,7 +17,5 @@ build_agentlib:
     script:
         - docker build --pull -f ci/agentlib/Dockerfile -t $DEVELOPMENT_IMAGE .
         - docker push $DEVELOPMENT_IMAGE
-        - docker build --pull -f ci/clonemap/Dockerfile -t $CLONEMAP_IMAGE .
-        - docker push $CLONEMAP_IMAGE
     only:
        - main

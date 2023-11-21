@@ -6,8 +6,11 @@ RUN apt-get update -y && apt-get install git -y
 WORKDIR /agency
 # Insall the agentlib
 COPY requirements.txt requirements.txt
-RUN pip install -r requirements.txt
 COPY setup.py setup.py
 COPY agentlib agentlib
-RUN pip install -e .
+COPY README.md README.md
+RUN pip install --upgrade pip && \
+    pip install -e .[full]
 ENV PYTHONPATH=.
+
+CMD ["python", "-u", "agentlib/modules/communicator/clonemap.py"]
