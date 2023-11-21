@@ -180,15 +180,16 @@ class AttrsToPydanticAdaptor(abc.ABC):
             Returns the schema as the first argument and a list of references
             as the second.
             """
-            if isinstance(_type, type):
-                return _get_type_schema(_type)
             if _type == Any:
                 # Any can't be used by GUIs or OpenAPI anyway. At the
                 # same time, it is the only type in typing with no __origin__.
                 # TODO-ses: We could also return string as the type, as
                 #   I had to tweak streamlit-pydantic to render Any as
-                #   string.
+                #   string. Depends on streamlit-pydantic fork moves forward
                 return {}, []
+            if isinstance(_type, type):
+                return _get_type_schema(_type)
+
             # If it's not a type object, it currently is always a typing object,
             # which indicates the actual type using __origin__.
             # We could also use `get_origin` from typing.
