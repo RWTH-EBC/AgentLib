@@ -1,24 +1,18 @@
-image: docker:latest
-
 stages:
 - docker_build
 
 variables:
     DEVELOPMENT_IMAGE: registry.git.rwth-aachen.de/ebc/ebc_all/github_ci/agentlib:latest
-    CLONEMAP_IMAGE: registry.git.rwth-aachen.de/ebc/ebc_all/github_ci/agentlib:clonemap
     DOCKER_DRIVER: overlay
 
-before_script:
-  - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
 
 build_agentlib:
+    image: docker:latest
     stage: docker_build
-    services:
-      - docker:18.09.7-dind
+    before_script:
+      - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     script:
-        - docker build --pull -f ci/agentlib/Dockerfile -t $DEVELOPMENT_IMAGE .
+        - docker build --pull -f ci/Dockerfile -t $DEVELOPMENT_IMAGE .
         - docker push $DEVELOPMENT_IMAGE
-        - docker build --pull -f ci/clonemap/Dockerfile -t $CLONEMAP_IMAGE .
-        - docker push $CLONEMAP_IMAGE
     only:
        - main
