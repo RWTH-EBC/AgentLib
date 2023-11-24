@@ -9,6 +9,7 @@ import json
 import math
 import numbers
 from copy import copy, deepcopy
+from io import StringIO
 from itertools import chain
 from typing import Union, Any, List, Optional, TypeVar, Set, Container, get_args
 
@@ -617,10 +618,7 @@ def _convert_value_to_type(value: Any, type_string: Optional[str]):
     try:
         # Use the try block to pretty print any error occurring.
         if type_of_value == pd.Series:
-            srs = pd.Series(value, dtype=np.float64)
-            if isinstance(srs.index[0], str):
-                srs.index = srs.index.astype(float)
-            return srs
+            return convert_to_pd_series(value)
         return type_of_value(value)
     except Exception as err:
         raise ValueError(
@@ -628,6 +626,21 @@ def _convert_value_to_type(value: Any, type_string: Optional[str]):
             f"to the specified type '{type_string}'. Error-message: "
             f"\n{err}"
         )
+
+
+def convert_to_pd_series(value):
+    if isinstance(value, str):
+        srs = pd.read_json(StringIO(value), typ="series")
+    elif isinstance(value, dict):
+        srs = pd.Series(value, dtype=np.float64)
+    else:
+        raise ValueError(
+            f"Specified a variable as a pd.Series, but the given value {value} "
+            f"could not be converted. Please pass a json string or a dict."
+        )
+    if isinstance(srs.index[0], str):
+        srs.index = srs.index.astype(float)
+    return srs
 
 
 @define(slots=True, weakref_slot=False, kw_only=True)
