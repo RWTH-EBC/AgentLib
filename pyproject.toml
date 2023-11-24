@@ -1,0 +1,46 @@
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "agentlib"
+authors = [
+    { name = "Associates of the AGENT project", email = "AGENT.Projekt@eonerc.rwth-aachen.de" }
+]
+description = "Framework for development and execution of agents for control and simulation of energy systems."
+readme = "README.md"
+requires-python = ">=3.8"
+keywords = [
+    "agents", "modular",
+    "control", "distributed", "digital twin"
+]
+license = { text = "BSD-3-Clause" }
+classifiers = [
+    'Programming Language :: Python :: 3.8',
+    'Programming Language :: Python :: 3.9',
+    'Programming Language :: Python :: 3.10',
+    'Programming Language :: Python :: 3.11',
+]
+dependencies = [
+    'numpy>=1.17.4',
+    'pandas>=1.1.0',
+    'simpy>=4.0.1',
+    'pydantic>=2.0.0',
+    'attrs>=22.2.0',
+]
+dynamic = ["version"]
+
+[project.optional-dependencies]
+
+fmu = ['FMPy>=0.3.6']
+scipy = ['scipy>=1.5.2']
+plot = ['matplotlib']
+clonemap = ['clonemapy @ git+https://github.com/RWTH-ACS/clonemapy@develop#egg=clonemapy']
+orjson = ['orjson>=3.9.5']
+fuzz = ['rapidfuzz>=1.7.0']
+mqtt = ['paho-mqtt>=1.6.1']
+full = ['agentlib[fmu,scipy,plot,clonemap,orjson,fuzz,mqtt]']
+
+[package.urls]
+homepage = "https://github.com/RWTH-EBC/AgentLib"
+documentation = "https://github.com/RWTH-EBC/AgentLib"
