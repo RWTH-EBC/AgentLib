@@ -6,7 +6,7 @@ RUN apt-get update -y && apt-get install git -y
 WORKDIR /agency
 # Insall the agentlib
 COPY requirements.txt requirements.txt
-COPY setup.py setup.py
+COPY pyproject.toml pyproject.toml
 COPY agentlib agentlib
 COPY README.md README.md
 RUN pip install --upgrade pip && \
