@@ -1,6 +1,6 @@
 stages:
- - test
  - docker_build
+ - test
  - doc
  - code_quality
  - build
