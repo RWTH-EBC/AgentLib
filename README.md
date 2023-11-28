@@ -1,9 +1,5 @@
-<table><tr><td>
-<a href="https://www.ebc.eonerc.rwth-aachen.de/"> <img alt="EBC" src="docs/images/logos/EONRWTH_logo.png" height="120"> </a>
-</td></tr></table>
+<img src="./docs/images/logos/agentlib_logo/logo.svg" alt="drawing" height="150"/>
 
-
-## AgentLib
 
 [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
 [![Coverage](https://rwth-ebc.github.io/AgentLib/main/coverage/badge.svg)](https://rwth-ebc.github.io/AgentLib/main/coverage/)
@@ -35,18 +31,16 @@ If you want to work on the agentlib, first clone it, go its directory and then i
 pip install -e .[full]
 ```
 
-For more detailed information on installation, we refer to the installation guide in the tutorial section.
-
 ## Optional Dependencies
-The AgentLib has a bunch of optional dependencies, ranging from additional features to performance improvements:
+The AgentLib has a number of optional dependencies, ranging from additional features to performance improvements:
  
- - **fmu**: Support simulation of FMU models (https://fmi-standard.org/)
- - **scipy**: Support simulation of linear state space models, based on scipy
- - **mqtt**: Support communication between agents through the mqtt protocol
- - **clonemap**: Support the execution of agents and their communication through [clonemap](https://github.com/sogno-platform/clonemap)
- - **plot**: Installs matplotlib, allows to plot the result of examples
- - **orjson**: Faster json library, improves performance when using network communicators
- - **fuzz**: Improves error messages, when providing wrong configurations
+ - **fmu**: Support simulation of FMU models (https://fmi-standard.org/).
+ - **scipy**: Support simulation of linear state space models, based on scipy.
+ - **mqtt**: Support communication between agents through the mqtt protocol.
+ - **clonemap**: Support the execution of agents and their communication through [clonemap](https://github.com/sogno-platform/clonemap).
+ - **plot**: Installs matplotlib, allows to plot the result of examples.
+ - **orjson**: Faster json library, improves performance when using network communicators.
+ - **fuzz**: Improves error messages when providing wrong configurations.
 
 ## Referencing the AgentLib
 
@@ -55,10 +49,11 @@ If you use the AgentLib in your work which you plan to publish, please check bac
 
 ## Copyright and license
 
-This project is licensed under the BSD License - see the [LICENSE](LICENSE) file for details
+This project is licensed under the BSD 3 Clause License - see the [LICENSE](LICENSE) file for details.
 
 ## Acknowledgments
 
 We gratefully acknowledge the financial support by Federal Ministry \\ for Economic Affairs and Climate Action (BMWK), promotional reference 03ET1495A.
+
 
 <a href="www.bmwk.de"> <img alt="BMWE" src="docs/images/logos/BMWK_en_logo.png" height="120"> </a>
