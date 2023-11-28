@@ -82,15 +82,19 @@ class TestVariables(unittest.TestCase):
 
     def test_pd_series(self):
         """Test the special cases for pd.Series"""
-        var = datamodels.BaseVariable.validate_data(dict(name="test",
-                                   type="pd.Series",
-                                   value=[0, 100],
-                                   ub=10,
-                                   lb=5,
-                                   clip=True,
-                                   allowed_values=[20]))
-        self.assertEqual(var.allowed_values, [])
-        self.assertIsInstance(var.value, pd.Series)
+        srs = pd.Series([0, 100], index=[0, 10])
+        srs_json = srs.to_json()
+        srs_literal = srs.to_dict()
+        for value in [srs_json, srs_literal]:
+            var = datamodels.BaseVariable.validate_data(dict(name="test",
+                                       type="pd.Series",
+                                       value=value,
+                                       ub=10,
+                                       lb=5,
+                                       clip=True,
+                                       allowed_values=[20]))
+            self.assertEqual(var.allowed_values, [])
+            self.assertIsInstance(var.value, pd.Series)
 
     def test_bounds(self):
         """Test if ub and lb work"""
