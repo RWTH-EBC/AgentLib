@@ -11,7 +11,6 @@ This is a collection of base classes for the implementation of agents in Python.
 The original purpose of this library is the execution of distributed simulations and controllers for energy systems, however it is not limited to any specific field.
 To get started, please check out our examples.
 
-
 ### Installation
 
 To install the agentlib with minimal dependencies, run:
