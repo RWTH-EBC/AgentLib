@@ -45,6 +45,9 @@ full = ['agentlib[fmu,scipy,plot,clonemap,orjson,fuzz,mqtt]']
 homepage = "https://github.com/RWTH-EBC/AgentLib"
 documentation = "https://github.com/RWTH-EBC/AgentLib"
 
+[tool.setuptools]
+include-package-data = true
+
 [tool.setuptools.packages.find]
 include = ["agentlib", "agentlib.*"]
 namespaces = false
