@@ -36,10 +36,11 @@ The AgentLib has a number of optional dependencies, ranging from additional feat
  - **fmu**: Support simulation of FMU models (https://fmi-standard.org/).
  - **scipy**: Support simulation of linear state space models, based on scipy.
  - **mqtt**: Support communication between agents through the mqtt protocol.
- - **clonemap**: Support the execution of agents and their communication through [clonemap](https://github.com/sogno-platform/clonemap).
  - **plot**: Installs matplotlib, allows to plot the result of examples.
  - **orjson**: Faster json library, improves performance when using network communicators.
  - **fuzz**: Improves error messages when providing wrong configurations.
+
+**clonemap**: Support the execution of agents and their communication through [clonemap](https://github.com/sogno-platform/clonemap). As clonemapy is not available through PYPI, please install it from source, or through the AgentLib's ``requirements.txt`` .
 
 ## Referencing the AgentLib
 

@@ -35,11 +35,10 @@ dynamic = ["version"]
 fmu = ['FMPy>=0.3.6']
 scipy = ['scipy>=1.5.2']
 plot = ['matplotlib']
-clonemap = ['clonemapy @ git+https://github.com/RWTH-ACS/clonemapy@develop#egg=clonemapy']
 orjson = ['orjson>=3.9.5']
 fuzz = ['rapidfuzz>=1.7.0']
 mqtt = ['paho-mqtt>=1.6.1']
-full = ['agentlib[fmu,scipy,plot,clonemap,orjson,fuzz,mqtt]']
+full = ['agentlib[fmu,scipy,plot,orjson,fuzz,mqtt]']
 
 [package.urls]
 homepage = "https://github.com/RWTH-EBC/AgentLib"
