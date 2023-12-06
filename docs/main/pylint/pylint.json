@@ -1324,7 +1324,7 @@
             "type": "convention",
             "module": "tests.test_datamodels",
             "obj": "",
-            "line": 109,
+            "line": 113,
             "column": 0,
             "path": "tests/test_datamodels.py",
             "symbol": "line-too-long",
@@ -1335,7 +1335,7 @@
             "type": "convention",
             "module": "tests.test_datamodels",
             "obj": "",
-            "line": 111,
+            "line": 115,
             "column": 0,
             "path": "tests/test_datamodels.py",
             "symbol": "line-too-long",
@@ -1434,18 +1434,18 @@
             "type": "refactor",
             "module": "tests.test_datamodels",
             "obj": "TestVariables.test_pd_series",
-            "line": 85,
-            "column": 52,
+            "line": 89,
+            "column": 56,
             "path": "tests/test_datamodels.py",
             "symbol": "use-dict-literal",
-            "message": "Consider using '{\"name\": 'test', \"type\": 'pd.Series', \"value\": [0, 100], \"ub\": 10}' instead of a call to 'dict'.",
+            "message": "Consider using '{\"name\": 'test', \"type\": 'pd.Series', \"value\": value, \"ub\": 10, \"lb\": 5, ... }' instead of a call to 'dict'.",
             "message-id": "R1735"
         },
         {
             "type": "refactor",
             "module": "tests.test_datamodels",
             "obj": "TestVariables.test_bounds",
-            "line": 104,
+            "line": 108,
             "column": 50,
             "path": "tests/test_datamodels.py",
             "symbol": "use-dict-literal",
@@ -1456,7 +1456,7 @@
             "type": "refactor",
             "module": "tests.test_datamodels",
             "obj": "TestVariables.test_bounds",
-            "line": 109,
+            "line": 113,
             "column": 52,
             "path": "tests/test_datamodels.py",
             "symbol": "use-dict-literal",
@@ -1467,7 +1467,7 @@
             "type": "refactor",
             "module": "tests.test_datamodels",
             "obj": "TestVariables.test_bounds",
-            "line": 111,
+            "line": 115,
             "column": 52,
             "path": "tests/test_datamodels.py",
             "symbol": "use-dict-literal",
@@ -1478,7 +1478,7 @@
             "type": "convention",
             "module": "tests.test_datamodels",
             "obj": "TestVariables.test_source",
-            "line": 185,
+            "line": 189,
             "column": 4,
             "path": "tests/test_datamodels.py",
             "symbol": "missing-function-docstring",
@@ -1489,7 +1489,7 @@
             "type": "convention",
             "module": "tests.test_datamodels",
             "obj": "TestVariables.test_source",
-            "line": 188,
+            "line": 192,
             "column": 30,
             "path": "tests/test_datamodels.py",
             "symbol": "unnecessary-dunder-call",
@@ -2355,7 +2355,7 @@
                 "fatal": 0,
                 "info": 0,
                 "refactor": 10,
-                "statement": 122,
+                "statement": 126,
                 "warning": 2
             },
             "tests.test_environment": {
@@ -2465,20 +2465,20 @@
         },
         "dependencies": {
             "agentlib.core": [
-                "tests.test_n_pingpong",
-                "tests.test_simulator",
                 "tests.test_model",
                 "tests.test_environment",
+                "tests.test_module",
+                "tests.test_n_pingpong",
                 "tests.test_agent",
                 "agentlib",
-                "tests.test_module",
-                "tests.test_data_broker"
+                "tests.test_data_broker",
+                "tests.test_simulator"
             ],
             "agentlib.utils": [
+                "run_examples",
                 "tests.test_n_pingpong",
                 "agentlib",
-                "tests.test_utils",
-                "run_examples"
+                "tests.test_utils"
             ],
             "agentlib.models": [
                 "agentlib"
@@ -2487,37 +2487,37 @@
                 "agentlib"
             ],
             "agentlib.core.datamodels": [
-                "tests.test_n_pingpong",
-                "tests.test_simulator",
                 "tests.test_model",
+                "tests.test_module",
                 "tests.test_datamodels",
+                "tests.test_n_pingpong",
                 "agentlib",
-                "tests.test_module"
+                "tests.test_simulator"
             ],
             "agentlib.utils.multi_agent_system": [
                 "tests.test_n_pingpong",
                 "agentlib"
             ],
             "pandas": [
+                "run_examples",
                 "tests.test_simulator",
-                "tests.test_datamodels",
-                "run_examples"
+                "tests.test_datamodels"
             ],
             "agentlib.utils.local_broadcast_broker": [
                 "run_examples"
             ],
             "pydantic": [
-                "tests.test_n_pingpong",
-                "tests.test_simulator",
                 "tests.test_model",
                 "tests.test_environment",
+                "tests.test_module",
                 "tests.test_datamodels",
+                "tests.test_n_pingpong",
                 "tests.test_agent",
-                "tests.test_module"
+                "tests.test_simulator"
             ],
             "agentlib.core.agent": [
-                "tests.test_utils",
-                "tests.test_agent"
+                "tests.test_agent",
+                "tests.test_utils"
             ],
             "agentlib": [
                 "tests.test_communicator",
@@ -2527,14 +2527,14 @@
                 "tests.test_communicator"
             ],
             "numpy": [
-                "tests.test_n_pingpong",
                 "tests.test_model",
-                "tests.test_simulator",
-                "tests.test_data_broker"
+                "tests.test_n_pingpong",
+                "tests.test_data_broker",
+                "tests.test_simulator"
             ],
             "agentlib.core.errors": [
-                "tests.test_utils",
                 "tests.test_module",
+                "tests.test_utils",
                 "tests.test_datamodels"
             ],
             "agentlib.core.environment": [
@@ -2580,11 +2580,11 @@
         "fatal": 0,
         "info": 0,
         "refactor": 13,
-        "statement": 1061,
+        "statement": 1065,
         "warning": 48,
         "global_note": 0,
         "nb_duplicated_lines": 6,
-        "percent_duplicated_lines": 0.31364349189754315
+        "percent_duplicated_lines": 0.3129890453834116
     },
     "previous": {
         "bad_names": {
@@ -2663,7 +2663,7 @@
                 "fatal": 0,
                 "info": 0,
                 "refactor": 10,
-                "statement": 122,
+                "statement": 126,
                 "warning": 2
             },
             "tests.test_environment": {
@@ -2773,20 +2773,20 @@
         },
         "dependencies": {
             "agentlib.core": [
-                "tests.test_n_pingpong",
-                "tests.test_simulator",
                 "tests.test_model",
                 "tests.test_environment",
-                "tests.test_agent",
-                "agentlib",
                 "tests.test_module",
-                "tests.test_data_broker"
+                "tests.test_n_pingpong",
+                "tests.test_agent",
+                "tests.test_data_broker",
+                "agentlib",
+                "tests.test_simulator"
             ],
             "agentlib.utils": [
-                "tests.test_utils",
-                "agentlib",
                 "tests.test_n_pingpong",
-                "ci.run_examples"
+                "ci.run_examples",
+                "tests.test_utils",
+                "agentlib"
             ],
             "agentlib.models": [
                 "agentlib"
@@ -2795,54 +2795,54 @@
                 "agentlib"
             ],
             "agentlib.core.datamodels": [
-                "tests.test_n_pingpong",
-                "tests.test_simulator",
                 "tests.test_model",
+                "tests.test_module",
                 "tests.test_datamodels",
+                "tests.test_n_pingpong",
                 "agentlib",
-                "tests.test_module"
+                "tests.test_simulator"
             ],
             "agentlib.utils.multi_agent_system": [
                 "tests.test_n_pingpong",
                 "agentlib"
             ],
             "pandas": [
-                "tests.test_simulator",
                 "ci.run_examples",
+                "tests.test_simulator",
                 "tests.test_datamodels"
             ],
             "agentlib.utils.local_broadcast_broker": [
                 "ci.run_examples"
             ],
             "pydantic": [
-                "tests.test_n_pingpong",
-                "tests.test_simulator",
                 "tests.test_model",
                 "tests.test_environment",
+                "tests.test_module",
                 "tests.test_datamodels",
+                "tests.test_n_pingpong",
                 "tests.test_agent",
-                "tests.test_module"
+                "tests.test_simulator"
             ],
             "agentlib.core.agent": [
-                "tests.test_utils",
-                "tests.test_agent"
+                "tests.test_agent",
+                "tests.test_utils"
             ],
             "agentlib": [
-                "tests.test_utils",
-                "tests.test_communicator"
+                "tests.test_communicator",
+                "tests.test_utils"
             ],
             "agentlib.modules.communicator.local": [
                 "tests.test_communicator"
             ],
             "numpy": [
-                "tests.test_simulator",
-                "tests.test_n_pingpong",
                 "tests.test_model",
-                "tests.test_data_broker"
+                "tests.test_n_pingpong",
+                "tests.test_data_broker",
+                "tests.test_simulator"
             ],
             "agentlib.core.errors": [
-                "tests.test_utils",
                 "tests.test_module",
+                "tests.test_utils",
                 "tests.test_datamodels"
             ],
             "agentlib.core.environment": [
@@ -2888,10 +2888,10 @@
         "fatal": 0,
         "info": 0,
         "refactor": 13,
-        "statement": 1061,
+        "statement": 1065,
         "warning": 48,
-        "global_note": 8.689915174363808,
+        "global_note": 8.694835680751174,
         "nb_duplicated_lines": 6,
-        "percent_duplicated_lines": 0.31364349189754315
+        "percent_duplicated_lines": 0.3129890453834116
     }
 }

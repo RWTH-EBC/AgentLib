@@ -1,97 +1,53 @@
-
-
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
   <title>How does the AgentLib work internally? &mdash; agentlib 0.6.0 documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/autodoc_pydantic.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/autodoc_pydantic.css" />
 
   
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/doctools.js"></script>
         <script src="../_static/sphinx_highlight.js"></script>
-    
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-
-    
+    <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="List of standard modules and models" href="../ModulesList.html" />
     <link rel="prev" title="How to start a MAS on cloneMAP" href="CloneMAP.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
 
           
-            <a href="../index.html" class="icon icon-home"> agentlib
           
-
-          
+          <a href="../index.html" class="icon icon-home">
+            agentlib
           </a>
-
-          
-            
-            
               <div class="version">
                 0.6
               </div>
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="tutorial.html">Tutorial</a><ul class="current">
@@ -122,75 +78,33 @@
 <li class="toctree-l1"><a class="reference internal" href="../agentlib.html">agentlib package</a></li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">agentlib</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-        
-          <li><a href="tutorial.html">Tutorial</a> &raquo;</li>
-        
-      <li>How does the AgentLib work internally?</li>
-    
-    
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="tutorial.html">Tutorial</a></li>
+      <li class="breadcrumb-item active">How does the AgentLib work internally?</li>
       <li class="wy-breadcrumbs-aside">
-        
-          
             <a href="../_sources/Tutorials/GeneralIdea.md.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   <section id="how-does-the-agentlib-work-internally">
-<h1>How does the AgentLib work internally?<a class="headerlink" href="#how-does-the-agentlib-work-internally" title="Permalink to this heading">¶</a></h1>
+<h1>How does the AgentLib work internally?<a class="headerlink" href="#how-does-the-agentlib-work-internally" title="Permalink to this heading"></a></h1>
 <p>The basic idea behind this framework is the usage of digital agents to manage various tasks.
 The implementation is motivated by the distributed control of building energy systems.
 However, the implementation is carried out to enable a broad usage of the library, e.g. for digital twins, agent based modeling or other forms of cooperative system operation.</p>
@@ -218,11 +132,11 @@ Thus, the AgentLib is easily executable in a fully distributed way.</p>
 The following sections describe in brief what the role of each type is.</p>
 <p><strong>Note:</strong> For our use-case, we added the option to model time-variant systems using the <code class="docutils literal notranslate"><span class="pre">Model</span></code> class. However, to understand the AgentLib the understanding of models is not required.</p>
 <section id="modules">
-<h2>Modules<a class="headerlink" href="#modules" title="Permalink to this heading">¶</a></h2>
+<h2>Modules<a class="headerlink" href="#modules" title="Permalink to this heading"></a></h2>
 <p>As all intelligence of agents is outsourced to the modules of the agent, understanding how modules work is key to using the AgentLib.</p>
 <p>As stated in the beginning, classes in the AgentLib are separated by function and configuration, so is the <strong>module</strong>.</p>
 <section id="module-configuration-basemoduleconfig">
-<h3>Module configuration: <code class="docutils literal notranslate"><span class="pre">BaseModuleConfig</span></code><a class="headerlink" href="#module-configuration-basemoduleconfig" title="Permalink to this heading">¶</a></h3>
+<h3>Module configuration: <code class="docutils literal notranslate"><span class="pre">BaseModuleConfig</span></code><a class="headerlink" href="#module-configuration-basemoduleconfig" title="Permalink to this heading"></a></h3>
 <p>Each module has, besides a <code class="docutils literal notranslate"><span class="pre">module_id</span></code> and an <code class="docutils literal notranslate"><span class="pre">agent_id</span></code> to uniquely identify itself,
 other properties defined in its implementation. Some of these will be <code class="docutils literal notranslate"><span class="pre">AgentVariables</span></code>,
 or lists of <code class="docutils literal notranslate"><span class="pre">AgentVariables</span></code>, which define the variables that govern how the module
@@ -238,7 +152,7 @@ Without <code class="docutils literal notranslate"><span class="pre">pydantic</s
 This would make debugging and robustness of the agent much more difficult.</p>
 </section>
 <section id="module-function-basemodule">
-<h3>Module function: <code class="docutils literal notranslate"><span class="pre">BaseModule</span></code><a class="headerlink" href="#module-function-basemodule" title="Permalink to this heading">¶</a></h3>
+<h3>Module function: <code class="docutils literal notranslate"><span class="pre">BaseModule</span></code><a class="headerlink" href="#module-function-basemodule" title="Permalink to this heading"></a></h3>
 <p>The basic module has no function in itself. To implement your functionality, custom modules need to overwrite to methods:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">process</span></code>: Define any <strong>synchronous</strong> tasks of your module. More on the process in the <strong>Environment</strong> section.</p></li>
@@ -257,7 +171,7 @@ Therefore, you can use the <code class="docutils literal notranslate"><span clas
 But what are <code class="docutils literal notranslate"><span class="pre">variables</span></code>? More on that in the next section.</p>
 </section>
 <section id="variables">
-<h3>Variables<a class="headerlink" href="#variables" title="Permalink to this heading">¶</a></h3>
+<h3>Variables<a class="headerlink" href="#variables" title="Permalink to this heading"></a></h3>
 <p>All agents use <code class="docutils literal notranslate"><span class="pre">AgentVariables</span></code> to exchange information between modules or agents.
 An <code class="docutils literal notranslate"><span class="pre">AgentVariable</span></code> is specified by a number of attributes.
 The most important ones are:</p>
@@ -278,17 +192,17 @@ outside the agent.</p></li>
 </section>
 </section>
 <section id="databroker">
-<h2>DataBroker<a class="headerlink" href="#databroker" title="Permalink to this heading">¶</a></h2>
+<h2>DataBroker<a class="headerlink" href="#databroker" title="Permalink to this heading"></a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">DataBroker</span></code> itself has no configuration, hence only a functional class is present.</p>
 <section id="callbacks">
-<h3>Callbacks<a class="headerlink" href="#callbacks" title="Permalink to this heading">¶</a></h3>
+<h3>Callbacks<a class="headerlink" href="#callbacks" title="Permalink to this heading"></a></h3>
 <p>All callbacks in the data_broker are <code class="docutils literal notranslate"><span class="pre">BrokerCallback</span></code> objects.
 Callbacks can be triggered every time the data_broker receives a new variable.
 If the fields in <code class="docutils literal notranslate"><span class="pre">BrokerCallback</span></code> match those of the <code class="docutils literal notranslate"><span class="pre">AgentVariable</span></code>, the callback is triggerd / the function is called.
 The callback-function itself is to be defined by the user.
 Any additional arguments provided to the <code class="docutils literal notranslate"><span class="pre">BrokerCallback</span></code> will be passed to the called function in each trigger.</p>
 <section id="how-can-i-add-callbacks">
-<h4>How can I add callbacks?<a class="headerlink" href="#how-can-i-add-callbacks" title="Permalink to this heading">¶</a></h4>
+<h4>How can I add callbacks?<a class="headerlink" href="#how-can-i-add-callbacks" title="Permalink to this heading"></a></h4>
 <p>Inside a custom module, one can register a <code class="docutils literal notranslate"><span class="pre">BrokerCallback</span></code> using <code class="docutils literal notranslate"><span class="pre">self.agent.data_broker.register_callback()</span></code>.
 This function and a <code class="docutils literal notranslate"><span class="pre">BrokerCallback</span></code> contain the following fields:</p>
 <ul class="simple">
@@ -301,13 +215,13 @@ Each callback function has one argument, the variable that triggers the callback
 If one of the fields is not specified, it is not required to match.</p>
 </section>
 <section id="why-do-i-need-callbacks">
-<h4>Why do I need callbacks?<a class="headerlink" href="#why-do-i-need-callbacks" title="Permalink to this heading">¶</a></h4>
+<h4>Why do I need callbacks?<a class="headerlink" href="#why-do-i-need-callbacks" title="Permalink to this heading"></a></h4>
 <p>Callbacks are useful for whenever you want to execute a tasks when the data_broker receives a new variable.
 An example would be an MQTT-Communicator.
 Every time an <code class="docutils literal notranslate"><span class="pre">AgentVariable</span></code> is added to the data_broker, the modules callback <code class="docutils literal notranslate"><span class="pre">send_output</span></code> is triggered and publishes the <code class="docutils literal notranslate"><span class="pre">AgentOuput</span></code> to an MQTT-broker.</p>
 </section>
 <section id="further-examples">
-<h4>Further examples<a class="headerlink" href="#further-examples" title="Permalink to this heading">¶</a></h4>
+<h4>Further examples<a class="headerlink" href="#further-examples" title="Permalink to this heading"></a></h4>
 <p>To show how different callbacks may be realized, the following short example should clear things up.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">agentlib.core</span> <span class="kn">import</span> <span class="n">RTDataBroker</span><span class="p">,</span> <span class="n">AgentVariable</span><span class="p">,</span> <span class="n">Source</span>
 <span class="kn">import</span> <span class="nn">time</span>
@@ -371,7 +285,7 @@ Thus, you don’t have to worry about such things when writing your own module. 
 </section>
 </section>
 <section id="environment">
-<h2>Environment<a class="headerlink" href="#environment" title="Permalink to this heading">¶</a></h2>
+<h2>Environment<a class="headerlink" href="#environment" title="Permalink to this heading"></a></h2>
 <p>The environment is based on <code class="docutils literal notranslate"><span class="pre">simpy</span></code> and exists for two reasons:</p>
 <ol class="arabic simple">
 <li><p>Depending on realtime (e.g. the <code class="docutils literal notranslate"><span class="pre">time</span></code> module) is not applicable for simulations.
@@ -451,7 +365,7 @@ Besides, you should see relevant execution speed changes, with real-time being t
 <p>As we just use the <code class="docutils literal notranslate"><span class="pre">simpy</span></code> package, we refer to their documentation for detailed information.</p>
 </section>
 <section id="structure-of-the-repository">
-<h2>Structure of the repository<a class="headerlink" href="#structure-of-the-repository" title="Permalink to this heading">¶</a></h2>
+<h2>Structure of the repository<a class="headerlink" href="#structure-of-the-repository" title="Permalink to this heading"></a></h2>
 <p>As the AgentLib needs to run on various devices, including one with limited storage capacity, we build the repository in a modular way.</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">agentlib\core</span></code> All core-features necessary to build own modules</p></li>
@@ -464,50 +378,33 @@ Besides, you should see relevant execution speed changes, with real-time being t
 
 
            </div>
-           
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="../ModulesList.html" class="btn btn-neutral float-right" title="List of standard modules and models" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="CloneMAP.html" class="btn btn-neutral float-left" title="How to start a MAS on cloneMAP" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../ModulesList.html" class="btn btn-neutral float-right" title="List of standard modules and models" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2021, AGENT-Project Associates.
-
-    </p>
+    <p>&#169; Copyright 2021, AGENT-Project Associates.</p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>
