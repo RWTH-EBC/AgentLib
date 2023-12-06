@@ -2465,19 +2465,19 @@
         },
         "dependencies": {
             "agentlib.core": [
+                "tests.test_simulator",
                 "tests.test_module",
                 "tests.test_model",
                 "tests.test_agent",
-                "tests.test_environment",
+                "tests.test_n_pingpong",
                 "tests.test_data_broker",
                 "agentlib",
-                "tests.test_n_pingpong",
-                "tests.test_simulator"
+                "tests.test_environment"
             ],
             "agentlib.utils": [
-                "agentlib",
                 "tests.test_n_pingpong",
                 "ci.run_examples",
+                "agentlib",
                 "tests.test_utils"
             ],
             "agentlib.models": [
@@ -2487,37 +2487,37 @@
                 "agentlib"
             ],
             "agentlib.core.datamodels": [
-                "tests.test_module",
-                "tests.test_datamodels",
-                "tests.test_model",
                 "tests.test_simulator",
-                "agentlib",
-                "tests.test_n_pingpong"
+                "tests.test_datamodels",
+                "tests.test_module",
+                "tests.test_model",
+                "tests.test_n_pingpong",
+                "agentlib"
             ],
             "agentlib.utils.multi_agent_system": [
-                "agentlib",
-                "tests.test_n_pingpong"
+                "tests.test_n_pingpong",
+                "agentlib"
             ],
             "pandas": [
-                "ci.run_examples",
+                "tests.test_simulator",
                 "tests.test_datamodels",
-                "tests.test_simulator"
+                "ci.run_examples"
             ],
             "agentlib.utils.local_broadcast_broker": [
                 "ci.run_examples"
             ],
             "pydantic": [
-                "tests.test_module",
+                "tests.test_simulator",
                 "tests.test_datamodels",
+                "tests.test_module",
                 "tests.test_model",
                 "tests.test_agent",
-                "tests.test_environment",
-                "tests.test_simulator",
-                "tests.test_n_pingpong"
+                "tests.test_n_pingpong",
+                "tests.test_environment"
             ],
             "agentlib.core.agent": [
-                "tests.test_agent",
-                "tests.test_utils"
+                "tests.test_utils",
+                "tests.test_agent"
             ],
             "agentlib": [
                 "tests.test_communicator",
@@ -2528,9 +2528,9 @@
             ],
             "numpy": [
                 "tests.test_n_pingpong",
-                "tests.test_simulator",
+                "tests.test_data_broker",
                 "tests.test_model",
-                "tests.test_data_broker"
+                "tests.test_simulator"
             ],
             "agentlib.core.errors": [
                 "tests.test_datamodels",
@@ -2612,7 +2612,7 @@
                 "statement": 9,
                 "warning": 0
             },
-            "ci.run_examples": {
+            "run_examples": {
                 "convention": 1,
                 "error": 0,
                 "fatal": 0,
@@ -2773,18 +2773,18 @@
         },
         "dependencies": {
             "agentlib.core": [
+                "tests.test_simulator",
                 "tests.test_module",
                 "tests.test_model",
                 "tests.test_agent",
-                "tests.test_environment",
+                "tests.test_n_pingpong",
                 "tests.test_data_broker",
-                "tests.test_simulator",
                 "agentlib",
-                "tests.test_n_pingpong"
+                "tests.test_environment"
             ],
             "agentlib.utils": [
-                "ci.run_examples",
                 "tests.test_n_pingpong",
+                "run_examples",
                 "agentlib",
                 "tests.test_utils"
             ],
@@ -2795,33 +2795,33 @@
                 "agentlib"
             ],
             "agentlib.core.datamodels": [
-                "tests.test_module",
-                "tests.test_datamodels",
-                "tests.test_model",
                 "tests.test_simulator",
-                "agentlib",
-                "tests.test_n_pingpong"
+                "tests.test_datamodels",
+                "tests.test_module",
+                "tests.test_model",
+                "tests.test_n_pingpong",
+                "agentlib"
             ],
             "agentlib.utils.multi_agent_system": [
-                "agentlib",
-                "tests.test_n_pingpong"
+                "tests.test_n_pingpong",
+                "agentlib"
             ],
             "pandas": [
-                "ci.run_examples",
                 "tests.test_datamodels",
-                "tests.test_simulator"
+                "tests.test_simulator",
+                "run_examples"
             ],
             "agentlib.utils.local_broadcast_broker": [
-                "ci.run_examples"
+                "run_examples"
             ],
             "pydantic": [
-                "tests.test_module",
+                "tests.test_simulator",
                 "tests.test_datamodels",
+                "tests.test_module",
                 "tests.test_model",
                 "tests.test_agent",
-                "tests.test_environment",
-                "tests.test_simulator",
-                "tests.test_n_pingpong"
+                "tests.test_n_pingpong",
+                "tests.test_environment"
             ],
             "agentlib.core.agent": [
                 "tests.test_agent",
@@ -2835,10 +2835,10 @@
                 "tests.test_communicator"
             ],
             "numpy": [
-                "tests.test_n_pingpong",
                 "tests.test_simulator",
+                "tests.test_data_broker",
                 "tests.test_model",
-                "tests.test_data_broker"
+                "tests.test_n_pingpong"
             ],
             "agentlib.core.errors": [
                 "tests.test_datamodels",

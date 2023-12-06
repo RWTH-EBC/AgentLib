@@ -17,14 +17,6 @@ agentlib.utils.broker module
    :undoc-members:
    :show-inheritance:
 
-agentlib.utils.communication\_check module
-------------------------------------------
-
-.. automodule:: agentlib.utils.communication_check
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 agentlib.utils.fuzzy\_matching module
 -------------------------------------
 
