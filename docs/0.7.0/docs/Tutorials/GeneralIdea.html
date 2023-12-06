@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How does the AgentLib work internally? &mdash; agentlib 0.7.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/autodoc_pydantic.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="List of standard modules and models" href="../ModulesList.html" />
+    <link rel="prev" title="How to start a MAS on cloneMAP" href="CloneMAP.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            agentlib
+          </a>
+              <div class="version">
+                0.7
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="tutorial.html">Tutorial</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="PingPong.html">PingPong</a></li>
+<li class="toctree-l2"><a class="reference internal" href="PIDRoomControl.html">A typical example: Controlling room temperature with a PID controller</a></li>
+<li class="toctree-l2"><a class="reference internal" href="CloneMAP.html">How to start a MAS on cloneMAP</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">How does the AgentLib work internally?</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#modules">Modules</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#module-configuration-basemoduleconfig">Module configuration: <code class="docutils literal notranslate"><span class="pre">BaseModuleConfig</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-function-basemodule">Module function: <code class="docutils literal notranslate"><span class="pre">BaseModule</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#variables">Variables</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#databroker">DataBroker</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#callbacks">Callbacks</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#environment">Environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#structure-of-the-repository">Structure of the repository</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../ModulesList.html">List of standard modules and models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../AgentVariable.html">AgentVariables and ModelVariables</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../agentlib.html">agentlib package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">agentlib</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="tutorial.html">Tutorial</a></li>
+      <li class="breadcrumb-item active">How does the AgentLib work internally?</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/Tutorials/GeneralIdea.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="how-does-the-agentlib-work-internally">
+<h1>How does the AgentLib work internally?<a class="headerlink" href="#how-does-the-agentlib-work-internally" title="Permalink to this heading"></a></h1>
+<p>The basic idea behind this framework is the usage of digital agents to manage various tasks.
+The implementation is motivated by the distributed control of building energy systems.
+However, the implementation is carried out to enable a broad usage of the library, e.g. for digital twins, agent based modeling or other forms of cooperative system operation.</p>
+<p>In order to understand how the AgentLib functions, you need to understand the setup of an agent:</p>
+<ol class="arabic simple">
+<li><p>Each agent has multiple <strong>Modules</strong>. In turn, each module exists to fulfill a task: Communication, optimization, predictive maintenance, simulation, etc. This way, an agent may accomplish one or multiple tasks / services.</p></li>
+<li><p>Each agent has exactly one <strong>DataBroker</strong>. This DataBroker manages the communication between Modules of an agent. Is informed of the change of state in other modules and synchronized. Additionally, if one module sets a variable, callbacks in other modules may be triggered, allowing for asynchronous execution of tasks and reactive behaviour.</p></li>
+<li><p>Each agent is located in exactly one <strong>Environment</strong> which specifies the time and handles all processes. Setting the configuration of this environment allows the agent to execute its tasks in realtime, scaled realtime, or as fast as possible in a simulation setting.</p></li>
+</ol>
+<p>Lastly, the whole AgentLib is configurable by json. This means <strong>all</strong> <em>functional classes</em> (e.g. <code class="docutils literal notranslate"><span class="pre">Environment</span></code>, <code class="docutils literal notranslate"><span class="pre">Agent</span></code>) contain a respective <em>configuration class</em>. All configuration is accomplished using <code class="docutils literal notranslate"><span class="pre">pydantic</span></code>’s <code class="docutils literal notranslate"><span class="pre">BaseModel</span></code>.
+This has two implications for users of the AgentLib:</p>
+<ol class="arabic simple">
+<li><p>If you are a user, you just have to learn how to configure existing code using json.</p></li>
+<li><p>If you want to develop new modules/services, you have to understand the code behind the AgentLib.
+At the current stage of development, nearly all new users will have to develop some kind of new module. This is due to the fact that application and modeling in general depends on the goal of your task. However, you may use pre-defined modules such as communicators or predictive controllers. Ready-to-use modules will be contiunally released as plugins for the AgentLib.</p></li>
+</ol>
+<p>All mentioned features are summarized by this general agent Figure:</p>
+<p><img alt="agent" src="../_images/figures-ModularAgent2_small.png" />
+Figure 1: The core idea of an agent in the AgentLib</p>
+<p><strong>Note:</strong> Why did we include the docker symbol?
+Because the AgentLib is fully compatible with <a class="reference external" href="https://www.fein-aachen.org/projects/clonemap/">cloneMAP</a>.
+This way, you can execute any number of agents in different docker containers and machines.
+Thus, the AgentLib is easily executable in a fully distributed way.</p>
+<p>There are three key components to any agent: <strong>Modules</strong>, <strong>DataBroker</strong> and the <strong>Environment</strong>.
+The following sections describe in brief what the role of each type is.</p>
+<p><strong>Note:</strong> For our use-case, we added the option to model time-variant systems using the <code class="docutils literal notranslate"><span class="pre">Model</span></code> class. However, to understand the AgentLib the understanding of models is not required.</p>
+<section id="modules">
+<h2>Modules<a class="headerlink" href="#modules" title="Permalink to this heading"></a></h2>
+<p>As all intelligence of agents is outsourced to the modules of the agent, understanding how modules work is key to using the AgentLib.</p>
+<p>As stated in the beginning, classes in the AgentLib are separated by function and configuration, so is the <strong>module</strong>.</p>
+<section id="module-configuration-basemoduleconfig">
+<h3>Module configuration: <code class="docutils literal notranslate"><span class="pre">BaseModuleConfig</span></code><a class="headerlink" href="#module-configuration-basemoduleconfig" title="Permalink to this heading"></a></h3>
+<p>Each module has, besides a <code class="docutils literal notranslate"><span class="pre">module_id</span></code> and an <code class="docutils literal notranslate"><span class="pre">agent_id</span></code> to uniquely identify itself,
+other properties defined in its implementation. Some of these will be <code class="docutils literal notranslate"><span class="pre">AgentVariables</span></code>,
+or lists of <code class="docutils literal notranslate"><span class="pre">AgentVariables</span></code>, which define the variables that govern how the module
+interacts within the multi-agent-system. Commonly, these variables will be either
+inputs from other agents or modules, and outputs which should be communicated to
+other agents or modules.
+All variables specified will be merged into the <code class="docutils literal notranslate"><span class="pre">variables</span></code> field of the Configuration.</p>
+<p>Besides these lists, a module configuration can contain any information you need for the function of the module to work.
+To add custom information, just extend the <code class="docutils literal notranslate"><span class="pre">BaseModuleConfig</span></code> and add any Field you need.
+By extending the class you guarantee that the configuration is correctly parsed at initialization.
+If a user gives wrong inputs, <code class="docutils literal notranslate"><span class="pre">pydantic</span></code> will raise a <code class="docutils literal notranslate"><span class="pre">ValidationError</span></code>.
+Without <code class="docutils literal notranslate"><span class="pre">pydantic</span></code>, you would only see the wrong configuration at run-time, possible hours after starting the agent.
+This would make debugging and robustness of the agent much more difficult.</p>
+</section>
+<section id="module-function-basemodule">
+<h3>Module function: <code class="docutils literal notranslate"><span class="pre">BaseModule</span></code><a class="headerlink" href="#module-function-basemodule" title="Permalink to this heading"></a></h3>
+<p>The basic module has no function in itself. To implement your functionality, custom modules need to overwrite to methods:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">process</span></code>: Define any <strong>synchronous</strong> tasks of your module. More on the process in the <strong>Environment</strong> section.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">register_callbacks</span></code>: Define any <strong>asynchronous</strong> task of your module. This function is triggered at initialization of the module and registers any callback you want. More on callbacks in the <strong>DataBroker</strong> section.</p></li>
+</ul>
+<p>To know when to use which method, ask yourself the question:
+<strong>When do I want to excecute a specific taks?</strong></p>
+<ul class="simple">
+<li><p>If the answer is: <strong>Every X seconds</strong>, use the <code class="docutils literal notranslate"><span class="pre">process</span></code>.</p></li>
+<li><p>If the answer is: <strong>Every time a specific variable changes</strong>, use the <code class="docutils literal notranslate"><span class="pre">register_callback</span></code>.</p></li>
+</ul>
+<p>The <code class="docutils literal notranslate"><span class="pre">BaseModule</span></code> already implements some functions everyone uses.
+For example, each variable specified in the config will register a callback in the <code class="docutils literal notranslate"><span class="pre">DataBroker</span></code> of the agent.
+Thus, each time a matching variable is sent to the <code class="docutils literal notranslate"><span class="pre">DataBroker</span></code>, it’s value is directly updated in the Module.
+Therefore, you can use the <code class="docutils literal notranslate"><span class="pre">set</span></code> and <code class="docutils literal notranslate"><span class="pre">get</span></code> functions of the <code class="docutils literal notranslate"><span class="pre">Module</span></code> to access any variable you specified in the config via the <code class="docutils literal notranslate"><span class="pre">name</span></code> of the variable.
+But what are <code class="docutils literal notranslate"><span class="pre">variables</span></code>? More on that in the next section.</p>
+</section>
+<section id="variables">
+<h3>Variables<a class="headerlink" href="#variables" title="Permalink to this heading"></a></h3>
+<p>All agents use <code class="docutils literal notranslate"><span class="pre">AgentVariables</span></code> to exchange information between modules or agents.
+An <code class="docutils literal notranslate"><span class="pre">AgentVariable</span></code> is specified by a number of attributes.
+The most important ones are:</p>
+<ul class="simple">
+<li><p>name: Name of the variable. The only required field. Only for agent-internal tasks.</p></li>
+<li><p>value: The current value of the variable.</p></li>
+<li><p>alias: The publicly known name of the variable.
+If the name inside an agent is cryptic, e.g. <code class="docutils literal notranslate"><span class="pre">House.Room.Temp_outdoorAir</span></code>, the alias helps to define a common naming space for inter-agent communication, e.g. <code class="docutils literal notranslate"><span class="pre">T_oda</span></code>.</p></li>
+<li><p>source: The source of the variable.
+It is an instance of <code class="docutils literal notranslate"><span class="pre">Source</span></code> and contains either only the <code class="docutils literal notranslate"><span class="pre">agent_id</span></code> or a <code class="docutils literal notranslate"><span class="pre">module_id</span></code>.
+Relevant for the case if multiple agents using the same alias.
+This way you can specify: I want the variable with alias <code class="docutils literal notranslate"><span class="pre">T_oda</span></code> of agent <code class="docutils literal notranslate"><span class="pre">RoomAgent</span></code>.</p></li>
+<li><p>shared: A boolean value, specifying if the variable should be communicated
+outside the agent.</p></li>
+</ul>
+<p>Aside from that, there are fields of minor importance such as <code class="docutils literal notranslate"><span class="pre">description</span></code>, <code class="docutils literal notranslate"><span class="pre">unit</span></code>, <code class="docutils literal notranslate"><span class="pre">type</span></code>, <code class="docutils literal notranslate"><span class="pre">ub</span></code>, etc.</p>
+<p>Variables are stored in each module. To send variables to other modules and agents, use the <code class="docutils literal notranslate"><span class="pre">send_variable</span></code> function in the <code class="docutils literal notranslate"><span class="pre">DataBroker</span></code>.</p>
+</section>
+</section>
+<section id="databroker">
+<h2>DataBroker<a class="headerlink" href="#databroker" title="Permalink to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">DataBroker</span></code> itself has no configuration, hence only a functional class is present.</p>
+<section id="callbacks">
+<h3>Callbacks<a class="headerlink" href="#callbacks" title="Permalink to this heading"></a></h3>
+<p>All callbacks in the data_broker are <code class="docutils literal notranslate"><span class="pre">BrokerCallback</span></code> objects.
+Callbacks can be triggered every time the data_broker receives a new variable.
+If the fields in <code class="docutils literal notranslate"><span class="pre">BrokerCallback</span></code> match those of the <code class="docutils literal notranslate"><span class="pre">AgentVariable</span></code>, the callback is triggerd / the function is called.
+The callback-function itself is to be defined by the user.
+Any additional arguments provided to the <code class="docutils literal notranslate"><span class="pre">BrokerCallback</span></code> will be passed to the called function in each trigger.</p>
+<section id="how-can-i-add-callbacks">
+<h4>How can I add callbacks?<a class="headerlink" href="#how-can-i-add-callbacks" title="Permalink to this heading"></a></h4>
+<p>Inside a custom module, one can register a <code class="docutils literal notranslate"><span class="pre">BrokerCallback</span></code> using <code class="docutils literal notranslate"><span class="pre">self.agent.data_broker.register_callback()</span></code>.
+This function and a <code class="docutils literal notranslate"><span class="pre">BrokerCallback</span></code> contain the following fields:</p>
+<ul class="simple">
+<li><p>alias: The alias of the <code class="docutils literal notranslate"><span class="pre">AgentVariable</span></code>, i.e. the publicly known name</p></li>
+<li><p>source: The <code class="docutils literal notranslate"><span class="pre">Source</span></code> object of the <code class="docutils literal notranslate"><span class="pre">AgentVariable</span></code>. The source contains an <code class="docutils literal notranslate"><span class="pre">agent_id</span></code> and possibly a <code class="docutils literal notranslate"><span class="pre">module_id</span></code>.</p></li>
+<li><p>callback: The callback-function to trigger.
+Each callback function has one argument, the variable that triggers the callback.</p></li>
+</ul>
+<p>If and only if <code class="docutils literal notranslate"><span class="pre">alias</span></code>, <code class="docutils literal notranslate"><span class="pre">source</span></code> and <code class="docutils literal notranslate"><span class="pre">causality</span></code> are matching, the callback is triggered.
+If one of the fields is not specified, it is not required to match.</p>
+</section>
+<section id="why-do-i-need-callbacks">
+<h4>Why do I need callbacks?<a class="headerlink" href="#why-do-i-need-callbacks" title="Permalink to this heading"></a></h4>
+<p>Callbacks are useful for whenever you want to execute a tasks when the data_broker receives a new variable.
+An example would be an MQTT-Communicator.
+Every time an <code class="docutils literal notranslate"><span class="pre">AgentVariable</span></code> is added to the data_broker, the modules callback <code class="docutils literal notranslate"><span class="pre">send_output</span></code> is triggered and publishes the <code class="docutils literal notranslate"><span class="pre">AgentOuput</span></code> to an MQTT-broker.</p>
+</section>
+<section id="further-examples">
+<h4>Further examples<a class="headerlink" href="#further-examples" title="Permalink to this heading"></a></h4>
+<p>To show how different callbacks may be realized, the following short example should clear things up.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">agentlib.core</span> <span class="kn">import</span> <span class="n">RTDataBroker</span><span class="p">,</span> <span class="n">AgentVariable</span><span class="p">,</span> <span class="n">Source</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="n">data_broker</span> <span class="o">=</span> <span class="n">RTDataBroker</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">print_all_callback</span><span class="p">(</span><span class="n">variable</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Each variable&quot;</span><span class="p">,</span> <span class="n">variable</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">variable</span><span class="o">.</span><span class="n">source</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">print_only_T_oda</span><span class="p">(</span><span class="n">variable</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;T_oda&quot;</span><span class="p">,</span> <span class="n">variable</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">variable</span><span class="o">.</span><span class="n">source</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">print_only_T_oda_of_room_agent</span><span class="p">(</span><span class="n">variable</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;T_oda of agent RoomAgent&quot;</span><span class="p">,</span> <span class="n">variable</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">variable</span><span class="o">.</span><span class="n">source</span><span class="p">)</span>
+
+
+
+<span class="n">data_broker</span><span class="o">.</span><span class="n">register_callback</span><span class="p">(</span><span class="n">callback</span><span class="o">=</span><span class="n">print_all_callback</span><span class="p">)</span>
+<span class="n">data_broker</span><span class="o">.</span><span class="n">register_callback</span><span class="p">(</span><span class="n">alias</span><span class="o">=</span><span class="s2">&quot;T_oda&quot;</span><span class="p">,</span>
+                        <span class="n">callback</span><span class="o">=</span><span class="n">print_only_T_oda</span><span class="p">)</span>
+<span class="n">data_broker</span><span class="o">.</span><span class="n">register_callback</span><span class="p">(</span><span class="n">alias</span><span class="o">=</span><span class="s2">&quot;T_oda&quot;</span><span class="p">,</span>
+                        <span class="n">source</span><span class="o">=</span><span class="n">Source</span><span class="p">(</span><span class="n">agent_id</span><span class="o">=</span><span class="s2">&quot;RoomAgent&quot;</span><span class="p">),</span>
+                        <span class="n">callback</span><span class="o">=</span><span class="n">print_only_T_oda_of_room_agent</span><span class="p">)</span>
+
+<span class="n">data_broker</span><span class="o">.</span><span class="n">send_variable</span><span class="p">(</span><span class="n">AgentVariable</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;T_oda&quot;</span><span class="p">))</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;################Setting new variable##################&quot;</span><span class="p">)</span>
+<span class="n">data_broker</span><span class="o">.</span><span class="n">send_variable</span><span class="p">(</span><span class="n">AgentVariable</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;T_oda_2&quot;</span><span class="p">))</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;################Setting new variable##################&quot;</span><span class="p">)</span>
+<span class="n">data_broker</span><span class="o">.</span><span class="n">send_variable</span><span class="p">(</span><span class="n">AgentVariable</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;T_oda&quot;</span><span class="p">))</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;################Setting new variable##################&quot;</span><span class="p">)</span>
+<span class="n">data_broker</span><span class="o">.</span><span class="n">send_variable</span><span class="p">(</span><span class="n">AgentVariable</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;T_oda_2&quot;</span><span class="p">,</span> <span class="n">alias</span><span class="o">=</span><span class="s2">&quot;T_oda&quot;</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="s2">&quot;RoomAgent&quot;</span><span class="p">))</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Expected output:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Each</span> <span class="n">variable</span> <span class="n">T_oda</span> <span class="n">None_None</span>
+<span class="n">T_oda</span> <span class="n">T_oda</span> <span class="n">None_None</span>
+<span class="c1">################Setting new variable##################</span>
+<span class="n">Each</span> <span class="n">variable</span> <span class="n">T_oda_2</span> <span class="n">None_None</span>
+<span class="c1">################Setting new variable##################</span>
+<span class="n">Each</span> <span class="n">variable</span> <span class="n">T_oda</span> <span class="n">None_None</span>
+<span class="n">T_oda</span> <span class="n">T_oda</span> <span class="n">None_None</span>
+<span class="c1">################Setting new variable##################</span>
+<span class="n">Each</span> <span class="n">variable</span> <span class="n">T_oda_2</span> <span class="n">RoomAgent_None</span>
+<span class="n">T_oda</span> <span class="n">T_oda_2</span> <span class="n">RoomAgent_None</span>
+<span class="n">T_oda</span> <span class="n">of</span> <span class="n">agent</span> <span class="n">RoomAgent</span> <span class="n">T_oda_2</span> <span class="n">RoomAgent_None</span>
+</pre></div>
+</div>
+<p>Why did we use the <code class="docutils literal notranslate"><span class="pre">time.sleep</span></code> call?
+Well, because our callbacks are threaded in this example.
+To ensure a deterministic output, we have to give the thread some time to run all callbacks.
+But don’t worry! Internally, we use the <code class="docutils literal notranslate"><span class="pre">RTDataBroker</span></code> for real time simulations, and the <code class="docutils literal notranslate"><span class="pre">LocalDataBroker</span></code> for local simulation (as fast as possible).
+Thus, you don’t have to worry about such things when writing your own module. Only if you start using <code class="docutils literal notranslate"><span class="pre">Threads</span></code>, be sure to check how we solved this issue for the <code class="docutils literal notranslate"><span class="pre">DataBroker</span></code>.</p>
+</section>
+</section>
+</section>
+<section id="environment">
+<h2>Environment<a class="headerlink" href="#environment" title="Permalink to this heading"></a></h2>
+<p>The environment is based on <code class="docutils literal notranslate"><span class="pre">simpy</span></code> and exists for two reasons:</p>
+<ol class="arabic simple">
+<li><p>Depending on realtime (e.g. the <code class="docutils literal notranslate"><span class="pre">time</span></code> module) is not applicable for simulations.
+<code class="docutils literal notranslate"><span class="pre">simpy</span></code> offers to simulate in real-time or as-fast-as-possible.
+For real-time, the time of the environment is added to the unix time (<code class="docutils literal notranslate"><span class="pre">time.time()</span></code>) at simulation start.
+Without real-time, the simulation time is just a float.</p></li>
+<li><p>Different modules in the agent need to be orchestrated.
+The <code class="docutils literal notranslate"><span class="pre">process</span></code> method, first described in the <strong>Modules</strong> section, enables this orchestration.</p></li>
+</ol>
+<p>This following example demonstrates the usage of the <code class="docutils literal notranslate"><span class="pre">Environment</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import the Environment</span>
+<span class="kn">from</span> <span class="nn">agentlib.core</span> <span class="kn">import</span> <span class="n">Environment</span>
+
+
+<span class="k">def</span> <span class="nf">my_first_process</span><span class="p">(</span><span class="n">env</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Define a dummy process. It uses env.timeout to tell simpy how long a step takes.&quot;&quot;&quot;</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Doing first task at time:&quot;</span><span class="p">,</span> <span class="n">env</span><span class="o">.</span><span class="n">time</span><span class="p">)</span>
+        <span class="k">yield</span> <span class="n">env</span><span class="o">.</span><span class="n">timeout</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">my_second_process</span><span class="p">(</span><span class="n">env</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Define a second dummy process.&quot;&quot;&quot;</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Doing second task at time:&quot;</span><span class="p">,</span> <span class="n">env</span><span class="o">.</span><span class="n">time</span><span class="p">)</span>
+        <span class="k">yield</span> <span class="n">env</span><span class="o">.</span><span class="n">timeout</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">simulate</span><span class="p">(</span><span class="n">config</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Just a small function to prevent duplicate code&quot;&quot;&quot;</span>
+    <span class="n">env</span> <span class="o">=</span> <span class="n">Environment</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">)</span>
+    <span class="c1"># You can add as many custom processes as you wish</span>
+    <span class="n">env</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">my_first_process</span><span class="p">(</span><span class="n">env</span><span class="p">))</span>
+    <span class="n">env</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">my_second_process</span><span class="p">(</span><span class="n">env</span><span class="p">))</span>
+    <span class="c1"># Agent normally run forever (unit=None).</span>
+    <span class="c1"># If you want to simulate for shorter period</span>
+    <span class="c1"># (here 4 seconds), specify it using `until`</span>
+    <span class="n">env</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">until</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+
+
+<span class="c1"># Run the simulation</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;################As fast as possible################&quot;</span><span class="p">)</span>
+<span class="n">simulate</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;rt&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">})</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;################10 times faster than real time################&quot;</span><span class="p">)</span>
+<span class="n">simulate</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;rt&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">&quot;factor&quot;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">})</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;################In real time################&quot;</span><span class="p">)</span>
+<span class="n">simulate</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;rt&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">})</span>
+</pre></div>
+</div>
+<p>Expected output (except the actual real time, as this depends on when you execute this example):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">################As fast as possible################</span>
+<span class="n">Doing</span> <span class="n">first</span> <span class="n">task</span> <span class="n">at</span> <span class="n">time</span><span class="p">:</span> <span class="mi">0</span>
+<span class="n">Doing</span> <span class="n">second</span> <span class="n">task</span> <span class="n">at</span> <span class="n">time</span><span class="p">:</span> <span class="mi">0</span>
+<span class="n">Doing</span> <span class="n">first</span> <span class="n">task</span> <span class="n">at</span> <span class="n">time</span><span class="p">:</span> <span class="mi">1</span>
+<span class="n">Doing</span> <span class="n">second</span> <span class="n">task</span> <span class="n">at</span> <span class="n">time</span><span class="p">:</span> <span class="mi">2</span>
+<span class="n">Doing</span> <span class="n">first</span> <span class="n">task</span> <span class="n">at</span> <span class="n">time</span><span class="p">:</span> <span class="mi">2</span>
+<span class="n">Doing</span> <span class="n">first</span> <span class="n">task</span> <span class="n">at</span> <span class="n">time</span><span class="p">:</span> <span class="mi">3</span>
+<span class="c1">################10 times faster than real time################</span>
+<span class="n">Doing</span> <span class="n">first</span> <span class="n">task</span> <span class="n">at</span> <span class="n">time</span><span class="p">:</span> <span class="mf">1627372451.6871307</span>
+<span class="n">Doing</span> <span class="n">second</span> <span class="n">task</span> <span class="n">at</span> <span class="n">time</span><span class="p">:</span> <span class="mf">1627372451.6871307</span>
+<span class="n">Doing</span> <span class="n">first</span> <span class="n">task</span> <span class="n">at</span> <span class="n">time</span><span class="p">:</span> <span class="mf">1627372452.6871307</span>
+<span class="n">Doing</span> <span class="n">second</span> <span class="n">task</span> <span class="n">at</span> <span class="n">time</span><span class="p">:</span> <span class="mf">1627372453.6871307</span>
+<span class="n">Doing</span> <span class="n">first</span> <span class="n">task</span> <span class="n">at</span> <span class="n">time</span><span class="p">:</span> <span class="mf">1627372453.6871307</span>
+<span class="n">Doing</span> <span class="n">first</span> <span class="n">task</span> <span class="n">at</span> <span class="n">time</span><span class="p">:</span> <span class="mf">1627372454.6871307</span>
+<span class="c1">################In real time################</span>
+<span class="n">Doing</span> <span class="n">first</span> <span class="n">task</span> <span class="n">at</span> <span class="n">time</span><span class="p">:</span> <span class="mf">1627372452.0911176</span>
+<span class="n">Doing</span> <span class="n">second</span> <span class="n">task</span> <span class="n">at</span> <span class="n">time</span><span class="p">:</span> <span class="mf">1627372452.0911176</span>
+<span class="n">Doing</span> <span class="n">first</span> <span class="n">task</span> <span class="n">at</span> <span class="n">time</span><span class="p">:</span> <span class="mf">1627372453.0911176</span>
+<span class="n">Doing</span> <span class="n">second</span> <span class="n">task</span> <span class="n">at</span> <span class="n">time</span><span class="p">:</span> <span class="mf">1627372454.0911176</span>
+<span class="n">Doing</span> <span class="n">first</span> <span class="n">task</span> <span class="n">at</span> <span class="n">time</span><span class="p">:</span> <span class="mf">1627372454.0911176</span>
+<span class="n">Doing</span> <span class="n">first</span> <span class="n">task</span> <span class="n">at</span> <span class="n">time</span><span class="p">:</span> <span class="mf">1627372455.0911176</span>
+</pre></div>
+</div>
+<p>When simulating as-fast-as-possible, the environment time starts at 0.
+For real-time, you should be able to see that the time changes for the first and second case.
+Besides, you should see relevant execution speed changes, with real-time being the slowest case-study.</p>
+<p>As we just use the <code class="docutils literal notranslate"><span class="pre">simpy</span></code> package, we refer to their documentation for detailed information.</p>
+</section>
+<section id="structure-of-the-repository">
+<h2>Structure of the repository<a class="headerlink" href="#structure-of-the-repository" title="Permalink to this heading"></a></h2>
+<p>As the AgentLib needs to run on various devices, including one with limited storage capacity, we build the repository in a modular way.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">agentlib\core</span></code> All core-features necessary to build own modules</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">agentlib\modules</span></code> All pre-defined modules. The installation of all such modules in optional.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">agentlib\models</span></code> All pre-defined models to simulate or optimize time-dependent systems. Again, installation is optional.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">agentlib\utils</span></code> All utility functions such as validators, local testing etc.</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="CloneMAP.html" class="btn btn-neutral float-left" title="How to start a MAS on cloneMAP" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../ModulesList.html" class="btn btn-neutral float-right" title="List of standard modules and models" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, AGENT-Project Associates.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
