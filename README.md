@@ -55,5 +55,4 @@ This project is licensed under the BSD 3 Clause License - see the [LICENSE](LICE
 
 We gratefully acknowledge the financial support by Federal Ministry \\ for Economic Affairs and Climate Action (BMWK), promotional reference 03ET1495A.
 
-
-<a href="www.bmwk.de"> <img alt="BMWE" src="docs/images/logos/BMWK_en_logo.png" height="120"> </a>
+<img src="./docs/images/logos/BMWK_logo.png" alt="BMWK" width="200"/>
