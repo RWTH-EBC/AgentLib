@@ -8,9 +8,6 @@ authors = [
     { name = "Associates of the AGENT project", email = "AGENT.Projekt@eonerc.rwth-aachen.de" }
 ]
 description = "Framework for development and execution of agents for control and simulation of energy systems."
-packages = [
-    { include = "agentlib", from = "." },
-]
 readme = "README.md"
 requires-python = ">=3.8"
 keywords = [
