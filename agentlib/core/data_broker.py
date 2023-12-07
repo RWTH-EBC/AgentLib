@@ -202,6 +202,8 @@ class DataBroker(abc.ABC):
         Run relevant callbacks for AgentVariable's from local queue.
         """
         variable = self._variable_queue.get(block=True)
+        qsize = self._variable_queue.qsize()
+        logger.debug("Queue fullness: %s", qsize)
         _map_tuple = (variable.alias, variable.source)
         # First the unmapped cbs
         callbacks = self._filter_unmapped_callbacks(map_tuple=_map_tuple)
