@@ -216,7 +216,9 @@ class DataBroker(abc.ABC):
 
         # Then run the callbacks
         for cb in callbacks:
-            cb.callback(variable, **cb.kwargs)
+            # TODO: Deamon True or false?
+            threading.Thread(target=cb.callback, args=[variable], daemon=True, kwargs=cb.kwargs).start()
+            #cb.callback(variable, **cb.kwargs)
 
     def _filter_unmapped_callbacks(self, map_tuple: tuple) -> List[BrokerCallback]:
         """
