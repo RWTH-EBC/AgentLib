@@ -74,6 +74,24 @@ pylintrc:1:0: W0012: Unknown option value for '--disable', expected a valid pyli
 ************* Module ci.run_examples
 ci/run_examples.py:39:12: W0719: Raising too general exception: Exception (broad-exception-raised)
 ci/run_examples.py:56:8: C0415: Import outside toplevel (sys) (import-outside-toplevel)
+************* Module databroker_limits
+examples/databroker_limits.py:20:0: C0301: Line too long (113/100) (line-too-long)
+examples/databroker_limits.py:28:0: C0301: Line too long (101/100) (line-too-long)
+examples/databroker_limits.py:67:0: C0301: Line too long (108/100) (line-too-long)
+examples/databroker_limits.py:68:0: C0301: Line too long (108/100) (line-too-long)
+examples/databroker_limits.py:108:0: C0304: Final newline missing (missing-final-newline)
+examples/databroker_limits.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+examples/databroker_limits.py:8:0: C0115: Missing class docstring (missing-class-docstring)
+examples/databroker_limits.py:23:0: C0115: Missing class docstring (missing-class-docstring)
+examples/databroker_limits.py:35:0: C0115: Missing class docstring (missing-class-docstring)
+examples/databroker_limits.py:49:0: C0115: Missing class docstring (missing-class-docstring)
+examples/databroker_limits.py:59:8: W0719: Raising too general exception: Exception (broad-exception-raised)
+examples/databroker_limits.py:62:0: C0116: Missing function or method docstring (missing-function-docstring)
+examples/databroker_limits.py:72:4: C0103: Variable name "MAS" doesn't conform to snake_case naming style (invalid-name)
+examples/databroker_limits.py:76:0: C0116: Missing function or method docstring (missing-function-docstring)
+examples/databroker_limits.py:86:4: C0103: Variable name "MAS" doesn't conform to snake_case naming style (invalid-name)
+examples/databroker_limits.py:90:0: C0116: Missing function or method docstring (missing-function-docstring)
+examples/databroker_limits.py:100:4: C0103: Variable name "MAS" doesn't conform to snake_case naming style (invalid-name)
 ************* Module tests.test_agent
 tests/test_agent.py:23:0: C0115: Missing class docstring (missing-class-docstring)
 tests/test_agent.py:27:0: C0115: Missing class docstring (missing-class-docstring)
@@ -229,5 +247,5 @@ tests/test_utils.py:1:0: R0801: Similar lines in 2 files
     "rdf_class": "MyRDFClass", (duplicate-code)
 
 -----------------------------------
-Your code has been rated at 8.69/10
+Your code has been rated at 8.61/10
 

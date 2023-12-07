@@ -284,6 +284,8 @@
 <span class="sd">        Run relevant callbacks for AgentVariable&#39;s from local queue.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">variable</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_variable_queue</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">block</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">qsize</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_variable_queue</span><span class="o">.</span><span class="n">qsize</span><span class="p">()</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Queue fullness: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">qsize</span><span class="p">)</span>
         <span class="n">_map_tuple</span> <span class="o">=</span> <span class="p">(</span><span class="n">variable</span><span class="o">.</span><span class="n">alias</span><span class="p">,</span> <span class="n">variable</span><span class="o">.</span><span class="n">source</span><span class="p">)</span>
         <span class="c1"># First the unmapped cbs</span>
         <span class="n">callbacks</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filter_unmapped_callbacks</span><span class="p">(</span><span class="n">map_tuple</span><span class="o">=</span><span class="n">_map_tuple</span><span class="p">)</span>
