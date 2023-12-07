@@ -29,10 +29,9 @@ from typing import (
 
 from pydantic import BaseModel, field_validator, model_validator, ConfigDict
 
+from agentlib.core.logging_ import CustomLogger
 from agentlib.core.datamodels import AgentVariable, Source
 from agentlib.core.environment import Environment
-
-logger = logging.getLogger()
 
 
 @runtime_checkable
@@ -164,10 +163,11 @@ class DataBroker(abc.ABC):
     with ``register_callback`` and ``deregister_callback``.
     """
 
-    def __init__(self):
+    def __init__(self, logger: CustomLogger):
         """
         Initialize lock, callbacks and entries
         """
+        self.logger = logger
         self._mapped_callbacks: Dict[Tuple[str, Source], List[BrokerCallback]] = {}
         self._unmapped_callbacks: List[BrokerCallback] = []
         self._variable_queue = queue.SimpleQueue()
@@ -203,7 +203,7 @@ class DataBroker(abc.ABC):
         """
         variable = self._variable_queue.get(block=True)
         qsize = self._variable_queue.qsize()
-        logger.debug("Queue fullness: %s", qsize)
+        self.logger.debug("Queue fullness: %s", qsize)
         _map_tuple = (variable.alias, variable.source)
         # First the unmapped cbs
         callbacks = self._filter_unmapped_callbacks(map_tuple=_map_tuple)
@@ -308,7 +308,7 @@ class DataBroker(abc.ABC):
                 self._mapped_callbacks[_map_tuple].remove(callback)
             else:
                 return  # No delete necessary
-            logger.debug("Callback de-registered: %s", callback)
+            self.logger.debug("Callback de-registered: %s", callback)
         except ValueError:
             pass
 
@@ -335,12 +335,12 @@ class LocalDataBroker(DataBroker):
     """Local variation of the DataBroker written for fast-as-possible
     simulation within a single non-realtime Environment."""
 
-    def __init__(self, env: Environment):
+    def __init__(self, env: Environment, logger: CustomLogger):
         """
         Initialize env
         """
         self.env = env
-        super().__init__()
+        super().__init__(logger=logger)
         self._callbacks_available = self.env.event()
 
     def _send_variable_to_modules(self, variable: AgentVariable):
@@ -366,7 +366,7 @@ class LocalDataBroker(DataBroker):
 class RTDataBroker(DataBroker):
     """DataBroker written for Realtime operation regardless of Environment."""
 
-    def __init__(self, env: Environment):
+    def __init__(self, env: Environment, logger: CustomLogger):
         """
         Initialize env.
         Adds the function to start callback execution to the environment as a process.
@@ -374,7 +374,7 @@ class RTDataBroker(DataBroker):
         the first triggered event, so no other process starts before the broker is
         ready
         """
-        super().__init__()
+        super().__init__(logger=logger)
         self.thread = threading.Thread(
             target=self._callback_thread, daemon=True, name="DataBroker"
         )

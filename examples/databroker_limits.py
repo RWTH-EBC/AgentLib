@@ -104,5 +104,5 @@ def faulty_module():
 if __name__ == '__main__':
     logging.basicConfig(level="DEBUG")
     # slow_module()
-    # exploding_modules()
-    faulty_module()
+    exploding_modules()
+    # faulty_module()

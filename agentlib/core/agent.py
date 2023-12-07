@@ -2,15 +2,14 @@
 Module containing only the Agent class.
 """
 import json
-import logging
 import threading
-import os
 from typing import Union, List, Dict, TypeVar
 
 from pathlib import Path
 from pydantic import field_validator, BaseModel, FilePath, Field
 
 import agentlib
+import agentlib.core.logging_ as agentlib_logging
 from agentlib.core import (
     Environment,
     LocalDataBroker,
@@ -94,14 +93,17 @@ class Agent:
         self._threads: Dict[str, threading.Thread] = {}
         self.env = env
         self.is_alive = True
+        data_broker_logger = agentlib_logging.create_logger(
+            env=self.env, name=f"{config.id}/DataBroker"
+        )
         if env.config.rt:
-            self._data_broker = RTDataBroker(env=env)
+            self._data_broker = RTDataBroker(env=env, logger=data_broker_logger)
             self.register_thread(thread=self._data_broker.thread)
         else:
-            self._data_broker = LocalDataBroker(env=env)
+            self._data_broker = LocalDataBroker(env=env, logger=data_broker_logger)
         self.config = config
         # Setup logger
-        self.logger = logging.getLogger(f"Agent '{self.id}'")
+        self.logger = agentlib_logging.create_logger(env=self.env, name=self.id)
         # Register the thread monitoring if configured
         if self.config.check_alive_interval > 0:
             self.env.process(self._monitor_threads())

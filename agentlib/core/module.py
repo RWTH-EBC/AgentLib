@@ -1,7 +1,6 @@
 """This module contains the base AgentModule."""
 from __future__ import annotations
 import abc
-import datetime
 import json
 import logging
 from copy import deepcopy
@@ -30,6 +29,7 @@ from agentlib.core.datamodels import (
     AttrsToPydanticAdaptor,
 )
 from agentlib.core import datamodels
+import agentlib.core.logging_ as agentlib_logging
 from agentlib.utils.fuzzy_matching import fuzzy_match, RAPIDFUZZ_IS_INSTALLED
 from agentlib.utils.validators import (
     include_defaults_in_root,
@@ -40,7 +40,7 @@ from agentlib.utils.validators import (
 
 if TYPE_CHECKING:
     # this avoids circular import
-    from agentlib.core import Agent, Environment
+    from agentlib.core import Agent
 
 
 logger = logging.getLogger(__name__)
@@ -338,32 +338,6 @@ class BaseModuleConfig(BaseModel):
 BaseModuleConfigClass = TypeVar("BaseModuleConfigClass", bound=BaseModuleConfig)
 
 
-# class CustomLogger(logging.Logger):
-#
-#     def __init__(self, agent: Agent, module_id: str):
-#         super().__init__(name="")
-#         self.env = agent.env
-#         self.header = f"Ag.'{agent.id}', mod.'{module_id}'"
-#
-#     def info(
-#             self,
-#             msg: object,
-#             *args: object,
-#             **kwargs
-#         ) -> None:
-#         msg = f"{self.header}, {self.env.time} s: {msg}"
-#         super().info(msg, *args, **kwargs)
-#
-#     def error(
-#             self,
-#             msg: object,
-#             *args: object,
-#             **kwargs
-#         ) -> None:
-#         msg = f"{self.env.time} s: {msg}"
-#         super().error(msg, *args, **kwargs)
-
-
 class BaseModule(abc.ABC):
     """
     Basic module used by any agent.
@@ -377,7 +351,9 @@ class BaseModule(abc.ABC):
 
     def __init__(self, *, config: dict, agent: Agent):
         self._agent = agent
-        self.logger = create_logger(agent=agent, module_id=config["module_id"])
+        self.logger = agentlib_logging.create_logger(
+            env=self.env, name=f"{self.agent.id}/{config['module_id']}"
+        )
         self.config = config  # evokes the config setter
         # Add process to environment
         self.env.process(self.process())
@@ -686,48 +662,3 @@ class BaseModule(abc.ABC):
 
         Override this method, if your module creates e.g. results files etc.
         """
-
-
-def create_logger(agent: Agent, module_id: str) -> CustomLogger:
-    """Creates a logger that displays the environment time when logging."""
-    # Create a custom logger
-    name = f"{agent.id}/{module_id}"
-    custom_logger = CustomLogger(name, env=agent.env)
-    custom_logger.setLevel(logging.root.getEffectiveLevel())
-
-    # Create a formatter
-    formatter = logging.Formatter("%(env_time)s %(levelname)s: %(name)s: %(message)s")
-
-    # Create a StreamHandler and add it to the logger
-    stream_handler = logging.StreamHandler()
-    stream_handler.setFormatter(formatter)
-    custom_logger.addHandler(stream_handler)
-    return custom_logger
-
-
-class CustomLogger(logging.Logger):
-    """Subclass of Logger that adds the env_time to the record, allowing it to print
-    the current time."""
-
-    def __init__(self, name, env: Environment, level=logging.NOTSET):
-        super().__init__(name, level)
-        self.env = env
-
-    def makeRecord(
-        self,
-        name,
-        level,
-        fn,
-        lno,
-        msg,
-        args,
-        exc_info,
-        func=None,
-        extra=None,
-        sinfo=None,
-    ):
-        record = super().makeRecord(
-            name, level, fn, lno, msg, args, exc_info, func, extra, sinfo
-        )
-        record.env_time = self.env.pretty_time()
-        return record
