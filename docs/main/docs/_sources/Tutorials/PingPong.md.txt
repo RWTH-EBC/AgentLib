@@ -69,13 +69,13 @@ The id is a string and has to be unique within the multi-agent-system. Next, we 
 A module config consist at least of a "module_id" and a "type".
 The first module we specify is a communicator.
 The first method to define a module type is to
-choose a standard module from the agentlib
+choose a standard module from the AgentLib
 modules. To learn the identifier of module type,
 look in the ``__init__.py`` files in the 'modules'
-subpackages of the agentlib. Here, we choose
+subpackages of the AgentLib. Here, we choose
 "local_broadcast" from the communicator package as
 our communicator.
-Our second module is the pingpong module. For this module, we will use custom injection to specify its type, as it is not from the standard agentlib modules. We also specify a parameter.
+Our second module is the pingpong module. For this module, we will use custom injection to specify its type, as it is not from the standard AgentLib modules. We also specify a parameter.
 
 When using custom injection, the type of a module
 is not specified by a string, but a dictionary,
@@ -135,8 +135,8 @@ logger = logging.getLogger(__name__)
 ```
 ``logging``, ``time`` and ``sys`` are used for the functionality of the 
 module, which we will look at later. From pydantic we import Field. Pydantic 
-is used in _agentlib_ to specify module configurations and validate them. 
-Finally, from the _agentlib_'s core we import ``BaseModule``, which we need to inherit 
+is used in _AgentLib_ to specify module configurations and validate them. 
+Finally, from the _AgentLib_'s core we import ``BaseModule``, which we need to inherit 
 from, ``BaseModuleConfig`` for the configuration and ``AgentVariable``, 
 ``AgentVariable`` and ``Causality``.
 ``AgentVariable`` is the base class for all quantities that need to be 

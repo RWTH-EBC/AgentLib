@@ -14,13 +14,13 @@ For demonstration of this part the pingpong example in `examples/multi-agent-sys
 
 #### Step 1 Behavior implementation
 
-The agent behavior in the agentlib is composed of the individual behavior of modules.
+The agent behavior in the AgentLib is composed of the individual behavior of modules.
 There are no special requirements for the agent behavior implementation if you want to use cloneMAP for MAS execution.
-You can either use the standard modules provided by the agentlib or implement your own modules.
+You can either use the standard modules provided by the AgentLib or implement your own modules.
 
 #### Step 2 Building the Docker image
 
-If you only use the agentlib standard modules, you can simply use the docker image provided in the repository's registry with the tag `clonemap`.
+If you only use the AgentLib standard modules, you can simply use the docker image provided in the repository's registry with the tag `clonemap`.
 If you have implemented your own modules, you have to build a new image, which contains these modules.
 Here is an example how a corresponding Dockerfile could look like:
 
@@ -31,7 +31,7 @@ COPY my_module.py my_module.py
 CMD ["python", "-u", "agentlib/modules/communicator/clonemap.py"]
 ```
 
-You start from the standard agentlib image, add your custom module and set the entry point to the clonemap communicator.
+You start from the standard AgentLib image, add your custom module and set the entry point to the clonemap communicator.
 
 #### Step 3 Scenario creation
 

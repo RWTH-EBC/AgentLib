@@ -3,7 +3,7 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to agentlib's documentation!
+Welcome to AgentLib's documentation!
 ====================================
 
 This is a collection of base classes for the implementation of agents in Python.

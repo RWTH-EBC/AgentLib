@@ -112,13 +112,13 @@ Please refer to the <a class="reference external" href="https://github.com/RWTH-
 <p>For demonstration of this part the pingpong example in <code class="docutils literal notranslate"><span class="pre">examples/multi-agent-systems/pingpong</span></code> is used.</p>
 <section id="step-1-behavior-implementation">
 <h3>Step 1 Behavior implementation<a class="headerlink" href="#step-1-behavior-implementation" title="Permalink to this heading"></a></h3>
-<p>The agent behavior in the agentlib is composed of the individual behavior of modules.
+<p>The agent behavior in the AgentLib is composed of the individual behavior of modules.
 There are no special requirements for the agent behavior implementation if you want to use cloneMAP for MAS execution.
-You can either use the standard modules provided by the agentlib or implement your own modules.</p>
+You can either use the standard modules provided by the AgentLib or implement your own modules.</p>
 </section>
 <section id="step-2-building-the-docker-image">
 <h3>Step 2 Building the Docker image<a class="headerlink" href="#step-2-building-the-docker-image" title="Permalink to this heading"></a></h3>
-<p>If you only use the agentlib standard modules, you can simply use the docker image provided in the repository’s registry with the tag <code class="docutils literal notranslate"><span class="pre">clonemap</span></code>.
+<p>If you only use the AgentLib standard modules, you can simply use the docker image provided in the repository’s registry with the tag <code class="docutils literal notranslate"><span class="pre">clonemap</span></code>.
 If you have implemented your own modules, you have to build a new image, which contains these modules.
 Here is an example how a corresponding Dockerfile could look like:</p>
 <div class="highlight-Docker notranslate"><div class="highlight"><pre><span></span><span class="k">FROM</span><span class="w"> </span><span class="s">registry.git.rwth-aachen.de/ebc/ebc_all/github_ci/agentlib:latest</span>
@@ -127,7 +127,7 @@ Here is an example how a corresponding Dockerfile could look like:</p>
 <span class="k">CMD</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;python&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;-u&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;agentlib/modules/communicator/clonemap.py&quot;</span><span class="p">]</span>
 </pre></div>
 </div>
-<p>You start from the standard agentlib image, add your custom module and set the entry point to the clonemap communicator.</p>
+<p>You start from the standard AgentLib image, add your custom module and set the entry point to the clonemap communicator.</p>
 </section>
 <section id="step-3-scenario-creation">
 <h3>Step 3 Scenario creation<a class="headerlink" href="#step-3-scenario-creation" title="Permalink to this heading"></a></h3>
