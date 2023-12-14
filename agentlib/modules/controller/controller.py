@@ -123,4 +123,4 @@ class SISOController(Controller):
         else:
             out_name = self.config.output.name
             self.logger.debug("Sending output %s=%s", out_name, out_val)
-            self.set(name=out_name, value=out_val, timestamp=inp.timestamp)
+            self.set(name=out_name, value=out_val)

@@ -381,7 +381,9 @@ class Simulator(BaseModule):
         The do_step() function needs to return a generator.
         """
         while True:
-            yield self.do_step()
+            self.do_step()
+            yield self.env.timeout(self.config.t_sample)
+            self.update_module_vars()
 
     def do_step(self):
         """
@@ -406,17 +408,12 @@ class Simulator(BaseModule):
         if not self.config.update_inputs_on_callback:
             # Update inputs manually
             self.update_model_inputs()
-        # Specify simulation end time
-        _end_time_simulation = self.env.time + self.config.t_sample
         # Simulate
         self.model.do_step(
             t_start=(self.env.now + self.env.offset), t_sample=self.config.t_sample
         )
         # Update the results and outputs
-        self._update_results(_end_time_simulation)
-        self.update_module_vars(timestamp=_end_time_simulation)
-        # Wait for the environment until the timeout
-        return self.env.timeout(self.config.t_sample)
+        self._update_results(self.env.time + self.config.t_sample)
 
     def update_model_inputs(self):
         """
@@ -431,7 +428,7 @@ class Simulator(BaseModule):
                 self.logger.debug("Updating model variable %s=%s", inp.name, inp.value)
                 self.model.set(name=inp.name, value=inp.value)
 
-    def update_module_vars(self, timestamp):
+    def update_module_vars(self):
         """
         Method to write current model output and states
         values to the module outputs and states.
@@ -448,7 +445,7 @@ class Simulator(BaseModule):
                     raise KeyError(f"Given variable {var.name} not found in model.")
                 value = self._get_uncertain_value(model_variable=mo_var)
                 self.logger.debug("Updating %s %s=%s", _type, var.name, value)
-                self.set(name=var.name, value=value, timestamp=timestamp)
+                self.set(name=var.name, value=value)
 
     def _get_uncertain_value(self, model_variable: ModelVariable) -> float:
         """Get the value with added uncertainty based on the value of the variable"""
