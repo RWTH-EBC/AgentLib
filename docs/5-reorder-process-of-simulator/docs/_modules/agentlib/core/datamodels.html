@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>agentlib.core.datamodels &mdash; agentlib 0.7.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/autodoc_pydantic.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            agentlib
+          </a>
+              <div class="version">
+                0.7
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Tutorials/tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ModulesList.html">List of standard modules and models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../AgentVariable.html">AgentVariables and ModelVariables</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../agentlib.html">agentlib package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">agentlib</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">agentlib.core.datamodels</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for agentlib.core.datamodels</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">The datamodels module contains all classes</span>
+<span class="sd">defining basic models to handle data.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">abc</span>
+<span class="kn">import</span> <span class="nn">functools</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">numbers</span>
+<span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">copy</span><span class="p">,</span> <span class="n">deepcopy</span>
+<span class="kn">from</span> <span class="nn">io</span> <span class="kn">import</span> <span class="n">StringIO</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">chain</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">TypeVar</span><span class="p">,</span> <span class="n">Set</span><span class="p">,</span> <span class="n">Container</span><span class="p">,</span> <span class="n">get_args</span>
+
+<span class="kn">import</span> <span class="nn">attrs</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+<span class="kn">from</span> <span class="nn">attrs</span> <span class="kn">import</span> <span class="n">define</span><span class="p">,</span> <span class="n">field</span>
+<span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">GetCoreSchemaHandler</span>
+<span class="kn">from</span> <span class="nn">pydantic_core</span> <span class="kn">import</span> <span class="n">core_schema</span>
+<span class="kn">from</span> <span class="nn">pydantic_core.core_schema</span> <span class="kn">import</span> <span class="n">CoreSchema</span><span class="p">,</span> <span class="n">SerializationInfo</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<span class="n">ATTRS_MODELS</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;AgentVariables&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;AgentVariable&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;BaseVariable&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ModelInput&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ModelState&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ModelOutput&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ModelParameter&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ModelInputs&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ModelStates&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ModelOutputs&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ModelParameters&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;ModelVariable&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Source&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="n">ATTRS_MODELS</span> <span class="o">+</span> <span class="p">[</span>
+    <span class="s2">&quot;Causality&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Variability&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+
+
+<div class="viewcode-block" id="Causality"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.Causality">[docs]</a><span class="k">class</span> <span class="nc">Causality</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Enumeration that defines the causality of a variable.</span>
+
+<span class="sd">    The default causality is “local”.</span>
+
+<span class="sd">    Allowed params of his enumeration:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># _init_ = &quot;value __doc__&quot;</span>
+    <span class="n">parameter</span> <span class="o">=</span> <span class="s2">&quot;parameter&quot;</span>
+    <span class="n">calculatedParameter</span> <span class="o">=</span> <span class="s2">&quot;calculatedParameter&quot;</span>
+
+    <span class="nb">input</span> <span class="o">=</span> <span class="s2">&quot;input&quot;</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="s2">&quot;output&quot;</span>
+    <span class="n">local</span> <span class="o">=</span> <span class="s2">&quot;local&quot;</span>
+    <span class="n">independent</span> <span class="o">=</span> <span class="s2">&quot;independent&quot;</span></div>
+
+
+<div class="viewcode-block" id="Variability"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.Variability">[docs]</a><span class="k">class</span> <span class="nc">Variability</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Enum</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Enumeration that defines the time dependency of the variable, in other</span>
+<span class="sd">    words,it defines the time instants when a variable can change its value.</span>
+<span class="sd">    [The purpose of this attribute is to define when a result value needs to</span>
+<span class="sd">    be inquired and to be stored. For example, discrete variables change</span>
+<span class="sd">    their params only at event instants (ModelExchange) or at a</span>
+<span class="sd">    communication point (CoSimulation) and it is therefore only necessary</span>
+<span class="sd">    to inquire and store them at event times].</span>
+
+<span class="sd">    The default is “continuous”</span>
+
+<span class="sd">    Allowed params of this enumeration:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">constant</span> <span class="o">=</span> <span class="s2">&quot;constant&quot;</span>
+    <span class="n">fixed</span> <span class="o">=</span> <span class="s2">&quot;fixed&quot;</span>
+    <span class="n">tunable</span> <span class="o">=</span> <span class="s2">&quot;tunable&quot;</span>
+    <span class="n">discrete</span> <span class="o">=</span> <span class="s2">&quot;discrete&quot;</span>
+    <span class="n">continuous</span> <span class="o">=</span> <span class="s2">&quot;continuous&quot;</span></div>
+
+
+<span class="c1">###############################################################################</span>
+<span class="c1"># Custom Field types</span>
+<span class="c1">###############################################################################</span>
+
+
+<span class="k">class</span> <span class="nc">AttrsToPydanticAdaptor</span><span class="p">(</span><span class="n">abc</span><span class="o">.</span><span class="n">ABC</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Class to use the attrs-based class in pydantic models.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
+    <span class="k">def</span> <span class="nf">dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the dict object of the class.&quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
+    <span class="k">def</span> <span class="nf">json</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns json serialization of the class&quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
+    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">dict</span><span class="p">,</span> <span class="s2">&quot;AttrsToPydanticAdaptor&quot;</span><span class="p">]):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+    <span class="k">def</span> <span class="nf">_serialize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_info</span><span class="p">:</span> <span class="n">SerializationInfo</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Function required for pydantic&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">_info</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;python&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dict</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">__get_pydantic_core_schema__</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span> <span class="n">source_type</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">handler</span><span class="p">:</span> <span class="n">GetCoreSchemaHandler</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CoreSchema</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Tells pydantic how to instantiate and validate this class.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">core_schema</span><span class="o">.</span><span class="n">no_info_after_validator_function</span><span class="p">(</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">create</span><span class="p">,</span>  <span class="c1"># validator</span>
+            <span class="n">core_schema</span><span class="o">.</span><span class="n">any_schema</span><span class="p">(</span><span class="n">ref</span><span class="o">=</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="p">),</span>  <span class="c1"># what to call before validator</span>
+            <span class="n">serialization</span><span class="o">=</span><span class="n">core_schema</span><span class="o">.</span><span class="n">plain_serializer_function_ser_schema</span><span class="p">(</span>
+                <span class="bp">cls</span><span class="o">.</span><span class="n">_serialize</span><span class="p">,</span>
+                <span class="n">info_arg</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">return_schema</span><span class="o">=</span><span class="n">core_schema</span><span class="o">.</span><span class="n">any_schema</span><span class="p">(),</span>
+            <span class="p">),</span>  <span class="c1"># serialization</span>
+        <span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">get_json_schema</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the JSON-Schema of the class.</span>
+<span class="sd">        Will try to create the schema based on the attrs-fields</span>
+<span class="sd">        and existing types. Specially nested types may not work,</span>
+<span class="sd">        e.g. Union[Dict[str, AgentVariable], List[Source]] o.s.</span>
+<span class="sd">        However, the current Variables and Source do not require</span>
+<span class="sd">        such complex type annotations.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">def</span> <span class="nf">_get_type_schema</span><span class="p">(</span><span class="n">_type</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="nb">dict</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Function to return the schema for the given _type.</span>
+<span class="sd">            The type is the one given in the attr-field.</span>
+<span class="sd">            Special types, which are not the _type_map, will not work properly.</span>
+<span class="sd">            Avoiding the .get method to explicitly raise the error if</span>
+<span class="sd">            future versions of custom AttrsToPydanticAdaptor use such types.</span>
+
+<span class="sd">            Returns the schema as the first argument and a list of references</span>
+<span class="sd">            as the second.</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="c1"># Map to infer the json-schema name for the type</span>
+            <span class="c1"># from the python object</span>
+            <span class="n">_type_map</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="nb">str</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+                <span class="nb">bool</span><span class="p">:</span> <span class="s2">&quot;boolean&quot;</span><span class="p">,</span>
+                <span class="nb">int</span><span class="p">:</span> <span class="s2">&quot;integer&quot;</span><span class="p">,</span>
+                <span class="nb">float</span><span class="p">:</span> <span class="s2">&quot;number&quot;</span><span class="p">,</span>
+                <span class="nb">list</span><span class="p">:</span> <span class="s2">&quot;array&quot;</span><span class="p">,</span>
+            <span class="p">}</span>
+            <span class="k">if</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">_type</span><span class="p">,</span> <span class="n">AttrsToPydanticAdaptor</span><span class="p">):</span>
+                <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;$ref&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;#/definitions/</span><span class="si">{</span><span class="n">_type</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">},</span> <span class="n">_type</span><span class="o">.</span><span class="vm">__name__</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="n">_type_map</span><span class="p">[</span><span class="n">_type</span><span class="p">]},</span> <span class="p">[]</span>
+
+        <span class="k">def</span> <span class="nf">_get_typing_schema</span><span class="p">(</span><span class="n">_type</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="nb">dict</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Recursive to extract the type schema for all possible types</span>
+<span class="sd">            which currently occur in the attrs fields. This includes</span>
+<span class="sd">            standard types like str and typing-types like Union[str, float].</span>
+
+<span class="sd">            Returns the schema as the first argument and a list of references</span>
+<span class="sd">            as the second.</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="k">if</span> <span class="n">_type</span> <span class="o">==</span> <span class="n">Any</span><span class="p">:</span>
+                <span class="c1"># Any can&#39;t be used by GUIs or OpenAPI anyway. At the</span>
+                <span class="c1"># same time, it is the only type in typing with no __origin__.</span>
+                <span class="c1"># TODO-ses: We could also return string as the type, as</span>
+                <span class="c1">#   I had to tweak streamlit-pydantic to render Any as</span>
+                <span class="c1">#   string. Depends on streamlit-pydantic fork moves forward</span>
+                <span class="k">return</span> <span class="p">{},</span> <span class="p">[]</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_type</span><span class="p">,</span> <span class="nb">type</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">_get_type_schema</span><span class="p">(</span><span class="n">_type</span><span class="p">)</span>
+
+            <span class="c1"># If it&#39;s not a type object, it currently is always a typing object,</span>
+            <span class="c1"># which indicates the actual type using __origin__.</span>
+            <span class="c1"># We could also use `get_origin` from typing.</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_type</span><span class="o">.</span><span class="n">__origin__</span><span class="p">,</span> <span class="nb">type</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">_get_type_schema</span><span class="p">(</span><span class="n">_type</span><span class="o">.</span><span class="n">__origin__</span><span class="p">)</span>
+            <span class="n">_types</span> <span class="o">=</span> <span class="n">get_args</span><span class="p">(</span><span class="n">_type</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span> <span class="ow">in</span> <span class="n">_types</span><span class="p">:</span>  <span class="c1"># Is optional</span>
+                <span class="k">return</span> <span class="n">_get_typing_schema</span><span class="p">(</span><span class="n">_types</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>  <span class="c1"># 2nd entry will be None</span>
+            <span class="k">if</span> <span class="n">_type</span><span class="o">.</span><span class="n">__origin__</span> <span class="o">==</span> <span class="n">Union</span><span class="p">:</span>
+                <span class="n">refs</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="n">_any_of_types</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="k">for</span> <span class="n">_type</span> <span class="ow">in</span> <span class="n">_types</span><span class="p">:</span>
+                    <span class="n">_any_of_type</span><span class="p">,</span> <span class="n">_ref</span> <span class="o">=</span> <span class="n">_get_type_schema</span><span class="p">(</span><span class="n">_type</span><span class="p">)</span>
+                    <span class="n">refs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_ref</span><span class="p">)</span>
+                    <span class="n">_any_of_types</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_any_of_type</span><span class="p">)</span>
+                <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;anyOf&quot;</span><span class="p">:</span> <span class="n">_any_of_types</span><span class="p">},</span> <span class="n">refs</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Given type &#39;</span><span class="si">{</span><span class="n">_type</span><span class="si">}</span><span class="s2">&#39; is not supported for JSONSchema export&quot;</span>
+            <span class="p">)</span>
+
+        <span class="n">field_schemas</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">required</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">all_refs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">attrs</span><span class="o">.</span><span class="n">fields</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+            <span class="n">field_schemas</span><span class="p">[</span><span class="n">attr</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">attr</span><span class="o">.</span><span class="n">metadata</span><span class="p">)</span>
+            <span class="n">_type_schema</span><span class="p">,</span> <span class="n">_refs</span> <span class="o">=</span> <span class="n">_get_typing_schema</span><span class="p">(</span><span class="n">attr</span><span class="o">.</span><span class="n">type</span><span class="p">)</span>
+            <span class="n">all_refs</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">_refs</span><span class="p">)</span>
+            <span class="n">field_schemas</span><span class="p">[</span><span class="n">attr</span><span class="o">.</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">_type_schema</span><span class="p">)</span>
+            <span class="c1"># Get default</span>
+            <span class="k">if</span> <span class="n">attr</span><span class="o">.</span><span class="n">default</span><span class="p">:</span>
+                <span class="n">field_schemas</span><span class="p">[</span><span class="n">attr</span><span class="o">.</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="n">attr</span><span class="o">.</span><span class="n">default</span><span class="p">})</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">required</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">attr</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+        <span class="n">schema</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
+            <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__doc__</span><span class="p">,</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="n">field_schemas</span><span class="p">,</span>
+            <span class="s2">&quot;required&quot;</span><span class="p">:</span> <span class="n">required</span><span class="p">,</span>
+            <span class="s2">&quot;definitions&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="sa">f</span><span class="s2">&quot;$defs/</span><span class="si">{</span><span class="n">ref</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">ref</span> <span class="ow">in</span> <span class="nb">set</span><span class="p">([</span><span class="n">r</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">all_refs</span><span class="p">)</span> <span class="k">if</span> <span class="n">r</span><span class="p">])</span>
+            <span class="p">],</span>
+            <span class="s2">&quot;additionalProperties&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="p">}</span>
+
+        <span class="k">return</span> <span class="n">schema</span>
+
+
+<div class="viewcode-block" id="Source"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.Source">[docs]</a><span class="nd">@define</span><span class="p">(</span><span class="n">slots</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">Source</span><span class="p">(</span><span class="n">AttrsToPydanticAdaptor</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Object to define the source of a variable or possible</span>
+<span class="sd">    other object. As objects are passed both module-internally</span>
+<span class="sd">    by agents or across multiple agents, both the</span>
+<span class="sd">    agent_id and module_id build up the source object.</span>
+
+<span class="sd">    However, with methods like &#39;matches&#39;, one can indicate</span>
+<span class="sd">    setting any id to None that the id is irrelevant.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">agent_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">module_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">agent_id</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">module_id</span><span class="si">}</span><span class="s2">&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">hash</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">agent_id</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                <span class="s2">&quot;agent_id&quot;</span>
+            <span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">module_id</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;module_id&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Source</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">agent_id</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">agent_id</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">module_id</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">module_id</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+<div class="viewcode-block" id="Source.dict"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.Source.dict">[docs]</a>    <span class="k">def</span> <span class="nf">dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Overwrite pydantic method to be faster.&quot;&quot;&quot;</span>
+        <span class="c1"># pylint: disable=unused-argument</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;agent_id&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">agent_id</span><span class="p">,</span> <span class="s2">&quot;module_id&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">module_id</span><span class="p">}</span></div>
+
+<div class="viewcode-block" id="Source.json"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.Source.json">[docs]</a>    <span class="k">def</span> <span class="nf">json</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns json serialization of the Source&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dict</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="Source.create"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.Source.create">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">dict</span><span class="p">,</span> <span class="s2">&quot;Source&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">]):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Constructor for this class, used by pydantic.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">agent_id</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">Source</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">data</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">data</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Source.matches"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.Source.matches">[docs]</a>    <span class="k">def</span> <span class="nf">matches</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Define if the current source matches another source:</span>
+
+<span class="sd">        First, convert other object to a dict. The dict must contain</span>
+<span class="sd">        the variables agent_id and module_id. If one of the values is None,</span>
+<span class="sd">        it is excluded from the comparison.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            other Union[Source, Dict]: Another source to compare</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Boolean if they match</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">agent_id</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">ag_match</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ag_match</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">agent_id</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">agent_id</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">module_id</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">mo_match</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">mo_match</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">module_id</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">module_id</span>
+
+        <span class="k">return</span> <span class="n">mo_match</span> <span class="ow">and</span> <span class="n">ag_match</span></div></div>
+
+
+<span class="c1">################################################################################</span>
+<span class="c1"># Variable Definitions</span>
+<span class="c1">################################################################################</span>
+<span class="n">_TYPE_MAP</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;Real&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="s2">&quot;Boolean&quot;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="s2">&quot;Integer&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="s2">&quot;Enumeration&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="s2">&quot;float&quot;</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="s2">&quot;int&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="s2">&quot;str&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="s2">&quot;bool&quot;</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
+    <span class="s2">&quot;pd.Series&quot;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span>
+    <span class="s2">&quot;list&quot;</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
+<span class="p">}</span>
+
+
+<span class="k">def</span> <span class="nf">none_to_inf</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert x to inf if it is None.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">x</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">inf</span>
+    <span class="k">return</span> <span class="n">x</span>
+
+
+<span class="k">def</span> <span class="nf">none_to_minus_inf</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Convert x to -inf if it is None.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">x</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="o">-</span><span class="n">math</span><span class="o">.</span><span class="n">inf</span>
+    <span class="k">return</span> <span class="n">x</span>
+
+
+<span class="nd">@functools</span><span class="o">.</span><span class="n">lru_cache</span>
+<span class="k">def</span> <span class="nf">slot_helper</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="nb">type</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the set of all slots of a class and its parents.</span>
+
+<span class="sd">    This function is needed, as cls.__slots__ only returns the new slots that class</span>
+<span class="sd">    defined, but not the slots which it inherited. We have to manually traverse the</span>
+<span class="sd">    inheritance chain to get all slots.</span>
+<span class="sd">    Since this function is called whenever a variable has its dict called, we cache the</span>
+<span class="sd">     results for performance.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">set</span><span class="p">(</span><span class="n">chain</span><span class="o">.</span><span class="n">from_iterable</span><span class="p">(</span><span class="n">parent</span><span class="o">.</span><span class="vm">__slots__</span> <span class="k">for</span> <span class="n">parent</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">mro</span><span class="p">()[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+
+
+<div class="viewcode-block" id="BaseVariable"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.BaseVariable">[docs]</a><span class="nd">@define</span><span class="p">(</span><span class="n">slots</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">weakref_slot</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">BaseVariable</span><span class="p">(</span><span class="n">AttrsToPydanticAdaptor</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    BaseVariable for all Variables inside the agentlib.</span>
+<span class="sd">    This includes Model Variables and AgentVariables.</span>
+<span class="sd">    A Variable can have an arbitrary value with several forms of validation for type,</span>
+<span class="sd">    boundaries and allowed values.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
+        <span class="n">metadata</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Name&quot;</span><span class="p">,</span> <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;The name of the variable&quot;</span><span class="p">}</span>
+    <span class="p">)</span>
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">metadata</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Type&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Name the type of the variable using a string&quot;</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">)</span>
+    <span class="n">timestamp</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">metadata</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Timestamp&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Timestamp of the current value&quot;</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">)</span>
+    <span class="n">unit</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">&quot;Not defined&quot;</span><span class="p">,</span>
+        <span class="n">metadata</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Unit&quot;</span><span class="p">,</span> <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Unit of the variable&quot;</span><span class="p">},</span>
+    <span class="p">)</span>
+    <span class="n">description</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">&quot;Not defined&quot;</span><span class="p">,</span>
+        <span class="n">metadata</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Description&quot;</span><span class="p">,</span> <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Description of the variable&quot;</span><span class="p">},</span>
+    <span class="p">)</span>
+    <span class="n">ub</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="n">math</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span>
+        <span class="n">converter</span><span class="o">=</span><span class="n">none_to_inf</span><span class="p">,</span>
+        <span class="n">metadata</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Upper boundary&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Upper bound of the variables value, &quot;</span>
+            <span class="s2">&quot;used only for numeric values.&quot;</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">)</span>
+    <span class="n">lb</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=-</span><span class="n">math</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span>
+        <span class="n">converter</span><span class="o">=</span><span class="n">none_to_minus_inf</span><span class="p">,</span>
+        <span class="n">metadata</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Lower boundary&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Lower bound of the variables value, &quot;</span>
+            <span class="s2">&quot;used only for numeric values.&quot;</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">)</span>
+    <span class="n">clip</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">metadata</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Clip values to boundaries&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;If set to true, values outside &quot;</span>
+            <span class="s2">&quot;of bounds will be clipped of&quot;</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">)</span>
+    <span class="c1"># we use list here, because json deserializes to list by default. While membership</span>
+    <span class="c1"># check is slower with list, on average we think this is more performant, since</span>
+    <span class="c1"># the feature is not used very often</span>
+    <span class="n">allowed_values</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="p">[],</span>
+        <span class="n">metadata</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Allowed values&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;If provided, the value may only &quot;</span>
+            <span class="s2">&quot;be any value inside the given set &quot;</span>
+            <span class="s2">&quot;of allowed values. &quot;</span>
+            <span class="s2">&quot;Example would be to only allow only &quot;</span>
+            <span class="s2">&quot;the string options &#39;Create&#39;, &#39;Update&#39; and &quot;</span>
+            <span class="s2">&quot;&#39;Delete&#39;. Then you should pass &quot;</span>
+            <span class="s2">&quot;allowed_values=[&#39;Create&#39;, &#39;Update&#39;, &#39;Delete&#39;]&quot;</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">)</span>
+    <span class="n">value</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">metadata</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Value&quot;</span><span class="p">,</span> <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;The value of the variable&quot;</span><span class="p">},</span>
+    <span class="p">)</span>
+
+<div class="viewcode-block" id="BaseVariable.validate_data"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.BaseVariable.validate_data">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">validate_data</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;BaseVariable&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Constructor that performs all validation.&quot;&quot;&quot;</span>
+        <span class="n">instance</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">instance</span><span class="o">.</span><span class="n">run_validation</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">instance</span></div>
+
+<div class="viewcode-block" id="BaseVariable.create"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.BaseVariable.create">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">dict</span><span class="p">,</span> <span class="s2">&quot;BaseVariable&quot;</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;BaseVariable&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Constructor for pydantic.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="bp">cls</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">data</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">validate_data</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="BaseVariable.run_validation"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.BaseVariable.run_validation">[docs]</a>    <span class="k">def</span> <span class="nf">run_validation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Performs all validations.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_check_bound</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_check_value_type</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_check_type_of_allowed_values</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">validate</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_check_bound</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        First checks if the boundaries lb and ub are either numeric</span>
+<span class="sd">        or if they can be converted to a float. If they can, they</span>
+<span class="sd">        are converted.</span>
+<span class="sd">        Second, lower bound must be lower or equal than upper bound</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">bound</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">&quot;lb&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">lb</span><span class="p">,</span> <span class="s2">&quot;ub&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">ub</span><span class="p">}</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">bound</span><span class="p">,</span> <span class="n">numbers</span><span class="o">.</span><span class="n">Real</span><span class="p">):</span>
+                <span class="k">continue</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">bound</span><span class="p">))</span>
+            <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Given bound </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> is not a valid number.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">lb</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">ub</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Given upper bound (ub) is lower than lower bound (lb)&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_check_value_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Validator for the type field. Makes sure the type is in the type map.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Given types value is of type </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">)</span><span class="si">}</span><span class="s2"> &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;but should be a string.&quot;</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_TYPE_MAP</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Given type &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="si">}</span><span class="s2">&#39; is not supported. &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;Currently supported options are &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">_TYPE_MAP</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_check_type_of_allowed_values</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Check if all given allowed values</span>
+<span class="sd">        are in line with the given type.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">type_string</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span>
+        <span class="k">if</span> <span class="n">type_string</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">allowed_values</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="k">if</span> <span class="n">_TYPE_MAP</span><span class="p">[</span><span class="n">type_string</span><span class="p">]</span> <span class="o">==</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+                <span class="s2">&quot;The filed allowed_values is not &quot;</span>
+                <span class="s2">&quot;supported for pd.Series objects. &quot;</span>
+                <span class="s2">&quot;Equality is not proof-able in a clear way.&quot;</span>
+                <span class="s2">&quot;Going to ignore the setting.&quot;</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">allowed_values</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">return</span>
+
+        <span class="n">allowed_values_converted</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">allowed_value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">allowed_values</span><span class="p">:</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">_convert_value_to_type</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">allowed_value</span><span class="p">,</span> <span class="n">type_string</span><span class="o">=</span><span class="n">type_string</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">_TYPE_MAP</span><span class="p">[</span><span class="n">type_string</span><span class="p">]</span> <span class="ow">in</span> <span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">value</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">lb</span> <span class="ow">or</span> <span class="n">value</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">ub</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">clip</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;Given allowed_value &#39;</span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">&#39; is outside of given bounds. &quot;</span>
+                        <span class="s2">&quot;Set of allowed values is hence infeasible.&quot;</span>
+                    <span class="p">)</span>
+            <span class="n">allowed_values_converted</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">allowed_values</span> <span class="o">=</span> <span class="n">allowed_values_converted</span>
+
+<div class="viewcode-block" id="BaseVariable.set_value"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.BaseVariable.set_value">[docs]</a>    <span class="k">def</span> <span class="nf">set_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">validate</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the value of the variable. If validate is True (default False), also do</span>
+<span class="sd">        the following:</span>
+
+<span class="sd">        - Convert to the given type</span>
+<span class="sd">        - Check if inside the list of allowed_values</span>
+<span class="sd">        - If bounds can be applied, check if inside the given</span>
+<span class="sd">          bounds and maybe even clip accordingly</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Unpack given values and convert the value</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">validate</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
+            <span class="k">return</span>
+
+        <span class="n">name_string</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">_convert_value_to_type</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">,</span> <span class="n">type_string</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">)):</span>
+            <span class="c1"># Else handle boundaries</span>
+            <span class="k">if</span> <span class="n">value</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">ub</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+                    <span class="s2">&quot;Given value &#39;</span><span class="si">%s</span><span class="s2">&#39; is higher than upper bound &#39;</span><span class="si">%s</span><span class="s2">&#39; for &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span><span class="p">,</span>
+                    <span class="n">value</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">ub</span><span class="p">,</span>
+                    <span class="n">name_string</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">clip</span><span class="p">:</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Clipping value accordingly to &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ub</span><span class="p">)</span>
+                    <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ub</span>
+            <span class="k">if</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">lb</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+                    <span class="s2">&quot;Given value &#39;</span><span class="si">%s</span><span class="s2">&#39; is lower than lower bound &#39;</span><span class="si">%s</span><span class="s2">&#39; for &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span><span class="p">,</span>
+                    <span class="n">value</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">lb</span><span class="p">,</span>
+                    <span class="n">name_string</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">clip</span><span class="p">:</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Clipping value accordingly to &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">lb</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">):</span>
+                        <span class="n">value</span><span class="p">[</span><span class="n">value</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">lb</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lb</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lb</span>
+        <span class="c1"># Check if value is inside allowed values</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">allowed_values</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
+            <span class="k">return</span>
+
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">allowed_values</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Given value for </span><span class="si">{</span><span class="n">name_string</span><span class="si">}</span><span class="s2"> is equal to </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2"> but has &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;to be in the set of allowed values: &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">allowed_values</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span></div>
+
+<div class="viewcode-block" id="BaseVariable.dict"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.BaseVariable.dict">[docs]</a>    <span class="k">def</span> <span class="nf">dict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exclude</span><span class="p">:</span> <span class="n">Container</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generates a dict from the Variable.&quot;&quot;&quot;</span>
+        <span class="n">slots</span> <span class="o">=</span> <span class="n">slot_helper</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">exclude</span><span class="p">:</span>
+            <span class="n">dump</span> <span class="o">=</span> <span class="p">{</span><span class="n">slot</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="n">slot</span><span class="p">)</span> <span class="k">for</span> <span class="n">slot</span> <span class="ow">in</span> <span class="n">slots</span><span class="p">}</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">dump</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="n">slot</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="n">slot</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">slot</span> <span class="ow">in</span> <span class="n">slots</span>
+                <span class="k">if</span> <span class="n">slot</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">exclude</span>
+            <span class="p">}</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">):</span>
+            <span class="n">dump</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">dump</span></div>
+
+<div class="viewcode-block" id="BaseVariable.json"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.BaseVariable.json">[docs]</a>    <span class="k">def</span> <span class="nf">json</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Serializes the Variable in json format and returns a string&quot;&quot;&quot;</span>
+        <span class="n">dump</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dict</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">dump</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="k">lambda</span> <span class="n">o</span><span class="p">:</span> <span class="n">o</span><span class="o">.</span><span class="n">dict</span><span class="p">())</span></div></div>
+
+
+<span class="n">BaseVariableT</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;BaseVariableT&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="n">BaseVariable</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_convert_value_to_type</span><span class="p">(</span><span class="n">value</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">type_string</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert the given value to the type of the value&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">type_string</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">value</span>
+
+    <span class="n">type_of_value</span> <span class="o">=</span> <span class="n">_TYPE_MAP</span><span class="p">[</span><span class="n">type_string</span><span class="p">]</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">type_of_value</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">value</span>  <span class="c1"># If already the type just return</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># Use the try block to pretty print any error occurring.</span>
+        <span class="k">if</span> <span class="n">type_of_value</span> <span class="o">==</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">convert_to_pd_series</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">type_of_value</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Given value &#39;</span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">&#39; could not be converted &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;to the specified type &#39;</span><span class="si">{</span><span class="n">type_string</span><span class="si">}</span><span class="s2">&#39;. Error-message: &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="si">{</span><span class="n">err</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">convert_to_pd_series</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">srs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_json</span><span class="p">(</span><span class="n">StringIO</span><span class="p">(</span><span class="n">value</span><span class="p">),</span> <span class="n">typ</span><span class="o">=</span><span class="s2">&quot;series&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="n">srs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Specified a variable as a pd.Series, but the given value </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2"> &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;could not be converted. Please pass a json string or a dict.&quot;</span>
+        <span class="p">)</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">srs</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">srs</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">srs</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">srs</span>
+
+
+<div class="viewcode-block" id="AgentVariable"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.AgentVariable">[docs]</a><span class="nd">@define</span><span class="p">(</span><span class="n">slots</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">weakref_slot</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">AgentVariable</span><span class="p">(</span><span class="n">BaseVariable</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The basic AgentVariable.</span>
+<span class="sd">    The AgentVariable is the central messaging piece in the AgentLib. It can hold</span>
+<span class="sd">    arbitrary (but json-serializable!) values as Agent States, Configuration objects or</span>
+<span class="sd">     messages.</span>
+
+<span class="sd">    In addition to fields defined in BaseVariable,</span>
+<span class="sd">    any AgentVariable holds the</span>
+<span class="sd">    - alias: The publicly known name of the variable</span>
+<span class="sd">    - source: Indicating which agent and or module the variable belong to</span>
+<span class="sd">    - shared: Whether the variable is going to be shared to other Agents</span>
+<span class="sd">    - rdf_class: Class in the resource description framework</span>
+
+<span class="sd">    Check the description of each field for further information.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">alias</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">metadata</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Alias&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Alias, i.e. public name, of the AgentVariable&quot;</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">)</span>
+    <span class="n">source</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Source</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="n">Source</span><span class="p">(),</span>
+        <span class="n">metadata</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Place where the variable has been generated&quot;</span><span class="p">},</span>
+        <span class="n">converter</span><span class="o">=</span><span class="n">Source</span><span class="o">.</span><span class="n">create</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">shared</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">metadata</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;shared&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Indicates if the variable is going to be shared &quot;</span>
+            <span class="s2">&quot;with other agents. If False, no external &quot;</span>
+            <span class="s2">&quot;communication of this variable should take &quot;</span>
+            <span class="s2">&quot;place in any module.&quot;</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">)</span>
+    <span class="n">rdf_class</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">metadata</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Class in the resource description framework (rdf). &quot;</span>
+            <span class="s2">&quot;Describes what of (real) object is represented by the&quot;</span>
+            <span class="s2">&quot;AgentVariable.&quot;</span>
+        <span class="p">},</span>
+    <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__attrs_post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># when creating an AgentVariable not with cls.validate_data(), we still set</span>
+        <span class="c1"># the alias, but don&#39;t validate the value.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_check_source</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_check_alias</span><span class="p">()</span>
+
+<div class="viewcode-block" id="AgentVariable.run_validation"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.AgentVariable.run_validation">[docs]</a>    <span class="k">def</span> <span class="nf">run_validation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">run_validation</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_check_source</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_check_alias</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="nf">_check_alias</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Sets the default value for the alias.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">alias</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">alias</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+
+<div class="viewcode-block" id="AgentVariable.from_json"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.AgentVariable.from_json">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_json</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">s</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">],</span> <span class="n">validate</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Instantiates a new AgentVariable from json.&quot;&quot;&quot;</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+        <span class="n">data</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;alias&quot;</span><span class="p">])</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">validate</span><span class="p">:</span>
+            <span class="n">variable</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">data</span><span class="p">)</span>
+            <span class="c1"># we do no validation, but we have to at least do type conversion</span>
+            <span class="n">variable</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">_convert_value_to_type</span><span class="p">(</span><span class="n">variable</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">variable</span><span class="o">.</span><span class="n">type</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">variable</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">validate_data</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_check_source</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Convert possible str into source&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="n">Source</span><span class="p">(</span><span class="n">agent_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="p">)</span>
+
+<div class="viewcode-block" id="AgentVariable.copy"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.AgentVariable.copy">[docs]</a>    <span class="k">def</span> <span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">update</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">deep</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Creates a copy of the Variable.&quot;&quot;&quot;</span>
+        <span class="n">_copy</span> <span class="o">=</span> <span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">deep</span><span class="p">:</span>
+            <span class="n">_copy</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">update</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">field</span><span class="p">,</span> <span class="n">field_value</span> <span class="ow">in</span> <span class="n">update</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">_copy</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">field_value</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">_copy</span></div>
+
+<div class="viewcode-block" id="AgentVariable.dict"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.AgentVariable.dict">[docs]</a>    <span class="k">def</span> <span class="nf">dict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exclude</span><span class="p">:</span> <span class="n">Container</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">dict</span><span class="p">(</span><span class="n">exclude</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s2">&quot;source&quot;</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
+            <span class="c1"># check needed in case source is in exclude</span>
+            <span class="n">result</span><span class="p">[</span><span class="s2">&quot;source&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s2">&quot;source&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">dict</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">result</span></div></div>
+
+
+<span class="nd">@define</span><span class="p">(</span><span class="n">slots</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">weakref_slot</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">BaseModelVariable</span><span class="p">(</span><span class="n">BaseVariable</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Add the causalities used for model specific variables.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">causality</span><span class="p">:</span> <span class="n">Causality</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">metadata</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;causality&quot;</span><span class="p">,</span> <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;The causality of the variable&quot;</span><span class="p">},</span>
+    <span class="p">)</span>
+    <span class="n">variability</span><span class="p">:</span> <span class="n">Variability</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">metadata</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;variability&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;The variability of the variable&quot;</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">)</span>
+    <span class="nb">type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">,</span>
+        <span class="n">metadata</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Type&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Name the type of the variable using a string. For model &quot;</span>
+            <span class="s2">&quot;variables, this is float by default.&quot;</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__attrs_post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># for model variables, we always want to validate them, since they are</span>
+        <span class="c1"># typically not created on the fly</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">run_validation</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">check_causality</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Check if causality equals the default value.</span>
+<span class="sd">        Else, convert it to the default.&quot;&quot;&quot;</span>
+        <span class="n">default</span> <span class="o">=</span> <span class="n">attrs</span><span class="o">.</span><span class="n">fields</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span><span class="o">.</span><span class="n">causality</span><span class="o">.</span><span class="n">default</span>
+        <span class="k">if</span> <span class="n">default</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">causality</span> <span class="o">!=</span> <span class="n">default</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">causality</span> <span class="o">=</span> <span class="n">default</span>
+
+    <span class="k">def</span> <span class="nf">run_validation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">run_validation</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">check_causality</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">check_fmu_compliance</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">check_fmu_compliance</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Check if combination of causality and variability</span>
+<span class="sd">        is supported according to fmu standard.&quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">variability</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">causality</span> <span class="ow">in</span> <span class="p">[</span><span class="n">Causality</span><span class="o">.</span><span class="n">parameter</span><span class="p">,</span> <span class="n">Causality</span><span class="o">.</span><span class="n">calculatedParameter</span><span class="p">]:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">variability</span> <span class="o">=</span> <span class="n">Variability</span><span class="o">.</span><span class="n">tunable</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">variability</span> <span class="o">=</span> <span class="n">Variability</span><span class="o">.</span><span class="n">continuous</span>
+        <span class="c1"># Specify allowed combinations and reasons for them being not allowed:</span>
+        <span class="c1"># Source: FMU Standard</span>
+        <span class="n">_reason_a</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s2">&quot;The combinations “constant / parameter”, “constant / &quot;</span>
+            <span class="s2">&quot;calculatedParameter” and “constant / input” do not &quot;</span>
+            <span class="s2">&quot;make sense, since parameters and inputs &quot;</span>
+            <span class="s2">&quot;are set from the environment, whereas a constant &quot;</span>
+            <span class="s2">&quot;has always a value.&quot;</span>
+        <span class="p">)</span>
+        <span class="n">_reason_b</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s2">&quot;The combinations “discrete / parameter”, “discrete / &quot;</span>
+            <span class="s2">&quot;calculatedParameter”, “continuous / parameter”and &quot;</span>
+            <span class="s2">&quot;continuous / calculatedParameter do not make sense, &quot;</span>
+            <span class="s2">&quot;since causality = “parameter” and “calculatedParameter” &quot;</span>
+            <span class="s2">&quot;define variables that do not depend on time, whereas “discrete” &quot;</span>
+            <span class="s2">&quot;and “continuous” define variables where the values can &quot;</span>
+            <span class="s2">&quot;change during simulation.&quot;</span>
+        <span class="p">)</span>
+        <span class="n">_reason_c</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s2">&quot;For an “independent” variable only variability = “continuous” &quot;</span>
+            <span class="s2">&quot;makes sense.&quot;</span>
+        <span class="p">)</span>
+        <span class="n">_reason_d</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s2">&quot;A fixed or tunable “input” has exactly the same properties &quot;</span>
+            <span class="s2">&quot;as a fixed or tunable parameter. For simplicity, only&quot;</span>
+            <span class="s2">&quot; fixed and tunable parameters shall be defined.&quot;</span>
+        <span class="p">)</span>
+        <span class="n">_reason_e</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s2">&quot;A fixed or tunable “output” has exactly the same properties &quot;</span>
+            <span class="s2">&quot;as a fixed or tunable calculatedParameter. For simplicity, &quot;</span>
+            <span class="s2">&quot;only fixed and tunable calculatedParameters shall be defined&quot;</span>
+        <span class="p">)</span>
+        <span class="n">_unsupported_combinations</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="p">(</span><span class="n">Causality</span><span class="o">.</span><span class="n">parameter</span><span class="p">,</span> <span class="n">Variability</span><span class="o">.</span><span class="n">constant</span><span class="p">):</span> <span class="n">_reason_a</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">Causality</span><span class="o">.</span><span class="n">parameter</span><span class="p">,</span> <span class="n">Variability</span><span class="o">.</span><span class="n">discrete</span><span class="p">):</span> <span class="n">_reason_b</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">Causality</span><span class="o">.</span><span class="n">parameter</span><span class="p">,</span> <span class="n">Variability</span><span class="o">.</span><span class="n">continuous</span><span class="p">):</span> <span class="n">_reason_b</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">Causality</span><span class="o">.</span><span class="n">calculatedParameter</span><span class="p">,</span> <span class="n">Variability</span><span class="o">.</span><span class="n">constant</span><span class="p">):</span> <span class="n">_reason_a</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">Causality</span><span class="o">.</span><span class="n">calculatedParameter</span><span class="p">,</span> <span class="n">Variability</span><span class="o">.</span><span class="n">discrete</span><span class="p">):</span> <span class="n">_reason_b</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">Causality</span><span class="o">.</span><span class="n">calculatedParameter</span><span class="p">,</span> <span class="n">Variability</span><span class="o">.</span><span class="n">continuous</span><span class="p">):</span> <span class="n">_reason_b</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">Causality</span><span class="o">.</span><span class="n">input</span><span class="p">,</span> <span class="n">Variability</span><span class="o">.</span><span class="n">constant</span><span class="p">):</span> <span class="n">_reason_a</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">Causality</span><span class="o">.</span><span class="n">input</span><span class="p">,</span> <span class="n">Variability</span><span class="o">.</span><span class="n">fixed</span><span class="p">):</span> <span class="n">_reason_d</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">Causality</span><span class="o">.</span><span class="n">input</span><span class="p">,</span> <span class="n">Variability</span><span class="o">.</span><span class="n">tunable</span><span class="p">):</span> <span class="n">_reason_d</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">Causality</span><span class="o">.</span><span class="n">output</span><span class="p">,</span> <span class="n">Variability</span><span class="o">.</span><span class="n">fixed</span><span class="p">):</span> <span class="n">_reason_e</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">Causality</span><span class="o">.</span><span class="n">output</span><span class="p">,</span> <span class="n">Variability</span><span class="o">.</span><span class="n">tunable</span><span class="p">):</span> <span class="n">_reason_e</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">Causality</span><span class="o">.</span><span class="n">independent</span><span class="p">,</span> <span class="n">Variability</span><span class="o">.</span><span class="n">constant</span><span class="p">):</span> <span class="n">_reason_c</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">Causality</span><span class="o">.</span><span class="n">independent</span><span class="p">,</span> <span class="n">Variability</span><span class="o">.</span><span class="n">fixed</span><span class="p">):</span> <span class="n">_reason_c</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">Causality</span><span class="o">.</span><span class="n">independent</span><span class="p">,</span> <span class="n">Variability</span><span class="o">.</span><span class="n">tunable</span><span class="p">):</span> <span class="n">_reason_c</span><span class="p">,</span>
+            <span class="p">(</span><span class="n">Causality</span><span class="o">.</span><span class="n">independent</span><span class="p">,</span> <span class="n">Variability</span><span class="o">.</span><span class="n">discrete</span><span class="p">):</span> <span class="n">_reason_c</span><span class="p">,</span>
+        <span class="p">}</span>
+
+        <span class="n">_combination</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">causality</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">variability</span><span class="p">)</span>
+        <span class="c1"># if combination is not supported, raise an error</span>
+        <span class="k">assert</span> <span class="n">_combination</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_unsupported_combinations</span><span class="p">,</span> <span class="n">_unsupported_combinations</span><span class="p">[</span>
+            <span class="n">_combination</span>
+        <span class="p">]</span>
+
+
+<div class="viewcode-block" id="ModelVariable"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.ModelVariable">[docs]</a><span class="nd">@define</span><span class="p">(</span><span class="n">slots</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">weakref_slot</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">ModelVariable</span><span class="p">(</span><span class="n">BaseModelVariable</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The basic ModelVariable.</span>
+<span class="sd">    Aside from only allowing number for values,</span>
+<span class="sd">    this class enables calculation with the object itself.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">sim_time</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Current simulation time&quot;</span><span class="p">})</span>
+
+    <span class="k">def</span> <span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">+</span> <span class="n">other</span>
+
+    <span class="k">def</span> <span class="fm">__radd__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">other</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span>
+
+    <span class="k">def</span> <span class="fm">__sub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">-</span> <span class="n">other</span>
+
+    <span class="k">def</span> <span class="fm">__rsub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">other</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span>
+
+    <span class="k">def</span> <span class="fm">__mul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">*</span> <span class="n">other</span>
+
+    <span class="k">def</span> <span class="fm">__rmul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">other</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span>
+
+    <span class="k">def</span> <span class="fm">__truediv__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">/</span> <span class="n">other</span>
+
+    <span class="k">def</span> <span class="fm">__rtruediv__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">other</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span>
+
+    <span class="k">def</span> <span class="fm">__pow__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">power</span><span class="p">,</span> <span class="n">modulo</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="o">**</span><span class="n">power</span>
+
+    <span class="k">def</span> <span class="fm">__rpow__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">other</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span></div>
+
+
+<div class="viewcode-block" id="ModelInput"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.ModelInput">[docs]</a><span class="nd">@define</span><span class="p">(</span><span class="n">slots</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">weakref_slot</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">ModelInput</span><span class="p">(</span><span class="n">ModelVariable</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The ModelInput variable.</span>
+<span class="sd">    Inherits</span>
+
+<span class="sd">    - BaseInput: The causality and variability associated with an input</span>
+<span class="sd">    - ModelVariable: The fields unique to a ModelVariable.</span>
+<span class="sd">    - BaseModelVariable: All fields associated with any model variable.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__attrs_post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">causality</span> <span class="o">=</span> <span class="n">Causality</span><span class="o">.</span><span class="n">input</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">variability</span> <span class="o">=</span> <span class="n">Variability</span><span class="o">.</span><span class="n">continuous</span></div>
+
+
+<div class="viewcode-block" id="ModelOutput"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.ModelOutput">[docs]</a><span class="nd">@define</span><span class="p">(</span><span class="n">slots</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">weakref_slot</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">ModelOutput</span><span class="p">(</span><span class="n">ModelVariable</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The ModelOutput variable.</span>
+<span class="sd">    Inherits</span>
+
+<span class="sd">    - BaseOutput: The causality and variability associated with an output</span>
+<span class="sd">    - ModelVariable: The fields unique to a ModelVariable.</span>
+<span class="sd">    - BaseModelVariable: All fields associated with any model variable.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__attrs_post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">causality</span><span class="p">:</span> <span class="n">Causality</span> <span class="o">=</span> <span class="n">Causality</span><span class="o">.</span><span class="n">output</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">variability</span><span class="p">:</span> <span class="n">Variability</span> <span class="o">=</span> <span class="n">Variability</span><span class="o">.</span><span class="n">continuous</span></div>
+
+
+<div class="viewcode-block" id="ModelState"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.ModelState">[docs]</a><span class="nd">@define</span><span class="p">(</span><span class="n">slots</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">weakref_slot</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">ModelState</span><span class="p">(</span><span class="n">ModelVariable</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The ModelState variable.</span>
+<span class="sd">    Inherits</span>
+
+<span class="sd">    - BaseLocal: The causality and variability associated with a local</span>
+<span class="sd">    - ModelVariable: The fields unique to a ModelVariable.</span>
+<span class="sd">    - BaseModelVariable: All fields associated with any model variable.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__attrs_post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">causality</span><span class="p">:</span> <span class="n">Causality</span> <span class="o">=</span> <span class="n">Causality</span><span class="o">.</span><span class="n">local</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">variability</span><span class="p">:</span> <span class="n">Variability</span> <span class="o">=</span> <span class="n">Variability</span><span class="o">.</span><span class="n">continuous</span></div>
+
+
+<div class="viewcode-block" id="ModelParameter"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.ModelParameter">[docs]</a><span class="nd">@define</span><span class="p">(</span><span class="n">slots</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">weakref_slot</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">kw_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">ModelParameter</span><span class="p">(</span><span class="n">ModelVariable</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The ModelParameter variable.</span>
+<span class="sd">    Inherits</span>
+
+<span class="sd">    - BaseParameter: The causality and variability associated with a parameter</span>
+<span class="sd">    - ModelVariable: The fields unique to a ModelVariable.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__attrs_post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">causality</span><span class="p">:</span> <span class="n">Causality</span> <span class="o">=</span> <span class="n">Causality</span><span class="o">.</span><span class="n">parameter</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">variability</span><span class="p">:</span> <span class="n">Variability</span> <span class="o">=</span> <span class="n">Variability</span><span class="o">.</span><span class="n">tunable</span></div>
+
+
+<span class="c1"># Types section</span>
+<span class="c1"># Agents</span>
+<span class="n">AgentVariables</span> <span class="o">=</span> <span class="n">List</span><span class="p">[</span><span class="n">AgentVariable</span><span class="p">]</span>
+<span class="c1"># Models</span>
+<span class="n">ModelInputs</span> <span class="o">=</span> <span class="n">List</span><span class="p">[</span><span class="n">ModelInput</span><span class="p">]</span>
+<span class="n">ModelStates</span> <span class="o">=</span> <span class="n">List</span><span class="p">[</span><span class="n">ModelState</span><span class="p">]</span>
+<span class="n">ModelOutputs</span> <span class="o">=</span> <span class="n">List</span><span class="p">[</span><span class="n">ModelOutput</span><span class="p">]</span>
+<span class="n">ModelParameters</span> <span class="o">=</span> <span class="n">List</span><span class="p">[</span><span class="n">ModelParameter</span><span class="p">]</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, AGENT-Project Associates.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
