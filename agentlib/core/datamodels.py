@@ -673,8 +673,8 @@ class AgentVariable(BaseVariable):
         metadata={"title": "Place where the variable has been generated"},
         converter=Source.create,
     )
-    shared: bool = field(
-        default=False,
+    shared: Optional[bool] = field(
+        default=None,
         metadata={
             "title": "shared",
             "description": "Indicates if the variable is going to be shared "
