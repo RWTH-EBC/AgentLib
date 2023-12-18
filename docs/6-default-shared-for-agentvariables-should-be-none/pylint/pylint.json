@@ -794,7 +794,7 @@
         },
         {
             "type": "warning",
-            "module": "run_examples",
+            "module": "ci.run_examples",
             "obj": "TestExamples._run_example",
             "line": 39,
             "column": 12,
@@ -805,7 +805,7 @@
         },
         {
             "type": "convention",
-            "module": "run_examples",
+            "module": "ci.run_examples",
             "obj": "TestExamples.test_room_mas",
             "line": 56,
             "column": 8,
@@ -2304,314 +2304,6 @@
                 "statement": 9,
                 "warning": 0
             },
-            "run_examples": {
-                "convention": 1,
-                "error": 0,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 0,
-                "statement": 51,
-                "warning": 1
-            },
-            "tests.__init__": {
-                "convention": 0,
-                "error": 0,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 0,
-                "statement": 0,
-                "warning": 0
-            },
-            "tests.test_agent": {
-                "convention": 13,
-                "error": 0,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 1,
-                "statement": 132,
-                "warning": 7
-            },
-            "tests.test_communicator": {
-                "convention": 6,
-                "error": 0,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 0,
-                "statement": 20,
-                "warning": 0
-            },
-            "tests.test_data_broker": {
-                "convention": 6,
-                "error": 0,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 0,
-                "statement": 78,
-                "warning": 13
-            },
-            "tests.test_datamodels": {
-                "convention": 7,
-                "error": 0,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 10,
-                "statement": 126,
-                "warning": 2
-            },
-            "tests.test_environment": {
-                "convention": 0,
-                "error": 0,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 0,
-                "statement": 42,
-                "warning": 1
-            },
-            "tests.test_mas": {
-                "convention": 4,
-                "error": 0,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 0,
-                "statement": 10,
-                "warning": 0
-            },
-            "tests.test_model": {
-                "convention": 2,
-                "error": 1,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 0,
-                "statement": 127,
-                "warning": 7
-            },
-            "tests.test_module": {
-                "convention": 8,
-                "error": 0,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 1,
-                "statement": 198,
-                "warning": 12
-            },
-            "tests.test_n_pingpong": {
-                "convention": 7,
-                "error": 0,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 0,
-                "statement": 110,
-                "warning": 1
-            },
-            "tests.test_plugins": {
-                "convention": 5,
-                "error": 0,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 0,
-                "statement": 10,
-                "warning": 0
-            },
-            "tests.test_simulator": {
-                "convention": 10,
-                "error": 0,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 0,
-                "statement": 93,
-                "warning": 3
-            },
-            "tests.test_utils": {
-                "convention": 4,
-                "error": 0,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 1,
-                "statement": 59,
-                "warning": 1
-            }
-        },
-        "by_msg": {
-            "broad-exception-raised": 2,
-            "import-outside-toplevel": 1,
-            "missing-class-docstring": 11,
-            "too-many-instance-attributes": 1,
-            "unspecified-encoding": 8,
-            "missing-function-docstring": 24,
-            "invalid-name": 17,
-            "attribute-defined-outside-init": 6,
-            "trailing-newlines": 1,
-            "missing-module-docstring": 3,
-            "unnecessary-dunder-call": 3,
-            "protected-access": 22,
-            "unused-variable": 4,
-            "unused-argument": 2,
-            "unused-import": 3,
-            "line-too-long": 9,
-            "use-dict-literal": 10,
-            "wrong-import-order": 1,
-            "missing-final-newline": 3,
-            "abstract-class-instantiated": 1,
-            "pointless-statement": 1,
-            "no-else-return": 1,
-            "duplicate-code": 1
-        },
-        "code_type_count": {
-            "code": 0,
-            "comment": 0,
-            "docstring": 0,
-            "empty": 0,
-            "total": 0
-        },
-        "dependencies": {
-            "agentlib.core": [
-                "tests.test_agent",
-                "tests.test_environment",
-                "tests.test_data_broker",
-                "tests.test_module",
-                "agentlib",
-                "tests.test_model",
-                "tests.test_n_pingpong",
-                "tests.test_simulator"
-            ],
-            "agentlib.utils": [
-                "agentlib",
-                "tests.test_utils",
-                "tests.test_n_pingpong",
-                "run_examples"
-            ],
-            "agentlib.models": [
-                "agentlib"
-            ],
-            "agentlib.modules": [
-                "agentlib"
-            ],
-            "agentlib.core.datamodels": [
-                "tests.test_datamodels",
-                "tests.test_module",
-                "agentlib",
-                "tests.test_model",
-                "tests.test_n_pingpong",
-                "tests.test_simulator"
-            ],
-            "agentlib.utils.multi_agent_system": [
-                "agentlib",
-                "tests.test_n_pingpong"
-            ],
-            "pandas": [
-                "tests.test_datamodels",
-                "tests.test_simulator",
-                "run_examples"
-            ],
-            "agentlib.utils.local_broadcast_broker": [
-                "run_examples"
-            ],
-            "pydantic": [
-                "tests.test_datamodels",
-                "tests.test_agent",
-                "tests.test_environment",
-                "tests.test_module",
-                "tests.test_model",
-                "tests.test_n_pingpong",
-                "tests.test_simulator"
-            ],
-            "agentlib.core.agent": [
-                "tests.test_agent",
-                "tests.test_utils"
-            ],
-            "agentlib": [
-                "tests.test_utils",
-                "tests.test_communicator"
-            ],
-            "agentlib.modules.communicator.local": [
-                "tests.test_communicator"
-            ],
-            "numpy": [
-                "tests.test_data_broker",
-                "tests.test_model",
-                "tests.test_n_pingpong",
-                "tests.test_simulator"
-            ],
-            "agentlib.core.errors": [
-                "tests.test_datamodels",
-                "tests.test_utils",
-                "tests.test_module"
-            ],
-            "agentlib.core.environment": [
-                "tests.test_environment"
-            ],
-            "agentlib.models.scipy_model": [
-                "tests.test_model"
-            ],
-            "agentlib.models.fmu_model": [
-                "tests.test_model"
-            ],
-            "agentlib.modules.simulator": [
-                "tests.test_simulator"
-            ],
-            "agentlib.utils.validators": [
-                "tests.test_utils"
-            ],
-            "agentlib.utils.broker": [
-                "tests.test_utils"
-            ],
-            "agentlib.utils.load_config": [
-                "tests.test_utils"
-            ]
-        },
-        "duplicated_lines": {
-            "nb_duplicated_lines": 0,
-            "percent_duplicated_lines": 0.0
-        },
-        "node_count": {
-            "function": 1,
-            "klass": 31,
-            "method": 147,
-            "module": 15
-        },
-        "undocumented": {
-            "function": 0,
-            "klass": 16,
-            "method": 24,
-            "module": 3
-        },
-        "convention": 73,
-        "error": 1,
-        "fatal": 0,
-        "info": 0,
-        "refactor": 13,
-        "statement": 1065,
-        "warning": 48,
-        "global_note": 0,
-        "nb_duplicated_lines": 6,
-        "percent_duplicated_lines": 0.3129890453834116
-    },
-    "previous": {
-        "bad_names": {
-            "argument": 1,
-            "attr": 2,
-            "klass": 0,
-            "class_attribute": 0,
-            "class_const": 0,
-            "const": 0,
-            "inlinevar": 0,
-            "function": 0,
-            "method": 0,
-            "module": 0,
-            "variable": 14,
-            "typevar": 0,
-            "typealias": 0
-        },
-        "by_module": {
-            "agentlib.__init__": {
-                "convention": 0,
-                "error": 0,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 0,
-                "statement": 9,
-                "warning": 0
-            },
             "ci.run_examples": {
                 "convention": 1,
                 "error": 0,
@@ -2773,20 +2465,20 @@
         },
         "dependencies": {
             "agentlib.core": [
-                "tests.test_agent",
-                "tests.test_data_broker",
-                "tests.test_environment",
-                "tests.test_module",
-                "agentlib",
                 "tests.test_model",
+                "tests.test_simulator",
                 "tests.test_n_pingpong",
-                "tests.test_simulator"
+                "agentlib",
+                "tests.test_data_broker",
+                "tests.test_module",
+                "tests.test_environment",
+                "tests.test_agent"
             ],
             "agentlib.utils": [
-                "agentlib",
-                "tests.test_utils",
                 "tests.test_n_pingpong",
-                "ci.run_examples"
+                "agentlib",
+                "ci.run_examples",
+                "tests.test_utils"
             ],
             "agentlib.models": [
                 "agentlib"
@@ -2795,33 +2487,341 @@
                 "agentlib"
             ],
             "agentlib.core.datamodels": [
-                "tests.test_datamodels",
-                "tests.test_module",
-                "agentlib",
                 "tests.test_model",
+                "tests.test_simulator",
+                "tests.test_datamodels",
                 "tests.test_n_pingpong",
-                "tests.test_simulator"
+                "agentlib",
+                "tests.test_module"
             ],
             "agentlib.utils.multi_agent_system": [
-                "agentlib",
-                "tests.test_n_pingpong"
+                "tests.test_n_pingpong",
+                "agentlib"
             ],
             "pandas": [
-                "ci.run_examples",
                 "tests.test_datamodels",
+                "ci.run_examples",
                 "tests.test_simulator"
             ],
             "agentlib.utils.local_broadcast_broker": [
                 "ci.run_examples"
             ],
             "pydantic": [
+                "tests.test_model",
+                "tests.test_simulator",
                 "tests.test_datamodels",
-                "tests.test_agent",
-                "tests.test_environment",
+                "tests.test_n_pingpong",
                 "tests.test_module",
+                "tests.test_environment",
+                "tests.test_agent"
+            ],
+            "agentlib.core.agent": [
+                "tests.test_utils",
+                "tests.test_agent"
+            ],
+            "agentlib": [
+                "tests.test_utils",
+                "tests.test_communicator"
+            ],
+            "agentlib.modules.communicator.local": [
+                "tests.test_communicator"
+            ],
+            "numpy": [
                 "tests.test_model",
                 "tests.test_n_pingpong",
+                "tests.test_simulator",
+                "tests.test_data_broker"
+            ],
+            "agentlib.core.errors": [
+                "tests.test_datamodels",
+                "tests.test_utils",
+                "tests.test_module"
+            ],
+            "agentlib.core.environment": [
+                "tests.test_environment"
+            ],
+            "agentlib.models.scipy_model": [
+                "tests.test_model"
+            ],
+            "agentlib.models.fmu_model": [
+                "tests.test_model"
+            ],
+            "agentlib.modules.simulator": [
                 "tests.test_simulator"
+            ],
+            "agentlib.utils.validators": [
+                "tests.test_utils"
+            ],
+            "agentlib.utils.broker": [
+                "tests.test_utils"
+            ],
+            "agentlib.utils.load_config": [
+                "tests.test_utils"
+            ]
+        },
+        "duplicated_lines": {
+            "nb_duplicated_lines": 0,
+            "percent_duplicated_lines": 0.0
+        },
+        "node_count": {
+            "function": 1,
+            "klass": 31,
+            "method": 147,
+            "module": 15
+        },
+        "undocumented": {
+            "function": 0,
+            "klass": 16,
+            "method": 24,
+            "module": 3
+        },
+        "convention": 73,
+        "error": 1,
+        "fatal": 0,
+        "info": 0,
+        "refactor": 13,
+        "statement": 1065,
+        "warning": 48,
+        "global_note": 0,
+        "nb_duplicated_lines": 6,
+        "percent_duplicated_lines": 0.3129890453834116
+    },
+    "previous": {
+        "bad_names": {
+            "argument": 1,
+            "attr": 2,
+            "klass": 0,
+            "class_attribute": 0,
+            "class_const": 0,
+            "const": 0,
+            "inlinevar": 0,
+            "function": 0,
+            "method": 0,
+            "module": 0,
+            "variable": 14,
+            "typevar": 0,
+            "typealias": 0
+        },
+        "by_module": {
+            "agentlib.__init__": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 9,
+                "warning": 0
+            },
+            "run_examples": {
+                "convention": 1,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 51,
+                "warning": 1
+            },
+            "tests.__init__": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "tests.test_agent": {
+                "convention": 13,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 1,
+                "statement": 132,
+                "warning": 7
+            },
+            "tests.test_communicator": {
+                "convention": 6,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 20,
+                "warning": 0
+            },
+            "tests.test_data_broker": {
+                "convention": 6,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 78,
+                "warning": 13
+            },
+            "tests.test_datamodels": {
+                "convention": 7,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 10,
+                "statement": 126,
+                "warning": 2
+            },
+            "tests.test_environment": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 42,
+                "warning": 1
+            },
+            "tests.test_mas": {
+                "convention": 4,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 10,
+                "warning": 0
+            },
+            "tests.test_model": {
+                "convention": 2,
+                "error": 1,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 127,
+                "warning": 7
+            },
+            "tests.test_module": {
+                "convention": 8,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 1,
+                "statement": 198,
+                "warning": 12
+            },
+            "tests.test_n_pingpong": {
+                "convention": 7,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 110,
+                "warning": 1
+            },
+            "tests.test_plugins": {
+                "convention": 5,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 10,
+                "warning": 0
+            },
+            "tests.test_simulator": {
+                "convention": 10,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 93,
+                "warning": 3
+            },
+            "tests.test_utils": {
+                "convention": 4,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 1,
+                "statement": 59,
+                "warning": 1
+            }
+        },
+        "by_msg": {
+            "broad-exception-raised": 2,
+            "import-outside-toplevel": 1,
+            "missing-class-docstring": 11,
+            "too-many-instance-attributes": 1,
+            "unspecified-encoding": 8,
+            "missing-function-docstring": 24,
+            "invalid-name": 17,
+            "attribute-defined-outside-init": 6,
+            "trailing-newlines": 1,
+            "missing-module-docstring": 3,
+            "unnecessary-dunder-call": 3,
+            "protected-access": 22,
+            "unused-variable": 4,
+            "unused-argument": 2,
+            "unused-import": 3,
+            "line-too-long": 9,
+            "use-dict-literal": 10,
+            "wrong-import-order": 1,
+            "missing-final-newline": 3,
+            "abstract-class-instantiated": 1,
+            "pointless-statement": 1,
+            "no-else-return": 1,
+            "duplicate-code": 1
+        },
+        "code_type_count": {
+            "code": 0,
+            "comment": 0,
+            "docstring": 0,
+            "empty": 0,
+            "total": 0
+        },
+        "dependencies": {
+            "agentlib.core": [
+                "tests.test_model",
+                "tests.test_simulator",
+                "tests.test_n_pingpong",
+                "agentlib",
+                "tests.test_data_broker",
+                "tests.test_module",
+                "tests.test_environment",
+                "tests.test_agent"
+            ],
+            "agentlib.utils": [
+                "run_examples",
+                "tests.test_n_pingpong",
+                "agentlib",
+                "tests.test_utils"
+            ],
+            "agentlib.models": [
+                "agentlib"
+            ],
+            "agentlib.modules": [
+                "agentlib"
+            ],
+            "agentlib.core.datamodels": [
+                "tests.test_model",
+                "tests.test_simulator",
+                "tests.test_datamodels",
+                "tests.test_n_pingpong",
+                "agentlib",
+                "tests.test_module"
+            ],
+            "agentlib.utils.multi_agent_system": [
+                "tests.test_n_pingpong",
+                "agentlib"
+            ],
+            "pandas": [
+                "run_examples",
+                "tests.test_datamodels",
+                "tests.test_simulator"
+            ],
+            "agentlib.utils.local_broadcast_broker": [
+                "run_examples"
+            ],
+            "pydantic": [
+                "tests.test_model",
+                "tests.test_simulator",
+                "tests.test_n_pingpong",
+                "tests.test_datamodels",
+                "tests.test_module",
+                "tests.test_environment",
+                "tests.test_agent"
             ],
             "agentlib.core.agent": [
                 "tests.test_agent",
@@ -2835,15 +2835,15 @@
                 "tests.test_communicator"
             ],
             "numpy": [
-                "tests.test_data_broker",
                 "tests.test_model",
                 "tests.test_n_pingpong",
-                "tests.test_simulator"
+                "tests.test_simulator",
+                "tests.test_data_broker"
             ],
             "agentlib.core.errors": [
-                "tests.test_module",
+                "tests.test_datamodels",
                 "tests.test_utils",
-                "tests.test_datamodels"
+                "tests.test_module"
             ],
             "agentlib.core.environment": [
                 "tests.test_environment"
