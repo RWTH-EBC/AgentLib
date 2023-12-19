@@ -155,13 +155,13 @@ of an “id” and a list of “modules”.</p>
 A module config consist at least of a “module_id” and a “type”.
 The first module we specify is a communicator.
 The first method to define a module type is to
-choose a standard module from the agentlib
+choose a standard module from the AgentLib
 modules. To learn the identifier of module type,
 look in the <code class="docutils literal notranslate"><span class="pre">__init__.py</span></code> files in the ‘modules’
-subpackages of the agentlib. Here, we choose
+subpackages of the AgentLib. Here, we choose
 “local_broadcast” from the communicator package as
 our communicator.
-Our second module is the pingpong module. For this module, we will use custom injection to specify its type, as it is not from the standard agentlib modules. We also specify a parameter.</p>
+Our second module is the pingpong module. For this module, we will use custom injection to specify its type, as it is not from the standard AgentLib modules. We also specify a parameter.</p>
 <p>When using custom injection, the type of a module
 is not specified by a string, but a dictionary,
 consisting of “file” and “class_name”. This way,
@@ -215,8 +215,8 @@ module is located at
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">logging</span></code>, <code class="docutils literal notranslate"><span class="pre">time</span></code> and <code class="docutils literal notranslate"><span class="pre">sys</span></code> are used for the functionality of the
 module, which we will look at later. From pydantic we import Field. Pydantic
-is used in <em>agentlib</em> to specify module configurations and validate them.
-Finally, from the <em>agentlib</em>’s core we import <code class="docutils literal notranslate"><span class="pre">BaseModule</span></code>, which we need to inherit
+is used in <em>AgentLib</em> to specify module configurations and validate them.
+Finally, from the <em>AgentLib</em>’s core we import <code class="docutils literal notranslate"><span class="pre">BaseModule</span></code>, which we need to inherit
 from, <code class="docutils literal notranslate"><span class="pre">BaseModuleConfig</span></code> for the configuration and <code class="docutils literal notranslate"><span class="pre">AgentVariable</span></code>,
 <code class="docutils literal notranslate"><span class="pre">AgentVariable</span></code> and <code class="docutils literal notranslate"><span class="pre">Causality</span></code>.
 <code class="docutils literal notranslate"><span class="pre">AgentVariable</span></code> is the base class for all quantities that need to be

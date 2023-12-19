@@ -13,7 +13,7 @@ To install with full dependencies (recommended), run:
 pip install agentlib[full]
 ```
 
-If you want to work on the agentlib, first clone it from [github](https://github.com/RWTH-EBC/AgentLib), go its directory and then install it in editable mode:
+If you want to work on the AgentLib, first clone it from [github](https://github.com/RWTH-EBC/AgentLib), go its directory and then install it in editable mode:
 
 ```
 pip install -e .[full]
@@ -23,7 +23,7 @@ If later you want to use uninstalled modules, an `OptionalDependencyError` will 
 
 ## Optional dependencies
 
-To install optional dependencies, install the agentlib with the key, i.e. to install with FMU support, do:
+To install optional dependencies, install the AgentLib with the key, i.e. to install with FMU support, do:
 ```
 pip install agentlib[fmu]
 ```
