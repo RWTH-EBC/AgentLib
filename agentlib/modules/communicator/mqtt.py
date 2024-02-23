@@ -67,6 +67,11 @@ class BaseMQTTClientConfig(SubscriptionCommunicatorConfig):
     )
     username: str = Field(default=None, title="Username to login")
     password: str = Field(default=None, title="Password to login")
+    use_tls: bool = Field(default=None, description="Option to use TLS certificates")
+    tls_ca_certs: str = Field(
+        default=None,
+        description="Path to the Certificate Authority certificate files. "
+                    "If None, windows certificate will be used.")
 
     # Add validator
     check_subtopics = field_validator("subtopics")(convert_to_list)
@@ -122,8 +127,12 @@ class BaseMqttClient(Communicator):
             self._mqttc.username_pw_set(
                 username=self.config.username, password=self.config.password
             )
-            # Add TLS-Settings
-            self._mqttc.tls_set()
+            #  Add TLS-Settings (default behavior)
+            if self.config.use_tls is None:
+                self._mqttc.tls_set(ca_certs=self.config.tls_ca_certs)
+        # Add TLS-Settings
+        if self.config.use_tls:
+            self._mqttc.tls_set(ca_certs=self.config.tls_ca_certs)
 
         self._mqttc.on_connect = self._connect_callback
         self._mqttc.on_disconnect = self._disconnect_callback
