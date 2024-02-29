@@ -319,7 +319,12 @@ class Simulator(BaseModule):
                 f"but should be an instance of Model or a valid subclass"
             )
         self._model = model
-        self.model.initialize(t_start=self.config.t_start, t_stop=self.config.t_stop)
+        if self.config.t_start and self.env.offset:
+            self.logger.warning("config.t_start and env.offset are non-zero. "
+                                "This may cause unexpected behavior. Ensure that this "
+                                "is intended and you know what you are doing.")
+        self.model.initialize(t_start=self.config.t_start + self.env.offset,
+                              t_stop=self.config.t_stop)
         self.logger.info("Model successfully loaded model: %s", self.model.name)
 
     def run(self, until=None):
