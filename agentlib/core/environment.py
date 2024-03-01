@@ -60,7 +60,7 @@ class Environment(simpy.RealtimeEnvironment):
 
     def __init__(self, *, config: dict = None):
         # pylint: disable=super-init-not-called
-        self.t_start = None
+        self.t_start = time.time()
         if config is None:
             self.config = EnvironmentConfig()
         else:
