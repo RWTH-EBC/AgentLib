@@ -60,7 +60,7 @@ class Environment(simpy.RealtimeEnvironment):
 
     def __init__(self, *, config: dict = None):
         # pylint: disable=super-init-not-called
-        self.t_start = time.time()
+        self.t_start = None
         if config is None:
             self.config = EnvironmentConfig()
         else:
@@ -146,7 +146,12 @@ class Environment(simpy.RealtimeEnvironment):
         """Get the current time of the environment.
         If RT is enabled, the unix-time is returned."""
         if self.config.rt:
-            return self.now + self.t_start + self.offset
+
+            try:
+                return self.now + self.t_start + self.offset
+            except TypeError:
+                raise RuntimeError("Some module tried to access environment time, "
+                                   "but environment has not started yet.")
         # Else return
         return self.now + self.offset
 
