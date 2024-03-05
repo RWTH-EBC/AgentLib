@@ -327,6 +327,7 @@ _TYPE_MAP: dict = {
     "str": str,
     "bool": bool,
     "pd.Series": pd.Series,
+    "np.ndarray": np.ndarray,
     "list": list,
 }
 
@@ -619,6 +620,8 @@ def _convert_value_to_type(value: Any, type_string: Optional[str]):
         # Use the try block to pretty print any error occurring.
         if type_of_value == pd.Series:
             return convert_to_pd_series(value)
+        elif type_of_value == np.ndarray:
+            return np.array(value)
         return type_of_value(value)
     except Exception as err:
         raise ValueError(
