@@ -98,11 +98,11 @@ def faulty_module():
         }
     ]
     MAS = LocalMASAgency(env={"rt": True}, agent_configs=agent_configs)
-    MAS.run(until=1)
+    MAS.run(until=10)
 
 
 if __name__ == '__main__':
     logging.basicConfig(level="DEBUG")
     # slow_module()
-    exploding_modules()
-    # faulty_module()
+    # exploding_modules()
+    faulty_module()
