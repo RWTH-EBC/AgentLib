@@ -86,7 +86,7 @@ class Agent:
         self._threads: Dict[str, threading.Thread] = {}
         self.env = env
         self.is_alive = True
-        self.config: AgentConfig = config
+        config: AgentConfig = load_config(config, config_type=AgentConfig)
         data_broker_logger = agentlib_logging.create_logger(
             env=self.env, name=f"{config.id}/DataBroker"
         )
@@ -97,10 +97,11 @@ class Agent:
             self.register_thread(thread=self._data_broker.thread)
         else:
             self._data_broker = LocalDataBroker(env=env, logger=data_broker_logger)
+        # Update modules
+        self.config = config
         # Setup logger
         self.logger = agentlib_logging.create_logger(env=self.env, name=self.id)
-        # Update modules
-        self._register_modules()
+
 
         # Register the thread monitoring if configured
         if env.config.rt:
@@ -143,6 +144,7 @@ class Agent:
         # Set the config
 
         self._config = load_config(config, config_type=AgentConfig)
+        self._register_modules()
 
     @property
     def data_broker(self) -> DataBroker:

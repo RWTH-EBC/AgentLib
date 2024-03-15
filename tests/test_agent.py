@@ -118,6 +118,7 @@ class TestAgent(unittest.TestCase):
         with open(self.filepath, "w+") as file:
             json.dump(self.ag_config, file)
         ag.config = self.filepath
+        Agent(config=self.filepath, env=self.env)
 
     def test_register_modules(self):
         """Test register bugs in modules"""
