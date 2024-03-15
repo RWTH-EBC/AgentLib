@@ -413,14 +413,12 @@ class RTDataBroker(DataBroker):
     def _callback_thread(self):
         """Thread to check and process the callback queue in Realtime
         applications."""
-        try:
-            while True:
-                if not self._stop_queue.empty():
-                    err, module_id = self._stop_queue.get()
-                    raise RuntimeError(f"A callback failed in the module {module_id}.") from err
-                self._execute_callbacks()
-        except Exception:
-            raise
+        while True:
+            if not self._stop_queue.empty():
+                err, module_id = self._stop_queue.get()
+                raise RuntimeError(f"A callback failed in the module {module_id}.") from err
+            self._execute_callbacks()
+
 
     def register_callback(
         self,
@@ -458,8 +456,6 @@ class RTDataBroker(DataBroker):
         try:
             while True:
                 cb, variable = queue.get(block=True)
-                cb: BrokerCallback
-                variable: AgentVariable
                 cb.callback(variable=variable, **cb.kwargs)
         except Exception as e:
             self._stop_queue.put((e, module_id))
