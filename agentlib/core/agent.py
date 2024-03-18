@@ -49,7 +49,7 @@ class AgentConfig(BaseModel):
     max_queue_size: Optional[int] = Field(
         default=1000,
         ge=-1,
-        description="Maximal number of waiting threads in data-broker queues. "
+        description="Maximal number of waiting items in data-broker queues. "
                     "Set to -1 for infinity"
     )
 

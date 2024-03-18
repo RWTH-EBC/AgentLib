@@ -493,13 +493,17 @@ def log_queue_status(logger: logging.Logger, queue_object: queue.Queue, max_queu
     """
     if max_queue_size < 1:
         return
-    percent_full = round(queue_object.qsize() / max_queue_size * 100, 2)
-    if percent_full > 80:
-        logger_func = logger.warning
-    elif percent_full > 50:
-        logger_func = logger.info
-    elif percent_full > 10:
+    number_of_items = queue_object.qsize()
+    percent_full = round(number_of_items / max_queue_size * 100, 2)
+    if percent_full < 10:
+        return
+    elif percent_full < 80:
         logger_func = logger.debug
     else:
-        return
-    logger_func("Queue '%s' fullness is %s percent", queue_name, percent_full)
+        logger_func = logger.warning
+    logger_func(
+        "Queue '%s' fullness is %s percent (%s items).",
+        queue_name,
+        percent_full,
+        number_of_items
+    )
