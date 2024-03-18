@@ -172,14 +172,15 @@ class DataBroker(abc.ABC):
     with ``register_callback`` and ``deregister_callback``.
     """
 
-    def __init__(self, logger: CustomLogger):
+    def __init__(self, logger: CustomLogger, max_queue_size: int = 1000):
         """
         Initialize lock, callbacks and entries
         """
         self.logger = logger
+        self._max_queue_size = max_queue_size
         self._mapped_callbacks: Dict[Tuple[str, Source], List[BrokerCallback]] = {}
         self._unmapped_callbacks: List[BrokerCallback] = []
-        self._variable_queue = queue.Queue(maxsize=1000)
+        self._variable_queue = queue.Queue(maxsize=max_queue_size)
 
     def send_variable(self, variable: AgentVariable, copy: bool = True):
         """
@@ -211,8 +212,12 @@ class DataBroker(abc.ABC):
         Run relevant callbacks for AgentVariable's from local queue.
         """
         variable = self._variable_queue.get(block=True)
-        qsize = self._variable_queue.qsize()
-        self.logger.debug("Distribution queue fullness: %s", qsize)
+        log_queue_status(
+            logger=self.logger,
+            queue_name="Callback-Distribution",
+            queue_object=self._variable_queue,
+            max_queue_size=self._max_queue_size
+        )
         _map_tuple = (variable.alias, variable.source)
         # First the unmapped cbs
         callbacks = self._filter_unmapped_callbacks(map_tuple=_map_tuple)
@@ -347,12 +352,12 @@ class LocalDataBroker(DataBroker):
     """Local variation of the DataBroker written for fast-as-possible
     simulation within a single non-realtime Environment."""
 
-    def __init__(self, env: Environment, logger: CustomLogger):
+    def __init__(self, env: Environment, logger: CustomLogger, max_queue_size: int = 1000):
         """
         Initialize env
         """
         self.env = env
-        super().__init__(logger=logger)
+        super().__init__(logger=logger, max_queue_size=max_queue_size)
         self._callbacks_available = self.env.event()
 
     def _send_variable_to_modules(self, variable: AgentVariable):
@@ -384,7 +389,7 @@ class LocalDataBroker(DataBroker):
 class RTDataBroker(DataBroker):
     """DataBroker written for Realtime operation regardless of Environment."""
 
-    def __init__(self, env: Environment, logger: CustomLogger):
+    def __init__(self, env: Environment, logger: CustomLogger, max_queue_size: int = 1000):
         """
         Initialize env.
         Adds the function to start callback execution to the environment as a process.
@@ -392,7 +397,7 @@ class RTDataBroker(DataBroker):
         the first triggered event, so no other process starts before the broker is
         ready
         """
-        super().__init__(logger=logger)
+        super().__init__(logger=logger, max_queue_size=max_queue_size)
         self._stop_queue = queue.SimpleQueue()
         self.thread = threading.Thread(
             target=self._callback_thread, daemon=True, name="DataBroker"
@@ -442,7 +447,7 @@ class RTDataBroker(DataBroker):
 
     def _start_module_thread(self, module_id: str):
         """Starts a consumer thread for callbacks registered from a module."""
-        module_queue = queue.Queue(maxsize=100)
+        module_queue = queue.Queue(maxsize=self._max_queue_size)
         threading.Thread(
             target=self._execute_callbacks_of_module,
             daemon=True,
@@ -465,5 +470,31 @@ class RTDataBroker(DataBroker):
         """Distributes callbacks to the threads running for each module."""
         for cb in callbacks:
             self._module_queues[cb.module_id].put_nowait((cb, variable))
-            self.logger.debug("Queue %s fullness: %s", cb.module_id, self._module_queues[cb.module_id].qsize())
+            log_queue_status(
+                logger=self.logger,
+                queue_name=cb.module_id,
+                queue_object=self._module_queues[cb.module_id],
+                max_queue_size=self._max_queue_size
+            )
 
+
+def log_queue_status(logger: logging.Logger, queue_object: queue.Queue, max_queue_size: int, queue_name: str):
+    """
+    Log the current load of the given queue in percent.
+
+    Args:
+         logger (logging.Logger): A logger instance
+         queue_object (queue.Queue): The queue object
+         max_queue_size (int): Maximal queue size
+         queue_name (str): Name associated with the queue
+    """
+    percent_full = round(queue_object.qsize() / max_queue_size * 100, 2)
+    if percent_full > 80:
+        logger_func = logger.warning
+    elif percent_full > 50:
+        logger_func = logger.info
+    elif percent_full > 10:
+        logger_func = logger.debug
+    else:
+        return
+    logger_func("Queue '%s' fullness is %s percent", queue_name, percent_full)

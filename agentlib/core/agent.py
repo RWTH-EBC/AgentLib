@@ -46,10 +46,10 @@ class AgentConfig(BaseModel):
         "agent. Updating this value at runtime will "
         "not work as all processes have already been started.",
     )
-    callback_timeout: Optional[float] = Field(
-        default=None,
+    max_queue_size: Optional[int] = Field(
+        default=1000,
         ge=0,
-        description="Timeout after which callbacks of this agent will be terminated."
+        description="Maximal number of waiting threads in data-broker queues."
     )
 
     @field_validator("modules")
@@ -92,11 +92,15 @@ class Agent:
         )
         if env.config.rt:
             self._data_broker = RTDataBroker(
-                env=env, logger=data_broker_logger
+                env=env, logger=data_broker_logger,
+                max_queue_size=config.max_queue_size
             )
             self.register_thread(thread=self._data_broker.thread)
         else:
-            self._data_broker = LocalDataBroker(env=env, logger=data_broker_logger)
+            self._data_broker = LocalDataBroker(
+                env=env, logger=data_broker_logger,
+                max_queue_size=config.max_queue_size
+            )
         # Update modules
         self.config = config
         # Setup logger
