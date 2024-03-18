@@ -1,4 +1,5 @@
 """Module with tests for the core module of the agentlib."""
+import logging
 import time
 import unittest
 
@@ -10,8 +11,8 @@ from agentlib.core import (
     Source,
     Environment,
     RTDataBroker,
-    Agent,
 )
+from agentlib.core.logging_ import CustomLogger
 
 
 class TestLocalDataBroker(unittest.TestCase):
@@ -19,8 +20,10 @@ class TestLocalDataBroker(unittest.TestCase):
 
     def setUp(self) -> None:
         """Setup the test-logger."""
+        env = Environment()
         self.data_broker = LocalDataBroker(
-            Environment(),
+            logger=CustomLogger("TestLocalDataBroker", env=env),
+            env=env,
         )
         self.n_vars = np.random.randint(1, 20)
         self.counter = 0
@@ -125,7 +128,9 @@ class TestRTDataBroker(TestLocalDataBroker):
     def setUp(self) -> None:
         """Setup the test-logger."""
         env = Environment(config={"rt": True})
-        self.data_broker = RTDataBroker(env=env)
+        self.data_broker = RTDataBroker(
+            logger=CustomLogger("TestLocalDataBroker", env=env),
+            env=env)
         next(self.data_broker._start_executing_callbacks(env))
         self.n_vars = np.random.randint(1, 20)
         self.counter = 0

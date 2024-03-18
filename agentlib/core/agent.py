@@ -2,15 +2,14 @@
 Module containing only the Agent class.
 """
 import json
-import logging
 import threading
-import os
-from typing import Union, List, Dict, TypeVar
+from typing import Union, List, Dict, TypeVar, Optional
 
 from pathlib import Path
 from pydantic import field_validator, BaseModel, FilePath, Field
 
 import agentlib
+import agentlib.core.logging_ as agentlib_logging
 from agentlib.core import (
     Environment,
     LocalDataBroker,
@@ -39,26 +38,20 @@ class AgentConfig(BaseModel):
     modules: List[Union[Dict, FilePath]] = None
     check_alive_interval: float = Field(
         title="check_alive_interval",
-        default=-1,
+        default=1,
+        ge=0,
         description="Check every other check_alive_interval second "
-        "if the thread of the agent are still alive."
+        "if the threads of the agent are still alive."
         "If that's not the case, exit the main thread of the "
-        "agent. If interval equals -1, no health check is "
-        "performed. Updating this value at runtime will "
+        "agent. Updating this value at runtime will "
         "not work as all processes have already been started.",
     )
-
-    @field_validator("check_alive_interval")
-    @classmethod
-    def check_correct_value(cls, check_alive_interval):
-        """Check if check_alive_interval is positive or -1"""
-        if (check_alive_interval > 0) or (check_alive_interval == -1):
-            return check_alive_interval
-        raise ValueError(
-            "check_alive_interval needs to be positive "
-            "or equal to -1 to disable the health check."
-            f"Current value: {check_alive_interval}"
-        )
+    max_queue_size: Optional[int] = Field(
+        default=1000,
+        ge=-1,
+        description="Maximal number of waiting items in data-broker queues. "
+                    "Set to -1 for infinity"
+    )
 
     @field_validator("modules")
     @classmethod
@@ -94,16 +87,29 @@ class Agent:
         self._threads: Dict[str, threading.Thread] = {}
         self.env = env
         self.is_alive = True
+        config: AgentConfig = load_config(config, config_type=AgentConfig)
+        data_broker_logger = agentlib_logging.create_logger(
+            env=self.env, name=f"{config.id}/DataBroker"
+        )
         if env.config.rt:
-            self._data_broker = RTDataBroker(env=env)
+            self._data_broker = RTDataBroker(
+                env=env, logger=data_broker_logger,
+                max_queue_size=config.max_queue_size
+            )
             self.register_thread(thread=self._data_broker.thread)
         else:
-            self._data_broker = LocalDataBroker(env=env)
+            self._data_broker = LocalDataBroker(
+                env=env, logger=data_broker_logger,
+                max_queue_size=config.max_queue_size
+            )
+        # Update modules
         self.config = config
         # Setup logger
-        self.logger = logging.getLogger(f"Agent '{self.id}'")
+        self.logger = agentlib_logging.create_logger(env=self.env, name=self.id)
+
+
         # Register the thread monitoring if configured
-        if self.config.check_alive_interval > 0:
+        if env.config.rt:
             self.env.process(self._monitor_threads())
 
     @property
@@ -143,8 +149,6 @@ class Agent:
         # Set the config
 
         self._config = load_config(config, config_type=AgentConfig)
-
-        # Update modules
         self._register_modules()
 
     @property
@@ -226,7 +230,8 @@ class Agent:
         while True:
             for name, thread in self._threads.items():
                 if not thread.is_alive():
-                    msg = f"The thread {name} is not alive anymore. Exiting agent."
+                    msg = (f"The thread {name} is not alive anymore. Exiting agent. "
+                           f"Check errors above for possible reasons")
                     self.logger.critical(msg)
                     self.is_alive = False
                     raise RuntimeError(msg)
