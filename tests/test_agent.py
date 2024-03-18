@@ -18,6 +18,7 @@ from agentlib.core import (
     BaseModuleConfig
 )
 from agentlib.core.agent import AgentConfig
+from agentlib.core.errors import ConfigurationError
 
 
 class UpdateModuleConfigTest(BaseModuleConfig):
@@ -118,7 +119,12 @@ class TestAgent(unittest.TestCase):
         with open(self.filepath, "w+") as file:
             json.dump(self.ag_config, file)
         ag.config = self.filepath
+        # Test if new setup with a file-path works
         Agent(config=self.filepath, env=self.env)
+        # Test if new setup with a json-string works
+        Agent(config=json.dumps(self.ag_config), env=self.env)
+        with self.assertRaises(ConfigurationError):
+            Agent(config=json.dumps(self.ag_config) + "SomeFault", env=self.env)
 
     def test_register_modules(self):
         """Test register bugs in modules"""
@@ -144,7 +150,7 @@ class TestAgent(unittest.TestCase):
             "id": self.ag_id,
             "check_alive_interval": 0.01  # More narrow checking for rt-tests.
         }
-        for rt, error in zip([False, True], [Exception, RuntimeError]):
+        for rt, error in zip([False, True], [Exception, Exception]):
             # if rt = False, no thread is used and the Exception is raised.
             # Else, the RunTimeError should be raised by the agent.
             env_cfg = {"rt": rt}

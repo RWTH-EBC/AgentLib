@@ -33,6 +33,7 @@ from pydantic import BaseModel, field_validator, model_validator, ConfigDict
 from agentlib.core.logging_ import CustomLogger
 from agentlib.core.datamodels import AgentVariable, Source
 from agentlib.core.environment import Environment
+from agentlib.core.module import BaseModule
 
 
 @runtime_checkable
@@ -119,7 +120,10 @@ class NoCopyBrokerCallback(BaseModel):
         # note from which module this callback came. If it is not a bound method, we
         # assign it to none
         try:
-            module_id = data["callback"].__self__.id
+            if isinstance(data["callback"].__self__, BaseModule):
+                module_id = data["callback"].__self__.id
+            else:
+                module_id = None
         except AttributeError:
             module_id = None
         data["module_id"] = module_id
@@ -488,6 +492,8 @@ def log_queue_status(logger: logging.Logger, queue_object: queue.Queue, max_queu
          max_queue_size (int): Maximal queue size
          queue_name (str): Name associated with the queue
     """
+    if max_queue_size < 1:
+        return
     percent_full = round(queue_object.qsize() / max_queue_size * 100, 2)
     if percent_full > 80:
         logger_func = logger.warning

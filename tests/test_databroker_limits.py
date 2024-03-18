@@ -1,5 +1,10 @@
-import logging
+"""Module with tests for the limits of the data-broker of the agentlib."""
 import time
+import unittest
+
+import time
+
+import numpy as np
 
 from agentlib import LocalMASAgency
 from agentlib import AgentVariable, BaseModule, BaseModuleConfig
@@ -59,32 +64,34 @@ class FaultyReceiver(BaseModule):
         raise Exception
 
 
-def exploding_modules():
+def exploding_modules(until: float, max_queue_size: int):
     agent_configs = [
         {
             "id": "First",
+            "max_queue_size": max_queue_size,
             "modules": [
                 {"type": {"file": __file__, "class_name": "DataBrokerExplosionTest"}, "module_id": "first"},
                 {"type": {"file": __file__, "class_name": "DataBrokerExplosionTest"}, "module_id": "second"}
             ]
         }
     ]
-    MAS = LocalMASAgency(env={"rt": True}, agent_configs=agent_configs)
-    MAS.run(until=3)
+    mas = LocalMASAgency(env={"rt": True}, agent_configs=agent_configs)
+    mas.run(until=until)
 
 
-def slow_module():
+def slow_module(until: float, max_queue_size: int):
     agent_configs = [
         {
             "id": "First",
             "modules": [
                 {"type": {"file": __file__, "class_name": "Sender"}},
                 {"type": {"file": __file__, "class_name": "SlowReceiver"}}
-            ]
+            ],
+            "max_queue_size": max_queue_size
         }
     ]
-    MAS = LocalMASAgency(env={"rt": True}, agent_configs=agent_configs)
-    MAS.run(until=5)
+    mas = LocalMASAgency(env={"rt": True}, agent_configs=agent_configs)
+    mas.run(until=until)
 
 
 def faulty_module():
@@ -97,12 +104,26 @@ def faulty_module():
             ]
         }
     ]
-    MAS = LocalMASAgency(env={"rt": True}, agent_configs=agent_configs)
-    MAS.run(until=10)
+    mas = LocalMASAgency(env={"rt": True}, agent_configs=agent_configs)
+    mas.run(until=10)
 
 
-if __name__ == '__main__':
-    logging.basicConfig(level="DEBUG")
-    # slow_module()
-    # exploding_modules()
-    faulty_module()
+class TestDataBrokerLimits(unittest.TestCase):
+
+    def test_slow_module(self):
+        slow_module(max_queue_size=10000, until=5)
+        with self.assertRaises(RuntimeError):
+            slow_module(max_queue_size=100, until=5)
+
+    def test_exploding_module(self):
+        exploding_modules(max_queue_size=-1, until=5)
+        with self.assertRaises(RuntimeError):
+            exploding_modules(max_queue_size=100, until=5)
+
+    def test_faulty_module(self):
+        with self.assertRaises(RuntimeError):
+            faulty_module()
+
+
+if __name__ == "__main__":
+    unittest.main()

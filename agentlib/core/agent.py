@@ -48,8 +48,9 @@ class AgentConfig(BaseModel):
     )
     max_queue_size: Optional[int] = Field(
         default=1000,
-        ge=0,
-        description="Maximal number of waiting threads in data-broker queues."
+        ge=-1,
+        description="Maximal number of waiting threads in data-broker queues. "
+                    "Set to -1 for infinity"
     )
 
     @field_validator("modules")
@@ -229,7 +230,8 @@ class Agent:
         while True:
             for name, thread in self._threads.items():
                 if not thread.is_alive():
-                    msg = f"The thread {name} is not alive anymore. Exiting agent."
+                    msg = (f"The thread {name} is not alive anymore. Exiting agent. "
+                           f"Check errors above for possible reasons")
                     self.logger.critical(msg)
                     self.is_alive = False
                     raise RuntimeError(msg)
