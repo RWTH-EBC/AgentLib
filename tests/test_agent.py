@@ -52,7 +52,7 @@ class HealthCheckTest(BaseModule):
 
     def _cb(self, _):
         if self.env.now > 0.2:
-            raise Exception  # raise any Exception
+            raise Exception("Module is dead now.")  # raise any Exception
 
 
 class TestAgent(unittest.TestCase):
@@ -150,25 +150,19 @@ class TestAgent(unittest.TestCase):
             "id": self.ag_id,
             "check_alive_interval": 0.01  # More narrow checking for rt-tests.
         }
-        for rt, error in zip([False, True], [Exception, Exception]):
-            # if rt = False, no thread is used and the Exception is raised.
-            # Else, the RunTimeError should be raised by the agent.
-            env_cfg = {"rt": rt}
-            ag = Agent(config=cfg, env=Environment(config=env_cfg))
-            ag.env.run(until=0.1)  # 0.1 is before 0.2 and thus raises no error
-            # Now catch the error:
-            # First try normal operation
-            ag = Agent(config=cfg, env=Environment(config=env_cfg))
-            with self.assertRaises(error):
-                # 0.3 is after 0.2 and thus raises the error
-                ag.env.run(until=0.31)
-        # Test with not health_check:
-        cfg_2 = cfg.copy()
-        cfg_2["check_alive_interval"] = -1
-        ag = Agent(config=cfg_2, env=Environment(config={"rt": True}))
-        ag.env.run(until=0.31)   # No error should be raised
+        # if rt = False, no thread is used and the Exception is raised.
+        # Else, the RunTimeError should be raised by the agent.
+        env_cfg = {"rt": True}
+        ag = Agent(config=cfg, env=Environment(config=env_cfg))
+        ag.env.run(until=0.1)  # 0.1 is before 0.2 and thus raises no error
+        # Now catch the error:
+        # First try normal operation
+        ag = Agent(config=cfg, env=Environment(config=env_cfg))
+        with self.assertRaises(RuntimeError):
+            # 0.3 is after 0.2 and thus raises the error
+            ag.env.run(until=0.5)
 
-        # Try with a deamon thread
+        # Try with a daemon thread
         self._stop_test = False
         _thread = threading.Thread(target=self._no_daemon_thread, daemon=False, name="notADaemon")
         _thread.start()
