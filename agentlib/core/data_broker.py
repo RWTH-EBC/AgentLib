@@ -428,7 +428,6 @@ class RTDataBroker(DataBroker):
                 raise RuntimeError(f"A callback failed in the module {module_id}.") from err
             self._execute_callbacks()
 
-
     def register_callback(
         self,
         callback: Callable,
