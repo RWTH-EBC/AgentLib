@@ -80,10 +80,10 @@ class SimulatorResults:
         self.index = [self.index[-1]]
         self.data = [self.data[-1]]
 
-    @staticmethod
-    def read(file: str):
-        """Reads results from file with correct multi-column format."""
-        return pd.read_csv(file, header=[0, 1, 2], index_col=0)
+
+def read_simulator_results(file: str):
+    """Reads results from file with correct multi-column format."""
+    return pd.read_csv(file, header=[0, 1, 2], index_col=0)
 
 
 class SimulatorConfig(BaseModuleConfig):
@@ -472,7 +472,7 @@ class Simulator(BaseModule):
         file = self.config.result_filename
         if file:
             self._result.write_results(self.config.result_filename)
-            df = SimulatorResults.read(file)
+            df = read_simulator_results(file)
         else:
             df = self._result.df()
         df = df.droplevel(level=2, axis=1).droplevel(level=0, axis=1)
