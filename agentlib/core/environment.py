@@ -146,3 +146,80 @@ class RealtimeEnvironment(simpy.RealtimeEnvironment, CustomSimpyEnvironment):
         """Returns the time in a nice format. Datetime if realtime, seconds if not
         realtime. Implemented as rt_time or sim_time"""
         return datetime.fromtimestamp(self.now).strftime("%d-%b-%Y %H:%M:%S")
+
+
+def monkey_patch_simpy_process():
+    """Removes the exception catching in simpy processes. This removes some of simpys
+    features that we do not need. In return, it improves debugging and makes error
+    messages more concise. """
+
+    def _describe_frame(frame) -> str:
+        """Print filename, line number and function name of a stack frame."""
+        filename, name = frame.f_code.co_filename, frame.f_code.co_name
+        lineno = frame.f_lineno
+
+        with open(filename) as f:
+            for no, line in enumerate(f):
+                if no + 1 == lineno:
+                    return (
+                        f'  File "{filename}", line {lineno}, in {name}\n'
+                        f'    {line.strip()}\n'
+                    )
+            return f'  File "{filename}", line {lineno}, in {name}\n'
+
+    def new_resume(self, event: Event) -> None:
+        """Resumes the execution of the process with the value of *event*. If
+        the process generator exits, the process itself will get triggered with
+        the return value or the exception of the generator."""
+        # Mark the current process as active.
+        self.env._active_proc = self
+
+        while True:
+            # Get next event from process
+            try:
+                if event._ok:
+                    event = self._generator.send(event._value)
+                else:
+                    # The process has no choice but to handle the failed event
+                    # (or fail itself).
+                    event._defused = True
+
+                    # Create an exclusive copy of the exception for this
+                    # process to prevent traceback modifications by other
+                    # processes.
+                    exc = type(event._value)(*event._value.args)
+                    exc.__cause__ = event._value
+                    event = self._generator.throw(exc)
+            except StopIteration as e:
+                # Process has terminated.
+                event = None  # type: ignore
+                self._ok = True
+                self._value = e.args[0] if len(e.args) else None
+                self.env.schedule(self)
+                break
+
+            # Process returned another event to wait upon.
+            try:
+                # Be optimistic and blindly access the callbacks attribute.
+                if event.callbacks is not None:
+                    # The event has not yet been triggered. Register callback
+                    # to resume the process if that happens.
+                    event.callbacks.append(self._resume)
+                    break
+            except AttributeError:
+                # Our optimism didn't work out, figure out what went wrong and
+                # inform the user.
+                if hasattr(event, 'callbacks'):
+                    raise
+
+                msg = f'Invalid yield value "{event}"'
+                descr = _describe_frame(self._generator.gi_frame)
+                raise RuntimeError(f'\n{descr}{msg}') from None
+
+        self._target = event
+        self.env._active_proc = None
+
+    simpy.Process._resume = new_resume
+
+
+monkey_patch_simpy_process()
