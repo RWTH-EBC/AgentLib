@@ -8,11 +8,9 @@ import simpy
 from pathlib import Path
 from simpy.core import SimTime, Event
 from pydantic import (
-    field_validator,
     ConfigDict,
     PositiveFloat,
     BaseModel,
-    FilePath,
     Field,
 )
 
@@ -25,10 +23,6 @@ class EnvironmentConfig(BaseModel):
     rt: bool = False
     factor: PositiveFloat = 1.0
     strict: bool = False
-    initial_time: Union[PositiveFloat, float] = Field(
-        default=0,
-        description="Initial time of the"
-    )
     t_sample: PositiveFloat = Field(
         title="t_sample",
         default=1,
@@ -46,27 +40,21 @@ class EnvironmentConfig(BaseModel):
         validate_assignment=True, arbitrary_types_allowed=True, extra="forbid"
     )
 
-    @field_validator("initial_time")
-    @classmethod
-    def check_time(cls, initial_time):
-        """Check if initial time is correct"""
-        if initial_time >= 0:
-            return initial_time
-        raise ValueError("Time has to be greater than 0.")
-
 
 class Environment:
     """TODO"""
 
-    def __init__(self, *, config: Union[dict, EnvironmentConfig, str, None]):
-        config = make_env_config(config)
+    def __new__(cls, *args, **kwargs) -> Union["RealtimeEnvironment", "InstantEnvironment"]:
+        config = make_env_config(kwargs["config"])
         if config.rt:
-            return RealtimeEnvironment(config)
+            return RealtimeEnvironment(config=config)
         else:
-            return InstantEnvironment(config)
+            return InstantEnvironment(config=config)
 
 
-def make_env_config(config: Union[dict, EnvironmentConfig, str, None]) -> EnvironmentConfig:
+def make_env_config(
+    config: Union[dict, EnvironmentConfig, str, None]
+) -> EnvironmentConfig:
     if isinstance(config, None):
         return EnvironmentConfig()
     if isinstance(config, EnvironmentConfig):
@@ -80,104 +68,20 @@ def make_env_config(config: Union[dict, EnvironmentConfig, str, None]) -> Enviro
         raise ValueError(f"Could not validate environment config {config}.")
 
 
+class CustomSimpyEnvironment(simpy.Environment):
 
-
-
-class InstantEnvironment(simpy.Environment):
-    """
-    Custom environment to meet the needs
-    of the agentlib.
-    """
-
-    def __init__(self, *, config: dict = None):
-        # pylint: disable=super-init-not-called
-        super().__init__()
-        self.t_start = None
-        self.config = config
-
-    @property
-    def offset(self):
-        """Offset of the now-time of the environment"""
-        return self.config.offset
-
-    @offset.setter
-    def offset(self, offset):
-        """Set the offset of the environment"""
-        self.config.offset = offset
+    _config: EnvironmentConfig
 
     @property
     def config(self) -> EnvironmentConfig:
         """Return the config of the environment"""
         return self._config
 
-    @config.setter
-    def config(self, config: Union[EnvironmentConfig, dict, str, FilePath]):
-        """Set the config/settings of the environment"""
-        if isinstance(config, EnvironmentConfig):
-            self._config = config
-        elif isinstance(config, (str, Path)):
-            if Path(config).exists():
-                with open(config, "r") as f:
-                    config = json.load(f)
-        self._config = EnvironmentConfig.model_validate(config)
-        self._create_env()
-
-    def _create_env(self):
-        """
-        Sets the runtime environment as discrete event dispatcher. We Use the
-        simpy package for this:
-        https://simpy.readthedocs.io/en/latest/contents.html
-
-        The environment is initialized according to configuration. If an
-        existing one is parsed it will only check if the local configuration
-        aligns with external configuration.
-
-        Args:
-            env(simpy.Environment): Environment where the local processes
-            should be added to
-
-        Returns:
-
-        """
-        if self.config.rt:
-            logger.info("Initializing real time runtime environment...")
-            simpy.RealtimeEnvironment.__init__(
-                self,
-                factor=self.config.factor,
-                initial_time=self.config.initial_time,
-                strict=self.config.strict,
-            )
-            self.pretty_time = self.rt_time
-        else:
-            logger.info("Initializing runtime environment...")
-            simpy.Environment.__init__(
-                self, **self.config.model_dump(include={"initial_time"})
-            )
-            self.pretty_time = self.sim_time
-        # regularily print sim time, if clock is on, and log level is sufficient
-        if self.config.clock and logger.level <= logging.INFO:
-            self.process(self.clock())
-
-    def step(self) -> None:
-        if self.config.rt:
-            simpy.RealtimeEnvironment.step(self)
-        else:
-            simpy.Environment.step(self)
-
-    def run(self, until: Optional[Union[SimTime, Event]] = None) -> Optional[Any]:
-        self.t_start = time.time()
-        if isinstance(self, simpy.RealtimeEnvironment):
-            self.sync()
-        return super().run(until=until)
-
     @property
     def time(self) -> float:
         """Get the current time of the environment.
         If RT is enabled, the unix-time is returned."""
-        if self.config.rt:
-            return self.now + self.t_start + self.offset
-        # Else return
-        return self.now + self.offset
+        return self.now
 
     def clock(self):
         """Define a clock loop to increase the now-timer every other milisecond
@@ -187,22 +91,66 @@ class InstantEnvironment(simpy.Environment):
             logger.info("Current simulation time: %s", self.pretty_time())
             yield self.timeout(self.config.t_sample)
 
+    def pretty_time(self):
+        ...
+
+
+class InstantEnvironment(CustomSimpyEnvironment):
+    """
+    Custom environment to meet the needs
+    of the agentlib.
+    """
+
+    def __init__(self, *, config: EnvironmentConfig):
+        super().__init__(initial_time=config.offset)
+        self._config = config
+        self.process(self.clock())
+
     def pretty_time(self) -> str:
         """Returns the time in a nice format. Datetime if realtime, seconds if not
         realtime. Implemented as rt_time or sim_time"""
-        if self.config.rt:
-            return self.rt_time()
-        return self.sim_time()
+        return f"{self.now:.2f}s"
 
-    def rt_time(self) -> str:
-        """Returns the current real time in datetime format, based on unix timestamp."""
-        try:
-            return datetime.fromtimestamp(self.time).strftime("%d-%b-%Y %H:%M:%S")
-        except TypeError:
-            # when the rt environment has not yet started, we cannot have a time
-            return ""
 
-    def sim_time(self) -> str:
-        """Returns the current simulation time in seconds, with two decimals of
-        precision."""
-        return f"{self.time:.2f}s"
+class RealtimeEnvironment(simpy.RealtimeEnvironment, CustomSimpyEnvironment):
+    """
+    Custom environment to meet the needs
+    of the agentlib.
+    """
+
+    def __init__(self, *, config: EnvironmentConfig):
+        super().__init__(
+            initial_time=config.offset, factor=config.factor, strict=config.strict
+        )
+        self._config = config
+        self.process(self.clock())
+
+    def run(self, until: Optional[Union[SimTime, Event]] = None) -> Optional[Any]:
+        self._now += time.time()
+        self.sync()
+        return super().run(until=until)
+
+    def pretty_time(self) -> str:
+        """Returns the time in a nice format. Datetime if realtime, seconds if not
+        realtime. Implemented as rt_time or sim_time"""
+        return datetime.fromtimestamp(self.now).strftime("%d-%b-%Y %H:%M:%S")
+
+    @property
+    def time(self) -> float:
+        """Get the current time of the environment.
+        If RT is enabled, the unix-time is returned."""
+        return self.now
+
+    def clock(self):
+        """Define a clock loop to increase the now-timer every other milisecond
+        (Or whatever t_sample is)"""
+        # if log level is not info or debug, this process can terminate
+        while True:
+            logger.info("Current simulation time: %s", self.pretty_time())
+            yield self.timeout(self.config.t_sample)
+
+
+if __name__ == '__main__':
+    print(RealtimeEnvironment.__mro__)
+    print(InstantEnvironment.__mro__)
+    print(CustomSimpyEnvironment.__mro__)

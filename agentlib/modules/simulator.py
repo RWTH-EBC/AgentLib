@@ -410,7 +410,7 @@ class Simulator(BaseModule):
         _end_time_simulation = self.env.time + self.config.t_sample
         # Simulate
         self.model.do_step(
-            t_start=(self.env.now + self.env.offset + self.config.t_start),
+            t_start=(self.env.now + self.config.t_start),
             t_sample=self.config.t_sample
         )
         # Update the results and outputs
