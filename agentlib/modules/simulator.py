@@ -67,6 +67,9 @@ class SimulatorResults:
         """Adds the first row to the data"""
 
     def df(self) -> pd.DataFrame:
+        """Returns the current results as a dataframe."""
+        # skip the last row, as it only contains the outputs (not inputs) and we
+        # don't want to append half lines to the csv
         return pd.DataFrame(self.data[:-1], index=self.index[:-1], columns=self.columns)
 
     def write_results(self, file: str):
