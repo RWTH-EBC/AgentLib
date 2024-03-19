@@ -4,7 +4,7 @@ Module contains the Simulator, used to simulate any model.
 import os
 from dataclasses import dataclass
 from math import inf
-from typing import Union, Dict, List, Optional
+from typing import Union, Dict, List, Optional, Tuple
 
 from pathlib import Path
 from pydantic import field_validator, Field
@@ -63,9 +63,11 @@ class SimulatorResults:
         self.index = []
         self.data = []
 
-    @property
+    def initialize(self, time: float, ):
+        """Adds the first row to the data"""
+
     def df(self) -> pd.DataFrame:
-        return pd.DataFrame(self.data, index=self.index, columns=self.columns)
+        return pd.DataFrame(self.data[:-1], index=self.index[:-1], columns=self.columns)
 
     def write_results(self, file: str):
         """
@@ -73,9 +75,10 @@ class SimulatorResults:
         On creation of the file, the header columns are dumped, as well.
         """
         header = not Path(file).exists()
-        self.df.to_csv(file, mode="a", header=header)
-        self.index = []
-        self.data = []
+        df = self.df()
+        df.to_csv(file, mode="a", header=header)
+        self.index = [self.index[-1]]
+        self.data = [self.data[-1]]
 
     @staticmethod
     def read(file: str):
@@ -380,6 +383,7 @@ class Simulator(BaseModule):
         This function creates a endless loop for the single simulation step event.
         The do_step() function needs to return a generator.
         """
+        self._update_result_outputs(self.env.time)
         while True:
             self.do_step()
             yield self.env.timeout(self.config.t_sample)
@@ -414,7 +418,7 @@ class Simulator(BaseModule):
             t_sample=self.config.t_sample
         )
         # Update the results and outputs
-        self._update_results(self.env.time + self.config.t_sample)
+        self._update_results()
 
     def update_model_inputs(self):
         """
@@ -470,44 +474,74 @@ class Simulator(BaseModule):
             self._result.write_results(self.config.result_filename)
             df = SimulatorResults.read(file)
         else:
-            df = self._result.df
+            df = self._result.df()
         df = df.droplevel(level=2, axis=1).droplevel(level=0, axis=1)
         return df
 
-    def _update_results(self, timestamp):
+    def _update_results(self):
         """
         Adds model variables to the SimulationResult object
         at the given timestamp.
         """
         if not self.config.save_results:
             return
-        values = [var.value for var in self._get_result_model_variables()]
-        self._result.index.append(timestamp)
-        self._result.data.append(values)
+        timestamp = self.env.time + self.config.t_sample
+        inp_values = [var.value for var in self._get_result_input_variables()]
+
+        # add inputs in the time stamp before adding outputs, as they are active from
+        # the start of this interval
+        self._result.data[-1].extend(inp_values)
+        # adding output results afterwards. If the order here is switched, the [-1]
+        # above will point to the wrong entry
+        self._update_result_outputs(timestamp)
         if (
-            self.config.result_filename is not None
-            and timestamp // (self.config.write_results_delay * self._save_count) > 0
+                self.config.result_filename is not None
+                and timestamp // (
+                self.config.write_results_delay * self._save_count) > 0
         ):
             self._save_count += 1
             self._result.write_results(self.config.result_filename)
 
-    def _get_result_model_variables(self):
+    def _update_result_outputs(self, timestamp: float):
+        """Updates results with current values for states and outputs."""
+        self._result.index.append(timestamp)
+        out_values = [var.value for var in self._get_result_output_variables()]
+        self._result.data.append(out_values)
+
+
+    def _get_result_model_variables(self) -> AgentVariables:
         """
         Gets all variables to be saved in the result based
-        on self.result_causalities
+        on self.result_causalities.
         """
+
+        # THE ORDER OF THIS CONCAT IS IMPORTANT. The _update_results function will
+        # extend the outputs with the inputs
+        return self._get_result_output_variables() + self._get_result_input_variables()
+
+    def _get_result_input_variables(self) -> AgentVariables:
+        """Gets all input variables to be saved in the results based on
+        self.result_causalities. Input variables are added to the results at the time
+        index before an interval, i.e. parameters and inputs."""
         _variables = []
         for causality in self.config.result_causalities:
             if causality == Causality.input:
                 _variables.extend(self.model.inputs)
-            elif causality == Causality.output:
-                _variables.extend(self.model.outputs)
-            elif causality == Causality.local:
-                _variables.extend(self.model.states)
             elif causality in [Causality.parameter, Causality.calculatedParameter]:
                 _variables.extend(self.model.parameters)
         return _variables
 
+    def _get_result_output_variables(self) -> AgentVariables:
+        """Gets all output variables to be saved in the results based on
+        self.result_causalities. Input variables are added to the results at the time
+        index after an interval, i.e. locals and outputs."""
+        _variables = []
+        for causality in self.config.result_causalities:
+            if causality == Causality.output:
+                _variables.extend(self.model.outputs)
+            elif causality == Causality.local:
+                _variables.extend(self.model.states)
+        return _variables
 
 def convert_agent_vars_to_list_of_dicts(var: AgentVariables) -> List[Dict]:
     """
