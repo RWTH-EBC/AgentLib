@@ -44,7 +44,9 @@ class EnvironmentConfig(BaseModel):
 class Environment:
     """TODO"""
 
-    def __new__(cls, *args, **kwargs) -> Union["RealtimeEnvironment", "InstantEnvironment"]:
+    def __new__(
+        cls, *args, **kwargs
+    ) -> Union["RealtimeEnvironment", "InstantEnvironment"]:
         config = make_env_config(kwargs["config"])
         if config.rt:
             return RealtimeEnvironment(config=config)
@@ -55,7 +57,7 @@ class Environment:
 def make_env_config(
     config: Union[dict, EnvironmentConfig, str, None]
 ) -> EnvironmentConfig:
-    if isinstance(config, None):
+    if config is None:
         return EnvironmentConfig()
     if isinstance(config, EnvironmentConfig):
         return config
@@ -63,9 +65,7 @@ def make_env_config(
         if Path(config).exists():
             with open(config, "r") as f:
                 config = json.load(f)
-        return EnvironmentConfig.model_validate(config)
-    else:
-        raise ValueError(f"Could not validate environment config {config}.")
+    return EnvironmentConfig.model_validate(config)
 
 
 class CustomSimpyEnvironment(simpy.Environment):
@@ -126,31 +126,23 @@ class RealtimeEnvironment(simpy.RealtimeEnvironment, CustomSimpyEnvironment):
         self.process(self.clock())
 
     def run(self, until: Optional[Union[SimTime, Event]] = None) -> Optional[Any]:
-        self._now += time.time()
+        self._t_start = time.time()
         self.sync()
         return super().run(until=until)
-
-    def pretty_time(self) -> str:
-        """Returns the time in a nice format. Datetime if realtime, seconds if not
-        realtime. Implemented as rt_time or sim_time"""
-        return datetime.fromtimestamp(self.now).strftime("%d-%b-%Y %H:%M:%S")
 
     @property
     def time(self) -> float:
         """Get the current time of the environment.
         If RT is enabled, the unix-time is returned."""
-        return self.now
+        try:
+            return self.now + self._t_start
+        except AttributeError:
+            raise RuntimeError(
+                "Environment time was accessed before start of the environment. Make "
+                "sure your modules do not access the environment time during __init__. "
+            )
 
-    def clock(self):
-        """Define a clock loop to increase the now-timer every other milisecond
-        (Or whatever t_sample is)"""
-        # if log level is not info or debug, this process can terminate
-        while True:
-            logger.info("Current simulation time: %s", self.pretty_time())
-            yield self.timeout(self.config.t_sample)
-
-
-if __name__ == '__main__':
-    print(RealtimeEnvironment.__mro__)
-    print(InstantEnvironment.__mro__)
-    print(CustomSimpyEnvironment.__mro__)
+    def pretty_time(self) -> str:
+        """Returns the time in a nice format. Datetime if realtime, seconds if not
+        realtime. Implemented as rt_time or sim_time"""
+        return datetime.fromtimestamp(self.now).strftime("%d-%b-%Y %H:%M:%S")

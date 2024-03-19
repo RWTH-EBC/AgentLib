@@ -33,7 +33,7 @@ def run_example(until, with_plots=True, log_level=logging.INFO):
     # Simulate
     mas.run(until=until)
     # Load results:
-    results = mas.get_results()
+    results = mas.get_results(cleanup=True)
 
     if not with_plots:
         return results
