@@ -4,7 +4,7 @@ Module contains the Simulator, used to simulate any model.
 import os
 from dataclasses import dataclass
 from math import inf
-from typing import Union, Dict, List, Optional, Tuple
+from typing import Union, Dict, List, Optional
 
 from pathlib import Path
 from pydantic import field_validator, Field
@@ -75,8 +75,7 @@ class SimulatorResults:
         On creation of the file, the header columns are dumped, as well.
         """
         header = not Path(file).exists()
-        df = self.df()
-        df.to_csv(file, mode="a", header=header)
+        self.df().to_csv(file, mode="a", header=header)
         self.index = [self.index[-1]]
         self.data = [self.data[-1]]
 
