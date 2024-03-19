@@ -59,7 +59,7 @@ def custom_injection(config: dict, module_name: str = None):
     # Build module_name if not given:
     if module_name is None:
         # Build a unique module_name to be imported based on the path
-        module_name = ".".join([file.stem] + [p.name for p in file.parents][::-1])
+        module_name = ".".join([p.name for p in file.parents][:-1] + [file.stem])
 
     # Custom file import
     try:
@@ -73,10 +73,9 @@ def custom_injection(config: dict, module_name: str = None):
             spec.loader.exec_module(custom_module)
     except ImportError as err:
         raise ImportError(
-            "Could not inject given module due to import error. "
-            "Carefully check for circular imports and partially "
-            "imported objects based on the following error message: "
-            f"{err}"
+            f"Could not inject given module '{class_name}' at '{file}' due to import "
+            "error. Carefully check for circular imports and partially " 
+            "imported objects based on the following error message: " f"{err}"
         ) from err
     try:
         return custom_module.__dict__[class_name]

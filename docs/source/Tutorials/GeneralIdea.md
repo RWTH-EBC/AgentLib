@@ -125,10 +125,11 @@ Every time an `AgentVariable` is added to the data_broker, the modules callback 
 To show how different callbacks may be realized, the following short example should clear things up.
 
 ```python
-from agentlib.core import RTDataBroker, AgentVariable, Source
+from agentlib.core import RTDataBroker, AgentVariable, Source, Environment
 import time
 
-data_broker = RTDataBroker()
+env = Environment(config={"rt": True})
+data_broker = RTDataBroker(env=env)
 
 
 def print_all_callback(variable):

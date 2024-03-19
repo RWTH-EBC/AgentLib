@@ -410,7 +410,8 @@ class Simulator(BaseModule):
             self.update_model_inputs()
         # Simulate
         self.model.do_step(
-            t_start=(self.env.now + self.env.offset), t_sample=self.config.t_sample
+            t_start=(self.env.now + self.env.offset + self.config.t_start),
+            t_sample=self.config.t_sample
         )
         # Update the results and outputs
         self._update_results(self.env.time + self.config.t_sample)
