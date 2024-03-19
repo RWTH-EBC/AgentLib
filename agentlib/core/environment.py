@@ -25,7 +25,10 @@ class EnvironmentConfig(BaseModel):
     rt: bool = False
     factor: PositiveFloat = 1.0
     strict: bool = False
-    initial_time: Union[PositiveFloat, float] = 0
+    initial_time: Union[PositiveFloat, float] = Field(
+        default=0,
+        description="Initial time of the"
+    )
     t_sample: PositiveFloat = Field(
         title="t_sample",
         default=1,
@@ -52,7 +55,35 @@ class EnvironmentConfig(BaseModel):
         raise ValueError("Time has to be greater than 0.")
 
 
-class Environment(simpy.RealtimeEnvironment):
+class Environment:
+    """TODO"""
+
+    def __init__(self, *, config: Union[dict, EnvironmentConfig, str, None]):
+        config = make_env_config(config)
+        if config.rt:
+            return RealtimeEnvironment(config)
+        else:
+            return InstantEnvironment(config)
+
+
+def make_env_config(config: Union[dict, EnvironmentConfig, str, None]) -> EnvironmentConfig:
+    if isinstance(config, None):
+        return EnvironmentConfig()
+    if isinstance(config, EnvironmentConfig):
+        return config
+    elif isinstance(config, (str, Path)):
+        if Path(config).exists():
+            with open(config, "r") as f:
+                config = json.load(f)
+        return EnvironmentConfig.model_validate(config)
+    else:
+        raise ValueError(f"Could not validate environment config {config}.")
+
+
+
+
+
+class InstantEnvironment(simpy.Environment):
     """
     Custom environment to meet the needs
     of the agentlib.
@@ -60,11 +91,9 @@ class Environment(simpy.RealtimeEnvironment):
 
     def __init__(self, *, config: dict = None):
         # pylint: disable=super-init-not-called
+        super().__init__()
         self.t_start = None
-        if config is None:
-            self.config = EnvironmentConfig()
-        else:
-            self.config = config
+        self.config = config
 
     @property
     def offset(self):
