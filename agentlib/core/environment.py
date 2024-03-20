@@ -25,7 +25,7 @@ class EnvironmentConfig(BaseModel):
     strict: bool = False
     t_sample: PositiveFloat = Field(
         title="t_sample",
-        default=1,
+        default=60,
         description="Used to increase the now-time of"
         "the environment using the clock function.",
     )
@@ -48,10 +48,11 @@ class Environment:
         cls, *args, **kwargs
     ) -> Union["RealtimeEnvironment", "InstantEnvironment"]:
         config = make_env_config(kwargs["config"])
-        if config.rt:
-            return RealtimeEnvironment(config=config)
-        else:
+        if not config.rt:
             return InstantEnvironment(config=config)
+        if config.factor == 1:
+            return RealtimeEnvironment(config=config)
+        return ScaledRealtimeEnvironment(config=config)
 
 
 def make_env_config(
@@ -100,7 +101,7 @@ class CustomSimpyEnvironment(simpy.Environment):
 
 class InstantEnvironment(CustomSimpyEnvironment):
     """A customized version of the simpy environment. Handles execution of modules
-    processes and manages time for real time execution mode."""
+    processes and manages time for instant execution mode."""
 
     def __init__(self, *, config: EnvironmentConfig):
         super().__init__(initial_time=config.offset)
@@ -111,14 +112,12 @@ class InstantEnvironment(CustomSimpyEnvironment):
     def pretty_time(self) -> str:
         """Returns the time in a nice format. Datetime if realtime, seconds if not
         realtime. Implemented as rt_time or sim_time"""
-        return f"{self.now:.2f}s"
+        return f"{self.time:.2f}s"
 
 
 class RealtimeEnvironment(simpy.RealtimeEnvironment, CustomSimpyEnvironment):
-    """
-    Custom environment to meet the needs
-    of the agentlib.
-    """
+    """A customized version of the simpy environment. Handles execution of modules
+    processes and manages time for real time execution mode."""
 
     def __init__(self, *, config: EnvironmentConfig):
         super().__init__(
@@ -131,7 +130,6 @@ class RealtimeEnvironment(simpy.RealtimeEnvironment, CustomSimpyEnvironment):
             self.process(self.silent_clock())
 
     def run(self, until: Optional[Union[SimTime, Event]] = None) -> Optional[Any]:
-        self._t_start = time.time()
         self.sync()
         return super().run(until=until)
 
@@ -139,18 +137,48 @@ class RealtimeEnvironment(simpy.RealtimeEnvironment, CustomSimpyEnvironment):
     def time(self) -> float:
         """Get the current time of the environment.
         If RT is enabled, the unix-time is returned."""
-        try:
-            return self.now + self._t_start
-        except AttributeError:
-            raise RuntimeError(
-                "Environment time was accessed before start of the environment. Make "
-                "sure your modules do not access the environment time during __init__. "
-            )
+        return time.time() + self.config.offset
 
     def pretty_time(self) -> str:
         """Returns the time in a nice format. Datetime if realtime, seconds if not
         realtime. Implemented as rt_time or sim_time"""
-        return datetime.fromtimestamp(self.now).strftime("%d-%b-%Y %H:%M:%S")
+        return datetime.fromtimestamp(self.time).strftime("%d-%b-%Y %H:%M:%S")
+
+    def silent_clock(self):
+        """A silent clock, which does not log anything."""
+        # if log level is not info or debug, this process can terminate
+        while True:
+            yield self.timeout(self.config.t_sample)
+
+
+class ScaledRealtimeEnvironment(simpy.RealtimeEnvironment, CustomSimpyEnvironment):
+    """A customized version of the simpy environment. Handles execution of modules
+    processes and manages time for scaled real time execution mode."""
+
+    def __init__(self, *, config: EnvironmentConfig):
+        super().__init__(
+            initial_time=config.offset, factor=config.factor, strict=config.strict
+        )
+        self._config = config
+        if self.config.clock:
+            self.process(self.clock())
+        else:
+            self.process(self.silent_clock())
+
+    def run(self, until: Optional[Union[SimTime, Event]] = None) -> Optional[Any]:
+        self.sync()
+        return super().run(until=until)
+
+    @property
+    def time(self) -> float:
+        """Get the current time of the environment.
+        If RT is enabled, the unix-time is returned."""
+        return self.now
+
+    def pretty_time(self) -> str:
+        """Returns the time in a nice format. Datetime if realtime, seconds if not
+        realtime. Implemented as rt_time or sim_time"""
+        return f"{self.time:.2f}s"
 
     def silent_clock(self):
         """A silent clock, which does not log anything."""

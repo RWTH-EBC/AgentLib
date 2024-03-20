@@ -12,9 +12,7 @@ def run_example(until, with_plots=True, log_level=logging.INFO):
     # Start by setting the log-level
     logging.basicConfig(level=log_level)
 
-    t_sample = 3600
-
-    env_config = {"rt": False, "t_sample": t_sample, "clock": True}
+    env_config = {"rt": False, "t_sample": 1, "clock": True}
 
     # Change the working directly so that relative paths work
     os.chdir(os.path.abspath(os.path.dirname(__file__)))
@@ -33,7 +31,7 @@ def run_example(until, with_plots=True, log_level=logging.INFO):
     # Simulate
     mas.run(until=until)
     # Load results:
-    results = mas.get_results(cleanup=True)
+    results = mas.get_results()
 
     if not with_plots:
         return results
