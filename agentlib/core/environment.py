@@ -47,7 +47,7 @@ class Environment:
     def __new__(
         cls, *args, **kwargs
     ) -> Union["RealtimeEnvironment", "InstantEnvironment"]:
-        config = make_env_config(kwargs["config"])
+        config = make_env_config(kwargs.get("config"))
         if not config.rt:
             return InstantEnvironment(config=config)
         if config.factor == 1:
@@ -80,6 +80,11 @@ class CustomSimpyEnvironment(simpy.Environment):
     def config(self) -> EnvironmentConfig:
         """Return the config of the environment"""
         return self._config
+
+    @property
+    def offset(self) -> EnvironmentConfig:
+        """Start time offset of the environment."""
+        return self.config.offset
 
     @property
     def time(self) -> float:

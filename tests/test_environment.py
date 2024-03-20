@@ -5,7 +5,7 @@ import os
 import json
 from pydantic import ValidationError
 from agentlib.core import Environment
-from agentlib.core.environment import EnvironmentConfig
+from agentlib.core.environment import EnvironmentConfig, make_env_config
 
 
 class TestEnvironment(unittest.TestCase):
@@ -17,7 +17,7 @@ class TestEnvironment(unittest.TestCase):
             'factor': 1.0,
             'strict': True,
             't_sample': 1,
-            'initial_time': 1
+            'offset': 1
         }
         self.filepath = os.path.join(os.getcwd(), 'config.json')
 
@@ -35,12 +35,12 @@ class TestEnvironment(unittest.TestCase):
     def test_config_setter(self):
         """Test the setter of config"""
         env = Environment(config=self.config)
-        env.config = EnvironmentConfig(**self.config)
+        env._config = make_env_config(self.config)
         self.assertIsInstance(env.config, EnvironmentConfig)
         # Test parse file
         with open(self.filepath, 'w+') as file:
             json.dump(self.config, file)
-        env.config = self.filepath
+        env._config = make_env_config(self.filepath)
         self.assertIsInstance(env.config, EnvironmentConfig)
 
     def test_rt(self):
