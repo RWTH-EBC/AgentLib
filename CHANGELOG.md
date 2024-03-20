@@ -6,6 +6,8 @@
 - Environment time in scaled real time is as before, and will be logged in seconds, not datetime
 - Changed default t_sample for agentlogger to 60 seconds and added warning for performance if below that
 - Change process error handling, so that exceptions are not caught by the process anymore, improving debugging. This might exclude the use of more advanced simpy features.
+- Move pahomqtt dependency up to 2.0
+- Fix a bug, where type validation was done incorrectly during initial configuration 
 
 
 ## 0.8.1
