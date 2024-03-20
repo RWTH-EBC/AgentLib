@@ -24,6 +24,7 @@ try:
         MQTT_LOG_ERR,
         MQTT_LOG_WARNING,
     )
+    from paho.mqtt.enums import CallbackAPIVersion
 except ImportError as err:
     raise OptionalDependencyError(
         dependency_name="mqtt", dependency_install="paho-mqtt"
@@ -121,7 +122,11 @@ class BaseMqttClient(Communicator):
     def __init__(self, config: dict, agent: Agent):
         super().__init__(config=config, agent=agent)
         self._subcribed_topics = 0
-        self._mqttc = self.mqttc_type(client_id=str(uuid.uuid4()), protocol=MQTTv5)
+        self._mqttc = self.mqttc_type(
+            client_id=str(uuid.uuid4()),
+            protocol=MQTTv5,
+            callback_api_version=CallbackAPIVersion.VERSION2,
+        )
         if self.config.username is not None:
             self.logger.debug("Setting password and username")
             self._mqttc.username_pw_set(

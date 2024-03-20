@@ -3,7 +3,7 @@ Module with validator function used in multiple parts of the agentlib
 """
 from __future__ import annotations
 
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Type
 from copy import deepcopy
 import logging
 
@@ -37,7 +37,7 @@ def include_defaults_in_root(
     make_shared: bool,
     agent_id: str,
     field_name: str,
-    type_: type = AgentVariable,
+    type_: Type[AgentVariable] = AgentVariable,
 ) -> AgentVariables:
     """
     Validator building block to merge default variables with config variables in the root validator.
