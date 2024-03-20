@@ -42,7 +42,7 @@ class EnvironmentConfig(BaseModel):
 
 
 class Environment:
-    """TODO"""
+    """Simpy Environment Distributor. Handles synchronous processes."""
 
     def __new__(
         cls, *args, **kwargs
@@ -57,6 +57,7 @@ class Environment:
 def make_env_config(
     config: Union[dict, EnvironmentConfig, str, None]
 ) -> EnvironmentConfig:
+    """Creates the environment config from different sources."""
     if config is None:
         return EnvironmentConfig()
     if isinstance(config, EnvironmentConfig):
@@ -69,6 +70,8 @@ def make_env_config(
 
 
 class CustomSimpyEnvironment(simpy.Environment):
+    """A customized version of the simpy environment. Handles execution of modules
+    processes and manages time for instant execution mode."""
 
     _config: EnvironmentConfig
 
@@ -84,7 +87,7 @@ class CustomSimpyEnvironment(simpy.Environment):
         return self.now
 
     def clock(self):
-        """Define a clock loop to increase the now-timer every other milisecond
+        """Define a clock loop to increase the now-timer every other second
         (Or whatever t_sample is)"""
         # if log level is not info or debug, this process can terminate
         while True:
@@ -96,15 +99,14 @@ class CustomSimpyEnvironment(simpy.Environment):
 
 
 class InstantEnvironment(CustomSimpyEnvironment):
-    """
-    Custom environment to meet the needs
-    of the agentlib.
-    """
+    """A customized version of the simpy environment. Handles execution of modules
+    processes and manages time for real time execution mode."""
 
     def __init__(self, *, config: EnvironmentConfig):
         super().__init__(initial_time=config.offset)
         self._config = config
-        self.process(self.clock())
+        if self.config.clock:
+            self.process(self.clock())
 
     def pretty_time(self) -> str:
         """Returns the time in a nice format. Datetime if realtime, seconds if not
@@ -123,7 +125,10 @@ class RealtimeEnvironment(simpy.RealtimeEnvironment, CustomSimpyEnvironment):
             initial_time=config.offset, factor=config.factor, strict=config.strict
         )
         self._config = config
-        self.process(self.clock())
+        if self.config.clock:
+            self.process(self.clock())
+        else:
+            self.process(self.silent_clock())
 
     def run(self, until: Optional[Union[SimTime, Event]] = None) -> Optional[Any]:
         self._t_start = time.time()
@@ -147,11 +152,17 @@ class RealtimeEnvironment(simpy.RealtimeEnvironment, CustomSimpyEnvironment):
         realtime. Implemented as rt_time or sim_time"""
         return datetime.fromtimestamp(self.now).strftime("%d-%b-%Y %H:%M:%S")
 
+    def silent_clock(self):
+        """A silent clock, which does not log anything."""
+        # if log level is not info or debug, this process can terminate
+        while True:
+            yield self.timeout(self.config.t_sample)
+
 
 def monkey_patch_simpy_process():
     """Removes the exception catching in simpy processes. This removes some of simpys
     features that we do not need. In return, it improves debugging and makes error
-    messages more concise. """
+    messages more concise."""
 
     def _describe_frame(frame) -> str:
         """Print filename, line number and function name of a stack frame."""
@@ -163,7 +174,7 @@ def monkey_patch_simpy_process():
                 if no + 1 == lineno:
                     return (
                         f'  File "{filename}", line {lineno}, in {name}\n'
-                        f'    {line.strip()}\n'
+                        f"    {line.strip()}\n"
                     )
             return f'  File "{filename}", line {lineno}, in {name}\n'
 
@@ -209,12 +220,12 @@ def monkey_patch_simpy_process():
             except AttributeError:
                 # Our optimism didn't work out, figure out what went wrong and
                 # inform the user.
-                if hasattr(event, 'callbacks'):
+                if hasattr(event, "callbacks"):
                     raise
 
                 msg = f'Invalid yield value "{event}"'
                 descr = _describe_frame(self._generator.gi_frame)
-                raise RuntimeError(f'\n{descr}{msg}') from None
+                raise RuntimeError(f"\n{descr}{msg}") from None
 
         self._target = event
         self.env._active_proc = None
