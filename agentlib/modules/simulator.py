@@ -68,8 +68,9 @@ class SimulatorResults:
 
     def df(self) -> pd.DataFrame:
         """Returns the current results as a dataframe."""
-        # skip the last row, as it only contains the outputs (not inputs) and we
-        # don't want to append half lines to the csv
+        # We do not return the last row, as it is always only half complete (since
+        # inputs at time step k influence results of time step k+1. Writing in
+        # incomplete dataframe would break the csv-file we append to.
         return pd.DataFrame(self.data[:-1], index=self.index[:-1], columns=self.columns)
 
     def write_results(self, file: str):
@@ -79,6 +80,7 @@ class SimulatorResults:
         """
         header = not Path(file).exists()
         self.df().to_csv(file, mode="a", header=header)
+        # keep the last row of the results, as it is not finished (inputs missing)
         self.index = [self.index[-1]]
         self.data = [self.data[-1]]
 
