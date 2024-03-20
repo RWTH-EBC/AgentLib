@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.8.2 
+- Realtime Environment always has a clock to prevent agents that define callbacks only from terminating
+- Environment time in real time is now based on system time, decoupling it from the simpy process
+- Environment time in scaled real time is as before, and will be logged in seconds, not datetime
+- Changed default t_sample for agentlogger to 60 seconds and added warning for performance if below that
+- Change process error handling, so that exceptions are not caught by the process anymore, improving debugging. This might exclude the use of more advanced simpy features.
+
+
 ## 0.8.1
 - Simulator results now start at the real start, not after the first sample interval. Inputs and parameters are now written at the correct index in the results (they are one row too late before).
 
