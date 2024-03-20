@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.8.1
+- Simulator results now start at the real start, not after the first sample interval. Inputs and parameters are now written at the correct index in the results (they are one row too late before).
+
+
 ## 0.8.0
 - Restructure DataBroker for real time execution. Each module now gets its own thread, preventing modules with slow callbacks from blocking other callbacks, e.g. communicators. Also ensure the entire agent fails, if there is an exception in a callback.
 
