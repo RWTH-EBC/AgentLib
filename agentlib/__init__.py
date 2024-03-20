@@ -15,7 +15,7 @@ from .utils.multi_agent_system import (
     LocalCloneMAPAgency,
 )
 
-__version__ = "0.8.0"
+__version__ = "0.8.1"
 
 __all__ = [
     "core",
