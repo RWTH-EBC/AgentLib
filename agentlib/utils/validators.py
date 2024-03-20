@@ -71,7 +71,7 @@ def include_defaults_in_root(
     for var_dict in variables:
         if "shared" not in var_dict:
             var_dict["shared"] = make_shared
-        new_var: AgentVariable = type_(**var_dict)
+        new_var: AgentVariable = type_.validate_data(var_dict)
         if new_var.shared:
             new_var.source = Source(agent_id=agent_id)
         default.append(new_var)
