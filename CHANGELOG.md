@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.8.2
+- More specific optional dependency errors and correct docker image #21
+
 ## 0.8.1
 - Simulator results now start at the real start, not after the first sample interval. Inputs and parameters are now written at the correct index in the results (they are one row too late before).
 
