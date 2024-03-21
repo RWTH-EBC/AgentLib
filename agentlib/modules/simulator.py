@@ -258,7 +258,7 @@ class SimulatorConfig(BaseModuleConfig):
                 raise OptionalDependencyError(
                     dependency_name=_type,
                     dependency_install=UNINSTALLED_MODEL_TYPES[_type],
-                    class_type="model",
+                    used_object=f"model {_type}",
                 )
             model = get_model_type(_type)(
                 **model,

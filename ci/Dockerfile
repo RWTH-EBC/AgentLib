@@ -10,7 +10,9 @@ COPY pyproject.toml pyproject.toml
 COPY agentlib agentlib
 COPY README.md README.md
 RUN pip install --upgrade pip && \
-    pip install -e .[full]
+    pip install -e .[full] && \
+    pip install git+https://github.com/sogno-platform/clonemapy
+
 ENV PYTHONPATH=.
 
 CMD ["python", "-u", "agentlib/modules/communicator/clonemap.py"]

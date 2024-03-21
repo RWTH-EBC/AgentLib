@@ -12,7 +12,7 @@ try:
     from scipy import interpolate, integrate
 except ImportError as err:
     raise OptionalDependencyError(
-        dependency_name="scipy", dependency_install="scipy", class_type="model"
+        dependency_name="scipy", dependency_install="scipy", used_object="scipy-model"
     ) from err
 
 
