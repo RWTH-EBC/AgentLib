@@ -21,7 +21,8 @@ try:
     import clonemapy.agency as clonemapyagency
 except ImportError as err:
     raise OptionalDependencyError(
-        dependency_name="clonemap", dependency_install="clonemap"
+        dependency_install="git+https://github.com/sogno-platform/clonemapy",
+        used_object="Module type 'clonemap'"
     ) from err
 
 

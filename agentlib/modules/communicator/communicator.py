@@ -59,7 +59,7 @@ class Communicator(BaseModule):
                 raise OptionalDependencyError(
                     dependency_name="orjson",
                     dependency_install="orjson",
-                    class_type="communicator with 'use_orjson=True'",
+                    used_object="Communicator with 'use_orjson=True'",
                 )
 
             def _to_orjson(payload: CommunicationDict) -> bytes:
