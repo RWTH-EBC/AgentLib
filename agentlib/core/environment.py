@@ -1,4 +1,5 @@
 """This module contains the Environment class, used by all Agents and Modules."""
+
 import json
 import logging
 import time
@@ -63,10 +64,11 @@ def make_env_config(
         return EnvironmentConfig()
     if isinstance(config, EnvironmentConfig):
         return config
-    elif isinstance(config, (str, Path)):
-        if Path(config).exists():
-            with open(config, "r") as f:
-                config = json.load(f)
+    if isinstance(config, (str, Path)) and Path(config).exists():
+        with open(config, "r") as f:
+            config = json.load(f)
+    else:
+        config = json.loads(config)
     return EnvironmentConfig.model_validate(config)
 
 
@@ -88,20 +90,17 @@ class CustomSimpyEnvironment(simpy.Environment):
 
     @property
     def time(self) -> float:
-        """Get the current time of the environment.
-        If RT is enabled, the unix-time is returned."""
+        """Get the current time of the environment."""
         return self.now
 
     def clock(self):
         """Define a clock loop to increase the now-timer every other second
         (Or whatever t_sample is)"""
-        # if log level is not info or debug, this process can terminate
         while True:
             logger.info("Current simulation time: %s", self.pretty_time())
             yield self.timeout(self.config.t_sample)
 
-    def pretty_time(self):
-        ...
+    def pretty_time(self): ...
 
 
 class InstantEnvironment(CustomSimpyEnvironment):
@@ -115,8 +114,7 @@ class InstantEnvironment(CustomSimpyEnvironment):
             self.process(self.clock())
 
     def pretty_time(self) -> str:
-        """Returns the time in a nice format. Datetime if realtime, seconds if not
-        realtime. Implemented as rt_time or sim_time"""
+        """Returns the time in seconds."""
         return f"{self.time:.2f}s"
 
 
@@ -140,18 +138,16 @@ class RealtimeEnvironment(simpy.RealtimeEnvironment, CustomSimpyEnvironment):
 
     @property
     def time(self) -> float:
-        """Get the current time of the environment.
-        If RT is enabled, the unix-time is returned."""
+        """Get the current system time as unix timestamp, with the enivronement
+        offset. """
         return time.time() + self.config.offset
 
     def pretty_time(self) -> str:
-        """Returns the time in a nice format. Datetime if realtime, seconds if not
-        realtime. Implemented as rt_time or sim_time"""
+        """Returns the time in a datetime format."""
         return datetime.fromtimestamp(self.time).strftime("%d-%b-%Y %H:%M:%S")
 
     def silent_clock(self):
         """A silent clock, which does not log anything."""
-        # if log level is not info or debug, this process can terminate
         while True:
             yield self.timeout(self.config.t_sample)
 
@@ -176,18 +172,15 @@ class ScaledRealtimeEnvironment(simpy.RealtimeEnvironment, CustomSimpyEnvironmen
 
     @property
     def time(self) -> float:
-        """Get the current time of the environment.
-        If RT is enabled, the unix-time is returned."""
+        """Get the current time of the environment."""
         return self.now
 
     def pretty_time(self) -> str:
-        """Returns the time in a nice format. Datetime if realtime, seconds if not
-        realtime. Implemented as rt_time or sim_time"""
+        """Returns the time in seconds."""
         return f"{self.time:.2f}s"
 
     def silent_clock(self):
         """A silent clock, which does not log anything."""
-        # if log level is not info or debug, this process can terminate
         while True:
             yield self.timeout(self.config.t_sample)
 
@@ -195,7 +188,30 @@ class ScaledRealtimeEnvironment(simpy.RealtimeEnvironment, CustomSimpyEnvironmen
 def monkey_patch_simpy_process():
     """Removes the exception catching in simpy processes. This removes some of simpys
     features that we do not need. In return, it improves debugging and makes error
-    messages more concise."""
+    messages more concise.
+    Simpy is licensed under the MIT License:
+
+    The MIT License (MIT)
+
+    Copyright (c) 2013 Ontje Lünsdorf and Stefan Scherfke (also see AUTHORS.txt)
+
+    Permission is hereby granted, free of charge, to any person obtaining a copy of
+    this software and associated documentation files (the "Software"), to deal in
+    the Software without restriction, including without limitation the rights to
+    use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+    the Software, and to permit persons to whom the Software is furnished to do so,
+    subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+    FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+    COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+    IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+    CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+    """
 
     def _describe_frame(frame) -> str:
         """Print filename, line number and function name of a stack frame."""
