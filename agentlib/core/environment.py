@@ -4,16 +4,17 @@ import json
 import logging
 import time
 from datetime import datetime
-from typing import Union, Any, Optional
-import simpy
 from pathlib import Path
-from simpy.core import SimTime, Event
+from typing import Union, Any, Optional
+
+import simpy
 from pydantic import (
     ConfigDict,
     PositiveFloat,
     BaseModel,
     Field,
 )
+from simpy.core import SimTime, Event
 
 logger = logging.getLogger(name=__name__)
 
@@ -64,11 +65,12 @@ def make_env_config(
         return EnvironmentConfig()
     if isinstance(config, EnvironmentConfig):
         return config
-    if isinstance(config, (str, Path)) and Path(config).exists():
-        with open(config, "r") as f:
-            config = json.load(f)
-    else:
-        config = json.loads(config)
+    if isinstance(config, (str, Path)):
+        if Path(config).exists():
+            with open(config, "r") as f:
+                config = json.load(f)
+        else:
+            config = json.loads(config)
     return EnvironmentConfig.model_validate(config)
 
 

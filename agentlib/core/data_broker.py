@@ -14,36 +14,23 @@ to match callbacks and AgentVariables.
 import abc
 import inspect
 import logging
-import threading
 import queue
+import threading
 from typing import (
     List,
     Callable,
     Dict,
     Tuple,
     Optional,
-    Protocol,
-    runtime_checkable,
-    Any,
     Union,
 )
 
 from pydantic import BaseModel, field_validator, model_validator, ConfigDict
 
-from agentlib.core.logging_ import CustomLogger
 from agentlib.core.datamodels import AgentVariable, Source
 from agentlib.core.environment import Environment
+from agentlib.core.logging_ import CustomLogger
 from agentlib.core.module import BaseModule
-
-
-@runtime_checkable
-class CallbackFunction(Protocol):
-    """Protocol defining the signature of a valid Callback Function"""
-
-    def __call__(self, variable: AgentVariable, **kwargs: Any) -> None:
-        ...
-
-    __name__: str
 
 
 class NoCopyBrokerCallback(BaseModel):
@@ -71,7 +58,7 @@ class NoCopyBrokerCallback(BaseModel):
     """
 
     # pylint: disable=too-few-public-methods
-    callback: CallbackFunction
+    callback: Callable
     alias: Optional[str] = None
     source: Optional[Source] = None
     kwargs: dict = {}
@@ -153,7 +140,7 @@ class BrokerCallback(NoCopyBrokerCallback):
 
     @field_validator("callback")
     @classmethod
-    def auto_copy(cls, callback_func: CallbackFunction):
+    def auto_copy(cls, callback_func: Callable):
         """Automatically supply the callback function with a copy"""
 
         def callback_copy(variable: AgentVariable, **kwargs):

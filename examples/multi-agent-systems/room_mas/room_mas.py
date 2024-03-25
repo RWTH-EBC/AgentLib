@@ -12,7 +12,7 @@ def run_example(until, with_plots=True, log_level=logging.INFO):
     # Start by setting the log-level
     logging.basicConfig(level=log_level)
 
-    env_config = {"rt": False, "t_sample": 1, "clock": True}
+    env_config = {"rt": False, "t_sample": 60, "clock": True}
 
     # Change the working directly so that relative paths work
     os.chdir(os.path.abspath(os.path.dirname(__file__)))
