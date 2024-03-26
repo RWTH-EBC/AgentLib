@@ -4,24 +4,23 @@ defining basic models to handle data.
 """
 import abc
 import functools
-import logging
 import json
+import logging
 import math
 import numbers
 from copy import copy, deepcopy
+from enum import Enum
 from io import StringIO
 from itertools import chain
 from typing import Union, Any, List, Optional, TypeVar, Set, Container, get_args
 
 import attrs
-from enum import Enum
+import numpy as np
+import pandas as pd
 from attrs import define, field
 from pydantic import GetCoreSchemaHandler
 from pydantic_core import core_schema
 from pydantic_core.core_schema import CoreSchema, SerializationInfo
-import numpy as np
-import pandas as pd
-
 
 logger = logging.getLogger(__name__)
 
@@ -604,7 +603,7 @@ class BaseVariable(AttrsToPydanticAdaptor):
         return json.dumps(dump, default=lambda o: o.dict())
 
 
-BaseVariableT = TypeVar(name="BaseVariableT", bound=BaseVariable)
+BaseVariableT = TypeVar("BaseVariableT", bound=BaseVariable)
 
 
 def _convert_value_to_type(value: Any, type_string: Optional[str]):
