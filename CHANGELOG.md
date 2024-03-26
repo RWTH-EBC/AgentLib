@@ -1,6 +1,13 @@
 # Changelog
 
-## 0.8.2
+## 0.8.2 
+- Realtime Environment always has a clock to prevent agents that define callbacks only from terminating
+- Environment time in real time is now based on system time, decoupling it from the simpy process
+- Environment time in scaled real time is as before, and will be logged in seconds, not datetime
+- Changed default t_sample for agentlogger to 60 seconds and added warning for performance if below that
+- Change process error handling, so that exceptions are not caught by the process anymore, improving debugging. This might exclude the use of more advanced simpy features.
+- Move pahomqtt dependency up to 2.0
+- Fix a bug, where type validation was done incorrectly during initial configuration 
 - More specific optional dependency errors and correct docker image #21
 
 ## 0.8.1

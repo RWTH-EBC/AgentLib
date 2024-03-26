@@ -28,7 +28,7 @@ class AgentLoggerConfig(BaseModuleConfig):
     t_sample: Union[float, int] = Field(
         title="t_sample",
         default=300,
-        description="The log is saved " "every other t_sample seconds.",
+        description="The log is saved every other t_sample seconds.",
     )
     values_only: bool = Field(
         title="values_only",
@@ -73,6 +73,13 @@ class AgentLogger(BaseModule):
                 os.getcwd(), f"Agent_{self.agent.id}_Logger.log"
             )
         self._variables_to_log = {}
+        if not self.env.config.rt and self.config.t_sample < 60:
+            self.logger.warning(
+                "Sampling time of agent_logger %s is very low %s. This can hinder "
+                "performance.",
+                self.id,
+                self.config.t_sample,
+            )
 
     @property
     def filename(self):
