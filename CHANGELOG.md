@@ -8,7 +8,7 @@
 - Change process error handling, so that exceptions are not caught by the process anymore, improving debugging. This might exclude the use of more advanced simpy features.
 - Move pahomqtt dependency up to 2.0
 - Fix a bug, where type validation was done incorrectly during initial configuration 
-
+- More specific optional dependency errors and correct docker image #21
 
 ## 0.8.1
 - Simulator results now start at the real start, not after the first sample interval. Inputs and parameters are now written at the correct index in the results (they are one row too late before).

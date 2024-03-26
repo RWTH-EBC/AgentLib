@@ -26,7 +26,8 @@ try:
     from paho.mqtt.enums import CallbackAPIVersion
 except ImportError as err:
     raise OptionalDependencyError(
-        dependency_name="mqtt", dependency_install="paho-mqtt"
+        dependency_name="mqtt", dependency_install="paho-mqtt",
+        used_object="Module type 'mqtt'"
     ) from err
 
 

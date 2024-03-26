@@ -22,7 +22,7 @@ try:
     from fmpy.fmi1 import FMICallException
 except ImportError as err:
     raise OptionalDependencyError(
-        dependency_name="fmu", dependency_install="fmpy", class_type="model"
+        dependency_name="fmu", dependency_install="fmpy", used_object="FMU-model"
     ) from err
 
 logger = logging.getLogger(__name__)
