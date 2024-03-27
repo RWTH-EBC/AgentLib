@@ -2,6 +2,7 @@
 Module contains the Simulator, used to simulate any model.
 """
 import os
+import time
 from dataclasses import dataclass
 from math import inf
 from typing import Union, Dict, List, Optional
@@ -169,6 +170,30 @@ class SimulatorConfig(BaseModuleConfig):
         "is False by default, as we expect to receive a lot of measurements"
         " and want to be efficient.",
     )
+    input_unit_conversion: Dict[str, Dict[str, float]] = Field(
+        title="Unit Conversion",
+        default={},
+        description="If the unit of certain inputs should be converted"
+                    "prior to setting them to the model, you can configure"
+                    "offset and factor according to the following equation:"
+                    "model_input = input * factor + offset."
+                    "E.g.: {'u': {'offset': -273.15, 'factor': 0}} for K to degC"
+                    "conversion. Defaults are 0 for offset and 1 for factor."
+    )
+    restart_model_on_failure: bool = Field(
+        default=False,
+        title="Restart on failure",
+        description="If True, the model will be re-started if "
+                    "an error occurs during simulation"
+    )
+    max_time_per_step: float = Field(
+        title="Maximal time per step",
+        default=None,
+        description="Maximal time in seconds for each simulation step (in realtime)."
+                    "If the simulation takes longer, a TimeoutError is raised."
+                    "Default is equal to t_sample to ensure real-time capability of Simulator.",
+        validate_default=True
+    )
 
     @field_validator("result_filename")
     @classmethod
@@ -250,9 +275,10 @@ class SimulatorConfig(BaseModuleConfig):
                 "Given model config does not " "contain key 'type' (type of the model)."
             )
         _type = model.pop("type")
+        if isinstance(model, Model):
+            return  # Already initialized
         if isinstance(_type, dict):
-            custom_cls = custom_injection(config=_type)
-            model = custom_cls(**model)
+            model_cls = custom_injection(config=_type)
         elif isinstance(_type, str):
             if _type in UNINSTALLED_MODEL_TYPES:
                 raise OptionalDependencyError(
@@ -260,16 +286,26 @@ class SimulatorConfig(BaseModuleConfig):
                     dependency_install=UNINSTALLED_MODEL_TYPES[_type],
                     used_object=f"model {_type}",
                 )
-            model = get_model_type(_type)(
-                **model,
-                parameters=convert_agent_vars_to_list_of_dicts(parameters),
-                inputs=convert_agent_vars_to_list_of_dicts(inputs),
-                outputs=convert_agent_vars_to_list_of_dicts(outputs),
-                states=convert_agent_vars_to_list_of_dicts(states),
-            )
-        # Check if model was correctly initialized
-        assert isinstance(model, Model)
-        return model
+            model_cls = get_model_type(_type)
+        else:
+            raise TypeError(f"Given model config '{model}' is neither Model, str, nor dict.")
+
+        return start_model(
+            model_cls=model_cls,
+            model_config=model,
+            parameters=parameters,
+            inputs=inputs,
+            outputs=outputs,
+            states=states,
+        )
+
+    @field_validator("max_time_per_step")
+    @classmethod
+    def set_default_max_time_per_step(cls, max_time_per_step, info: FieldValidationInfo):
+        """Set the sample time as default."""
+        if max_time_per_step is None:
+            return info.data["t_sample"]
+        return max_time_per_step
 
 
 class Simulator(BaseModule):
@@ -341,7 +377,16 @@ class Simulator(BaseModule):
             self.env.run(until=until)
 
     def register_callbacks(self):
-        pass
+        self.__simulating = True
+        self.agent.data_broker.register_callback(
+            callback=self._kill_on_timeout, alias="___simulation_started", source=self.source
+        )
+
+    def _kill_on_timeout(self, var: AgentVariable):
+        while self.__simulating:
+            if time.time() >= var.value + self.config.max_time_per_step:
+                raise TimeoutError(f"Current do_step took too long. "
+                                   f"Aborting simulation... at time {self.env.now + self.config.t_start}")
 
     def _register_input_callbacks(self):
         """Register input callbacks"""
@@ -374,8 +419,27 @@ class Simulator(BaseModule):
 
     def _callback_update_model_input(self, inp: AgentVariable, name: str):
         """Set given model input value to the model"""
-        self.logger.debug("Updating model input %s=%s", name, inp.value)
-        self.model.set_input_value(name=name, value=inp.value)
+        if inp.value is None:
+            self.logger.error("Won't update model input %s to value None", name)
+            return
+        if name in self.config.input_unit_conversion:
+            value = (
+                    inp.value * self.config.input_unit_conversion[name].get("factor", 1) +
+                    self.config.input_unit_conversion[name].get("offset", 0)
+            )
+            self.logger.debug("Converted model input '%s' from %s to %s based on unit conversion.",
+                              name, inp.value, value)
+        else:
+            value = inp.value
+        own_var = self.get(name)
+        if value < own_var.lb:
+            value = own_var.lb
+        if value > own_var.ub:
+            value = own_var.ub
+        old_value = self.model.get_input(name).value
+        if value != old_value:
+            self.logger.info("Changing model input %s from %s to %s", name, old_value, value)
+            self.model.set_input_value(name=name, value=value)
 
     def _callback_update_model_parameter(self, par: AgentVariable, name: str):
         """Set given model parameter value to the model"""
@@ -417,12 +481,54 @@ class Simulator(BaseModule):
             # Update inputs manually
             self.update_model_inputs()
         # Simulate
-        self.model.do_step(
-            t_start=(self.env.now + self.env.offset + self.config.t_start),
-            t_sample=self.config.t_sample
-        )
-        # Update the results and outputs
-        self._update_results()
+        try:
+            run_as_thread = False
+            if run_as_thread:
+                import threading
+                thread_do_step = threading.Thread(
+                    target=self.model.do_step,
+                    name=f"Simulator-module: {self.id}-do_step",
+                    daemon=True,
+                    kwargs=dict(
+                        t_start=(self.env.now + self.config.t_start),
+                        t_sample=self.config.t_sample
+                    )
+                )
+                thread_do_step.start()
+                thread_do_step.join(timeout=self.config.max_time_per_step)
+                if thread_do_step.is_alive():
+                    raise TimeoutError(f"Current do_step took too long. "
+                                       f"Aborting simulation... at time {self.env.now + self.config.t_start}")
+            else:
+                self.__simulating = True
+                self.agent.data_broker.send_variable(AgentVariable(name="___simulation_started", value=time.time(), source=self.source))
+                self.model.do_step(
+                    t_start=(self.env.now + self.config.t_start),
+                    t_sample=self.config.t_sample
+                )
+                self.__simulating = False
+
+            # Update the results and outputs
+            self._update_results()
+            # Wait for the environment until the timeout
+        except (RuntimeError, TimeoutError) as err:
+            if not self.config.restart_model_on_failure:
+                raise err
+            # Restart
+            self.logger.error("Model terminated with an error, restarting: %s", err)
+            # Ensure the thread (with is probably still alive) loses access
+            # to the model and will terminate (ungracefully).
+            self.model.terminate()
+            self.model = start_model(
+                model_cls=type(self.model),
+                model_config={k: v for k, v in self.config._user_config["model"].items() if k != "type"},
+                inputs=self.config.inputs,
+                outputs=self.config.outputs,
+                states=self.config.states,
+                parameters=self.config.parameters,
+            )
+            self.model.initialize(t_start=self.config.t_start + self.env.now, t_stop=self.config.t_stop)
+        return self.env.timeout(self.config.t_sample)
 
     def update_model_inputs(self):
         """
@@ -456,8 +562,10 @@ class Simulator(BaseModule):
                 self.logger.debug("Updating %s %s=%s", _type, var.name, value)
                 self.set(name=var.name, value=value)
 
-    def _get_uncertain_value(self, model_variable: ModelVariable) -> float:
+    def _get_uncertain_value(self, model_variable: ModelVariable) -> Union[float, None]:
         """Get the value with added uncertainty based on the value of the variable"""
+        if model_variable.value is None:
+            return
         if isinstance(self.config.measurement_uncertainty, dict):
             bias = self.config.measurement_uncertainty.get(model_variable.name, 0)
         else:
@@ -512,7 +620,6 @@ class Simulator(BaseModule):
         out_values = [var.value for var in self._get_result_output_variables()]
         self._result.data.append(out_values)
 
-
     def _get_result_model_variables(self) -> AgentVariables:
         """
         Gets all variables to be saved in the result based
@@ -547,6 +654,7 @@ class Simulator(BaseModule):
                 _variables.extend(self.model.states)
         return _variables
 
+
 def convert_agent_vars_to_list_of_dicts(var: AgentVariables) -> List[Dict]:
     """
     Function to convert AgentVariables to a list of dictionaries containing information for
@@ -557,3 +665,27 @@ def convert_agent_vars_to_list_of_dicts(var: AgentVariables) -> List[Dict]:
         for agent_var in var
     ]
     return var_dict_list
+
+
+def start_model(
+        model_cls: type,
+        model_config: dict,
+        parameters: List[ModelVariable],
+        inputs: List[ModelVariable],
+        outputs: List[ModelVariable],
+        states: List[ModelVariable]
+):
+    """
+    Start the given model config in the model class
+    with the given variables.
+    """
+    model = model_cls(
+        **model_config,
+        parameters=convert_agent_vars_to_list_of_dicts(parameters),
+        inputs=convert_agent_vars_to_list_of_dicts(inputs),
+        outputs=convert_agent_vars_to_list_of_dicts(outputs),
+        states=convert_agent_vars_to_list_of_dicts(states),
+    )
+    # Check if model was correctly initialized
+    assert isinstance(model, Model)
+    return model
