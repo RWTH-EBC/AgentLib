@@ -1,8 +1,7 @@
 import abc
 import time
-import uuid
 from functools import cached_property
-from typing import Union, List
+from typing import Union, List, Optional
 
 from pydantic import AnyUrl, Field, ValidationError, field_validator
 
@@ -24,6 +23,7 @@ try:
         MQTT_LOG_ERR,
         MQTT_LOG_WARNING,
     )
+    from paho.mqtt.enums import CallbackAPIVersion
 except ImportError as err:
     raise OptionalDependencyError(
         dependency_name="mqtt", dependency_install="paho-mqtt",
@@ -66,13 +66,17 @@ class BaseMQTTClientConfig(SubscriptionCommunicatorConfig):
         description="Number of seconds to wait for the initial connection "
         "until throwing an Error.",
     )
-    username: str = Field(default=None, title="Username to login")
-    password: str = Field(default=None, title="Password to login")
-    use_tls: bool = Field(default=None, description="Option to use TLS certificates")
-    tls_ca_certs: str = Field(
+    username: Optional[str] = Field(default=None, title="Username to login")
+    password: Optional[str] = Field(default=None, title="Password to login")
+    use_tls: Optional[bool] = Field(
+        default=None, description="Option to use TLS certificates"
+    )
+    tls_ca_certs: Optional[str] = Field(
         default=None,
         description="Path to the Certificate Authority certificate files. "
-                    "If None, windows certificate will be used.")
+        "If None, windows certificate will be used.",
+    )
+    client_id: Optional[str] = Field(default=None, title="Client ID")
 
     # Add validator
     check_subtopics = field_validator("subtopics")(convert_to_list)
@@ -122,7 +126,11 @@ class BaseMqttClient(Communicator):
     def __init__(self, config: dict, agent: Agent):
         super().__init__(config=config, agent=agent)
         self._subcribed_topics = 0
-        self._mqttc = self.mqttc_type(client_id=str(uuid.uuid4()), protocol=MQTTv5)
+        self._mqttc = self.mqttc_type(
+            client_id=self.config.client_id or str(self.source),
+            protocol=MQTTv5,
+            callback_api_version=CallbackAPIVersion.VERSION2,
+        )
         if self.config.username is not None:
             self.logger.debug("Setting password and username")
             self._mqttc.username_pw_set(

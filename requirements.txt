@@ -60,7 +60,7 @@ orjson==3.9.10
     # via agentlib (setup.py)
 packaging==23.2
     # via matplotlib
-paho-mqtt==1.6.1
+paho-mqtt==2.0.0
     # via
     #   agentlib (setup.py)
     #   clonemapy

@@ -17,6 +17,7 @@ from agentlib.core import (
     BaseModule,
     DataBroker,
 )
+from agentlib.core.environment import CustomSimpyEnvironment
 from agentlib.utils import custom_injection
 from agentlib.utils.load_config import load_config
 
@@ -162,7 +163,7 @@ class Agent:
         return self._data_broker
 
     @property
-    def env(self) -> Environment:
+    def env(self) -> CustomSimpyEnvironment:
         """
         Get the environment the agent is in
 
