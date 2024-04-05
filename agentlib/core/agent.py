@@ -53,6 +53,14 @@ class AgentConfig(BaseModel):
         description="Maximal number of waiting items in data-broker queues. "
                     "Set to -1 for infinity"
     )
+    max_callback_wait_time: Optional[float] = Field(
+        default=60,
+        ge=-1,
+        description="Maximum seconds the callback is allowed to wait in queue "
+                    "before execution. If the time surpasses, the callback is "
+                    "ignored and an info is logged, as this indicates full queues "
+                    "and slow processes in some module(s). Set to -1 for infinity"
+    )
 
     @field_validator("modules")
     @classmethod
@@ -95,7 +103,8 @@ class Agent:
         if env.config.rt:
             self._data_broker = RTDataBroker(
                 env=env, logger=data_broker_logger,
-                max_queue_size=config.max_queue_size
+                max_queue_size=config.max_queue_size,
+                max_callback_wait_time=config.max_callback_wait_time
             )
             self.register_thread(thread=self._data_broker.thread)
         else:

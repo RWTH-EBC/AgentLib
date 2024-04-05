@@ -16,6 +16,7 @@ import inspect
 import logging
 import queue
 import threading
+import time
 from typing import (
     List,
     Callable,
@@ -28,7 +29,7 @@ from typing import (
 from pydantic import BaseModel, field_validator, model_validator, ConfigDict
 
 from agentlib.core.datamodels import AgentVariable, Source
-from agentlib.core.environment import Environment
+from agentlib.core.environment import InstantEnvironment, RealtimeEnvironment
 from agentlib.core.logging_ import CustomLogger
 from agentlib.core.module import BaseModule
 
@@ -49,7 +50,7 @@ class NoCopyBrokerCallback(BaseModel):
 
     Example:
     >>> def my_callback(variable: "AgentVariable", some_static_info: str):
-    >>>     print(variable, some_other_info)
+    >>>     print(variable, some_static_info)
     >>> NoCopyBrokerCallback(
     >>>     callback=my_callback,
     >>>     kwargs={"some_static_info": "Hello World"}
@@ -134,7 +135,7 @@ class BrokerCallback(NoCopyBrokerCallback):
     This broker callback always creates a deep-copy of the
     AgentVariable it is going to send.
     It is considered the safer option, as the receiving module
-    only get's the values and is not able to alter
+    only gets the values and is not able to alter
     the AgentVariable for other modules.
     """
 
@@ -343,7 +344,12 @@ class LocalDataBroker(DataBroker):
     """Local variation of the DataBroker written for fast-as-possible
     simulation within a single non-realtime Environment."""
 
-    def __init__(self, env: Environment, logger: CustomLogger, max_queue_size: int = 1000):
+    def __init__(
+            self,
+            env: Union[RealtimeEnvironment, InstantEnvironment],
+            logger: CustomLogger,
+            max_queue_size: int = 1000
+    ):
         """
         Initialize env
         """
@@ -380,7 +386,13 @@ class LocalDataBroker(DataBroker):
 class RTDataBroker(DataBroker):
     """DataBroker written for Realtime operation regardless of Environment."""
 
-    def __init__(self, env: Environment, logger: CustomLogger, max_queue_size: int = 1000):
+    def __init__(
+            self,
+            env: Union[RealtimeEnvironment, InstantEnvironment],
+            logger: CustomLogger,
+            max_queue_size: int = 1000,
+            max_callback_wait_time: float = 60
+    ):
         """
         Initialize env.
         Adds the function to start callback execution to the environment as a process.
@@ -394,10 +406,10 @@ class RTDataBroker(DataBroker):
             target=self._callback_thread, daemon=True, name="DataBroker"
         )
         self._module_queues: dict[Union[str, None], queue.Queue] = {}
-
+        self.max_callback_wait_time = max_callback_wait_time
         env.process(self._start_executing_callbacks(env))
 
-    def _start_executing_callbacks(self, env: Environment):
+    def _start_executing_callbacks(self, env: Union[RealtimeEnvironment, InstantEnvironment]):
         """
         Starts the callback thread.
         Thread is started after it is registered by the agent. Should be fine, since
@@ -450,8 +462,15 @@ class RTDataBroker(DataBroker):
         """Executes the callbacks associated with a specific module."""
         try:
             while True:
-                cb, variable = queue.get(block=True)
+                cb, variable, time_entered_queue = queue.get(block=True)
+                if self.max_callback_wait_time > 0:
+                    seconds_cb_waited = time.time() - time_entered_queue
+                    if seconds_cb_waited > self.max_callback_wait_time:
+                        self.logger.info("Skipping callback %s, is %s seconds too old",
+                                          cb.callback.__name__, seconds_cb_waited - self.max_callback_wait_time)
+                        return
                 cb.callback(variable=variable, **cb.kwargs)
+
         except Exception as e:
             self._stop_queue.put((e, module_id))
             raise e
@@ -459,7 +478,7 @@ class RTDataBroker(DataBroker):
     def _run_callbacks(self, callbacks: List[BrokerCallback], variable: AgentVariable):
         """Distributes callbacks to the threads running for each module."""
         for cb in callbacks:
-            self._module_queues[cb.module_id].put_nowait((cb, variable))
+            self._module_queues[cb.module_id].put_nowait((cb, variable, time.time()))
             log_queue_status(
                 logger=self.logger,
                 queue_name=cb.module_id,
