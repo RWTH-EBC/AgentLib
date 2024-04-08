@@ -96,6 +96,8 @@ class BaseModuleConfig(BaseModel):
     # Is also useful to debug validators and the general BaseModuleConfig.
     _user_config: dict = PrivateAttr(default=None)
 
+    _register_variable_callbacks: bool = PrivateAttr(default=True)
+
     model_config = ConfigDict(
         arbitrary_types_allowed=True,
         validate_assignment=True,
@@ -106,6 +108,11 @@ class BaseModuleConfig(BaseModel):
     def get_variables(self):
         """Return the private attribute with all AgentVariables"""
         return self._variables
+
+    @property
+    def register_variable_callbacks(self):
+        return self._register_variable_callbacks
+
 
     @classmethod
     def model_json_schema(cls, *args, **kwargs) -> dict:
@@ -425,7 +432,8 @@ class BaseModule(abc.ABC):
             self.config.get_variables()
         )
         # Now de-and re-register all callbacks:
-        self._register_variable_callbacks()
+        if self.config.register_variable_callbacks:
+            self._register_variable_callbacks()
 
         # Set log-level
         if self.config.log_level is not None:

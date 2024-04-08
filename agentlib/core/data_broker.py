@@ -129,6 +129,13 @@ class NoCopyBrokerCallback(BaseModel):
             other.callback.__name__,
         )
 
+    @property
+    def name(self):
+        """
+        Get the name of the callback, i.e. the name of the function being called
+        """
+        return self.callback.__name__
+
 
 class BrokerCallback(NoCopyBrokerCallback):
     """
@@ -197,19 +204,19 @@ class DataBroker(abc.ABC):
         Args:
             variable AgentVariable: The variable to append to the local queue.
         """
-        self._variable_queue.put(variable)
-
-    def _execute_callbacks(self):
-        """
-        Run relevant callbacks for AgentVariable's from local queue.
-        """
-        variable = self._variable_queue.get(block=True)
+        self._variable_queue.put_nowait(variable)
         log_queue_status(
             logger=self.logger,
             queue_name="Callback-Distribution",
             queue_object=self._variable_queue,
             max_queue_size=self._max_queue_size
         )
+
+    def _execute_callbacks(self):
+        """
+        Run relevant callbacks for AgentVariable's from local queue.
+        """
+        variable = self._variable_queue.get(block=True)
         _map_tuple = (variable.alias, variable.source)
         # First the unmapped cbs
         callbacks = self._filter_unmapped_callbacks(map_tuple=_map_tuple)
@@ -466,8 +473,8 @@ class RTDataBroker(DataBroker):
                 if self.max_callback_wait_time > 0:
                     seconds_cb_waited = time.time() - time_entered_queue
                     if seconds_cb_waited > self.max_callback_wait_time:
-                        self.logger.info("Skipping callback %s, is %s seconds too old",
-                                          cb.callback.__name__, seconds_cb_waited - self.max_callback_wait_time)
+                        self.logger.critical("Skipping callback %s, is %s seconds too old",
+                                             cb.name, seconds_cb_waited - self.max_callback_wait_time)
                         return
                 cb.callback(variable=variable, **cb.kwargs)
 
@@ -478,6 +485,8 @@ class RTDataBroker(DataBroker):
     def _run_callbacks(self, callbacks: List[BrokerCallback], variable: AgentVariable):
         """Distributes callbacks to the threads running for each module."""
         for cb in callbacks:
+            self.logger.info("Putting variable %s into callback %s of module %s",
+                             variable.name, cb.name, cb.module_id)
             self._module_queues[cb.module_id].put_nowait((cb, variable, time.time()))
             log_queue_status(
                 logger=self.logger,
@@ -504,7 +513,7 @@ def log_queue_status(logger: logging.Logger, queue_object: queue.Queue, max_queu
     if percent_full < 10:
         return
     elif percent_full < 80:
-        logger_func = logger.debug
+        logger_func = logger.info
     else:
         logger_func = logger.warning
     logger_func(
