@@ -106,7 +106,7 @@ class Agent:
                 max_queue_size=config.max_queue_size,
                 max_callback_wait_time=config.max_callback_wait_time
             )
-            self.register_thread(thread=self._data_broker.thread)
+            #self.register_thread(thread=self._data_broker.thread)
         else:
             self._data_broker = LocalDataBroker(
                 env=env, logger=data_broker_logger,

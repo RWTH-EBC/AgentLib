@@ -179,6 +179,8 @@ class DataBroker(abc.ABC):
         self._max_queue_size = max_queue_size
         self._mapped_callbacks: Dict[Tuple[str, Source], List[BrokerCallback]] = {}
         self._unmapped_callbacks: List[BrokerCallback] = []
+        self._mapped_variable_update_callbacks: Dict[Tuple[str, Source], List[BrokerCallback]] = {}
+        self._unmapped_variable_update_callbacks: List[BrokerCallback] = []
         self._variable_queue = queue.Queue(maxsize=max_queue_size)
 
     def send_variable(self, variable: AgentVariable, copy: bool = True):
@@ -218,19 +220,31 @@ class DataBroker(abc.ABC):
         """
         variable = self._variable_queue.get(block=True)
         _map_tuple = (variable.alias, variable.source)
-        # First the unmapped cbs
-        callbacks = self._filter_unmapped_callbacks(map_tuple=_map_tuple)
-        # Then the mapped once.
-        # Use try-except to avoid possible deregister during check and execution
-        try:
-            callbacks.extend(self._mapped_callbacks[_map_tuple])
-        except KeyError:
-            pass
+        # First the variable cbs
+        variable_update_callbacks = self._filter_callbacks(
+            map_tuple=_map_tuple,
+            unmapped_callbacks=self._unmapped_variable_update_callbacks,
+            mapped_callbacks=self._mapped_variable_update_callbacks
+        )
+        for cb in variable_update_callbacks:
+            cb.callback(variable, **cb.kwargs)
+
+        # Then the other cbs
+        callbacks = self._filter_callbacks(
+            map_tuple=_map_tuple,
+            unmapped_callbacks=self._unmapped_callbacks,
+            mapped_callbacks=self._mapped_callbacks
+        )
 
         # Then run the callbacks
         self._run_callbacks(callbacks, variable)
 
-    def _filter_unmapped_callbacks(self, map_tuple: tuple) -> List[BrokerCallback]:
+    @staticmethod
+    def _filter_callbacks(
+            map_tuple: tuple,
+            unmapped_callbacks: List[BrokerCallback],
+            mapped_callbacks: Dict[Tuple[str, Source], List[BrokerCallback]]
+    ) -> List[BrokerCallback]:
         """
         Filter the unmapped callbacks according to the given
         tuple of variable information.
@@ -244,16 +258,22 @@ class DataBroker(abc.ABC):
 
         """
         # Filter all callbacks matching the given variable
-        callbacks = self._unmapped_callbacks
         # First filter source
         source = map_tuple[1]
         callbacks = [
-            cb for cb in callbacks if (cb.source is None) or (cb.source.matches(source))
+            cb for cb in unmapped_callbacks if (cb.source is None) or (cb.source.matches(source))
         ]
         # Now alias
         callbacks = [
             cb for cb in callbacks if (cb.alias is None) or (cb.alias == map_tuple[0])
         ]
+
+        # Then the mapped once.
+        # Use try-except to avoid possible deregister during check and execution
+        try:
+            callbacks.extend(mapped_callbacks[map_tuple])
+        except KeyError:
+            pass
 
         return callbacks
 
@@ -286,14 +306,70 @@ class DataBroker(abc.ABC):
             callback_ = BrokerCallback(
                 alias=alias, source=source, callback=callback, kwargs=kwargs
             )
-        _map_tuple = (alias, source)
-        if self.any_is_none(alias=alias, source=source):
-            self._unmapped_callbacks.append(callback_)
-        elif _map_tuple in self._mapped_callbacks:
-            self._mapped_callbacks[_map_tuple].append(callback_)
-        else:
-            self._mapped_callbacks[_map_tuple] = [callback_]
+        self._add_callback_as_mapped_or_unmapped(
+            callback_=callback_,
+            mapped_callbacks=self._mapped_callbacks,
+            unmapped_callbacks=self._unmapped_callbacks
+        )
+
         return callback_
+
+    def register_variable_update_callback(
+        self,
+        callback: Callable,
+        alias: str = None,
+        source: Source = None,
+        **kwargs,
+    ) -> Union[BrokerCallback, NoCopyBrokerCallback]:
+        """
+        Register a callback to the data_broker.
+
+        Args:
+            callback callable: The function of the callback
+            alias str: The alias of variables to trigger callback
+            source Source: The Source of variables to trigger callback
+            kwargs dict: Kwargs to be passed to the callback function
+        """
+        callback_ = NoCopyBrokerCallback(
+            alias=alias, source=source, callback=callback, kwargs=kwargs
+        )
+        self._add_callback_as_mapped_or_unmapped(
+            callback_=callback_,
+            mapped_callbacks=self._mapped_variable_update_callbacks,
+            unmapped_callbacks=self._unmapped_variable_update_callbacks
+        )
+        return callback_
+
+    @staticmethod
+    def _add_callback_as_mapped_or_unmapped(
+            callback_: Union[BrokerCallback, NoCopyBrokerCallback],
+            unmapped_callbacks: List[BrokerCallback],
+            mapped_callbacks: Dict[Tuple[str, Source], List[BrokerCallback]]
+    ):
+        _map_tuple = (callback_.alias, callback_.source)
+        if DataBroker.any_is_none(alias=callback_.alias, source=callback_.source):
+            unmapped_callbacks.append(callback_)
+        elif _map_tuple in mapped_callbacks:
+            mapped_callbacks[_map_tuple].append(callback_)
+        else:
+            mapped_callbacks[_map_tuple] = [callback_]
+
+    @staticmethod
+    def _remove_callback_from_mapped_or_unmapped(
+            callback_: Union[BrokerCallback, NoCopyBrokerCallback],
+            unmapped_callbacks: List[BrokerCallback],
+            mapped_callbacks: Dict[Tuple[str, Source], List[BrokerCallback]]
+    ):
+        try:
+            _map_tuple = (callback_.alias, callback_.source)
+            if DataBroker.any_is_none(alias=callback_.alias, source=callback_.source):
+                unmapped_callbacks.remove(callback_)
+            elif _map_tuple in mapped_callbacks:
+                mapped_callbacks[_map_tuple].remove(callback_)
+            else:
+                return  # No delete necessary
+        except ValueError:
+            pass
 
     def deregister_callback(
         self, callback: Callable, alias: str = None, source: Source = None, **kwargs
@@ -308,20 +384,38 @@ class DataBroker(abc.ABC):
             source Source: The Source of variables to trigger callback
             kwargs dict: Kwargs of the callback function
         """
-        try:
-            callback = BrokerCallback(
-                alias=alias, source=source, callback=callback, kwargs=kwargs
-            )
-            _map_tuple = (alias, source)
-            if self.any_is_none(alias=alias, source=source):
-                self._unmapped_callbacks.remove(callback)
-            elif _map_tuple in self._mapped_callbacks:
-                self._mapped_callbacks[_map_tuple].remove(callback)
-            else:
-                return  # No delete necessary
-            self.logger.debug("Callback de-registered: %s", callback)
-        except ValueError:
-            pass
+        callback = BrokerCallback(
+            alias=alias, source=source, callback=callback, kwargs=kwargs
+        )
+        self._remove_callback_from_mapped_or_unmapped(
+            callback_=callback,
+            unmapped_callbacks=self._unmapped_callbacks,
+            mapped_callbacks=self._mapped_callbacks
+        )
+        self.logger.debug("Callback de-registered: %s", callback)
+
+    def deregister_variable_update_callback(
+        self, callback: Callable, alias: str = None, source: Source = None, **kwargs
+    ):
+        """
+        Deregister the given callback based on given
+        alias and source.
+
+        Args:
+            callback callable: The function of the callback
+            alias str: The alias of variables to trigger callback
+            source Source: The Source of variables to trigger callback
+            kwargs dict: Kwargs of the callback function
+        """
+        callback = BrokerCallback(
+            alias=alias, source=source, callback=callback, kwargs=kwargs
+        )
+        self._remove_callback_from_mapped_or_unmapped(
+            callback_=callback,
+            unmapped_callbacks=self._unmapped_variable_update_callbacks,
+            mapped_callbacks=self._mapped_variable_update_callbacks
+        )
+        self.logger.debug("Callback de-registered: %s", callback)
 
     @staticmethod
     def any_is_none(alias: str, source: Source) -> bool:
@@ -409,9 +503,9 @@ class RTDataBroker(DataBroker):
         """
         super().__init__(logger=logger, max_queue_size=max_queue_size)
         self._stop_queue = queue.SimpleQueue()
-        self.thread = threading.Thread(
-            target=self._callback_thread, daemon=True, name="DataBroker"
-        )
+        #self.thread = threading.Thread(
+        #    target=self._callback_thread, daemon=True, name="DataBroker"
+        #)
         self._module_queues: dict[Union[str, None], queue.Queue] = {}
         self.max_callback_wait_time = max_callback_wait_time
         env.process(self._start_executing_callbacks(env))
@@ -422,7 +516,7 @@ class RTDataBroker(DataBroker):
         Thread is started after it is registered by the agent. Should be fine, since
         the monitor process is started after the process in this function
         """
-        self.thread.start()
+        #self.thread.start()
         yield env.event()
 
     def _callback_thread(self):
@@ -461,15 +555,15 @@ class RTDataBroker(DataBroker):
             target=self._execute_callbacks_of_module,
             daemon=True,
             name=f"DataBroker/{module_id}",
-            kwargs={"queue": module_queue, "module_id": module_id},
+            kwargs={"module_queue": module_queue, "module_id": module_id},
         ).start()
         self._module_queues[module_id] = module_queue
 
-    def _execute_callbacks_of_module(self, queue: queue.SimpleQueue, module_id: str):
+    def _execute_callbacks_of_module(self, module_queue: queue.SimpleQueue, module_id: str):
         """Executes the callbacks associated with a specific module."""
         try:
             while True:
-                cb, variable, time_entered_queue = queue.get(block=True)
+                cb, variable, time_entered_queue = module_queue.get(block=True)
                 if self.max_callback_wait_time > 0:
                     seconds_cb_waited = time.time() - time_entered_queue
                     if seconds_cb_waited > self.max_callback_wait_time:
@@ -494,6 +588,39 @@ class RTDataBroker(DataBroker):
                 queue_object=self._module_queues[cb.module_id],
                 max_queue_size=self._max_queue_size
             )
+
+    def _send_variable_to_modules(self, variable: AgentVariable):
+        """
+        Enqueue AgentVariable in local queue for executing relevant callbacks.
+
+        Args:
+            variable AgentVariable: The variable to append to the local queue.
+        """
+        self._execute_callbacks(variable)
+
+    def _execute_callbacks(self, variable):
+        """
+        Run relevant callbacks for AgentVariable's from local queue.
+        """
+        _map_tuple = (variable.alias, variable.source)
+        # First the variable cbs
+        variable_update_callbacks = self._filter_callbacks(
+            map_tuple=_map_tuple,
+            unmapped_callbacks=self._unmapped_variable_update_callbacks,
+            mapped_callbacks=self._mapped_variable_update_callbacks
+        )
+        for cb in variable_update_callbacks:
+            cb.callback(variable, **cb.kwargs)
+
+        # Then the other cbs
+        callbacks = self._filter_callbacks(
+            map_tuple=_map_tuple,
+            unmapped_callbacks=self._unmapped_callbacks,
+            mapped_callbacks=self._mapped_callbacks
+        )
+
+        # Then run the callbacks
+        self._run_callbacks(callbacks, variable)
 
 
 def log_queue_status(logger: logging.Logger, queue_object: queue.Queue, max_queue_size: int, queue_name: str):
