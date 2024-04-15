@@ -1,15 +1,16 @@
 """
 Module contains the Simulator, used to simulate any model.
 """
+
 import os
 from dataclasses import dataclass
 from math import inf
+from pathlib import Path
 from typing import Union, Dict, List, Optional
 
-from pathlib import Path
-from pydantic import field_validator, Field
 import numpy as np
 import pandas as pd
+from pydantic import field_validator, Field
 from pydantic_core.core_schema import FieldValidationInfo
 
 from agentlib.core import (
@@ -20,8 +21,8 @@ from agentlib.core import (
     AgentVariable,
     AgentVariables,
     ModelVariable,
+    Model,
 )
-from agentlib.core import Model
 from agentlib.core.errors import OptionalDependencyError
 from agentlib.models import get_model_type, UNINSTALLED_MODEL_TYPES
 from agentlib.utils import custom_injection
@@ -63,7 +64,10 @@ class SimulatorResults:
         self.index = []
         self.data = []
 
-    def initialize(self, time: float, ):
+    def initialize(
+        self,
+        time: float,
+    ):
         """Adds the first row to the data"""
 
     def df(self) -> pd.DataFrame:
@@ -327,11 +331,15 @@ class Simulator(BaseModule):
             )
         self._model = model
         if self.config.t_start and self.env.offset:
-            self.logger.warning("config.t_start and env.offset are both non-zero. "
-                                "This may cause unexpected behavior. Ensure that this "
-                                "is intended and you know what you are doing.")
-        self.model.initialize(t_start=self.config.t_start + self.env.config.offset,
-                              t_stop=self.config.t_stop)
+            self.logger.warning(
+                "config.t_start and env.offset are both non-zero. "
+                "This may cause unexpected behavior. Ensure that this "
+                "is intended and you know what you are doing."
+            )
+        self.model.initialize(
+            t_start=self.config.t_start + self.env.config.offset,
+            t_stop=self.config.t_stop,
+        )
         self.logger.info("Model successfully loaded model: %s", self.model.name)
 
     def run(self, until=None):
@@ -423,8 +431,7 @@ class Simulator(BaseModule):
             self.update_model_inputs()
         # Simulate
         self.model.do_step(
-            t_start=(self.env.now + self.config.t_start),
-            t_sample=self.config.t_sample
+            t_start=(self.env.now + self.config.t_start), t_sample=self.config.t_sample
         )
         # Update the results and outputs
         self._update_results()
@@ -487,6 +494,12 @@ class Simulator(BaseModule):
         df = df.droplevel(level=2, axis=1).droplevel(level=0, axis=1)
         return df
 
+    def cleanup_results(self):
+        """Cleans the result file."""
+        if not self.config.result_filename:
+            return
+        os.remove(self.config.result_filename)
+
     def _update_results(self):
         """
         Adds model variables to the SimulationResult object
@@ -504,9 +517,8 @@ class Simulator(BaseModule):
         # above will point to the wrong entry
         self._update_result_outputs(timestamp)
         if (
-                self.config.result_filename is not None
-                and timestamp // (
-                self.config.write_results_delay * self._save_count) > 0
+            self.config.result_filename is not None
+            and timestamp // (self.config.write_results_delay * self._save_count) > 0
         ):
             self._save_count += 1
             self._result.write_results(self.config.result_filename)
@@ -516,7 +528,6 @@ class Simulator(BaseModule):
         self._result.index.append(timestamp)
         out_values = [var.value for var in self._get_result_output_variables()]
         self._result.data.append(out_values)
-
 
     def _get_result_model_variables(self) -> AgentVariables:
         """
@@ -551,6 +562,7 @@ class Simulator(BaseModule):
             elif causality == Causality.local:
                 _variables.extend(self.model.states)
         return _variables
+
 
 def convert_agent_vars_to_list_of_dicts(var: AgentVariables) -> List[Dict]:
     """
