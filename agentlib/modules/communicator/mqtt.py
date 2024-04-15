@@ -5,15 +5,14 @@ from typing import Union, List, Optional
 
 from pydantic import AnyUrl, Field, ValidationError, field_validator
 
+from agentlib.core import Agent
+from agentlib.core.datamodels import AgentVariable
+from agentlib.core.errors import InitializationError, OptionalDependencyError
 from agentlib.modules.communicator.communicator import (
     Communicator,
     SubscriptionCommunicatorConfig,
 )
-from agentlib.core import Agent
-from agentlib.core.datamodels import AgentVariable
-from agentlib.core.errors import InitializationError
 from agentlib.utils.validators import convert_to_list
-from agentlib.core.errors import OptionalDependencyError
 
 try:
     from paho.mqtt.client import (
@@ -188,13 +187,15 @@ class BaseMqttClient(Communicator):
         """Trigger the disconnect"""
         self._mqttc.disconnect(reasoncode=reasoncode, properties=properties)
 
-    def _disconnect_callback(self, client, userdata, reasonCode, properties):
+    def _disconnect_callback(self, client, userdata, flags, reasonCode, properties):
         """Stop the loop as a result of the disconnect"""
         self.logger.warning(
-            "Disconnected with result code: %s | userdata: %s | properties: %s",
+            "Disconnected with result code: %s | userdata: %s | properties: %s | "
+            "flags: %s",
             reasonCode,
             userdata,
             properties,
+            flags,
         )
         self.logger.info("Active: %s", self._mqttc.is_connected())
 
