@@ -77,7 +77,7 @@ class BaseModuleConfig(BaseModel):
     log_level: Optional[str] = Field(
         default=None,
         description="The log level for this Module. "
-        "Default uses the root-loggers level."
+        "Default uses the agent or root-loggers level."
         "Options: DEBUG; INFO; WARNING; ERROR; CRITICAL",
     )
     shared_variable_fields: List[str] = Field(

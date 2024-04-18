@@ -53,6 +53,13 @@ class AgentConfig(BaseModel):
         description="Maximal number of waiting items in data-broker queues. "
                     "Set to -1 for infinity"
     )
+    log_level: Optional[str] = Field(
+        default=None,
+        description="The log level for this Agent and its Modules. "
+        "Default uses the root-loggers level."
+        "Will not override custom log-levels specified in Modules."
+        "Options: DEBUG; INFO; WARNING; ERROR; CRITICAL",
+    )
 
     @field_validator("modules")
     @classmethod
@@ -92,6 +99,8 @@ class Agent:
         data_broker_logger = agentlib_logging.create_logger(
             env=self.env, name=f"{config.id}/DataBroker"
         )
+        if config.log_level is not None:
+            data_broker_logger.setLevel(config.log_level)
         if env.config.rt:
             self._data_broker = RTDataBroker(
                 env=env, logger=data_broker_logger,
@@ -107,7 +116,6 @@ class Agent:
         self.config = config
         # Setup logger
         self.logger = agentlib_logging.create_logger(env=self.env, name=self.id)
-
 
         # Register the thread monitoring if configured
         if env.config.rt:
@@ -255,6 +263,10 @@ class Agent:
 
             # Insert default module id if it did not exist:
             module_config.update({"module_id": _module_id})
+
+            # Insert agent log-level if no log_level is specified:
+            if "log_level" not in module_config:
+                module_config["log_level"] = self.config.log_level
 
             if _module_id in updated_modules:
                 raise KeyError(

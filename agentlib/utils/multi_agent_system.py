@@ -9,7 +9,7 @@ import multiprocessing
 import logging
 import threading
 from pathlib import Path
-from typing import List, Dict, Union, Any
+from typing import List, Dict, Union, Any, Optional
 
 from pydantic import (
     field_validator,
@@ -43,6 +43,13 @@ class MAS(BaseModel):
         default=False,
         title="variable_logging",
         description="Enable variable logging in all agents with sampling rate of environment.",
+    )
+    log_level: Optional[str] = Field(
+        default=None,
+        description="The log level for all agents and modules in this MAS. "
+        "Default uses the root-loggers level. "
+        "Will not override custom log-levels specified in Agents or Modules."
+        "Options: DEBUG; INFO; WARNING; ERROR; CRITICAL",
     )
     _agent_configs: Dict[str, AgentConfig] = PrivateAttr(default={})
 
@@ -79,6 +86,8 @@ class MAS(BaseModel):
                 config = self.add_agent_logger(
                     config=config, sampling=self.env.config.t_sample
                 )
+        if config.log_level is None:
+            config.log_level = self.log_level
         self._agent_configs[config.id] = config.model_copy()
         logger.info("Registered agent %s in agency", config.id)
 
