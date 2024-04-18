@@ -87,11 +87,9 @@ def update_default_agent_variable(
     field_name: str,
 ):
     """Update a variable based on it's default"""
-
-    if is_valid_agent_var_config(user_data, field_name):
-        update_var_with = user_data
-    else:
-        update_var_with = {"value": user_data}
+    # Check if user_data is valid:
+    is_valid_agent_var_config(user_data, field_name)
+    update_var_with = user_data
 
     # Setting the shared attribute first allows it to be overwritten by the user config
     if not isinstance(default_var, AgentVariable):
@@ -122,15 +120,5 @@ def is_valid_agent_var_config(
 ):
     if data == {}:
         return True
-    try:
-        type_.validate_data(data)
-        return True
-    except Exception as err:
-        logger.error(
-            "Could not update the default config of field '%s'. "
-            "You most probably used some validator on this field. "
-            "Error message: %s",
-            err,
-            field_name,
-        )
-        return False
+    type_.validate_data(data)
+    return True
