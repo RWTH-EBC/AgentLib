@@ -209,7 +209,7 @@ class BaseMqttClient(BaseModule):
 
     def _disconnect_callback(self, client, userdata, flags, reasonCode, properties):
         """Stop the loop as a result of the disconnect"""
-        self.logger.warning(
+        self.logger.info(
             "Disconnected with result code: %s | userdata: %s | properties: %s | "
             "flags: %s",
             reasonCode,
