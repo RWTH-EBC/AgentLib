@@ -209,7 +209,7 @@ class BaseModuleConfig(BaseModel):
         This function:
 
         - Collects all variables
-        - Checks if duplicate names (will cause errors in the get() function.
+        - Checks if duplicate names (will cause errors in the get() function).
         """
         _vars = []
         # Extract all variables from fields
