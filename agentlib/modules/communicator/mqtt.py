@@ -5,7 +5,7 @@ from typing import Union, List, Optional
 
 from pydantic import AnyUrl, Field, ValidationError, field_validator
 
-from agentlib.core import Agent
+from agentlib.core import Agent, BaseModule, BaseModuleConfig
 from agentlib.core.datamodels import AgentVariable
 from agentlib.core.errors import InitializationError, OptionalDependencyError
 from agentlib.modules.communicator.communicator import (
@@ -30,7 +30,7 @@ except ImportError as err:
     ) from err
 
 
-class BaseMQTTClientConfig(SubscriptionCommunicatorConfig):
+class BaseMQTTClientConfig(BaseModuleConfig):
     keepalive: int = Field(
         default=60,
         description="Maximum period in seconds between "
@@ -81,7 +81,7 @@ class BaseMQTTClientConfig(SubscriptionCommunicatorConfig):
     check_subtopics = field_validator("subtopics")(convert_to_list)
 
 
-class MQTTClientConfig(BaseMQTTClientConfig):
+class MQTTClientConfig(SubscriptionCommunicatorConfig, BaseMQTTClientConfig):
     url: AnyUrl = Field(
         title="Host",
         description="Host is the hostname or IP address " "of the remote broker.",
@@ -98,29 +98,12 @@ class MQTTClientConfig(BaseMQTTClientConfig):
         raise ValidationError
 
 
-class BaseMqttClient(Communicator):
+class BaseMqttClient(BaseModule):
     # We use the paho-mqtt module and are
     # thus required to use their function signatures and function names
     # pylint: disable=unused-argument,too-many-arguments,invalid-name
     config: BaseMQTTClientConfig
     mqttc_type = PahoMQTTClient
-
-    def _log_all(self, client, userdata, level, buf):
-        """
-        client:     the client instance for this callback
-        userdata:   the private user data as set in Client() or userdata_set()
-        level:      gives the severity of the message and will be one of
-                    MQTT_LOG_INFO, MQTT_LOG_NOTICE, MQTT_LOG_WARNING,
-                    MQTT_LOG_ERR, and MQTT_LOG_DEBUG.
-        buf:        the message itself
-        Args:
-            *args:
-
-        Returns:
-
-        """
-        if level == MQTT_LOG_ERR or level == MQTT_LOG_WARNING:
-            self.logger.error("ERROR OR WARNING: %s", buf)
 
     def __init__(self, config: dict, agent: Agent):
         super().__init__(config=config, agent=agent)
@@ -167,8 +150,37 @@ class BaseMqttClient(Communicator):
         self.logger.info("Module is fully connected")
 
     @abc.abstractmethod
-    def connect(self):
+    def _message_callback(self, client, userdata, msg):
         raise NotImplementedError
+
+    @property
+    @abc.abstractmethod
+    def url(self) -> AnyUrl:
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def get_all_topics(self):
+        """
+        Helper function to return all topics the client
+        should listen to.
+        """
+        raise NotImplementedError
+
+    def connect(self):
+        port = self.url.port
+        if port is None:
+            port = 1883
+        else:
+            port = int(port)
+        self._mqttc.connect(
+            host=self.url.host,
+            port=port,
+            keepalive=self.config.keepalive,
+            bind_address="",
+            bind_port=0,
+            clean_start=MQTT_CLEAN_START_FIRST_ONLY,
+            properties=None,
+        )
 
     def terminate(self):
         """Disconnect from client and join loop"""
@@ -182,6 +194,14 @@ class BaseMqttClient(Communicator):
             self.logger.error(err_msg)
             raise ConnectionError(err_msg)
         self.logger.debug("Connected with result code: '%s'", reasonCode)
+
+        # Subscribing in on_connect() means that if we lose the connection and
+        # reconnect then subscriptions will be renewed.
+        self._subcribed_topics = 0  # Reset counter as well
+
+        for topic in self.get_all_topics():
+            client.subscribe(topic=topic, qos=self.config.qos)
+            self.logger.info("Subscribes to: '%s'", topic)
 
     def disconnect(self, reasoncode=None, properties=None):
         """Trigger the disconnect"""
@@ -198,20 +218,6 @@ class BaseMqttClient(Communicator):
             flags,
         )
         self.logger.info("Active: %s", self._mqttc.is_connected())
-
-    def _message_callback(self, client, userdata, msg):
-        """
-        The default callback for when a PUBLISH message is
-        received from the server.
-        """
-        agent_inp = AgentVariable.from_json(msg.payload)
-        self.logger.debug(
-            "Received variable %s = %s from source %s",
-            agent_inp.alias,
-            agent_inp.value,
-            agent_inp.source,
-        )
-        self.agent.data_broker.send_variable(agent_inp)
 
     def _subscribe_callback(self, client, userdata, mid, reasonCodes, properties):
         """Log if the subscription was successful"""
@@ -230,10 +236,27 @@ class BaseMqttClient(Communicator):
 
     @property
     def topics_size(self):
-        return len(self.config.subtopics) + len(self.config.subscriptions)
+        return len(self.get_all_topics())
+
+    def _log_all(self, client, userdata, level, buf):
+        """
+        client:     the client instance for this callback
+        userdata:   the private user data as set in Client() or userdata_set()
+        level:      gives the severity of the message and will be one of
+                    MQTT_LOG_INFO, MQTT_LOG_NOTICE, MQTT_LOG_WARNING,
+                    MQTT_LOG_ERR, and MQTT_LOG_DEBUG.
+        buf:        the message itself
+        Args:
+            *args:
+
+        Returns:
+
+        """
+        if level == MQTT_LOG_ERR or level == MQTT_LOG_WARNING:
+            self.logger.error("ERROR OR WARNING: %s", buf)
 
 
-class MqttClient(BaseMqttClient):
+class MqttClient(BaseMqttClient, Communicator):
     config: MQTTClientConfig
 
     @cached_property
@@ -241,8 +264,8 @@ class MqttClient(BaseMqttClient):
         return self.generate_topic(agent_id=self.agent.id, subscription=False)
 
     @property
-    def topics_size(self):
-        return len(self._get_all_topics())
+    def url(self) -> AnyUrl:
+        return self.config.url
 
     def generate_topic(self, agent_id: str, subscription: bool = True):
         """
@@ -256,23 +279,21 @@ class MqttClient(BaseMqttClient):
         topic.replace("//", "/")
         return topic
 
-    def connect(self):
-        port = self.config.url.port
-        if port is None:
-            port = 1883
-        else:
-            port = int(port)
-        self._mqttc.connect(
-            host=self.config.url.host,
-            port=port,
-            keepalive=self.config.keepalive,
-            bind_address="",
-            bind_port=0,
-            clean_start=MQTT_CLEAN_START_FIRST_ONLY,
-            properties=None,
+    def _message_callback(self, client, userdata, msg):
+        """
+        The default callback for when a PUBLISH message is
+        received from the server.
+        """
+        agent_inp = AgentVariable.from_json(msg.payload)
+        self.logger.debug(
+            "Received variable %s = %s from source %s",
+            agent_inp.alias,
+            agent_inp.value,
+            agent_inp.source,
         )
+        self.agent.data_broker.send_variable(agent_inp)
 
-    def _get_all_topics(self):
+    def get_all_topics(self):
         """
         Helper function to return all topics the client
         should listen to.
@@ -282,22 +303,6 @@ class MqttClient(BaseMqttClient):
             topics.add(self.generate_topic(agent_id=subscription))
         topics.update(set(self.config.subtopics))
         return topics
-
-    def _connect_callback(self, client, userdata, flags, reasonCode, properties):
-        super()._connect_callback(
-            client=client,
-            userdata=userdata,
-            flags=flags,
-            reasonCode=reasonCode,
-            properties=properties,
-        )
-        # Subscribing in on_connect() means that if we lose the connection and
-        # reconnect then subscriptions will be renewed.
-        self._subcribed_topics = 0  # Reset counter as well
-
-        for topic in self._get_all_topics():
-            client.subscribe(topic=topic, qos=self.config.qos)
-            self.logger.info("Subscribes to: '%s'", topic)
 
     def _send(self, payload: dict):
         """Publish the given output"""
