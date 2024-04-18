@@ -9,7 +9,7 @@ from math import inf
 from typing import Generator
 
 from pydantic import field_validator, Field
-from pydantic_core.core_schema import FieldValidationInfo
+from pydantic_core.core_schema import ValidationInfo
 
 from agentlib.core import BaseModule, Agent, BaseModuleConfig
 from agentlib.core.datamodels import AgentVariable
@@ -70,7 +70,7 @@ class SISOControllerConfig(BaseModuleConfig):
 
     @field_validator("lb")
     @classmethod
-    def check_bounds(cls, lb, info: FieldValidationInfo):
+    def check_bounds(cls, lb, info: ValidationInfo):
         """Check if upper and lower bound values are correct"""
         assert info.data["ub"] > lb, "Upper limit must be greater than lower limit"
         return lb
