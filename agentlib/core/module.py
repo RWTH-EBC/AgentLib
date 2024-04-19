@@ -21,6 +21,7 @@ from pydantic import field_validator, ConfigDict, BaseModel, Field, PrivateAttr
 from pydantic_core import core_schema
 from pydantic.json_schema import GenerateJsonSchema
 
+from agentlib.core.environment import CustomSimpyEnvironment
 from agentlib.core.errors import ConfigurationError
 from agentlib.core.datamodels import (
     AgentVariable,
@@ -482,7 +483,7 @@ class BaseModule(abc.ABC):
             )
 
     @property
-    def env(self):
+    def env(self) -> CustomSimpyEnvironment:
         """Get the environment of the agent."""
         return self.agent.env
 

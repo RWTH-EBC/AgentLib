@@ -73,7 +73,7 @@ class MAS(BaseModel):
         if self.variable_logging:
             if isinstance(self.env, dict):
                 config = self.add_agent_logger(
-                    config=config, sampling=self.env.get("t_sample", 1)
+                    config=config, sampling=self.env.get("t_sample", 60)
                 )
             else:
                 config = self.add_agent_logger(
