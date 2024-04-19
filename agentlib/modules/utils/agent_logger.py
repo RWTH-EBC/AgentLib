@@ -1,18 +1,17 @@
 """This module contains a custom Module to log
 all variables inside an agent's data_broker."""
+
 import collections
 import json
-import os
 import logging
-from ast import literal_eval
-from typing import Union
-
-from pydantic import field_validator, Field
+import os
 import pandas as pd
+from ast import literal_eval
+from pydantic import field_validator, Field
+from typing import Union
 
 from agentlib import AgentVariable
 from agentlib.core import BaseModule, Agent, BaseModuleConfig
-
 
 logger = logging.getLogger(__name__)
 
@@ -106,13 +105,17 @@ class AgentLogger(BaseModule):
         """Save variable values to log later."""
         if not isinstance(variable.value, (float, int, str)):
             return
-        current_time = self._variables_to_log.setdefault(str(self.env.time), {})
+        current_time = self._variables_to_log.setdefault(
+            str(round(self.env.time), 2), {}
+        )
         # we merge alias and source tuple into a string so we can .json it
         current_time[str((variable.alias, str(variable.source)))] = variable.value
 
     def _callback_full(self, variable: AgentVariable):
         """Save full variable to log later."""
-        current_time = self._variables_to_log.setdefault(str(self.env.time), {})
+        current_time = self._variables_to_log.setdefault(
+            str(round(self.env.time), 2), {}
+        )
         current_time[str((variable.alias, str(variable.source)))] = variable.dict()
 
     def _log(self):
