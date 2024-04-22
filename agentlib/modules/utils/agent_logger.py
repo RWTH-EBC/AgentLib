@@ -5,10 +5,11 @@ import collections
 import json
 import logging
 import os
-import pandas as pd
 from ast import literal_eval
-from pydantic import field_validator, Field
 from typing import Union
+
+import pandas as pd
+from pydantic import field_validator, Field
 
 from agentlib import AgentVariable
 from agentlib.core import BaseModule, Agent, BaseModuleConfig
@@ -106,7 +107,7 @@ class AgentLogger(BaseModule):
         if not isinstance(variable.value, (float, int, str)):
             return
         current_time = self._variables_to_log.setdefault(
-            str(round(self.env.time), 2), {}
+            str(round(self.env.time, 2)), {}
         )
         # we merge alias and source tuple into a string so we can .json it
         current_time[str((variable.alias, str(variable.source)))] = variable.value
@@ -114,7 +115,7 @@ class AgentLogger(BaseModule):
     def _callback_full(self, variable: AgentVariable):
         """Save full variable to log later."""
         current_time = self._variables_to_log.setdefault(
-            str(round(self.env.time), 2), {}
+            str(round(self.env.time, 2)), {}
         )
         current_time[str((variable.alias, str(variable.source)))] = variable.dict()
 
