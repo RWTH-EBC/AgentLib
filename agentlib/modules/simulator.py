@@ -11,7 +11,7 @@ from typing import Union, Dict, List, Optional
 import numpy as np
 import pandas as pd
 from pydantic import field_validator, Field
-from pydantic_core.core_schema import FieldValidationInfo
+from pydantic_core.core_schema import ValidationInfo
 
 from agentlib.core import (
     BaseModule,
@@ -176,7 +176,7 @@ class SimulatorConfig(BaseModuleConfig):
 
     @field_validator("result_filename")
     @classmethod
-    def check_nonexisting_csv(cls, result_filename, info: FieldValidationInfo):
+    def check_nonexisting_csv(cls, result_filename, info: ValidationInfo):
         """Check if the result_filename is a .csv file or an hf
         and assert that it does not exist."""
         if not info.data.get("save_results", False):
@@ -209,7 +209,7 @@ class SimulatorConfig(BaseModuleConfig):
 
     @field_validator("t_stop")
     @classmethod
-    def check_t_stop(cls, t_stop, info: FieldValidationInfo):
+    def check_t_stop(cls, t_stop, info: ValidationInfo):
         """Check if stop is greater than start time"""
         t_start = info.data.get("t_start")
         assert t_stop > t_start, "t_stop must be greater than t_start"
@@ -217,7 +217,7 @@ class SimulatorConfig(BaseModuleConfig):
 
     @field_validator("t_sample")
     @classmethod
-    def check_t_sample(cls, t_sample, info: FieldValidationInfo):
+    def check_t_sample(cls, t_sample, info: ValidationInfo):
         """Check if t_sample is smaller than stop-start time"""
         t_start = info.data.get("t_start")
         t_stop = info.data.get("t_stop")
@@ -228,7 +228,7 @@ class SimulatorConfig(BaseModuleConfig):
 
     @field_validator("write_results_delay")
     @classmethod
-    def set_default_t_sample(cls, write_results_delay, info: FieldValidationInfo):
+    def set_default_t_sample(cls, write_results_delay, info: ValidationInfo):
         t_sample = info.data["t_sample"]
         if write_results_delay is None:
             # 5 is an arbitrary default which should balance writing new results as
@@ -243,7 +243,7 @@ class SimulatorConfig(BaseModuleConfig):
 
     @field_validator("model")
     @classmethod
-    def check_model(cls, model, info: FieldValidationInfo):
+    def check_model(cls, model, info: ValidationInfo):
         """Validate the model input"""
         parameters = info.data.get("parameters")
         inputs = info.data.get("inputs")

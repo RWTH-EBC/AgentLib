@@ -77,7 +77,7 @@ class BaseModuleConfig(BaseModel):
     log_level: Optional[str] = Field(
         default=None,
         description="The log level for this Module. "
-        "Default uses the root-loggers level."
+        "Default uses the agent or root-loggers level."
         "Options: DEBUG; INFO; WARNING; ERROR; CRITICAL",
     )
     shared_variable_fields: List[str] = Field(
@@ -226,25 +226,40 @@ class BaseModuleConfig(BaseModel):
                 update_var_with = user_config.get(field_name, {})
 
                 make_shared = field_name in shared_variable_fields
-
-                var = update_default_agent_variable(
-                    default_var=field.default,
-                    user_data=update_var_with,
-                    make_shared=make_shared,
-                    agent_id=agent_id,
-                    field_name=field_name,
-                )
+                try:
+                    var = update_default_agent_variable(
+                        default_var=field.default,
+                        user_data=update_var_with,
+                        make_shared=make_shared,
+                        agent_id=agent_id,
+                        field_name=field_name,
+                    )
+                except Exception as err:
+                    logger.error(
+                        "Could not update the default config of AgentVariable field '%s'. "
+                        "You most probably used some validator on this field. "
+                        "Error message: %s. User config: %s",
+                        field_name, err, update_var_with
+                    )
+                    var = pre_merged_attr
                 _vars.append(var)
                 pre_validated_instance.__setattr__(field_name, var)
 
             elif is_list_of_agent_variables(pre_merged_attr):
                 user_config_var_dicts = user_config.get(field_name, [])
                 type_ = pre_merged_attr[0].__class__
-                update_vars_with = [
-                    conf
-                    for conf in user_config_var_dicts
-                    if is_valid_agent_var_config(conf, field_name, type_)
-                ]
+                update_vars_with = []
+                for conf in user_config_var_dicts:
+                    try:
+                        is_valid_agent_var_config(conf, field_name, type_)
+                        update_vars_with.append(conf)
+                    except Exception as err:
+                        logger.error(
+                            "Could not update the default config of AgentVariables '%s'."
+                            "You most probably used some validator on this field. "
+                            "Error message: %s. User config: %s",
+                            field_name, err, conf
+                        )
 
                 make_shared = field_name in shared_variable_fields
                 variables = include_defaults_in_root(
