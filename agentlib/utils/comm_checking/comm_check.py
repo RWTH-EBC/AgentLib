@@ -1,17 +1,19 @@
 from pathlib import Path
-from typing import List, Dict, Optional, Tuple
+from typing import List, Dict, Optional, Tuple, get_type_hints
 
 import networkx as nx
 
 from agentlib import AgentVariable, AgentVariables
+from agentlib.core.agent import get_module_class
 
 AG_ID = str
 MOD_ID = str
 Alias = str
 
 
-def get_config_class(module_class):
-    config_class = module_class.__fields__["config"].type_
+def get_config_class(type_):
+    module_class = get_module_class(type_)
+    config_class = get_type_hints(module_class)["config"]
     config_fields = {}
     agent_variables = []
 
@@ -41,7 +43,7 @@ def create_configs(configs) -> List[Dict]:
         agent_config = {"id": config["id"], "modules": []}
         for module in config["modules"]:
             module_config = module.copy()
-            module_config["_config_class"] = get_config_class(module["type"])
+            module_config["_config_class"] = get_config_class(module)
             agent_config["modules"].append(module_config)
         agent_configs.append(agent_config)
     return agent_configs
@@ -159,5 +161,5 @@ if __name__ == "__main__":
     directory_path = Path(
         r"D:\repos\AgentLib\examples\multi-agent-systems\room_mas\configs"
     )
-    configs = [file for file in directory_path.glob("*")]
+    configs = load_json_to_dict([str(file) for file in directory_path.glob("*")])
     create_comm_graph(configs)
