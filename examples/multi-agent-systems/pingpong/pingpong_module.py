@@ -2,8 +2,8 @@ import logging
 import time
 import sys
 from pydantic import Field
-from agentlib.core import BaseModule, BaseModuleConfig
-from agentlib.core.datamodels import AgentVariable
+from agentlib import AgentVariable, BaseModule, BaseModuleConfig
+
 
 logger = logging.getLogger(__name__)
 

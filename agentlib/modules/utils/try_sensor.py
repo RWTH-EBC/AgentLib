@@ -197,5 +197,5 @@ def read_dat_file(dat_file):
     # Rename df for easier later usage.
     df.rename(columns=_key_map, inplace=True)
     df = df[df.columns.intersection(_key_map.values())]
-    df["T_oda"] += 273.15  # To Kelvin
+    df.loc[:, "T_oda"] += 273.15  # To Kelvin
     return df

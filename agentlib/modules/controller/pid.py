@@ -2,7 +2,7 @@ from math import inf, isclose
 from typing import Union
 
 from pydantic import field_validator
-from pydantic_core.core_schema import FieldValidationInfo
+from pydantic_core.core_schema import ValidationInfo
 
 from agentlib.modules.controller import SISOController, SISOControllerConfig
 from agentlib.core.datamodels import AgentVariable
@@ -33,7 +33,7 @@ class PIDConfig(SISOControllerConfig):
 
     @field_validator("Kp", "Ti", "Td", "setpoint", mode="before")
     @classmethod
-    def convert_to_variable(cls, parameter, info: FieldValidationInfo):
+    def convert_to_variable(cls, parameter, info: ValidationInfo):
         if isinstance(parameter, (float, int)):
             default = cls.default(info.field_name)
             parameter = default.copy(update={"value": parameter})
