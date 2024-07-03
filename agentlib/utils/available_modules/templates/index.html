@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Available Modules</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .module-info {
+            display: none;
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4">Available Modules</h1>
+        <div class="list-group">
+            {% for key, module in modules %}
+            <div class="list-group-item list-group-item-action" onmouseover="showInfo('{{ key }}')" onmouseout="hideInfo('{{ key }}')">
+                <h5 class="mb-1">{{ key }}</h5>
+                <div id="{{ key }}-info" class="module-info">
+                    <p class="mb-1"><strong>Import Path:</strong> {{ module.import_path }}</p>
+                    <p class="mb-1"><strong>Class Name:</strong> {{ module.class_name }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script>
+        function showInfo(key) {
+            document.getElementById(key + '-info').style.display = 'block';
+        }
+
+        function hideInfo(key) {
+            document.getElementById(key + '-info').style.display = 'none';
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
