@@ -13,6 +13,9 @@
             border-radius: 5px;
             margin-top: 5px;
         }
+        .show {
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -20,11 +23,40 @@
         <h1 class="mb-4">Available Modules</h1>
         <div class="list-group">
             {% for key, module in modules %}
-            <div class="list-group-item list-group-item-action" onmouseover="showInfo('{{ key }}')" onmouseout="hideInfo('{{ key }}')">
-                <h5 class="mb-1">{{ key }}</h5>
-                <div id="{{ key }}-info" class="module-info">
-                    <p class="mb-1"><strong>Import Path:</strong> {{ module.import_path }}</p>
-                    <p class="mb-1"><strong>Class Name:</strong> {{ module.class_name }}</p>
+            <div class="list-group-item list-group-item-action">
+                <div class="d-flex w-100 justify-content-between align-items-center">
+                    <h5 class="mb-1">{{ key }}</h5>
+                    <button class="btn btn-sm btn-outline-primary" onclick="copyToClipboard('{{ key }}')">Copy JSON</button>
+                </div>
+                <div onclick="toggleInfo('{{ key }}')" style="cursor: pointer;">
+                    <small>Click to expand</small>
+                    <div id="{{ key }}-info" class="module-info">
+                        <h6>Config Class Fields:</h6>
+                        {% if configs[key][0].error is defined %}
+                            <p class="text-danger">{{ configs[key][0].error }}</p>
+                        {% else %}
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Type</th>
+                                        <th>Description</th>
+                                        <th>Default</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for field in configs[key] %}
+                                    <tr>
+                                        <td>{{ field.name }}</td>
+                                        <td>{{ field.type }}</td>
+                                        <td>{{ field.description }}</td>
+                                        <td>{{ field.default }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
             {% endfor %}
@@ -32,12 +64,17 @@
     </div>
 
     <script>
-        function showInfo(key) {
-            document.getElementById(key + '-info').style.display = 'block';
+        function toggleInfo(key) {
+            document.getElementById(key + '-info').classList.toggle('show');
         }
 
-        function hideInfo(key) {
-            document.getElementById(key + '-info').style.display = 'none';
+        function copyToClipboard(key) {
+            const jsonConfig = {{ default_jsons | tojson | safe }}[key];
+            navigator.clipboard.writeText(jsonConfig).then(function() {
+                alert('JSON configuration copied to clipboard!');
+            }, function(err) {
+                console.error('Could not copy text: ', err);
+            });
         }
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
