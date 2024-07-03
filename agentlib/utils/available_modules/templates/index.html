@@ -27,6 +27,11 @@
             display: none;
             z-index: 1000;
         }
+        .toggle-info {
+            cursor: pointer;
+            font-weight: bold;
+            color: #007bff;
+        }
     </style>
 </head>
 <body>
@@ -38,37 +43,40 @@
             <div class="list-group-item list-group-item-action">
                 <div class="d-flex w-100 justify-content-between align-items-center">
                     <h5 class="mb-1">{{ key }}</h5>
-                    <button class="btn btn-sm btn-outline-primary" onclick="copyToClipboard('{{ key }}')">Copy Config</button>
-                </div>
-                <div onclick="toggleInfo('{{ key }}')" style="cursor: pointer;">
-                    <small>Click to expand</small>
-                    <div id="{{ key }}-info" class="module-info">
-                        <h6>Config Class Fields:</h6>
-                        {% if configs[key][0].error is defined %}
-                            <p class="text-danger">{{ configs[key][0].error }}</p>
-                        {% else %}
-                            <table class="table table-sm">
-                                <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Type</th>
-                                        <th>Description</th>
-                                        <th>Default</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for field in configs[key] %}
-                                    <tr>
-                                        <td>{{ field.name }}</td>
-                                        <td>{{ field.type }}</td>
-                                        <td>{{ field.description }}</td>
-                                        <td>{{ field.default }}</td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                        {% endif %}
+                    <div>
+                        <button class="btn btn-sm btn-outline-primary me-2" onclick="copyToClipboard('{{ key }}', 'python')">Copy Python</button>
+                        <button class="btn btn-sm btn-outline-primary" onclick="copyToClipboard('{{ key }}', 'json')">Copy JSON</button>
                     </div>
+                </div>
+                <div class="toggle-info" onclick="toggleInfo('{{ key }}')" id="{{ key }}-toggle">
+                    Click to expand
+                </div>
+                <div id="{{ key }}-info" class="module-info">
+                    <h6>Config Class Fields:</h6>
+                    {% if configs[key][0].error is defined %}
+                        <p class="text-danger">{{ configs[key][0].error }}</p>
+                    {% else %}
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Type</th>
+                                    <th>Description</th>
+                                    <th>Default</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for field in configs[key] %}
+                                <tr>
+                                    <td>{{ field.name }}</td>
+                                    <td>{{ field.type }}</td>
+                                    <td>{{ field.description }}</td>
+                                    <td>{{ field.default }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    {% endif %}
                 </div>
             </div>
             {% endfor %}
@@ -77,12 +85,27 @@
 
     <script>
         function toggleInfo(key) {
-            document.getElementById(key + '-info').classList.toggle('show');
+            const infoElement = document.getElementById(key + '-info');
+            const toggleElement = document.getElementById(key + '-toggle');
+
+            if (infoElement.classList.contains('show')) {
+                infoElement.classList.remove('show');
+                toggleElement.textContent = 'Click to expand';
+            } else {
+                infoElement.classList.add('show');
+                toggleElement.textContent = 'Click to collapse';
+            }
         }
 
-        function copyToClipboard(key) {
-            const modelConfig = {{ model_configs | tojson | safe }}[key];
-            navigator.clipboard.writeText(modelConfig).then(function() {
+
+        function copyToClipboard(key, format) {
+            let content;
+            if (format === 'python') {
+                content = {{ python_configs | tojson | safe }}[key];
+            } else {
+                content = {{ json_configs | tojson | safe }}[key];
+            }
+            navigator.clipboard.writeText(content).then(function() {
                 showNotification();
             }, function(err) {
                 console.error('Could not copy text: ', err);
