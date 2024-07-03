@@ -1,5 +1,7 @@
 """This module contains the base AgentModule."""
+
 from __future__ import annotations
+
 import abc
 import json
 import logging
@@ -17,20 +19,29 @@ from typing import (
 )
 
 import pydantic
-from pydantic import field_validator, ConfigDict, BaseModel, Field, PrivateAttr
-from pydantic_core import core_schema
+from pydantic import (
+    field_validator,
+    ConfigDict,
+    BaseModel,
+    Field,
+    PrivateAttr,
+    model_validator,
+    ValidatorFunctionWrapHandler,
+    ValidationInfo,
+)
 from pydantic.json_schema import GenerateJsonSchema
+from pydantic_core import core_schema
 
-from agentlib.core.environment import CustomSimpyEnvironment
-from agentlib.core.errors import ConfigurationError
+import agentlib.core.logging_ as agentlib_logging
+from agentlib.core import datamodels
 from agentlib.core.datamodels import (
     AgentVariable,
     Source,
     AgentVariables,
     AttrsToPydanticAdaptor,
 )
-from agentlib.core import datamodels
-import agentlib.core.logging_ as agentlib_logging
+from agentlib.core.environment import CustomSimpyEnvironment
+from agentlib.core.errors import ConfigurationError
 from agentlib.utils.fuzzy_matching import fuzzy_match, RAPIDFUZZ_IS_INSTALLED
 from agentlib.utils.validators import (
     include_defaults_in_root,
@@ -47,20 +58,23 @@ if TYPE_CHECKING:
 logger = logging.getLogger(__name__)
 
 
+count = 0
+
+
 class BaseModuleConfig(BaseModel):
     """
     Pydantic data model for basic module configuration
     """
 
     # The type is relevant to load the correct module class.
-    type: Union[str, Dict[str, str]] = Field(
-        title="Type",
-        description="The type of the Module. Used to find the Python-Object "
-        "from all agentlib-core and plugin Module options. If a dict is given,"
-        "it must contain the keys 'file' and 'class_name'. "
-        "'file' is the filepath of a python file containing the Module."
-        "'class_name' is the name of the Module class within this file.",
-    )
+    # type: #Union[str, Dict[str, str]] = Field(
+    #     title="Type",
+    #     description="The type of the Module. Used to find the Python-Object "
+    #     "from all agentlib-core and plugin Module options. If a dict is given,"
+    #     "it must contain the keys 'file' and 'class_name'. "
+    #     "'file' is the filepath of a python file containing the Module."
+    #     "'class_name' is the name of the Module class within this file.",
+    # )
     # A module is uniquely identified in the MAS using agent_id and module_id.
     # The module_id should be unique inside one agent.
     # This is checked inside the agent-class.
@@ -98,7 +112,7 @@ class BaseModuleConfig(BaseModel):
 
     model_config = ConfigDict(
         arbitrary_types_allowed=True,
-        validate_assignment=True,
+        validate_assignment=False,
         extra="forbid",
         frozen=True,
     )
@@ -198,7 +212,7 @@ class BaseModuleConfig(BaseModel):
     @classmethod
     def merge_variables(
         cls,
-        pre_validated_instance: BaseModuleConfig,
+        validated_instance: BaseModuleConfig,
         user_config: dict,
         agent_id: str,
         shared_variable_fields: List[str],
@@ -216,10 +230,10 @@ class BaseModuleConfig(BaseModel):
         for field_name, field in cls.model_fields.items():
             # If field is missing in values, validation of field was not
             # successful. Continue and pydantic will later raise the ValidationError
-            if field_name not in pre_validated_instance.model_fields:
+            if field_name not in validated_instance.model_fields:
                 continue
 
-            pre_merged_attr = pre_validated_instance.__getattribute__(field_name)
+            pre_merged_attr = validated_instance.__getattribute__(field_name)
             # we need the type if plugins subclass the AgentVariable
 
             if isinstance(pre_merged_attr, AgentVariable):
@@ -235,7 +249,7 @@ class BaseModuleConfig(BaseModel):
                     field_name=field_name,
                 )
                 _vars.append(var)
-                pre_validated_instance.__setattr__(field_name, var)
+                validated_instance.__setattr__(field_name, var)
 
             elif is_list_of_agent_variables(pre_merged_attr):
                 user_config_var_dicts = user_config.get(field_name, [])
@@ -257,7 +271,7 @@ class BaseModuleConfig(BaseModel):
                 )
 
                 _vars.extend(variables)
-                pre_validated_instance.__setattr__(field_name, variables)
+                validated_instance.__setattr__(field_name, variables)
 
         # Extract names
         variable_names = [var.name for var in _vars]
@@ -284,24 +298,45 @@ class BaseModuleConfig(BaseModel):
     def default(cls, field: str):
         return cls.model_fields[field].get_default()
 
-    def __init__(self, _agent_id, *args, **kwargs):
-        _user_config = kwargs.copy()
+        # def __init__(self, _agent_id, *args, **kwargs):
+        # _user_config = kwargs.copy()
+        # try:
+        #     super().__init__(*args, **kwargs)
+        # except pydantic.ValidationError as e:
+        #     better_error = self._improve_extra_field_error_messages(e)
+        #     raise better_error
+        # # Enable mutation
+        # self.model_config["frozen"] = False
+        #
+        # self._user_config = _user_config
+        # # Disable mutation
+        # self.model_config["frozen"] = True
+
+    @model_validator(mode="wrap")
+    @classmethod
+    def wrap_validator(
+        cls, data: dict, handler: ValidatorFunctionWrapHandler, info: ValidationInfo
+    ):
+        global count
+        count += 1
+        print(f"{count}: {data["module_id"]}")
+        _user_config = deepcopy(data)
+        agent_id = _user_config.pop("_agent_id")
         try:
-            super().__init__(*args, **kwargs)
+            validated_instance = handler(data)
         except pydantic.ValidationError as e:
-            better_error = self._improve_extra_field_error_messages(e)
+            better_error = cls._improve_extra_field_error_messages(e)
             raise better_error
-        # Enable mutation
-        self.model_config["frozen"] = False
-        self._variables = self.__class__.merge_variables(
-            pre_validated_instance=self,
+        validated_instance.model_config["frozen"] = False
+        validated_instance._variables = cls.merge_variables(
+            validated_instance=validated_instance,
             user_config=_user_config,
-            agent_id=_agent_id,
-            shared_variable_fields=self.shared_variable_fields,
+            agent_id=agent_id,
+            shared_variable_fields=validated_instance.shared_variable_fields,
         )
-        self._user_config = _user_config
-        # Disable mutation
-        self.model_config["frozen"] = True
+        validated_instance._user_config = _user_config
+        validated_instance.model_config["frozen"] = True
+        return validated_instance
 
     @classmethod
     def _improve_extra_field_error_messages(

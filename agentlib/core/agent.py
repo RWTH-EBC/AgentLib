@@ -1,11 +1,12 @@
 """
 Module containing only the Agent class.
 """
+
 import json
 import threading
+from pathlib import Path
 from typing import Union, List, Dict, TypeVar, Optional
 
-from pathlib import Path
 from pydantic import field_validator, BaseModel, FilePath, Field
 
 import agentlib
@@ -36,7 +37,7 @@ class AgentConfig(BaseModel):
         description="The ID of the Agent, should be unique in "
         "the multi-agent-system the agent is living in.",
     )
-    modules: List[Union[Dict, FilePath]] = None
+    modules: List[Union[Dict, FilePath]]
     check_alive_interval: float = Field(
         title="check_alive_interval",
         default=1,
@@ -51,7 +52,7 @@ class AgentConfig(BaseModel):
         default=1000,
         ge=-1,
         description="Maximal number of waiting items in data-broker queues. "
-                    "Set to -1 for infinity"
+        "Set to -1 for infinity",
     )
 
     @field_validator("modules")
@@ -94,20 +95,17 @@ class Agent:
         )
         if env.config.rt:
             self._data_broker = RTDataBroker(
-                env=env, logger=data_broker_logger,
-                max_queue_size=config.max_queue_size
+                env=env, logger=data_broker_logger, max_queue_size=config.max_queue_size
             )
             self.register_thread(thread=self._data_broker.thread)
         else:
             self._data_broker = LocalDataBroker(
-                env=env, logger=data_broker_logger,
-                max_queue_size=config.max_queue_size
+                env=env, logger=data_broker_logger, max_queue_size=config.max_queue_size
             )
         # Update modules
         self.config = config
         # Setup logger
         self.logger = agentlib_logging.create_logger(env=self.env, name=self.id)
-
 
         # Register the thread monitoring if configured
         if env.config.rt:
@@ -231,8 +229,10 @@ class Agent:
         while True:
             for name, thread in self._threads.items():
                 if not thread.is_alive():
-                    msg = (f"The thread {name} is not alive anymore. Exiting agent. "
-                           f"Check errors above for possible reasons")
+                    msg = (
+                        f"The thread {name} is not alive anymore. Exiting agent. "
+                        f"Check errors above for possible reasons"
+                    )
                     self.logger.critical(msg)
                     self.is_alive = False
                     raise RuntimeError(msg)
@@ -255,6 +255,8 @@ class Agent:
 
             # Insert default module id if it did not exist:
             module_config.update({"module_id": _module_id})
+            if "type" in module_config:
+                module_config.pop("type")
 
             if _module_id in updated_modules:
                 raise KeyError(
