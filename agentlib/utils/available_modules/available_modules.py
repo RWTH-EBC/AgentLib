@@ -5,6 +5,7 @@ from typing import get_origin, get_args, Union
 
 from flask import Flask, render_template
 from pydantic import BaseModel
+from pydantic_core import PydanticUndefined
 
 from agentlib.modules import get_all_module_types
 
@@ -13,6 +14,7 @@ app = Flask(__name__)
 
 def get_config_info(config_class):
     fields = []
+    undefined_fields = []
     for name, field in config_class.model_fields.items():
         field_info = {
             "name": name,
@@ -20,8 +22,11 @@ def get_config_info(config_class):
             "description": field.description or "No description",
             "default": field.default if field.default is not None else "None",
         }
-        fields.append(field_info)
-    return fields
+        if field.default is PydanticUndefined:
+            undefined_fields.append(field_info)
+        else:
+            fields.append(field_info)
+    return undefined_fields + fields
 
 
 def clean_type_name(type_str):
