@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>&lt;no title&gt; &mdash; agentlib 0.8.2 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/autodoc_pydantic.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            agentlib
+          </a>
+              <div class="version">
+                0.8
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Tutorials/tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ModulesList.html">List of standard modules and models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../AgentVariable.html">AgentVariables and ModelVariables</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../agentlib.html">agentlib package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">agentlib</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">&lt;no title&gt;</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/diagrams/src/admm_sequence.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <p><a class="reference external" href="https://mermaid-js.github.io/mermaid-live-editor/#/edit/eyJjb2RlIjoic2VxdWVuY2VEaWFncmFtIFxuICAgIHBhcnRpY2lwYW50IEFwIGFzIHByb2Nlc3MgQVxuICAgIHBhcnRpY2lwYW50IEEgYXMgb3B0aW1pemVyIEFcbiAgICBwYXJ0aWNpcGFudCBPIGFzIG90aGVyIG9wdGltaXplcnNcbiAgICBBcC0-PkE6IHN0YXJ0IHRocmVhZFxuICAgIGxvb3AgQ29udHJvbCBzdGVwc1xuICAgICAgICBBcC0-PkE6IHNpZ25hbCBvcHRpbWl6YXRpb24gc3RhcnQgXG4gICAgICAgIGFjdGl2YXRlIEFcbiAgICAgICAgICAgICAgICAgICAgcGFyIFxuICAgICAgICAgICAgICAgIEEtPj5POiBTZW5kIGNvdXBsaW5nIHZhcmlhYmxlc1xuICAgICAgICAgICAgYW5kIFxuICAgICAgICAgICAgICAgIE8tPj5BOiBTZW5kIGNvdXBsaW5nIHZhcmlhYmxlc1xuICAgICAgICAgICAgZW5kXG4gICAgICAgIGxvb3AgaW5uZXIgQURNTSBpdGVyYXRpb25zXG4gICAgICAgICAgICBhY3RpdmF0ZSBBXG4gICAgICAgICAgICBOb3RlIHJpZ2h0IG9mIEE6IHBlcmZvcm1pbmcgbG9jYWwgb3B0aW1pemF0aW9uXG4gICAgICAgICAgICBkZWFjdGl2YXRlIEFcbiAgICAgICAgICAgIHBhciBcbiAgICAgICAgICAgICAgICBBLT4-TzogU2VuZCBjb3VwbGluZyB2YXJpYWJsZXNcbiAgICAgICAgICAgIGFuZCBcbiAgICAgICAgICAgICAgICBPLT4-QTogU2VuZCBjb3VwbGluZyB2YXJpYWJsZXNcbiAgICAgICAgICAgIGVuZFxuICAgICAgICAgICAgYWN0aXZhdGUgQVxuICAgICAgICAgICAgTm90ZSByaWdodCBvZiBBOiB1cGRhdGUgZ2xvYmFsIHZhbHVlcywgbXVsdGlwbGllcnNcbiAgICAgICAgICAgIGRlYWN0aXZhdGUgQVxuICAgICAgICBlbmRcbiAgICAgICAgZGVhY3RpdmF0ZSBBXG4gICAgZW5kXG4iLCJtZXJtYWlkIjp7InRoZW1lIjoiZGVmYXVsdCJ9LCJ1cGRhdGVFZGl0b3IiOmZhbHNlfQ"><img alt="" src="https://mermaid.ink/img/eyJjb2RlIjoic2VxdWVuY2VEaWFncmFtIFxuICAgIHBhcnRpY2lwYW50IEFwIGFzIHByb2Nlc3MgQVxuICAgIHBhcnRpY2lwYW50IEEgYXMgb3B0aW1pemVyIEFcbiAgICBwYXJ0aWNpcGFudCBPIGFzIG90aGVyIG9wdGltaXplcnNcbiAgICBBcC0-PkE6IHN0YXJ0IHRocmVhZFxuICAgIGxvb3AgQ29udHJvbCBzdGVwc1xuICAgICAgICBBcC0-PkE6IHNpZ25hbCBvcHRpbWl6YXRpb24gc3RhcnQgXG4gICAgICAgIGFjdGl2YXRlIEFcbiAgICAgICAgICAgICAgICAgICAgcGFyIFxuICAgICAgICAgICAgICAgIEEtPj5POiBTZW5kIGNvdXBsaW5nIHZhcmlhYmxlc1xuICAgICAgICAgICAgYW5kIFxuICAgICAgICAgICAgICAgIE8tPj5BOiBTZW5kIGNvdXBsaW5nIHZhcmlhYmxlc1xuICAgICAgICAgICAgZW5kXG4gICAgICAgIGxvb3AgaW5uZXIgQURNTSBpdGVyYXRpb25zXG4gICAgICAgICAgICBhY3RpdmF0ZSBBXG4gICAgICAgICAgICBOb3RlIHJpZ2h0IG9mIEE6IHBlcmZvcm1pbmcgbG9jYWwgb3B0aW1pemF0aW9uXG4gICAgICAgICAgICBkZWFjdGl2YXRlIEFcbiAgICAgICAgICAgIHBhciBcbiAgICAgICAgICAgICAgICBBLT4-TzogU2VuZCBjb3VwbGluZyB2YXJpYWJsZXNcbiAgICAgICAgICAgIGFuZCBcbiAgICAgICAgICAgICAgICBPLT4-QTogU2VuZCBjb3VwbGluZyB2YXJpYWJsZXNcbiAgICAgICAgICAgIGVuZFxuICAgICAgICAgICAgYWN0aXZhdGUgQVxuICAgICAgICAgICAgTm90ZSByaWdodCBvZiBBOiB1cGRhdGUgZ2xvYmFsIHZhbHVlcywgbXVsdGlwbGllcnNcbiAgICAgICAgICAgIGRlYWN0aXZhdGUgQVxuICAgICAgICBlbmRcbiAgICAgICAgZGVhY3RpdmF0ZSBBXG4gICAgZW5kXG4iLCJtZXJtYWlkIjp7InRoZW1lIjoiZGVmYXVsdCJ9LCJ1cGRhdGVFZGl0b3IiOmZhbHNlfQ" /></a></p>
+<p>sequenceDiagram
+participant Ap as process A
+participant A as optimizer A
+participant O as other optimizers
+Ap-&gt;&gt;A: start thread
+loop Control steps
+Ap-&gt;&gt;A: signal optimization start
+activate A
+loop inner ADMM iterations
+par
+A-&gt;&gt;O: Send coupling variables
+and
+O-&gt;&gt;A: Send coupling variables
+end
+activate A
+Note over A,O: update global values, multipliers
+Note over A,O: perform local optimization
+deactivate A
+end
+deactivate A
+end</p>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, AGENT-Project Associates.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

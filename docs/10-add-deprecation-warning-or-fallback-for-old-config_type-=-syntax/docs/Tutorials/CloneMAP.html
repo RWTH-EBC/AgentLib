@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How to start a MAS on cloneMAP &mdash; agentlib 0.8.2 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/autodoc_pydantic.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="How does the AgentLib work internally?" href="GeneralIdea.html" />
+    <link rel="prev" title="A typical example: Controlling room temperature with a PID controller" href="PIDRoomControl.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            agentlib
+          </a>
+              <div class="version">
+                0.8
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="tutorial.html">Tutorial</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="PingPong.html">PingPong</a></li>
+<li class="toctree-l2"><a class="reference internal" href="PIDRoomControl.html">A typical example: Controlling room temperature with a PID controller</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">How to start a MAS on cloneMAP</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#start-clonemap">Start cloneMAP</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#implement-agent-behavior-and-start-mas">Implement agent behavior and start MAS</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#step-1-behavior-implementation">Step 1 Behavior implementation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-2-building-the-docker-image">Step 2 Building the Docker image</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-3-scenario-creation">Step 3 Scenario creation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#step-4-mas-execution">Step 4 MAS execution</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="GeneralIdea.html">How does the AgentLib work internally?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../ModulesList.html">List of standard modules and models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../AgentVariable.html">AgentVariables and ModelVariables</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../agentlib.html">agentlib package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">agentlib</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="tutorial.html">Tutorial</a></li>
+      <li class="breadcrumb-item active">How to start a MAS on cloneMAP</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/Tutorials/CloneMAP.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="how-to-start-a-mas-on-clonemap">
+<h1>How to start a MAS on cloneMAP<a class="headerlink" href="#how-to-start-a-mas-on-clonemap" title="Permalink to this heading"></a></h1>
+<p>In the following it will be described step-by-step how to execute a MAS on <a class="reference external" href="https://www.fein-aachen.org/projects/clonemap/">cloneMAP</a>.</p>
+<section id="start-clonemap">
+<h2>Start cloneMAP<a class="headerlink" href="#start-clonemap" title="Permalink to this heading"></a></h2>
+<p>There are two options for starting cloneMAP: locally and on a Kubernetes cluster.
+Please refer to the <a class="reference external" href="https://github.com/RWTH-ACS/clonemap/blob/develop/docs/administration_guide.md">administration guide</a> of cloneMAP for both options.</p>
+</section>
+<section id="implement-agent-behavior-and-start-mas">
+<h2>Implement agent behavior and start MAS<a class="headerlink" href="#implement-agent-behavior-and-start-mas" title="Permalink to this heading"></a></h2>
+<p>For demonstration of this part the pingpong example in <code class="docutils literal notranslate"><span class="pre">examples/multi-agent-systems/pingpong</span></code> is used.</p>
+<section id="step-1-behavior-implementation">
+<h3>Step 1 Behavior implementation<a class="headerlink" href="#step-1-behavior-implementation" title="Permalink to this heading"></a></h3>
+<p>The agent behavior in the AgentLib is composed of the individual behavior of modules.
+There are no special requirements for the agent behavior implementation if you want to use cloneMAP for MAS execution.
+You can either use the standard modules provided by the AgentLib or implement your own modules.</p>
+</section>
+<section id="step-2-building-the-docker-image">
+<h3>Step 2 Building the Docker image<a class="headerlink" href="#step-2-building-the-docker-image" title="Permalink to this heading"></a></h3>
+<p>If you only use the AgentLib standard modules, you can simply use the docker image provided in the repository’s registry with the tag <code class="docutils literal notranslate"><span class="pre">clonemap</span></code>.
+If you have implemented your own modules, you have to build a new image, which contains these modules.
+Here is an example how a corresponding Dockerfile could look like:</p>
+<div class="highlight-Docker notranslate"><div class="highlight"><pre><span></span><span class="k">FROM</span><span class="w"> </span><span class="s">registry.git.rwth-aachen.de/ebc/ebc_all/github_ci/agentlib:latest</span>
+
+<span class="k">COPY</span><span class="w"> </span>my_module.py<span class="w"> </span>my_module.py
+<span class="k">CMD</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;python&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;-u&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;agentlib/modules/communicator/clonemap.py&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>You start from the standard AgentLib image, add your custom module and set the entry point to the clonemap communicator.</p>
+</section>
+<section id="step-3-scenario-creation">
+<h3>Step 3 Scenario creation<a class="headerlink" href="#step-3-scenario-creation" title="Permalink to this heading"></a></h3>
+<p>Besides specifying the agent behavior you also have to define the MAS configuration in order to start a MAS application. The MAS configuration consists of a list of agents you want to execute as well as individual configuration information for each agent.
+Take a look at the <a class="reference external" href="https://github.com/RWTH-ACS/clonemap/blob/develop/api/ams/openapi.yaml">API specification of the AMS</a> for a description of the MAS configuration.
+In the configuration you also have to specify the docker image to be used for the agencies.
+This corresponds to the image you created in the previous step.</p>
+<p>Here is an example configuration which starts an agent using the standard image.
+This agent only has a clonemap communicator as module.
+This is mandator to start agents with clonemap.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;config&quot;</span><span class="p">:{</span>
+<span class="w">        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;test&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;agentsperagency&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;mqtt&quot;</span><span class="p">:{</span>
+<span class="w">            </span><span class="nt">&quot;active&quot;</span><span class="p">:</span><span class="kc">true</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nt">&quot;df&quot;</span><span class="p">:{</span>
+<span class="w">            </span><span class="nt">&quot;active&quot;</span><span class="p">:</span><span class="kc">false</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="nt">&quot;logger&quot;</span><span class="p">:{</span>
+<span class="w">            </span><span class="nt">&quot;active&quot;</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;msg&quot;</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;app&quot;</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;debug&quot;</span><span class="p">:</span><span class="kc">true</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;imagegroups&quot;</span><span class="p">:[</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;config&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">&quot;image&quot;</span><span class="p">:</span><span class="s2">&quot;agentlibtest&quot;</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">            </span><span class="nt">&quot;agents&quot;</span><span class="p">:[</span>
+<span class="w">                </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;nodeid&quot;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;FirstAgent&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="s2">&quot;test&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">&quot;custom&quot;</span><span class="p">:</span><span class="s2">&quot;{\&quot;id\&quot;:\&quot;FirstAgent\&quot;, \&quot;modules\&quot;:[{\&quot;module_id\&quot;:\&quot;AgCom\&quot;, \&quot;type\&quot;:\&quot;clonemap\&quot;, \&quot;subtopics\&quot;:[\&quot;/agentlib/SecondAgent/#\&quot;]}]}&quot;</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">]</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;graph&quot;</span><span class="p">:{</span>
+<span class="w">        </span><span class="nt">&quot;node&quot;</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;edge&quot;</span><span class="p">:</span><span class="kc">null</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>In the first field, general configuration of the MAS can be adjusted.
+One important field is <code class="docutils literal notranslate"><span class="pre">agentsperagency</span></code> which specifies the maximum number of agents that are executed in one agency container.
+Within the logger field you can decide what to do with log messages from agents.
+If <code class="docutils literal notranslate"><span class="pre">logger.active</span></code> is set to false, all logs will be added to stdout of the docker container and can be viewed with the <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">logs</span></code> command.
+If <code class="docutils literal notranslate"><span class="pre">logger.active</span></code> is set to true, the cloneMAP logger is used.
+That means that all logs are sent to the logger and can be viewed in the cloneMAP WebUI or downloaded in json format.
+The fields <code class="docutils literal notranslate"><span class="pre">msg</span></code>, <code class="docutils literal notranslate"><span class="pre">app</span></code> and <code class="docutils literal notranslate"><span class="pre">debug</span></code> control which logs are saved.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">imagegroups</span></code> field expects a list of image groups.
+An image group contains the image to be used (<code class="docutils literal notranslate"><span class="pre">config.image</span></code>) and a list of agents to create (<code class="docutils literal notranslate"><span class="pre">agents</span></code>).
+Each agent consists of a set of fields.
+The important one is <code class="docutils literal notranslate"><span class="pre">custom</span></code> which is used to provide the configuration to the agent as specified by the agentlib, i.e, the configuration of all modules that make up the agent.
+The <code class="docutils literal notranslate"><span class="pre">custom</span></code> field expects a string.
+Since we use json as format for the agent configuration, make sure to escape quotation marks.</p>
+<p>For a new MAS the provided example can be used as template.
+The list of groups, the names of the images and the list of agents per image group have to be adjusted.</p>
+</section>
+<section id="step-4-mas-execution">
+<h3>Step 4 MAS execution<a class="headerlink" href="#step-4-mas-execution" title="Permalink to this heading"></a></h3>
+<p>In order to execute a MAS you have to post the previously created scenario file to the AMS.
+Look at the <a class="reference external" href="https://github.com/RWTH-ACS/clonemap/blob/develop/api/ams/openapi.yaml">api specification</a> for the correct path and method to be used.
+Subsequently the AMS will start all agencies which then will start the single agents.
+Depending on the size the creation of a MAS might take a few seconds.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>-X<span class="w"> </span><span class="s2">&quot;POST&quot;</span><span class="w"> </span>-d<span class="w"> </span>@clonemap_config.yaml<span class="w"> </span>&lt;ip-address&gt;:30009/api/clonemap/mas
+</pre></div>
+</div>
+<p>The AMS is made available to the outside world via NodePort on port 30009.
+Replace <code class="docutils literal notranslate"><span class="pre">&lt;ip-address&gt;</span></code> with the IP address of one of your Kubernetes machines or localhost if you execute cloneMAP locally.
+The AMS should answer with http code 201.
+It starts the agency containers which automatically execute the agents.</p>
+<p>To terminate the MAS run</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>-X<span class="w"> </span>DELETE<span class="w"> </span>&lt;ip-address&gt;:30009/api/clonemap/mas/0
+</pre></div>
+</div>
+<p>Alternatively you can also use the WebUI for starting and terminating agents.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="PIDRoomControl.html" class="btn btn-neutral float-left" title="A typical example: Controlling room temperature with a PID controller" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="GeneralIdea.html" class="btn btn-neutral float-right" title="How does the AgentLib work internally?" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, AGENT-Project Associates.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
