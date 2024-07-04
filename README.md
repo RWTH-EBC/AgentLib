@@ -45,7 +45,9 @@ The AgentLib has a number of optional dependencies, ranging from additional feat
 ## Referencing the AgentLib
 
 A publication regarding the AgentLib is currently in the work.
-If you use the AgentLib in your work which you plan to publish, please check back at a later date for a reference.
+A preprint is available under http://dx.doi.org/10.2139/ssrn.4884846 and can be cited as: 
+
+> Eser, Steffen and Storek, Thomas and Wüllhorst, Fabian and Dähling, Stefan and Gall, Jan and Stoffel, Phillip and Müller, Dirk, A Modular Python Framework for Rapid Development of Advanced Control Algorithms for Energy Systems. Available at SSRN: https://ssrn.com/abstract=4884846 or http://dx.doi.org/10.2139/ssrn.4884846 
 
 ## Copyright and license
 
@@ -53,6 +55,6 @@ This project is licensed under the BSD 3 Clause License - see the [LICENSE](LICE
 
 ## Acknowledgments
 
-We gratefully acknowledge the financial support by Federal Ministry \\ for Economic Affairs and Climate Action (BMWK), promotional reference 03ET1495A.
+We gratefully acknowledge the financial support by Federal Ministry \\ for Economic Affairs and Climate Action (BMWK), promotional references 03ET1495A and 03EN1006A.
 
 <img src="./docs/images/logos/BMWK_logo.png" alt="BMWK" width="200"/>
