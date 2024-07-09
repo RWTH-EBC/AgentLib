@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import List, Dict, Optional, Tuple, get_type_hints
+from typing import List, Dict, Optional, Tuple, get_type_hints, get_origin, get_args
 
 import networkx as nx
 
@@ -21,23 +21,36 @@ def get_config_class(type_):
         if field_name.startswith("_"):
             continue
 
-        field_type = field_info.type_
-        if issubclass(field_type, (AgentVariable, AgentVariables)):
-            default_value = field_info.default
-            if default_value is not None and default_value != Ellipsis:
-                config_fields[field_name] = default_value
+        field_type = field_info.annotation
+        default_value = field_info.default
 
-            if field_type == AgentVariable:
-                if default_value is not None and default_value != Ellipsis:
-                    agent_variables.append(default_value)
-            elif field_type == AgentVariables:
-                if default_value is not None and default_value != Ellipsis:
-                    agent_variables.extend(default_value)
+        if default_value is None or default_value == Ellipsis:
+            continue
+
+        # If our annotation is List[AgentVariable], we have to work around the
+        # generic type hints
+        origin = get_origin(field_type)
+        generic_args = get_args(field_type)
+        if origin in {List, list} and len(generic_args) == 1:
+            field_type = generic_args[0]
+
+        if not isinstance(field_type, type):
+            continue
+
+        if not issubclass(field_type, AgentVariable):
+            continue
+
+        config_fields[field_name] = default_value
+
+        if issubclass(field_type, AgentVariable):
+            agent_variables.append(default_value)
+        elif issubclass(field_type, AgentVariables):
+            agent_variables.extend(default_value)
 
     return config_class, config_fields, agent_variables
 
 
-def create_configs(configs) -> List[Dict]:
+def create_configs(configs: list[dict]) -> List[Dict]:
     agent_configs = []
     for config in configs:
         agent_config = {"id": config["id"], "modules": []}
