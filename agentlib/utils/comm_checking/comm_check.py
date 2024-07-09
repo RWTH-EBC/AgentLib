@@ -1,6 +1,8 @@
 import json
+import socket
 import threading
 import webbrowser
+from contextlib import closing
 from pathlib import Path
 from typing import (
     List,
@@ -138,23 +140,42 @@ def check_communication_conditions(sender_agent, receiver_agent, configs):
         config for config in configs if config["id"] == receiver_agent
     )
 
-    # Check if both agents have MQTT modules
-    sender_mqtt = next(
-        (module for module in sender_config["modules"] if module["type"] == "local"),
+    # Get communication modules for both agents
+    sender_comm = next(
+        (
+            module
+            for module in sender_config["modules"]
+            if module["type"] in ["mqtt", "local", "local_broadcast"]
+        ),
         None,
     )
-    receiver_mqtt = next(
-        (module for module in receiver_config["modules"] if module["type"] == "local"),
+    receiver_comm = next(
+        (
+            module
+            for module in receiver_config["modules"]
+            if module["type"] in ["mqtt", "local", "local_broadcast"]
+        ),
         None,
     )
 
-    if not sender_mqtt or not receiver_mqtt:
+    if not sender_comm or not receiver_comm:
         return False
 
-    # Check if the receiver has the sender in its subscriptions
+    # Case 1: MQTT or Local communication
     if (
-        "subscriptions" in receiver_mqtt
-        and sender_agent in receiver_mqtt["subscriptions"]
+        sender_comm["type"] in ["mqtt", "local"]
+        and receiver_comm["type"] == sender_comm["type"]
+    ):
+        if (
+            "subscriptions" in receiver_comm
+            and sender_agent in receiver_comm["subscriptions"]
+        ):
+            return True
+
+    # Case 2: Local Broadcast communication
+    if (
+        sender_comm["type"] == "local_broadcast"
+        and receiver_comm["type"] == "local_broadcast"
     ):
         return True
 
@@ -176,19 +197,26 @@ def create_comm_graph(configs):
     for alias, var_list in vars_by_alias.items():
         if len(var_list) > 1:
             for i in range(len(var_list)):
-                for j in range(len(var_list)):
-                    if i != j:
-                        ag1, mod1, var1 = var_list[i][0].split(".")
-                        ag2, mod2, var2 = var_list[j][0].split(".")
-                        if ag1 != ag2:
-                            # Check communication conditions
-                            if check_communication_conditions(ag1, ag2, configs):
-                                # Add a directed edge from ag1 to ag2
-                                if g.has_edge(ag1, ag2):
-                                    # If the edge already exists, append the new alias to the label
-                                    g[ag1][ag2]["label"] += f", {alias}"
-                                else:
-                                    g.add_edge(ag1, ag2, label=alias)
+                for j in range(
+                    i + 1, len(var_list)
+                ):  # Changed to avoid duplicate checks
+                    ag1, mod1, var1 = var_list[i][0].split(".")
+                    ag2, mod2, var2 = var_list[j][0].split(".")
+                    if ag1 != ag2:
+                        # Check communication conditions
+                        if check_communication_conditions(ag1, ag2, configs):
+                            # Add a directed edge from ag1 to ag2
+                            if g.has_edge(ag1, ag2):
+                                g[ag1][ag2]["label"] += f", {alias}"
+                            else:
+                                g.add_edge(ag1, ag2, label=alias)
+
+                        # For local_broadcast, add the reverse edge as well
+                        if check_communication_conditions(ag2, ag1, configs):
+                            if g.has_edge(ag2, ag1):
+                                g[ag2][ag1]["label"] += f", {alias}"
+                            else:
+                                g.add_edge(ag2, ag1, label=alias)
 
     return g, vars_by_module
 
@@ -207,7 +235,9 @@ def create_dash_app(G, vars_by_module):
     app.layout = html.Div(
         [
             html.H1("Agent Communication Network"),
-            dcc.Graph(id="network-graph"),
+            dcc.Graph(
+                id="network-graph", style={"height": "80vh"}
+            ),  # Set height to 80% of viewport height
             html.Div(
                 [
                     html.Button("Spring Layout", id="spring-button", n_clicks=0),
@@ -217,7 +247,12 @@ def create_dash_app(G, vars_by_module):
                 ],
                 style={"padding": "10px"},
             ),
-        ]
+        ],
+        style={
+            "height": "100vh",
+            "display": "flex",
+            "flex-direction": "column",
+        },  # Make the main div take full viewport height
     )
 
     @app.callback(
@@ -264,10 +299,11 @@ def create_dash_app(G, vars_by_module):
             edge_y.extend([y0, y1, None])
 
             edge_label = G.edges[edge].get("label", "")
+            var_count = len(edge_label.split(","))
             mid_x, mid_y = (x0 + x1) / 2, (y0 + y1) / 2
             edge_label_x.append(mid_x)
             edge_label_y.append(mid_y)
-            edge_labels.append(edge_label)
+            edge_labels.append(f"{var_count} vars")
 
         node_adjacencies = []
         for node in G.nodes():
@@ -323,7 +359,8 @@ def create_dash_app(G, vars_by_module):
             mode="text",
             text=edge_labels,
             textposition="middle center",
-            hoverinfo="none",
+            hoverinfo="text",
+            hovertext=[G.edges[edge].get("label", "") for edge in G.edges()],
         )
 
         node_trace.hovertext = node_hovertext
@@ -331,12 +368,14 @@ def create_dash_app(G, vars_by_module):
         return go.Figure(
             data=[edge_trace, node_trace, edge_label_trace],
             layout=go.Layout(
+                title="Agent Communication Network",
                 showlegend=False,
                 hovermode="closest",
                 margin=dict(b=20, l=5, r=5, t=40),
                 xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
                 yaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
                 dragmode="pan",
+                height=800,  # Increase the height of the plot
             ),
         )
 
@@ -390,17 +429,54 @@ def process_config(config: Union[str, dict]) -> dict:
     return config
 
 
-def visualize_agents(
-    configs: List[Union[str, dict]], port: int = 8050, background: bool = False
-):
+def find_free_port(start_port=8050, max_port=8100):
+    """Find a free port in the given range."""
+    with closing(socket.socket(socket.AF_INET, socket.SOCK_STREAM)) as s:
+        for port in range(start_port, max_port):
+            try:
+                s.bind(("", port))
+                return port
+            except socket.error:
+                continue
+    return None
 
+
+def is_port_in_use(port):
+    """Check if a port is already in use."""
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+        return s.connect_ex(("localhost", port)) == 0
+
+
+def visualize_agents(
+    configs: List[Union[str, dict]],
+    port: int = 8050,
+    background: bool = False,
+    force_new: bool = False,
+):
     # Process configs
     processed_configs = [process_config(config) for config in configs]
 
     G, vars_by_module = create_comm_graph(processed_configs)
     app = create_dash_app(G, vars_by_module)
 
+    if is_port_in_use(port):
+        if force_new:
+            raise RuntimeError(
+                f"Port {port} is in use. Please terminate the application that uses it."
+            )
+        else:
+            new_port = find_free_port(port)
+            if new_port:
+                print(f"Port {port} is already in use. Using port {new_port} instead.")
+                port = new_port
+            else:
+                print(
+                    "No available ports found. Please close some running servers and try again."
+                )
+                return
+
     def run_dash():
+        print(f"Starting server on port {port}")
         app.run_server(debug=False, port=port)
 
     if background:
@@ -434,3 +510,9 @@ if __name__ == "__main__":
         except KeyboardInterrupt:
             print("Exiting...")
             break
+
+
+# TODO next steps for this comm check:
+#  1. on hover over a node, add a subgraph that shows communication between modules
+#  2. check the shared attribute for inter-agent-communication
+#  3. add multi-processing broadcast
