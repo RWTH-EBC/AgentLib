@@ -129,19 +129,73 @@ def create_comm_graph(configs):
                     if ag1 != ag2:
                         g.add_edge(ag1, ag2, label=alias)
 
-    return g
+    return g, vars_by_module
 
 
-def create_interactive_graph(G):
+def create_interactive_graph(G, vars_by_module):
     pos = nx.spring_layout(G)
 
-    edge_x = []
-    edge_y = []
+    edge_x, edge_y = [], []
+    edge_label_x, edge_label_y, edge_labels = [], [], []
+    node_x, node_y, node_text, node_hovertext = [], [], [], []
+
     for edge in G.edges():
         x0, y0 = pos[edge[0]]
         x1, y1 = pos[edge[1]]
         edge_x.extend([x0, x1, None])
         edge_y.extend([y0, y1, None])
+
+        edge_label = G.edges[edge].get("label", "")
+        mid_x, mid_y = (x0 + x1) / 2, (y0 + y1) / 2
+        edge_label_x.append(mid_x)
+        edge_label_y.append(mid_y)
+        edge_labels.append(edge_label)
+
+    node_adjacencies = []
+    for node in G.nodes():
+        x, y = pos[node]
+        node_x.append(x)
+        node_y.append(y)
+        node_text.append(node)
+
+        # Prepare hover information
+        modules = list(vars_by_module[node].keys())
+        all_vars = set()
+        for mod_vars in vars_by_module[node].values():
+            all_vars.update(var["name"] for var in mod_vars)
+
+        shared_vars = set()
+        internal_shared_vars = set()
+        unique_vars = set()
+
+        for var in all_vars:
+            var_count = sum(
+                1
+                for mod_vars in vars_by_module[node].values()
+                if var in [v["name"] for v in mod_vars]
+            )
+            if var_count > 1:
+                internal_shared_vars.add(var)
+
+            is_shared = any(
+                var in [v["name"] for v in mod_vars]
+                for other_agent in vars_by_module
+                if other_agent != node
+                for mod_vars in vars_by_module[other_agent].values()
+            )
+            if is_shared:
+                shared_vars.add(var)
+            else:
+                unique_vars.add(var)
+
+        hover_text = f"Agent: {node}<br>"
+        hover_text += f"Modules: {', '.join(modules)}<br>"
+        hover_text += f"Shared variables: {', '.join(shared_vars)}<br>"
+        hover_text += f"Internally shared variables: {', '.join(internal_shared_vars - shared_vars)}<br>"
+        hover_text += f"Unique variables: {', '.join(unique_vars)}"
+
+        node_hovertext.append(hover_text)
+        node_adjacencies.append(len(list(G.neighbors(node))))
 
     edge_trace = go.Scatter(
         x=edge_x,
@@ -151,24 +205,19 @@ def create_interactive_graph(G):
         mode="lines",
     )
 
-    node_x = []
-    node_y = []
-    for node in G.nodes():
-        x, y = pos[node]
-        node_x.append(x)
-        node_y.append(y)
-
     node_trace = go.Scatter(
         x=node_x,
         y=node_y,
-        mode="markers",
+        text=node_text,
+        textposition="top center",
+        mode="markers+text",
         hoverinfo="text",
         marker=dict(
             showscale=True,
             colorscale="YlGnBu",
             reversescale=True,
-            color=[],
-            size=10,
+            color=node_adjacencies,
+            size=15,
             colorbar=dict(
                 thickness=15,
                 title="Node Connections",
@@ -179,30 +228,16 @@ def create_interactive_graph(G):
         ),
     )
 
-    node_adjacencies = []
-    node_text = []
-    for node, adjacencies in enumerate(G.adjacency()):
-        node_adjacencies.append(len(adjacencies[1]))
-        node_text.append(f"{adjacencies[0]}<br># of connections: {len(adjacencies[1])}")
-
-    node_trace.marker.color = node_adjacencies
-    node_trace.text = node_text
-
-    edge_labels = nx.get_edge_attributes(G, "label")
     edge_label_trace = go.Scatter(
-        x=[
-            pos[edge[0]][0] + 0.5 * (pos[edge[1]][0] - pos[edge[0]][0])
-            for edge in G.edges()
-        ],
-        y=[
-            pos[edge[0]][1] + 0.5 * (pos[edge[1]][1] - pos[edge[0]][1])
-            for edge in G.edges()
-        ],
+        x=edge_label_x,
+        y=edge_label_y,
         mode="text",
-        text=[edge_labels[edge] for edge in G.edges()],
+        text=edge_labels,
         textposition="middle center",
-        hoverinfo="text",
+        hoverinfo="none",
     )
+
+    node_trace.hovertext = node_hovertext
 
     fig = go.Figure(
         data=[edge_trace, node_trace, edge_label_trace],
@@ -224,8 +259,30 @@ def create_interactive_graph(G):
             ],
             xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
             yaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
+            dragmode="pan",  # Enable panning
         ),
     )
+
+    # Add buttons for zoom and pan
+    fig.update_layout(
+        updatemenus=[
+            dict(
+                type="buttons",
+                direction="left",
+                buttons=[
+                    dict(args=[{"dragmode": "pan"}], label="Pan", method="relayout"),
+                    dict(args=[{"dragmode": "zoom"}], label="Zoom", method="relayout"),
+                ],
+                pad={"r": 10, "t": 10},
+                showactive=True,
+                x=0.11,
+                xanchor="left",
+                y=1.1,
+                yanchor="top",
+            ),
+        ]
+    )
+
     return fig
 
 
@@ -274,8 +331,8 @@ if __name__ == "__main__":
         r"D:\repos\AgentLib\examples\multi-agent-systems\room_mas\configs"
     )
     configs = load_json_to_dict([str(file) for file in directory_path.glob("*")])
-    G = create_comm_graph(configs)
+    G, vars_by_module = create_comm_graph(configs)
 
-    fig = create_interactive_graph(G)
+    fig = create_interactive_graph(G, vars_by_module)
     fig.show()
     # pio.write_html(fig, file="agent_network.html", auto_open=True)
