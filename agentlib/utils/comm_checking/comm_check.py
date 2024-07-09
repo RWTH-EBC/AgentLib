@@ -1,9 +1,12 @@
+import json
+import os
 from pathlib import Path
 from typing import List, Dict, Optional, Tuple, get_type_hints, get_origin, get_args
 
 import networkx as nx
+import plotly.graph_objects as go
 
-from agentlib import AgentVariable, AgentVariables
+from agentlib import AgentVariable
 from agentlib.core.agent import get_module_class
 
 AG_ID = str
@@ -42,10 +45,10 @@ def get_config_class(type_):
 
         config_fields[field_name] = default_value
 
-        if issubclass(field_type, AgentVariable):
-            agent_variables.append(default_value)
-        elif issubclass(field_type, AgentVariables):
+        if origin in {List, list}:
             agent_variables.extend(default_value)
+        else:
+            agent_variables.append(default_value)
 
     return config_class, config_fields, agent_variables
 
@@ -56,7 +59,10 @@ def create_configs(configs: list[dict]) -> List[Dict]:
         agent_config = {"id": config["id"], "modules": []}
         for module in config["modules"]:
             module_config = module.copy()
-            module_config["_config_class"] = get_config_class(module)
+            _conf_class, _fields, _variables = get_config_class(module)
+            module_config["_config_class"] = _conf_class
+            module_config["_config_fields"] = _fields
+            module_config["_agent_variables"] = _variables
             agent_config["modules"].append(module_config)
         agent_configs.append(agent_config)
     return agent_configs
@@ -80,10 +86,10 @@ def collect_vars(configs_: List[Dict]) -> Dict[AG_ID, Dict[MOD_ID, List[Dict]]]:
             vars_by_module[ag_id][mod_id].extend(
                 [var.dict() for var in module["_agent_variables"]]
             )
-            vars_by_module[ag_id][mod_id] = [
-                dict(t)
-                for t in {tuple(d.items()) for d in vars_by_module[ag_id][mod_id]}
-            ]
+            # vars_by_module[ag_id][mod_id] = [
+            #     dict(t)
+            #     for t in {tuple(d.items()) for d in vars_by_module[ag_id][mod_id]}
+            # ]
     return vars_by_module
 
 
@@ -126,8 +132,101 @@ def create_comm_graph(configs):
     return g
 
 
-import json
-import os
+def create_interactive_graph(G):
+    pos = nx.spring_layout(G)
+
+    edge_x = []
+    edge_y = []
+    for edge in G.edges():
+        x0, y0 = pos[edge[0]]
+        x1, y1 = pos[edge[1]]
+        edge_x.extend([x0, x1, None])
+        edge_y.extend([y0, y1, None])
+
+    edge_trace = go.Scatter(
+        x=edge_x,
+        y=edge_y,
+        line=dict(width=0.5, color="#888"),
+        hoverinfo="none",
+        mode="lines",
+    )
+
+    node_x = []
+    node_y = []
+    for node in G.nodes():
+        x, y = pos[node]
+        node_x.append(x)
+        node_y.append(y)
+
+    node_trace = go.Scatter(
+        x=node_x,
+        y=node_y,
+        mode="markers",
+        hoverinfo="text",
+        marker=dict(
+            showscale=True,
+            colorscale="YlGnBu",
+            reversescale=True,
+            color=[],
+            size=10,
+            colorbar=dict(
+                thickness=15,
+                title="Node Connections",
+                xanchor="left",
+                titleside="right",
+            ),
+            line_width=2,
+        ),
+    )
+
+    node_adjacencies = []
+    node_text = []
+    for node, adjacencies in enumerate(G.adjacency()):
+        node_adjacencies.append(len(adjacencies[1]))
+        node_text.append(f"{adjacencies[0]}<br># of connections: {len(adjacencies[1])}")
+
+    node_trace.marker.color = node_adjacencies
+    node_trace.text = node_text
+
+    edge_labels = nx.get_edge_attributes(G, "label")
+    edge_label_trace = go.Scatter(
+        x=[
+            pos[edge[0]][0] + 0.5 * (pos[edge[1]][0] - pos[edge[0]][0])
+            for edge in G.edges()
+        ],
+        y=[
+            pos[edge[0]][1] + 0.5 * (pos[edge[1]][1] - pos[edge[0]][1])
+            for edge in G.edges()
+        ],
+        mode="text",
+        text=[edge_labels[edge] for edge in G.edges()],
+        textposition="middle center",
+        hoverinfo="text",
+    )
+
+    fig = go.Figure(
+        data=[edge_trace, node_trace, edge_label_trace],
+        layout=go.Layout(
+            title="Agent Communication Network",
+            titlefont_size=16,
+            showlegend=False,
+            hovermode="closest",
+            margin=dict(b=20, l=5, r=5, t=40),
+            annotations=[
+                dict(
+                    text="",
+                    showarrow=False,
+                    xref="paper",
+                    yref="paper",
+                    x=0.005,
+                    y=-0.002,
+                )
+            ],
+            xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
+            yaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
+        ),
+    )
+    return fig
 
 
 def load_json_to_dict(input_data):
@@ -175,4 +274,8 @@ if __name__ == "__main__":
         r"D:\repos\AgentLib\examples\multi-agent-systems\room_mas\configs"
     )
     configs = load_json_to_dict([str(file) for file in directory_path.glob("*")])
-    create_comm_graph(configs)
+    G = create_comm_graph(configs)
+
+    fig = create_interactive_graph(G)
+    fig.show()
+    # pio.write_html(fig, file="agent_network.html", auto_open=True)
