@@ -3,6 +3,7 @@ import os
 
 from matplotlib.ticker import AutoMinorLocator
 
+from agentlib.utils.dependency_check import is_dependency_installed
 from agentlib.utils.multi_agent_system import LocalMASAgency
 
 logger = logging.getLogger(__name__)
@@ -16,16 +17,19 @@ def run_example(until, with_plots=True, log_level=logging.INFO):
 
     # Change the working directly so that relative paths work
     os.chdir(os.path.abspath(os.path.dirname(__file__)))
+
+    agent_configs = [
+        "configs/TRYSensor.json",
+        "configs/Room2.json",
+        "configs/Room1.json",
+        "configs/PIDAgent.json",
+        "configs/BangBangAgent.json",
+    ]
+
     # create multiple agents with different configuration
     mas = LocalMASAgency(
         env=env_config,
-        agent_configs=[
-            "configs/TRYSensor.json",
-            "configs/Room2.json",
-            "configs/Room1.json",
-            "configs/PIDAgent.json",
-            "configs/BangBangAgent.json",
-        ],
+        agent_configs=agent_configs,
         variable_logging=True,
     )
     # Simulate
@@ -35,6 +39,11 @@ def run_example(until, with_plots=True, log_level=logging.INFO):
 
     if not with_plots:
         return results
+
+    if is_dependency_installed("gui"):
+        from agentlib.utils.comm_checking.comm_check import visualize_agents
+
+        visualize_agents(agent_configs, background=True)
 
     df_ro_pid = results["Room1Agent"]["room"]
     df_ro_bb = results["Room2Agent"]["room"]
@@ -87,7 +96,12 @@ def run_example(until, with_plots=True, log_level=logging.INFO):
             zorder=0,
         )
         ax.grid(
-            which="minor", axis="both", linestyle="--", linewidth=0.5, color="0.7", zorder=0
+            which="minor",
+            axis="both",
+            linestyle="--",
+            linewidth=0.5,
+            color="0.7",
+            zorder=0,
         )
 
     plt.show()

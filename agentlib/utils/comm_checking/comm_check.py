@@ -1,14 +1,33 @@
 import json
-import os
+import threading
+import webbrowser
 from pathlib import Path
-from typing import List, Dict, Optional, Tuple, get_type_hints, get_origin, get_args
+from typing import (
+    List,
+    Dict,
+    Optional,
+    Tuple,
+    get_type_hints,
+    get_origin,
+    get_args,
+    Union,
+)
 
-import dash
-import networkx as nx
+from agentlib.core.errors import OptionalDependencyError
+
+try:
+    import dash
+    import networkx as nx
+    import plotly.graph_objects as go
+    from dash import dcc, html
+    from dash.dependencies import Input, Output, State
+except ImportError:
+    raise OptionalDependencyError(
+        used_object=f"Communication checker",
+        dependency_install="gui",
+    )
 import numpy as np
-import plotly.graph_objects as go
-from dash import dcc, html
-from dash.dependencies import Input, Output, State
+
 
 from agentlib import AgentVariable
 from agentlib.core.agent import get_module_class
@@ -181,7 +200,6 @@ def create_dash_app(G, vars_by_module):
         "spring": nx.spring_layout,
         "circular": nx.circular_layout,
         "shell": nx.shell_layout,
-        "kamada_kawai": nx.kamada_kawai_layout,
     }
 
     pos = layouts["spring"](G)
@@ -195,9 +213,6 @@ def create_dash_app(G, vars_by_module):
                     html.Button("Spring Layout", id="spring-button", n_clicks=0),
                     html.Button("Circular Layout", id="circular-button", n_clicks=0),
                     html.Button("Shell Layout", id="shell-button", n_clicks=0),
-                    html.Button(
-                        "Kamada-Kawai Layout", id="kamada-kawai-button", n_clicks=0
-                    ),
                     html.Button("Shuffle Layout", id="shuffle-button", n_clicks=0),
                 ],
                 style={"padding": "10px"},
@@ -211,18 +226,12 @@ def create_dash_app(G, vars_by_module):
             Input("spring-button", "n_clicks"),
             Input("circular-button", "n_clicks"),
             Input("shell-button", "n_clicks"),
-            Input("kamada-kawai-button", "n_clicks"),
             Input("shuffle-button", "n_clicks"),
         ],
         [State("network-graph", "figure")],
     )
     def update_layout(
-        spring_clicks,
-        circular_clicks,
-        shell_clicks,
-        kamada_clicks,
-        shuffle_clicks,
-        current_fig,
+        spring_clicks, circular_clicks, shell_clicks, shuffle_clicks, current_fig
     ):
         nonlocal pos
         ctx = dash.callback_context
@@ -334,30 +343,22 @@ def create_dash_app(G, vars_by_module):
     return app
 
 
-def load_json_to_dict(input_data):
+def load_json_to_dict(
+    input_data: Union[str, dict, List[Union[str, dict]]]
+) -> List[dict]:
     """
     Loads JSON data from various input formats and returns a list of dictionaries.
-
-    Args:
-        input_data (str, dict, or list): The input data, which can be a file path, a JSON string, or a dictionary.
-
-    Returns:
-        list[dict]: A list of dictionaries containing the JSON data.
     """
-    results = []
-
-    # Ensure input_data is a list
     if not isinstance(input_data, list):
         input_data = [input_data]
 
+    results = []
     for item in input_data:
         if isinstance(item, str):
-            # Check if the string is a file path
-            if os.path.isfile(item):
+            if Path(item).is_file():
                 with open(item, "r") as file:
                     data = json.load(file)
             else:
-                # Assume the string is a JSON string
                 data = json.loads(item)
         elif isinstance(item, dict):
             data = item
@@ -366,12 +367,55 @@ def load_json_to_dict(input_data):
                 "Input data must be a string (file path or JSON), or a dictionary."
             )
 
-        if isinstance(data, list):
-            results.extend(data)
-        else:
-            results.append(data)
+        results.append(data)
 
     return results
+
+
+def process_config(config: Union[str, dict]) -> dict:
+    """
+    Process a single config, loading JSON files for modules if necessary.
+    """
+    if isinstance(config, str):
+        config = load_json_to_dict(config)[0]
+
+    processed_modules = []
+    for module in config.get("modules", []):
+        if isinstance(module, str):
+            processed_modules.extend(load_json_to_dict(module))
+        else:
+            processed_modules.append(module)
+
+    config["modules"] = processed_modules
+    return config
+
+
+def visualize_agents(
+    configs: List[Union[str, dict]], port: int = 8050, background: bool = False
+):
+
+    # Process configs
+    processed_configs = [process_config(config) for config in configs]
+
+    G, vars_by_module = create_comm_graph(processed_configs)
+    app = create_dash_app(G, vars_by_module)
+
+    def run_dash():
+        app.run_server(debug=False, port=port)
+
+    if background:
+        # Start the Dash app in a daemon thread
+        dash_thread = threading.Thread(target=run_dash, daemon=True)
+        dash_thread.start()
+
+        # Open the web browser
+        webbrowser.open(f"http://localhost:{port}")
+
+        return dash_thread
+    else:
+        # Run in the main thread (blocking)
+        webbrowser.open(f"http://localhost:{port}")
+        run_dash()
 
 
 if __name__ == "__main__":
@@ -379,8 +423,14 @@ if __name__ == "__main__":
         r"D:\repos\AgentLib\examples\multi-agent-systems\room_mas\configs"
     )
     configs = load_json_to_dict([str(file) for file in directory_path.glob("*")])
-    G, vars_by_module = create_comm_graph(configs)
 
-    app = create_dash_app(G, vars_by_module)
-    app.run_server(debug=True)
-    # pio.write_html(fig, file="agent_network.html", auto_open=True)
+    # Run the visualization
+    visualize_agents(configs)
+
+    # Keep the main thread alive
+    while True:
+        try:
+            input("Press Ctrl+C to exit...")
+        except KeyboardInterrupt:
+            print("Exiting...")
+            break
