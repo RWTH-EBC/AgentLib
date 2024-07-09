@@ -3,9 +3,12 @@ import os
 from pathlib import Path
 from typing import List, Dict, Optional, Tuple, get_type_hints, get_origin, get_args
 
+import dash
 import networkx as nx
 import numpy as np
 import plotly.graph_objects as go
+from dash import dcc, html
+from dash.dependencies import Input, Output, State
 
 from agentlib import AgentVariable
 from agentlib.core.agent import get_module_class
@@ -171,7 +174,9 @@ def create_comm_graph(configs):
     return g, vars_by_module
 
 
-def create_interactive_graph(G, vars_by_module):
+def create_dash_app(G, vars_by_module):
+    app = dash.Dash(__name__)
+
     layouts = {
         "spring": nx.spring_layout,
         "circular": nx.circular_layout,
@@ -179,23 +184,66 @@ def create_interactive_graph(G, vars_by_module):
         "kamada_kawai": nx.kamada_kawai_layout,
     }
 
-    def update_layout(layout_name):
-        nonlocal pos
-        pos = layouts[layout_name](G)
-        return create_graph_data(pos)
+    pos = layouts["spring"](G)
 
-    def shuffle_layout():
-        nonlocal pos
-        pos = {
-            node: (
-                pos[node][0] + np.random.normal(0, 0.1),
-                pos[node][1] + np.random.normal(0, 0.1),
-            )
-            for node in pos
-        }
-        return create_graph_data(pos)
+    app.layout = html.Div(
+        [
+            html.H1("Agent Communication Network"),
+            dcc.Graph(id="network-graph"),
+            html.Div(
+                [
+                    html.Button("Spring Layout", id="spring-button", n_clicks=0),
+                    html.Button("Circular Layout", id="circular-button", n_clicks=0),
+                    html.Button("Shell Layout", id="shell-button", n_clicks=0),
+                    html.Button(
+                        "Kamada-Kawai Layout", id="kamada-kawai-button", n_clicks=0
+                    ),
+                    html.Button("Shuffle Layout", id="shuffle-button", n_clicks=0),
+                ],
+                style={"padding": "10px"},
+            ),
+        ]
+    )
 
-    def create_graph_data(pos):
+    @app.callback(
+        Output("network-graph", "figure"),
+        [
+            Input("spring-button", "n_clicks"),
+            Input("circular-button", "n_clicks"),
+            Input("shell-button", "n_clicks"),
+            Input("kamada-kawai-button", "n_clicks"),
+            Input("shuffle-button", "n_clicks"),
+        ],
+        [State("network-graph", "figure")],
+    )
+    def update_layout(
+        spring_clicks,
+        circular_clicks,
+        shell_clicks,
+        kamada_clicks,
+        shuffle_clicks,
+        current_fig,
+    ):
+        nonlocal pos
+        ctx = dash.callback_context
+        if not ctx.triggered:
+            return create_graph_figure(pos)
+        else:
+            button_id = ctx.triggered[0]["prop_id"].split(".")[0]
+            if button_id == "shuffle-button":
+                pos = {
+                    node: (
+                        pos[node][0] + np.random.normal(0, 0.1),
+                        pos[node][1] + np.random.normal(0, 0.1),
+                    )
+                    for node in pos
+                }
+            else:
+                layout_name = button_id.split("-")[0]
+                pos = layouts[layout_name](G)
+        return create_graph_figure(pos)
+
+    def create_graph_figure(pos):
         edge_x, edge_y = [], []
         edge_label_x, edge_label_y, edge_labels = [], [], []
         node_x, node_y, node_text, node_hovertext = [], [], [], []
@@ -219,7 +267,6 @@ def create_interactive_graph(G, vars_by_module):
             node_y.append(y)
             node_text.append(node)
 
-            # Prepare hover information (same as before)
             hover_text = f"Agent: {node}<br>"
             hover_text += f"Modules: {', '.join(list(vars_by_module[node].keys()))}<br>"
             # ... (rest of hover text preparation)
@@ -232,12 +279,10 @@ def create_interactive_graph(G, vars_by_module):
         edge_trace = go.Scatter(
             x=edge_x,
             y=edge_y,
-            line=dict(width=1.5, color="#888"),  # Increased line width
+            line=dict(width=1.5, color="#888"),
             hoverinfo="none",
             mode="lines+markers",
-            marker=dict(
-                symbol="arrow", size=15, color="#f00", angleref="previous"
-            ),  # Larger, red arrows
+            marker=dict(symbol="arrow", size=15, color="#f00", angleref="previous"),
         )
 
         node_trace = go.Scatter(
@@ -252,7 +297,7 @@ def create_interactive_graph(G, vars_by_module):
                 colorscale="YlGnBu",
                 reversescale=True,
                 color=node_adjacencies,
-                size=20,  # Increased node size
+                size=20,
                 colorbar=dict(
                     thickness=15,
                     title="Node Connections",
@@ -274,79 +319,19 @@ def create_interactive_graph(G, vars_by_module):
 
         node_trace.hovertext = node_hovertext
 
-        return [edge_trace, node_trace, edge_label_trace]
-
-    pos = layouts["spring"](G)
-    data = create_graph_data(pos)
-
-    fig = go.Figure(
-        data=data,
-        layout=go.Layout(
-            title="Agent Communication Network",
-            titlefont_size=16,
-            showlegend=False,
-            hovermode="closest",
-            margin=dict(b=20, l=5, r=5, t=40),
-            annotations=[
-                dict(
-                    text="",
-                    showarrow=False,
-                    xref="paper",
-                    yref="paper",
-                    x=0.005,
-                    y=-0.002,
-                )
-            ],
-            xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
-            yaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
-            dragmode="pan",
-        ),
-    )
-
-    # Add buttons for zoom, pan, and layout changes
-    fig.update_layout(
-        updatemenus=[
-            dict(
-                type="buttons",
-                direction="right",
-                buttons=[
-                    dict(args=[{"dragmode": "pan"}], label="Pan", method="relayout"),
-                    dict(args=[{"dragmode": "zoom"}], label="Zoom", method="relayout"),
-                    dict(
-                        args=[update_layout("spring")],
-                        label="Spring Layout",
-                        method="update",
-                    ),
-                    dict(
-                        args=[update_layout("circular")],
-                        label="Circular Layout",
-                        method="update",
-                    ),
-                    dict(
-                        args=[update_layout("shell")],
-                        label="Shell Layout",
-                        method="update",
-                    ),
-                    dict(
-                        args=[update_layout("kamada_kawai")],
-                        label="Kamada-Kawai Layout",
-                        method="update",
-                    ),
-                    dict(
-                        args=[shuffle_layout()], label="Shuffle Layout", method="update"
-                    ),
-                ],
-                pad={"r": 10, "t": 10},
-                showactive=True,
-                x=0.11,
-                xanchor="left",
-                y=1.1,
-                yanchor="top",
+        return go.Figure(
+            data=[edge_trace, node_trace, edge_label_trace],
+            layout=go.Layout(
+                showlegend=False,
+                hovermode="closest",
+                margin=dict(b=20, l=5, r=5, t=40),
+                xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
+                yaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
+                dragmode="pan",
             ),
-        ]
-    )
+        )
 
-    return fig
+    return app
 
 
 def load_json_to_dict(input_data):
@@ -396,6 +381,6 @@ if __name__ == "__main__":
     configs = load_json_to_dict([str(file) for file in directory_path.glob("*")])
     G, vars_by_module = create_comm_graph(configs)
 
-    fig = create_interactive_graph(G, vars_by_module)
-    fig.show()
+    app = create_dash_app(G, vars_by_module)
+    app.run_server(debug=True)
     # pio.write_html(fig, file="agent_network.html", auto_open=True)
