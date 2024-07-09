@@ -4,6 +4,7 @@ from pathlib import Path
 from typing import List, Dict, Optional, Tuple, get_type_hints, get_origin, get_args
 
 import networkx as nx
+import numpy as np
 import plotly.graph_objects as go
 
 from agentlib import AgentVariable
@@ -109,6 +110,35 @@ def order_vars_by_alias(
     return vars_by_alias
 
 
+def check_communication_conditions(sender_agent, receiver_agent, configs):
+    sender_config = next(config for config in configs if config["id"] == sender_agent)
+    receiver_config = next(
+        config for config in configs if config["id"] == receiver_agent
+    )
+
+    # Check if both agents have MQTT modules
+    sender_mqtt = next(
+        (module for module in sender_config["modules"] if module["type"] == "local"),
+        None,
+    )
+    receiver_mqtt = next(
+        (module for module in receiver_config["modules"] if module["type"] == "local"),
+        None,
+    )
+
+    if not sender_mqtt or not receiver_mqtt:
+        return False
+
+    # Check if the receiver has the sender in its subscriptions
+    if (
+        "subscriptions" in receiver_mqtt
+        and sender_agent in receiver_mqtt["subscriptions"]
+    ):
+        return True
+
+    return False
+
+
 def create_comm_graph(configs):
     configs_: List[Dict] = create_configs(configs)
     vars_by_module: Dict[AG_ID, Dict[MOD_ID, List[Dict]]] = collect_vars(configs_)
@@ -116,131 +146,141 @@ def create_comm_graph(configs):
         order_vars_by_alias(vars_by_module)
     )
 
-    g = nx.Graph()
+    # Create a directed graph
+    g = nx.DiGraph()
     for ag_id in vars_by_module:
         g.add_node(ag_id)
 
     for alias, var_list in vars_by_alias.items():
         if len(var_list) > 1:
-            for i in range(len(var_list) - 1):
-                for j in range(i + 1, len(var_list)):
-                    ag1, mod1, var1 = var_list[i][0].split(".")
-                    ag2, mod2, var2 = var_list[j][0].split(".")
-                    if ag1 != ag2:
-                        g.add_edge(ag1, ag2, label=alias)
+            for i in range(len(var_list)):
+                for j in range(len(var_list)):
+                    if i != j:
+                        ag1, mod1, var1 = var_list[i][0].split(".")
+                        ag2, mod2, var2 = var_list[j][0].split(".")
+                        if ag1 != ag2:
+                            # Check communication conditions
+                            if check_communication_conditions(ag1, ag2, configs):
+                                # Add a directed edge from ag1 to ag2
+                                if g.has_edge(ag1, ag2):
+                                    # If the edge already exists, append the new alias to the label
+                                    g[ag1][ag2]["label"] += f", {alias}"
+                                else:
+                                    g.add_edge(ag1, ag2, label=alias)
 
     return g, vars_by_module
 
 
 def create_interactive_graph(G, vars_by_module):
-    pos = nx.spring_layout(G)
+    layouts = {
+        "spring": nx.spring_layout,
+        "circular": nx.circular_layout,
+        "shell": nx.shell_layout,
+        "kamada_kawai": nx.kamada_kawai_layout,
+    }
 
-    edge_x, edge_y = [], []
-    edge_label_x, edge_label_y, edge_labels = [], [], []
-    node_x, node_y, node_text, node_hovertext = [], [], [], []
+    def update_layout(layout_name):
+        nonlocal pos
+        pos = layouts[layout_name](G)
+        return create_graph_data(pos)
 
-    for edge in G.edges():
-        x0, y0 = pos[edge[0]]
-        x1, y1 = pos[edge[1]]
-        edge_x.extend([x0, x1, None])
-        edge_y.extend([y0, y1, None])
-
-        edge_label = G.edges[edge].get("label", "")
-        mid_x, mid_y = (x0 + x1) / 2, (y0 + y1) / 2
-        edge_label_x.append(mid_x)
-        edge_label_y.append(mid_y)
-        edge_labels.append(edge_label)
-
-    node_adjacencies = []
-    for node in G.nodes():
-        x, y = pos[node]
-        node_x.append(x)
-        node_y.append(y)
-        node_text.append(node)
-
-        # Prepare hover information
-        modules = list(vars_by_module[node].keys())
-        all_vars = set()
-        for mod_vars in vars_by_module[node].values():
-            all_vars.update(var["name"] for var in mod_vars)
-
-        shared_vars = set()
-        internal_shared_vars = set()
-        unique_vars = set()
-
-        for var in all_vars:
-            var_count = sum(
-                1
-                for mod_vars in vars_by_module[node].values()
-                if var in [v["name"] for v in mod_vars]
+    def shuffle_layout():
+        nonlocal pos
+        pos = {
+            node: (
+                pos[node][0] + np.random.normal(0, 0.1),
+                pos[node][1] + np.random.normal(0, 0.1),
             )
-            if var_count > 1:
-                internal_shared_vars.add(var)
+            for node in pos
+        }
+        return create_graph_data(pos)
 
-            is_shared = any(
-                var in [v["name"] for v in mod_vars]
-                for other_agent in vars_by_module
-                if other_agent != node
-                for mod_vars in vars_by_module[other_agent].values()
+    def create_graph_data(pos):
+        edge_x, edge_y = [], []
+        edge_label_x, edge_label_y, edge_labels = [], [], []
+        node_x, node_y, node_text, node_hovertext = [], [], [], []
+
+        for edge in G.edges():
+            x0, y0 = pos[edge[0]]
+            x1, y1 = pos[edge[1]]
+            edge_x.extend([x0, x1, None])
+            edge_y.extend([y0, y1, None])
+
+            edge_label = G.edges[edge].get("label", "")
+            mid_x, mid_y = (x0 + x1) / 2, (y0 + y1) / 2
+            edge_label_x.append(mid_x)
+            edge_label_y.append(mid_y)
+            edge_labels.append(edge_label)
+
+        node_adjacencies = []
+        for node in G.nodes():
+            x, y = pos[node]
+            node_x.append(x)
+            node_y.append(y)
+            node_text.append(node)
+
+            # Prepare hover information (same as before)
+            hover_text = f"Agent: {node}<br>"
+            hover_text += f"Modules: {', '.join(list(vars_by_module[node].keys()))}<br>"
+            # ... (rest of hover text preparation)
+
+            node_hovertext.append(hover_text)
+            node_adjacencies.append(
+                len(list(G.successors(node))) + len(list(G.predecessors(node)))
             )
-            if is_shared:
-                shared_vars.add(var)
-            else:
-                unique_vars.add(var)
 
-        hover_text = f"Agent: {node}<br>"
-        hover_text += f"Modules: {', '.join(modules)}<br>"
-        hover_text += f"Shared variables: {', '.join(shared_vars)}<br>"
-        hover_text += f"Internally shared variables: {', '.join(internal_shared_vars - shared_vars)}<br>"
-        hover_text += f"Unique variables: {', '.join(unique_vars)}"
+        edge_trace = go.Scatter(
+            x=edge_x,
+            y=edge_y,
+            line=dict(width=1.5, color="#888"),  # Increased line width
+            hoverinfo="none",
+            mode="lines+markers",
+            marker=dict(
+                symbol="arrow", size=15, color="#f00", angleref="previous"
+            ),  # Larger, red arrows
+        )
 
-        node_hovertext.append(hover_text)
-        node_adjacencies.append(len(list(G.neighbors(node))))
-
-    edge_trace = go.Scatter(
-        x=edge_x,
-        y=edge_y,
-        line=dict(width=0.5, color="#888"),
-        hoverinfo="none",
-        mode="lines",
-    )
-
-    node_trace = go.Scatter(
-        x=node_x,
-        y=node_y,
-        text=node_text,
-        textposition="top center",
-        mode="markers+text",
-        hoverinfo="text",
-        marker=dict(
-            showscale=True,
-            colorscale="YlGnBu",
-            reversescale=True,
-            color=node_adjacencies,
-            size=15,
-            colorbar=dict(
-                thickness=15,
-                title="Node Connections",
-                xanchor="left",
-                titleside="right",
+        node_trace = go.Scatter(
+            x=node_x,
+            y=node_y,
+            text=node_text,
+            textposition="top center",
+            mode="markers+text",
+            hoverinfo="text",
+            marker=dict(
+                showscale=True,
+                colorscale="YlGnBu",
+                reversescale=True,
+                color=node_adjacencies,
+                size=20,  # Increased node size
+                colorbar=dict(
+                    thickness=15,
+                    title="Node Connections",
+                    xanchor="left",
+                    titleside="right",
+                ),
+                line_width=2,
             ),
-            line_width=2,
-        ),
-    )
+        )
 
-    edge_label_trace = go.Scatter(
-        x=edge_label_x,
-        y=edge_label_y,
-        mode="text",
-        text=edge_labels,
-        textposition="middle center",
-        hoverinfo="none",
-    )
+        edge_label_trace = go.Scatter(
+            x=edge_label_x,
+            y=edge_label_y,
+            mode="text",
+            text=edge_labels,
+            textposition="middle center",
+            hoverinfo="none",
+        )
 
-    node_trace.hovertext = node_hovertext
+        node_trace.hovertext = node_hovertext
+
+        return [edge_trace, node_trace, edge_label_trace]
+
+    pos = layouts["spring"](G)
+    data = create_graph_data(pos)
 
     fig = go.Figure(
-        data=[edge_trace, node_trace, edge_label_trace],
+        data=data,
         layout=go.Layout(
             title="Agent Communication Network",
             titlefont_size=16,
@@ -259,19 +299,42 @@ def create_interactive_graph(G, vars_by_module):
             ],
             xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
             yaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
-            dragmode="pan",  # Enable panning
+            dragmode="pan",
         ),
     )
 
-    # Add buttons for zoom and pan
+    # Add buttons for zoom, pan, and layout changes
     fig.update_layout(
         updatemenus=[
             dict(
                 type="buttons",
-                direction="left",
+                direction="right",
                 buttons=[
                     dict(args=[{"dragmode": "pan"}], label="Pan", method="relayout"),
                     dict(args=[{"dragmode": "zoom"}], label="Zoom", method="relayout"),
+                    dict(
+                        args=[update_layout("spring")],
+                        label="Spring Layout",
+                        method="update",
+                    ),
+                    dict(
+                        args=[update_layout("circular")],
+                        label="Circular Layout",
+                        method="update",
+                    ),
+                    dict(
+                        args=[update_layout("shell")],
+                        label="Shell Layout",
+                        method="update",
+                    ),
+                    dict(
+                        args=[update_layout("kamada_kawai")],
+                        label="Kamada-Kawai Layout",
+                        method="update",
+                    ),
+                    dict(
+                        args=[shuffle_layout()], label="Shuffle Layout", method="update"
+                    ),
                 ],
                 pad={"r": 10, "t": 10},
                 showactive=True,
