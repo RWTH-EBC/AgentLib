@@ -263,7 +263,7 @@ def create_comm_graph(configs: List[Dict]) -> Tuple[nx.DiGraph, Dict]:
     return g, vars_by_module
 
 
-def create_dash_app(G, vars_by_module):
+def create_dash_app(G: nx.DiGraph, vars_by_module):
     app = dash.Dash(__name__)
 
     # Get all unique variables
@@ -420,34 +420,32 @@ def create_dash_app(G, vars_by_module):
 
                 # Check if there's a reverse edge
                 reverse_edge = G.has_edge(edge[1], edge[0])
+                edge_labels.append(f"{var_count} vars")
 
                 if reverse_edge:
                     color = color_bidirectional
-                    edge_labels.append(
-                        f"<span style='color:{color_bidirectional};'>{var_count} vars</span>"
-                    )
                 else:
                     color = color_forward
-                    edge_labels.append(
-                        f"<span style='color:{color_forward};'>{var_count} vars</span>"
-                    )
 
-                edge_hovers.append("\n".join(active_edge_vars))
+                # Create colored hover text
+                hover_text = "<br>".join(
+                    [
+                        f"<span style='color:"
+                        f"{color_forward if not reverse_edge or not G.edges[edge[1], edge[0]].get('label', '').split('\n') else color_bidirectional if var in G.edges[edge[1], edge[0]].get('label', '').split('\n') else color_backward};'>{var}</span>"
+                        for var in active_edge_vars
+                    ]
+                )
+                edge_hovers.append(hover_text)
 
                 # Create edge trace
                 edge_trace = go.Scatter(
                     x=[x0, x1, None],
                     y=[y0, y1, None],
-                    line=dict(width=2, color=color),
+                    line=dict(width=1.5, color="#888"),
                     hoverinfo="none",
-                    mode="lines",
-                )
-
-                # Add arrow
-                edge_trace.update(
                     mode="lines+markers",
                     marker=dict(
-                        size=10,
+                        size=15,
                         symbol="arrow",
                         angleref="previous",
                         color=color,
@@ -461,11 +459,11 @@ def create_dash_app(G, vars_by_module):
                     reverse_trace = go.Scatter(
                         x=[x1, x0, None],
                         y=[y1, y0, None],
-                        line=dict(width=2, color=color),
+                        line=dict(width=1.5, color="#888"),
                         hoverinfo="none",
                         mode="lines+markers",
                         marker=dict(
-                            size=10,
+                            size=15,
                             symbol="arrow",
                             angleref="previous",
                             color=color,
