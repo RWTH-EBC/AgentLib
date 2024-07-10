@@ -45,7 +45,7 @@ def get_config_class(type_):
     module_class = get_module_class(type_)
     config_class = get_type_hints(module_class)["config"]
     config_fields = {}
-    agent_variables = []
+    agent_variables = {}
 
     for field_name, field_info in config_class.__fields__.items():
         if field_name.startswith("_"):
@@ -73,9 +73,9 @@ def get_config_class(type_):
         config_fields[field_name] = default_value
 
         if origin in {List, list}:
-            agent_variables.extend(default_value)
+            agent_variables[field_name] = default_value
         else:
-            agent_variables.append(default_value)
+            agent_variables[field_name] = [default_value]
 
     return config_class, config_fields, agent_variables
 
@@ -104,19 +104,39 @@ def collect_vars(configs_: List[Dict]) -> Dict[AG_ID, Dict[MOD_ID, List[Dict]]]:
             mod_id = module.get("id", module["_config_class"].__name__)
             vars_by_module[ag_id][mod_id] = []
             config_fields = module["_config_fields"]
-            for key, value in module.items():
-                if key in config_fields:
-                    if isinstance(value, list):
-                        vars_by_module[ag_id][mod_id].extend(value)
-                    else:
-                        vars_by_module[ag_id][mod_id].append(value)
-            vars_by_module[ag_id][mod_id].extend(
-                [var.dict() for var in module["_agent_variables"]]
+            shared_variable_fields = config.get(
+                "shared_variable_fields",
+                module["_config_class"].__fields__["shared_variable_fields"].default,
             )
-            # vars_by_module[ag_id][mod_id] = [
-            #     dict(t)
-            #     for t in {tuple(d.items()) for d in vars_by_module[ag_id][mod_id]}
-            # ]
+
+            for field_name, agvars in module.items():
+                if field_name not in config_fields:
+                    continue
+                if isinstance(agvars, list):
+                    for var in agvars:
+                        var_dict = var.dict() if hasattr(var, "dict") else var
+                        if var_dict.get("shared") is None:
+                            var_dict["shared"] = field_name in shared_variable_fields
+                        vars_by_module[ag_id][mod_id].append(var_dict)
+                else:
+                    var_dict = agvars.dict() if hasattr(agvars, "dict") else agvars
+                    if var_dict.get("shared") is None:
+                        var_dict["shared"] = field_name in shared_variable_fields
+                    vars_by_module[ag_id][mod_id].append(var_dict)
+
+            for field_name, agvars in module["_agent_variables"].items():
+                if isinstance(agvars, list):
+                    for var in agvars:
+                        var_dict = var.dict() if hasattr(var, "dict") else var
+                        if var_dict.get("shared") is None:
+                            var_dict["shared"] = field_name in shared_variable_fields
+                        vars_by_module[ag_id][mod_id].append(var_dict)
+                else:
+                    var_dict = agvars.dict() if hasattr(agvars, "dict") else agvars
+                    if var_dict.get("shared") is None:
+                        var_dict["shared"] = field_name in shared_variable_fields
+                    vars_by_module[ag_id][mod_id].append(var_dict)
+
     return vars_by_module
 
 
@@ -185,11 +205,11 @@ def check_comm_conditions(
         return []
 
     communicable_vars = []
-    for module in vars_by_module[receiver_agent].values():
+    for module in vars_by_module[sender_agent].values():
         for var in module:
             sender_source = Source.create(var.get("source", None))
             receiver_source = Source.create(var.get("source", None))
-            if receiver_source.matches(sender_source):
+            if receiver_source.matches(sender_source) and var.get("shared", False):
                 communicable_vars.append(var["name"])
 
     return communicable_vars
@@ -212,7 +232,7 @@ def create_comm_graph(configs: List[Dict]) -> Tuple[nx.DiGraph, Dict]:
             communicable_vars_1_to_2 = check_comm_conditions(
                 var1.ag_id, var2.ag_id, configs, vars_by_module
             )
-            if var2.var_name in communicable_vars_1_to_2:
+            if var1.var_name in communicable_vars_1_to_2:
                 if g.has_edge(var1.ag_id, var2.ag_id):
                     g[var1.ag_id][var2.ag_id]["label"] = set(
                         g[var1.ag_id][var2.ag_id]["label"].split("\n")
@@ -228,7 +248,7 @@ def create_comm_graph(configs: List[Dict]) -> Tuple[nx.DiGraph, Dict]:
             communicable_vars_2_to_1 = check_comm_conditions(
                 var2.ag_id, var1.ag_id, configs, vars_by_module
             )
-            if var1.var_name in communicable_vars_2_to_1:
+            if var2.var_name in communicable_vars_2_to_1:
                 if g.has_edge(var2.ag_id, var1.ag_id):
                     g[var2.ag_id][var1.ag_id]["label"] = set(
                         g[var2.ag_id][var1.ag_id]["label"].split("\n")
