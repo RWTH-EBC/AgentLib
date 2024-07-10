@@ -2,6 +2,7 @@
 The datamodels module contains all classes
 defining basic models to handle data.
 """
+
 import abc
 import functools
 import json
@@ -279,7 +280,7 @@ class Source(AttrsToPydanticAdaptor):
         return json.dumps(self.dict())
 
     @classmethod
-    def create(cls, data: Union[dict, "Source", str]):
+    def create(cls, data: Union[dict, "Source", str, None]):
         """Constructor for this class, used by pydantic."""
         if isinstance(data, str):
             return cls(agent_id=data)
@@ -287,6 +288,8 @@ class Source(AttrsToPydanticAdaptor):
             return data
         if isinstance(data, dict):
             return cls(**data)
+        if data is None:
+            return cls()
 
     def matches(self, other) -> bool:
         """

@@ -33,7 +33,7 @@ except ImportError:
 import numpy as np
 
 
-from agentlib import AgentVariable
+from agentlib import AgentVariable, Source
 from agentlib.core.agent import get_module_class
 
 AG_ID = str
@@ -152,7 +152,7 @@ def order_vars_by_alias(
 
 def check_comm_conditions(
     sender_agent: str, receiver_agent: str, configs: List[Dict], vars_by_module: Dict
-) -> bool:
+) -> List[str]:
     def get_comm_module(agent_config):
         return next(
             (
@@ -172,7 +172,7 @@ def check_comm_conditions(
     receiver_comm = get_comm_module(receiver_config)
 
     if not sender_comm or not receiver_comm:
-        return False
+        return []
 
     comm_type_match = sender_comm["type"] == receiver_comm["type"]
     subscription_valid = sender_agent in receiver_comm.get("subscriptions", [])
@@ -181,14 +181,18 @@ def check_comm_conditions(
         "multiprocessing_broadcast",
     }
 
-    if comm_type_match and (subscription_valid or is_broadcast):
-        return all(
-            var.get("source") in (None, sender_agent)
-            for module in vars_by_module[receiver_agent].values()
-            for var in module
-        )
+    if not (comm_type_match and (subscription_valid or is_broadcast)):
+        return []
 
-    return False
+    communicable_vars = []
+    for module in vars_by_module[receiver_agent].values():
+        for var in module:
+            sender_source = Source.create(var.get("source", None))
+            receiver_source = Source.create(var.get("source", None))
+            if receiver_source.matches(sender_source):
+                communicable_vars.append(var["name"])
+
+    return communicable_vars
 
 
 def create_comm_graph(configs: List[Dict]) -> Tuple[nx.DiGraph, Dict]:
@@ -204,13 +208,37 @@ def create_comm_graph(configs: List[Dict]) -> Tuple[nx.DiGraph, Dict]:
             if var1.ag_id == var2.ag_id:
                 continue
 
-            for ag1, ag2 in [(var1.ag_id, var2.ag_id), (var2.ag_id, var1.ag_id)]:
-                if not check_comm_conditions(ag1, ag2, configs, vars_by_module):
-                    continue
-                if g.has_edge(ag1, ag2):
-                    g[ag1][ag2]["label"] += f"\n{alias}"
+            # Check communication from var1.ag_id to var2.ag_id
+            communicable_vars_1_to_2 = check_comm_conditions(
+                var1.ag_id, var2.ag_id, configs, vars_by_module
+            )
+            if var2.var_name in communicable_vars_1_to_2:
+                if g.has_edge(var1.ag_id, var2.ag_id):
+                    g[var1.ag_id][var2.ag_id]["label"] = set(
+                        g[var1.ag_id][var2.ag_id]["label"].split("\n")
+                    )
+                    g[var1.ag_id][var2.ag_id]["label"].add(alias)
+                    g[var1.ag_id][var2.ag_id]["label"] = "\n".join(
+                        g[var1.ag_id][var2.ag_id]["label"]
+                    )
                 else:
-                    g.add_edge(ag1, ag2, label=alias)
+                    g.add_edge(var1.ag_id, var2.ag_id, label=alias)
+
+            # Check communication from var2.ag_id to var1.ag_id
+            communicable_vars_2_to_1 = check_comm_conditions(
+                var2.ag_id, var1.ag_id, configs, vars_by_module
+            )
+            if var1.var_name in communicable_vars_2_to_1:
+                if g.has_edge(var2.ag_id, var1.ag_id):
+                    g[var2.ag_id][var1.ag_id]["label"] = set(
+                        g[var2.ag_id][var1.ag_id]["label"].split("\n")
+                    )
+                    g[var2.ag_id][var1.ag_id]["label"].add(alias)
+                    g[var2.ag_id][var1.ag_id]["label"] = "\n".join(
+                        g[var2.ag_id][var1.ag_id]["label"]
+                    )
+                else:
+                    g.add_edge(var2.ag_id, var1.ag_id, label=alias)
 
     return g, vars_by_module
 
@@ -221,7 +249,7 @@ def create_dash_app(G, vars_by_module):
     # Get all unique variables
     all_variables = set()
     for edge in G.edges(data=True):
-        all_variables.update(edge[2]["label"].split(", "))
+        all_variables.update(edge[2]["label"].split("\n"))
     all_variables = sorted(list(all_variables), key=str.casefold)
 
     layouts = {
@@ -352,7 +380,7 @@ def create_dash_app(G, vars_by_module):
 
             edge_label = G.edges[edge].get("label", "")
             active_edge_vars = [
-                var for var in edge_label.split(", ") if var in active_variables
+                var for var in edge_label.split("\n") if var in active_variables
             ]
             var_count = len(active_edge_vars)
 
@@ -361,7 +389,7 @@ def create_dash_app(G, vars_by_module):
                 edge_label_x.append(mid_x)
                 edge_label_y.append(mid_y)
                 edge_labels.append(f"{var_count} vars")
-                edge_hovers.append(", ".join(active_edge_vars))
+                edge_hovers.append("\n".join(active_edge_vars))
 
                 if highlight_var and highlight_var in active_edge_vars:
                     highlight_edge_x.extend([x0, x1, None])
