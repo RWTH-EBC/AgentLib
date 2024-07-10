@@ -389,16 +389,25 @@ def create_dash_app(G, vars_by_module):
         return create_graph_figure(pos, active_variables)
 
     def create_graph_figure(pos, active_variables, highlight_var=None):
-        edge_x, edge_y = [], []
-        highlight_edge_x, highlight_edge_y = [], []
+        edge_traces = []
         edge_label_x, edge_label_y, edge_labels, edge_hovers = [], [], [], []
         node_x, node_y, node_text, node_hovertext = [], [], [], []
 
-        for edge in G.edges():
+        # Define colors for different directions
+        color_forward = "blue"
+        color_backward = "red"
+        color_bidirectional = "purple"
+
+        # Collect all variables that are part of edges
+        edge_variables = set()
+        for edge in G.edges(data=True):
+            edge_variables.update(edge[2].get("label", "").split("\n"))
+
+        for edge in G.edges(data=True):
             x0, y0 = pos[edge[0]]
             x1, y1 = pos[edge[1]]
 
-            edge_label = G.edges[edge].get("label", "")
+            edge_label = edge[2].get("label", "")
             active_edge_vars = [
                 var for var in edge_label.split("\n") if var in active_variables
             ]
@@ -408,15 +417,61 @@ def create_dash_app(G, vars_by_module):
                 mid_x, mid_y = (x0 + x1) / 2, (y0 + y1) / 2
                 edge_label_x.append(mid_x)
                 edge_label_y.append(mid_y)
-                edge_labels.append(f"{var_count} vars")
+
+                # Check if there's a reverse edge
+                reverse_edge = G.has_edge(edge[1], edge[0])
+
+                if reverse_edge:
+                    color = color_bidirectional
+                    edge_labels.append(
+                        f"<span style='color:{color_bidirectional};'>{var_count} vars</span>"
+                    )
+                else:
+                    color = color_forward
+                    edge_labels.append(
+                        f"<span style='color:{color_forward};'>{var_count} vars</span>"
+                    )
+
                 edge_hovers.append("\n".join(active_edge_vars))
 
-                if highlight_var and highlight_var in active_edge_vars:
-                    highlight_edge_x.extend([x0, x1, None])
-                    highlight_edge_y.extend([y0, y1, None])
-                else:
-                    edge_x.extend([x0, x1, None])
-                    edge_y.extend([y0, y1, None])
+                # Create edge trace
+                edge_trace = go.Scatter(
+                    x=[x0, x1, None],
+                    y=[y0, y1, None],
+                    line=dict(width=2, color=color),
+                    hoverinfo="none",
+                    mode="lines",
+                )
+
+                # Add arrow
+                edge_trace.update(
+                    mode="lines+markers",
+                    marker=dict(
+                        size=10,
+                        symbol="arrow",
+                        angleref="previous",
+                        color=color,
+                    ),
+                )
+
+                edge_traces.append(edge_trace)
+
+                # If it's bidirectional, add a reverse arrow
+                if reverse_edge:
+                    reverse_trace = go.Scatter(
+                        x=[x1, x0, None],
+                        y=[y1, y0, None],
+                        line=dict(width=2, color=color),
+                        hoverinfo="none",
+                        mode="lines+markers",
+                        marker=dict(
+                            size=10,
+                            symbol="arrow",
+                            angleref="previous",
+                            color=color,
+                        ),
+                    )
+                    edge_traces.append(reverse_trace)
 
         node_adjacencies = []
         for node in G.nodes():
@@ -427,28 +482,20 @@ def create_dash_app(G, vars_by_module):
 
             hover_text = f"Agent: {node}<br>"
             hover_text += f"Modules: {', '.join(list(vars_by_module[node].keys()))}<br>"
-            # ... (rest of hover text preparation)
 
+            # Detailed module and variable information
+            for mod_id, variables in vars_by_module[node].items():
+                hover_text += f"<br>{mod_id}:<br>"
+                for var in variables:
+                    alias = var.get("alias", var["name"])
+                    if alias in edge_variables:
+                        hover_text += f"  - <i>{alias}</i><br>"
+                    else:
+                        hover_text += f"  - {alias}<br>"
             node_hovertext.append(hover_text)
             node_adjacencies.append(
                 len(list(G.successors(node))) + len(list(G.predecessors(node)))
             )
-
-        edge_trace = go.Scatter(
-            x=edge_x,
-            y=edge_y,
-            line=dict(width=1.5, color="#888"),
-            hoverinfo="none",
-            mode="lines",
-        )
-
-        highlight_edge_trace = go.Scatter(
-            x=highlight_edge_x,
-            y=highlight_edge_y,
-            line=dict(width=2, color="red"),
-            hoverinfo="none",
-            mode="lines",
-        )
 
         edge_label_trace = go.Scatter(
             x=edge_label_x,
@@ -458,6 +505,7 @@ def create_dash_app(G, vars_by_module):
             textposition="middle center",
             hoverinfo="text",
             hovertext=edge_hovers,
+            textfont=dict(size=10),
         )
 
         node_trace = go.Scatter(
@@ -486,7 +534,7 @@ def create_dash_app(G, vars_by_module):
         node_trace.hovertext = node_hovertext
 
         return go.Figure(
-            data=[edge_trace, highlight_edge_trace, node_trace, edge_label_trace],
+            data=edge_traces + [node_trace, edge_label_trace],
             layout=go.Layout(
                 title="Agent Communication Network",
                 showlegend=False,
