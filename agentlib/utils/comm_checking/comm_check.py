@@ -1,7 +1,8 @@
+import itertools
 import json
-import os
 import socket
 import threading
+import typing
 import webbrowser
 from contextlib import closing
 from pathlib import Path
@@ -119,10 +120,18 @@ def collect_vars(configs_: List[Dict]) -> Dict[AG_ID, Dict[MOD_ID, List[Dict]]]:
     return vars_by_module
 
 
+class VarTuple(typing.NamedTuple):
+    ag_id: str
+    mod_id: str
+    var_name: str
+    shared: bool
+    unknown: Optional[Dict]
+
+
 def order_vars_by_alias(
     vars_by_module: Dict[AG_ID, Dict[MOD_ID, List[Dict]]]
-) -> Dict[Alias, List[Tuple[str, bool, Optional[Dict]]]]:
-    vars_by_alias: Dict[Alias, List[Tuple[str, bool, Optional[Dict]]]] = {}
+) -> Dict[Alias, List[VarTuple]]:
+    vars_by_alias: Dict[Alias, List[VarTuple]] = {}
     for ag_id, modules in vars_by_module.items():
         for mod_id, ag_vars in modules.items():
             for var in ag_vars:
@@ -130,94 +139,78 @@ def order_vars_by_alias(
                 if alias not in vars_by_alias:
                     vars_by_alias[alias] = []
                 vars_by_alias[alias].append(
-                    (f"{ag_id}.{mod_id}.{var['name']}", var.get("shared", False), None)
+                    VarTuple(
+                        ag_id=ag_id,
+                        mod_id=mod_id,
+                        var_name=var["name"],
+                        shared=var.get("shared", False),
+                        unknown=None,
+                    )
                 )
     return vars_by_alias
 
 
-def check_communication_conditions(sender_agent, receiver_agent, configs):
+def check_comm_conditions(
+    sender_agent: str, receiver_agent: str, configs: List[Dict], vars_by_module: Dict
+) -> bool:
+    def get_comm_module(agent_config):
+        return next(
+            (
+                module
+                for module in agent_config["modules"]
+                if module["type"] in ["mqtt", "local", "local_broadcast"]
+            ),
+            None,
+        )
+
     sender_config = next(config for config in configs if config["id"] == sender_agent)
     receiver_config = next(
         config for config in configs if config["id"] == receiver_agent
     )
 
-    # Get communication modules for both agents
-    sender_comm = next(
-        (
-            module
-            for module in sender_config["modules"]
-            if module["type"] in ["mqtt", "local", "local_broadcast"]
-        ),
-        None,
-    )
-    receiver_comm = next(
-        (
-            module
-            for module in receiver_config["modules"]
-            if module["type"] in ["mqtt", "local", "local_broadcast"]
-        ),
-        None,
-    )
+    sender_comm = get_comm_module(sender_config)
+    receiver_comm = get_comm_module(receiver_config)
 
     if not sender_comm or not receiver_comm:
         return False
 
-    # Case 1: MQTT or Local communication
-    if (
-        sender_comm["type"] in ["mqtt", "local"]
-        and receiver_comm["type"] == sender_comm["type"]
-    ):
-        if (
-            "subscriptions" in receiver_comm
-            and sender_agent in receiver_comm["subscriptions"]
-        ):
-            return True
+    comm_type_match = sender_comm["type"] == receiver_comm["type"]
+    subscription_valid = sender_agent in receiver_comm.get("subscriptions", [])
+    is_broadcast = sender_comm["type"] in {
+        "local_broadcast",
+        "multiprocessing_broadcast",
+    }
 
-    # Case 2: Local Broadcast communication
-    if (
-        sender_comm["type"] == "local_broadcast"
-        and receiver_comm["type"] == "local_broadcast"
-    ):
-        return True
+    if comm_type_match and (subscription_valid or is_broadcast):
+        return all(
+            var.get("source") in (None, sender_agent)
+            for module in vars_by_module[receiver_agent].values()
+            for var in module
+        )
 
     return False
 
 
-def create_comm_graph(configs):
+def create_comm_graph(configs: List[Dict]) -> Tuple[nx.DiGraph, Dict]:
     configs_: List[Dict] = create_configs(configs)
     vars_by_module: Dict[AG_ID, Dict[MOD_ID, List[Dict]]] = collect_vars(configs_)
-    vars_by_alias: Dict[Alias, List[Tuple[str, bool, Optional[Dict]]]] = (
-        order_vars_by_alias(vars_by_module)
-    )
+    vars_by_alias: Dict[Alias, List[VarTuple]] = order_vars_by_alias(vars_by_module)
 
-    # Create a directed graph
     g = nx.DiGraph()
-    for ag_id in vars_by_module:
-        g.add_node(ag_id)
+    g.add_nodes_from(vars_by_module.keys())
 
     for alias, var_list in vars_by_alias.items():
-        if len(var_list) > 1:
-            for i in range(len(var_list)):
-                for j in range(
-                    i + 1, len(var_list)
-                ):  # Changed to avoid duplicate checks
-                    ag1, mod1, var1 = var_list[i][0].split(".")
-                    ag2, mod2, var2 = var_list[j][0].split(".")
-                    if ag1 != ag2:
-                        # Check communication conditions
-                        if check_communication_conditions(ag1, ag2, configs):
-                            # Add a directed edge from ag1 to ag2
-                            if g.has_edge(ag1, ag2):
-                                g[ag1][ag2]["label"] += f", {alias}"
-                            else:
-                                g.add_edge(ag1, ag2, label=alias)
+        for var1, var2 in itertools.combinations(var_list, 2):
+            if var1.ag_id == var2.ag_id:
+                continue
 
-                        # For local_broadcast, add the reverse edge as well
-                        if check_communication_conditions(ag2, ag1, configs):
-                            if g.has_edge(ag2, ag1):
-                                g[ag2][ag1]["label"] += f", {alias}"
-                            else:
-                                g.add_edge(ag2, ag1, label=alias)
+            for ag1, ag2 in [(var1.ag_id, var2.ag_id), (var2.ag_id, var1.ag_id)]:
+                if not check_comm_conditions(ag1, ag2, configs, vars_by_module):
+                    continue
+                if g.has_edge(ag1, ag2):
+                    g[ag1][ag2]["label"] += f"\n{alias}"
+                else:
+                    g.add_edge(ag1, ag2, label=alias)
 
     return g, vars_by_module
 
@@ -574,24 +567,13 @@ def visualize_agents(
 
 
 if __name__ == "__main__":
-    directory_path = Path(r"D:\repos\agentlib_mpc\examples\aladin\nonlinear_storage")
-    os.chdir(directory_path)
-    agent_configs = [
-        "configs\\consumer1.json",
-        "configs\\consumer2.json",
-        "configs\\boiler.json",
-        "configs\\chp.json",
-        "configs\\storage.json",
-        "configs\\full_simulation.json",
-        # "configs\\T_sensor.json",
-        "configs\\coordinator.json",
-    ]
-    # configs = [str(Path(directory_path, c)) for c in agent_configs]
-
-    # configs = load_json_to_dict([str(file) for file in directory_path.glob("*")])
+    directory_path = Path(
+        r"D:\repos\AgentLib\examples\multi-agent-systems\room_mas\configs"
+    )
+    configs = load_json_to_dict([str(file) for file in directory_path.glob("*")])
 
     # Run the visualization
-    visualize_agents(agent_configs)
+    visualize_agents(configs)
 
     # Keep the main thread alive
     while True:
