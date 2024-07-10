@@ -1,4 +1,5 @@
 import json
+import os
 import socket
 import threading
 import webbrowser
@@ -224,6 +225,12 @@ def create_comm_graph(configs):
 def create_dash_app(G, vars_by_module):
     app = dash.Dash(__name__)
 
+    # Get all unique variables
+    all_variables = set()
+    for edge in G.edges(data=True):
+        all_variables.update(edge[2]["label"].split(", "))
+    all_variables = sorted(list(all_variables), key=str.casefold)
+
     layouts = {
         "spring": nx.spring_layout,
         "circular": nx.circular_layout,
@@ -234,25 +241,61 @@ def create_dash_app(G, vars_by_module):
 
     app.layout = html.Div(
         [
-            html.H1("Agent Communication Network"),
-            dcc.Graph(
-                id="network-graph", style={"height": "80vh"}
-            ),  # Set height to 80% of viewport height
             html.Div(
                 [
-                    html.Button("Spring Layout", id="spring-button", n_clicks=0),
-                    html.Button("Circular Layout", id="circular-button", n_clicks=0),
-                    html.Button("Shell Layout", id="shell-button", n_clicks=0),
-                    html.Button("Shuffle Layout", id="shuffle-button", n_clicks=0),
+                    html.H1("Agent Communication Network"),
+                    dcc.Graph(id="network-graph", style={"height": "80vh"}),
+                    html.Div(
+                        [
+                            html.Button(
+                                "Spring Layout", id="spring-button", n_clicks=0
+                            ),
+                            html.Button(
+                                "Circular Layout", id="circular-button", n_clicks=0
+                            ),
+                            html.Button("Shell Layout", id="shell-button", n_clicks=0),
+                            html.Button(
+                                "Shuffle Layout", id="shuffle-button", n_clicks=0
+                            ),
+                        ],
+                        style={"padding": "10px"},
+                    ),
                 ],
-                style={"padding": "10px"},
+                style={
+                    "width": "80%",
+                    "display": "inline-block",
+                    "vertical-align": "top",
+                },
+            ),
+            html.Div(
+                [
+                    html.H3("Filter Variables"),
+                    dcc.Checklist(
+                        id="variable-checklist",
+                        options=[
+                            {
+                                "label": html.Span(
+                                    var, id={"type": "var-span", "index": var}
+                                ),
+                                "value": var,
+                            }
+                            for var in all_variables
+                        ],
+                        value=all_variables,
+                        labelStyle={"display": "block"},
+                    ),
+                ],
+                style={
+                    "width": "20%",
+                    "display": "inline-block",
+                    "vertical-align": "top",
+                    "padding": "20px",
+                    "overflow-y": "auto",
+                    "max-height": "80vh",
+                },
             ),
         ],
-        style={
-            "height": "100vh",
-            "display": "flex",
-            "flex-direction": "column",
-        },  # Make the main div take full viewport height
+        style={"display": "flex"},
     )
 
     @app.callback(
@@ -262,16 +305,24 @@ def create_dash_app(G, vars_by_module):
             Input("circular-button", "n_clicks"),
             Input("shell-button", "n_clicks"),
             Input("shuffle-button", "n_clicks"),
+            Input("variable-checklist", "value"),
+            Input({"type": "var-span", "index": dash.dependencies.ALL}, "n_hover"),
         ],
         [State("network-graph", "figure")],
     )
     def update_layout(
-        spring_clicks, circular_clicks, shell_clicks, shuffle_clicks, current_fig
+        spring_clicks,
+        circular_clicks,
+        shell_clicks,
+        shuffle_clicks,
+        active_variables,
+        var_hovers,
+        current_fig,
     ):
         nonlocal pos
         ctx = dash.callback_context
         if not ctx.triggered:
-            return create_graph_figure(pos)
+            return create_graph_figure(pos, active_variables)
         else:
             button_id = ctx.triggered[0]["prop_id"].split(".")[0]
             if button_id == "shuffle-button":
@@ -282,28 +333,49 @@ def create_dash_app(G, vars_by_module):
                     )
                     for node in pos
                 }
+            elif button_id == "variable-checklist":
+                # Don't change the layout, just update active variables
+                pass
+            elif "var-span" in button_id:
+                # Highlight the hovered variable
+                hovered_var = json.loads(button_id)["index"]
+                return create_graph_figure(
+                    pos, active_variables, highlight_var=hovered_var
+                )
             else:
                 layout_name = button_id.split("-")[0]
                 pos = layouts[layout_name](G)
-        return create_graph_figure(pos)
+        return create_graph_figure(pos, active_variables)
 
-    def create_graph_figure(pos):
+    def create_graph_figure(pos, active_variables, highlight_var=None):
         edge_x, edge_y = [], []
-        edge_label_x, edge_label_y, edge_labels = [], [], []
+        highlight_edge_x, highlight_edge_y = [], []
+        edge_label_x, edge_label_y, edge_labels, edge_hovers = [], [], [], []
         node_x, node_y, node_text, node_hovertext = [], [], [], []
 
         for edge in G.edges():
             x0, y0 = pos[edge[0]]
             x1, y1 = pos[edge[1]]
-            edge_x.extend([x0, x1, None])
-            edge_y.extend([y0, y1, None])
 
             edge_label = G.edges[edge].get("label", "")
-            var_count = len(edge_label.split(","))
-            mid_x, mid_y = (x0 + x1) / 2, (y0 + y1) / 2
-            edge_label_x.append(mid_x)
-            edge_label_y.append(mid_y)
-            edge_labels.append(f"{var_count} vars")
+            active_edge_vars = [
+                var for var in edge_label.split(", ") if var in active_variables
+            ]
+            var_count = len(active_edge_vars)
+
+            if var_count > 0:
+                mid_x, mid_y = (x0 + x1) / 2, (y0 + y1) / 2
+                edge_label_x.append(mid_x)
+                edge_label_y.append(mid_y)
+                edge_labels.append(f"{var_count} vars")
+                edge_hovers.append(", ".join(active_edge_vars))
+
+                if highlight_var and highlight_var in active_edge_vars:
+                    highlight_edge_x.extend([x0, x1, None])
+                    highlight_edge_y.extend([y0, y1, None])
+                else:
+                    edge_x.extend([x0, x1, None])
+                    edge_y.extend([y0, y1, None])
 
         node_adjacencies = []
         for node in G.nodes():
@@ -326,8 +398,25 @@ def create_dash_app(G, vars_by_module):
             y=edge_y,
             line=dict(width=1.5, color="#888"),
             hoverinfo="none",
-            mode="lines+markers",
-            marker=dict(symbol="arrow", size=15, color="#f00", angleref="previous"),
+            mode="lines",
+        )
+
+        highlight_edge_trace = go.Scatter(
+            x=highlight_edge_x,
+            y=highlight_edge_y,
+            line=dict(width=2, color="red"),
+            hoverinfo="none",
+            mode="lines",
+        )
+
+        edge_label_trace = go.Scatter(
+            x=edge_label_x,
+            y=edge_label_y,
+            mode="text",
+            text=edge_labels,
+            textposition="middle center",
+            hoverinfo="text",
+            hovertext=edge_hovers,
         )
 
         node_trace = go.Scatter(
@@ -353,20 +442,10 @@ def create_dash_app(G, vars_by_module):
             ),
         )
 
-        edge_label_trace = go.Scatter(
-            x=edge_label_x,
-            y=edge_label_y,
-            mode="text",
-            text=edge_labels,
-            textposition="middle center",
-            hoverinfo="text",
-            hovertext=[G.edges[edge].get("label", "") for edge in G.edges()],
-        )
-
         node_trace.hovertext = node_hovertext
 
         return go.Figure(
-            data=[edge_trace, node_trace, edge_label_trace],
+            data=[edge_trace, highlight_edge_trace, node_trace, edge_label_trace],
             layout=go.Layout(
                 title="Agent Communication Network",
                 showlegend=False,
@@ -375,7 +454,7 @@ def create_dash_app(G, vars_by_module):
                 xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
                 yaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
                 dragmode="pan",
-                height=800,  # Increase the height of the plot
+                height=800,
             ),
         )
 
@@ -429,7 +508,7 @@ def process_config(config: Union[str, dict]) -> dict:
     return config
 
 
-def find_free_port(start_port=8050, max_port=8100):
+def find_free_port(start_port=8050, max_port=8200):
     """Find a free port in the given range."""
     with closing(socket.socket(socket.AF_INET, socket.SOCK_STREAM)) as s:
         for port in range(start_port, max_port):
@@ -495,13 +574,24 @@ def visualize_agents(
 
 
 if __name__ == "__main__":
-    directory_path = Path(
-        r"D:\repos\AgentLib\examples\multi-agent-systems\room_mas\configs"
-    )
-    configs = load_json_to_dict([str(file) for file in directory_path.glob("*")])
+    directory_path = Path(r"D:\repos\agentlib_mpc\examples\aladin\nonlinear_storage")
+    os.chdir(directory_path)
+    agent_configs = [
+        "configs\\consumer1.json",
+        "configs\\consumer2.json",
+        "configs\\boiler.json",
+        "configs\\chp.json",
+        "configs\\storage.json",
+        "configs\\full_simulation.json",
+        # "configs\\T_sensor.json",
+        "configs\\coordinator.json",
+    ]
+    # configs = [str(Path(directory_path, c)) for c in agent_configs]
+
+    # configs = load_json_to_dict([str(file) for file in directory_path.glob("*")])
 
     # Run the visualization
-    visualize_agents(configs)
+    visualize_agents(agent_configs)
 
     # Keep the main thread alive
     while True:
