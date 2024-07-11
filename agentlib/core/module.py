@@ -1,8 +1,12 @@
 """This module contains the base AgentModule."""
+
 from __future__ import annotations
+
 import abc
+import inspect
 import json
 import logging
+import os
 from copy import deepcopy
 from typing import (
     TYPE_CHECKING,
@@ -18,19 +22,19 @@ from typing import (
 
 import pydantic
 from pydantic import field_validator, ConfigDict, BaseModel, Field, PrivateAttr
-from pydantic_core import core_schema
 from pydantic.json_schema import GenerateJsonSchema
+from pydantic_core import core_schema
 
-from agentlib.core.environment import CustomSimpyEnvironment
-from agentlib.core.errors import ConfigurationError
+import agentlib.core.logging_ as agentlib_logging
+from agentlib.core import datamodels
 from agentlib.core.datamodels import (
     AgentVariable,
     Source,
     AgentVariables,
     AttrsToPydanticAdaptor,
 )
-from agentlib.core import datamodels
-import agentlib.core.logging_ as agentlib_logging
+from agentlib.core.environment import CustomSimpyEnvironment
+from agentlib.core.errors import ConfigurationError
 from agentlib.utils.fuzzy_matching import fuzzy_match, RAPIDFUZZ_IS_INSTALLED
 from agentlib.utils.validators import (
     include_defaults_in_root,
@@ -309,30 +313,42 @@ class BaseModuleConfig(BaseModel):
     ) -> pydantic.ValidationError:
         """Checks the validation errors for invalid fields and adds suggestions for
         correct field names to the error message."""
-        if not RAPIDFUZZ_IS_INSTALLED:
-            return e
+
+        # Get the file path where the class is defined
+        class_file = os.path.abspath(inspect.getfile(cls))
+        try:
+            # Get the line number where the class is defined
+            class_line = inspect.getsourcelines(cls)[1]
+        except OSError:
+            class_line = 1  # fallback if unable to get the exact line
+
+        # Create a clickable link
+        clickable_link = f"""File "{class_file}:{class_line}" """
+        title = f"{e.title} ({clickable_link})"
 
         error_list = e.errors()
-        for error in error_list:
-            if not error["type"] == "extra_forbidden":
-                continue
 
-            # change error type to literal because it allows for context
-            error["type"] = "literal_error"
-            # pydantic automatically prints the __dict__ of an error, so it is
-            # sufficient to just assign the suggestions to an arbitrary attribute of
-            # the error
-            suggestions = fuzzy_match(
-                target=error["loc"][0], choices=cls.model_fields.keys()
-            )
-            if suggestions:
-                error["ctx"] = {
-                    "expected": f"a valid Field name. Field '{error['loc'][0]}' does "
-                    f"not exist. Did you mean any of {suggestions}?"
-                }
+        if RAPIDFUZZ_IS_INSTALLED:
+            for error in error_list:
+                if not error["type"] == "extra_forbidden":
+                    continue
+
+                # change error type to literal because it allows for context
+                error["type"] = "literal_error"
+                # pydantic automatically prints the __dict__ of an error, so it is
+                # sufficient to just assign the suggestions to an arbitrary attribute of
+                # the error
+                suggestions = fuzzy_match(
+                    target=error["loc"][0], choices=cls.model_fields.keys()
+                )
+                if suggestions:
+                    error["ctx"] = {
+                        "expected": f"a valid Field name. Field '{error['loc'][0]}' does "
+                        f"not exist. Did you mean any of {suggestions}?"
+                    }
 
         return pydantic.ValidationError.from_exception_data(
-            title=e.title, line_errors=error_list
+            title=title, line_errors=error_list
         )
 
 
