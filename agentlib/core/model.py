@@ -9,7 +9,7 @@ from typing import Union, List, Dict, Any, Optional, get_type_hints, Type
 from pydantic import ConfigDict, BaseModel, Field, field_validator
 import numpy as np
 from pydantic.fields import PrivateAttr
-from pydantic_core.core_schema import FieldValidationInfo
+from pydantic_core.core_schema import ValidationInfo
 
 from agentlib.core.datamodels import (
     ModelVariable,
@@ -80,7 +80,7 @@ class ModelConfig(BaseModel):
     @field_validator("parameters", "inputs", "outputs", "states", mode="after")
     @classmethod
     def include_default_model_variables(
-        cls, _: List[ModelVariable], info: FieldValidationInfo
+        cls, _: List[ModelVariable], info: ValidationInfo
     ):
         """
         Validator building block to merge default variables with config variables in a standard validator.

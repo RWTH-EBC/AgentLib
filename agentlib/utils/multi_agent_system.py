@@ -5,12 +5,13 @@ without the need of cloneMAP.
 
 import abc
 import json
-import multiprocessing
 import logging
+import multiprocessing
 import threading
 from pathlib import Path
-from typing import List, Dict, Union, Any
+from typing import List, Dict, Union, Any, Optional
 
+import pandas as pd
 from pydantic import (
     field_validator,
     ConfigDict,
@@ -19,7 +20,6 @@ from pydantic import (
     Field,
     FilePath,
 )
-import pandas as pd
 
 from agentlib.core import Agent, Environment
 from agentlib.core.agent import AgentConfig
@@ -44,7 +44,22 @@ class MAS(BaseModel):
         title="variable_logging",
         description="Enable variable logging in all agents with sampling rate of environment.",
     )
+    log_level: Optional[str] = Field(
+        default=None,
+        description="The log level for all agents and modules in this MAS. "
+        "Default uses the root-loggers level. "
+        "Will not override custom log-levels specified in Agents or Modules."
+        "Options: DEBUG; INFO; WARNING; ERROR; CRITICAL",
+    )
     _agent_configs: Dict[str, AgentConfig] = PrivateAttr(default={})
+
+    @field_validator("log_level", mode="before")
+    @classmethod
+    def convert_log_level_to_str(cls, log_level):
+        """Converts int log levels to str, as downstream expects str."""
+        if isinstance(log_level, int):
+            return logging.getLevelName(log_level)
+        return log_level
 
     def __init__(self, **data: Any) -> None:
         """Add all agents as Agent object"""
@@ -79,6 +94,8 @@ class MAS(BaseModel):
                 config = self.add_agent_logger(
                     config=config, sampling=self.env.config.t_sample
                 )
+        if config.log_level is None:
+            config.log_level = self.log_level
         self._agent_configs[config.id] = config.model_copy()
         logger.info("Registered agent %s in agency", config.id)
 
@@ -274,9 +291,6 @@ class MultiProcessingMAS(MAS):
     cleanup: bool = Field(
         default=False,
         description="Whether agents should clean the results files after " "running.",
-    )
-    log_level: int = Field(
-        default=logging.ERROR, description="Loglevel to set for the processes."
     )
 
     _processes: List[multiprocessing.Process] = PrivateAttr(default=[])
