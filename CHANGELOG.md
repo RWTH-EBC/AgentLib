@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.9.0
+- Adding a gui for visualization of small agent networks. Can be used as \\  
+``
+from agentlib.utils.comm_checking.comm_check import visualize_agents
+visualize_agents(agent_configs, background=True)
+``
+- Added a tool to check optional dependencies: ``is_dependency_installed("gui")``
+
+
 ## 0.8.2 
 - Realtime Environment always has a clock to prevent agents that define callbacks only from terminating
 - Environment time in real time is now based on system time, decoupling it from the simpy process
