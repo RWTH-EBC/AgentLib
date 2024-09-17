@@ -24,7 +24,7 @@ except ImportError:
         dependency_install="gui",
     )
 
-
+import agentlib.utils.comm_checking.data_structures as structs
 from agentlib import AgentVariable, Source
 from agentlib.core.agent import get_module_class
 
@@ -72,18 +72,57 @@ def get_config_class(type_):
     return config_class, config_fields, agent_variables
 
 
-def create_configs(configs: list[dict]) -> List[Dict]:
+def create_configs(configs: List[Dict]) -> List[structs.AgentC]:
     agent_configs = []
     for config in configs:
-        agent_config = {"id": config["id"], "modules": []}
+        agent = structs.AgentC(id=config["id"])
         for module in config["modules"]:
-            module_config = module.copy()
-            _conf_class, _fields, _variables = get_config_class(module)
-            module_config["_config_class"] = _conf_class
-            module_config["_config_fields"] = _fields
-            module_config["_agent_variables"] = _variables
-            agent_config["modules"].append(module_config)
-        agent_configs.append(agent_config)
+            module_class = get_module_class(module["type"])
+            config_class = get_type_hints(module_class)["config"]
+
+            module_config = structs.ModuleC(
+                id=module.get("id", config_class.__name__), type=module["type"]
+            )
+
+            for field_name, field_info in config_class.__fields__.items():
+                if field_name.startswith("_"):
+                    continue
+
+                field_type = field_info.annotation
+                default_value = field_info.default
+
+                if default_value is None or default_value == Ellipsis:
+                    continue
+
+                origin = get_origin(field_type)
+                generic_args = get_args(field_type)
+
+                if origin in {List, list} and len(generic_args) == 1:
+                    field_type = generic_args[0]
+
+                if not isinstance(field_type, type) or not issubclass(
+                    field_type, AgentVariable
+                ):
+                    continue
+
+                if field_name in module:
+                    if origin in {List, list}:
+                        module_config.variables.extend(module[field_name])
+                    else:
+                        module_config.variables.append(module[field_name])
+                else:
+                    if origin in {List, list}:
+                        module_config.variables.extend(default_value)
+                    else:
+                        module_config.variables.append(default_value)
+
+            if "subscriptions" in module:
+                module_config.subscriptions = module["subscriptions"]
+
+            agent.modules.append(module_config)
+
+        agent_configs.append(agent)
+
     return agent_configs
 
 
