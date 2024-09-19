@@ -104,15 +104,15 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
-            <span class="bp">self</span><span class="p">,</span>
-            <span class="n">used_object</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-            <span class="n">dependency_install</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-            <span class="n">dependency_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">used_object</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">dependency_install</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">dependency_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="n">message</span> <span class="o">=</span> <span class="p">(</span>
             <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">used_object</span><span class="si">}</span><span class="s2"> is an optional dependency which you did not &quot;</span>
             <span class="sa">f</span><span class="s2">&quot;install yet. Install the missing dependency &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;either using `pip install </span><span class="si">{</span><span class="n">dependency_install</span><span class="si">}</span><span class="s2">`&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;using `pip install </span><span class="si">{</span><span class="n">dependency_install</span><span class="si">}</span><span class="s2">`&quot;</span>
         <span class="p">)</span>
         <span class="k">if</span> <span class="n">dependency_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">message</span> <span class="o">+=</span> <span class="p">(</span>
