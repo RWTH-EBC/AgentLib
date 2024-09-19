@@ -2,7 +2,12 @@
 
 ## 0.8.3
 - Add CSV Data source module. Allows to gradually send data from a csv file. Can be used to provide the simulator with variable data.
-- Add optional dependecy interactive, which introduces dash. Can be used to create a dashboard of simulator results, updating in real time. Use the new utility in agentlib.utils.interactive simulator_dashboard
+- Add optional dependecy interactive, which introduces dash. Can be used to create a dashboard of simulator results, updating in real time. Usage
+    ```python
+    from agentlib.utils import simulator_dashboard
+    simulator_dashboard("results1.csv", "results2.csv")
+  ```
+  Make sure your simulation is already running and saving to a csv file.
 - Fix causality print in writing csv data.
 
 

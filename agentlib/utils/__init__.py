@@ -13,7 +13,6 @@ from pathlib import Path
 
 from .local_broadcast_broker import LocalBroadcastBroker
 from .local_broker import LocalBroker
-from .multi_agent_system import MultiProcessingMAS, LocalMASAgency, LocalCloneMAPAgency
 from .multi_processing_broker import MultiProcessingBroker
 from .plotting.simulator_dashboard import simulator_dashboard
 
@@ -22,9 +21,6 @@ __all__ = [
     "MultiProcessingBroker",
     "LocalBroadcastBroker",
     "LocalBroker",
-    # "MultiProcessingMAS",
-    # "LocalMASAgency",
-    # "LocalCloneMAPAgency",
 ]
 
 

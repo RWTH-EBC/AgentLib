@@ -76,7 +76,7 @@ def format_time_axis(seconds):
         return seconds / 2592000, "mo", "{:.1f}"
 
 
-def create_plot(df: pd.Series, title: str) -> dcc.Graph:
+def create_plot(df: pd.Series, title: str, plot_id: str) -> html.Div:
     # Convert index to seconds if it's not already
     if df.index.dtype != "float64":
         df.index = pd.to_numeric(df.index)
@@ -89,23 +89,31 @@ def create_plot(df: pd.Series, title: str) -> dcc.Graph:
     scale_factor = time_range / scaled_time
     x_values = df.index / scale_factor
 
-    return dcc.Graph(
-        figure={
-            "data": [go.Scatter(x=x_values, y=df.values, mode="lines", name=title)],
-            "layout": go.Layout(
-                title=title,
-                xaxis={
-                    "title": f"Time ({time_unit})",
-                    "tickformat": tick_format,
-                    "hoverformat": ".2f",
+    return html.Div(
+        [
+            dcc.Graph(
+                id={"type": "plot", "index": plot_id},
+                figure={
+                    "data": [
+                        go.Scatter(x=x_values, y=df.values, mode="lines", name=title)
+                    ],
+                    "layout": go.Layout(
+                        title=title,
+                        xaxis={
+                            "title": f"Time ({time_unit})",
+                            "tickformat": tick_format,
+                            "hoverformat": ".2f",
+                        },
+                        yaxis={"title": "Value"},
+                        margin=dict(l=40, r=20, t=40, b=30),
+                        height=250,
+                        uirevision=plot_id,  # This helps maintain zoom state
+                    ),
                 },
-                yaxis={"title": "Value"},
-                margin=dict(l=40, r=20, t=40, b=30),
-                height=250,
-            ),
-        },
-        config={"displayModeBar": False},
-        style={"height": "100%", "width": "100%"},
+                config={"displayModeBar": False},
+                style={"height": "100%", "width": "100%"},
+            )
+        ]
     )
 
 
@@ -274,12 +282,11 @@ def simulator_dashboard(*file_names: Union[str, Path]):
             plots = []
             for column in causality_data.columns:
                 checkbox_key = f"{causality.name}-{column}"
-                if selected_variables.get(
-                    checkbox_key, True
-                ):  # True if not found (default state)
+                if selected_variables.get(checkbox_key, True):
+                    plot_id = f"{causality.name}-{column}"
                     plots.append(
                         html.Div(
-                            create_plot(causality_data[column], column),
+                            create_plot(causality_data[column], column, plot_id),
                             style={
                                 "width": "33%",
                                 "display": "inline-block",
@@ -307,4 +314,4 @@ def simulator_dashboard(*file_names: Union[str, Path]):
 
     port = get_port()
     webbrowser.open_new_tab(f"http://localhost:{port}")
-    app.run_server(debug=True, port=port)
+    app.run_server(debug=False, port=port)
