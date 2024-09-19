@@ -3,12 +3,11 @@ Package containing all modules used by agents.
 Use the helper functions get_module_type
 to load module classes from this package.
 """
+
 from typing import Union, Dict, Iterable, List
 
-from agentlib.utils.fuzzy_matching import fuzzy_match
-
 from agentlib.utils import plugin_import
-
+from agentlib.utils.fuzzy_matching import fuzzy_match
 
 # Global modules:
 _MODULE_TYPES = plugin_import.SaveUpdateDict()
@@ -43,13 +42,9 @@ def _load_core_modules() -> None:
 
     _MODULE_TYPES.update(utils.MODULE_TYPES)
     # Simulator
-    _MODULE_TYPES.update(
-        {
-            "simulator": plugin_import.ModuleImport(
-                import_path="agentlib.modules.simulator", class_name="Simulator"
-            )
-        }
-    )
+    import agentlib.modules.simulation as simulation
+
+    _MODULE_TYPES.update(simulation.MODULE_TYPES)
     _LOADED_CORE_MODULES = True
 
 
