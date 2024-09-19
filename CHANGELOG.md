@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.8.3
+- Add CSV Data source module. Allows to gradually send data from a csv file. Can be used to provide the simulator with variable data.
+- Add optional dependecy interactive, which introduces dash. Can be used to create a dashboard of simulator results, updating in real time. Use the new utility in agentlib.utils.interactive simulator_dashboard
+- Fix causality print in writing csv data.
+
+
 ## 0.8.2 
 - Realtime Environment always has a clock to prevent agents that define callbacks only from terminating
 - Environment time in real time is now based on system time, decoupling it from the simpy process

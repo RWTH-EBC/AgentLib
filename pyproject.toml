@@ -38,7 +38,8 @@ plot = ['matplotlib']
 orjson = ['orjson>=3.9.15']
 fuzz = ['rapidfuzz>=1.7.0']
 mqtt = ['paho-mqtt>=2.0.0']
-full = ['agentlib[fmu,scipy,plot,orjson,fuzz,mqtt]']
+interactive = ['dash', 'dash-bootstrap-components', 'plotly']
+full = ['agentlib[fmu,scipy,plot,orjson,fuzz,mqtt,interactive]']
 
 [package.urls]
 homepage = "https://github.com/RWTH-EBC/AgentLib"

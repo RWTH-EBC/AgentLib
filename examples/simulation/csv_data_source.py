@@ -19,7 +19,7 @@ def create_sample_data():
     return df
 
 
-def run_data_source_example(log_level=logging.INFO):
+def run_example(log_level=logging.INFO, with_plots: bool = True):
     # Set the log-level
     logging.basicConfig(level=log_level)
 
@@ -51,17 +51,21 @@ def run_data_source_example(log_level=logging.INFO):
 
     # Run the simulation
     env.run(until=600)  # Run for 10 minutes (600 seconds)
-
-    # Get results from the AgentLogger
     results = agent.get_results()
-    logger_results = results["Logger"]
 
+    if with_plots:
+        plot(results, original_df)
+
+    return {"DataSourceAgent": results}
+
+
+def plot(results, original_df):
+    # Get results from the AgentLogger
+    logger_results = results["Logger"]
     # Convert original_df index to seconds from start
     original_df.index = (original_df.index - original_df.index[0]).total_seconds()
-
     # Plot the results
     fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(10, 10))
-
     # Temperature plot
     original_df["temperature"].plot(
         ax=ax1,
@@ -79,7 +83,6 @@ def run_data_source_example(log_level=logging.INFO):
     ax1.set_ylabel("Temperature (°C)")
     ax1.set_xlabel("Time (seconds)")
     ax1.legend()
-
     # Humidity plot
     original_df["humidity"].plot(
         ax=ax2,
@@ -97,12 +100,10 @@ def run_data_source_example(log_level=logging.INFO):
     ax2.set_ylabel("Humidity (%)")
     ax2.set_xlabel("Time (seconds)")
     ax2.legend()
-
     plt.tight_layout()
     plt.show()
-
-    return {"DataSourceAgent": results}
+    return results
 
 
 if __name__ == "__main__":
-    run_data_source_example(log_level=logging.INFO)
+    run_example(log_level=logging.INFO)

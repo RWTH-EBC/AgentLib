@@ -22,15 +22,15 @@ class OptionalDependencyError(Exception):
     """
 
     def __init__(
-            self,
-            used_object: str,
-            dependency_install: str,
-            dependency_name: str = None,
+        self,
+        used_object: str,
+        dependency_install: str,
+        dependency_name: str = None,
     ):
         message = (
             f"{used_object} is an optional dependency which you did not "
             f"install yet. Install the missing dependency "
-            f"either using `pip install {dependency_install}`"
+            f"using `pip install {dependency_install}`"
         )
         if dependency_name is not None:
             message += (
