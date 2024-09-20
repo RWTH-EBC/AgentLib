@@ -86,68 +86,34 @@
 functions for the agentlib.</p>
 <p>Most notably, the custom injection enabling
 dynamic loading of custom models and modules.</p>
-<dl class="py class">
-<dt class="sig sig-object py" id="agentlib.utils.LocalBroadcastBroker">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agentlib.utils.</span></span><span class="sig-name descname"><span class="pre">LocalBroadcastBroker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/utils/local_broadcast_broker.html#LocalBroadcastBroker"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.utils.LocalBroadcastBroker" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#agentlib.utils.broker.Broker" title="agentlib.utils.broker.Broker"><code class="xref py py-class docutils literal notranslate"><span class="pre">Broker</span></code></a></p>
-<p>Local broadcast broker class which broadcasts messages</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="agentlib.utils.LocalBroadcastBroker.broadcast">
-<span class="sig-name descname"><span class="pre">broadcast</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agent_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bytes</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="agentlib.core.html#agentlib.core.datamodels.AgentVariable" title="agentlib.core.datamodels.AgentVariable"><span class="pre">AgentVariable</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/utils/local_broadcast_broker.html#LocalBroadcastBroker.broadcast"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.utils.LocalBroadcastBroker.broadcast" title="Permalink to this definition"></a></dt>
-<dd><p>Broadcast message object to all agents but itself</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="agentlib.utils.LocalBroker">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agentlib.utils.</span></span><span class="sig-name descname"><span class="pre">LocalBroker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/utils/local_broker.html#LocalBroker"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.utils.LocalBroker" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#agentlib.utils.broker.Broker" title="agentlib.utils.broker.Broker"><code class="xref py py-class docutils literal notranslate"><span class="pre">Broker</span></code></a></p>
-<p>Local broker class which sends messages</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="agentlib.utils.LocalBroker.send">
-<span class="sig-name descname"><span class="pre">send</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agent_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bytes</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="agentlib.core.html#agentlib.core.datamodels.AgentVariable" title="agentlib.core.datamodels.AgentVariable"><span class="pre">AgentVariable</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/utils/local_broker.html#LocalBroker.send"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.utils.LocalBroker.send" title="Permalink to this definition"></a></dt>
-<dd><p>Send the given message to all clients if the source
-matches.
-:param agent_id: Source to match
-:param message: The message to send</p>
-<p>Returns:</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="agentlib.utils.MultiProcessingBroker">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agentlib.utils.</span></span><span class="sig-name descname"><span class="pre">MultiProcessingBroker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/utils/multi_processing_broker.html#MultiProcessingBroker"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.utils.MultiProcessingBroker" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="#agentlib.utils.broker.Broker" title="agentlib.utils.broker.Broker"><code class="xref py py-class docutils literal notranslate"><span class="pre">Broker</span></code></a></p>
-<p>Singleton which acts as a broker for distributed simulations among multiple
-local processes. Establishes a connection to a multiprocessing.Manager object,
-which defines a queue. This queue is used to receive connection requests from
-local clients. The clients send a Conn object (from multiprocessing.Pipe())
-object through which the connection is established.
-For each connected client, a thread waits for incoming objects.</p>
-<dl class="py property">
-<dt class="sig sig-object py" id="agentlib.utils.MultiProcessingBroker.config">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#agentlib.utils.multi_processing_broker.MultiProcessingBrokerConfig" title="agentlib.utils.multi_processing_broker.MultiProcessingBrokerConfig"><span class="pre">MultiProcessingBrokerConfig</span></a></em><a class="headerlink" href="#agentlib.utils.MultiProcessingBroker.config" title="Permalink to this definition"></a></dt>
-<dd><p>Return the config of the environment</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="agentlib.utils.MultiProcessingBroker.send">
-<span class="sig-name descname"><span class="pre">send</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/utils/multi_processing_broker.html#MultiProcessingBroker.send"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.utils.MultiProcessingBroker.send" title="Permalink to this definition"></a></dt>
-<dd><p>Send the given message to all clients if the source
-matches.
-:param source: Source to match
-:param message: The message to send</p>
-<p>Returns:</p>
-</dd></dl>
-
-</dd></dl>
-
 <dl class="py function">
-<dt class="sig sig-object py" id="agentlib.utils.simulator_dashboard">
-<span class="sig-prename descclassname"><span class="pre">agentlib.utils.</span></span><span class="sig-name descname"><span class="pre">simulator_dashboard</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">file_names</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/utils/plotting/simulator_dashboard.html#simulator_dashboard"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.utils.simulator_dashboard" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dt class="sig sig-object py" id="agentlib.utils.custom_injection">
+<span class="sig-prename descclassname"><span class="pre">agentlib.utils.</span></span><span class="sig-name descname"><span class="pre">custom_injection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/utils.html#custom_injection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.utils.custom_injection" title="Permalink to this definition"></a></dt>
+<dd><p>Function to dynamically load new python files into
+the agentlib. Using this, users may use custom modules
+oder custom models together with the existing agentlib objects.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>config</strong> (<em>dict</em>) – Config dict containing the following items:
+file (str): Filepath to a python file (.py)
+class_name (str): Name of the class to be imported</p></li>
+<li><p><strong>module_name</strong> (<em>str</em><em>, </em><em>optional</em>) – Name of the imported module
+in the sys.modules list. Carefully check if duplicate
+module keys raise unexpected behaviour. If so,
+use randomly generated strings or similar in classes
+calling this function. Default is None.
+In that case, the path is converted to a matching string.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The class object specified by class_name</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>class (object)</p>
+</dd>
+</dl>
+</dd></dl>
 
 <section id="subpackages">
 <h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this heading"></a></h2>
