@@ -1,6 +1,7 @@
 """
 Module contains the Simulator, used to simulate any model.
 """
+
 import os
 from dataclasses import dataclass
 from math import inf
@@ -63,7 +64,10 @@ class SimulatorResults:
         self.index = []
         self.data = []
 
-    def initialize(self, time: float, ):
+    def initialize(
+        self,
+        time: float,
+    ):
         """Adds the first row to the data"""
 
     def df(self) -> pd.DataFrame:
@@ -327,11 +331,15 @@ class Simulator(BaseModule):
             )
         self._model = model
         if self.config.t_start and self.env.offset:
-            self.logger.warning("config.t_start and env.offset are both non-zero. "
-                                "This may cause unexpected behavior. Ensure that this "
-                                "is intended and you know what you are doing.")
-        self.model.initialize(t_start=self.config.t_start + self.env.config.offset,
-                              t_stop=self.config.t_stop)
+            self.logger.warning(
+                "config.t_start and env.offset are both non-zero. "
+                "This may cause unexpected behavior. Ensure that this "
+                "is intended and you know what you are doing."
+            )
+        self.model.initialize(
+            t_start=self.config.t_start + self.env.config.offset,
+            t_stop=self.config.t_stop,
+        )
         self.logger.info("Model successfully loaded model: %s", self.model.name)
 
     def run(self, until=None):
@@ -423,8 +431,7 @@ class Simulator(BaseModule):
             self.update_model_inputs()
         # Simulate
         self.model.do_step(
-            t_start=(self.env.now + self.config.t_start),
-            t_sample=self.config.t_sample
+            t_start=(self.env.now + self.config.t_start), t_sample=self.config.t_sample
         )
         # Update the results and outputs
         self._update_results()
@@ -504,9 +511,8 @@ class Simulator(BaseModule):
         # above will point to the wrong entry
         self._update_result_outputs(timestamp)
         if (
-                self.config.result_filename is not None
-                and timestamp // (
-                self.config.write_results_delay * self._save_count) > 0
+            self.config.result_filename is not None
+            and timestamp // (self.config.write_results_delay * self._save_count) > 0
         ):
             self._save_count += 1
             self._result.write_results(self.config.result_filename)
@@ -516,7 +522,6 @@ class Simulator(BaseModule):
         self._result.index.append(timestamp)
         out_values = [var.value for var in self._get_result_output_variables()]
         self._result.data.append(out_values)
-
 
     def _get_result_model_variables(self) -> AgentVariables:
         """
@@ -551,6 +556,7 @@ class Simulator(BaseModule):
             elif causality == Causality.local:
                 _variables.extend(self.model.states)
         return _variables
+
 
 def convert_agent_vars_to_list_of_dicts(var: AgentVariables) -> List[Dict]:
     """

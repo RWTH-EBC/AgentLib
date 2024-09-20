@@ -2,6 +2,7 @@
 The datamodels module contains all classes
 defining basic models to handle data.
 """
+
 import abc
 import functools
 import json

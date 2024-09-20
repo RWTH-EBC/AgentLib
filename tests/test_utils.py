@@ -1,4 +1,5 @@
 """Module with tests for the core module of the agentlib."""
+
 import json
 import os
 import unittest
@@ -13,8 +14,9 @@ from agentlib.utils.broker import Broker
 from agentlib.utils.load_config import load_config
 
 
-class Foo():
+class Foo:
     """DummyImport class"""
+
     test_value = 5
 
 
@@ -36,31 +38,34 @@ class TestUtil(unittest.TestCase):
 
     def test_custom_injection(self):
         """Test the custom injection function"""
-        config = {"file": __file__,
-                  "class_name": "Foo"}
+        config = {"file": __file__, "class_name": "Foo"}
         module = custom_injection(config=config)
         self.assertEqual(module().test_value, 5)
         # Test module_name.
         uuid_4 = str(uuid.uuid4())
-        custom_injection(config=config,
-                         module_name=uuid_4)
+        custom_injection(config=config, module_name=uuid_4)
         self.assertTrue(uuid_4 in sys.modules)
         # Test existing modules. E.g. 'sys' should not be overwritten
         with self.assertRaises(ImportError):
-            custom_injection(config=config,
-                             module_name="sys")
+            custom_injection(config=config, module_name="sys")
         # If class is found in existing module, this class should be returned
-        sys_path = custom_injection(config={
-            "file": __file__, "class_name": "path"},
-            module_name="sys"
+        sys_path = custom_injection(
+            config={"file": __file__, "class_name": "path"}, module_name="sys"
         )
         self.assertEqual(sys_path, sys.path)
 
 
 class TestLoadConfig(unittest.TestCase):
-
     def setUp(self) -> None:
-        self.configs = {AgentConfig: {"id": "agentid", "modules": []}, BaseModuleConfig: {"type": "dummy", "module_id": "myid", "_agent_id": "myagent"}, ModelConfig: {}}
+        self.configs = {
+            AgentConfig: {"id": "agentid", "modules": []},
+            BaseModuleConfig: {
+                "type": "dummy",
+                "module_id": "myid",
+                "_agent_id": "myagent",
+            },
+            ModelConfig: {},
+        }
         self.filepath = "load_config_test.json"
 
     def tearDown(self) -> None:

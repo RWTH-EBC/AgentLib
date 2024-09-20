@@ -1,4 +1,5 @@
 """This module contains the ScipyStateSpaceModel class."""
+
 import logging
 from typing import Union
 from pydantic import ValidationError, model_validator

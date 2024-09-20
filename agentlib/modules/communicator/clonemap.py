@@ -1,19 +1,22 @@
 """
 This module implements a clonemap compatible communicator
 """
+
+import json
 import logging
 import os
-import json
 from functools import cached_property
 from typing import Union, List
+
 from pydantic import Field, field_validator
+
+from agentlib.core import Agent, Environment
 from agentlib.core.datamodels import AgentVariable
 from agentlib.core.errors import OptionalDependencyError
 from agentlib.modules.communicator.communicator import (
     Communicator,
     SubscriptionCommunicatorConfig,
 )
-from agentlib.core import Agent, Environment
 from agentlib.utils.validators import convert_to_list
 
 try:
@@ -22,7 +25,7 @@ try:
 except ImportError as err:
     raise OptionalDependencyError(
         dependency_install="git+https://github.com/sogno-platform/clonemapy",
-        used_object="Module type 'clonemap'"
+        used_object="Module type 'clonemap'",
     ) from err
 
 

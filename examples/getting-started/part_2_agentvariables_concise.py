@@ -26,7 +26,9 @@ class MyModule(ag.BaseModule):
         while True:
             my_number = self.get(name_of_my_number)
             new_value = my_number.value + self.config.increment
-            self.logger.info(f"I will change the value of '{name_of_my_number}' from {my_number.value} to {new_value}.")
+            self.logger.info(
+                f"I will change the value of '{name_of_my_number}' from {my_number.value} to {new_value}."
+            )
             self.set(name_of_my_number, new_value)
             yield self.env.timeout(1)
 
@@ -41,12 +43,8 @@ agent_config = {
             "type": {"file": __file__, "class_name": "MyModule"},
             "my_number": {"name": "greg", "value": 5},
         },
-        {
-            "module_id": "my_logger",
-            "type": "agentlogger",
-            "t_sample": 1
-        }
-    ]
+        {"module_id": "my_logger", "type": "agentlogger", "t_sample": 1},
+    ],
 }
 
 

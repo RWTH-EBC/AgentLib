@@ -14,12 +14,11 @@ default_data = {
     "description": "My Doc",
     "clip": True,
     "rdf_class": "MyRDFClass",
-    "source": {"agent_id": "Send"}
+    "source": {"agent_id": "Send"},
 }
 
 
 class TestCommunicator(unittest.TestCase):
-
     def setUp(self) -> None:
         self.test_config = {
             "type": "local_broadcast",
@@ -38,9 +37,10 @@ class TestCommunicator(unittest.TestCase):
         variable2 = AgentVariable.from_json(var_json)
         comm_fields = ["alias", "source", "type", "timestamp", "value"]
         for field in comm_fields:
-            self.assertEqual(variable.__getattribute__(field), variable2.__getattribute__(field))
+            self.assertEqual(
+                variable.__getattribute__(field), variable2.__getattribute__(field)
+            )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()
-

@@ -1,4 +1,5 @@
 """This module contains just the basic Model."""
+
 import abc
 import os
 import json

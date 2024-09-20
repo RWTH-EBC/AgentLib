@@ -3,6 +3,7 @@ Package containing all modules used by agents.
 Use the helper functions get_module_type
 to load module classes from this package.
 """
+
 from typing import Union, Dict, Iterable, List
 
 from agentlib.utils.fuzzy_matching import fuzzy_match

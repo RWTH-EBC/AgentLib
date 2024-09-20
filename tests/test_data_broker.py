@@ -1,4 +1,5 @@
 """Module with tests for the core module of the agentlib."""
+
 import logging
 import time
 import unittest
@@ -54,9 +55,7 @@ class TestLocalDataBroker(unittest.TestCase):
         # Register matching input
         source = Source(agent_id="1", module_id="2")
         self.data_broker.register_callback(
-            alias="Test",
-            source=source,
-            callback=self.dummy_callback
+            alias="Test", source=source, callback=self.dummy_callback
         )
         self.assertEqual(len(self.data_broker._mapped_callbacks), 1)
         self.counter = 0
@@ -65,10 +64,7 @@ class TestLocalDataBroker(unittest.TestCase):
         self.assertEqual(self.counter, 0)
         for _ in range(self.n_vars):
             self.data_broker.send_variable(
-                variable=AgentVariable(
-                    name="Test",
-                    source=source
-                )
+                variable=AgentVariable(name="Test", source=source)
             )
         self.perform_callbacks()
         self.assertEqual(self.counter, self.n_vars)
@@ -129,8 +125,8 @@ class TestRTDataBroker(TestLocalDataBroker):
         """Setup the test-logger."""
         env = Environment(config={"rt": True})
         self.data_broker = RTDataBroker(
-            logger=CustomLogger("TestLocalDataBroker", env=env),
-            env=env)
+            logger=CustomLogger("TestLocalDataBroker", env=env), env=env
+        )
         next(self.data_broker._start_executing_callbacks(env))
         self.n_vars = np.random.randint(1, 20)
         self.counter = 0
