@@ -289,7 +289,7 @@
             <span class="n">logger</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="p">,</span>
             <span class="n">queue_name</span><span class="o">=</span><span class="s2">&quot;Callback-Distribution&quot;</span><span class="p">,</span>
             <span class="n">queue_object</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_variable_queue</span><span class="p">,</span>
-            <span class="n">max_queue_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_max_queue_size</span>
+            <span class="n">max_queue_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_max_queue_size</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">_map_tuple</span> <span class="o">=</span> <span class="p">(</span><span class="n">variable</span><span class="o">.</span><span class="n">alias</span><span class="p">,</span> <span class="n">variable</span><span class="o">.</span><span class="n">source</span><span class="p">)</span>
         <span class="c1"># First the unmapped cbs</span>
@@ -425,7 +425,9 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Local variation of the DataBroker written for fast-as-possible</span>
 <span class="sd">    simulation within a single non-realtime Environment.&quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">env</span><span class="p">:</span> <span class="n">Environment</span><span class="p">,</span> <span class="n">logger</span><span class="p">:</span> <span class="n">CustomLogger</span><span class="p">,</span> <span class="n">max_queue_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">env</span><span class="p">:</span> <span class="n">Environment</span><span class="p">,</span> <span class="n">logger</span><span class="p">:</span> <span class="n">CustomLogger</span><span class="p">,</span> <span class="n">max_queue_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span>
+    <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize env</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -462,7 +464,9 @@
 <div class="viewcode-block" id="RTDataBroker"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.core.data_broker.RTDataBroker">[docs]</a><span class="k">class</span> <span class="nc">RTDataBroker</span><span class="p">(</span><span class="n">DataBroker</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;DataBroker written for Realtime operation regardless of Environment.&quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">env</span><span class="p">:</span> <span class="n">Environment</span><span class="p">,</span> <span class="n">logger</span><span class="p">:</span> <span class="n">CustomLogger</span><span class="p">,</span> <span class="n">max_queue_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">env</span><span class="p">:</span> <span class="n">Environment</span><span class="p">,</span> <span class="n">logger</span><span class="p">:</span> <span class="n">CustomLogger</span><span class="p">,</span> <span class="n">max_queue_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span>
+    <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize env.</span>
 <span class="sd">        Adds the function to start callback execution to the environment as a process.</span>
@@ -494,7 +498,9 @@
         <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stop_queue</span><span class="o">.</span><span class="n">empty</span><span class="p">():</span>
                 <span class="n">err</span><span class="p">,</span> <span class="n">module_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stop_queue</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
-                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;A callback failed in the module </span><span class="si">{</span><span class="n">module_id</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">err</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;A callback failed in the module </span><span class="si">{</span><span class="n">module_id</span><span class="si">}</span><span class="s2">.&quot;</span>
+                <span class="p">)</span> <span class="kn">from</span> <span class="nn">err</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_execute_callbacks</span><span class="p">()</span>
 
 <div class="viewcode-block" id="RTDataBroker.register_callback"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.core.data_broker.RTDataBroker.register_callback">[docs]</a>    <span class="k">def</span> <span class="nf">register_callback</span><span class="p">(</span>
@@ -546,11 +552,16 @@
                 <span class="n">logger</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="p">,</span>
                 <span class="n">queue_name</span><span class="o">=</span><span class="n">cb</span><span class="o">.</span><span class="n">module_id</span><span class="p">,</span>
                 <span class="n">queue_object</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_module_queues</span><span class="p">[</span><span class="n">cb</span><span class="o">.</span><span class="n">module_id</span><span class="p">],</span>
-                <span class="n">max_queue_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_max_queue_size</span>
+                <span class="n">max_queue_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_max_queue_size</span><span class="p">,</span>
             <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="log_queue_status"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.core.data_broker.log_queue_status">[docs]</a><span class="k">def</span> <span class="nf">log_queue_status</span><span class="p">(</span><span class="n">logger</span><span class="p">:</span> <span class="n">logging</span><span class="o">.</span><span class="n">Logger</span><span class="p">,</span> <span class="n">queue_object</span><span class="p">:</span> <span class="n">queue</span><span class="o">.</span><span class="n">Queue</span><span class="p">,</span> <span class="n">max_queue_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">queue_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<div class="viewcode-block" id="log_queue_status"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.core.data_broker.log_queue_status">[docs]</a><span class="k">def</span> <span class="nf">log_queue_status</span><span class="p">(</span>
+    <span class="n">logger</span><span class="p">:</span> <span class="n">logging</span><span class="o">.</span><span class="n">Logger</span><span class="p">,</span>
+    <span class="n">queue_object</span><span class="p">:</span> <span class="n">queue</span><span class="o">.</span><span class="n">Queue</span><span class="p">,</span>
+    <span class="n">max_queue_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">queue_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+<span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Log the current load of the given queue in percent.</span>
 
@@ -574,7 +585,7 @@
         <span class="s2">&quot;Queue &#39;</span><span class="si">%s</span><span class="s2">&#39; fullness is </span><span class="si">%s</span><span class="s2"> percent (</span><span class="si">%s</span><span class="s2"> items).&quot;</span><span class="p">,</span>
         <span class="n">queue_name</span><span class="p">,</span>
         <span class="n">percent_full</span><span class="p">,</span>
-        <span class="n">number_of_items</span>
+        <span class="n">number_of_items</span><span class="p">,</span>
     <span class="p">)</span></div>
 </pre></div>
 

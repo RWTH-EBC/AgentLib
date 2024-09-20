@@ -165,7 +165,7 @@
 
 
 <div class="viewcode-block" id="make_env_config"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.make_env_config">[docs]</a><span class="k">def</span> <span class="nf">make_env_config</span><span class="p">(</span>
-    <span class="n">config</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">dict</span><span class="p">,</span> <span class="n">EnvironmentConfig</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
+    <span class="n">config</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">dict</span><span class="p">,</span> <span class="n">EnvironmentConfig</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">EnvironmentConfig</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Creates the environment config from different sources.&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">config</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -248,7 +248,7 @@
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">time</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the current system time as unix timestamp, with the enivronement</span>
-<span class="sd">        offset. &quot;&quot;&quot;</span>
+<span class="sd">        offset.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">offset</span>
 
 <div class="viewcode-block" id="RealtimeEnvironment.pretty_time"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.RealtimeEnvironment.pretty_time">[docs]</a>    <span class="k">def</span> <span class="nf">pretty_time</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
