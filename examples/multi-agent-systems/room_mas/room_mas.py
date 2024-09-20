@@ -100,4 +100,4 @@ def run_example(until, with_plots=True, log_level=logging.INFO):
 
 
 if __name__ == "__main__":
-    run_example(until=None, with_plots=True)
+    run_example(until=86400 / 10, with_plots=True)

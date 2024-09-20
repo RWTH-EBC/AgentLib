@@ -62,6 +62,8 @@ def update_data(existing_data: pd.DataFrame, new_data: pd.DataFrame) -> pd.DataF
 
 
 def format_time_axis(seconds):
+    """Formats units on the time axis, scaling to minutes, hours etc. for longer
+    simulations."""
     if seconds < 60 * 5:
         return seconds, "s", "{:.0f}"
     elif seconds < 3600 * 4:
@@ -121,7 +123,6 @@ def create_layout(file_names: List[Union[str, Path]]) -> html.Div:
     file_names = [Path(n) for n in file_names]
     return html.Div(
         [
-            # dcc.Store(id="app-load-trigger", data=False),
             dcc.Tabs(
                 id="agent-tabs",
                 children=[
@@ -153,7 +154,6 @@ def create_layout(file_names: List[Union[str, Path]]) -> html.Div:
     )
 
 
-# Add this CSS to improve the layout
 index_string = """
 <!DOCTYPE html>
 <html>
@@ -192,13 +192,6 @@ def simulator_dashboard(*file_names: Union[str, Path]):
     app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
     app.layout = create_layout(file_names)
     app.index_string = index_string
-    # app.clientside_callback(
-    #     ClientsideFunction(
-    #         namespace="clientside", function_name="updateAppLoadTrigger"
-    #     ),
-    #     Output("app-load-trigger", "data"),
-    #     Input("app-load-trigger", "data"),
-    # )
 
     @app.callback(
         Output("variable-checkboxes", "children"), Input("agent-tabs", "value")

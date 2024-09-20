@@ -37,7 +37,7 @@ class CSVDataSourceConfig(BaseModuleConfig):
         "starts at 0, and you want your data-source to start at 1000 "
         "seconds, you should set this to 1000.",
     )
-    shared_variable_fields: List[str] = "[outputs]"
+    shared_variable_fields: List[str] = ["outputs"]
 
     @field_validator("data")
     @classmethod
@@ -80,19 +80,14 @@ class CSVDataSource(BaseModule):
         super().__init__(config=config, agent=agent)
 
         data = self.config.data
-        data = self.transform_index(data)
+        data = self.transform_to_numeric_index(data)
 
         # Filter columns if specified
         if self.config.outputs:
             columns_to_keep = [
                 col.name for col in self.config.outputs if col.name in data.columns
             ]
-            if not columns_to_keep:
-                raise ValueError("None of the specified columns exist in the dataframe")
             data = data[columns_to_keep]
-
-        if data.empty:
-            raise ValueError("Resulting dataframe is empty after processing")
 
         # Interpolate the dataframe
         start_time = data.index[0]
@@ -109,12 +104,10 @@ class CSVDataSource(BaseModule):
         # Transform to list of tuples
         self.data_tuples = list(interpolated_data.itertuples(index=False, name=None))
         self.data_iterator = self.create_iterator()
-        self.current_time = start_time
 
     def _get_next_data(self):
         """Yield the next data point"""
         data = next(self.data_iterator)
-        self.current_time += self.config.t_sample
         return data
 
     def create_iterator(self):
@@ -127,7 +120,7 @@ class CSVDataSource(BaseModule):
         while True:
             yield self.data_tuples[-1]
 
-    def transform_index(self, data: pd.DataFrame) -> pd.DataFrame:
+    def transform_to_numeric_index(self, data: pd.DataFrame) -> pd.DataFrame:
         """Handles the index and ensures it is numeric, with correct offset"""
         offset = self.config.data_offset
         # Convert offset to seconds if it's a Timedelta
@@ -142,7 +135,7 @@ class CSVDataSource(BaseModule):
                 data.index = pd.to_numeric(data.index)
                 data.index = data.index - data.index[0]
             except ValueError:
-                # If conversion to numeric fails, try to convert to datetune
+                # If conversion to numeric fails, try to convert to datetime
                 try:
                     data.index = pd.to_datetime(data.index)
                     data.index = (data.index - data.index[0]).total_seconds()
@@ -158,48 +151,10 @@ class CSVDataSource(BaseModule):
             current_data = self._get_next_data()
             for output, value in zip(self.config.outputs, current_data):
                 self.logger.debug(
-                    f"At {self.env.now}: Sending variable {output.name} with value {value} to data broker."
+                    f"At {self.env.time}: Sending variable {output.name} with value {value} to data broker."
                 )
                 self.set(output.name, value)
             yield self.env.timeout(self.config.t_sample)
 
     def register_callbacks(self):
         """Don't do anything as this module is not event-triggered"""
-
-
-if __name__ == "__main__":
-    import logging
-    from datetime import datetime, timedelta
-    from agentlib import Environment
-
-    logging.basicConfig(level=logging.DEBUG)
-    date_today = datetime.now()
-    time = range(5)
-    time = pd.date_range(date_today, date_today + timedelta(minutes=5), freq="min")
-    data1 = np.random.randint(1, high=100, size=len(time)) / 10
-    data2 = np.random.randint(1, high=100, size=len(time)) / 10
-    df = pd.DataFrame({"index": time, "col1": data1, "col2": data2})
-    df.set_index("index", inplace=True)
-    print("Dataframe:")
-    df.to_csv("example_df.csv")
-    print(df)
-    agent_config = {
-        "id": "my_agent_id",
-        "modules": [
-            {
-                "module_id": "My_Data_Source",
-                "type": {"file": __file__, "class_name": DataSource.__name__},
-                "data": "example_df.csv",
-                # "data_offset": pd.Timedelta("1min"),
-                # "data_offset": 60,
-                "interpolation_method": InterpolationMethods.linear,
-                "columns": ["col1", "col2"],
-            }
-        ],
-    }
-
-    logging.basicConfig(level=logging.INFO)
-    environment_config = {"rt": False, "factor": 1}
-    env = Environment(config=environment_config)
-    agent_ = Agent(config=agent_config, env=env)
-    env.run(65)
