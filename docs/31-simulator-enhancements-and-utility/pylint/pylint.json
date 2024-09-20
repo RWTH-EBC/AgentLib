@@ -794,7 +794,7 @@
         },
         {
             "type": "warning",
-            "module": "run_examples",
+            "module": "ci.run_examples",
             "obj": "TestExamples._run_example",
             "line": 42,
             "column": 12,
@@ -805,7 +805,7 @@
         },
         {
             "type": "convention",
-            "module": "run_examples",
+            "module": "ci.run_examples",
             "obj": "TestExamples.test_room_mas",
             "line": 58,
             "column": 8,
@@ -2642,6 +2642,72 @@
         },
         {
             "type": "convention",
+            "module": "tests.test_simulator_dashboard",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "tests/test_simulator_dashboard.py",
+            "symbol": "missing-module-docstring",
+            "message": "Missing module docstring",
+            "message-id": "C0114"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_simulator_dashboard",
+            "obj": "TestSimulatorDashboard",
+            "line": 15,
+            "column": 0,
+            "path": "tests/test_simulator_dashboard.py",
+            "symbol": "missing-class-docstring",
+            "message": "Missing class docstring",
+            "message-id": "C0115"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_simulator_dashboard",
+            "obj": "TestSimulatorDashboard.test_load_new_data",
+            "line": 17,
+            "column": 4,
+            "path": "tests/test_simulator_dashboard.py",
+            "symbol": "missing-function-docstring",
+            "message": "Missing function or method docstring",
+            "message-id": "C0116"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_simulator_dashboard",
+            "obj": "TestSimulatorDashboard.test_update_data",
+            "line": 46,
+            "column": 4,
+            "path": "tests/test_simulator_dashboard.py",
+            "symbol": "missing-function-docstring",
+            "message": "Missing function or method docstring",
+            "message-id": "C0116"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_simulator_dashboard",
+            "obj": "TestSimulatorDashboard.test_format_time_axis",
+            "line": 74,
+            "column": 4,
+            "path": "tests/test_simulator_dashboard.py",
+            "symbol": "missing-function-docstring",
+            "message": "Missing function or method docstring",
+            "message-id": "C0116"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_simulator_dashboard",
+            "obj": "TestSimulatorDashboard.test_create_plot",
+            "line": 79,
+            "column": 4,
+            "path": "tests/test_simulator_dashboard.py",
+            "symbol": "missing-function-docstring",
+            "message": "Missing function or method docstring",
+            "message-id": "C0116"
+        },
+        {
+            "type": "convention",
             "module": "tests.test_utils",
             "obj": "",
             "line": 63,
@@ -2733,7 +2799,7 @@
                 "statement": 6,
                 "warning": 0
             },
-            "run_examples": {
+            "ci.run_examples": {
                 "convention": 1,
                 "error": 0,
                 "fatal": 0,
@@ -2868,6 +2934,15 @@
                 "statement": 92,
                 "warning": 3
             },
+            "tests.test_simulator_dashboard": {
+                "convention": 6,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 47,
+                "warning": 0
+            },
             "tests.test_utils": {
                 "convention": 4,
                 "error": 0,
@@ -2881,14 +2956,14 @@
         "by_msg": {
             "broad-exception-raised": 3,
             "import-outside-toplevel": 1,
-            "missing-class-docstring": 17,
+            "missing-class-docstring": 18,
             "too-many-instance-attributes": 2,
             "unspecified-encoding": 8,
-            "missing-function-docstring": 42,
+            "missing-function-docstring": 46,
             "invalid-name": 15,
             "attribute-defined-outside-init": 6,
             "trailing-newlines": 1,
-            "missing-module-docstring": 4,
+            "missing-module-docstring": 5,
             "unnecessary-dunder-call": 3,
             "protected-access": 26,
             "unused-variable": 4,
@@ -2915,14 +2990,14 @@
         },
         "dependencies": {
             "agentlib.core": [
-                "tests.test_agent",
-                "tests.test_simulator",
-                "tests.test_module",
                 "tests.test_data_broker",
-                "tests.test_n_pingpong",
-                "agentlib",
+                "tests.test_environment",
+                "tests.test_simulator",
+                "tests.test_agent",
                 "tests.test_model",
-                "tests.test_environment"
+                "tests.test_module",
+                "tests.test_n_pingpong",
+                "agentlib"
             ],
             "agentlib.models": [
                 "agentlib"
@@ -2932,39 +3007,40 @@
             ],
             "agentlib.utils": [
                 "tests.test_n_pingpong",
+                "tests.test_utils",
                 "agentlib",
-                "run_examples",
-                "tests.test_utils"
+                "ci.run_examples"
             ],
             "agentlib.core.datamodels": [
                 "tests.test_datamodels",
                 "tests.test_simulator",
+                "tests.test_model",
                 "tests.test_module",
                 "tests.test_n_pingpong",
-                "agentlib",
-                "tests.test_model"
+                "agentlib"
             ],
             "agentlib.utils.multi_agent_system": [
                 "tests.test_n_pingpong",
                 "agentlib"
             ],
             "pandas": [
-                "tests.test_simulator",
+                "tests.test_data_source",
                 "tests.test_datamodels",
-                "run_examples",
-                "tests.test_data_source"
+                "ci.run_examples",
+                "tests.test_simulator",
+                "tests.test_simulator_dashboard"
             ],
             "agentlib.utils.local_broadcast_broker": [
-                "run_examples"
+                "ci.run_examples"
             ],
             "pydantic": [
                 "tests.test_datamodels",
-                "tests.test_agent",
+                "tests.test_environment",
                 "tests.test_simulator",
+                "tests.test_agent",
                 "tests.test_module",
-                "tests.test_n_pingpong",
                 "tests.test_model",
-                "tests.test_environment"
+                "tests.test_n_pingpong"
             ],
             "agentlib.core.agent": [
                 "tests.test_agent",
@@ -2972,26 +3048,26 @@
             ],
             "agentlib.core.errors": [
                 "tests.test_agent",
-                "tests.test_datamodels",
                 "tests.test_module",
+                "tests.test_datamodels",
                 "tests.test_utils"
             ],
             "agentlib": [
-                "tests.test_communicator",
-                "tests.test_databroker_limits",
                 "tests.test_utils",
-                "tests.test_data_source"
+                "tests.test_databroker_limits",
+                "tests.test_data_source",
+                "tests.test_communicator"
             ],
             "agentlib.modules.communicator.local": [
                 "tests.test_communicator"
             ],
             "numpy": [
+                "tests.test_data_source",
+                "tests.test_data_broker",
                 "tests.test_simulator",
                 "tests.test_databroker_limits",
-                "tests.test_data_broker",
-                "tests.test_data_source",
-                "tests.test_n_pingpong",
-                "tests.test_model"
+                "tests.test_model",
+                "tests.test_n_pingpong"
             ],
             "agentlib.core.logging_": [
                 "tests.test_data_broker"
@@ -3011,6 +3087,15 @@
             "agentlib.modules.simulation.simulator": [
                 "tests.test_simulator"
             ],
+            "dash.html": [
+                "tests.test_simulator_dashboard"
+            ],
+            "dash.dcc": [
+                "tests.test_simulator_dashboard"
+            ],
+            "agentlib.utils.plotting.simulator_dashboard": [
+                "tests.test_simulator_dashboard"
+            ],
             "agentlib.utils.validators": [
                 "tests.test_utils"
             ],
@@ -3027,26 +3112,26 @@
         },
         "node_count": {
             "function": 4,
-            "klass": 37,
-            "method": 176,
-            "module": 17
+            "klass": 38,
+            "method": 180,
+            "module": 18
         },
         "undocumented": {
             "function": 3,
-            "klass": 22,
-            "method": 39,
-            "module": 4
+            "klass": 23,
+            "method": 43,
+            "module": 5
         },
-        "convention": 98,
+        "convention": 104,
         "error": 6,
         "fatal": 0,
         "info": 0,
         "refactor": 15,
-        "statement": 1232,
+        "statement": 1279,
         "warning": 55,
         "global_note": 0,
         "nb_duplicated_lines": 6,
-        "percent_duplicated_lines": 0.2695417789757412
+        "percent_duplicated_lines": 0.25929127052722556
     },
     "previous": {
         "bad_names": {
@@ -3074,7 +3159,7 @@
                 "statement": 6,
                 "warning": 0
             },
-            "run_examples": {
+            "ci.run_examples": {
                 "convention": 1,
                 "error": 0,
                 "fatal": 0,
@@ -3209,6 +3294,15 @@
                 "statement": 92,
                 "warning": 3
             },
+            "tests.test_simulator_dashboard": {
+                "convention": 6,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 47,
+                "warning": 0
+            },
             "tests.test_utils": {
                 "convention": 4,
                 "error": 0,
@@ -3222,14 +3316,14 @@
         "by_msg": {
             "broad-exception-raised": 3,
             "import-outside-toplevel": 1,
-            "missing-class-docstring": 17,
+            "missing-class-docstring": 18,
             "too-many-instance-attributes": 2,
             "unspecified-encoding": 8,
-            "missing-function-docstring": 42,
+            "missing-function-docstring": 46,
             "invalid-name": 15,
             "attribute-defined-outside-init": 6,
             "trailing-newlines": 1,
-            "missing-module-docstring": 4,
+            "missing-module-docstring": 5,
             "unnecessary-dunder-call": 3,
             "protected-access": 26,
             "unused-variable": 4,
@@ -3256,14 +3350,14 @@
         },
         "dependencies": {
             "agentlib.core": [
-                "tests.test_agent",
-                "tests.test_module",
                 "tests.test_data_broker",
-                "tests.test_model",
-                "tests.test_n_pingpong",
-                "agentlib",
+                "tests.test_environment",
                 "tests.test_simulator",
-                "tests.test_environment"
+                "tests.test_agent",
+                "tests.test_model",
+                "tests.test_module",
+                "tests.test_n_pingpong",
+                "agentlib"
             ],
             "agentlib.models": [
                 "agentlib"
@@ -3273,66 +3367,67 @@
             ],
             "agentlib.utils": [
                 "tests.test_n_pingpong",
+                "tests.test_utils",
                 "agentlib",
-                "run_examples",
-                "tests.test_utils"
+                "ci.run_examples"
             ],
             "agentlib.core.datamodels": [
                 "tests.test_datamodels",
-                "tests.test_module",
+                "tests.test_simulator",
                 "tests.test_model",
+                "tests.test_module",
                 "tests.test_n_pingpong",
-                "agentlib",
-                "tests.test_simulator"
+                "agentlib"
             ],
             "agentlib.utils.multi_agent_system": [
                 "tests.test_n_pingpong",
                 "agentlib"
             ],
             "pandas": [
-                "tests.test_simulator",
+                "tests.test_data_source",
                 "tests.test_datamodels",
-                "run_examples",
-                "tests.test_data_source"
+                "ci.run_examples",
+                "tests.test_simulator",
+                "tests.test_simulator_dashboard"
             ],
             "agentlib.utils.local_broadcast_broker": [
-                "run_examples"
+                "ci.run_examples"
             ],
             "pydantic": [
                 "tests.test_datamodels",
-                "tests.test_agent",
-                "tests.test_module",
-                "tests.test_model",
-                "tests.test_n_pingpong",
+                "tests.test_environment",
                 "tests.test_simulator",
-                "tests.test_environment"
+                "tests.test_agent",
+                "tests.test_model",
+                "tests.test_module",
+                "tests.test_n_pingpong"
             ],
             "agentlib.core.agent": [
-                "tests.test_agent",
-                "tests.test_utils"
+                "tests.test_utils",
+                "tests.test_agent"
             ],
             "agentlib.core.errors": [
-                "tests.test_agent",
-                "tests.test_datamodels",
+                "tests.test_utils",
                 "tests.test_module",
-                "tests.test_utils"
+                "tests.test_agent",
+                "tests.test_datamodels"
             ],
             "agentlib": [
-                "tests.test_communicator",
-                "tests.test_databroker_limits",
                 "tests.test_utils",
-                "tests.test_data_source"
+                "tests.test_databroker_limits",
+                "tests.test_data_source",
+                "tests.test_communicator"
             ],
             "agentlib.modules.communicator.local": [
                 "tests.test_communicator"
             ],
             "numpy": [
-                "tests.test_databroker_limits",
-                "tests.test_data_broker",
                 "tests.test_data_source",
+                "tests.test_data_broker",
+                "tests.test_simulator",
+                "tests.test_databroker_limits",
                 "tests.test_model",
-                "tests.test_n_pingpong",
-                "tests.test_simulator"
+                "tests.test_n_pingpong"
             ],
             "agentlib.core.logging_": [
                 "tests.test_data_broker"
@@ -3352,6 +3447,15 @@
             "agentlib.modules.simulation.simulator": [
                 "tests.test_simulator"
             ],
+            "dash.html": [
+                "tests.test_simulator_dashboard"
+            ],
+            "dash.dcc": [
+                "tests.test_simulator_dashboard"
+            ],
+            "agentlib.utils.plotting.simulator_dashboard": [
+                "tests.test_simulator_dashboard"
+            ],
             "agentlib.utils.validators": [
                 "tests.test_utils"
             ],
@@ -3368,25 +3472,25 @@
         },
         "node_count": {
             "function": 4,
-            "klass": 37,
-            "method": 176,
-            "module": 17
+            "klass": 38,
+            "method": 180,
+            "module": 18
         },
         "undocumented": {
             "function": 3,
-            "klass": 22,
-            "method": 39,
-            "module": 4
+            "klass": 23,
+            "method": 43,
+            "module": 5
         },
-        "convention": 98,
+        "convention": 104,
         "error": 6,
         "fatal": 0,
         "info": 0,
         "refactor": 15,
-        "statement": 1232,
+        "statement": 1279,
         "warning": 55,
-        "global_note": 8.392857142857142,
+        "global_note": 8.405003909304144,
         "nb_duplicated_lines": 6,
-        "percent_duplicated_lines": 0.2695417789757412
+        "percent_duplicated_lines": 0.25929127052722556
     }
 }

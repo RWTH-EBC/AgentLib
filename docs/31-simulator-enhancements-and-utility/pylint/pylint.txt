@@ -71,7 +71,7 @@ pylintrc:1:0: W0012: Unknown option value for '--disable', expected a valid pyli
 pylintrc:1:0: W0012: Unknown option value for '--disable', expected a valid pylint message and got 'old-octal-literal' (unknown-option-value)
 pylintrc:1:0: W0012: Unknown option value for '--disable', expected a valid pylint message and got 'non-ascii-bytes-literal' (unknown-option-value)
 pylintrc:1:0: W0012: Unknown option value for '--disable', expected a valid pylint message and got 'eq-without-hash' (unknown-option-value)
-************* Module run_examples
+************* Module ci.run_examples
 ci/run_examples.py:42:12: W0719: Raising too general exception: Exception (broad-exception-raised)
 ci/run_examples.py:58:8: C0415: Import outside toplevel (sys) (import-outside-toplevel)
 ************* Module tests.test_agent
@@ -253,6 +253,13 @@ tests/test_simulator.py:115:4: C0116: Missing function or method docstring (miss
 tests/test_simulator.py:142:4: C0116: Missing function or method docstring (missing-function-docstring)
 tests/test_simulator.py:149:4: C0116: Missing function or method docstring (missing-function-docstring)
 tests/test_simulator.py:175:13: W1514: Using open without explicitly specifying an encoding (unspecified-encoding)
+************* Module tests.test_simulator_dashboard
+tests/test_simulator_dashboard.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+tests/test_simulator_dashboard.py:15:0: C0115: Missing class docstring (missing-class-docstring)
+tests/test_simulator_dashboard.py:17:4: C0116: Missing function or method docstring (missing-function-docstring)
+tests/test_simulator_dashboard.py:46:4: C0116: Missing function or method docstring (missing-function-docstring)
+tests/test_simulator_dashboard.py:74:4: C0116: Missing function or method docstring (missing-function-docstring)
+tests/test_simulator_dashboard.py:79:4: C0116: Missing function or method docstring (missing-function-docstring)
 ************* Module tests.test_utils
 tests/test_utils.py:63:0: C0301: Line too long (169/100) (line-too-long)
 tests/test_utils.py:60:0: C0115: Missing class docstring (missing-class-docstring)
@@ -270,5 +277,5 @@ tests/test_utils.py:1:0: R0801: Similar lines in 2 files
     "rdf_class": "MyRDFClass", (duplicate-code)
 
 -----------------------------------
-Your code has been rated at 8.39/10
+Your code has been rated at 8.41/10
 
