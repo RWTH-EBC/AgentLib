@@ -4,9 +4,10 @@ Module containing only the Agent class.
 
 import json
 import threading
+from copy import deepcopy
+from pathlib import Path
 from typing import Union, List, Dict, TypeVar, Optional
 
-from pathlib import Path
 from pydantic import field_validator, BaseModel, FilePath, Field
 
 import agentlib
@@ -37,7 +38,12 @@ class AgentConfig(BaseModel):
         description="The ID of the Agent, should be unique in "
         "the multi-agent-system the agent is living in.",
     )
-    modules: List[Union[Dict, FilePath]] = None
+    modules: Union[List[Union[Dict, FilePath]], Dict[str, Union[Dict, FilePath]]] = (
+        Field(
+            default_factory=list,
+            description="A list or dictionary of modules. If a dictionary is provided, keys are treated as module_ids.",
+        )
+    )
     check_alive_interval: float = Field(
         title="check_alive_interval",
         default=1,
@@ -57,17 +63,32 @@ class AgentConfig(BaseModel):
 
     @field_validator("modules")
     @classmethod
-    def check_modules(cls, modules: List):
-        """Validator to ensure all modules are in dict-format."""
+    def check_modules(cls, modules: Union[List, Dict]):
+        """Validator to ensure all modules are in dict-format and include 'module_id'."""
         modules_loaded = []
-        for module in modules:
-            if isinstance(module, (str, Path)):
-                if Path(module).exists():
-                    with open(module, "r") as f:
-                        module = json.load(f)
-                else:
-                    module = json.loads(module)
-            modules_loaded.append(module)
+        if isinstance(modules, dict):
+            for module_id, module in modules.items():
+                if isinstance(module, (str, Path)):
+                    if Path(module).exists():
+                        with open(module, "r") as f:
+                            module = json.load(f)
+                    else:
+                        module = json.loads(module)
+                if isinstance(module, dict):
+                    module = deepcopy(module)
+                    module["module_id"] = module_id
+                modules_loaded.append(module)
+        elif isinstance(modules, list):
+            for module in modules:
+                if isinstance(module, (str, Path)):
+                    if Path(module).exists():
+                        with open(module, "r") as f:
+                            module = json.load(f)
+                    else:
+                        module = json.loads(module)
+                modules_loaded.append(module)
+        else:
+            raise TypeError("modules must be a list or a dict")
         return modules_loaded
 
 
