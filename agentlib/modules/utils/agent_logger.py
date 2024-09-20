@@ -1,5 +1,6 @@
 """This module contains a custom Module to log
 all variables inside an agent's data_broker."""
+
 import collections
 import json
 import os

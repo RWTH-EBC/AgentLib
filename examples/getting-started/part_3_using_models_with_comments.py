@@ -78,16 +78,12 @@ agent_config = {
                 # or "statespace"
                 "type": {"file": __file__, "class_name": "HeatedRoom"},
             },
-
             # specify the interval, in which outputs are written, and inputs are updated
             "t_sample": 10,
-
             # the simulator can save its own results if desired, there is no need for an AgentLogger
             "save_results": True,
-
             # results are stored in RAM if not specified
             "result_filename": "results_part3.csv",
-
             # define, which variable groups we want to store in the results. Note that
             # here, we wrote locals, which maps to the states. This is a special case,
             # where we used states instead of locals in some places, to avoid shadowing
@@ -96,7 +92,6 @@ agent_config = {
             # extremely high number in FMU models. Therefore, we have to activate them
             # manually here.
             "result_causalities": ["local"],
-
             # the inputs and states fields of the simulator are lists of AgentVariables
             # There are also the fields outputs and parameters. We do not have to
             # specify all the variables that are given in the model config. However,
@@ -108,7 +103,7 @@ agent_config = {
             ],
             "states": [
                 {"name": "temperature_in_celsius", "value": 21},
-            ]
+            ],
         },
     ],
 }

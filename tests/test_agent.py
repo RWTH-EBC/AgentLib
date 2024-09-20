@@ -1,4 +1,5 @@
 """Module with tests for the core module of the agentlib."""
+
 import unittest
 import json
 import os
@@ -15,7 +16,7 @@ from agentlib.core import (
     Environment,
     DataBroker,
     BaseModule,
-    BaseModuleConfig
+    BaseModuleConfig,
 )
 from agentlib.core.agent import AgentConfig
 from agentlib.core.errors import ConfigurationError
@@ -26,7 +27,6 @@ class UpdateModuleConfigTest(BaseModuleConfig):
 
 
 class UpdateModuleTest(BaseModule):
-
     config: UpdateModuleConfigTest
 
     def register_callbacks(self):
@@ -37,13 +37,10 @@ class UpdateModuleTest(BaseModule):
 
 
 class HealthCheckTest(BaseModule):
-
     config: BaseModuleConfig
 
     def register_callbacks(self):
-        self.agent.data_broker.register_callback(
-            callback=self._cb
-        )
+        self.agent.data_broker.register_callback(callback=self._cb)
 
     def process(self):
         while True:
@@ -66,9 +63,9 @@ class TestAgent(unittest.TestCase):
             "modules": [],
             "id": self.ag_id,
         }
-        self.env_cfg = {'rt': False}
+        self.env_cfg = {"rt": False}
         self.env = Environment(config=self.env_cfg)
-        self.filepath = os.path.join(os.getcwd(), 'ag_config.json')
+        self.filepath = os.path.join(os.getcwd(), "ag_config.json")
 
     def test_settings_modules_error(self):
         """Test if setting anything but dict or filepath setting works"""
@@ -80,7 +77,7 @@ class TestAgent(unittest.TestCase):
     def test_filepath_module_settings(self):
         """Test setting module by filepath"""
         with open(self.filepath, "w+") as file:
-            json.dump(self._generate_ag_config()['modules'][0], file)
+            json.dump(self._generate_ag_config()["modules"][0], file)
         AgentConfig(id=self.ag_id, modules=[self.filepath])
 
     def test_getters(self):
@@ -91,7 +88,7 @@ class TestAgent(unittest.TestCase):
         self.assertIsInstance(str(ag), str)
         self.assertEqual(ag.env, self.env)
         self.assertEqual(ag.modules, [])
-        self.assertIsNone(ag.get_module('Not in there'))
+        self.assertIsNone(ag.get_module("Not in there"))
 
     def test_set_config(self):
         """Test the in code setting configs."""
@@ -107,7 +104,7 @@ class TestAgent(unittest.TestCase):
     def test_duplicate_modules(self):
         """Test if duplicate module ids raise KeyError"""
         ag_cfg = self._generate_ag_config(module_id=self.mo_id, value=0)
-        ag_cfg['modules'] = ag_cfg.get('modules') + ag_cfg.get('modules')
+        ag_cfg["modules"] = ag_cfg.get("modules") + ag_cfg.get("modules")
         with self.assertRaises(KeyError):
             Agent(env=self.env, config=ag_cfg)
 
@@ -143,12 +140,9 @@ class TestAgent(unittest.TestCase):
     def test_health_check(self):
         """Test to see if the health check works."""
         cfg = {
-            "modules": [{"type": {
-                "file": __file__,
-                "class_name": "HealthCheckTest"}
-            }],
+            "modules": [{"type": {"file": __file__, "class_name": "HealthCheckTest"}}],
             "id": self.ag_id,
-            "check_alive_interval": 0.01  # More narrow checking for rt-tests.
+            "check_alive_interval": 0.01,  # More narrow checking for rt-tests.
         }
         # if rt = False, no thread is used and the Exception is raised.
         # Else, the RunTimeError should be raised by the agent.
@@ -164,7 +158,9 @@ class TestAgent(unittest.TestCase):
 
         # Try with a daemon thread
         self._stop_test = False
-        _thread = threading.Thread(target=self._no_daemon_thread, daemon=False, name="notADaemon")
+        _thread = threading.Thread(
+            target=self._no_daemon_thread, daemon=False, name="notADaemon"
+        )
         _thread.start()
         ag = Agent(config=cfg, env=Environment(config={"rt": True}))
         ag.register_thread(thread=_thread)
@@ -194,19 +190,14 @@ class TestAgent(unittest.TestCase):
     def _generate_ag_config(self, module_id=None, value=0, type_str=None):
         """Helper function to avoid duplicate code"""
         if type_str is None:
-            type_str = {
-                "file": __file__,
-                "class_name": "UpdateModuleTest"}
-        module = {"type": type_str,
-                  "variables": [{"name": "TestParam",
-                                 "value": value}]
-                  }
+            type_str = {"file": __file__, "class_name": "UpdateModuleTest"}
+        module = {
+            "type": type_str,
+            "variables": [{"name": "TestParam", "value": value}],
+        }
         if module_id is not None:
             module["module_id"] = module_id
-        return {
-            "modules": [module],
-            "id": self.ag_id
-        }
+        return {"modules": [module], "id": self.ag_id}
 
     def tearDown(self) -> None:
         """Delete file"""
@@ -214,6 +205,7 @@ class TestAgent(unittest.TestCase):
             os.remove(self.filepath)
         except FileNotFoundError:
             pass
+
 
 if __name__ == "__main__":
     unittest.main()

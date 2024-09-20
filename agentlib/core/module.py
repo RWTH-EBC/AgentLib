@@ -1,4 +1,5 @@
 """This module contains the base AgentModule."""
+
 from __future__ import annotations
 import abc
 import json

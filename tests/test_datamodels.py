@@ -1,4 +1,5 @@
 """Module to test all datamodels in the agentlib"""
+
 import unittest
 from pydantic import ValidationError
 from agentlib.core import datamodels, errors
@@ -14,27 +15,25 @@ class TestVariables(unittest.TestCase):
             "type": None,
             "value": None,
             "unit": "-",
-            "description": "Description of the variable"
+            "description": "Description of the variable",
         }
 
     def test_base_model_variable(self):
         # Default variability
         var = datamodels.BaseModelVariable(
-            name="test",
-            causality=datamodels.Causality.input
+            name="test", causality=datamodels.Causality.input
         )
         self.assertEqual(var.variability, datamodels.Variability.continuous)
         var = datamodels.BaseModelVariable(
-            name="test",
-            causality=datamodels.Causality.parameter
+            name="test", causality=datamodels.Causality.parameter
         )
         self.assertEqual(var.variability, datamodels.Variability.tunable)
 
     def test_value_conversion(self):
         """Test value conversion when providing a type."""
-        var = datamodels.BaseVariable.validate_data(dict(name="test",
-                                   value=100.0,
-                                   type="float"))
+        var = datamodels.BaseVariable.validate_data(
+            dict(name="test", value=100.0, type="float")
+        )
         var.set_value("100", validate=True)
         self.assertEqual(var.value, 100)
         self.assertIsInstance(var.value, float)
@@ -46,9 +45,9 @@ class TestVariables(unittest.TestCase):
         srs = pd.Series([0, 1, 2, 3])
 
         # emulates sending and receiving
-        var = datamodels.AgentVariable.validate_data(dict(name="test",
-                                       value=srs,
-                                       type="pd.Series"))
+        var = datamodels.AgentVariable.validate_data(
+            dict(name="test", value=srs, type="pd.Series")
+        )
         json = var.json()
         var = datamodels.AgentVariable.from_json(json)
 
@@ -58,23 +57,33 @@ class TestVariables(unittest.TestCase):
     def test_type(self):
         """Test the type setting"""
         with self.assertRaises(ValueError):
-            datamodels.BaseVariable.validate_data(dict(name="test", type="not_supported"))
+            datamodels.BaseVariable.validate_data(
+                dict(name="test", type="not_supported")
+            )
         with self.assertRaises(TypeError):
             datamodels.BaseVariable.validate_data(dict(name="test", type=float))
 
     def test_allowed_values(self):
         """Test allowed values"""
         with self.assertRaises(ValueError):
-            datamodels.BaseVariable.validate_data(dict(name="test",
-                                 type="float",
-                                 ub=10,
-                                 lb=0,
-                                 clip=True,
-                                 allowed_values=[20]))
-        var = datamodels.BaseVariable.validate_data(dict(name="test",
-                                   type="float",
-                                   value=20.0,
-                                   allowed_values=["0", "10", 20, 30.0]))
+            datamodels.BaseVariable.validate_data(
+                dict(
+                    name="test",
+                    type="float",
+                    ub=10,
+                    lb=0,
+                    clip=True,
+                    allowed_values=[20],
+                )
+            )
+        var = datamodels.BaseVariable.validate_data(
+            dict(
+                name="test",
+                type="float",
+                value=20.0,
+                allowed_values=["0", "10", 20, 30.0],
+            )
+        )
         for v in var.allowed_values:
             self.assertEqual(type(v), float)
         with self.assertRaises(ValueError):
@@ -86,13 +95,17 @@ class TestVariables(unittest.TestCase):
         srs_json = srs.to_json()
         srs_literal = srs.to_dict()
         for value in [srs_json, srs_literal]:
-            var = datamodels.BaseVariable.validate_data(dict(name="test",
-                                       type="pd.Series",
-                                       value=value,
-                                       ub=10,
-                                       lb=5,
-                                       clip=True,
-                                       allowed_values=[20]))
+            var = datamodels.BaseVariable.validate_data(
+                dict(
+                    name="test",
+                    type="pd.Series",
+                    value=value,
+                    ub=10,
+                    lb=5,
+                    clip=True,
+                    allowed_values=[20],
+                )
+            )
             self.assertEqual(var.allowed_values, [])
             self.assertIsInstance(var.value, pd.Series)
 
@@ -105,14 +118,16 @@ class TestVariables(unittest.TestCase):
         var.ub = 200
         # Test wrong setting:
         with self.assertRaises(ValueError):
-            datamodels.BaseVariable.validate_data(dict(name="test",
-                                 ub=100,
-                                 lb=200))
+            datamodels.BaseVariable.validate_data(dict(name="test", ub=100, lb=200))
 
         # With clip=True:
-        var = datamodels.BaseVariable.validate_data(dict(name="test", clip=True, ub=100, lb=0, value=10000))
+        var = datamodels.BaseVariable.validate_data(
+            dict(name="test", clip=True, ub=100, lb=0, value=10000)
+        )
         self.assertEqual(var.value, var.ub)
-        var = datamodels.BaseVariable.validate_data(dict(name="test", clip=True, ub=100, lb=0, value=-10000))
+        var = datamodels.BaseVariable.validate_data(
+            dict(name="test", clip=True, ub=100, lb=0, value=-10000)
+        )
         self.assertEqual(var.value, var.lb)
 
     def test_agent_variables(self):
@@ -133,13 +148,14 @@ class TestVariables(unittest.TestCase):
         mod_id = "MyModTest"
         var = datamodels.AgentVariable(name="test", source=ag_id)
         self.assertEqual(var.source.agent_id, ag_id)
-        var = datamodels.AgentVariable(name="test",
-                                  source={"agent_id": ag_id, "module_id": mod_id})
+        var = datamodels.AgentVariable(
+            name="test", source={"agent_id": ag_id, "module_id": mod_id}
+        )
         self.assertEqual(var.source.agent_id, ag_id)
         self.assertEqual(var.source.module_id, mod_id)
-        var = datamodels.AgentVariable(name="test",
-                                  source=datamodels.Source(agent_id=ag_id,
-                                                           module_id=mod_id))
+        var = datamodels.AgentVariable(
+            name="test", source=datamodels.Source(agent_id=ag_id, module_id=mod_id)
+        )
         self.assertEqual(var.source.agent_id, ag_id)
         self.assertEqual(var.source.module_id, mod_id)
 
@@ -161,9 +177,19 @@ class TestVariables(unittest.TestCase):
         self.assertEqual(inp.causality, datamodels.Causality.input)
         out = datamodels.ModelOutput(**self.config)
         self.assertEqual(out.causality, datamodels.Causality.output)
-        par = datamodels.ModelParameter(**{**self.config, "value": 10, })
+        par = datamodels.ModelParameter(
+            **{
+                **self.config,
+                "value": 10,
+            }
+        )
         self.assertEqual(par.causality, datamodels.Causality.parameter)
-        sta = datamodels.ModelState(**{**self.config, "value": 10, })
+        sta = datamodels.ModelState(
+            **{
+                **self.config,
+                "value": 10,
+            }
+        )
         self.assertEqual(sta.causality, datamodels.Causality.local)
 
     def test_calculation(self):
@@ -173,13 +199,13 @@ class TestVariables(unittest.TestCase):
         self.assertEqual(inp * 5, 1 * 5)
         self.assertEqual(inp - 5, 1 - 5)
         self.assertEqual(inp / 5, 1 / 5)
-        self.assertEqual(inp ** 5, 1 ** 5)
+        self.assertEqual(inp**5, 1**5)
 
         self.assertEqual(5 + inp, 5 + 1)
         self.assertEqual(5 * inp, 5 * 1)
         self.assertEqual(5 - inp, 5 - 1)
         self.assertEqual(5 / inp, 5 / 1)
-        self.assertEqual(5 ** inp, 5 ** 1)
+        self.assertEqual(5**inp, 5**1)
 
     def test_equal(self):
         """Test agent equal"""
@@ -187,8 +213,7 @@ class TestVariables(unittest.TestCase):
         self.assertEqual(var, var.copy())
 
     def test_source(self):
-        source = datamodels.Source(agent_id="test",
-                                   module_id="test2")
+        source = datamodels.Source(agent_id="test", module_id="test2")
         self.assertIsInstance(source.__str__(), str)
         self.assertIsInstance(hash(source), type(hash(1)))
         self.assertEqual(source, source)
@@ -200,12 +225,12 @@ class TestVariables(unittest.TestCase):
         conf = self.config
 
         # test on normal value
-        conf['value'] = 12
+        conf["value"] = 12
         var = datamodels.AgentVariable(**conf)
         json_str = var.json()
         var_after = datamodels.AgentVariable.from_json(json_str)
         self.assertEqual(var, var_after)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

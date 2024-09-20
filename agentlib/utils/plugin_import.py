@@ -1,6 +1,7 @@
 """
 Module containing all function to import new plugins
 """
+
 import importlib
 from pydantic import BaseModel
 

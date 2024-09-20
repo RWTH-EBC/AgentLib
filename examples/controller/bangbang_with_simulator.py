@@ -5,8 +5,12 @@ import agentlib as ag
 
 
 class HeatedRoomConfig(ag.ModelConfig):
-    inputs: List[ag.ModelInput] = [ag.ModelInput(name="heating_power_in_watt", value=100)]
-    states: List[ag.ModelState] = [ag.ModelState(name="temperature_in_celsius", value=20)]
+    inputs: List[ag.ModelInput] = [
+        ag.ModelInput(name="heating_power_in_watt", value=100)
+    ]
+    states: List[ag.ModelState] = [
+        ag.ModelState(name="temperature_in_celsius", value=20)
+    ]
     parameters: List[ag.ModelParameter] = [
         ag.ModelParameter(name="heat_loss_in_watt", value=150),
         ag.ModelParameter(name="thermal_capacity_zone", value=100_000),
@@ -38,7 +42,12 @@ pid_agent_config = {
             "lb": 20,
             "ub": 22,
             "input": {"name": "u", "value": 0, "alias": "room_temp"},
-            "output": {"name": "y", "value": 0, "alias": "heating_power", "shared": True},
+            "output": {
+                "name": "y",
+                "value": 0,
+                "alias": "heating_power",
+                "shared": True,
+            },
         },
         {"module_id": "myLogger", "type": "AgentLogger"},
         {"module_id": "myComm", "type": "local", "subscriptions": ["Process"]},
@@ -53,8 +62,17 @@ process_agent_config = {
             "type": "simulator",
             "model": {"type": {"file": __file__, "class_name": "HeatedRoom"}},
             "t_sample": 10,
-            "inputs": [{"name": "heating_power_in_watt", "value": 0, "alias": "heating_power"}],
-            "states": [{"name": "temperature_in_celsius", "value": 21, "shared": True, "alias": "room_temp"}],
+            "inputs": [
+                {"name": "heating_power_in_watt", "value": 0, "alias": "heating_power"}
+            ],
+            "states": [
+                {
+                    "name": "temperature_in_celsius",
+                    "value": 21,
+                    "shared": True,
+                    "alias": "room_temp",
+                }
+            ],
         },
         {"module_id": "myLogger", "type": "AgentLogger"},
         {"module_id": "myComm", "type": "local", "subscriptions": ["PID"]},
@@ -76,6 +94,7 @@ def run_example(with_plots=True, log_level=logging.INFO):
     res = results["myLogger"]
     if with_plots:
         import matplotlib.pyplot as plt
+
         fig, ax = plt.subplots(2, 1)
         res["room_temp"].plot(ax=ax[0], label="$T_{room}$")
         ax[0].axhline(20, label="_", linestyle="--", color="black")

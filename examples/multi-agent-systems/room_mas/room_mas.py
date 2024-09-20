@@ -87,7 +87,12 @@ def run_example(until, with_plots=True, log_level=logging.INFO):
             zorder=0,
         )
         ax.grid(
-            which="minor", axis="both", linestyle="--", linewidth=0.5, color="0.7", zorder=0
+            which="minor",
+            axis="both",
+            linestyle="--",
+            linewidth=0.5,
+            color="0.7",
+            zorder=0,
         )
 
     plt.show()

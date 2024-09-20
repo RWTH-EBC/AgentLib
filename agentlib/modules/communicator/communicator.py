@@ -1,6 +1,7 @@
 """
 Module contains basics communicator modules
 """
+
 import abc
 import json
 import queue

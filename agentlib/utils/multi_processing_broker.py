@@ -2,6 +2,7 @@
 Module containing a MultiProcessingBroker that
 enables communication across different processes.
 """
+
 import json
 import multiprocessing
 from ipaddress import IPv4Address

@@ -2,6 +2,7 @@
 Module containing a LocalBroadcastBroker that
 enables local broadcast communication.
 """
+
 from typing import Union
 
 from agentlib.utils.broker import Broker

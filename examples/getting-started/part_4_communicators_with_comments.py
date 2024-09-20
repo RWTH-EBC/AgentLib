@@ -77,7 +77,12 @@ process_agent_config = {
                 # True. The 'shared' keyword is a flag, that is checked in the
                 # communicator. A variable will always be exchanged between the modules
                 # of an agent, but only sent to other agents, if it is 'shared'.
-                {"name": "temperature_in_celsius", "value": 21, "alias": "T_room", "shared": True}
+                {
+                    "name": "temperature_in_celsius",
+                    "value": 21,
+                    "alias": "T_room",
+                    "shared": True,
+                }
             ],
         },
         # here we define our first communicator, which is of type 'local'. A local
@@ -131,7 +136,9 @@ pid_agent_config = {
 def main(with_plots: bool = True):
     logging.basicConfig(level=logging.INFO)
     environment_config = {"rt": False, "factor": 1, "clock": False}
-    mas = ag.LocalMASAgency(agent_configs=[process_agent_config, pid_agent_config], env=environment_config)
+    mas = ag.LocalMASAgency(
+        agent_configs=[process_agent_config, pid_agent_config], env=environment_config
+    )
     mas.run(1800)
 
     if with_plots:

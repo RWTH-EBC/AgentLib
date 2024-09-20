@@ -207,7 +207,7 @@ class DataBroker(abc.ABC):
             logger=self.logger,
             queue_name="Callback-Distribution",
             queue_object=self._variable_queue,
-            max_queue_size=self._max_queue_size
+            max_queue_size=self._max_queue_size,
         )
         _map_tuple = (variable.alias, variable.source)
         # First the unmapped cbs
@@ -343,7 +343,9 @@ class LocalDataBroker(DataBroker):
     """Local variation of the DataBroker written for fast-as-possible
     simulation within a single non-realtime Environment."""
 
-    def __init__(self, env: Environment, logger: CustomLogger, max_queue_size: int = 1000):
+    def __init__(
+        self, env: Environment, logger: CustomLogger, max_queue_size: int = 1000
+    ):
         """
         Initialize env
         """
@@ -380,7 +382,9 @@ class LocalDataBroker(DataBroker):
 class RTDataBroker(DataBroker):
     """DataBroker written for Realtime operation regardless of Environment."""
 
-    def __init__(self, env: Environment, logger: CustomLogger, max_queue_size: int = 1000):
+    def __init__(
+        self, env: Environment, logger: CustomLogger, max_queue_size: int = 1000
+    ):
         """
         Initialize env.
         Adds the function to start callback execution to the environment as a process.
@@ -412,7 +416,9 @@ class RTDataBroker(DataBroker):
         while True:
             if not self._stop_queue.empty():
                 err, module_id = self._stop_queue.get()
-                raise RuntimeError(f"A callback failed in the module {module_id}.") from err
+                raise RuntimeError(
+                    f"A callback failed in the module {module_id}."
+                ) from err
             self._execute_callbacks()
 
     def register_callback(
@@ -464,11 +470,16 @@ class RTDataBroker(DataBroker):
                 logger=self.logger,
                 queue_name=cb.module_id,
                 queue_object=self._module_queues[cb.module_id],
-                max_queue_size=self._max_queue_size
+                max_queue_size=self._max_queue_size,
             )
 
 
-def log_queue_status(logger: logging.Logger, queue_object: queue.Queue, max_queue_size: int, queue_name: str):
+def log_queue_status(
+    logger: logging.Logger,
+    queue_object: queue.Queue,
+    max_queue_size: int,
+    queue_name: str,
+):
     """
     Log the current load of the given queue in percent.
 
@@ -492,5 +503,5 @@ def log_queue_status(logger: logging.Logger, queue_object: queue.Queue, max_queu
         "Queue '%s' fullness is %s percent (%s items).",
         queue_name,
         percent_full,
-        number_of_items
+        number_of_items,
     )

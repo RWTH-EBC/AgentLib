@@ -21,7 +21,9 @@ class MyFirstModuleConfig(ag.BaseModuleConfig):
 
 
 class MyFirstModule(ag.BaseModule):
-    config: MyFirstModuleConfig  # this links the functions to the config! easy to forget
+    config: (
+        MyFirstModuleConfig  # this links the functions to the config! easy to forget
+    )
 
     def process(self):
         # the process defines recurring tasks. It usually looks something like this
@@ -41,7 +43,6 @@ agent_config = {
     # the id is the public name of the agent. It will become later, when using
     # communicators. It is also displayed in log messages.
     "id": "my_agent_id",
-
     # second comes a list of modules, which define the function of the agent. Usually,
     # an agent has a communicator and a functional module, but in fact, any
     # combination of modules is possible.
@@ -57,13 +58,12 @@ agent_config = {
             #   exact python class you want to execute.
             # In our example, we use option two, to load the module defined above.
             "type": {"file": __file__, "class_name": "MyFirstModule"},
-
             # on the same level as type, the remaining configuration of the module has
             # to be done. For our module defined above, we defined a 'name' field which
             # we now have to specify
             "name": "first_agent",
         }
-    ]
+    ],
 }
 
 
