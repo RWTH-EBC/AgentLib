@@ -1,6 +1,7 @@
 """
 Module containing only the Agent class.
 """
+
 import json
 import threading
 from typing import Union, List, Dict, TypeVar, Optional
@@ -51,7 +52,7 @@ class AgentConfig(BaseModel):
         default=1000,
         ge=-1,
         description="Maximal number of waiting items in data-broker queues. "
-                    "Set to -1 for infinity"
+        "Set to -1 for infinity",
     )
 
     @field_validator("modules")
@@ -94,20 +95,17 @@ class Agent:
         )
         if env.config.rt:
             self._data_broker = RTDataBroker(
-                env=env, logger=data_broker_logger,
-                max_queue_size=config.max_queue_size
+                env=env, logger=data_broker_logger, max_queue_size=config.max_queue_size
             )
             self.register_thread(thread=self._data_broker.thread)
         else:
             self._data_broker = LocalDataBroker(
-                env=env, logger=data_broker_logger,
-                max_queue_size=config.max_queue_size
+                env=env, logger=data_broker_logger, max_queue_size=config.max_queue_size
             )
         # Update modules
         self.config = config
         # Setup logger
         self.logger = agentlib_logging.create_logger(env=self.env, name=self.id)
-
 
         # Register the thread monitoring if configured
         if env.config.rt:
@@ -231,8 +229,10 @@ class Agent:
         while True:
             for name, thread in self._threads.items():
                 if not thread.is_alive():
-                    msg = (f"The thread {name} is not alive anymore. Exiting agent. "
-                           f"Check errors above for possible reasons")
+                    msg = (
+                        f"The thread {name} is not alive anymore. Exiting agent. "
+                        f"Check errors above for possible reasons"
+                    )
                     self.logger.critical(msg)
                     self.is_alive = False
                     raise RuntimeError(msg)

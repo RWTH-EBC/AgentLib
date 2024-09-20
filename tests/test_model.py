@@ -1,4 +1,5 @@
 """Module with tests for all models in the agentlib."""
+
 import os
 import sys
 import json
@@ -14,6 +15,7 @@ from agentlib.core import datamodels
 class DummyModel(Model):
     def do_step(self, *, t_start, t_sample=None):
         pass
+
     def initialize(self, **kwargs):
         pass
 
@@ -38,7 +40,7 @@ class TestModel(unittest.TestCase):
 
     def test_description(self):
         """Test if the description is set and deleted."""
-        _default_desc = self.model.get_config_type().model_fields['description'].default
+        _default_desc = self.model.get_config_type().model_fields["description"].default
         _test_desc = "This is just a dummy description"
         self.model.description = _test_desc
         self.assertEqual(_test_desc, self.model.description)
@@ -95,40 +97,39 @@ class TestModel(unittest.TestCase):
         """Test the config generator"""
         model = DummyModel()
         filename = model.generate_variables_config()
-        with open(filename, 'r') as file:
+        with open(filename, "r") as file:
             config = json.load(file)
             self.assertIsInstance(config, dict)
-            self.assertTrue('inputs' in config.keys())
-            self.assertTrue('states' in config.keys())
-            self.assertTrue('outputs' in config.keys())
-            self.assertTrue('parameters' in config.keys())
+            self.assertTrue("inputs" in config.keys())
+            self.assertTrue("states" in config.keys())
+            self.assertTrue("outputs" in config.keys())
+            self.assertTrue("parameters" in config.keys())
 
     def test_get_set(self):
         random_val = np.random.randint(100)
         model = DummyModel(
-            inputs=[{'name': 'test_inp', 'value': 0}],
-            outputs=[{'name': 'test_out', 'value': 0}],
-            parameters=[{'name': 'test_par', 'value': 0}],
-            states=[{'name': 'test_sta', 'value': 0}],
+            inputs=[{"name": "test_inp", "value": 0}],
+            outputs=[{"name": "test_out", "value": 0}],
+            parameters=[{"name": "test_par", "value": 0}],
+            states=[{"name": "test_sta", "value": 0}],
         )
-        model.set('test_inp', random_val)
-        model.set('test_out', random_val)
-        model.set('test_par', random_val)
-        model.set('test_sta', random_val)
-        model.set_parameter_value(name='test_par', value=random_val)
-        model._set_state_value(name='test_sta', value=random_val)
-        model.set_input_value(name='test_inp', value=random_val)
-        model._set_output_value(name='test_out', value=random_val)
+        model.set("test_inp", random_val)
+        model.set("test_out", random_val)
+        model.set("test_par", random_val)
+        model.set("test_sta", random_val)
+        model.set_parameter_value(name="test_par", value=random_val)
+        model._set_state_value(name="test_sta", value=random_val)
+        model.set_input_value(name="test_inp", value=random_val)
+        model._set_output_value(name="test_out", value=random_val)
 
-        self.assertEqual(model.get('test_inp').value, random_val)
-        self.assertEqual(model.get('test_out').value, random_val)
-        self.assertEqual(model.get('test_par').value, random_val)
-        self.assertEqual(model.get('test_sta').value, random_val)
+        self.assertEqual(model.get("test_inp").value, random_val)
+        self.assertEqual(model.get("test_out").value, random_val)
+        self.assertEqual(model.get("test_par").value, random_val)
+        self.assertEqual(model.get("test_sta").value, random_val)
         with self.assertRaises(ValueError):
-            model.get('not_an_input')
+            model.get("not_an_input")
         with self.assertRaises(ValueError):
-            model.set('not_an_input', 10)
-
+            model.set("not_an_input", 10)
 
     def test_create_time_samples(self):
         """Test create time samples"""
@@ -136,24 +137,26 @@ class TestModel(unittest.TestCase):
         random_val = np.random.randint(10, 100)
         samples = model._create_time_samples(t_sample=random_val)
         self.assertEqual(samples[-1], random_val)
-        samples = model._create_time_samples(t_sample=random_val+0.01)
-        self.assertEqual(samples[-1], random_val+0.01)
+        samples = model._create_time_samples(t_sample=random_val + 0.01)
+        self.assertEqual(samples[-1], random_val + 0.01)
 
 
 class TestFMUModel(unittest.TestCase):
     """Class to test the FMUModel"""
 
     def setUp(self) -> None:
-        self.path = os.path.join(os.path.dirname(os.path.dirname(__file__)),
-                                 "examples",
-                                 "models",
-                                 "fmu",
-                                 "test_sinus.fmu")
+        self.path = os.path.join(
+            os.path.dirname(os.path.dirname(__file__)),
+            "examples",
+            "models",
+            "fmu",
+            "test_sinus.fmu",
+        )
         if "linux" in sys.platform:
             self.skipTest("FMU test not yet supported")
-        self.model = FmuModel(path=self.path,
-                              only_config_variables=False,
-                              dt=np.random.rand() + 0.1)
+        self.model = FmuModel(
+            path=self.path, only_config_variables=False, dt=np.random.rand() + 0.1
+        )
 
     def test_initialize(self):
         """Test initialization of FMU"""
@@ -163,8 +166,7 @@ class TestFMUModel(unittest.TestCase):
         """Test simulation of FMU"""
         self.model.initialize(t_start=0, t_stop=3600)
 
-        self.model.set_input_values(names=['u_mul', 'u_add'],
-                                    values=[5, -5])
+        self.model.set_input_values(names=["u_mul", "u_add"], values=[5, -5])
         self.model.do_step(t_start=0, t_sample=3600)
 
 
@@ -175,30 +177,36 @@ class TestScipyModel(unittest.TestCase):
         param_a = np.random.rand() + 1
         param_b = np.random.rand() + 1
 
-        self.inputs = [datamodels.ModelInput(name="T_oda", value=273.15),
-                       datamodels.ModelInput(name="Q_flow_heat", value=0)]
+        self.inputs = [
+            datamodels.ModelInput(name="T_oda", value=273.15),
+            datamodels.ModelInput(name="Q_flow_heat", value=0),
+        ]
         self.out = datamodels.ModelOutput(name="T_room")
         self.sta = datamodels.ModelState(name="T_room", value=293.15)
-        self.model = ScipyStateSpaceModel(system={
-            "A": [-param_a / param_b],
-            "B": [param_a / param_b, 1 / param_b],
-            "C": [1],
-            "D": [0, 0], },
+        self.model = ScipyStateSpaceModel(
+            system={
+                "A": [-param_a / param_b],
+                "B": [param_a / param_b, 1 / param_b],
+                "C": [1],
+                "D": [0, 0],
+            },
             inputs=[
                 {"name": "T_oda", "value": 273.15},
-                {"name": "Q_flow_heat", "value": 0}
+                {"name": "Q_flow_heat", "value": 0},
             ],
             outputs=[{"name": "T_room"}],
             states=[{"name": "T_room", "value": 293.15}],
-            dt=np.random.rand() + 0.1
+            dt=np.random.rand() + 0.1,
         )
 
     def test_simulation(self):
         """Test the simulation of the scipy model"""
         self.model.do_step(t_start=0, t_sample=3600)
         # System should be in equilibrium
-        self.assertEqual(round(self.model.get_output("T_room").value, 2),
-                         self.model.get_input("T_oda").value)
+        self.assertEqual(
+            round(self.model.get_output("T_room").value, 2),
+            self.model.get_input("T_oda").value,
+        )
 
 
 if __name__ == "__main__":

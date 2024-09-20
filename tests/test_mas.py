@@ -12,11 +12,9 @@ class TestMAS(unittest.TestCase):
     def setUp(self) -> None:
         pass
 
-    def test_local_mas(self):
-        ...
+    def test_local_mas(self): ...
 
-    def test_multiprocessing_mas(self):
-        ...
+    def test_multiprocessing_mas(self): ...
 
     def test_clonemap_mas(self):
         # maybe we can do some dummy checks at least?

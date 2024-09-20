@@ -38,7 +38,7 @@ agent_config = {
             "type": {"file": __file__, "class_name": "MyFirstModule"},
             "name": "first_agent",
         }
-    ]
+    ],
 }
 
 

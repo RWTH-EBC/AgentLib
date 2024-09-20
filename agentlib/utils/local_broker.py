@@ -2,6 +2,7 @@
 Module containing a LocalBroker that
 enables local communication with subscriptions.
 """
+
 from typing import Union
 
 from .broker import Broker

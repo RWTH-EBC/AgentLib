@@ -1,4 +1,5 @@
 """Module with tests for the core module of the agentlib."""
+
 import itertools
 import logging
 import os
@@ -7,8 +8,15 @@ from typing import Optional, List
 
 from pydantic import ValidationError
 
-from agentlib.core import BaseModule, Agent, Environment, datamodels, \
-    BaseModuleConfig, AgentVariables, AgentVariable
+from agentlib.core import (
+    BaseModule,
+    Agent,
+    Environment,
+    datamodels,
+    BaseModuleConfig,
+    AgentVariables,
+    AgentVariable,
+)
 from agentlib.core.errors import ConfigurationError
 
 
@@ -23,31 +31,22 @@ default_data = {
     "description": "My Doc",
     "clip": True,
     "rdf_class": "MyRDFClass",
-    "source": {"agent_id": "2938310293"}
+    "source": {"agent_id": "2938310293"},
 }
 
 
-LOG_LEVELS = [
-    "INFO",
-    "DEBUG",
-    "CRITICAL",
-    "WARNING",
-    "ERROR"
-]
+LOG_LEVELS = ["INFO", "DEBUG", "CRITICAL", "WARNING", "ERROR"]
 
 
 class CustomModuleConfig(BaseModuleConfig):
     my_shared_field: AgentVariables = []
     my_single_agent_var: AgentVariable = AgentVariable(name="u1", **default_data)
-    my_single_agent_vars: AgentVariables = [
-        AgentVariable(name="u2", **default_data)
-    ]
+    my_single_agent_vars: AgentVariables = [AgentVariable(name="u2", **default_data)]
     my_custom_vars: AgentVariables = []
-    shared_variable_fields: List[str] = ['my_shared_field']
+    shared_variable_fields: List[str] = ["my_shared_field"]
 
 
 class CustomModule(BaseModule):
-
     config: CustomModuleConfig
 
     def register_callbacks(self):
@@ -98,38 +97,34 @@ class TestModuleConfig(unittest.TestCase):
 
     def test_make_shared(self):
         """Tests if shared fields are properly reconfigured"""
-        cfg = {
-            "my_shared_field": [{"name": "test"}]
-        }
+        cfg = {"my_shared_field": [{"name": "test"}]}
         my_config = CustomModuleConfig(_agent_id=self.ag_id, **self.test_config, **cfg)
         self.assertTrue(my_config.my_shared_field[0].shared)
 
     def test_make_shared_raises_on_misspelling(self):
         """Tests if ConfigurationError is raised when providing wrong shared fields"""
-        cfg = {
-            "shared_variable_fields": ["non_existing_field"]
-        }
+        cfg = {"shared_variable_fields": ["non_existing_field"]}
         with self.assertRaises(ConfigurationError):
             CustomModuleConfig(_agent_id=self.ag_id, **self.test_config, **cfg)
 
     def test_overwrite_default(self):
         """Test the overwrite default behaviour"""
-        self._check_if_overwrite_works(overwrite_default={
-            "type": "int",
-            "value": 200,
-            "ub": 400,
-            "lb": -200,
-            "allowed_values": [100, 150, 200],
-            "shared": False,
-            "unit": "testUnit2",
-            "description": "My Doc 2",
-            "clip": False,
-            "rdf_class": "MyRDFClass2",
-            "source": {"agent_id": "2938310293", "module_id": None}
-        })
-        self._check_if_overwrite_works(overwrite_default={
-            "type": "int"
-        })
+        self._check_if_overwrite_works(
+            overwrite_default={
+                "type": "int",
+                "value": 200,
+                "ub": 400,
+                "lb": -200,
+                "allowed_values": [100, 150, 200],
+                "shared": False,
+                "unit": "testUnit2",
+                "description": "My Doc 2",
+                "clip": False,
+                "rdf_class": "MyRDFClass2",
+                "source": {"agent_id": "2938310293", "module_id": None},
+            }
+        )
+        self._check_if_overwrite_works(overwrite_default={"type": "int"})
 
     def _check_if_overwrite_works(self, overwrite_default: dict):
         """Helper to avoid boiler plate and test various custom AgentVars"""
@@ -142,19 +137,27 @@ class TestModuleConfig(unittest.TestCase):
         updated_data.update(overwrite_default)
         my_config = CustomModuleConfig(_agent_id=self.ag_id, **self.test_config, **cfg)
         for key, value in updated_data.items():
-
             if key == "source":
                 shared = overwrite_default.get("shared")
-                self._check_source(shared=shared, to_check=my_config.my_single_agent_var.dict()[key], truth=value)
-                self._check_source(shared=shared, to_check=my_config.my_single_agent_vars[0].dict()[key], truth=value)
+                self._check_source(
+                    shared=shared,
+                    to_check=my_config.my_single_agent_var.dict()[key],
+                    truth=value,
+                )
+                self._check_source(
+                    shared=shared,
+                    to_check=my_config.my_single_agent_vars[0].dict()[key],
+                    truth=value,
+                )
                 continue
 
             self.assertEqual(my_config.my_single_agent_var.dict()[key], value)
             self.assertEqual(my_config.my_single_agent_vars[0].dict()[key], value)
 
-
     def _check_source(self, shared: Optional[bool], truth: dict, to_check: dict):
-        shared_fields = CustomModuleConfig.model_fields["shared_variable_fields"].default
+        shared_fields = CustomModuleConfig.model_fields[
+            "shared_variable_fields"
+        ].default
         shared_source = {"agent_id": self.ag_id, "module_id": None}
 
         if shared:
@@ -194,13 +197,17 @@ class TestModuleConfig(unittest.TestCase):
         BaseModuleConfig(_agent_id=self.ag_id, log_level="criTical", **self.test_config)
         BaseModuleConfig(_agent_id=self.ag_id, log_level=None, **self.test_config)
         with self.assertRaises(ValidationError):
-            BaseModuleConfig(_agent_id=self.ag_id, log_level="criticall", **self.test_config)
+            BaseModuleConfig(
+                _agent_id=self.ag_id, log_level="criticall", **self.test_config
+            )
         with self.assertRaises(ValidationError):
-            BaseModuleConfig(_agent_id=self.ag_id, log_level="infoo", **self.test_config)
+            BaseModuleConfig(
+                _agent_id=self.ag_id, log_level="infoo", **self.test_config
+            )
 
     def test_extra_error_message(self):
         """Checks that the error message is correctly modified with suggestions when
-         initializing with wrong field names"""
+        initializing with wrong field names"""
         cfg = {
             "extra-field": "ignored",
         }
@@ -209,13 +216,13 @@ class TestModuleConfig(unittest.TestCase):
         try:
             _ = BaseModuleConfig(_agent_id=self.ag_id, **self.test_config, **cfg)
         except ValidationError as e:
-            suggestions = ['module_id', 'type', 'log_level']
+            suggestions = ["module_id", "type", "log_level"]
             for suggestion in suggestions:
                 self.assertIn(suggestion, str(e))
 
     def test_custom_json_schema(self):
         """Checks that the json schema is implemented correctly, putting log level and
-         shared variable fields always last."""
+        shared variable fields always last."""
         schema = CustomModuleConfig.model_json_schema()
         fields = list(schema["properties"])
         self.assertEqual(fields[-1], "log_level")
@@ -225,9 +232,8 @@ class TestModuleConfig(unittest.TestCase):
         """Checks implementation of the default utility method"""
         self.assertEqual(
             CustomModuleConfig.default("my_single_agent_var"),
-            AgentVariable(name="u1", **default_data)
+            AgentVariable(name="u1", **default_data),
         )
-
 
 
 class TestModule(unittest.TestCase):
@@ -337,7 +343,6 @@ class TestModule(unittest.TestCase):
 
 
 class TestModuleLogging(unittest.TestCase):
-
     def setUp(self) -> None:
         self.test_config = {
             "type": "not_necessary_here",
@@ -361,8 +366,9 @@ class TestModuleLogging(unittest.TestCase):
             logging.basicConfig(level=root_lvl, filename=self.log_filename)
             mod_lvl_int = logging.getLevelName(mod_lvl)
             self._clear_file()
-            mod = CustomModule(config={**self.test_config, "log_level": mod_lvl},
-                               agent=self.agent)
+            mod = CustomModule(
+                config={**self.test_config, "log_level": mod_lvl}, agent=self.agent
+            )
             self.assertEqual(mod.logger.getEffectiveLevel(), mod_lvl_int)
             # todo Fabian discuss, how we can log to a file, or test this better
             # for lvl in LOG_LEVELS:

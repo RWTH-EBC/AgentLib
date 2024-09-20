@@ -40,7 +40,9 @@ class MyModule(ag.BaseModule):
             new_value = my_number.value + self.config.increment
 
             # Now we log what we did, to confirm it is working.
-            self.logger.info(f"I will change the value of '{name_of_my_number}' from {my_number.value} to {new_value}.")
+            self.logger.info(
+                f"I will change the value of '{name_of_my_number}' from {my_number.value} to {new_value}."
+            )
 
             # The set method will write the new value of our variable. Using the set
             # method notifies other modules, that we changed the value of this variable.
@@ -59,7 +61,6 @@ agent_config = {
     "modules": [
         {
             "type": {"file": __file__, "class_name": "MyModule"},
-
             # when specifying fields of a module config that represent AgentVariables,
             # we have to provide more than just a value. The 'name' key is always
             # required. The 'value' key is not required and will default to None.
@@ -67,7 +68,6 @@ agent_config = {
             # is None, and depends on the specific code where the variable is used.
             "my_number": {"name": "greg", "value": 5},
         },
-
         # We define a second module in this agent, which will log the value of
         # AgentVariables.
         {
@@ -75,17 +75,15 @@ agent_config = {
             # default to the class name. Here, we specify it, because we need to know
             # it, when we plot our results below.
             "module_id": "my_logger",
-
             # Here we use the first method to specify a module type - we simply provide
             # the identifier of a core module. Its source code is located
             # at agentlib/modules/utils/agent_logger.py
             "type": "agentlogger",
-
             # Here, we specify the time intervall, for which we want to log the value
             # of our AgentVariables.
-            "t_sample": 1
-        }
-    ]
+            "t_sample": 1,
+        },
+    ],
 }
 
 
@@ -109,7 +107,6 @@ def main(with_plots: bool = True):
         # key is name of the variable (it's actually the alias, more on this later!)
         logger_results["greg"].plot()
         plt.show()
-
 
 
 if __name__ == "__main__":

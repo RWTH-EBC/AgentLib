@@ -10,8 +10,7 @@ from agentlib.utils import LocalBroker
 
 class LocalSubscriptionCommunicatorConfig(
     LocalCommunicatorConfig, SubscriptionCommunicatorConfig
-):
-    ...
+): ...
 
 
 class LocalClient(LocalCommunicator):

@@ -1,5 +1,6 @@
 """This module contains a SensorModule which reads a .dat file
 from the Deutsche Wetterdienst (DWD)."""
+
 import io
 from typing import Union, List
 from pydantic import FilePath, Field, validator

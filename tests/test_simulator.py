@@ -47,7 +47,6 @@ class DummyModel(Model):
 
 
 class TestSimulator(unittest.TestCase):
-
     def setUp(self) -> None:
         self.t_start = np.random.randint(2)
         self.t_stop = np.random.randint(self.t_start + 10, high=self.t_start + 10000)

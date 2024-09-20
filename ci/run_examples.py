@@ -1,6 +1,9 @@
 """Module with functions to test the if examples are
 executable."""
 
+import unittest
+import os
+import subprocess
 import logging
 import os
 import pathlib
@@ -92,7 +95,6 @@ class TestExamples(unittest.TestCase):
             with_plots=False,
             log_level=logging.FATAL,
         )
-
     def test_csv_data_source(self):
         """Test the pid example"""
         self._run_example_with_return(

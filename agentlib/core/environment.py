@@ -83,7 +83,7 @@ class Environment:
 
 
 def make_env_config(
-    config: Union[dict, EnvironmentConfig, str, None]
+    config: Union[dict, EnvironmentConfig, str, None],
 ) -> EnvironmentConfig:
     """Creates the environment config from different sources."""
     if config is None:
@@ -166,7 +166,7 @@ class RealtimeEnvironment(simpy.RealtimeEnvironment, CustomSimpyEnvironment):
     @property
     def time(self) -> float:
         """Get the current system time as unix timestamp, with the enivronement
-        offset. """
+        offset."""
         return time.time() + self.config.offset
 
     def pretty_time(self) -> str:

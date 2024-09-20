@@ -1,4 +1,5 @@
 """This module contains the FMUModel class."""
+
 import queue
 import shutil
 import os
@@ -234,23 +235,29 @@ class FmuModel(Model):
                 dict(
                     name=_model_var.name,
                     type=_model_var.type,
-                    value=self._converter(_model_var.type, _model_var.start)
-                    if (
-                        _model_var.causality
-                        in [
-                            Causality.parameter,
-                            Causality.calculatedParameter,
-                            Causality.input,
-                        ]
-                        and _model_var.start is not None
-                    )
-                    else None,
-                    unit=_model_var.unit
-                    if _model_var.unit is not None
-                    else attrs.fields(ModelVariable).unit.default,
-                    description=_model_var.description
-                    if _model_var.description is not None
-                    else attrs.fields(ModelVariable).description.default,
+                    value=(
+                        self._converter(_model_var.type, _model_var.start)
+                        if (
+                            _model_var.causality
+                            in [
+                                Causality.parameter,
+                                Causality.calculatedParameter,
+                                Causality.input,
+                            ]
+                            and _model_var.start is not None
+                        )
+                        else None
+                    ),
+                    unit=(
+                        _model_var.unit
+                        if _model_var.unit is not None
+                        else attrs.fields(ModelVariable).unit.default
+                    ),
+                    description=(
+                        _model_var.description
+                        if _model_var.description is not None
+                        else attrs.fields(ModelVariable).description.default
+                    ),
                     causality=_model_var.causality,
                     variability=_model_var.variability,
                 )
