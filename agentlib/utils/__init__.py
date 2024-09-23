@@ -14,7 +14,6 @@ from pathlib import Path
 from .local_broadcast_broker import LocalBroadcastBroker
 from .local_broker import LocalBroker
 from .multi_processing_broker import MultiProcessingBroker
-from .plotting.simulator_dashboard import simulator_dashboard
 
 
 def custom_injection(config: dict, module_name: str = None):
