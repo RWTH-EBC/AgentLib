@@ -15,7 +15,7 @@ if __name__ == "__main__":
 import os
 from pathlib import Path
 
-from agentlib.utils import simulator_dashboard
+from agentlib.utils.plotting.simulator_dashboard import simulator_dashboard
 
 if __name__ == "__main__":
 
