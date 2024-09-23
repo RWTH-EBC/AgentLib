@@ -71,7 +71,7 @@ pylintrc:1:0: W0012: Unknown option value for '--disable', expected a valid pyli
 pylintrc:1:0: W0012: Unknown option value for '--disable', expected a valid pylint message and got 'old-octal-literal' (unknown-option-value)
 pylintrc:1:0: W0012: Unknown option value for '--disable', expected a valid pylint message and got 'non-ascii-bytes-literal' (unknown-option-value)
 pylintrc:1:0: W0012: Unknown option value for '--disable', expected a valid pylint message and got 'eq-without-hash' (unknown-option-value)
-************* Module ci.run_examples
+************* Module run_examples
 ci/run_examples.py:8:0: W0404: Reimport 'os' (imported line 5) (reimported)
 ci/run_examples.py:10:0: W0404: Reimport 'subprocess' (imported line 6) (reimported)
 ci/run_examples.py:11:0: W0404: Reimport 'unittest' (imported line 4) (reimported)
