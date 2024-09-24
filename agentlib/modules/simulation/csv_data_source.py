@@ -67,8 +67,33 @@ class CSVDataSourceConfig(BaseModuleConfig):
             )
         return data
 
+    def transform_to_numeric_index(self, data: pd.DataFrame) -> pd.DataFrame:
+        """Handles the index and ensures it is numeric, with correct offset"""
+        # Convert offset to seconds if it's a Timedelta
+        offset = self.data_offset
+        if isinstance(offset, pd.Timedelta):
+            offset = offset.total_seconds()
+        # Handle different index types
+        if isinstance(data.index, pd.DatetimeIndex):
+            data.index = (data.index - data.index[0]).total_seconds()
+        else:
+            # Try to convert to numeric if it's a string
+            try:
+                data.index = pd.to_numeric(data.index)
+                data.index = data.index - data.index[0]
+            except ValueError:
+                # If conversion to numeric fails, try to convert to datetime
+                try:
+                    data.index = pd.to_datetime(data.index)
+                    data.index = (data.index - data.index[0]).total_seconds()
+                except ValueError:
+                    raise ValueError("Unable to convert index to numeric format")
+
+        data.index = data.index.astype(float) - offset
+
     @model_validator(mode="after")
-    def are_outputs_in_data(self):
+    def validate_data(self):
+        """Checks if outputs and data columns match, and ensures a numeric index."""
         if self.outputs:
             columns = set(self.data.columns)
             output_names = set(o.name for o in self.outputs)
@@ -79,6 +104,7 @@ class CSVDataSourceConfig(BaseModuleConfig):
                     f"The following output columns are not present in the dataframe: "
                     f"{', '.join(missing_columns)}"
                 )
+        self.transform_to_numeric_index(self.data)
         return self
 
 
@@ -90,14 +116,6 @@ class CSVDataSource(BaseModule):
         super().__init__(config=config, agent=agent)
 
         data = self.config.data
-        data = self.transform_to_numeric_index(data)
-
-        # Filter columns if specified
-        if self.config.outputs:
-            columns_to_keep = [
-                col.name for col in self.config.outputs if col.name in data.columns
-            ]
-            data = data[columns_to_keep]
 
         # Interpolate the dataframe
         start_time = data.index[0]
@@ -168,28 +186,3 @@ class CSVDataSource(BaseModule):
 
     def register_callbacks(self):
         """Don't do anything as this module is not event-triggered"""
-
-    def transform_to_numeric_index(self, data: pd.DataFrame) -> pd.DataFrame:
-        """Handles the index and ensures it is numeric, with correct offset"""
-        # Convert offset to seconds if it's a Timedelta
-        offset = self.config.data_offset
-        if isinstance(offset, pd.Timedelta):
-            offset = offset.total_seconds()
-        # Handle different index types
-        if isinstance(data.index, pd.DatetimeIndex):
-            data.index = (data.index - data.index[0]).total_seconds()
-        else:
-            # Try to convert to numeric if it's a string
-            try:
-                data.index = pd.to_numeric(data.index)
-                data.index = data.index - data.index[0]
-            except ValueError:
-                # If conversion to numeric fails, try to convert to datetime
-                try:
-                    data.index = pd.to_datetime(data.index)
-                    data.index = (data.index - data.index[0]).total_seconds()
-                except ValueError:
-                    raise ValueError("Unable to convert index to numeric format")
-
-        data.index = data.index.astype(float) - offset
-        return data
