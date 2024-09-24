@@ -19,7 +19,7 @@ def create_sample_data():
     return df
 
 
-def run_example(log_level=logging.INFO, with_plots: bool = True):
+def run_example(log_level=logging.INFO, with_plots: bool = True, extrapolation: str = "constant"):
     # Set the log-level
     logging.basicConfig(level=log_level)
 
@@ -39,7 +39,7 @@ def run_example(log_level=logging.INFO, with_plots: bool = True):
                     {"name": "temperature", "shared": True},
                     {"name": "humidity", "shared": True},
                 ],
-                "extrapolation": "constant",
+                "extrapolation": extrapolation,
             },
             {"module_id": "Logger", "type": "AgentLogger"},
         ],
