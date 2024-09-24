@@ -18,8 +18,5 @@ from pathlib import Path
 from agentlib.utils.plotting.simulator_dashboard import simulator_dashboard
 
 if __name__ == "__main__":
-
-    #
-
     os.chdir(Path(__file__).parent)
     simulator_dashboard("res_room1.csv")  # accepts multiple files as *args
