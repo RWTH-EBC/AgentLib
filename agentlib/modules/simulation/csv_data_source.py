@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import List, Optional, Union
+from typing import List, Optional, Union, Literal
 
 import numpy as np
 import pandas as pd
@@ -28,14 +28,24 @@ class CSVDataSourceConfig(BaseModuleConfig):
         title="t_sample",
         default=1,
         ge=0,
-        description="Date source sends a value every <t_sample> seconds. Default is 1 s.",
+        description="Sampling time. Data source sends an interpolated value from the "
+        "data every <t_sample> seconds. Default is 1 s.",
     )
     data_offset: Optional[Union[pd.Timedelta, float]] = Field(
         title="data_offset",
         default=0,
-        description="Offset will be subtracted from index. I.e. if your environment "
-        "starts at 0, and you want your data-source to start at 1000 "
-        "seconds, you should set this to 1000.",
+        description="Offset will be subtracted from index, allowing you to start at "
+        "any point in your data. I.e. if your environment starts at 0, "
+        "and you want your data-source to start at 1000 seconds, "
+        "you should set this to 1000.",
+    )
+    extrapolation: Literal["constant", "repeat", "backwards"] = Field(
+        title="Extrapolation",
+        default="constant",
+        description="Determines what to do, when the data source runs out. 'constant' "
+        "returns the last value, 'repeat' repeats the data from the "
+        "start, and 'backwards' goes through the data backwards, bouncing "
+        "indefinitely.",
     )
     shared_variable_fields: List[str] = ["outputs"]
 
@@ -111,19 +121,58 @@ class CSVDataSource(BaseModule):
         return data
 
     def create_iterator(self):
-        """Create a custom iterator that returns the last value when exhausted"""
-        for item in self.data_tuples:
-            yield item
-        self.logger.warning(
-            "Data source has been exhausted. Returning last value indefinitely."
-        )
+        """Create a custom iterator based on the extrapolation method"""
         while True:
-            yield self.data_tuples[-1]
+            for item in self.data_tuples:
+                yield item
+
+            if self.config.extrapolation == "constant":
+                self.logger.warning(
+                    "Data source has been exhausted. Returning last value indefinitely."
+                )
+                while True:
+                    yield self.data_tuples[-1]
+            elif self.config.extrapolation == "repeat":
+                self.logger.warning(
+                    "Data source has been exhausted. Repeating data from the start."
+                )
+                continue  # This will restart the outer loop
+            elif self.config.extrapolation == "backwards":
+                self.logger.warning(
+                    "Data source has been exhausted. Going through data backwards."
+                )
+                yield from self.backwards_iterator()
+
+    def backwards_iterator(self):
+        """Iterator for backwards extrapolation"""
+        while True:
+            for item in reversed(
+                self.data_tuples[:-1]
+            ):  # Exclude the last item to avoid repetition
+                yield item
+            for item in self.data_tuples[
+                1:
+            ]:  # Exclude the first item to avoid repetition
+                yield item
+
+    def process(self):
+        """Write the current data values into data_broker every t_sample"""
+        while True:
+            current_data = self._get_next_data()
+            for output, value in zip(self.config.outputs, current_data):
+                self.logger.debug(
+                    f"At {self.env.time}: Sending variable {output.name} with value {value} to data broker."
+                )
+                self.set(output.name, value)
+            yield self.env.timeout(self.config.t_sample)
+
+    def register_callbacks(self):
+        """Don't do anything as this module is not event-triggered"""
 
     def transform_to_numeric_index(self, data: pd.DataFrame) -> pd.DataFrame:
         """Handles the index and ensures it is numeric, with correct offset"""
-        offset = self.config.data_offset
         # Convert offset to seconds if it's a Timedelta
+        offset = self.config.data_offset
         if isinstance(offset, pd.Timedelta):
             offset = offset.total_seconds()
         # Handle different index types
@@ -144,17 +193,3 @@ class CSVDataSource(BaseModule):
 
         data.index = data.index.astype(float) - offset
         return data
-
-    def process(self):
-        """Write the current data values into data_broker every t_sample"""
-        while True:
-            current_data = self._get_next_data()
-            for output, value in zip(self.config.outputs, current_data):
-                self.logger.debug(
-                    f"At {self.env.time}: Sending variable {output.name} with value {value} to data broker."
-                )
-                self.set(output.name, value)
-            yield self.env.timeout(self.config.t_sample)
-
-    def register_callbacks(self):
-        """Don't do anything as this module is not event-triggered"""

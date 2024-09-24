@@ -39,6 +39,7 @@ def run_example(log_level=logging.INFO, with_plots: bool = True):
                     {"name": "temperature", "shared": True},
                     {"name": "humidity", "shared": True},
                 ],
+                "extrapolation": "constant",
             },
             {"module_id": "Logger", "type": "AgentLogger"},
         ],
@@ -50,7 +51,7 @@ def run_example(log_level=logging.INFO, with_plots: bool = True):
     agent = ag.Agent(config=agent_config, env=env)
 
     # Run the simulation
-    env.run(until=600)  # Run for 10 minutes (600 seconds)
+    env.run(until=600 * 2)  # Run for 10 minutes (600 seconds)
     results = agent.get_results()
 
     if with_plots:
