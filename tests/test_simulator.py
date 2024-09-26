@@ -3,12 +3,13 @@ import shutil
 import unittest
 import uuid
 
-from pydantic import ValidationError
 import numpy as np
 import pandas as pd
+from pydantic import ValidationError
 
-from agentlib.core import Agent, Environment
 from agentlib.core import (
+    Agent,
+    Environment,
     Model,
     ModelConfig,
     ModelOutputs,
@@ -17,7 +18,8 @@ from agentlib.core import (
     ModelInputs,
     datamodels,
 )
-from agentlib.modules.simulator import Simulator
+from agentlib.modules.simulation.simulator import Simulator
+
 
 # pylint: disable=missing-module-docstring,missing-class-docstring
 

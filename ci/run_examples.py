@@ -5,8 +5,11 @@ import unittest
 import os
 import subprocess
 import logging
-
+import os
 import pathlib
+import subprocess
+import unittest
+
 import pandas as pd
 
 from agentlib.utils import custom_injection
@@ -92,6 +95,31 @@ class TestExamples(unittest.TestCase):
             with_plots=False,
             log_level=logging.FATAL,
         )
+
+    def test_csv_data_source(self):
+        """Test the pid example"""
+        self._run_example_with_return(
+            file="simulation//csv_data_source.py",
+            func_name="run_example",
+            with_plots=False,
+            log_level=logging.FATAL,
+            extrapolation="constant"
+        )
+        self._run_example_with_return(
+            file="simulation//csv_data_source.py",
+            func_name="run_example",
+            with_plots=False,
+            log_level=logging.FATAL,
+            extrapolation="repeat"
+        )
+        self._run_example_with_return(
+            file="simulation//csv_data_source.py",
+            func_name="run_example",
+            with_plots=False,
+            log_level=logging.FATAL,
+            extrapolation="backwards"
+        )
+
 
     def test_scipy_model(self):
         """Tests the scipy model example"""

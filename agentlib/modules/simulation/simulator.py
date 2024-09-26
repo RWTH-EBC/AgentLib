@@ -5,12 +5,12 @@ Module contains the Simulator, used to simulate any model.
 import os
 from dataclasses import dataclass
 from math import inf
+from pathlib import Path
 from typing import Union, Dict, List, Optional
 
-from pathlib import Path
-from pydantic import field_validator, Field
 import numpy as np
 import pandas as pd
+from pydantic import field_validator, Field
 from pydantic_core.core_schema import FieldValidationInfo
 
 from agentlib.core import (
@@ -21,8 +21,8 @@ from agentlib.core import (
     AgentVariable,
     AgentVariables,
     ModelVariable,
+    Model,
 )
-from agentlib.core import Model
 from agentlib.core.errors import OptionalDependencyError
 from agentlib.models import get_model_type, UNINSTALLED_MODEL_TYPES
 from agentlib.utils import custom_injection
@@ -53,7 +53,7 @@ class SimulatorResults:
         self.columns = pd.MultiIndex.from_arrays(
             arrays=np.array(
                 [
-                    [_var.causality for _var in variables],
+                    [_var.causality.name for _var in variables],
                     [_var.name for _var in variables],
                     [_var.type for _var in variables],
                 ]
