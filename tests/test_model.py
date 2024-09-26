@@ -85,7 +85,7 @@ class TestModel(unittest.TestCase):
     def test_abc(self):
         """Test if abc evokes error"""
         with self.assertRaises(TypeError):
-            model = Model()
+            Model()
 
     def test_get_attr(self):
         """Test if AttributeError is evoked"""

@@ -4,21 +4,16 @@ Module containing only the Agent class.
 
 import json
 import threading
+from pathlib import Path
 from typing import Union, List, Dict, TypeVar, Optional
 
-from pathlib import Path
 from pydantic import field_validator, BaseModel, FilePath, Field
 
 import agentlib
 import agentlib.core.logging_ as agentlib_logging
-from agentlib.core import (
-    Environment,
-    LocalDataBroker,
-    RTDataBroker,
-    BaseModule,
-    DataBroker,
-)
-from agentlib.core.environment import CustomSimpyEnvironment
+from agentlib.core.data_broker import DataBroker, LocalDataBroker, RTDataBroker
+from agentlib.core.environment import CustomSimpyEnvironment, Environment
+from agentlib.core.module import BaseModule
 from agentlib.utils import custom_injection
 from agentlib.utils.load_config import load_config
 

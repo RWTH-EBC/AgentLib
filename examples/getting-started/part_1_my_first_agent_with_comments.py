@@ -81,7 +81,7 @@ def main():
     env = ag.Environment(config=environment_config)
 
     # create the agent. Multiple agents can be created with the same environment.
-    agent = ag.Agent(config=agent_config, env=env)
+    _agent = ag.Agent(config=agent_config, env=env)
 
     # runs the environment for 10 seconds, starting the agent
     env.run(10)

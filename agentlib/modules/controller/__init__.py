@@ -1,5 +1,4 @@
 from agentlib.utils.plugin_import import ModuleImport
-from .controller import Controller, SISOController, SISOControllerConfig
 
 MODULE_TYPES = {
     "pid": ModuleImport(

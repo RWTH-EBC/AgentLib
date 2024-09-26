@@ -1,7 +1,8 @@
 from pydantic import Field
+
 from agentlib.core import Agent
-from agentlib.modules.controller import SISOController, SISOControllerConfig
 from agentlib.core.datamodels import AgentVariable
+from agentlib.modules.controller.controller import SISOController, SISOControllerConfig
 
 
 class BangBangConfig(SISOControllerConfig):

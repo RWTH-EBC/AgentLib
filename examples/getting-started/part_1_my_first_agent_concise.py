@@ -46,7 +46,7 @@ def main():
     logging.basicConfig(level=logging.INFO)
     environment_config = {"rt": False, "factor": 1, "clock": False, "t_sample": 60}
     env = ag.Environment(config=environment_config)
-    agent = ag.Agent(config=agent_config, env=env)
+    _agent = ag.Agent(config=agent_config, env=env)
     env.run(10)
 
 

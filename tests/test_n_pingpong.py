@@ -3,10 +3,12 @@ This test file checks if MAS correctly execute.
 """
 
 import itertools
-import unittest
 import time
-from pydantic import Field
+import unittest
+
 import numpy as np
+from pydantic import Field
+
 from agentlib.core import BaseModule, Agent, BaseModuleConfig
 from agentlib.core.datamodels import AgentVariable
 from agentlib.utils import MultiProcessingBroker, LocalBroadcastBroker, LocalBroker
@@ -114,7 +116,8 @@ class TestNPingPong(unittest.TestCase):
 
     def test_multiprocessing_broadcast(self):
         """Test the NPingPong system using multiprocessing broadcast as communicator"""
-        broker = MultiProcessingBroker(config={"port": PORT})
+        _broker = MultiProcessingBroker(config={"port": PORT})
+        assert _broker
         with self._create_2n_pingpong_agents(
             com_type="multiprocessing_broadcast"
         ) as mas:

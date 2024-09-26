@@ -19,7 +19,6 @@ from agentlib.core import (
 )
 from agentlib.core.errors import ConfigurationError
 
-
 default_data = {
     "type": "float",
     "value": 100,
@@ -212,9 +211,9 @@ class TestModuleConfig(unittest.TestCase):
             "extra-field": "ignored",
         }
         with self.assertRaises(ValidationError):
-            _ = BaseModuleConfig(_agent_id=self.ag_id, **self.test_config, **cfg)
+            BaseModuleConfig(_agent_id=self.ag_id, **self.test_config, **cfg)
         try:
-            _ = BaseModuleConfig(_agent_id=self.ag_id, **self.test_config, **cfg)
+            BaseModuleConfig(_agent_id=self.ag_id, **self.test_config, **cfg)
         except ValidationError as e:
             suggestions = ["module_id", "type", "log_level"]
             for suggestion in suggestions:
@@ -253,7 +252,7 @@ class TestModule(unittest.TestCase):
     def test_missing_config_type(self):
         """Tests if a proper error is raised when the type is missing."""
         with self.assertRaises(ConfigurationError):
-            mod = BrokenCustomModule(config=self.test_config, agent=self.agent)
+            BrokenCustomModule(config=self.test_config, agent=self.agent)
 
     def test_properties(self):
         """Test properties of module"""

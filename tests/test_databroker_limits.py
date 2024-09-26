@@ -4,7 +4,6 @@ import time
 import unittest
 
 
-
 from agentlib import LocalMASAgency
 from agentlib import AgentVariable, BaseModule, BaseModuleConfig
 

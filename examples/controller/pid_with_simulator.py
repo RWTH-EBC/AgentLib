@@ -99,7 +99,7 @@ def run_example(with_plots=True, log_level=logging.INFO):
 
     env_config = {"rt": False, "factor": 0.01, "clock": True, "t_sample": 60}
     env = ag.Environment(config=env_config)
-    pid_agent = ag.Agent(config=pid_agent_config, env=env)
+    _pid_agent = ag.Agent(config=pid_agent_config, env=env)
     process_agent = ag.Agent(config=process_agent_config, env=env)
     env.run(until=1000)
 

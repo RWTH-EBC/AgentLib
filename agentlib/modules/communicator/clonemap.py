@@ -223,7 +223,7 @@ class CloneMAPAgent(clonemapyagent.Agent):
         logger.addHandler(cl)
 
         env = Environment(config={"rt": True, "factor": env_factor})
-        agent = Agent(env=env, config=agent_config)
+        _agent = Agent(env=env, config=agent_config)
         env.run()
         self.loop_forever()
 
