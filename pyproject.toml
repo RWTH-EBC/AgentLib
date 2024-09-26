@@ -44,7 +44,3 @@ full = ['agentlib[fmu,scipy,plot,orjson,fuzz,mqtt]']
 homepage = "https://github.com/RWTH-EBC/AgentLib"
 documentation = "https://github.com/RWTH-EBC/AgentLib"
 
-
-[tool.ruff.lint]
-# prevents unused variable for agent = Agent(...)
-dummy-variable-rgx = "^.*(agent|model).*$"
