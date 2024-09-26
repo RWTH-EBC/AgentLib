@@ -1,6 +1,5 @@
 """Module with tests for the core module of the agentlib."""
 
-import logging
 import time
 import unittest
 

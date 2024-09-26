@@ -1,8 +1,7 @@
 """Module to test all datamodels in the agentlib"""
 
 import unittest
-from pydantic import ValidationError
-from agentlib.core import datamodels, errors
+from agentlib.core import datamodels
 import pandas as pd
 
 

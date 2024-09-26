@@ -3,7 +3,7 @@ from the Deutsche Wetterdienst (DWD)."""
 
 import io
 from typing import Union, List
-from pydantic import FilePath, Field, validator
+from pydantic import FilePath, Field
 import numpy as np
 import pandas as pd
 from agentlib.core import (

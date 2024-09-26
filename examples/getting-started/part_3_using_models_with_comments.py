@@ -32,7 +32,6 @@ import agentlib as ag
 
 
 # define the inputs, outputs, states and parameters of your model
-from agentlib.utils.multi_agent_system import LocalMASAgency
 
 
 class HeatedRoomConfig(ag.ModelConfig):
