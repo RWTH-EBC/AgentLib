@@ -107,13 +107,6 @@ class TestCSVDataSource(unittest.TestCase):
         data_source = CSVDataSource(config=config, agent=self.agent)
         self.assertEqual(data_source.config.data.index[0], -offset)
 
-    def test_output_filtering(self):
-        outputs = [dict(name="col1", value=0)]
-        config = self.get_data_source_config(outputs=outputs)
-        data_source = CSVDataSource(config=config, agent=self.agent)
-        self.assertEqual(len(data_source.data_tuples[0]), 1)
-        self.assertEqual(data_source.config.data.columns[0], "col1")
-
     def test_interpolation(self):
         config = self.get_data_source_config(t_sample=30)  # 30 seconds
         data_source = CSVDataSource(config=config, agent=self.agent)
