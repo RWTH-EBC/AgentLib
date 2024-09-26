@@ -140,11 +140,9 @@ tests/test_data_source.py:91:4: C0116: Missing function or method docstring (mis
 tests/test_data_source.py:98:4: C0116: Missing function or method docstring (missing-function-docstring)
 tests/test_data_source.py:104:4: C0116: Missing function or method docstring (missing-function-docstring)
 tests/test_data_source.py:110:4: C0116: Missing function or method docstring (missing-function-docstring)
-tests/test_data_source.py:111:19: R1735: Consider using '{"name": 'col1', "value": 0}' instead of a call to 'dict'. (use-dict-literal)
 tests/test_data_source.py:117:4: C0116: Missing function or method docstring (missing-function-docstring)
-tests/test_data_source.py:124:4: C0116: Missing function or method docstring (missing-function-docstring)
-tests/test_data_source.py:128:12: W0212: Access to a protected member _get_next_data of a client class (protected-access)
-tests/test_data_source.py:129:20: W0212: Access to a protected member _get_next_data of a client class (protected-access)
+tests/test_data_source.py:121:12: W0212: Access to a protected member _get_next_data of a client class (protected-access)
+tests/test_data_source.py:122:20: W0212: Access to a protected member _get_next_data of a client class (protected-access)
 ************* Module tests.test_databroker_limits
 tests/test_databroker_limits.py:6:0: W0404: Reimport 'time' (imported line 3) (reimported)
 tests/test_databroker_limits.py:14:0: C0115: Missing class docstring (missing-class-docstring)
@@ -281,5 +279,5 @@ if __name__ == "__main__":
     unittest.main() (duplicate-code)
 
 -----------------------------------
-Your code has been rated at 8.46/10
+Your code has been rated at 8.47/10
 
