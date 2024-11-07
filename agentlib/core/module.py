@@ -1,6 +1,7 @@
 """This module contains the base AgentModule."""
 
 from __future__ import annotations
+
 import abc
 import json
 import logging
@@ -19,19 +20,19 @@ from typing import (
 
 import pydantic
 from pydantic import field_validator, ConfigDict, BaseModel, Field, PrivateAttr
-from pydantic_core import core_schema
 from pydantic.json_schema import GenerateJsonSchema
+from pydantic_core import core_schema
 
-from agentlib.core.environment import CustomSimpyEnvironment
-from agentlib.core.errors import ConfigurationError
+import agentlib.core.logging_ as agentlib_logging
+from agentlib.core import datamodels
 from agentlib.core.datamodels import (
     AgentVariable,
     Source,
     AgentVariables,
     AttrsToPydanticAdaptor,
 )
-from agentlib.core import datamodels
-import agentlib.core.logging_ as agentlib_logging
+from agentlib.core.environment import CustomSimpyEnvironment
+from agentlib.core.errors import ConfigurationError
 from agentlib.utils.fuzzy_matching import fuzzy_match, RAPIDFUZZ_IS_INSTALLED
 from agentlib.utils.validators import (
     include_defaults_in_root,
@@ -291,7 +292,12 @@ class BaseModuleConfig(BaseModel):
             super().__init__(*args, **kwargs)
         except pydantic.ValidationError as e:
             better_error = self._improve_extra_field_error_messages(e)
-            raise better_error
+            module_id = _user_config.get("module_id")
+            module_id_text = f" / module '{module_id}" if module_id is not None else ""
+            raise ConfigurationError(
+                f"Error in Configuration of agent '{_agent_id}{module_id_text}': \n {better_error}"
+            )
+
         # Enable mutation
         self.model_config["frozen"] = False
         self._variables = self.__class__.merge_variables(

@@ -1,5 +1,8 @@
 # Changelog
 
+## todo
+- Improve error message to include agent and module id in validation errors
+
 ## 0.8.2 
 - Realtime Environment always has a clock to prevent agents that define callbacks only from terminating
 - Environment time in real time is now based on system time, decoupling it from the simpy process
