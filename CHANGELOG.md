@@ -1,5 +1,10 @@
 # Changelog
 
+
+## 0.8.4
+- Fixed a bug, where modules could deregister callbacks of other modules
+
+
 ## 0.8.3
 - Add CSV Data source module. Allows to gradually send data from a csv file. Can be used to provide the simulator with variable data.
 - Add optional dependecy interactive, which introduces dash. Can be used to create a dashboard of simulator results, updating in real time. Usage
