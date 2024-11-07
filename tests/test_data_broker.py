@@ -1,11 +1,11 @@
 """Module with tests for the core module of the agentlib."""
 
-import logging
 import time
 import unittest
 
 import numpy as np
 
+from agentlib import BaseModule, Agent, BaseModuleConfig
 from agentlib.core import (
     LocalDataBroker,
     AgentVariable,
@@ -96,6 +96,41 @@ class TestLocalDataBroker(unittest.TestCase):
     def recursion_callback_2(self, variable):
         self.data_broker.send_variable(AgentVariable(name="Test_2"))
         self.never_reached = False
+
+    def test_modules_cannot_overwrite_each_others_callbacks(self):
+        """Makes sure that all checks are done, to prevent modules from deregistering
+        other modules callbacks accidentally."""
+        alias = "test_alias"
+        name = "test_name"
+        test_config = {
+            "type": "not_necessary_here",
+        }
+        agent = Agent(config={"id": "Test", "modules": []}, env=Environment())
+
+        class Module(BaseModule):
+            config: BaseModuleConfig
+
+            def register_callbacks(self): ...
+            def process(self):
+                yield self.env.event()
+
+        module_1 = Module(agent=agent, config={**test_config, "module_id": "mod1"})
+        module_2 = Module(agent=agent, config={**test_config, "module_id": "mod2"})
+
+        self.data_broker.register_callback(
+            alias=alias, source=None, callback=module_1._callback_config_vars, name=name
+        )
+
+        # module 2 tries to deregister the same callback, but it should not work since it is a different module
+        self.data_broker.deregister_callback(
+            alias=alias, source=None, callback=module_2._callback_config_vars, name=name
+        )
+        self.assertEqual(len(self.data_broker._unmapped_callbacks), 1)
+        # module 1 deregisters the callback, which should work
+        self.data_broker.deregister_callback(
+            alias=alias, source=None, callback=module_1._callback_config_vars, name=name
+        )
+        self.assertEqual(len(self.data_broker._unmapped_callbacks), 0)
 
     def test_process(self):
         """Tests that the receive method is properly called during a process."""
