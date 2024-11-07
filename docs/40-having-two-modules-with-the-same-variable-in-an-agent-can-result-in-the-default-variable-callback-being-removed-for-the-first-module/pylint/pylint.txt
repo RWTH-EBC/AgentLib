@@ -107,6 +107,7 @@ tests/test_communicator.py:32:4: C0116: Missing function or method docstring (mi
 tests/test_communicator.py:41:16: C2801: Unnecessarily calls dunder method __getattribute__. Access attribute directly or use getattr built-in function. (unnecessary-dunder-call)
 tests/test_communicator.py:41:50: C2801: Unnecessarily calls dunder method __getattribute__. Access attribute directly or use getattr built-in function. (unnecessary-dunder-call)
 ************* Module tests.test_data_broker
+tests/test_data_broker.py:124:0: C0301: Line too long (111/100) (line-too-long)
 tests/test_data_broker.py:32:4: C0116: Missing function or method docstring (missing-function-docstring)
 tests/test_data_broker.py:33:23: W0212: Access to a protected member _variable_queue of a client class (protected-access)
 tests/test_data_broker.py:34:12: W0212: Access to a protected member _execute_callbacks of a client class (protected-access)
@@ -121,11 +122,16 @@ tests/test_data_broker.py:93:4: C0116: Missing function or method docstring (mis
 tests/test_data_broker.py:93:35: W0613: Unused argument 'variable' (unused-argument)
 tests/test_data_broker.py:96:4: C0116: Missing function or method docstring (missing-function-docstring)
 tests/test_data_broker.py:96:35: W0613: Unused argument 'variable' (unused-argument)
+tests/test_data_broker.py:110:8: C0115: Missing class docstring (missing-class-docstring)
+tests/test_data_broker.py:121:47: W0212: Access to a protected member _callback_config_vars of a client class (protected-access)
+tests/test_data_broker.py:126:47: W0212: Access to a protected member _callback_config_vars of a client class (protected-access)
+tests/test_data_broker.py:128:29: W0212: Access to a protected member _unmapped_callbacks of a client class (protected-access)
+tests/test_data_broker.py:131:47: W0212: Access to a protected member _callback_config_vars of a client class (protected-access)
+tests/test_data_broker.py:133:29: W0212: Access to a protected member _unmapped_callbacks of a client class (protected-access)
 tests/test_data_broker.py:81:8: W0201: Attribute 'never_reached' defined outside __init__ (attribute-defined-outside-init)
 tests/test_data_broker.py:98:8: W0201: Attribute 'never_reached' defined outside __init__ (attribute-defined-outside-init)
-tests/test_data_broker.py:123:0: C0115: Missing class docstring (missing-class-docstring)
-tests/test_data_broker.py:130:13: W0212: Access to a protected member _start_executing_callbacks of a client class (protected-access)
-tests/test_data_broker.py:3:0: W0611: Unused import logging (unused-import)
+tests/test_data_broker.py:158:0: C0115: Missing class docstring (missing-class-docstring)
+tests/test_data_broker.py:165:13: W0212: Access to a protected member _start_executing_callbacks of a client class (protected-access)
 ************* Module tests.test_data_source
 tests/test_data_source.py:1:0: C0114: Missing module docstring (missing-module-docstring)
 tests/test_data_source.py:15:0: C0115: Missing class docstring (missing-class-docstring)
@@ -279,5 +285,5 @@ if __name__ == "__main__":
     unittest.main() (duplicate-code)
 
 -----------------------------------
-Your code has been rated at 8.47/10
+Your code has been rated at 8.44/10
 
