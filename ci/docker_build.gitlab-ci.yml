@@ -3,8 +3,6 @@ stages:
 
 variables:
     DEVELOPMENT_IMAGE: registry.git.rwth-aachen.de/ebc/ebc_all/github_ci/agentlib:latest
-    DOCKER_DRIVER: overlay
-
 
 build_agentlib:
     image: docker:24.0.5
