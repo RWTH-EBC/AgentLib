@@ -9,9 +9,10 @@ COPY requirements.txt requirements.txt
 COPY pyproject.toml pyproject.toml
 COPY agentlib agentlib
 COPY README.md README.md
+ENV PIP_DEFAULT_TIMEOUT=100
 RUN pip install --upgrade pip && \
-    pip install -e .[full] && \
-    pip install git+https://github.com/sogno-platform/clonemapy
+    pip install -e .[full]
+RUN pip install git+https://github.com/sogno-platform/clonemapy
 
 ENV PYTHONPATH=.
 
