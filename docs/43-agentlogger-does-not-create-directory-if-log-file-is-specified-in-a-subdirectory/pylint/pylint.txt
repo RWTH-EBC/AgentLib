@@ -71,7 +71,7 @@ pylintrc:1:0: W0012: Unknown option value for '--disable', expected a valid pyli
 pylintrc:1:0: W0012: Unknown option value for '--disable', expected a valid pylint message and got 'old-octal-literal' (unknown-option-value)
 pylintrc:1:0: W0012: Unknown option value for '--disable', expected a valid pylint message and got 'non-ascii-bytes-literal' (unknown-option-value)
 pylintrc:1:0: W0012: Unknown option value for '--disable', expected a valid pylint message and got 'eq-without-hash' (unknown-option-value)
-************* Module run_examples
+************* Module ci.run_examples
 ci/run_examples.py:8:0: W0404: Reimport 'os' (imported line 5) (reimported)
 ci/run_examples.py:10:0: W0404: Reimport 'subprocess' (imported line 6) (reimported)
 ci/run_examples.py:11:0: W0404: Reimport 'unittest' (imported line 4) (reimported)
@@ -100,6 +100,22 @@ tests/test_agent.py:160:8: W0201: Attribute '_stop_test' defined outside __init_
 tests/test_agent.py:177:12: W0201: Attribute '_stop_test' defined outside __init__ (attribute-defined-outside-init)
 tests/test_agent.py:173:12: W0201: Attribute '_still_running' defined outside __init__ (attribute-defined-outside-init)
 tests/test_agent.py:186:12: W0201: Attribute '_still_running' defined outside __init__ (attribute-defined-outside-init)
+************* Module tests.test_agentlogger
+tests/test_agentlogger.py:173:0: C0304: Final newline missing (missing-final-newline)
+tests/test_agentlogger.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+tests/test_agentlogger.py:13:0: C0115: Missing class docstring (missing-class-docstring)
+tests/test_agentlogger.py:60:8: W0212: Access to a protected member _callback_values of a client class (protected-access)
+tests/test_agentlogger.py:61:8: W0212: Access to a protected member _log of a client class (protected-access)
+tests/test_agentlogger.py:79:8: W0212: Access to a protected member _callback_full of a client class (protected-access)
+tests/test_agentlogger.py:80:8: W0212: Access to a protected member _log of a client class (protected-access)
+tests/test_agentlogger.py:95:8: W0212: Access to a protected member _callback_values of a client class (protected-access)
+tests/test_agentlogger.py:96:8: W0212: Access to a protected member _log of a client class (protected-access)
+tests/test_agentlogger.py:111:8: W0212: Access to a protected member _callback_values of a client class (protected-access)
+tests/test_agentlogger.py:112:8: W0212: Access to a protected member _log of a client class (protected-access)
+tests/test_agentlogger.py:129:8: W0212: Access to a protected member _callback_values of a client class (protected-access)
+tests/test_agentlogger.py:130:8: W0212: Access to a protected member _log of a client class (protected-access)
+tests/test_agentlogger.py:150:12: W0212: Access to a protected member _callback_values of a client class (protected-access)
+tests/test_agentlogger.py:151:8: W0212: Access to a protected member _log of a client class (protected-access)
 ************* Module tests.test_communicator
 tests/test_communicator.py:1:0: C0114: Missing module docstring (missing-module-docstring)
 tests/test_communicator.py:21:0: C0115: Missing class docstring (missing-class-docstring)
@@ -283,7 +299,18 @@ tests/test_utils.py:1:0: R0801: Similar lines in 2 files
 
 if __name__ == "__main__":
     unittest.main() (duplicate-code)
+tests/test_utils.py:1:0: R0801: Similar lines in 2 files
+==tests.test_agentlogger:[23:31]
+==tests.test_simulator:[60:68]
+        env_config = {"rt": False, "factor": 1}
+        agent_config = {"id": "TestAgent", "modules": []}
+        env = Environment(config=env_config)
+        return Agent(env=env, config=agent_config)
+
+    def _get_module_cfg(self, **kwargs):
+        """Dynamically build config to avoid duplicate code:"""
+        return { (duplicate-code)
 
 -----------------------------------
-Your code has been rated at 8.44/10
+Your code has been rated at 8.42/10
 
