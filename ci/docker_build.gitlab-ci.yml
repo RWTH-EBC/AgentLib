@@ -13,7 +13,7 @@ build_agentlib:
           HEALTHCHECK_TCP_PORT: "2376"
     before_script:
       - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-      - apk update && apk add git -y
+      - apk update && apk add git
     script:
         - docker build --pull -f ci/Dockerfile -t $DEVELOPMENT_IMAGE .
         - docker push $DEVELOPMENT_IMAGE
