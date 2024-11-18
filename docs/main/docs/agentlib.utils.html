@@ -1,24 +1,22 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en">
 <head>
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>agentlib.utils package &mdash; agentlib 0.7.1 documentation</title>
+  <title>agentlib.utils package &mdash; agentlib 0.8.4 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css" />
       <link rel="stylesheet" type="text/css" href="_static/autodoc_pydantic.css" />
 
   
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="_static/jquery.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
+      <script src="_static/jquery.js"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+      <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+      <script src="_static/doctools.js"></script>
+      <script src="_static/sphinx_highlight.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -36,9 +34,6 @@
           <a href="index.html" class="icon icon-home">
             agentlib
           </a>
-              <div class="version">
-                0.7
-              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
@@ -225,12 +220,15 @@ behaviour for the local execution.</p>
 <dt class="field-even">Fields<span class="colon">:</span></dt>
 <dd class="field-even"><p></p></dd>
 <dt class="field-odd">Validators<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><a class="reference internal" href="code/agentlib.utils.html#agentlib.utils.multi_agent_system.MAS.setup_agents" title="agentlib.utils.multi_agent_system.MAS.setup_agents"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_agents</span></code></a> » <code class="xref py py-obj docutils literal notranslate"><span class="pre">agent_configs</span></code></p></li>
-<li><p><a class="reference internal" href="code/agentlib.utils.html#agentlib.utils.multi_agent_system.LocalMASAgency.setup_env" title="agentlib.utils.multi_agent_system.LocalMASAgency.setup_env"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_env</span></code></a> » <code class="xref py py-obj docutils literal notranslate"><span class="pre">env</span></code></p></li>
-</ul>
-</dd>
+<dd class="field-odd"><p></p></dd>
 </dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.utils.multi_agent_system.LocalCloneMAPAgency.model_post_init">
+<span class="sig-name descname"><span class="pre">model_post_init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#agentlib.utils.multi_agent_system.LocalCloneMAPAgency.model_post_init" title="Permalink to this definition"></a></dt>
+<dd><p>We need to both initialize private attributes and call the user-defined model_post_init
+method.</p>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="agentlib.utils.multi_agent_system.LocalCloneMAPAgency.run">
 <span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">until</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agentlib/utils/multi_agent_system.html#LocalCloneMAPAgency.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.utils.multi_agent_system.LocalCloneMAPAgency.run" title="Permalink to this definition"></a></dt>
@@ -267,7 +265,6 @@ executes and terminates them.</p>
 <dd class="field-even"><p></p></dd>
 <dt class="field-odd">Validators<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><a class="reference internal" href="code/agentlib.utils.html#agentlib.utils.multi_agent_system.MAS.setup_agents" title="agentlib.utils.multi_agent_system.MAS.setup_agents"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_agents</span></code></a> » <code class="xref py py-obj docutils literal notranslate"><span class="pre">agent_configs</span></code></p></li>
 <li><p><a class="reference internal" href="code/agentlib.utils.html#agentlib.utils.multi_agent_system.LocalMASAgency.setup_env" title="agentlib.utils.multi_agent_system.LocalMASAgency.setup_env"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_env</span></code></a> » <code class="xref py py-obj docutils literal notranslate"><span class="pre">env</span></code></p></li>
 </ul>
 </dd>
@@ -301,7 +298,7 @@ executes and terminates them.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="agentlib.utils.multi_agent_system.LocalMASAgency.model_post_init">
-<span class="sig-name descname"><span class="pre">model_post_init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_ModelMetaclass__context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#agentlib.utils.multi_agent_system.LocalMASAgency.model_post_init" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">model_post_init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#agentlib.utils.multi_agent_system.LocalMASAgency.model_post_init" title="Permalink to this definition"></a></dt>
 <dd><p>We need to both initialize private attributes and call the user-defined model_post_init
 method.</p>
 </dd></dl>
@@ -414,14 +411,14 @@ given agent config.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="agentlib.utils.multi_agent_system.MAS.model_post_init">
-<span class="sig-name descname"><span class="pre">model_post_init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">__context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#agentlib.utils.multi_agent_system.MAS.model_post_init" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">model_post_init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#agentlib.utils.multi_agent_system.MAS.model_post_init" title="Permalink to this definition"></a></dt>
 <dd><p>This function is meant to behave like a BaseModel method to initialise private attributes.</p>
 <p>It takes context as an argument since that’s what pydantic-core passes when calling it.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>self</strong> – The BaseModel instance.</p></li>
-<li><p><strong>__context</strong> – The context.</p></li>
+<li><p><strong>context</strong> – The context.</p></li>
 </ul>
 </dd>
 </dl>
@@ -523,7 +520,7 @@ given agent config.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="agentlib.utils.multi_agent_system.MultiProcessingMAS.model_post_init">
-<span class="sig-name descname"><span class="pre">model_post_init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_ModelMetaclass__context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#agentlib.utils.multi_agent_system.MultiProcessingMAS.model_post_init" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">model_post_init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#agentlib.utils.multi_agent_system.MultiProcessingMAS.model_post_init" title="Permalink to this definition"></a></dt>
 <dd><p>We need to both initialize private attributes and call the user-defined model_post_init
 method.</p>
 </dd></dl>
@@ -769,7 +766,7 @@ or it is a scalar object and thus converted to a list.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="agentlib.utils.validators.include_defaults_in_root">
-<span class="sig-prename descclassname"><span class="pre">agentlib.utils.validators.</span></span><span class="sig-name descname"><span class="pre">include_defaults_in_root</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">variables:</span> <span class="pre">~typing.List[~typing.Dict],</span> <span class="pre">field:</span> <span class="pre">~pydantic.fields.FieldInfo,</span> <span class="pre">make_shared:</span> <span class="pre">bool,</span> <span class="pre">agent_id:</span> <span class="pre">str,</span> <span class="pre">field_name:</span> <span class="pre">str,</span> <span class="pre">type_:</span> <span class="pre">type</span> <span class="pre">=</span> <span class="pre">&lt;class</span> <span class="pre">'agentlib.core.datamodels.AgentVariable'&gt;</span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="code/agentlib.core.html#agentlib.core.datamodels.AgentVariable" title="agentlib.core.datamodels.AgentVariable"><span class="pre">AgentVariable</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/agentlib/utils/validators.html#include_defaults_in_root"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.utils.validators.include_defaults_in_root" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">agentlib.utils.validators.</span></span><span class="sig-name descname"><span class="pre">include_defaults_in_root</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">variables:</span> <span class="pre">~typing.List[~typing.Dict],</span> <span class="pre">field:</span> <span class="pre">~pydantic.fields.FieldInfo,</span> <span class="pre">make_shared:</span> <span class="pre">bool,</span> <span class="pre">agent_id:</span> <span class="pre">str,</span> <span class="pre">field_name:</span> <span class="pre">str,</span> <span class="pre">type_:</span> <span class="pre">~typing.Type[~agentlib.core.datamodels.AgentVariable]</span> <span class="pre">=</span> <span class="pre">&lt;class</span> <span class="pre">'agentlib.core.datamodels.AgentVariable'&gt;</span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="code/agentlib.core.html#agentlib.core.datamodels.AgentVariable" title="agentlib.core.datamodels.AgentVariable"><span class="pre">AgentVariable</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/agentlib/utils/validators.html#include_defaults_in_root"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.utils.validators.include_defaults_in_root" title="Permalink to this definition"></a></dt>
 <dd><p>Validator building block to merge default variables with config variables in the root validator.
 Updates default variables when a variable with the same name is present in the config.
 Then returns the union of the default variables and the external config variables.</p>

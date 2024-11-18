@@ -6,6 +6,14 @@ agentlib.utils package
    :undoc-members:
    :show-inheritance:
 
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   agentlib.utils.plotting
+
 Submodules
 ----------
 

@@ -1,23 +1,21 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>agentlib.core.agent &mdash; agentlib 0.7.1 documentation</title>
+  <title>agentlib.core.agent &mdash; agentlib 0.8.4 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css" />
       <link rel="stylesheet" type="text/css" href="../../../_static/autodoc_pydantic.css" />
 
   
-  <!--[if lt IE 9]>
-    <script src="../../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="../../../_static/jquery.js"></script>
-        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
-        <script src="../../../_static/doctools.js"></script>
-        <script src="../../../_static/sphinx_highlight.js"></script>
+      <script src="../../../_static/jquery.js"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+      <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+      <script src="../../../_static/doctools.js"></script>
+      <script src="../../../_static/sphinx_highlight.js"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
@@ -34,9 +32,6 @@
           <a href="../../../index.html" class="icon icon-home">
             agentlib
           </a>
-              <div class="version">
-                0.7
-              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
@@ -83,16 +78,16 @@
 <span></span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Module containing only the Agent class.</span>
 <span class="sd">&quot;&quot;&quot;</span>
+
 <span class="kn">import</span> <span class="nn">json</span>
-<span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">threading</span>
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">TypeVar</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">TypeVar</span><span class="p">,</span> <span class="n">Optional</span>
 
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">field_validator</span><span class="p">,</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">FilePath</span><span class="p">,</span> <span class="n">Field</span>
 
 <span class="kn">import</span> <span class="nn">agentlib</span>
+<span class="kn">import</span> <span class="nn">agentlib.core.logging_</span> <span class="k">as</span> <span class="nn">agentlib_logging</span>
 <span class="kn">from</span> <span class="nn">agentlib.core</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">Environment</span><span class="p">,</span>
     <span class="n">LocalDataBroker</span><span class="p">,</span>
@@ -100,6 +95,7 @@
     <span class="n">BaseModule</span><span class="p">,</span>
     <span class="n">DataBroker</span><span class="p">,</span>
 <span class="p">)</span>
+<span class="kn">from</span> <span class="nn">agentlib.core.environment</span> <span class="kn">import</span> <span class="n">CustomSimpyEnvironment</span>
 <span class="kn">from</span> <span class="nn">agentlib.utils</span> <span class="kn">import</span> <span class="n">custom_injection</span>
 <span class="kn">from</span> <span class="nn">agentlib.utils.load_config</span> <span class="kn">import</span> <span class="n">load_config</span>
 
@@ -121,26 +117,20 @@
     <span class="n">modules</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">Dict</span><span class="p">,</span> <span class="n">FilePath</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">check_alive_interval</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
         <span class="n">title</span><span class="o">=</span><span class="s2">&quot;check_alive_interval&quot;</span><span class="p">,</span>
-        <span class="n">default</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">ge</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
         <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Check every other check_alive_interval second &quot;</span>
-        <span class="s2">&quot;if the thread of the agent are still alive.&quot;</span>
+        <span class="s2">&quot;if the threads of the agent are still alive.&quot;</span>
         <span class="s2">&quot;If that&#39;s not the case, exit the main thread of the &quot;</span>
-        <span class="s2">&quot;agent. If interval equals -1, no health check is &quot;</span>
-        <span class="s2">&quot;performed. Updating this value at runtime will &quot;</span>
+        <span class="s2">&quot;agent. Updating this value at runtime will &quot;</span>
         <span class="s2">&quot;not work as all processes have already been started.&quot;</span><span class="p">,</span>
     <span class="p">)</span>
-
-<div class="viewcode-block" id="AgentConfig.check_correct_value"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.AgentConfig.check_correct_value">[docs]</a>    <span class="nd">@field_validator</span><span class="p">(</span><span class="s2">&quot;check_alive_interval&quot;</span><span class="p">)</span>
-    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">check_correct_value</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">check_alive_interval</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Check if check_alive_interval is positive or -1&quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">check_alive_interval</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">check_alive_interval</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
-            <span class="k">return</span> <span class="n">check_alive_interval</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-            <span class="s2">&quot;check_alive_interval needs to be positive &quot;</span>
-            <span class="s2">&quot;or equal to -1 to disable the health check.&quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;Current value: </span><span class="si">{</span><span class="n">check_alive_interval</span><span class="si">}</span><span class="s2">&quot;</span>
-        <span class="p">)</span></div>
+    <span class="n">max_queue_size</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+        <span class="n">ge</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Maximal number of waiting items in data-broker queues. &quot;</span>
+        <span class="s2">&quot;Set to -1 for infinity&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
 
 <div class="viewcode-block" id="AgentConfig.check_modules"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.AgentConfig.check_modules">[docs]</a>    <span class="nd">@field_validator</span><span class="p">(</span><span class="s2">&quot;modules&quot;</span><span class="p">)</span>
     <span class="nd">@classmethod</span>
@@ -176,16 +166,26 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_threads</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">env</span> <span class="o">=</span> <span class="n">env</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">is_alive</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">config</span><span class="p">:</span> <span class="n">AgentConfig</span> <span class="o">=</span> <span class="n">load_config</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">config_type</span><span class="o">=</span><span class="n">AgentConfig</span><span class="p">)</span>
+        <span class="n">data_broker_logger</span> <span class="o">=</span> <span class="n">agentlib_logging</span><span class="o">.</span><span class="n">create_logger</span><span class="p">(</span>
+            <span class="n">env</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">/DataBroker&quot;</span>
+        <span class="p">)</span>
         <span class="k">if</span> <span class="n">env</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">rt</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_data_broker</span> <span class="o">=</span> <span class="n">RTDataBroker</span><span class="p">(</span><span class="n">env</span><span class="o">=</span><span class="n">env</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_data_broker</span> <span class="o">=</span> <span class="n">RTDataBroker</span><span class="p">(</span>
+                <span class="n">env</span><span class="o">=</span><span class="n">env</span><span class="p">,</span> <span class="n">logger</span><span class="o">=</span><span class="n">data_broker_logger</span><span class="p">,</span> <span class="n">max_queue_size</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">max_queue_size</span>
+            <span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">register_thread</span><span class="p">(</span><span class="n">thread</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_data_broker</span><span class="o">.</span><span class="n">thread</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_data_broker</span> <span class="o">=</span> <span class="n">LocalDataBroker</span><span class="p">(</span><span class="n">env</span><span class="o">=</span><span class="n">env</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_data_broker</span> <span class="o">=</span> <span class="n">LocalDataBroker</span><span class="p">(</span>
+                <span class="n">env</span><span class="o">=</span><span class="n">env</span><span class="p">,</span> <span class="n">logger</span><span class="o">=</span><span class="n">data_broker_logger</span><span class="p">,</span> <span class="n">max_queue_size</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">max_queue_size</span>
+            <span class="p">)</span>
+        <span class="c1"># Update modules</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">config</span>
         <span class="c1"># Setup logger</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Agent &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">agentlib_logging</span><span class="o">.</span><span class="n">create_logger</span><span class="p">(</span><span class="n">env</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+
         <span class="c1"># Register the thread monitoring if configured</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">check_alive_interval</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">env</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">rt</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_monitor_threads</span><span class="p">())</span>
 
     <span class="nd">@property</span>
@@ -225,8 +225,6 @@
         <span class="c1"># Set the config</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_config</span> <span class="o">=</span> <span class="n">load_config</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">config_type</span><span class="o">=</span><span class="n">AgentConfig</span><span class="p">)</span>
-
-        <span class="c1"># Update modules</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_register_modules</span><span class="p">()</span>
 
     <span class="nd">@property</span>
@@ -240,7 +238,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_broker</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">env</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Environment</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">env</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CustomSimpyEnvironment</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get the environment the agent is in</span>
 
@@ -308,7 +306,10 @@
         <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">thread</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_threads</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="n">thread</span><span class="o">.</span><span class="n">is_alive</span><span class="p">():</span>
-                    <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;The thread </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> is not alive anymore. Exiting agent.&quot;</span>
+                    <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;The thread </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> is not alive anymore. Exiting agent. &quot;</span>
+                        <span class="sa">f</span><span class="s2">&quot;Check errors above for possible reasons&quot;</span>
+                    <span class="p">)</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">is_alive</span> <span class="o">=</span> <span class="kc">False</span>
                     <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>

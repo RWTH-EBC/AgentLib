@@ -1,23 +1,21 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>agentlib.core.errors &mdash; agentlib 0.7.1 documentation</title>
+  <title>agentlib.core.errors &mdash; agentlib 0.8.4 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css" />
       <link rel="stylesheet" type="text/css" href="../../../_static/autodoc_pydantic.css" />
 
   
-  <!--[if lt IE 9]>
-    <script src="../../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="../../../_static/jquery.js"></script>
-        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
-        <script src="../../../_static/doctools.js"></script>
-        <script src="../../../_static/sphinx_highlight.js"></script>
+      <script src="../../../_static/jquery.js"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+      <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+      <script src="../../../_static/doctools.js"></script>
+      <script src="../../../_static/sphinx_highlight.js"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
@@ -34,9 +32,6 @@
           <a href="../../../index.html" class="icon icon-home">
             agentlib
           </a>
-              <div class="version">
-                0.7
-              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
@@ -103,17 +98,24 @@
 <span class="sd">    dependency.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dependency_name</span><span class="p">,</span> <span class="n">dependency_install</span><span class="p">,</span> <span class="n">class_type</span><span class="o">=</span><span class="s2">&quot;module&quot;</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">used_object</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">dependency_install</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">dependency_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
         <span class="n">message</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;Given </span><span class="si">{</span><span class="n">class_type</span><span class="si">}</span><span class="s2"> type &#39;</span><span class="si">{</span><span class="n">dependency_name</span><span class="si">}</span><span class="s2">&#39; is &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;an optional dependency which you did not &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">used_object</span><span class="si">}</span><span class="s2"> is an optional dependency which you did not &quot;</span>
             <span class="sa">f</span><span class="s2">&quot;install yet. Install the missing dependency &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;either using `pip install </span><span class="si">{</span><span class="n">dependency_install</span><span class="si">}</span><span class="s2">`, &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;or by re-installing the agentlib using &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;`pip install agentlib[full]` or just the &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;key (e.g. for </span><span class="si">{</span><span class="n">dependency_name</span><span class="si">}</span><span class="s2">: &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;`pip install agentlib[</span><span class="si">{</span><span class="n">dependency_name</span><span class="si">}</span><span class="s2">]`&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;using `pip install </span><span class="si">{</span><span class="n">dependency_install</span><span class="si">}</span><span class="s2">`&quot;</span>
         <span class="p">)</span>
+        <span class="k">if</span> <span class="n">dependency_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">message</span> <span class="o">+=</span> <span class="p">(</span>
+                <span class="s2">&quot;, or by re-installing the agentlib using &quot;</span>
+                <span class="s2">&quot;`pip install agentlib[full]` or just the &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;key (e.g. for </span><span class="si">{</span><span class="n">dependency_name</span><span class="si">}</span><span class="s2">: &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;`pip install agentlib[</span><span class="si">{</span><span class="n">dependency_name</span><span class="si">}</span><span class="s2">]`&quot;</span>
+            <span class="p">)</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 </pre></div>
 

@@ -794,9 +794,42 @@
         },
         {
             "type": "warning",
-            "module": "run_examples",
+            "module": "ci.run_examples",
+            "obj": "",
+            "line": 8,
+            "column": 0,
+            "path": "ci/run_examples.py",
+            "symbol": "reimported",
+            "message": "Reimport 'os' (imported line 5)",
+            "message-id": "W0404"
+        },
+        {
+            "type": "warning",
+            "module": "ci.run_examples",
+            "obj": "",
+            "line": 10,
+            "column": 0,
+            "path": "ci/run_examples.py",
+            "symbol": "reimported",
+            "message": "Reimport 'subprocess' (imported line 6)",
+            "message-id": "W0404"
+        },
+        {
+            "type": "warning",
+            "module": "ci.run_examples",
+            "obj": "",
+            "line": 11,
+            "column": 0,
+            "path": "ci/run_examples.py",
+            "symbol": "reimported",
+            "message": "Reimport 'unittest' (imported line 4)",
+            "message-id": "W0404"
+        },
+        {
+            "type": "warning",
+            "module": "ci.run_examples",
             "obj": "TestExamples._run_example",
-            "line": 39,
+            "line": 45,
             "column": 12,
             "path": "ci/run_examples.py",
             "symbol": "broad-exception-raised",
@@ -805,9 +838,9 @@
         },
         {
             "type": "convention",
-            "module": "run_examples",
+            "module": "ci.run_examples",
             "obj": "TestExamples.test_room_mas",
-            "line": 56,
+            "line": 61,
             "column": 8,
             "path": "ci/run_examples.py",
             "symbol": "import-outside-toplevel",
@@ -816,9 +849,42 @@
         },
         {
             "type": "convention",
+            "module": "ci.run_examples",
+            "obj": "",
+            "line": 8,
+            "column": 0,
+            "path": "ci/run_examples.py",
+            "symbol": "ungrouped-imports",
+            "message": "Imports from package os are not grouped",
+            "message-id": "C0412"
+        },
+        {
+            "type": "convention",
+            "module": "ci.run_examples",
+            "obj": "",
+            "line": 10,
+            "column": 0,
+            "path": "ci/run_examples.py",
+            "symbol": "ungrouped-imports",
+            "message": "Imports from package subprocess are not grouped",
+            "message-id": "C0412"
+        },
+        {
+            "type": "convention",
+            "module": "ci.run_examples",
+            "obj": "",
+            "line": 11,
+            "column": 0,
+            "path": "ci/run_examples.py",
+            "symbol": "ungrouped-imports",
+            "message": "Imports from package unittest are not grouped",
+            "message-id": "C0412"
+        },
+        {
+            "type": "convention",
             "module": "tests.test_agent",
             "obj": "UpdateModuleConfigTest",
-            "line": 23,
+            "line": 25,
             "column": 0,
             "path": "tests/test_agent.py",
             "symbol": "missing-class-docstring",
@@ -829,7 +895,7 @@
             "type": "convention",
             "module": "tests.test_agent",
             "obj": "UpdateModuleTest",
-            "line": 27,
+            "line": 29,
             "column": 0,
             "path": "tests/test_agent.py",
             "symbol": "missing-class-docstring",
@@ -840,7 +906,7 @@
             "type": "convention",
             "module": "tests.test_agent",
             "obj": "HealthCheckTest",
-            "line": 38,
+            "line": 39,
             "column": 0,
             "path": "tests/test_agent.py",
             "symbol": "missing-class-docstring",
@@ -851,7 +917,7 @@
             "type": "warning",
             "module": "tests.test_agent",
             "obj": "HealthCheckTest._cb",
-            "line": 54,
+            "line": 52,
             "column": 12,
             "path": "tests/test_agent.py",
             "symbol": "broad-exception-raised",
@@ -862,7 +928,7 @@
             "type": "refactor",
             "module": "tests.test_agent",
             "obj": "TestAgent",
-            "line": 57,
+            "line": 55,
             "column": 0,
             "path": "tests/test_agent.py",
             "symbol": "too-many-instance-attributes",
@@ -873,7 +939,7 @@
             "type": "warning",
             "module": "tests.test_agent",
             "obj": "TestAgent.test_filepath_module_settings",
-            "line": 81,
+            "line": 79,
             "column": 13,
             "path": "tests/test_agent.py",
             "symbol": "unspecified-encoding",
@@ -884,7 +950,7 @@
             "type": "convention",
             "module": "tests.test_agent",
             "obj": "TestAgent.test_getters",
-            "line": 85,
+            "line": 83,
             "column": 4,
             "path": "tests/test_agent.py",
             "symbol": "missing-function-docstring",
@@ -895,7 +961,7 @@
             "type": "convention",
             "module": "tests.test_agent",
             "obj": "TestAgent.test_getters",
-            "line": 86,
+            "line": 84,
             "column": 8,
             "path": "tests/test_agent.py",
             "symbol": "invalid-name",
@@ -906,7 +972,7 @@
             "type": "convention",
             "module": "tests.test_agent",
             "obj": "TestAgent.test_set_config",
-            "line": 97,
+            "line": 95,
             "column": 8,
             "path": "tests/test_agent.py",
             "symbol": "invalid-name",
@@ -917,7 +983,7 @@
             "type": "convention",
             "module": "tests.test_agent",
             "obj": "TestAgent.test_config_setter",
-            "line": 115,
+            "line": 113,
             "column": 8,
             "path": "tests/test_agent.py",
             "symbol": "invalid-name",
@@ -928,7 +994,7 @@
             "type": "warning",
             "module": "tests.test_agent",
             "obj": "TestAgent.test_config_setter",
-            "line": 118,
+            "line": 116,
             "column": 13,
             "path": "tests/test_agent.py",
             "symbol": "unspecified-encoding",
@@ -939,7 +1005,7 @@
             "type": "convention",
             "module": "tests.test_agent",
             "obj": "TestAgent.test_register_modules",
-            "line": 129,
+            "line": 133,
             "column": 8,
             "path": "tests/test_agent.py",
             "symbol": "invalid-name",
@@ -950,19 +1016,8 @@
             "type": "convention",
             "module": "tests.test_agent",
             "obj": "TestAgent.test_health_check",
-            "line": 146,
-            "column": 12,
-            "path": "tests/test_agent.py",
-            "symbol": "invalid-name",
-            "message": "Variable name \"rt\" doesn't conform to snake_case naming style",
-            "message-id": "C0103"
-        },
-        {
-            "type": "convention",
-            "module": "tests.test_agent",
-            "obj": "TestAgent.test_health_check",
             "line": 150,
-            "column": 12,
+            "column": 8,
             "path": "tests/test_agent.py",
             "symbol": "invalid-name",
             "message": "Variable name \"ag\" doesn't conform to snake_case naming style",
@@ -973,17 +1028,6 @@
             "module": "tests.test_agent",
             "obj": "TestAgent.test_health_check",
             "line": 154,
-            "column": 12,
-            "path": "tests/test_agent.py",
-            "symbol": "invalid-name",
-            "message": "Variable name \"ag\" doesn't conform to snake_case naming style",
-            "message-id": "C0103"
-        },
-        {
-            "type": "convention",
-            "module": "tests.test_agent",
-            "obj": "TestAgent.test_health_check",
-            "line": 161,
             "column": 8,
             "path": "tests/test_agent.py",
             "symbol": "invalid-name",
@@ -992,22 +1036,22 @@
         },
         {
             "type": "convention",
-            "module": "tests.test_agent",
-            "obj": "TestAgent.test_health_check",
-            "line": 168,
-            "column": 8,
-            "path": "tests/test_agent.py",
-            "symbol": "invalid-name",
-            "message": "Variable name \"ag\" doesn't conform to snake_case naming style",
-            "message-id": "C0103"
-        },
-        {
-            "type": "warning",
             "module": "tests.test_agent",
             "obj": "TestAgent.test_health_check",
             "line": 165,
             "column": 8,
             "path": "tests/test_agent.py",
+            "symbol": "invalid-name",
+            "message": "Variable name \"ag\" doesn't conform to snake_case naming style",
+            "message-id": "C0103"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_agent",
+            "obj": "TestAgent.test_health_check",
+            "line": 160,
+            "column": 8,
+            "path": "tests/test_agent.py",
             "symbol": "attribute-defined-outside-init",
             "message": "Attribute '_stop_test' defined outside __init__",
             "message-id": "W0201"
@@ -1016,7 +1060,7 @@
             "type": "warning",
             "module": "tests.test_agent",
             "obj": "TestAgent.test_health_check",
-            "line": 180,
+            "line": 177,
             "column": 12,
             "path": "tests/test_agent.py",
             "symbol": "attribute-defined-outside-init",
@@ -1027,7 +1071,7 @@
             "type": "warning",
             "module": "tests.test_agent",
             "obj": "TestAgent.test_health_check",
-            "line": 176,
+            "line": 173,
             "column": 12,
             "path": "tests/test_agent.py",
             "symbol": "attribute-defined-outside-init",
@@ -1038,23 +1082,12 @@
             "type": "warning",
             "module": "tests.test_agent",
             "obj": "TestAgent._no_daemon_thread",
-            "line": 189,
+            "line": 186,
             "column": 12,
             "path": "tests/test_agent.py",
             "symbol": "attribute-defined-outside-init",
             "message": "Attribute '_still_running' defined outside __init__",
             "message-id": "W0201"
-        },
-        {
-            "type": "convention",
-            "module": "tests.test_communicator",
-            "obj": "",
-            "line": 46,
-            "column": 0,
-            "path": "tests/test_communicator.py",
-            "symbol": "trailing-newlines",
-            "message": "Trailing newlines",
-            "message-id": "C0305"
         },
         {
             "type": "convention",
@@ -1082,7 +1115,7 @@
             "type": "convention",
             "module": "tests.test_communicator",
             "obj": "TestCommunicator.test_roundtrip_variable",
-            "line": 33,
+            "line": 32,
             "column": 4,
             "path": "tests/test_communicator.py",
             "symbol": "missing-function-docstring",
@@ -1094,7 +1127,7 @@
             "module": "tests.test_communicator",
             "obj": "TestCommunicator.test_roundtrip_variable",
             "line": 41,
-            "column": 29,
+            "column": 16,
             "path": "tests/test_communicator.py",
             "symbol": "unnecessary-dunder-call",
             "message": "Unnecessarily calls dunder method __getattribute__. Access attribute directly or use getattr built-in function.",
@@ -1105,7 +1138,7 @@
             "module": "tests.test_communicator",
             "obj": "TestCommunicator.test_roundtrip_variable",
             "line": 41,
-            "column": 63,
+            "column": 50,
             "path": "tests/test_communicator.py",
             "symbol": "unnecessary-dunder-call",
             "message": "Unnecessarily calls dunder method __getattribute__. Access attribute directly or use getattr built-in function.",
@@ -1114,8 +1147,19 @@
         {
             "type": "convention",
             "module": "tests.test_data_broker",
+            "obj": "",
+            "line": 124,
+            "column": 0,
+            "path": "tests/test_data_broker.py",
+            "symbol": "line-too-long",
+            "message": "Line too long (111/100)",
+            "message-id": "C0301"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_data_broker",
             "obj": "TestLocalDataBroker.perform_callbacks",
-            "line": 28,
+            "line": 32,
             "column": 4,
             "path": "tests/test_data_broker.py",
             "symbol": "missing-function-docstring",
@@ -1126,7 +1170,7 @@
             "type": "warning",
             "module": "tests.test_data_broker",
             "obj": "TestLocalDataBroker.perform_callbacks",
-            "line": 29,
+            "line": 33,
             "column": 23,
             "path": "tests/test_data_broker.py",
             "symbol": "protected-access",
@@ -1137,7 +1181,7 @@
             "type": "warning",
             "module": "tests.test_data_broker",
             "obj": "TestLocalDataBroker.perform_callbacks",
-            "line": 30,
+            "line": 34,
             "column": 12,
             "path": "tests/test_data_broker.py",
             "symbol": "protected-access",
@@ -1148,7 +1192,7 @@
             "type": "warning",
             "module": "tests.test_data_broker",
             "obj": "TestLocalDataBroker.test_callback",
-            "line": 37,
+            "line": 41,
             "column": 29,
             "path": "tests/test_data_broker.py",
             "symbol": "protected-access",
@@ -1159,7 +1203,7 @@
             "type": "warning",
             "module": "tests.test_data_broker",
             "obj": "TestLocalDataBroker.test_callback",
-            "line": 50,
+            "line": 54,
             "column": 29,
             "path": "tests/test_data_broker.py",
             "symbol": "protected-access",
@@ -1170,7 +1214,7 @@
             "type": "warning",
             "module": "tests.test_data_broker",
             "obj": "TestLocalDataBroker.test_callback",
-            "line": 58,
+            "line": 60,
             "column": 29,
             "path": "tests/test_data_broker.py",
             "symbol": "protected-access",
@@ -1181,7 +1225,7 @@
             "type": "warning",
             "module": "tests.test_data_broker",
             "obj": "TestLocalDataBroker.test_callback",
-            "line": 75,
+            "line": 74,
             "column": 19,
             "path": "tests/test_data_broker.py",
             "symbol": "protected-access",
@@ -1192,7 +1236,7 @@
             "type": "warning",
             "module": "tests.test_data_broker",
             "obj": "TestLocalDataBroker.test_callback",
-            "line": 75,
+            "line": 74,
             "column": 8,
             "path": "tests/test_data_broker.py",
             "symbol": "unused-variable",
@@ -1203,7 +1247,7 @@
             "type": "convention",
             "module": "tests.test_data_broker",
             "obj": "TestLocalDataBroker.dummy_callback",
-            "line": 78,
+            "line": 77,
             "column": 4,
             "path": "tests/test_data_broker.py",
             "symbol": "missing-function-docstring",
@@ -1212,64 +1256,130 @@
         },
         {
             "type": "convention",
+            "module": "tests.test_data_broker",
+            "obj": "TestLocalDataBroker.test_trigger_recursion_error",
+            "line": 80,
+            "column": 4,
+            "path": "tests/test_data_broker.py",
+            "symbol": "missing-function-docstring",
+            "message": "Missing function or method docstring",
+            "message-id": "C0116"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_data_broker",
+            "obj": "TestLocalDataBroker.recursion_callback_1",
+            "line": 93,
+            "column": 4,
+            "path": "tests/test_data_broker.py",
+            "symbol": "missing-function-docstring",
+            "message": "Missing function or method docstring",
+            "message-id": "C0116"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_data_broker",
+            "obj": "TestLocalDataBroker.recursion_callback_1",
+            "line": 93,
+            "column": 35,
+            "path": "tests/test_data_broker.py",
+            "symbol": "unused-argument",
+            "message": "Unused argument 'variable'",
+            "message-id": "W0613"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_data_broker",
+            "obj": "TestLocalDataBroker.recursion_callback_2",
+            "line": 96,
+            "column": 4,
+            "path": "tests/test_data_broker.py",
+            "symbol": "missing-function-docstring",
+            "message": "Missing function or method docstring",
+            "message-id": "C0116"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_data_broker",
+            "obj": "TestLocalDataBroker.recursion_callback_2",
+            "line": 96,
+            "column": 35,
+            "path": "tests/test_data_broker.py",
+            "symbol": "unused-argument",
+            "message": "Unused argument 'variable'",
+            "message-id": "W0613"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_data_broker",
+            "obj": "TestLocalDataBroker.test_modules_cannot_overwrite_each_others_callbacks.Module",
+            "line": 110,
+            "column": 8,
+            "path": "tests/test_data_broker.py",
+            "symbol": "missing-class-docstring",
+            "message": "Missing class docstring",
+            "message-id": "C0115"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_data_broker",
+            "obj": "TestLocalDataBroker.test_modules_cannot_overwrite_each_others_callbacks",
+            "line": 121,
+            "column": 47,
+            "path": "tests/test_data_broker.py",
+            "symbol": "protected-access",
+            "message": "Access to a protected member _callback_config_vars of a client class",
+            "message-id": "W0212"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_data_broker",
+            "obj": "TestLocalDataBroker.test_modules_cannot_overwrite_each_others_callbacks",
+            "line": 126,
+            "column": 47,
+            "path": "tests/test_data_broker.py",
+            "symbol": "protected-access",
+            "message": "Access to a protected member _callback_config_vars of a client class",
+            "message-id": "W0212"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_data_broker",
+            "obj": "TestLocalDataBroker.test_modules_cannot_overwrite_each_others_callbacks",
+            "line": 128,
+            "column": 29,
+            "path": "tests/test_data_broker.py",
+            "symbol": "protected-access",
+            "message": "Access to a protected member _unmapped_callbacks of a client class",
+            "message-id": "W0212"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_data_broker",
+            "obj": "TestLocalDataBroker.test_modules_cannot_overwrite_each_others_callbacks",
+            "line": 131,
+            "column": 47,
+            "path": "tests/test_data_broker.py",
+            "symbol": "protected-access",
+            "message": "Access to a protected member _callback_config_vars of a client class",
+            "message-id": "W0212"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_data_broker",
+            "obj": "TestLocalDataBroker.test_modules_cannot_overwrite_each_others_callbacks",
+            "line": 133,
+            "column": 29,
+            "path": "tests/test_data_broker.py",
+            "symbol": "protected-access",
+            "message": "Access to a protected member _unmapped_callbacks of a client class",
+            "message-id": "W0212"
+        },
+        {
+            "type": "warning",
             "module": "tests.test_data_broker",
             "obj": "TestLocalDataBroker.test_trigger_recursion_error",
             "line": 81,
-            "column": 4,
-            "path": "tests/test_data_broker.py",
-            "symbol": "missing-function-docstring",
-            "message": "Missing function or method docstring",
-            "message-id": "C0116"
-        },
-        {
-            "type": "convention",
-            "module": "tests.test_data_broker",
-            "obj": "TestLocalDataBroker.recursion_callback_1",
-            "line": 94,
-            "column": 4,
-            "path": "tests/test_data_broker.py",
-            "symbol": "missing-function-docstring",
-            "message": "Missing function or method docstring",
-            "message-id": "C0116"
-        },
-        {
-            "type": "warning",
-            "module": "tests.test_data_broker",
-            "obj": "TestLocalDataBroker.recursion_callback_1",
-            "line": 94,
-            "column": 35,
-            "path": "tests/test_data_broker.py",
-            "symbol": "unused-argument",
-            "message": "Unused argument 'variable'",
-            "message-id": "W0613"
-        },
-        {
-            "type": "convention",
-            "module": "tests.test_data_broker",
-            "obj": "TestLocalDataBroker.recursion_callback_2",
-            "line": 97,
-            "column": 4,
-            "path": "tests/test_data_broker.py",
-            "symbol": "missing-function-docstring",
-            "message": "Missing function or method docstring",
-            "message-id": "C0116"
-        },
-        {
-            "type": "warning",
-            "module": "tests.test_data_broker",
-            "obj": "TestLocalDataBroker.recursion_callback_2",
-            "line": 97,
-            "column": 35,
-            "path": "tests/test_data_broker.py",
-            "symbol": "unused-argument",
-            "message": "Unused argument 'variable'",
-            "message-id": "W0613"
-        },
-        {
-            "type": "warning",
-            "module": "tests.test_data_broker",
-            "obj": "TestLocalDataBroker.test_trigger_recursion_error",
-            "line": 82,
             "column": 8,
             "path": "tests/test_data_broker.py",
             "symbol": "attribute-defined-outside-init",
@@ -1280,7 +1390,7 @@
             "type": "warning",
             "module": "tests.test_data_broker",
             "obj": "TestLocalDataBroker.recursion_callback_2",
-            "line": 99,
+            "line": 98,
             "column": 8,
             "path": "tests/test_data_broker.py",
             "symbol": "attribute-defined-outside-init",
@@ -1291,7 +1401,7 @@
             "type": "convention",
             "module": "tests.test_data_broker",
             "obj": "TestRTDataBroker",
-            "line": 124,
+            "line": 158,
             "column": 0,
             "path": "tests/test_data_broker.py",
             "symbol": "missing-class-docstring",
@@ -1302,7 +1412,7 @@
             "type": "warning",
             "module": "tests.test_data_broker",
             "obj": "TestRTDataBroker.setUp",
-            "line": 129,
+            "line": 165,
             "column": 13,
             "path": "tests/test_data_broker.py",
             "symbol": "protected-access",
@@ -1310,43 +1420,351 @@
             "message-id": "W0212"
         },
         {
-            "type": "warning",
-            "module": "tests.test_data_broker",
+            "type": "convention",
+            "module": "tests.test_data_source",
             "obj": "",
-            "line": 7,
+            "line": 1,
             "column": 0,
-            "path": "tests/test_data_broker.py",
+            "path": "tests/test_data_source.py",
+            "symbol": "missing-module-docstring",
+            "message": "Missing module docstring",
+            "message-id": "C0114"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_data_source",
+            "obj": "TestCSVDataSource",
+            "line": 15,
+            "column": 0,
+            "path": "tests/test_data_source.py",
+            "symbol": "missing-class-docstring",
+            "message": "Missing class docstring",
+            "message-id": "C0115"
+        },
+        {
+            "type": "refactor",
+            "module": "tests.test_data_source",
+            "obj": "TestCSVDataSource",
+            "line": 15,
+            "column": 0,
+            "path": "tests/test_data_source.py",
+            "symbol": "too-many-instance-attributes",
+            "message": "Too many instance attributes (9/7)",
+            "message-id": "R0902"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_data_source",
+            "obj": "TestCSVDataSource.create_test_df",
+            "line": 35,
+            "column": 4,
+            "path": "tests/test_data_source.py",
+            "symbol": "missing-function-docstring",
+            "message": "Missing function or method docstring",
+            "message-id": "C0116"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_data_source",
+            "obj": "TestCSVDataSource.test_datetime_index",
+            "line": 50,
+            "column": 4,
+            "path": "tests/test_data_source.py",
+            "symbol": "missing-function-docstring",
+            "message": "Missing function or method docstring",
+            "message-id": "C0116"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_data_source",
+            "obj": "TestCSVDataSource.test_float_index",
+            "line": 58,
+            "column": 4,
+            "path": "tests/test_data_source.py",
+            "symbol": "missing-function-docstring",
+            "message": "Missing function or method docstring",
+            "message-id": "C0116"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_data_source",
+            "obj": "TestCSVDataSource.test_string_number_index",
+            "line": 66,
+            "column": 4,
+            "path": "tests/test_data_source.py",
+            "symbol": "missing-function-docstring",
+            "message": "Missing function or method docstring",
+            "message-id": "C0116"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_data_source",
+            "obj": "TestCSVDataSource.test_non_convertible_index",
+            "line": 74,
+            "column": 4,
+            "path": "tests/test_data_source.py",
+            "symbol": "missing-function-docstring",
+            "message": "Missing function or method docstring",
+            "message-id": "C0116"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_data_source",
+            "obj": "TestCSVDataSource.get_data_source_config",
+            "line": 81,
+            "column": 4,
+            "path": "tests/test_data_source.py",
+            "symbol": "missing-function-docstring",
+            "message": "Missing function or method docstring",
+            "message-id": "C0116"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_data_source",
+            "obj": "TestCSVDataSource.test_data_source_initialization",
+            "line": 91,
+            "column": 4,
+            "path": "tests/test_data_source.py",
+            "symbol": "missing-function-docstring",
+            "message": "Missing function or method docstring",
+            "message-id": "C0116"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_data_source",
+            "obj": "TestCSVDataSource.test_data_loading",
+            "line": 98,
+            "column": 4,
+            "path": "tests/test_data_source.py",
+            "symbol": "missing-function-docstring",
+            "message": "Missing function or method docstring",
+            "message-id": "C0116"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_data_source",
+            "obj": "TestCSVDataSource.test_data_offset",
+            "line": 104,
+            "column": 4,
+            "path": "tests/test_data_source.py",
+            "symbol": "missing-function-docstring",
+            "message": "Missing function or method docstring",
+            "message-id": "C0116"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_data_source",
+            "obj": "TestCSVDataSource.test_interpolation",
+            "line": 110,
+            "column": 4,
+            "path": "tests/test_data_source.py",
+            "symbol": "missing-function-docstring",
+            "message": "Missing function or method docstring",
+            "message-id": "C0116"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_data_source",
+            "obj": "TestCSVDataSource.test_data_exhaustion",
+            "line": 117,
+            "column": 4,
+            "path": "tests/test_data_source.py",
+            "symbol": "missing-function-docstring",
+            "message": "Missing function or method docstring",
+            "message-id": "C0116"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_data_source",
+            "obj": "TestCSVDataSource.test_data_exhaustion",
+            "line": 121,
+            "column": 12,
+            "path": "tests/test_data_source.py",
+            "symbol": "protected-access",
+            "message": "Access to a protected member _get_next_data of a client class",
+            "message-id": "W0212"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_data_source",
+            "obj": "TestCSVDataSource.test_data_exhaustion",
+            "line": 122,
+            "column": 20,
+            "path": "tests/test_data_source.py",
+            "symbol": "protected-access",
+            "message": "Access to a protected member _get_next_data of a client class",
+            "message-id": "W0212"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_databroker_limits",
+            "obj": "",
+            "line": 6,
+            "column": 0,
+            "path": "tests/test_databroker_limits.py",
+            "symbol": "reimported",
+            "message": "Reimport 'time' (imported line 3)",
+            "message-id": "W0404"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_databroker_limits",
+            "obj": "DataBrokerExplosionTest",
+            "line": 14,
+            "column": 0,
+            "path": "tests/test_databroker_limits.py",
+            "symbol": "missing-class-docstring",
+            "message": "Missing class docstring",
+            "message-id": "C0115"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_databroker_limits",
+            "obj": "Sender",
+            "line": 33,
+            "column": 0,
+            "path": "tests/test_databroker_limits.py",
+            "symbol": "missing-class-docstring",
+            "message": "Missing class docstring",
+            "message-id": "C0115"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_databroker_limits",
+            "obj": "SlowReceiver",
+            "line": 47,
+            "column": 0,
+            "path": "tests/test_databroker_limits.py",
+            "symbol": "missing-class-docstring",
+            "message": "Missing class docstring",
+            "message-id": "C0115"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_databroker_limits",
+            "obj": "FaultyReceiver",
+            "line": 63,
+            "column": 0,
+            "path": "tests/test_databroker_limits.py",
+            "symbol": "missing-class-docstring",
+            "message": "Missing class docstring",
+            "message-id": "C0115"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_databroker_limits",
+            "obj": "FaultyReceiver._do_some_slow_stuff",
+            "line": 73,
+            "column": 8,
+            "path": "tests/test_databroker_limits.py",
+            "symbol": "broad-exception-raised",
+            "message": "Raising too general exception: Exception",
+            "message-id": "W0719"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_databroker_limits",
+            "obj": "exploding_modules",
+            "line": 76,
+            "column": 0,
+            "path": "tests/test_databroker_limits.py",
+            "symbol": "missing-function-docstring",
+            "message": "Missing function or method docstring",
+            "message-id": "C0116"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_databroker_limits",
+            "obj": "slow_module",
+            "line": 97,
+            "column": 0,
+            "path": "tests/test_databroker_limits.py",
+            "symbol": "missing-function-docstring",
+            "message": "Missing function or method docstring",
+            "message-id": "C0116"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_databroker_limits",
+            "obj": "faulty_module",
+            "line": 112,
+            "column": 0,
+            "path": "tests/test_databroker_limits.py",
+            "symbol": "missing-function-docstring",
+            "message": "Missing function or method docstring",
+            "message-id": "C0116"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_databroker_limits",
+            "obj": "TestDataBrokerLimits",
+            "line": 126,
+            "column": 0,
+            "path": "tests/test_databroker_limits.py",
+            "symbol": "missing-class-docstring",
+            "message": "Missing class docstring",
+            "message-id": "C0115"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_databroker_limits",
+            "obj": "TestDataBrokerLimits.test_slow_module",
+            "line": 127,
+            "column": 4,
+            "path": "tests/test_databroker_limits.py",
+            "symbol": "missing-function-docstring",
+            "message": "Missing function or method docstring",
+            "message-id": "C0116"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_databroker_limits",
+            "obj": "TestDataBrokerLimits.test_exploding_module",
+            "line": 132,
+            "column": 4,
+            "path": "tests/test_databroker_limits.py",
+            "symbol": "missing-function-docstring",
+            "message": "Missing function or method docstring",
+            "message-id": "C0116"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_databroker_limits",
+            "obj": "TestDataBrokerLimits.test_faulty_module",
+            "line": 137,
+            "column": 4,
+            "path": "tests/test_databroker_limits.py",
+            "symbol": "missing-function-docstring",
+            "message": "Missing function or method docstring",
+            "message-id": "C0116"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_databroker_limits",
+            "obj": "",
+            "line": 6,
+            "column": 0,
+            "path": "tests/test_databroker_limits.py",
+            "symbol": "ungrouped-imports",
+            "message": "Imports from package time are not grouped",
+            "message-id": "C0412"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_databroker_limits",
+            "obj": "",
+            "line": 8,
+            "column": 0,
+            "path": "tests/test_databroker_limits.py",
             "symbol": "unused-import",
-            "message": "Unused Agent imported from agentlib.core",
+            "message": "Unused numpy imported as np",
             "message-id": "W0611"
         },
         {
             "type": "convention",
             "module": "tests.test_datamodels",
-            "obj": "",
-            "line": 113,
-            "column": 0,
-            "path": "tests/test_datamodels.py",
-            "symbol": "line-too-long",
-            "message": "Line too long (108/100)",
-            "message-id": "C0301"
-        },
-        {
-            "type": "convention",
-            "module": "tests.test_datamodels",
-            "obj": "",
-            "line": 115,
-            "column": 0,
-            "path": "tests/test_datamodels.py",
-            "symbol": "line-too-long",
-            "message": "Line too long (109/100)",
-            "message-id": "C0301"
-        },
-        {
-            "type": "convention",
-            "module": "tests.test_datamodels",
             "obj": "TestVariables.test_base_model_variable",
-            "line": 20,
+            "line": 21,
             "column": 4,
             "path": "tests/test_datamodels.py",
             "symbol": "missing-function-docstring",
@@ -1358,7 +1776,7 @@
             "module": "tests.test_datamodels",
             "obj": "TestVariables.test_value_conversion",
             "line": 35,
-            "column": 52,
+            "column": 12,
             "path": "tests/test_datamodels.py",
             "symbol": "use-dict-literal",
             "message": "Consider using '{\"name\": 'test', \"value\": 100.0, \"type\": 'float'}' instead of a call to 'dict'.",
@@ -1369,7 +1787,7 @@
             "module": "tests.test_datamodels",
             "obj": "TestVariables.test_series_sending",
             "line": 49,
-            "column": 53,
+            "column": 12,
             "path": "tests/test_datamodels.py",
             "symbol": "use-dict-literal",
             "message": "Consider using '{\"name\": 'test', \"value\": srs, \"type\": 'pd.Series'}' instead of a call to 'dict'.",
@@ -1380,7 +1798,7 @@
             "module": "tests.test_datamodels",
             "obj": "TestVariables.test_type",
             "line": 61,
-            "column": 50,
+            "column": 16,
             "path": "tests/test_datamodels.py",
             "symbol": "use-dict-literal",
             "message": "Consider using '{\"name\": 'test', \"type\": 'not_supported'}' instead of a call to 'dict'.",
@@ -1390,7 +1808,7 @@
             "type": "refactor",
             "module": "tests.test_datamodels",
             "obj": "TestVariables.test_type",
-            "line": 63,
+            "line": 64,
             "column": 50,
             "path": "tests/test_datamodels.py",
             "symbol": "use-dict-literal",
@@ -1401,8 +1819,8 @@
             "type": "refactor",
             "module": "tests.test_datamodels",
             "obj": "TestVariables.test_allowed_values",
-            "line": 68,
-            "column": 50,
+            "line": 70,
+            "column": 16,
             "path": "tests/test_datamodels.py",
             "symbol": "use-dict-literal",
             "message": "Consider using '{\"name\": 'test', \"type\": 'float', \"ub\": 10, \"lb\": 0, \"clip\": True}' instead of a call to 'dict'.",
@@ -1412,8 +1830,8 @@
             "type": "refactor",
             "module": "tests.test_datamodels",
             "obj": "TestVariables.test_allowed_values",
-            "line": 74,
-            "column": 52,
+            "line": 80,
+            "column": 12,
             "path": "tests/test_datamodels.py",
             "symbol": "use-dict-literal",
             "message": "Consider using '{\"name\": 'test', \"type\": 'float', \"value\": 20.0, \"allowed_values\": ['0', '10', 20, 30.0], ... }' instead of a call to 'dict'.",
@@ -1423,7 +1841,7 @@
             "type": "convention",
             "module": "tests.test_datamodels",
             "obj": "TestVariables.test_allowed_values",
-            "line": 78,
+            "line": 87,
             "column": 12,
             "path": "tests/test_datamodels.py",
             "symbol": "invalid-name",
@@ -1434,8 +1852,8 @@
             "type": "refactor",
             "module": "tests.test_datamodels",
             "obj": "TestVariables.test_pd_series",
-            "line": 89,
-            "column": 56,
+            "line": 99,
+            "column": 16,
             "path": "tests/test_datamodels.py",
             "symbol": "use-dict-literal",
             "message": "Consider using '{\"name\": 'test', \"type\": 'pd.Series', \"value\": value, \"ub\": 10, \"lb\": 5, ... }' instead of a call to 'dict'.",
@@ -1445,7 +1863,7 @@
             "type": "refactor",
             "module": "tests.test_datamodels",
             "obj": "TestVariables.test_bounds",
-            "line": 108,
+            "line": 121,
             "column": 50,
             "path": "tests/test_datamodels.py",
             "symbol": "use-dict-literal",
@@ -1456,8 +1874,8 @@
             "type": "refactor",
             "module": "tests.test_datamodels",
             "obj": "TestVariables.test_bounds",
-            "line": 113,
-            "column": 52,
+            "line": 125,
+            "column": 12,
             "path": "tests/test_datamodels.py",
             "symbol": "use-dict-literal",
             "message": "Consider using '{\"name\": 'test', \"clip\": True, \"ub\": 100, \"lb\": 0, \"value\": 10000}' instead of a call to 'dict'.",
@@ -1467,8 +1885,8 @@
             "type": "refactor",
             "module": "tests.test_datamodels",
             "obj": "TestVariables.test_bounds",
-            "line": 115,
-            "column": 52,
+            "line": 129,
+            "column": 12,
             "path": "tests/test_datamodels.py",
             "symbol": "use-dict-literal",
             "message": "Consider using '{\"name\": 'test', \"clip\": True, \"ub\": 100, \"lb\": 0, \"value\": -10000, ... }' instead of a call to 'dict'.",
@@ -1478,7 +1896,7 @@
             "type": "convention",
             "module": "tests.test_datamodels",
             "obj": "TestVariables.test_source",
-            "line": 189,
+            "line": 215,
             "column": 4,
             "path": "tests/test_datamodels.py",
             "symbol": "missing-function-docstring",
@@ -1489,7 +1907,7 @@
             "type": "convention",
             "module": "tests.test_datamodels",
             "obj": "TestVariables.test_source",
-            "line": 192,
+            "line": 217,
             "column": 30,
             "path": "tests/test_datamodels.py",
             "symbol": "unnecessary-dunder-call",
@@ -1500,7 +1918,7 @@
             "type": "convention",
             "module": "tests.test_datamodels",
             "obj": "",
-            "line": 5,
+            "line": 6,
             "column": 0,
             "path": "tests/test_datamodels.py",
             "symbol": "wrong-import-order",
@@ -1511,7 +1929,7 @@
             "type": "warning",
             "module": "tests.test_datamodels",
             "obj": "",
-            "line": 3,
+            "line": 4,
             "column": 0,
             "path": "tests/test_datamodels.py",
             "symbol": "unused-import",
@@ -1522,7 +1940,7 @@
             "type": "warning",
             "module": "tests.test_datamodels",
             "obj": "",
-            "line": 4,
+            "line": 5,
             "column": 0,
             "path": "tests/test_datamodels.py",
             "symbol": "unused-import",
@@ -1533,7 +1951,29 @@
             "type": "warning",
             "module": "tests.test_environment",
             "obj": "TestEnvironment.test_config_setter",
-            "line": 41,
+            "line": 39,
+            "column": 8,
+            "path": "tests/test_environment.py",
+            "symbol": "protected-access",
+            "message": "Access to a protected member _config of a client class",
+            "message-id": "W0212"
+        },
+        {
+            "type": "error",
+            "module": "tests.test_environment",
+            "obj": "TestEnvironment.test_config_setter",
+            "line": 40,
+            "column": 30,
+            "path": "tests/test_environment.py",
+            "symbol": "no-member",
+            "message": "Instance of 'Environment' has no 'config' member; maybe '_config'?",
+            "message-id": "E1101"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_environment",
+            "obj": "TestEnvironment.test_config_setter",
+            "line": 42,
             "column": 13,
             "path": "tests/test_environment.py",
             "symbol": "unspecified-encoding",
@@ -1541,15 +1981,59 @@
             "message-id": "W1514"
         },
         {
-            "type": "convention",
-            "module": "tests.test_mas",
-            "obj": "",
-            "line": 23,
-            "column": 0,
-            "path": "tests/test_mas.py",
-            "symbol": "missing-final-newline",
-            "message": "Final newline missing",
-            "message-id": "C0304"
+            "type": "warning",
+            "module": "tests.test_environment",
+            "obj": "TestEnvironment.test_config_setter",
+            "line": 44,
+            "column": 8,
+            "path": "tests/test_environment.py",
+            "symbol": "protected-access",
+            "message": "Access to a protected member _config of a client class",
+            "message-id": "W0212"
+        },
+        {
+            "type": "error",
+            "module": "tests.test_environment",
+            "obj": "TestEnvironment.test_config_setter",
+            "line": 45,
+            "column": 30,
+            "path": "tests/test_environment.py",
+            "symbol": "no-member",
+            "message": "Instance of 'Environment' has no 'config' member; maybe '_config'?",
+            "message-id": "E1101"
+        },
+        {
+            "type": "error",
+            "module": "tests.test_environment",
+            "obj": "TestEnvironment.test_rt",
+            "line": 52,
+            "column": 8,
+            "path": "tests/test_environment.py",
+            "symbol": "no-member",
+            "message": "Instance of 'Environment' has no 'run' member",
+            "message-id": "E1101"
+        },
+        {
+            "type": "error",
+            "module": "tests.test_environment",
+            "obj": "TestEnvironment.test_rt",
+            "line": 53,
+            "column": 32,
+            "path": "tests/test_environment.py",
+            "symbol": "no-member",
+            "message": "Instance of 'Environment' has no 'time' member",
+            "message-id": "E1101"
+        },
+        {
+            "type": "error",
+            "module": "tests.test_environment",
+            "obj": "TestEnvironment.test_no_config",
+            "line": 58,
+            "column": 30,
+            "path": "tests/test_environment.py",
+            "symbol": "no-member",
+            "message": "Instance of 'Environment' has no 'config' member; maybe '_config'?",
+            "message-id": "E1101"
         },
         {
             "type": "convention",
@@ -1566,7 +2050,7 @@
             "type": "convention",
             "module": "tests.test_mas",
             "obj": "TestMAS.test_multiprocessing_mas",
-            "line": 18,
+            "line": 17,
             "column": 4,
             "path": "tests/test_mas.py",
             "symbol": "missing-function-docstring",
@@ -1577,7 +2061,7 @@
             "type": "convention",
             "module": "tests.test_mas",
             "obj": "TestMAS.test_clonemap_mas",
-            "line": 21,
+            "line": 19,
             "column": 4,
             "path": "tests/test_mas.py",
             "symbol": "missing-function-docstring",
@@ -1588,7 +2072,7 @@
             "type": "convention",
             "module": "tests.test_model",
             "obj": "DummyModel",
-            "line": 14,
+            "line": 15,
             "column": 0,
             "path": "tests/test_model.py",
             "symbol": "missing-class-docstring",
@@ -1599,7 +2083,7 @@
             "type": "error",
             "module": "tests.test_model",
             "obj": "TestModel.test_abc",
-            "line": 86,
+            "line": 88,
             "column": 20,
             "path": "tests/test_model.py",
             "symbol": "abstract-class-instantiated",
@@ -1610,7 +2094,7 @@
             "type": "warning",
             "module": "tests.test_model",
             "obj": "TestModel.test_abc",
-            "line": 86,
+            "line": 88,
             "column": 12,
             "path": "tests/test_model.py",
             "symbol": "unused-variable",
@@ -1621,7 +2105,7 @@
             "type": "warning",
             "module": "tests.test_model",
             "obj": "TestModel.test_get_attr",
-            "line": 92,
+            "line": 94,
             "column": 12,
             "path": "tests/test_model.py",
             "symbol": "pointless-statement",
@@ -1632,7 +2116,7 @@
             "type": "warning",
             "module": "tests.test_model",
             "obj": "TestModel.test_generate_config",
-            "line": 98,
+            "line": 100,
             "column": 13,
             "path": "tests/test_model.py",
             "symbol": "unspecified-encoding",
@@ -1643,7 +2127,7 @@
             "type": "convention",
             "module": "tests.test_model",
             "obj": "TestModel.test_get_set",
-            "line": 106,
+            "line": 108,
             "column": 4,
             "path": "tests/test_model.py",
             "symbol": "missing-function-docstring",
@@ -1654,7 +2138,7 @@
             "type": "warning",
             "module": "tests.test_model",
             "obj": "TestModel.test_get_set",
-            "line": 119,
+            "line": 121,
             "column": 8,
             "path": "tests/test_model.py",
             "symbol": "protected-access",
@@ -1665,7 +2149,7 @@
             "type": "warning",
             "module": "tests.test_model",
             "obj": "TestModel.test_get_set",
-            "line": 121,
+            "line": 123,
             "column": 8,
             "path": "tests/test_model.py",
             "symbol": "protected-access",
@@ -1676,7 +2160,7 @@
             "type": "warning",
             "module": "tests.test_model",
             "obj": "TestModel.test_create_time_samples",
-            "line": 137,
+            "line": 138,
             "column": 18,
             "path": "tests/test_model.py",
             "symbol": "protected-access",
@@ -1687,7 +2171,7 @@
             "type": "warning",
             "module": "tests.test_model",
             "obj": "TestModel.test_create_time_samples",
-            "line": 139,
+            "line": 140,
             "column": 18,
             "path": "tests/test_model.py",
             "symbol": "protected-access",
@@ -1697,41 +2181,8 @@
         {
             "type": "convention",
             "module": "tests.test_module",
-            "obj": "",
-            "line": 148,
-            "column": 0,
-            "path": "tests/test_module.py",
-            "symbol": "line-too-long",
-            "message": "Line too long (114/100)",
-            "message-id": "C0301"
-        },
-        {
-            "type": "convention",
-            "module": "tests.test_module",
-            "obj": "",
-            "line": 149,
-            "column": 0,
-            "path": "tests/test_module.py",
-            "symbol": "line-too-long",
-            "message": "Line too long (118/100)",
-            "message-id": "C0301"
-        },
-        {
-            "type": "convention",
-            "module": "tests.test_module",
-            "obj": "",
-            "line": 396,
-            "column": 0,
-            "path": "tests/test_module.py",
-            "symbol": "missing-final-newline",
-            "message": "Final newline missing",
-            "message-id": "C0304"
-        },
-        {
-            "type": "convention",
-            "module": "tests.test_module",
             "obj": "CustomModuleConfig",
-            "line": 39,
+            "line": 41,
             "column": 0,
             "path": "tests/test_module.py",
             "symbol": "missing-class-docstring",
@@ -1753,7 +2204,7 @@
             "type": "convention",
             "module": "tests.test_module",
             "obj": "BrokenCustomModule",
-            "line": 60,
+            "line": 59,
             "column": 0,
             "path": "tests/test_module.py",
             "symbol": "missing-class-docstring",
@@ -1764,7 +2215,7 @@
             "type": "refactor",
             "module": "tests.test_module",
             "obj": "TestModuleConfig._check_source",
-            "line": 160,
+            "line": 163,
             "column": 8,
             "path": "tests/test_module.py",
             "symbol": "no-else-return",
@@ -1775,7 +2226,7 @@
             "type": "warning",
             "module": "tests.test_module",
             "obj": "TestModuleConfig.test_user_config",
-            "line": 184,
+            "line": 187,
             "column": 25,
             "path": "tests/test_module.py",
             "symbol": "protected-access",
@@ -1786,7 +2237,7 @@
             "type": "warning",
             "module": "tests.test_module",
             "obj": "TestModule.test_missing_config_type",
-            "line": 250,
+            "line": 256,
             "column": 12,
             "path": "tests/test_module.py",
             "symbol": "unused-variable",
@@ -1797,7 +2248,7 @@
             "type": "warning",
             "module": "tests.test_module",
             "obj": "TestModule.test_properties",
-            "line": 259,
+            "line": 265,
             "column": 30,
             "path": "tests/test_module.py",
             "symbol": "protected-access",
@@ -1808,18 +2259,7 @@
             "type": "warning",
             "module": "tests.test_module",
             "obj": "TestModule.test_get_set",
-            "line": 276,
-            "column": 35,
-            "path": "tests/test_module.py",
-            "symbol": "protected-access",
-            "message": "Access to a protected member _variables_dict of a client class",
-            "message-id": "W0212"
-        },
-        {
-            "type": "warning",
-            "module": "tests.test_module",
-            "obj": "TestModule.test_get_set",
-            "line": 277,
+            "line": 282,
             "column": 35,
             "path": "tests/test_module.py",
             "symbol": "protected-access",
@@ -1841,7 +2281,7 @@
             "type": "warning",
             "module": "tests.test_module",
             "obj": "TestModule.test_get_set",
-            "line": 284,
+            "line": 289,
             "column": 35,
             "path": "tests/test_module.py",
             "symbol": "protected-access",
@@ -1852,7 +2292,18 @@
             "type": "warning",
             "module": "tests.test_module",
             "obj": "TestModule.test_get_set",
-            "line": 285,
+            "line": 290,
+            "column": 35,
+            "path": "tests/test_module.py",
+            "symbol": "protected-access",
+            "message": "Access to a protected member _variables_dict of a client class",
+            "message-id": "W0212"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_module",
+            "obj": "TestModule.test_get_set",
+            "line": 291,
             "column": 25,
             "path": "tests/test_module.py",
             "symbol": "protected-access",
@@ -1863,7 +2314,7 @@
             "type": "warning",
             "module": "tests.test_module",
             "obj": "TestModule.test_get_value",
-            "line": 298,
+            "line": 304,
             "column": 37,
             "path": "tests/test_module.py",
             "symbol": "protected-access",
@@ -1874,7 +2325,7 @@
             "type": "warning",
             "module": "tests.test_module",
             "obj": "TestModule.test_get_value",
-            "line": 299,
+            "line": 305,
             "column": 37,
             "path": "tests/test_module.py",
             "symbol": "protected-access",
@@ -1885,7 +2336,7 @@
             "type": "convention",
             "module": "tests.test_module",
             "obj": "TestModuleLogging",
-            "line": 339,
+            "line": 345,
             "column": 0,
             "path": "tests/test_module.py",
             "symbol": "missing-class-docstring",
@@ -1896,7 +2347,7 @@
             "type": "convention",
             "module": "tests.test_module",
             "obj": "TestModuleLogging.tearDown",
-            "line": 350,
+            "line": 355,
             "column": 12,
             "path": "tests/test_module.py",
             "symbol": "invalid-name",
@@ -1907,7 +2358,7 @@
             "type": "warning",
             "module": "tests.test_module",
             "obj": "TestModuleLogging._clear_file",
-            "line": 385,
+            "line": 391,
             "column": 13,
             "path": "tests/test_module.py",
             "symbol": "unspecified-encoding",
@@ -1918,7 +2369,7 @@
             "type": "warning",
             "module": "tests.test_module",
             "obj": "TestModuleLogging._read_file",
-            "line": 390,
+            "line": 396,
             "column": 13,
             "path": "tests/test_module.py",
             "symbol": "unspecified-encoding",
@@ -1929,7 +2380,7 @@
             "type": "convention",
             "module": "tests.test_n_pingpong",
             "obj": "",
-            "line": 100,
+            "line": 98,
             "column": 0,
             "path": "tests/test_n_pingpong.py",
             "symbol": "line-too-long",
@@ -1940,7 +2391,7 @@
             "type": "convention",
             "module": "tests.test_n_pingpong",
             "obj": "NPingPong.n",
-            "line": 59,
+            "line": 60,
             "column": 4,
             "path": "tests/test_n_pingpong.py",
             "symbol": "missing-function-docstring",
@@ -1951,7 +2402,7 @@
             "type": "convention",
             "module": "tests.test_n_pingpong",
             "obj": "NPingPong.n",
-            "line": 59,
+            "line": 60,
             "column": 4,
             "path": "tests/test_n_pingpong.py",
             "symbol": "invalid-name",
@@ -1962,7 +2413,7 @@
             "type": "convention",
             "module": "tests.test_n_pingpong",
             "obj": "TestNPingPong.setUp",
-            "line": 95,
+            "line": 93,
             "column": 8,
             "path": "tests/test_n_pingpong.py",
             "symbol": "invalid-name",
@@ -1973,7 +2424,7 @@
             "type": "convention",
             "module": "tests.test_n_pingpong",
             "obj": "TestNPingPong.test_local_communicators",
-            "line": 103,
+            "line": 101,
             "column": 8,
             "path": "tests/test_n_pingpong.py",
             "symbol": "invalid-name",
@@ -1984,7 +2435,7 @@
             "type": "convention",
             "module": "tests.test_n_pingpong",
             "obj": "TestNPingPong.test_local_communicators",
-            "line": 105,
+            "line": 103,
             "column": 34,
             "path": "tests/test_n_pingpong.py",
             "symbol": "invalid-name",
@@ -1995,7 +2446,7 @@
             "type": "warning",
             "module": "tests.test_n_pingpong",
             "obj": "TestNPingPong.test_multiprocessing_broadcast",
-            "line": 121,
+            "line": 117,
             "column": 8,
             "path": "tests/test_n_pingpong.py",
             "symbol": "unused-variable",
@@ -2006,23 +2457,12 @@
             "type": "convention",
             "module": "tests.test_n_pingpong",
             "obj": "TestNPingPong._create_2n_pingpong_agents",
-            "line": 132,
-            "column": 86,
+            "line": 130,
+            "column": 59,
             "path": "tests/test_n_pingpong.py",
             "symbol": "invalid-name",
             "message": "Argument name \"rt\" doesn't conform to snake_case naming style",
             "message-id": "C0103"
-        },
-        {
-            "type": "convention",
-            "module": "tests.test_plugins",
-            "obj": "",
-            "line": 18,
-            "column": 0,
-            "path": "tests/test_plugins.py",
-            "symbol": "missing-final-newline",
-            "message": "Final newline missing",
-            "message-id": "C0304"
         },
         {
             "type": "convention",
@@ -2050,7 +2490,7 @@
             "type": "convention",
             "module": "tests.test_plugins",
             "obj": "TestPlugin.test_module_plugin",
-            "line": 14,
+            "line": 13,
             "column": 4,
             "path": "tests/test_plugins.py",
             "symbol": "missing-function-docstring",
@@ -2061,45 +2501,12 @@
             "type": "convention",
             "module": "tests.test_plugins",
             "obj": "TestPlugin.test_module_not_found_error",
-            "line": 17,
+            "line": 15,
             "column": 4,
             "path": "tests/test_plugins.py",
             "symbol": "missing-function-docstring",
             "message": "Missing function or method docstring",
             "message-id": "C0116"
-        },
-        {
-            "type": "convention",
-            "module": "tests.test_simulator",
-            "obj": "",
-            "line": 70,
-            "column": 0,
-            "path": "tests/test_simulator.py",
-            "symbol": "line-too-long",
-            "message": "Line too long (115/100)",
-            "message-id": "C0301"
-        },
-        {
-            "type": "convention",
-            "module": "tests.test_simulator",
-            "obj": "",
-            "line": 118,
-            "column": 0,
-            "path": "tests/test_simulator.py",
-            "symbol": "line-too-long",
-            "message": "Line too long (102/100)",
-            "message-id": "C0301"
-        },
-        {
-            "type": "convention",
-            "module": "tests.test_simulator",
-            "obj": "",
-            "line": 123,
-            "column": 0,
-            "path": "tests/test_simulator.py",
-            "symbol": "line-too-long",
-            "message": "Line too long (104/100)",
-            "message-id": "C0301"
         },
         {
             "type": "convention",
@@ -2116,7 +2523,7 @@
             "type": "convention",
             "module": "tests.test_simulator",
             "obj": "TestSimulator.get_agent",
-            "line": 53,
+            "line": 60,
             "column": 4,
             "path": "tests/test_simulator.py",
             "symbol": "missing-function-docstring",
@@ -2127,7 +2534,7 @@
             "type": "convention",
             "module": "tests.test_simulator",
             "obj": "TestSimulator.test_simulation",
-            "line": 86,
+            "line": 94,
             "column": 4,
             "path": "tests/test_simulator.py",
             "symbol": "missing-function-docstring",
@@ -2138,7 +2545,7 @@
             "type": "convention",
             "module": "tests.test_simulator",
             "obj": "TestSimulator.test_inputs_and_pars",
-            "line": 93,
+            "line": 101,
             "column": 4,
             "path": "tests/test_simulator.py",
             "symbol": "missing-function-docstring",
@@ -2149,7 +2556,7 @@
             "type": "warning",
             "module": "tests.test_simulator",
             "obj": "TestSimulator.test_inputs_and_pars",
-            "line": 95,
+            "line": 103,
             "column": 8,
             "path": "tests/test_simulator.py",
             "symbol": "protected-access",
@@ -2160,7 +2567,7 @@
             "type": "warning",
             "module": "tests.test_simulator",
             "obj": "TestSimulator.test_inputs_and_pars",
-            "line": 98,
+            "line": 106,
             "column": 8,
             "path": "tests/test_simulator.py",
             "symbol": "protected-access",
@@ -2171,7 +2578,7 @@
             "type": "convention",
             "module": "tests.test_simulator",
             "obj": "TestSimulator.test_save_results",
-            "line": 106,
+            "line": 114,
             "column": 4,
             "path": "tests/test_simulator.py",
             "symbol": "missing-function-docstring",
@@ -2182,7 +2589,7 @@
             "type": "convention",
             "module": "tests.test_simulator",
             "obj": "TestSimulator.test_wrong_causality",
-            "line": 128,
+            "line": 141,
             "column": 4,
             "path": "tests/test_simulator.py",
             "symbol": "missing-function-docstring",
@@ -2193,7 +2600,7 @@
             "type": "convention",
             "module": "tests.test_simulator",
             "obj": "TestSimulator.test_no_files",
-            "line": 133,
+            "line": 148,
             "column": 4,
             "path": "tests/test_simulator.py",
             "symbol": "missing-function-docstring",
@@ -2204,7 +2611,7 @@
             "type": "warning",
             "module": "tests.test_simulator",
             "obj": "TestSimulator.test_model_injection",
-            "line": 155,
+            "line": 174,
             "column": 13,
             "path": "tests/test_simulator.py",
             "symbol": "unspecified-encoding",
@@ -2213,20 +2620,75 @@
         },
         {
             "type": "convention",
-            "module": "tests.test_utils",
+            "module": "tests.test_simulator_dashboard",
             "obj": "",
-            "line": 63,
+            "line": 1,
             "column": 0,
-            "path": "tests/test_utils.py",
-            "symbol": "line-too-long",
-            "message": "Line too long (169/100)",
-            "message-id": "C0301"
+            "path": "tests/test_simulator_dashboard.py",
+            "symbol": "missing-module-docstring",
+            "message": "Missing module docstring",
+            "message-id": "C0114"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_simulator_dashboard",
+            "obj": "TestSimulatorDashboard",
+            "line": 15,
+            "column": 0,
+            "path": "tests/test_simulator_dashboard.py",
+            "symbol": "missing-class-docstring",
+            "message": "Missing class docstring",
+            "message-id": "C0115"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_simulator_dashboard",
+            "obj": "TestSimulatorDashboard.test_load_new_data",
+            "line": 17,
+            "column": 4,
+            "path": "tests/test_simulator_dashboard.py",
+            "symbol": "missing-function-docstring",
+            "message": "Missing function or method docstring",
+            "message-id": "C0116"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_simulator_dashboard",
+            "obj": "TestSimulatorDashboard.test_update_data",
+            "line": 46,
+            "column": 4,
+            "path": "tests/test_simulator_dashboard.py",
+            "symbol": "missing-function-docstring",
+            "message": "Missing function or method docstring",
+            "message-id": "C0116"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_simulator_dashboard",
+            "obj": "TestSimulatorDashboard.test_format_time_axis",
+            "line": 74,
+            "column": 4,
+            "path": "tests/test_simulator_dashboard.py",
+            "symbol": "missing-function-docstring",
+            "message": "Missing function or method docstring",
+            "message-id": "C0116"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_simulator_dashboard",
+            "obj": "TestSimulatorDashboard.test_create_plot",
+            "line": 79,
+            "column": 4,
+            "path": "tests/test_simulator_dashboard.py",
+            "symbol": "missing-function-docstring",
+            "message": "Missing function or method docstring",
+            "message-id": "C0116"
         },
         {
             "type": "convention",
             "module": "tests.test_utils",
             "obj": "TestLoadConfig",
-            "line": 60,
+            "line": 58,
             "column": 0,
             "path": "tests/test_utils.py",
             "symbol": "missing-class-docstring",
@@ -2237,7 +2699,7 @@
             "type": "warning",
             "module": "tests.test_utils",
             "obj": "TestLoadConfig.test_load_config",
-            "line": 76,
+            "line": 81,
             "column": 17,
             "path": "tests/test_utils.py",
             "symbol": "unspecified-encoding",
@@ -2248,7 +2710,7 @@
             "type": "convention",
             "module": "tests.test_utils",
             "obj": "TestLoadConfig.test_load_config",
-            "line": 76,
+            "line": 81,
             "column": 45,
             "path": "tests/test_utils.py",
             "symbol": "invalid-name",
@@ -2259,7 +2721,7 @@
             "type": "convention",
             "module": "tests.test_utils",
             "obj": "TestLoadConfig.test_load_config_error",
-            "line": 84,
+            "line": 89,
             "column": 4,
             "path": "tests/test_utils.py",
             "symbol": "missing-function-docstring",
@@ -2274,7 +2736,18 @@
             "column": 0,
             "path": "tests/test_utils.py",
             "symbol": "duplicate-code",
-            "message": "Similar lines in 2 files\n==tests.test_communicator:[10:16]\n==tests.test_module:[19:25]\n    \"allowed_values\": [100, 150],\n    \"shared\": True,\n    \"unit\": \"testUnit\",\n    \"description\": \"My Doc\",\n    \"clip\": True,\n    \"rdf_class\": \"MyRDFClass\",",
+            "message": "Similar lines in 2 files\n==tests.test_communicator:[10:16]\n==tests.test_module:[27:33]\n    \"allowed_values\": [100, 150],\n    \"shared\": True,\n    \"unit\": \"testUnit\",\n    \"description\": \"My Doc\",\n    \"clip\": True,\n    \"rdf_class\": \"MyRDFClass\",",
+            "message-id": "R0801"
+        },
+        {
+            "type": "refactor",
+            "module": "tests.test_utils",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "tests/test_utils.py",
+            "symbol": "duplicate-code",
+            "message": "Similar lines in 2 files\n==tests.test_agent:[203:211]\n==tests.test_environment:[61:69]\n        try:\n            os.remove(self.filepath)\n        except FileNotFoundError:\n            pass\n\n\nif __name__ == \"__main__\":\n    unittest.main()",
             "message-id": "R0801"
         }
     ],
@@ -2290,7 +2763,7 @@
             "function": 0,
             "method": 0,
             "module": 0,
-            "variable": 14,
+            "variable": 12,
             "typevar": 0,
             "typealias": 0
         },
@@ -2301,17 +2774,17 @@
                 "fatal": 0,
                 "info": 0,
                 "refactor": 0,
-                "statement": 9,
+                "statement": 6,
                 "warning": 0
             },
-            "run_examples": {
-                "convention": 1,
+            "ci.run_examples": {
+                "convention": 4,
                 "error": 0,
                 "fatal": 0,
                 "info": 0,
                 "refactor": 0,
-                "statement": 51,
-                "warning": 1
+                "statement": 58,
+                "warning": 4
             },
             "tests.__init__": {
                 "convention": 0,
@@ -2323,7 +2796,7 @@
                 "warning": 0
             },
             "tests.test_agent": {
-                "convention": 13,
+                "convention": 11,
                 "error": 0,
                 "fatal": 0,
                 "info": 0,
@@ -2332,7 +2805,7 @@
                 "warning": 7
             },
             "tests.test_communicator": {
-                "convention": 6,
+                "convention": 5,
                 "error": 0,
                 "fatal": 0,
                 "info": 0,
@@ -2341,16 +2814,34 @@
                 "warning": 0
             },
             "tests.test_data_broker": {
-                "convention": 6,
+                "convention": 8,
                 "error": 0,
                 "fatal": 0,
                 "info": 0,
                 "refactor": 0,
-                "statement": 78,
-                "warning": 13
+                "statement": 99,
+                "warning": 17
+            },
+            "tests.test_data_source": {
+                "convention": 13,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 1,
+                "statement": 93,
+                "warning": 2
+            },
+            "tests.test_databroker_limits": {
+                "convention": 12,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 67,
+                "warning": 3
             },
             "tests.test_datamodels": {
-                "convention": 7,
+                "convention": 5,
                 "error": 0,
                 "fatal": 0,
                 "info": 0,
@@ -2360,15 +2851,15 @@
             },
             "tests.test_environment": {
                 "convention": 0,
-                "error": 0,
+                "error": 5,
                 "fatal": 0,
                 "info": 0,
                 "refactor": 0,
                 "statement": 42,
-                "warning": 1
+                "warning": 3
             },
             "tests.test_mas": {
-                "convention": 4,
+                "convention": 3,
                 "error": 0,
                 "fatal": 0,
                 "info": 0,
@@ -2386,7 +2877,7 @@
                 "warning": 7
             },
             "tests.test_module": {
-                "convention": 8,
+                "convention": 5,
                 "error": 0,
                 "fatal": 0,
                 "info": 0,
@@ -2404,7 +2895,7 @@
                 "warning": 1
             },
             "tests.test_plugins": {
-                "convention": 5,
+                "convention": 4,
                 "error": 0,
                 "fatal": 0,
                 "info": 0,
@@ -2413,48 +2904,58 @@
                 "warning": 0
             },
             "tests.test_simulator": {
-                "convention": 10,
+                "convention": 7,
                 "error": 0,
                 "fatal": 0,
                 "info": 0,
                 "refactor": 0,
-                "statement": 93,
+                "statement": 92,
                 "warning": 3
             },
-            "tests.test_utils": {
-                "convention": 4,
+            "tests.test_simulator_dashboard": {
+                "convention": 6,
                 "error": 0,
                 "fatal": 0,
                 "info": 0,
-                "refactor": 1,
+                "refactor": 0,
+                "statement": 47,
+                "warning": 0
+            },
+            "tests.test_utils": {
+                "convention": 3,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 2,
                 "statement": 59,
                 "warning": 1
             }
         },
         "by_msg": {
-            "broad-exception-raised": 2,
+            "reimported": 4,
+            "broad-exception-raised": 3,
             "import-outside-toplevel": 1,
-            "missing-class-docstring": 11,
-            "too-many-instance-attributes": 1,
+            "ungrouped-imports": 4,
+            "missing-class-docstring": 19,
+            "too-many-instance-attributes": 2,
             "unspecified-encoding": 8,
-            "missing-function-docstring": 24,
-            "invalid-name": 17,
+            "missing-function-docstring": 45,
+            "invalid-name": 15,
             "attribute-defined-outside-init": 6,
-            "trailing-newlines": 1,
-            "missing-module-docstring": 3,
+            "missing-module-docstring": 5,
             "unnecessary-dunder-call": 3,
-            "protected-access": 22,
+            "line-too-long": 2,
+            "protected-access": 31,
             "unused-variable": 4,
             "unused-argument": 2,
             "unused-import": 3,
-            "line-too-long": 9,
             "use-dict-literal": 10,
             "wrong-import-order": 1,
-            "missing-final-newline": 3,
+            "no-member": 5,
             "abstract-class-instantiated": 1,
             "pointless-statement": 1,
             "no-else-return": 1,
-            "duplicate-code": 1
+            "duplicate-code": 2
         },
         "code_type_count": {
             "code": 0,
@@ -2465,20 +2966,14 @@
         },
         "dependencies": {
             "agentlib.core": [
-                "tests.test_n_pingpong",
-                "tests.test_model",
-                "tests.test_environment",
-                "tests.test_agent",
                 "tests.test_simulator",
-                "agentlib",
                 "tests.test_module",
-                "tests.test_data_broker"
-            ],
-            "agentlib.utils": [
                 "tests.test_n_pingpong",
+                "tests.test_data_broker",
                 "agentlib",
-                "tests.test_utils",
-                "run_examples"
+                "tests.test_agent",
+                "tests.test_environment",
+                "tests.test_model"
             ],
             "agentlib.models": [
                 "agentlib"
@@ -2486,56 +2981,76 @@
             "agentlib.modules": [
                 "agentlib"
             ],
-            "agentlib.core.datamodels": [
+            "agentlib.utils": [
                 "tests.test_n_pingpong",
-                "tests.test_model",
+                "agentlib",
+                "tests.test_utils",
+                "ci.run_examples"
+            ],
+            "agentlib.core.datamodels": [
+                "tests.test_datamodels",
                 "tests.test_simulator",
+                "tests.test_n_pingpong",
                 "agentlib",
                 "tests.test_module",
-                "tests.test_datamodels"
+                "tests.test_model"
             ],
             "agentlib.utils.multi_agent_system": [
                 "tests.test_n_pingpong",
                 "agentlib"
             ],
             "pandas": [
-                "tests.test_simulator",
+                "tests.test_simulator_dashboard",
                 "tests.test_datamodels",
-                "run_examples"
+                "tests.test_simulator",
+                "tests.test_data_source",
+                "ci.run_examples"
             ],
             "agentlib.utils.local_broadcast_broker": [
-                "run_examples"
+                "ci.run_examples"
             ],
             "pydantic": [
+                "tests.test_datamodels",
+                "tests.test_simulator",
                 "tests.test_n_pingpong",
+                "tests.test_module",
                 "tests.test_environment",
                 "tests.test_agent",
-                "tests.test_model",
-                "tests.test_simulator",
-                "tests.test_module",
-                "tests.test_datamodels"
+                "tests.test_model"
             ],
             "agentlib.core.agent": [
                 "tests.test_agent",
                 "tests.test_utils"
             ],
+            "agentlib.core.errors": [
+                "tests.test_agent",
+                "tests.test_datamodels",
+                "tests.test_module",
+                "tests.test_utils"
+            ],
             "agentlib": [
-                "tests.test_utils",
-                "tests.test_communicator"
+                "tests.test_databroker_limits",
+                "tests.test_data_source",
+                "tests.test_communicator",
+                "tests.test_data_broker",
+                "tests.test_utils"
             ],
             "agentlib.modules.communicator.local": [
                 "tests.test_communicator"
             ],
             "numpy": [
-                "tests.test_n_pingpong",
-                "tests.test_model",
                 "tests.test_simulator",
+                "tests.test_databroker_limits",
+                "tests.test_data_source",
+                "tests.test_n_pingpong",
+                "tests.test_data_broker",
+                "tests.test_model"
+            ],
+            "agentlib.core.logging_": [
                 "tests.test_data_broker"
             ],
-            "agentlib.core.errors": [
-                "tests.test_module",
-                "tests.test_datamodels",
-                "tests.test_utils"
+            "agentlib.modules.simulation.csv_data_source": [
+                "tests.test_data_source"
             ],
             "agentlib.core.environment": [
                 "tests.test_environment"
@@ -2546,8 +3061,17 @@
             "agentlib.models.fmu_model": [
                 "tests.test_model"
             ],
-            "agentlib.modules.simulator": [
+            "agentlib.modules.simulation.simulator": [
                 "tests.test_simulator"
+            ],
+            "dash.html": [
+                "tests.test_simulator_dashboard"
+            ],
+            "dash.dcc": [
+                "tests.test_simulator_dashboard"
+            ],
+            "agentlib.utils.plotting.simulator_dashboard": [
+                "tests.test_simulator_dashboard"
             ],
             "agentlib.utils.validators": [
                 "tests.test_utils"
@@ -2564,27 +3088,27 @@
             "percent_duplicated_lines": 0.0
         },
         "node_count": {
-            "function": 1,
-            "klass": 31,
-            "method": 147,
-            "module": 15
+            "function": 4,
+            "klass": 39,
+            "method": 182,
+            "module": 18
         },
         "undocumented": {
-            "function": 0,
-            "klass": 16,
-            "method": 24,
-            "module": 3
+            "function": 3,
+            "klass": 24,
+            "method": 42,
+            "module": 5
         },
-        "convention": 73,
-        "error": 1,
+        "convention": 95,
+        "error": 6,
         "fatal": 0,
         "info": 0,
-        "refactor": 13,
-        "statement": 1065,
-        "warning": 48,
+        "refactor": 15,
+        "statement": 1296,
+        "warning": 62,
         "global_note": 0,
-        "nb_duplicated_lines": 6,
-        "percent_duplicated_lines": 0.3129890453834116
+        "nb_duplicated_lines": 12,
+        "percent_duplicated_lines": 0.5035669324381032
     },
     "previous": {
         "bad_names": {
@@ -2598,7 +3122,7 @@
             "function": 0,
             "method": 0,
             "module": 0,
-            "variable": 14,
+            "variable": 12,
             "typevar": 0,
             "typealias": 0
         },
@@ -2609,17 +3133,17 @@
                 "fatal": 0,
                 "info": 0,
                 "refactor": 0,
-                "statement": 9,
+                "statement": 6,
                 "warning": 0
             },
             "ci.run_examples": {
-                "convention": 1,
+                "convention": 4,
                 "error": 0,
                 "fatal": 0,
                 "info": 0,
                 "refactor": 0,
-                "statement": 51,
-                "warning": 1
+                "statement": 58,
+                "warning": 4
             },
             "tests.__init__": {
                 "convention": 0,
@@ -2631,7 +3155,7 @@
                 "warning": 0
             },
             "tests.test_agent": {
-                "convention": 13,
+                "convention": 11,
                 "error": 0,
                 "fatal": 0,
                 "info": 0,
@@ -2640,7 +3164,7 @@
                 "warning": 7
             },
             "tests.test_communicator": {
-                "convention": 6,
+                "convention": 5,
                 "error": 0,
                 "fatal": 0,
                 "info": 0,
@@ -2649,16 +3173,34 @@
                 "warning": 0
             },
             "tests.test_data_broker": {
-                "convention": 6,
+                "convention": 8,
                 "error": 0,
                 "fatal": 0,
                 "info": 0,
                 "refactor": 0,
-                "statement": 78,
-                "warning": 13
+                "statement": 99,
+                "warning": 17
+            },
+            "tests.test_data_source": {
+                "convention": 13,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 1,
+                "statement": 93,
+                "warning": 2
+            },
+            "tests.test_databroker_limits": {
+                "convention": 12,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 67,
+                "warning": 3
             },
             "tests.test_datamodels": {
-                "convention": 7,
+                "convention": 5,
                 "error": 0,
                 "fatal": 0,
                 "info": 0,
@@ -2668,15 +3210,15 @@
             },
             "tests.test_environment": {
                 "convention": 0,
-                "error": 0,
+                "error": 5,
                 "fatal": 0,
                 "info": 0,
                 "refactor": 0,
                 "statement": 42,
-                "warning": 1
+                "warning": 3
             },
             "tests.test_mas": {
-                "convention": 4,
+                "convention": 3,
                 "error": 0,
                 "fatal": 0,
                 "info": 0,
@@ -2694,7 +3236,7 @@
                 "warning": 7
             },
             "tests.test_module": {
-                "convention": 8,
+                "convention": 5,
                 "error": 0,
                 "fatal": 0,
                 "info": 0,
@@ -2712,7 +3254,7 @@
                 "warning": 1
             },
             "tests.test_plugins": {
-                "convention": 5,
+                "convention": 4,
                 "error": 0,
                 "fatal": 0,
                 "info": 0,
@@ -2721,48 +3263,58 @@
                 "warning": 0
             },
             "tests.test_simulator": {
-                "convention": 10,
+                "convention": 7,
                 "error": 0,
                 "fatal": 0,
                 "info": 0,
                 "refactor": 0,
-                "statement": 93,
+                "statement": 92,
                 "warning": 3
             },
-            "tests.test_utils": {
-                "convention": 4,
+            "tests.test_simulator_dashboard": {
+                "convention": 6,
                 "error": 0,
                 "fatal": 0,
                 "info": 0,
-                "refactor": 1,
+                "refactor": 0,
+                "statement": 47,
+                "warning": 0
+            },
+            "tests.test_utils": {
+                "convention": 3,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 2,
                 "statement": 59,
                 "warning": 1
             }
         },
         "by_msg": {
-            "broad-exception-raised": 2,
+            "reimported": 4,
+            "broad-exception-raised": 3,
             "import-outside-toplevel": 1,
-            "missing-class-docstring": 11,
-            "too-many-instance-attributes": 1,
+            "ungrouped-imports": 4,
+            "missing-class-docstring": 19,
+            "too-many-instance-attributes": 2,
             "unspecified-encoding": 8,
-            "missing-function-docstring": 24,
-            "invalid-name": 17,
+            "missing-function-docstring": 45,
+            "invalid-name": 15,
             "attribute-defined-outside-init": 6,
-            "trailing-newlines": 1,
-            "missing-module-docstring": 3,
+            "missing-module-docstring": 5,
             "unnecessary-dunder-call": 3,
-            "protected-access": 22,
+            "line-too-long": 2,
+            "protected-access": 31,
             "unused-variable": 4,
             "unused-argument": 2,
             "unused-import": 3,
-            "line-too-long": 9,
             "use-dict-literal": 10,
             "wrong-import-order": 1,
-            "missing-final-newline": 3,
+            "no-member": 5,
             "abstract-class-instantiated": 1,
             "pointless-statement": 1,
             "no-else-return": 1,
-            "duplicate-code": 1
+            "duplicate-code": 2
         },
         "code_type_count": {
             "code": 0,
@@ -2773,20 +3325,14 @@
         },
         "dependencies": {
             "agentlib.core": [
-                "tests.test_n_pingpong",
-                "tests.test_environment",
-                "tests.test_agent",
                 "tests.test_simulator",
-                "tests.test_model",
-                "agentlib",
                 "tests.test_module",
-                "tests.test_data_broker"
-            ],
-            "agentlib.utils": [
                 "tests.test_n_pingpong",
+                "tests.test_data_broker",
                 "agentlib",
-                "ci.run_examples",
-                "tests.test_utils"
+                "tests.test_agent",
+                "tests.test_environment",
+                "tests.test_model"
             ],
             "agentlib.models": [
                 "agentlib"
@@ -2794,56 +3340,76 @@
             "agentlib.modules": [
                 "agentlib"
             ],
-            "agentlib.core.datamodels": [
+            "agentlib.utils": [
                 "tests.test_n_pingpong",
+                "agentlib",
+                "tests.test_utils",
+                "ci.run_examples"
+            ],
+            "agentlib.core.datamodels": [
+                "tests.test_datamodels",
                 "tests.test_simulator",
-                "tests.test_model",
+                "tests.test_n_pingpong",
                 "agentlib",
                 "tests.test_module",
-                "tests.test_datamodels"
+                "tests.test_model"
             ],
             "agentlib.utils.multi_agent_system": [
                 "tests.test_n_pingpong",
                 "agentlib"
             ],
             "pandas": [
+                "tests.test_simulator_dashboard",
+                "tests.test_datamodels",
                 "tests.test_simulator",
-                "ci.run_examples",
-                "tests.test_datamodels"
+                "tests.test_data_source",
+                "ci.run_examples"
             ],
             "agentlib.utils.local_broadcast_broker": [
                 "ci.run_examples"
             ],
             "pydantic": [
-                "tests.test_n_pingpong",
-                "tests.test_environment",
-                "tests.test_agent",
+                "tests.test_datamodels",
                 "tests.test_simulator",
-                "tests.test_model",
                 "tests.test_module",
-                "tests.test_datamodels"
+                "tests.test_n_pingpong",
+                "tests.test_agent",
+                "tests.test_environment",
+                "tests.test_model"
             ],
             "agentlib.core.agent": [
-                "tests.test_utils",
-                "tests.test_agent"
+                "tests.test_agent",
+                "tests.test_utils"
+            ],
+            "agentlib.core.errors": [
+                "tests.test_datamodels",
+                "tests.test_module",
+                "tests.test_agent",
+                "tests.test_utils"
             ],
             "agentlib": [
-                "tests.test_utils",
-                "tests.test_communicator"
+                "tests.test_databroker_limits",
+                "tests.test_data_source",
+                "tests.test_communicator",
+                "tests.test_data_broker",
+                "tests.test_utils"
             ],
             "agentlib.modules.communicator.local": [
                 "tests.test_communicator"
             ],
             "numpy": [
-                "tests.test_n_pingpong",
-                "tests.test_model",
                 "tests.test_simulator",
+                "tests.test_databroker_limits",
+                "tests.test_data_source",
+                "tests.test_n_pingpong",
+                "tests.test_data_broker",
+                "tests.test_model"
+            ],
+            "agentlib.core.logging_": [
                 "tests.test_data_broker"
             ],
-            "agentlib.core.errors": [
-                "tests.test_module",
-                "tests.test_utils",
-                "tests.test_datamodels"
+            "agentlib.modules.simulation.csv_data_source": [
+                "tests.test_data_source"
             ],
             "agentlib.core.environment": [
                 "tests.test_environment"
@@ -2854,8 +3420,17 @@
             "agentlib.models.fmu_model": [
                 "tests.test_model"
             ],
-            "agentlib.modules.simulator": [
+            "agentlib.modules.simulation.simulator": [
                 "tests.test_simulator"
+            ],
+            "dash.html": [
+                "tests.test_simulator_dashboard"
+            ],
+            "dash.dcc": [
+                "tests.test_simulator_dashboard"
+            ],
+            "agentlib.utils.plotting.simulator_dashboard": [
+                "tests.test_simulator_dashboard"
             ],
             "agentlib.utils.validators": [
                 "tests.test_utils"
@@ -2872,26 +3447,26 @@
             "percent_duplicated_lines": 0.0
         },
         "node_count": {
-            "function": 1,
-            "klass": 31,
-            "method": 147,
-            "module": 15
+            "function": 4,
+            "klass": 39,
+            "method": 182,
+            "module": 18
         },
         "undocumented": {
-            "function": 0,
-            "klass": 16,
-            "method": 24,
-            "module": 3
+            "function": 3,
+            "klass": 24,
+            "method": 42,
+            "module": 5
         },
-        "convention": 73,
-        "error": 1,
+        "convention": 95,
+        "error": 6,
         "fatal": 0,
         "info": 0,
-        "refactor": 13,
-        "statement": 1065,
-        "warning": 48,
-        "global_note": 8.694835680751174,
-        "nb_duplicated_lines": 6,
-        "percent_duplicated_lines": 0.3129890453834116
+        "refactor": 15,
+        "statement": 1296,
+        "warning": 62,
+        "global_note": 8.441358024691358,
+        "nb_duplicated_lines": 12,
+        "percent_duplicated_lines": 0.5035669324381032
     }
 }

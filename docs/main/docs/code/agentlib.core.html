@@ -1,24 +1,22 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en">
 <head>
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>agentlib.core package &mdash; agentlib 0.7.1 documentation</title>
+  <title>agentlib.core package &mdash; agentlib 0.8.4 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
       <link rel="stylesheet" type="text/css" href="../_static/autodoc_pydantic.css" />
 
   
-  <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
+      <script src="../_static/jquery.js"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+      <script src="../_static/doctools.js"></script>
+      <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" /> 
@@ -35,9 +33,6 @@
           <a href="../index.html" class="icon icon-home">
             agentlib
           </a>
-              <div class="version">
-                0.7
-              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
@@ -144,7 +139,7 @@ were created by them.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="agentlib.core.agent.Agent.env">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">env</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#agentlib.core.environment.Environment" title="agentlib.core.environment.Environment"><span class="pre">Environment</span></a></em><a class="headerlink" href="#agentlib.core.agent.Agent.env" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">env</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#agentlib.core.environment.CustomSimpyEnvironment" title="agentlib.core.environment.CustomSimpyEnvironment"><span class="pre">CustomSimpyEnvironment</span></a></em><a class="headerlink" href="#agentlib.core.agent.Agent.env" title="Permalink to this definition"></a></dt>
 <dd><p>Get the environment the agent is in</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -240,24 +235,24 @@ to work.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><a class="reference internal" href="#agentlib.core.agent.AgentConfig.check_alive_interval" title="agentlib.core.agent.AgentConfig.check_alive_interval"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_alive_interval</span> <span class="pre">(float)</span></code></a></p></li>
 <li><p><a class="reference internal" href="#agentlib.core.agent.AgentConfig.id" title="agentlib.core.agent.AgentConfig.id"><code class="xref py py-obj docutils literal notranslate"><span class="pre">id</span> <span class="pre">(str</span> <span class="pre">|</span> <span class="pre">int)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#agentlib.core.agent.AgentConfig.max_queue_size" title="agentlib.core.agent.AgentConfig.max_queue_size"><code class="xref py py-obj docutils literal notranslate"><span class="pre">max_queue_size</span> <span class="pre">(int</span> <span class="pre">|</span> <span class="pre">None)</span></code></a></p></li>
 <li><p><a class="reference internal" href="#agentlib.core.agent.AgentConfig.modules" title="agentlib.core.agent.AgentConfig.modules"><code class="xref py py-obj docutils literal notranslate"><span class="pre">modules</span> <span class="pre">(List[Dict</span> <span class="pre">|</span> <span class="pre">pathlib.Path])</span></code></a></p></li>
 </ul>
 </dd>
 <dt class="field-even">Validators<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><a class="reference internal" href="#agentlib.core.agent.AgentConfig.check_correct_value" title="agentlib.core.agent.AgentConfig.check_correct_value"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_correct_value</span></code></a> » <a class="reference internal" href="#agentlib.core.agent.AgentConfig.check_alive_interval" title="agentlib.core.agent.AgentConfig.check_alive_interval"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_alive_interval</span></code></a></p></li>
 <li><p><a class="reference internal" href="#agentlib.core.agent.AgentConfig.check_modules" title="agentlib.core.agent.AgentConfig.check_modules"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_modules</span></code></a> » <a class="reference internal" href="#agentlib.core.agent.AgentConfig.modules" title="agentlib.core.agent.AgentConfig.modules"><code class="xref py py-obj docutils literal notranslate"><span class="pre">modules</span></code></a></p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py attribute pydantic_field">
 <dt class="sig sig-object py" id="agentlib.core.agent.AgentConfig.check_alive_interval">
-<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">check_alive_interval</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">-1</span></em><a class="headerlink" href="#agentlib.core.agent.AgentConfig.check_alive_interval" title="Permalink to this definition"></a></dt>
-<dd><p>Check every other check_alive_interval second if the thread of the agent are still alive.If that’s not the case, exit the main thread of the agent. If interval equals -1, no health check is performed. Updating this value at runtime will not work as all processes have already been started.</p>
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">check_alive_interval</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#agentlib.core.agent.AgentConfig.check_alive_interval" title="Permalink to this definition"></a></dt>
+<dd><p>Check every other check_alive_interval second if the threads of the agent are still alive.If that’s not the case, exit the main thread of the agent. Updating this value at runtime will not work as all processes have already been started.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Validated by<span class="colon">:</span></dt>
+<dt class="field-odd">Constraints<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><a class="reference internal" href="#agentlib.core.agent.AgentConfig.check_correct_value" title="agentlib.core.agent.AgentConfig.check_correct_value"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_correct_value</span></code></a></p></li>
+<li><p><strong>ge</strong> = 0</p></li>
 </ul>
 </dd>
 </dl>
@@ -270,6 +265,19 @@ to work.</p>
 </dd></dl>
 
 <dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.core.agent.AgentConfig.max_queue_size">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">max_queue_size</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1000</span></em><a class="headerlink" href="#agentlib.core.agent.AgentConfig.max_queue_size" title="Permalink to this definition"></a></dt>
+<dd><p>Maximal number of waiting items in data-broker queues. Set to -1 for infinity</p>
+<dl class="field-list simple">
+<dt class="field-odd">Constraints<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ge</strong> = -1</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
 <dt class="sig sig-object py" id="agentlib.core.agent.AgentConfig.modules">
 <em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">modules</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agentlib.core.agent.AgentConfig.modules" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
@@ -279,12 +287,6 @@ to work.</p>
 </ul>
 </dd>
 </dl>
-</dd></dl>
-
-<dl class="py method pydantic_validator">
-<dt class="sig sig-object py" id="agentlib.core.agent.AgentConfig.check_correct_value">
-<em class="property"><span class="pre">validator</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">check_correct_value</span></span><em class="autodoc_pydantic_validator_arrow property">&#160; <span class="pre">»</span>&#160; </em><a class="reference internal" href="#agentlib.core.agent.AgentConfig.check_alive_interval" title="agentlib.core.agent.AgentConfig.check_alive_interval"><em class="xref py py-obj"><span class="pre">check_alive_interval</span></em></a><a class="reference internal" href="../_modules/agentlib/core/agent.html#AgentConfig.check_correct_value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.core.agent.AgentConfig.check_correct_value" title="Permalink to this definition"></a></dt>
-<dd><p>Check if check_alive_interval is positive or -1</p>
 </dd></dl>
 
 <dl class="py method pydantic_validator">
@@ -339,15 +341,15 @@ the AgentVariable for other modules.</p>
 <dt class="field-even">Fields<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
 <li><p><a class="reference internal" href="#agentlib.core.data_broker.BrokerCallback.alias" title="agentlib.core.data_broker.BrokerCallback.alias"><code class="xref py py-obj docutils literal notranslate"><span class="pre">alias</span> <span class="pre">(str</span> <span class="pre">|</span> <span class="pre">None)</span></code></a></p></li>
-<li><p><a class="reference internal" href="#agentlib.core.data_broker.BrokerCallback.callback" title="agentlib.core.data_broker.BrokerCallback.callback"><code class="xref py py-obj docutils literal notranslate"><span class="pre">callback</span> <span class="pre">(agentlib.core.data_broker.CallbackFunction)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#agentlib.core.data_broker.BrokerCallback.callback" title="agentlib.core.data_broker.BrokerCallback.callback"><code class="xref py py-obj docutils literal notranslate"><span class="pre">callback</span> <span class="pre">(Callable)</span></code></a></p></li>
 <li><p><a class="reference internal" href="#agentlib.core.data_broker.BrokerCallback.kwargs" title="agentlib.core.data_broker.BrokerCallback.kwargs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kwargs</span> <span class="pre">(dict)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#agentlib.core.data_broker.BrokerCallback.module_id" title="agentlib.core.data_broker.BrokerCallback.module_id"><code class="xref py py-obj docutils literal notranslate"><span class="pre">module_id</span> <span class="pre">(str</span> <span class="pre">|</span> <span class="pre">None)</span></code></a></p></li>
 <li><p><a class="reference internal" href="#agentlib.core.data_broker.BrokerCallback.source" title="agentlib.core.data_broker.BrokerCallback.source"><code class="xref py py-obj docutils literal notranslate"><span class="pre">source</span> <span class="pre">(agentlib.core.datamodels.Source</span> <span class="pre">|</span> <span class="pre">None)</span></code></a></p></li>
 </ul>
 </dd>
 <dt class="field-odd">Validators<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><a class="reference internal" href="#agentlib.core.data_broker.BrokerCallback.auto_copy" title="agentlib.core.data_broker.BrokerCallback.auto_copy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">auto_copy</span></code></a> » <a class="reference internal" href="#agentlib.core.data_broker.BrokerCallback.callback" title="agentlib.core.data_broker.BrokerCallback.callback"><code class="xref py py-obj docutils literal notranslate"><span class="pre">callback</span></code></a></p></li>
-<li><p><a class="reference internal" href="#agentlib.core.data_broker.NoCopyBrokerCallback.check_valid_callback_function" title="agentlib.core.data_broker.NoCopyBrokerCallback.check_valid_callback_function"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_valid_callback_function</span></code></a> » <code class="xref py py-obj docutils literal notranslate"><span class="pre">all</span> <span class="pre">fields</span></code></p></li>
 </ul>
 </dd>
 </dl>
@@ -365,7 +367,7 @@ the AgentVariable for other modules.</p>
 
 <dl class="py attribute pydantic_field">
 <dt class="sig sig-object py" id="agentlib.core.data_broker.BrokerCallback.callback">
-<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">callback</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#agentlib.core.data_broker.CallbackFunction" title="agentlib.core.data_broker.CallbackFunction"><span class="pre">CallbackFunction</span></a></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#agentlib.core.data_broker.BrokerCallback.callback" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">callback</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Callable</span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#agentlib.core.data_broker.BrokerCallback.callback" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Validated by<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -379,6 +381,18 @@ the AgentVariable for other modules.</p>
 <dl class="py attribute pydantic_field">
 <dt class="sig sig-object py" id="agentlib.core.data_broker.BrokerCallback.kwargs">
 <em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">kwargs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#agentlib.core.data_broker.BrokerCallback.kwargs" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Validated by<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="#agentlib.core.data_broker.NoCopyBrokerCallback.check_valid_callback_function" title="agentlib.core.data_broker.NoCopyBrokerCallback.check_valid_callback_function"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_valid_callback_function</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.core.data_broker.BrokerCallback.module_id">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">module_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agentlib.core.data_broker.BrokerCallback.module_id" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Validated by<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -409,15 +423,8 @@ the AgentVariable for other modules.</p>
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="agentlib.core.data_broker.CallbackFunction">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agentlib.core.data_broker.</span></span><span class="sig-name descname"><span class="pre">CallbackFunction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/core/data_broker.html#CallbackFunction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.core.data_broker.CallbackFunction" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Protocol</span></code></p>
-<p>Protocol defining the signature of a valid Callback Function</p>
-</dd></dl>
-
-<dl class="py class">
 <dt class="sig sig-object py" id="agentlib.core.data_broker.DataBroker">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agentlib.core.data_broker.</span></span><span class="sig-name descname"><span class="pre">DataBroker</span></span><a class="reference internal" href="../_modules/agentlib/core/data_broker.html#DataBroker"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.core.data_broker.DataBroker" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agentlib.core.data_broker.</span></span><span class="sig-name descname"><span class="pre">DataBroker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logger</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#agentlib.core.logging_.CustomLogger" title="agentlib.core.logging_.CustomLogger"><span class="pre">CustomLogger</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_queue_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1000</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/core/data_broker.html#DataBroker"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.core.data_broker.DataBroker" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
 <p>Handles communication and Callback triggers within an agent.
 Write variables to the broker with <code class="docutils literal notranslate"><span class="pre">send_variable()</span></code>.
@@ -460,7 +467,7 @@ alias and source.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="agentlib.core.data_broker.DataBroker.register_callback">
-<span class="sig-name descname"><span class="pre">register_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">callback</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alias</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#agentlib.core.datamodels.Source" title="agentlib.core.datamodels.Source"><span class="pre">Source</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_unsafe_no_copy</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/core/data_broker.html#DataBroker.register_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.core.data_broker.DataBroker.register_callback" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">register_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">callback</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alias</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#agentlib.core.datamodels.Source" title="agentlib.core.datamodels.Source"><span class="pre">Source</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_unsafe_no_copy</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#agentlib.core.data_broker.BrokerCallback" title="agentlib.core.data_broker.BrokerCallback"><span class="pre">BrokerCallback</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#agentlib.core.data_broker.NoCopyBrokerCallback" title="agentlib.core.data_broker.NoCopyBrokerCallback"><span class="pre">NoCopyBrokerCallback</span></a></span></span><a class="reference internal" href="../_modules/agentlib/core/data_broker.html#DataBroker.register_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.core.data_broker.DataBroker.register_callback" title="Permalink to this definition"></a></dt>
 <dd><p>Register a callback to the data_broker.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -497,7 +504,7 @@ Default is True.</p></li>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="agentlib.core.data_broker.LocalDataBroker">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agentlib.core.data_broker.</span></span><span class="sig-name descname"><span class="pre">LocalDataBroker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#agentlib.core.environment.Environment" title="agentlib.core.environment.Environment"><span class="pre">Environment</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/core/data_broker.html#LocalDataBroker"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.core.data_broker.LocalDataBroker" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agentlib.core.data_broker.</span></span><span class="sig-name descname"><span class="pre">LocalDataBroker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#agentlib.core.environment.Environment" title="agentlib.core.environment.Environment"><span class="pre">Environment</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">logger</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#agentlib.core.logging_.CustomLogger" title="agentlib.core.logging_.CustomLogger"><span class="pre">CustomLogger</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_queue_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1000</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/core/data_broker.html#LocalDataBroker"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.core.data_broker.LocalDataBroker" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#agentlib.core.data_broker.DataBroker" title="agentlib.core.data_broker.DataBroker"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataBroker</span></code></a></p>
 <p>Local variation of the DataBroker written for fast-as-possible
 simulation within a single non-realtime Environment.</p>
@@ -533,8 +540,9 @@ pass to this class.</p>
 <dt class="field-even">Fields<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
 <li><p><a class="reference internal" href="#agentlib.core.data_broker.NoCopyBrokerCallback.alias" title="agentlib.core.data_broker.NoCopyBrokerCallback.alias"><code class="xref py py-obj docutils literal notranslate"><span class="pre">alias</span> <span class="pre">(str</span> <span class="pre">|</span> <span class="pre">None)</span></code></a></p></li>
-<li><p><a class="reference internal" href="#agentlib.core.data_broker.NoCopyBrokerCallback.callback" title="agentlib.core.data_broker.NoCopyBrokerCallback.callback"><code class="xref py py-obj docutils literal notranslate"><span class="pre">callback</span> <span class="pre">(agentlib.core.data_broker.CallbackFunction)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#agentlib.core.data_broker.NoCopyBrokerCallback.callback" title="agentlib.core.data_broker.NoCopyBrokerCallback.callback"><code class="xref py py-obj docutils literal notranslate"><span class="pre">callback</span> <span class="pre">(Callable)</span></code></a></p></li>
 <li><p><a class="reference internal" href="#agentlib.core.data_broker.NoCopyBrokerCallback.kwargs" title="agentlib.core.data_broker.NoCopyBrokerCallback.kwargs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kwargs</span> <span class="pre">(dict)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#agentlib.core.data_broker.NoCopyBrokerCallback.module_id" title="agentlib.core.data_broker.NoCopyBrokerCallback.module_id"><code class="xref py py-obj docutils literal notranslate"><span class="pre">module_id</span> <span class="pre">(str</span> <span class="pre">|</span> <span class="pre">None)</span></code></a></p></li>
 <li><p><a class="reference internal" href="#agentlib.core.data_broker.NoCopyBrokerCallback.source" title="agentlib.core.data_broker.NoCopyBrokerCallback.source"><code class="xref py py-obj docutils literal notranslate"><span class="pre">source</span> <span class="pre">(agentlib.core.datamodels.Source</span> <span class="pre">|</span> <span class="pre">None)</span></code></a></p></li>
 </ul>
 </dd>
@@ -558,7 +566,7 @@ pass to this class.</p>
 
 <dl class="py attribute pydantic_field">
 <dt class="sig sig-object py" id="agentlib.core.data_broker.NoCopyBrokerCallback.callback">
-<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">callback</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#agentlib.core.data_broker.CallbackFunction" title="agentlib.core.data_broker.CallbackFunction"><span class="pre">CallbackFunction</span></a></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#agentlib.core.data_broker.NoCopyBrokerCallback.callback" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">callback</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Callable</span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#agentlib.core.data_broker.NoCopyBrokerCallback.callback" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Validated by<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -571,6 +579,18 @@ pass to this class.</p>
 <dl class="py attribute pydantic_field">
 <dt class="sig sig-object py" id="agentlib.core.data_broker.NoCopyBrokerCallback.kwargs">
 <em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">kwargs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#agentlib.core.data_broker.NoCopyBrokerCallback.kwargs" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Validated by<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="#agentlib.core.data_broker.NoCopyBrokerCallback.check_valid_callback_function" title="agentlib.core.data_broker.NoCopyBrokerCallback.check_valid_callback_function"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_valid_callback_function</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.core.data_broker.NoCopyBrokerCallback.module_id">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">module_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agentlib.core.data_broker.NoCopyBrokerCallback.module_id" title="Permalink to this definition"></a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Validated by<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -602,9 +622,45 @@ pass to this class.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="agentlib.core.data_broker.RTDataBroker">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agentlib.core.data_broker.</span></span><span class="sig-name descname"><span class="pre">RTDataBroker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#agentlib.core.environment.Environment" title="agentlib.core.environment.Environment"><span class="pre">Environment</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/core/data_broker.html#RTDataBroker"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.core.data_broker.RTDataBroker" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agentlib.core.data_broker.</span></span><span class="sig-name descname"><span class="pre">RTDataBroker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#agentlib.core.environment.Environment" title="agentlib.core.environment.Environment"><span class="pre">Environment</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">logger</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#agentlib.core.logging_.CustomLogger" title="agentlib.core.logging_.CustomLogger"><span class="pre">CustomLogger</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_queue_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1000</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/core/data_broker.html#RTDataBroker"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.core.data_broker.RTDataBroker" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#agentlib.core.data_broker.DataBroker" title="agentlib.core.data_broker.DataBroker"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataBroker</span></code></a></p>
 <p>DataBroker written for Realtime operation regardless of Environment.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.core.data_broker.RTDataBroker.register_callback">
+<span class="sig-name descname"><span class="pre">register_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">callback</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alias</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#agentlib.core.datamodels.Source" title="agentlib.core.datamodels.Source"><span class="pre">Source</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_unsafe_no_copy</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#agentlib.core.data_broker.NoCopyBrokerCallback" title="agentlib.core.data_broker.NoCopyBrokerCallback"><span class="pre">NoCopyBrokerCallback</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#agentlib.core.data_broker.BrokerCallback" title="agentlib.core.data_broker.BrokerCallback"><span class="pre">BrokerCallback</span></a></span></span><a class="reference internal" href="../_modules/agentlib/core/data_broker.html#RTDataBroker.register_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.core.data_broker.RTDataBroker.register_callback" title="Permalink to this definition"></a></dt>
+<dd><p>Register a callback to the data_broker.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>callable</strong> (<em>callback</em>) – The function of the callback</p></li>
+<li><p><strong>str</strong> (<em>alias</em>) – The alias of variables to trigger callback</p></li>
+<li><p><strong>Source</strong> (<em>source</em>) – The Source of variables to trigger callback</p></li>
+<li><p><strong>dict</strong> (<em>kwargs</em>) – Kwargs to be passed to the callback function</p></li>
+<li><p><strong>_unsafe_no_copy</strong> – If True, the callback will not be passed a copy, but the
+original AgentVariable. When using this option, the user promises to not
+modify the AgentVariable, as doing so could lead to
+wrong and difficult to debug behaviour in other modules (default False)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="agentlib.core.data_broker.log_queue_status">
+<span class="sig-prename descclassname"><span class="pre">agentlib.core.data_broker.</span></span><span class="sig-name descname"><span class="pre">log_queue_status</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logger</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Logger</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">queue_object</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Queue</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_queue_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">queue_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/core/data_broker.html#log_queue_status"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.core.data_broker.log_queue_status" title="Permalink to this definition"></a></dt>
+<dd><p>Log the current load of the given queue in percent.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>logger</strong> (<em>logging.Logger</em>) – A logger instance</p></li>
+<li><p><strong>queue_object</strong> (<em>queue.Queue</em>) – The queue object</p></li>
+<li><p><strong>max_queue_size</strong> (<em>int</em>) – Maximal queue size</p></li>
+<li><p><strong>queue_name</strong> (<em>str</em>) – Name associated with the queue</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 </section>
@@ -982,84 +1038,69 @@ to inquire and store them at event times].</p>
 <section id="module-agentlib.core.environment">
 <span id="agentlib-core-environment-module"></span><h2>agentlib.core.environment module<a class="headerlink" href="#module-agentlib.core.environment" title="Permalink to this heading"></a></h2>
 <p>This module contains the Environment class, used by all Agents and Modules.</p>
+<p>This module contains modified code of simpy (<a class="reference external" href="https://gitlab.com/team-simpy/simpy">https://gitlab.com/team-simpy/simpy</a>).
+Simpy is distributed under the MIT License</p>
+<blockquote>
+<div><p>The MIT License (MIT)</p>
+<p>Copyright (c) 2013 Ontje Lünsdorf and Stefan Scherfke (also see AUTHORS.txt)</p>
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the “Software”), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+the Software, and to permit persons to whom the Software is furnished to do so,
+subject to the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.</p>
+<p>THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+</div></blockquote>
 <dl class="py class">
-<dt class="sig sig-object py" id="agentlib.core.environment.Environment">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agentlib.core.environment.</span></span><span class="sig-name descname"><span class="pre">Environment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/core/environment.html#Environment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.core.environment.Environment" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">RealtimeEnvironment</span></code></p>
-<p>Custom environment to meet the needs
-of the agentlib.</p>
+<dt class="sig sig-object py" id="agentlib.core.environment.CustomSimpyEnvironment">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agentlib.core.environment.</span></span><span class="sig-name descname"><span class="pre">CustomSimpyEnvironment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">initial_time</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/core/environment.html#CustomSimpyEnvironment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.core.environment.CustomSimpyEnvironment" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Environment</span></code></p>
+<p>A customized version of the simpy environment. Handles execution of modules
+processes and manages time for instant execution mode.</p>
 <dl class="py method">
-<dt class="sig sig-object py" id="agentlib.core.environment.Environment.clock">
-<span class="sig-name descname"><span class="pre">clock</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/core/environment.html#Environment.clock"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.core.environment.Environment.clock" title="Permalink to this definition"></a></dt>
-<dd><p>Define a clock loop to increase the now-timer every other milisecond
+<dt class="sig sig-object py" id="agentlib.core.environment.CustomSimpyEnvironment.clock">
+<span class="sig-name descname"><span class="pre">clock</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/core/environment.html#CustomSimpyEnvironment.clock"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.core.environment.CustomSimpyEnvironment.clock" title="Permalink to this definition"></a></dt>
+<dd><p>Define a clock loop to increase the now-timer every other second
 (Or whatever t_sample is)</p>
 </dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="agentlib.core.environment.Environment.config">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#agentlib.core.environment.EnvironmentConfig" title="agentlib.core.environment.EnvironmentConfig"><span class="pre">EnvironmentConfig</span></a></em><a class="headerlink" href="#agentlib.core.environment.Environment.config" title="Permalink to this definition"></a></dt>
+<dt class="sig sig-object py" id="agentlib.core.environment.CustomSimpyEnvironment.config">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#agentlib.core.environment.EnvironmentConfig" title="agentlib.core.environment.EnvironmentConfig"><span class="pre">EnvironmentConfig</span></a></em><a class="headerlink" href="#agentlib.core.environment.CustomSimpyEnvironment.config" title="Permalink to this definition"></a></dt>
 <dd><p>Return the config of the environment</p>
 </dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="agentlib.core.environment.Environment.offset">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">offset</span></span><a class="headerlink" href="#agentlib.core.environment.Environment.offset" title="Permalink to this definition"></a></dt>
-<dd><p>Offset of the now-time of the environment</p>
+<dt class="sig sig-object py" id="agentlib.core.environment.CustomSimpyEnvironment.offset">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">offset</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#agentlib.core.environment.EnvironmentConfig" title="agentlib.core.environment.EnvironmentConfig"><span class="pre">EnvironmentConfig</span></a></em><a class="headerlink" href="#agentlib.core.environment.CustomSimpyEnvironment.offset" title="Permalink to this definition"></a></dt>
+<dd><p>Start time offset of the environment.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="agentlib.core.environment.Environment.pretty_time">
-<span class="sig-name descname"><span class="pre">pretty_time</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/agentlib/core/environment.html#Environment.pretty_time"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.core.environment.Environment.pretty_time" title="Permalink to this definition"></a></dt>
-<dd><p>Returns the time in a nice format. Datetime if realtime, seconds if not
-realtime. Implemented as rt_time or sim_time</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="agentlib.core.environment.Environment.rt_time">
-<span class="sig-name descname"><span class="pre">rt_time</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/agentlib/core/environment.html#Environment.rt_time"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.core.environment.Environment.rt_time" title="Permalink to this definition"></a></dt>
-<dd><p>Returns the current real time in datetime format, based on unix timestamp.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="agentlib.core.environment.Environment.run">
-<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">until</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Event</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/agentlib/core/environment.html#Environment.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.core.environment.Environment.run" title="Permalink to this definition"></a></dt>
-<dd><p>Executes <a class="reference internal" href="#agentlib.core.environment.Environment.step" title="agentlib.core.environment.Environment.step"><code class="xref py py-meth docutils literal notranslate"><span class="pre">step()</span></code></a> until the given criterion <em>until</em> is met.</p>
-<ul class="simple">
-<li><p>If it is <code class="docutils literal notranslate"><span class="pre">None</span></code> (which is the default), this method will return
-when there are no further events to be processed.</p></li>
-<li><p>If it is an <code class="xref py py-class docutils literal notranslate"><span class="pre">Event</span></code>, the method will continue
-stepping until this event has been triggered and will return its
-value.  Raises a <code class="xref py py-exc docutils literal notranslate"><span class="pre">RuntimeError</span></code> if there are no further events
-to be processed and the <em>until</em> event was not triggered.</p></li>
-<li><p>If it is a number, the method will continue stepping
-until the environment’s time reaches <em>until</em>.</p></li>
-</ul>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="agentlib.core.environment.Environment.sim_time">
-<span class="sig-name descname"><span class="pre">sim_time</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/agentlib/core/environment.html#Environment.sim_time"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.core.environment.Environment.sim_time" title="Permalink to this definition"></a></dt>
-<dd><p>Returns the current simulation time in seconds, with two decimals of
-precision.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="agentlib.core.environment.Environment.step">
-<span class="sig-name descname"><span class="pre">step</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/agentlib/core/environment.html#Environment.step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.core.environment.Environment.step" title="Permalink to this definition"></a></dt>
-<dd><p>Process the next event after enough real-time has passed for the
-event to happen.</p>
-<p>The delay is scaled according to the real-time <code class="xref py py-attr docutils literal notranslate"><span class="pre">factor</span></code>. With
-<code class="xref py py-attr docutils literal notranslate"><span class="pre">strict</span></code> mode enabled, a <code class="xref py py-exc docutils literal notranslate"><span class="pre">RuntimeError</span></code> will be raised, if
-the event is processed too slowly.</p>
-</dd></dl>
+<dt class="sig sig-object py" id="agentlib.core.environment.CustomSimpyEnvironment.pretty_time">
+<span class="sig-name descname"><span class="pre">pretty_time</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/core/environment.html#CustomSimpyEnvironment.pretty_time"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.core.environment.CustomSimpyEnvironment.pretty_time" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="agentlib.core.environment.Environment.time">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">time</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#agentlib.core.environment.Environment.time" title="Permalink to this definition"></a></dt>
-<dd><p>Get the current time of the environment.
-If RT is enabled, the unix-time is returned.</p>
+<dt class="sig sig-object py" id="agentlib.core.environment.CustomSimpyEnvironment.time">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">time</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#agentlib.core.environment.CustomSimpyEnvironment.time" title="Permalink to this definition"></a></dt>
+<dd><p>Get the current time of the environment.</p>
 </dd></dl>
 
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agentlib.core.environment.Environment">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agentlib.core.environment.</span></span><span class="sig-name descname"><span class="pre">Environment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/core/environment.html#Environment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.core.environment.Environment" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Simpy Environment Distributor. Handles synchronous processes.</p>
 </dd></dl>
 
 <dl class="py class pydantic_model">
@@ -1079,16 +1120,10 @@ If RT is enabled, the unix-time is returned.</p>
 <dd class="field-even"><ul class="simple">
 <li><p><a class="reference internal" href="#agentlib.core.environment.EnvironmentConfig.clock" title="agentlib.core.environment.EnvironmentConfig.clock"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clock</span> <span class="pre">(bool)</span></code></a></p></li>
 <li><p><a class="reference internal" href="#agentlib.core.environment.EnvironmentConfig.factor" title="agentlib.core.environment.EnvironmentConfig.factor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">factor</span> <span class="pre">(float)</span></code></a></p></li>
-<li><p><a class="reference internal" href="#agentlib.core.environment.EnvironmentConfig.initial_time" title="agentlib.core.environment.EnvironmentConfig.initial_time"><code class="xref py py-obj docutils literal notranslate"><span class="pre">initial_time</span> <span class="pre">(float</span> <span class="pre">|</span> <span class="pre">float)</span></code></a></p></li>
 <li><p><a class="reference internal" href="#agentlib.core.environment.EnvironmentConfig.offset" title="agentlib.core.environment.EnvironmentConfig.offset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">offset</span> <span class="pre">(float)</span></code></a></p></li>
 <li><p><a class="reference internal" href="#agentlib.core.environment.EnvironmentConfig.rt" title="agentlib.core.environment.EnvironmentConfig.rt"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rt</span> <span class="pre">(bool)</span></code></a></p></li>
 <li><p><a class="reference internal" href="#agentlib.core.environment.EnvironmentConfig.strict" title="agentlib.core.environment.EnvironmentConfig.strict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">strict</span> <span class="pre">(bool)</span></code></a></p></li>
 <li><p><a class="reference internal" href="#agentlib.core.environment.EnvironmentConfig.t_sample" title="agentlib.core.environment.EnvironmentConfig.t_sample"><code class="xref py py-obj docutils literal notranslate"><span class="pre">t_sample</span> <span class="pre">(float)</span></code></a></p></li>
-</ul>
-</dd>
-<dt class="field-odd">Validators<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><a class="reference internal" href="#agentlib.core.environment.EnvironmentConfig.check_time" title="agentlib.core.environment.EnvironmentConfig.check_time"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_time</span></code></a> » <a class="reference internal" href="#agentlib.core.environment.EnvironmentConfig.initial_time" title="agentlib.core.environment.EnvironmentConfig.initial_time"><code class="xref py py-obj docutils literal notranslate"><span class="pre">initial_time</span></code></a></p></li>
 </ul>
 </dd>
 </dl>
@@ -1104,18 +1139,6 @@ If RT is enabled, the unix-time is returned.</p>
 <dt class="field-odd">Constraints<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>gt</strong> = 0</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute pydantic_field">
-<dt class="sig sig-object py" id="agentlib.core.environment.EnvironmentConfig.initial_time">
-<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">initial_time</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#agentlib.core.environment.EnvironmentConfig.initial_time" title="Permalink to this definition"></a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Validated by<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><a class="reference internal" href="#agentlib.core.environment.EnvironmentConfig.check_time" title="agentlib.core.environment.EnvironmentConfig.check_time"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_time</span></code></a></p></li>
 </ul>
 </dd>
 </dl>
@@ -1139,7 +1162,7 @@ If RT is enabled, the unix-time is returned.</p>
 
 <dl class="py attribute pydantic_field">
 <dt class="sig sig-object py" id="agentlib.core.environment.EnvironmentConfig.t_sample">
-<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">t_sample</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#agentlib.core.environment.EnvironmentConfig.t_sample" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">t_sample</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">60</span></em><a class="headerlink" href="#agentlib.core.environment.EnvironmentConfig.t_sample" title="Permalink to this definition"></a></dt>
 <dd><p>Used to increase the now-time ofthe environment using the clock function.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Constraints<span class="colon">:</span></dt>
@@ -1150,12 +1173,119 @@ If RT is enabled, the unix-time is returned.</p>
 </dl>
 </dd></dl>
 
-<dl class="py method pydantic_validator">
-<dt class="sig sig-object py" id="agentlib.core.environment.EnvironmentConfig.check_time">
-<em class="property"><span class="pre">validator</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">check_time</span></span><em class="autodoc_pydantic_validator_arrow property">&#160; <span class="pre">»</span>&#160; </em><a class="reference internal" href="#agentlib.core.environment.EnvironmentConfig.initial_time" title="agentlib.core.environment.EnvironmentConfig.initial_time"><em class="xref py py-obj"><span class="pre">initial_time</span></em></a><a class="reference internal" href="../_modules/agentlib/core/environment.html#EnvironmentConfig.check_time"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.core.environment.EnvironmentConfig.check_time" title="Permalink to this definition"></a></dt>
-<dd><p>Check if initial time is correct</p>
 </dd></dl>
 
+<dl class="py class">
+<dt class="sig sig-object py" id="agentlib.core.environment.InstantEnvironment">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agentlib.core.environment.</span></span><span class="sig-name descname"><span class="pre">InstantEnvironment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#agentlib.core.environment.EnvironmentConfig" title="agentlib.core.environment.EnvironmentConfig"><span class="pre">EnvironmentConfig</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/core/environment.html#InstantEnvironment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.core.environment.InstantEnvironment" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#agentlib.core.environment.CustomSimpyEnvironment" title="agentlib.core.environment.CustomSimpyEnvironment"><code class="xref py py-class docutils literal notranslate"><span class="pre">CustomSimpyEnvironment</span></code></a></p>
+<p>A customized version of the simpy environment. Handles execution of modules
+processes and manages time for instant execution mode.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.core.environment.InstantEnvironment.pretty_time">
+<span class="sig-name descname"><span class="pre">pretty_time</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/agentlib/core/environment.html#InstantEnvironment.pretty_time"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.core.environment.InstantEnvironment.pretty_time" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the time in seconds.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agentlib.core.environment.RealtimeEnvironment">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agentlib.core.environment.</span></span><span class="sig-name descname"><span class="pre">RealtimeEnvironment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#agentlib.core.environment.EnvironmentConfig" title="agentlib.core.environment.EnvironmentConfig"><span class="pre">EnvironmentConfig</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/core/environment.html#RealtimeEnvironment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.core.environment.RealtimeEnvironment" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">RealtimeEnvironment</span></code>, <a class="reference internal" href="#agentlib.core.environment.CustomSimpyEnvironment" title="agentlib.core.environment.CustomSimpyEnvironment"><code class="xref py py-class docutils literal notranslate"><span class="pre">CustomSimpyEnvironment</span></code></a></p>
+<p>A customized version of the simpy environment. Handles execution of modules
+processes and manages time for real time execution mode.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.core.environment.RealtimeEnvironment.pretty_time">
+<span class="sig-name descname"><span class="pre">pretty_time</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/agentlib/core/environment.html#RealtimeEnvironment.pretty_time"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.core.environment.RealtimeEnvironment.pretty_time" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the time in a datetime format.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.core.environment.RealtimeEnvironment.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">until</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Event</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/agentlib/core/environment.html#RealtimeEnvironment.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.core.environment.RealtimeEnvironment.run" title="Permalink to this definition"></a></dt>
+<dd><p>Executes <code class="xref py py-meth docutils literal notranslate"><span class="pre">step()</span></code> until the given criterion <em>until</em> is met.</p>
+<ul class="simple">
+<li><p>If it is <code class="docutils literal notranslate"><span class="pre">None</span></code> (which is the default), this method will return
+when there are no further events to be processed.</p></li>
+<li><p>If it is an <code class="xref py py-class docutils literal notranslate"><span class="pre">Event</span></code>, the method will continue
+stepping until this event has been triggered and will return its
+value.  Raises a <code class="xref py py-exc docutils literal notranslate"><span class="pre">RuntimeError</span></code> if there are no further events
+to be processed and the <em>until</em> event was not triggered.</p></li>
+<li><p>If it is a number, the method will continue stepping
+until the environment’s time reaches <em>until</em>.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.core.environment.RealtimeEnvironment.silent_clock">
+<span class="sig-name descname"><span class="pre">silent_clock</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/core/environment.html#RealtimeEnvironment.silent_clock"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.core.environment.RealtimeEnvironment.silent_clock" title="Permalink to this definition"></a></dt>
+<dd><p>A silent clock, which does not log anything.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="agentlib.core.environment.RealtimeEnvironment.time">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">time</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#agentlib.core.environment.RealtimeEnvironment.time" title="Permalink to this definition"></a></dt>
+<dd><p>Get the current system time as unix timestamp, with the enivronement
+offset.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agentlib.core.environment.ScaledRealtimeEnvironment">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agentlib.core.environment.</span></span><span class="sig-name descname"><span class="pre">ScaledRealtimeEnvironment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#agentlib.core.environment.EnvironmentConfig" title="agentlib.core.environment.EnvironmentConfig"><span class="pre">EnvironmentConfig</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/core/environment.html#ScaledRealtimeEnvironment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.core.environment.ScaledRealtimeEnvironment" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">RealtimeEnvironment</span></code>, <a class="reference internal" href="#agentlib.core.environment.CustomSimpyEnvironment" title="agentlib.core.environment.CustomSimpyEnvironment"><code class="xref py py-class docutils literal notranslate"><span class="pre">CustomSimpyEnvironment</span></code></a></p>
+<p>A customized version of the simpy environment. Handles execution of modules
+processes and manages time for scaled real time execution mode.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.core.environment.ScaledRealtimeEnvironment.pretty_time">
+<span class="sig-name descname"><span class="pre">pretty_time</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/agentlib/core/environment.html#ScaledRealtimeEnvironment.pretty_time"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.core.environment.ScaledRealtimeEnvironment.pretty_time" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the time in seconds.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.core.environment.ScaledRealtimeEnvironment.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">until</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Event</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/agentlib/core/environment.html#ScaledRealtimeEnvironment.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.core.environment.ScaledRealtimeEnvironment.run" title="Permalink to this definition"></a></dt>
+<dd><p>Executes <code class="xref py py-meth docutils literal notranslate"><span class="pre">step()</span></code> until the given criterion <em>until</em> is met.</p>
+<ul class="simple">
+<li><p>If it is <code class="docutils literal notranslate"><span class="pre">None</span></code> (which is the default), this method will return
+when there are no further events to be processed.</p></li>
+<li><p>If it is an <code class="xref py py-class docutils literal notranslate"><span class="pre">Event</span></code>, the method will continue
+stepping until this event has been triggered and will return its
+value.  Raises a <code class="xref py py-exc docutils literal notranslate"><span class="pre">RuntimeError</span></code> if there are no further events
+to be processed and the <em>until</em> event was not triggered.</p></li>
+<li><p>If it is a number, the method will continue stepping
+until the environment’s time reaches <em>until</em>.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.core.environment.ScaledRealtimeEnvironment.silent_clock">
+<span class="sig-name descname"><span class="pre">silent_clock</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/core/environment.html#ScaledRealtimeEnvironment.silent_clock"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.core.environment.ScaledRealtimeEnvironment.silent_clock" title="Permalink to this definition"></a></dt>
+<dd><p>A silent clock, which does not log anything.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="agentlib.core.environment.ScaledRealtimeEnvironment.time">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">time</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#agentlib.core.environment.ScaledRealtimeEnvironment.time" title="Permalink to this definition"></a></dt>
+<dd><p>Get the current time of the environment.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="agentlib.core.environment.make_env_config">
+<span class="sig-prename descclassname"><span class="pre">agentlib.core.environment.</span></span><span class="sig-name descname"><span class="pre">make_env_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#agentlib.core.environment.EnvironmentConfig" title="agentlib.core.environment.EnvironmentConfig"><span class="pre">EnvironmentConfig</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#agentlib.core.environment.EnvironmentConfig" title="agentlib.core.environment.EnvironmentConfig"><span class="pre">EnvironmentConfig</span></a></span></span><a class="reference internal" href="../_modules/agentlib/core/environment.html#make_env_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.core.environment.make_env_config" title="Permalink to this definition"></a></dt>
+<dd><p>Creates the environment config from different sources.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="agentlib.core.environment.monkey_patch_simpy_process">
+<span class="sig-prename descclassname"><span class="pre">agentlib.core.environment.</span></span><span class="sig-name descname"><span class="pre">monkey_patch_simpy_process</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/core/environment.html#monkey_patch_simpy_process"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.core.environment.monkey_patch_simpy_process" title="Permalink to this definition"></a></dt>
+<dd><p>Removes the exception catching in simpy processes. This removes some of simpys
+features that we do not need. In return, it improves debugging and makes error
+messages more concise.</p>
 </dd></dl>
 
 </section>
@@ -1179,11 +1309,35 @@ a better understand of errors in the agentlib</p>
 
 <dl class="py exception">
 <dt class="sig sig-object py" id="agentlib.core.errors.OptionalDependencyError">
-<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agentlib.core.errors.</span></span><span class="sig-name descname"><span class="pre">OptionalDependencyError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dependency_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dependency_install</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'module'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/core/errors.html#OptionalDependencyError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.core.errors.OptionalDependencyError" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agentlib.core.errors.</span></span><span class="sig-name descname"><span class="pre">OptionalDependencyError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">used_object</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dependency_install</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dependency_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/core/errors.html#OptionalDependencyError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.core.errors.OptionalDependencyError" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
 <p>Exception to indicate that an optional dependency is missing
 which can always be fixed by installing the missing
 dependency.</p>
+</dd></dl>
+
+</section>
+<section id="module-agentlib.core.logging_">
+<span id="agentlib-core-logging-module"></span><h2>agentlib.core.logging_ module<a class="headerlink" href="#module-agentlib.core.logging_" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="agentlib.core.logging_.CustomLogger">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agentlib.core.logging_.</span></span><span class="sig-name descname"><span class="pre">CustomLogger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="agentlib.html#agentlib.Environment" title="agentlib.Environment"><span class="pre">Environment</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/core/logging_.html#CustomLogger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.core.logging_.CustomLogger" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Logger</span></code></p>
+<p>Subclass of Logger that adds the env_time to the record, allowing it to print
+the current time.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.core.logging_.CustomLogger.makeRecord">
+<span class="sig-name descname"><span class="pre">makeRecord</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">level</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fn</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lno</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">msg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exc_info</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">func</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sinfo</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/core/logging_.html#CustomLogger.makeRecord"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.core.logging_.CustomLogger.makeRecord" title="Permalink to this definition"></a></dt>
+<dd><p>A factory method which can be overridden in subclasses to create
+specialized LogRecords.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="agentlib.core.logging_.create_logger">
+<span class="sig-prename descclassname"><span class="pre">agentlib.core.logging_.</span></span><span class="sig-name descname"><span class="pre">create_logger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="agentlib.html#agentlib.Environment" title="agentlib.Environment"><span class="pre">Environment</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#agentlib.core.logging_.CustomLogger" title="agentlib.core.logging_.CustomLogger"><span class="pre">CustomLogger</span></a></span></span><a class="reference internal" href="../_modules/agentlib/core/logging_.html#create_logger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.core.logging_.create_logger" title="Permalink to this definition"></a></dt>
+<dd><p>Creates a logger that displays the environment time when logging.</p>
 </dd></dl>
 
 </section>
@@ -1612,7 +1766,7 @@ name of the model class.</p>
 
 <dl class="py method pydantic_validator">
 <dt class="sig sig-object py" id="agentlib.core.model.ModelConfig.include_default_model_variables">
-<em class="property"><span class="pre">validator</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">include_default_model_variables</span></span><em class="autodoc_pydantic_validator_arrow property">&#160; <span class="pre">»</span>&#160; </em><a class="reference internal" href="#agentlib.core.model.ModelConfig.outputs" title="agentlib.core.model.ModelConfig.outputs"><em class="xref py py-obj"><span class="pre">outputs</span></em></a><em class="property"><span class="pre">,</span> </em><a class="reference internal" href="#agentlib.core.model.ModelConfig.states" title="agentlib.core.model.ModelConfig.states"><em class="xref py py-obj"><span class="pre">states</span></em></a><em class="property"><span class="pre">,</span> </em><a class="reference internal" href="#agentlib.core.model.ModelConfig.inputs" title="agentlib.core.model.ModelConfig.inputs"><em class="xref py py-obj"><span class="pre">inputs</span></em></a><em class="property"><span class="pre">,</span> </em><a class="reference internal" href="#agentlib.core.model.ModelConfig.parameters" title="agentlib.core.model.ModelConfig.parameters"><em class="xref py py-obj"><span class="pre">parameters</span></em></a><a class="reference internal" href="../_modules/agentlib/core/model.html#ModelConfig.include_default_model_variables"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.core.model.ModelConfig.include_default_model_variables" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">validator</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">include_default_model_variables</span></span><em class="autodoc_pydantic_validator_arrow property">&#160; <span class="pre">»</span>&#160; </em><a class="reference internal" href="#agentlib.core.model.ModelConfig.states" title="agentlib.core.model.ModelConfig.states"><em class="xref py py-obj"><span class="pre">states</span></em></a><em class="property"><span class="pre">,</span> </em><a class="reference internal" href="#agentlib.core.model.ModelConfig.outputs" title="agentlib.core.model.ModelConfig.outputs"><em class="xref py py-obj"><span class="pre">outputs</span></em></a><em class="property"><span class="pre">,</span> </em><a class="reference internal" href="#agentlib.core.model.ModelConfig.parameters" title="agentlib.core.model.ModelConfig.parameters"><em class="xref py py-obj"><span class="pre">parameters</span></em></a><em class="property"><span class="pre">,</span> </em><a class="reference internal" href="#agentlib.core.model.ModelConfig.inputs" title="agentlib.core.model.ModelConfig.inputs"><em class="xref py py-obj"><span class="pre">inputs</span></em></a><a class="reference internal" href="../_modules/agentlib/core/model.html#ModelConfig.include_default_model_variables"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.core.model.ModelConfig.include_default_model_variables" title="Permalink to this definition"></a></dt>
 <dd><p>Validator building block to merge default variables with config variables in a standard validator.
 Updates default variables when a variable with the same name is present in the config.
 Then returns the union of the default variables and the external config variables.</p>
@@ -1622,14 +1776,14 @@ when the config provides new variables</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="agentlib.core.model.ModelConfig.model_post_init">
-<span class="sig-name descname"><span class="pre">model_post_init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">__context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#agentlib.core.model.ModelConfig.model_post_init" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">model_post_init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#agentlib.core.model.ModelConfig.model_post_init" title="Permalink to this definition"></a></dt>
 <dd><p>This function is meant to behave like a BaseModel method to initialise private attributes.</p>
 <p>It takes context as an argument since that’s what pydantic-core passes when calling it.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>self</strong> – The BaseModel instance.</p></li>
-<li><p><strong>__context</strong> – The context.</p></li>
+<li><p><strong>context</strong> – The context.</p></li>
 </ul>
 </dd>
 </dl>
@@ -1679,7 +1833,7 @@ attributes.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="agentlib.core.module.BaseModule.env">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">env</span></span><a class="headerlink" href="#agentlib.core.module.BaseModule.env" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">env</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#agentlib.core.environment.CustomSimpyEnvironment" title="agentlib.core.environment.CustomSimpyEnvironment"><span class="pre">CustomSimpyEnvironment</span></a></em><a class="headerlink" href="#agentlib.core.module.BaseModule.env" title="Permalink to this definition"></a></dt>
 <dd><p>Get the environment of the agent.</p>
 </dd></dl>
 
@@ -1956,40 +2110,19 @@ Used to better display relevant options of children classes in GUIs.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="agentlib.core.module.BaseModuleConfig.model_post_init">
-<span class="sig-name descname"><span class="pre">model_post_init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">__context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#agentlib.core.module.BaseModuleConfig.model_post_init" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">model_post_init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#agentlib.core.module.BaseModuleConfig.model_post_init" title="Permalink to this definition"></a></dt>
 <dd><p>This function is meant to behave like a BaseModel method to initialise private attributes.</p>
 <p>It takes context as an argument since that’s what pydantic-core passes when calling it.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>self</strong> – The BaseModel instance.</p></li>
-<li><p><strong>__context</strong> – The context.</p></li>
+<li><p><strong>context</strong> – The context.</p></li>
 </ul>
 </dd>
 </dl>
 </dd></dl>
 
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="agentlib.core.module.CustomLogger">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agentlib.core.module.</span></span><span class="sig-name descname"><span class="pre">CustomLogger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="agentlib.html#agentlib.Environment" title="agentlib.Environment"><span class="pre">Environment</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/core/module.html#CustomLogger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.core.module.CustomLogger" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Logger</span></code></p>
-<p>Subclass of Logger that adds the env_time to the record, allowing it to print
-the current time.</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="agentlib.core.module.CustomLogger.makeRecord">
-<span class="sig-name descname"><span class="pre">makeRecord</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">level</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fn</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lno</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">msg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exc_info</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">func</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sinfo</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/core/module.html#CustomLogger.makeRecord"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.core.module.CustomLogger.makeRecord" title="Permalink to this definition"></a></dt>
-<dd><p>A factory method which can be overridden in subclasses to create
-specialized LogRecords.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="agentlib.core.module.create_logger">
-<span class="sig-prename descclassname"><span class="pre">agentlib.core.module.</span></span><span class="sig-name descname"><span class="pre">create_logger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="agentlib.html#agentlib.Agent" title="agentlib.Agent"><span class="pre">Agent</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#agentlib.core.module.CustomLogger" title="agentlib.core.module.CustomLogger"><span class="pre">CustomLogger</span></a></span></span><a class="reference internal" href="../_modules/agentlib/core/module.html#create_logger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.core.module.create_logger" title="Permalink to this definition"></a></dt>
-<dd><p>Creates a logger that displays the environment time when logging.</p>
 </dd></dl>
 
 </section>

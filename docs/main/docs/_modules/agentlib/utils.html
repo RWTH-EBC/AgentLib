@@ -1,23 +1,21 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>agentlib.utils &mdash; agentlib 0.7.1 documentation</title>
+  <title>agentlib.utils &mdash; agentlib 0.8.4 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css" />
       <link rel="stylesheet" type="text/css" href="../../_static/autodoc_pydantic.css" />
 
   
-  <!--[if lt IE 9]>
-    <script src="../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/sphinx_highlight.js"></script>
+      <script src="../../_static/jquery.js"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+      <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+      <script src="../../_static/doctools.js"></script>
+      <script src="../../_static/sphinx_highlight.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -34,9 +32,6 @@
           <a href="../../index.html" class="icon icon-home">
             agentlib
           </a>
-              <div class="version">
-                0.7
-              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
@@ -88,12 +83,13 @@
 <span class="sd">dynamic loading of custom models and modules.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">importlib.util</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">from</span> <span class="nn">.local_broker</span> <span class="kn">import</span> <span class="n">LocalBroker</span>
+
 <span class="kn">from</span> <span class="nn">.local_broadcast_broker</span> <span class="kn">import</span> <span class="n">LocalBroadcastBroker</span>
+<span class="kn">from</span> <span class="nn">.local_broker</span> <span class="kn">import</span> <span class="n">LocalBroker</span>
 <span class="kn">from</span> <span class="nn">.multi_processing_broker</span> <span class="kn">import</span> <span class="n">MultiProcessingBroker</span>
 
 
@@ -141,7 +137,7 @@
     <span class="c1"># Build module_name if not given:</span>
     <span class="k">if</span> <span class="n">module_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="c1"># Build a unique module_name to be imported based on the path</span>
-        <span class="n">module_name</span> <span class="o">=</span> <span class="s2">&quot;.&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">file</span><span class="o">.</span><span class="n">stem</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">file</span><span class="o">.</span><span class="n">parents</span><span class="p">][::</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">module_name</span> <span class="o">=</span> <span class="s2">&quot;.&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">p</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">file</span><span class="o">.</span><span class="n">parents</span><span class="p">][:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">file</span><span class="o">.</span><span class="n">stem</span><span class="p">])</span>
 
     <span class="c1"># Custom file import</span>
     <span class="k">try</span><span class="p">:</span>
@@ -155,8 +151,8 @@
             <span class="n">spec</span><span class="o">.</span><span class="n">loader</span><span class="o">.</span><span class="n">exec_module</span><span class="p">(</span><span class="n">custom_module</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">ImportError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span>
-            <span class="s2">&quot;Could not inject given module due to import error. &quot;</span>
-            <span class="s2">&quot;Carefully check for circular imports and partially &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;Could not inject given module &#39;</span><span class="si">{</span><span class="n">class_name</span><span class="si">}</span><span class="s2">&#39; at &#39;</span><span class="si">{</span><span class="n">file</span><span class="si">}</span><span class="s2">&#39; due to import &quot;</span>
+            <span class="s2">&quot;error. Carefully check for circular imports and partially &quot;</span>
             <span class="s2">&quot;imported objects based on the following error message: &quot;</span>
             <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">err</span><span class="si">}</span><span class="s2">&quot;</span>
         <span class="p">)</span> <span class="kn">from</span> <span class="nn">err</span>

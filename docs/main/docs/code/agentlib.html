@@ -1,24 +1,22 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en">
 <head>
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>agentlib package &mdash; agentlib 0.7.1 documentation</title>
+  <title>agentlib package &mdash; agentlib 0.8.4 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
       <link rel="stylesheet" type="text/css" href="../_static/autodoc_pydantic.css" />
 
   
-  <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
+      <script src="../_static/jquery.js"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+      <script src="../_static/doctools.js"></script>
+      <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" /> 
@@ -35,9 +33,6 @@
           <a href="../index.html" class="icon icon-home">
             agentlib
           </a>
-              <div class="version">
-                0.7
-              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
@@ -134,7 +129,7 @@ were created by them.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="agentlib.Agent.env">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">env</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="agentlib.core.html#agentlib.core.environment.Environment" title="agentlib.core.environment.Environment"><span class="pre">Environment</span></a></em><a class="headerlink" href="#agentlib.Agent.env" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">env</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="agentlib.core.html#agentlib.core.environment.CustomSimpyEnvironment" title="agentlib.core.environment.CustomSimpyEnvironment"><span class="pre">CustomSimpyEnvironment</span></a></em><a class="headerlink" href="#agentlib.Agent.env" title="Permalink to this definition"></a></dt>
 <dd><p>Get the environment the agent is in</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -320,7 +315,7 @@ attributes.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="agentlib.BaseModule.env">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">env</span></span><a class="headerlink" href="#agentlib.BaseModule.env" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">env</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="agentlib.core.html#agentlib.core.environment.CustomSimpyEnvironment" title="agentlib.core.environment.CustomSimpyEnvironment"><span class="pre">CustomSimpyEnvironment</span></a></em><a class="headerlink" href="#agentlib.BaseModule.env" title="Permalink to this definition"></a></dt>
 <dd><p>Get the environment of the agent.</p>
 </dd></dl>
 
@@ -597,14 +592,14 @@ Used to better display relevant options of children classes in GUIs.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="agentlib.BaseModuleConfig.model_post_init">
-<span class="sig-name descname"><span class="pre">model_post_init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">__context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#agentlib.BaseModuleConfig.model_post_init" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">model_post_init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#agentlib.BaseModuleConfig.model_post_init" title="Permalink to this definition"></a></dt>
 <dd><p>This function is meant to behave like a BaseModel method to initialise private attributes.</p>
 <p>It takes context as an argument since that’s what pydantic-core passes when calling it.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>self</strong> – The BaseModel instance.</p></li>
-<li><p><strong>__context</strong> – The context.</p></li>
+<li><p><strong>context</strong> – The context.</p></li>
 </ul>
 </dd>
 </dl>
@@ -614,82 +609,9 @@ Used to better display relevant options of children classes in GUIs.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="agentlib.Environment">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agentlib.</span></span><span class="sig-name descname"><span class="pre">Environment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/core/environment.html#Environment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.Environment" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">RealtimeEnvironment</span></code></p>
-<p>Custom environment to meet the needs
-of the agentlib.</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="agentlib.Environment.clock">
-<span class="sig-name descname"><span class="pre">clock</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/core/environment.html#Environment.clock"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.Environment.clock" title="Permalink to this definition"></a></dt>
-<dd><p>Define a clock loop to increase the now-timer every other milisecond
-(Or whatever t_sample is)</p>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="agentlib.Environment.config">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="agentlib.core.html#agentlib.core.environment.EnvironmentConfig" title="agentlib.core.environment.EnvironmentConfig"><span class="pre">EnvironmentConfig</span></a></em><a class="headerlink" href="#agentlib.Environment.config" title="Permalink to this definition"></a></dt>
-<dd><p>Return the config of the environment</p>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="agentlib.Environment.offset">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">offset</span></span><a class="headerlink" href="#agentlib.Environment.offset" title="Permalink to this definition"></a></dt>
-<dd><p>Offset of the now-time of the environment</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="agentlib.Environment.pretty_time">
-<span class="sig-name descname"><span class="pre">pretty_time</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/agentlib/core/environment.html#Environment.pretty_time"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.Environment.pretty_time" title="Permalink to this definition"></a></dt>
-<dd><p>Returns the time in a nice format. Datetime if realtime, seconds if not
-realtime. Implemented as rt_time or sim_time</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="agentlib.Environment.rt_time">
-<span class="sig-name descname"><span class="pre">rt_time</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/agentlib/core/environment.html#Environment.rt_time"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.Environment.rt_time" title="Permalink to this definition"></a></dt>
-<dd><p>Returns the current real time in datetime format, based on unix timestamp.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="agentlib.Environment.run">
-<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">until</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Event</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/agentlib/core/environment.html#Environment.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.Environment.run" title="Permalink to this definition"></a></dt>
-<dd><p>Executes <a class="reference internal" href="#agentlib.Environment.step" title="agentlib.Environment.step"><code class="xref py py-meth docutils literal notranslate"><span class="pre">step()</span></code></a> until the given criterion <em>until</em> is met.</p>
-<ul class="simple">
-<li><p>If it is <code class="docutils literal notranslate"><span class="pre">None</span></code> (which is the default), this method will return
-when there are no further events to be processed.</p></li>
-<li><p>If it is an <code class="xref py py-class docutils literal notranslate"><span class="pre">Event</span></code>, the method will continue
-stepping until this event has been triggered and will return its
-value.  Raises a <code class="xref py py-exc docutils literal notranslate"><span class="pre">RuntimeError</span></code> if there are no further events
-to be processed and the <em>until</em> event was not triggered.</p></li>
-<li><p>If it is a number, the method will continue stepping
-until the environment’s time reaches <em>until</em>.</p></li>
-</ul>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="agentlib.Environment.sim_time">
-<span class="sig-name descname"><span class="pre">sim_time</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/agentlib/core/environment.html#Environment.sim_time"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.Environment.sim_time" title="Permalink to this definition"></a></dt>
-<dd><p>Returns the current simulation time in seconds, with two decimals of
-precision.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="agentlib.Environment.step">
-<span class="sig-name descname"><span class="pre">step</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/agentlib/core/environment.html#Environment.step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.Environment.step" title="Permalink to this definition"></a></dt>
-<dd><p>Process the next event after enough real-time has passed for the
-event to happen.</p>
-<p>The delay is scaled according to the real-time <code class="xref py py-attr docutils literal notranslate"><span class="pre">factor</span></code>. With
-<code class="xref py py-attr docutils literal notranslate"><span class="pre">strict</span></code> mode enabled, a <code class="xref py py-exc docutils literal notranslate"><span class="pre">RuntimeError</span></code> will be raised, if
-the event is processed too slowly.</p>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="agentlib.Environment.time">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">time</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#agentlib.Environment.time" title="Permalink to this definition"></a></dt>
-<dd><p>Get the current time of the environment.
-If RT is enabled, the unix-time is returned.</p>
-</dd></dl>
-
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agentlib.</span></span><span class="sig-name descname"><span class="pre">Environment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/core/environment.html#Environment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.Environment" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Simpy Environment Distributor. Handles synchronous processes.</p>
 </dd></dl>
 
 <dl class="py class pydantic_model">
@@ -707,12 +629,15 @@ behaviour for the local execution.</p>
 <dt class="field-even">Fields<span class="colon">:</span></dt>
 <dd class="field-even"><p></p></dd>
 <dt class="field-odd">Validators<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><a class="reference internal" href="agentlib.utils.html#agentlib.utils.multi_agent_system.MAS.setup_agents" title="agentlib.utils.multi_agent_system.MAS.setup_agents"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_agents</span></code></a> » <code class="xref py py-obj docutils literal notranslate"><span class="pre">agent_configs</span></code></p></li>
-<li><p><a class="reference internal" href="agentlib.utils.html#agentlib.utils.multi_agent_system.LocalMASAgency.setup_env" title="agentlib.utils.multi_agent_system.LocalMASAgency.setup_env"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_env</span></code></a> » <code class="xref py py-obj docutils literal notranslate"><span class="pre">env</span></code></p></li>
-</ul>
-</dd>
+<dd class="field-odd"><p></p></dd>
 </dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.LocalCloneMAPAgency.model_post_init">
+<span class="sig-name descname"><span class="pre">model_post_init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#agentlib.LocalCloneMAPAgency.model_post_init" title="Permalink to this definition"></a></dt>
+<dd><p>We need to both initialize private attributes and call the user-defined model_post_init
+method.</p>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="agentlib.LocalCloneMAPAgency.run">
 <span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">until</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/utils/multi_agent_system.html#LocalCloneMAPAgency.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.LocalCloneMAPAgency.run" title="Permalink to this definition"></a></dt>
@@ -749,7 +674,6 @@ executes and terminates them.</p>
 <dd class="field-even"><p></p></dd>
 <dt class="field-odd">Validators<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><a class="reference internal" href="agentlib.utils.html#agentlib.utils.multi_agent_system.MAS.setup_agents" title="agentlib.utils.multi_agent_system.MAS.setup_agents"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_agents</span></code></a> » <code class="xref py py-obj docutils literal notranslate"><span class="pre">agent_configs</span></code></p></li>
 <li><p><a class="reference internal" href="agentlib.utils.html#agentlib.utils.multi_agent_system.LocalMASAgency.setup_env" title="agentlib.utils.multi_agent_system.LocalMASAgency.setup_env"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_env</span></code></a> » <code class="xref py py-obj docutils literal notranslate"><span class="pre">env</span></code></p></li>
 </ul>
 </dd>
@@ -783,7 +707,7 @@ executes and terminates them.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="agentlib.LocalMASAgency.model_post_init">
-<span class="sig-name descname"><span class="pre">model_post_init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_ModelMetaclass__context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#agentlib.LocalMASAgency.model_post_init" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">model_post_init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#agentlib.LocalMASAgency.model_post_init" title="Permalink to this definition"></a></dt>
 <dd><p>We need to both initialize private attributes and call the user-defined model_post_init
 method.</p>
 </dd></dl>
@@ -1242,7 +1166,7 @@ name of the model class.</p>
 
 <dl class="py method pydantic_validator">
 <dt class="sig sig-object py" id="agentlib.ModelConfig.include_default_model_variables">
-<em class="property"><span class="pre">validator</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">include_default_model_variables</span></span><em class="autodoc_pydantic_validator_arrow property">&#160; <span class="pre">»</span>&#160; </em><a class="reference internal" href="agentlib.core.html#agentlib.core.model.ModelConfig.outputs" title="agentlib.core.model.ModelConfig.outputs"><em class="xref py py-obj"><span class="pre">outputs</span></em></a><em class="property"><span class="pre">,</span> </em><a class="reference internal" href="agentlib.core.html#agentlib.core.model.ModelConfig.states" title="agentlib.core.model.ModelConfig.states"><em class="xref py py-obj"><span class="pre">states</span></em></a><em class="property"><span class="pre">,</span> </em><a class="reference internal" href="agentlib.core.html#agentlib.core.model.ModelConfig.inputs" title="agentlib.core.model.ModelConfig.inputs"><em class="xref py py-obj"><span class="pre">inputs</span></em></a><em class="property"><span class="pre">,</span> </em><a class="reference internal" href="agentlib.core.html#agentlib.core.model.ModelConfig.parameters" title="agentlib.core.model.ModelConfig.parameters"><em class="xref py py-obj"><span class="pre">parameters</span></em></a><a class="reference internal" href="../_modules/agentlib/core/model.html#ModelConfig.include_default_model_variables"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.ModelConfig.include_default_model_variables" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">validator</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">include_default_model_variables</span></span><em class="autodoc_pydantic_validator_arrow property">&#160; <span class="pre">»</span>&#160; </em><a class="reference internal" href="agentlib.core.html#agentlib.core.model.ModelConfig.states" title="agentlib.core.model.ModelConfig.states"><em class="xref py py-obj"><span class="pre">states</span></em></a><em class="property"><span class="pre">,</span> </em><a class="reference internal" href="agentlib.core.html#agentlib.core.model.ModelConfig.outputs" title="agentlib.core.model.ModelConfig.outputs"><em class="xref py py-obj"><span class="pre">outputs</span></em></a><em class="property"><span class="pre">,</span> </em><a class="reference internal" href="agentlib.core.html#agentlib.core.model.ModelConfig.parameters" title="agentlib.core.model.ModelConfig.parameters"><em class="xref py py-obj"><span class="pre">parameters</span></em></a><em class="property"><span class="pre">,</span> </em><a class="reference internal" href="agentlib.core.html#agentlib.core.model.ModelConfig.inputs" title="agentlib.core.model.ModelConfig.inputs"><em class="xref py py-obj"><span class="pre">inputs</span></em></a><a class="reference internal" href="../_modules/agentlib/core/model.html#ModelConfig.include_default_model_variables"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.ModelConfig.include_default_model_variables" title="Permalink to this definition"></a></dt>
 <dd><p>Validator building block to merge default variables with config variables in a standard validator.
 Updates default variables when a variable with the same name is present in the config.
 Then returns the union of the default variables and the external config variables.</p>
@@ -1252,14 +1176,14 @@ when the config provides new variables</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="agentlib.ModelConfig.model_post_init">
-<span class="sig-name descname"><span class="pre">model_post_init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">__context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#agentlib.ModelConfig.model_post_init" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">model_post_init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#agentlib.ModelConfig.model_post_init" title="Permalink to this definition"></a></dt>
 <dd><p>This function is meant to behave like a BaseModel method to initialise private attributes.</p>
 <p>It takes context as an argument since that’s what pydantic-core passes when calling it.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>self</strong> – The BaseModel instance.</p></li>
-<li><p><strong>__context</strong> – The context.</p></li>
+<li><p><strong>context</strong> – The context.</p></li>
 </ul>
 </dd>
 </dl>
@@ -1347,7 +1271,7 @@ when the config provides new variables</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="agentlib.MultiProcessingMAS.model_post_init">
-<span class="sig-name descname"><span class="pre">model_post_init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">_ModelMetaclass__context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#agentlib.MultiProcessingMAS.model_post_init" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">model_post_init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#agentlib.MultiProcessingMAS.model_post_init" title="Permalink to this definition"></a></dt>
 <dd><p>We need to both initialize private attributes and call the user-defined model_post_init
 method.</p>
 </dd></dl>
@@ -1390,8 +1314,8 @@ run is finished</p>
 <li class="toctree-l3"><a class="reference internal" href="agentlib.core.html#agentlib.core.agent.AgentConfig"><code class="docutils literal notranslate"><span class="pre">AgentConfig</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#agentlib.core.agent.AgentConfig.check_alive_interval"><code class="docutils literal notranslate"><span class="pre">AgentConfig.check_alive_interval</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#agentlib.core.agent.AgentConfig.id"><code class="docutils literal notranslate"><span class="pre">AgentConfig.id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#agentlib.core.agent.AgentConfig.max_queue_size"><code class="docutils literal notranslate"><span class="pre">AgentConfig.max_queue_size</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#agentlib.core.agent.AgentConfig.modules"><code class="docutils literal notranslate"><span class="pre">AgentConfig.modules</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#agentlib.core.agent.AgentConfig.check_correct_value"><code class="docutils literal notranslate"><span class="pre">AgentConfig.check_correct_value</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#agentlib.core.agent.AgentConfig.check_modules"><code class="docutils literal notranslate"><span class="pre">AgentConfig.check_modules</span></code></a></li>
 </ul>
 </li>
@@ -1403,11 +1327,11 @@ run is finished</p>
 <li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#agentlib.core.data_broker.BrokerCallback.alias"><code class="docutils literal notranslate"><span class="pre">BrokerCallback.alias</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#agentlib.core.data_broker.BrokerCallback.callback"><code class="docutils literal notranslate"><span class="pre">BrokerCallback.callback</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#agentlib.core.data_broker.BrokerCallback.kwargs"><code class="docutils literal notranslate"><span class="pre">BrokerCallback.kwargs</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#agentlib.core.data_broker.BrokerCallback.module_id"><code class="docutils literal notranslate"><span class="pre">BrokerCallback.module_id</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#agentlib.core.data_broker.BrokerCallback.source"><code class="docutils literal notranslate"><span class="pre">BrokerCallback.source</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#agentlib.core.data_broker.BrokerCallback.auto_copy"><code class="docutils literal notranslate"><span class="pre">BrokerCallback.auto_copy</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="agentlib.core.html#agentlib.core.data_broker.CallbackFunction"><code class="docutils literal notranslate"><span class="pre">CallbackFunction</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="agentlib.core.html#agentlib.core.data_broker.DataBroker"><code class="docutils literal notranslate"><span class="pre">DataBroker</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#agentlib.core.data_broker.DataBroker.any_is_none"><code class="docutils literal notranslate"><span class="pre">DataBroker.any_is_none()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#agentlib.core.data_broker.DataBroker.deregister_callback"><code class="docutils literal notranslate"><span class="pre">DataBroker.deregister_callback()</span></code></a></li>
@@ -1420,11 +1344,16 @@ run is finished</p>
 <li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#agentlib.core.data_broker.NoCopyBrokerCallback.alias"><code class="docutils literal notranslate"><span class="pre">NoCopyBrokerCallback.alias</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#agentlib.core.data_broker.NoCopyBrokerCallback.callback"><code class="docutils literal notranslate"><span class="pre">NoCopyBrokerCallback.callback</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#agentlib.core.data_broker.NoCopyBrokerCallback.kwargs"><code class="docutils literal notranslate"><span class="pre">NoCopyBrokerCallback.kwargs</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#agentlib.core.data_broker.NoCopyBrokerCallback.module_id"><code class="docutils literal notranslate"><span class="pre">NoCopyBrokerCallback.module_id</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#agentlib.core.data_broker.NoCopyBrokerCallback.source"><code class="docutils literal notranslate"><span class="pre">NoCopyBrokerCallback.source</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#agentlib.core.data_broker.NoCopyBrokerCallback.check_valid_callback_function"><code class="docutils literal notranslate"><span class="pre">NoCopyBrokerCallback.check_valid_callback_function</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="agentlib.core.html#agentlib.core.data_broker.RTDataBroker"><code class="docutils literal notranslate"><span class="pre">RTDataBroker</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.core.html#agentlib.core.data_broker.RTDataBroker"><code class="docutils literal notranslate"><span class="pre">RTDataBroker</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#agentlib.core.data_broker.RTDataBroker.register_callback"><code class="docutils literal notranslate"><span class="pre">RTDataBroker.register_callback()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.core.html#agentlib.core.data_broker.log_queue_status"><code class="docutils literal notranslate"><span class="pre">log_queue_status()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="agentlib.core.html#module-agentlib.core.datamodels">agentlib.core.datamodels module</a><ul>
@@ -1495,35 +1424,58 @@ run is finished</p>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="agentlib.core.html#module-agentlib.core.environment">agentlib.core.environment module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="agentlib.core.html#agentlib.core.environment.Environment"><code class="docutils literal notranslate"><span class="pre">Environment</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#agentlib.core.environment.Environment.clock"><code class="docutils literal notranslate"><span class="pre">Environment.clock()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#agentlib.core.environment.Environment.config"><code class="docutils literal notranslate"><span class="pre">Environment.config</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#agentlib.core.environment.Environment.offset"><code class="docutils literal notranslate"><span class="pre">Environment.offset</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#agentlib.core.environment.Environment.pretty_time"><code class="docutils literal notranslate"><span class="pre">Environment.pretty_time()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#agentlib.core.environment.Environment.rt_time"><code class="docutils literal notranslate"><span class="pre">Environment.rt_time()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#agentlib.core.environment.Environment.run"><code class="docutils literal notranslate"><span class="pre">Environment.run()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#agentlib.core.environment.Environment.sim_time"><code class="docutils literal notranslate"><span class="pre">Environment.sim_time()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#agentlib.core.environment.Environment.step"><code class="docutils literal notranslate"><span class="pre">Environment.step()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#agentlib.core.environment.Environment.time"><code class="docutils literal notranslate"><span class="pre">Environment.time</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.core.html#agentlib.core.environment.CustomSimpyEnvironment"><code class="docutils literal notranslate"><span class="pre">CustomSimpyEnvironment</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#agentlib.core.environment.CustomSimpyEnvironment.clock"><code class="docutils literal notranslate"><span class="pre">CustomSimpyEnvironment.clock()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#agentlib.core.environment.CustomSimpyEnvironment.config"><code class="docutils literal notranslate"><span class="pre">CustomSimpyEnvironment.config</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#agentlib.core.environment.CustomSimpyEnvironment.offset"><code class="docutils literal notranslate"><span class="pre">CustomSimpyEnvironment.offset</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#agentlib.core.environment.CustomSimpyEnvironment.pretty_time"><code class="docutils literal notranslate"><span class="pre">CustomSimpyEnvironment.pretty_time()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#agentlib.core.environment.CustomSimpyEnvironment.time"><code class="docutils literal notranslate"><span class="pre">CustomSimpyEnvironment.time</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.core.html#agentlib.core.environment.Environment"><code class="docutils literal notranslate"><span class="pre">Environment</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="agentlib.core.html#agentlib.core.environment.EnvironmentConfig"><code class="docutils literal notranslate"><span class="pre">EnvironmentConfig</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#agentlib.core.environment.EnvironmentConfig.clock"><code class="docutils literal notranslate"><span class="pre">EnvironmentConfig.clock</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#agentlib.core.environment.EnvironmentConfig.factor"><code class="docutils literal notranslate"><span class="pre">EnvironmentConfig.factor</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#agentlib.core.environment.EnvironmentConfig.initial_time"><code class="docutils literal notranslate"><span class="pre">EnvironmentConfig.initial_time</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#agentlib.core.environment.EnvironmentConfig.offset"><code class="docutils literal notranslate"><span class="pre">EnvironmentConfig.offset</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#agentlib.core.environment.EnvironmentConfig.rt"><code class="docutils literal notranslate"><span class="pre">EnvironmentConfig.rt</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#agentlib.core.environment.EnvironmentConfig.strict"><code class="docutils literal notranslate"><span class="pre">EnvironmentConfig.strict</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#agentlib.core.environment.EnvironmentConfig.t_sample"><code class="docutils literal notranslate"><span class="pre">EnvironmentConfig.t_sample</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#agentlib.core.environment.EnvironmentConfig.check_time"><code class="docutils literal notranslate"><span class="pre">EnvironmentConfig.check_time</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.core.html#agentlib.core.environment.InstantEnvironment"><code class="docutils literal notranslate"><span class="pre">InstantEnvironment</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#agentlib.core.environment.InstantEnvironment.pretty_time"><code class="docutils literal notranslate"><span class="pre">InstantEnvironment.pretty_time()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.core.html#agentlib.core.environment.RealtimeEnvironment"><code class="docutils literal notranslate"><span class="pre">RealtimeEnvironment</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#agentlib.core.environment.RealtimeEnvironment.pretty_time"><code class="docutils literal notranslate"><span class="pre">RealtimeEnvironment.pretty_time()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#agentlib.core.environment.RealtimeEnvironment.run"><code class="docutils literal notranslate"><span class="pre">RealtimeEnvironment.run()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#agentlib.core.environment.RealtimeEnvironment.silent_clock"><code class="docutils literal notranslate"><span class="pre">RealtimeEnvironment.silent_clock()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#agentlib.core.environment.RealtimeEnvironment.time"><code class="docutils literal notranslate"><span class="pre">RealtimeEnvironment.time</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.core.html#agentlib.core.environment.ScaledRealtimeEnvironment"><code class="docutils literal notranslate"><span class="pre">ScaledRealtimeEnvironment</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#agentlib.core.environment.ScaledRealtimeEnvironment.pretty_time"><code class="docutils literal notranslate"><span class="pre">ScaledRealtimeEnvironment.pretty_time()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#agentlib.core.environment.ScaledRealtimeEnvironment.run"><code class="docutils literal notranslate"><span class="pre">ScaledRealtimeEnvironment.run()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#agentlib.core.environment.ScaledRealtimeEnvironment.silent_clock"><code class="docutils literal notranslate"><span class="pre">ScaledRealtimeEnvironment.silent_clock()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#agentlib.core.environment.ScaledRealtimeEnvironment.time"><code class="docutils literal notranslate"><span class="pre">ScaledRealtimeEnvironment.time</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.core.html#agentlib.core.environment.make_env_config"><code class="docutils literal notranslate"><span class="pre">make_env_config()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.core.html#agentlib.core.environment.monkey_patch_simpy_process"><code class="docutils literal notranslate"><span class="pre">monkey_patch_simpy_process()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="agentlib.core.html#module-agentlib.core.errors">agentlib.core.errors module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="agentlib.core.html#agentlib.core.errors.ConfigurationError"><code class="docutils literal notranslate"><span class="pre">ConfigurationError</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="agentlib.core.html#agentlib.core.errors.InitializationError"><code class="docutils literal notranslate"><span class="pre">InitializationError</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="agentlib.core.html#agentlib.core.errors.OptionalDependencyError"><code class="docutils literal notranslate"><span class="pre">OptionalDependencyError</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="agentlib.core.html#module-agentlib.core.logging_">agentlib.core.logging_ module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.core.html#agentlib.core.logging_.CustomLogger"><code class="docutils literal notranslate"><span class="pre">CustomLogger</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#agentlib.core.logging_.CustomLogger.makeRecord"><code class="docutils literal notranslate"><span class="pre">CustomLogger.makeRecord()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.core.html#agentlib.core.logging_.create_logger"><code class="docutils literal notranslate"><span class="pre">create_logger()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="agentlib.core.html#module-agentlib.core.model">agentlib.core.model module</a><ul>
@@ -1618,11 +1570,6 @@ run is finished</p>
 <li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#agentlib.core.module.BaseModuleConfig.model_post_init"><code class="docutils literal notranslate"><span class="pre">BaseModuleConfig.model_post_init()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="agentlib.core.html#agentlib.core.module.CustomLogger"><code class="docutils literal notranslate"><span class="pre">CustomLogger</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#agentlib.core.module.CustomLogger.makeRecord"><code class="docutils literal notranslate"><span class="pre">CustomLogger.makeRecord()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="agentlib.core.html#agentlib.core.module.create_logger"><code class="docutils literal notranslate"><span class="pre">create_logger()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -1655,6 +1602,12 @@ run is finished</p>
 <li class="toctree-l4"><a class="reference internal" href="agentlib.modules.controller.html#agentlib-modules-controller-pid-module">agentlib.modules.controller.pid module</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.modules.simulation.html">agentlib.modules.simulation package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.simulation.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.simulation.html#agentlib-modules-simulation-csv-data-source-module">agentlib.modules.simulation.csv_data_source module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.simulation.html#agentlib-modules-simulation-simulator-module">agentlib.modules.simulation.simulator module</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="agentlib.modules.utils.html">agentlib.modules.utils package</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="agentlib.modules.utils.html#submodules">Submodules</a></li>
 <li class="toctree-l4"><a class="reference internal" href="agentlib.modules.utils.html#agentlib-modules-utils-agent-logger-module">agentlib.modules.utils.agent_logger module</a></li>
@@ -1663,12 +1616,18 @@ run is finished</p>
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="agentlib.modules.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="agentlib.modules.html#agentlib-modules-simulator-module">agentlib.modules.simulator module</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="agentlib.utils.html">agentlib.utils package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="agentlib.utils.html#agentlib.utils.custom_injection"><code class="docutils literal notranslate"><span class="pre">custom_injection()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="agentlib.utils.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.utils.plotting.html">agentlib.utils.plotting package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.utils.plotting.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.utils.plotting.html#module-agentlib.utils.plotting.simulator_dashboard">agentlib.utils.plotting.simulator_dashboard module</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="agentlib.utils.html#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="agentlib.utils.html#module-agentlib.utils.broker">agentlib.utils.broker module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="agentlib.utils.html#agentlib.utils.broker.Broker"><code class="docutils literal notranslate"><span class="pre">Broker</span></code></a><ul>
@@ -1704,6 +1663,7 @@ run is finished</p>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="agentlib.utils.html#module-agentlib.utils.multi_agent_system">agentlib.utils.multi_agent_system module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="agentlib.utils.html#agentlib.utils.multi_agent_system.LocalCloneMAPAgency"><code class="docutils literal notranslate"><span class="pre">LocalCloneMAPAgency</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.utils.html#agentlib.utils.multi_agent_system.LocalCloneMAPAgency.model_post_init"><code class="docutils literal notranslate"><span class="pre">LocalCloneMAPAgency.model_post_init()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="agentlib.utils.html#agentlib.utils.multi_agent_system.LocalCloneMAPAgency.run"><code class="docutils literal notranslate"><span class="pre">LocalCloneMAPAgency.run()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="agentlib.utils.html#agentlib.utils.multi_agent_system.LocalCloneMAPAgency.setup_agent"><code class="docutils literal notranslate"><span class="pre">LocalCloneMAPAgency.setup_agent()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="agentlib.utils.html#agentlib.utils.multi_agent_system.LocalCloneMAPAgency.terminate_agents"><code class="docutils literal notranslate"><span class="pre">LocalCloneMAPAgency.terminate_agents()</span></code></a></li>

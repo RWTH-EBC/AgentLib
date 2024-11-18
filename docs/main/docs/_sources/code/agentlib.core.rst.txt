@@ -49,6 +49,14 @@ agentlib.core.errors module
    :undoc-members:
    :show-inheritance:
 
+agentlib.core.logging\_ module
+------------------------------
+
+.. automodule:: agentlib.core.logging_
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 agentlib.core.model module
 --------------------------
 
