@@ -7,8 +7,12 @@ variables:
 
 
 build_agentlib:
-    image: docker:latest
+    image: docker:24.0.5
     stage: docker_build
+    services:
+      - name: docker:24.0.5-dind
+        variables:
+          HEALTHCHECK_TCP_PORT: "2376"
     before_script:
       - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     script:
