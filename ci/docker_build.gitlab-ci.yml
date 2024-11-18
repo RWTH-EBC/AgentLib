@@ -10,13 +10,12 @@ build_agentlib:
     services:
       - name: docker:24.0.5-dind
         variables:
-          DOCKER_TLS_CERTDIR: ""
-          HEALTHCHECK_TCP_PORT: "2375"
+          HEALTHCHECK_TCP_PORT: "2376"
     before_script:
       - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
       - apk update && apk add git
     script:
-        - docker build --pull -f ci/Dockerfile -t $DEVELOPMENT_IMAGE .
+        - docker build --pull --network=host -f ci/Dockerfile -t $DEVELOPMENT_IMAGE .
         - docker push $DEVELOPMENT_IMAGE
     only:
        - main
