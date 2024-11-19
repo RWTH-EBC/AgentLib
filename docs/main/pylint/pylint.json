@@ -794,7 +794,7 @@
         },
         {
             "type": "warning",
-            "module": "run_examples",
+            "module": "ci.run_examples",
             "obj": "",
             "line": 8,
             "column": 0,
@@ -805,7 +805,7 @@
         },
         {
             "type": "warning",
-            "module": "run_examples",
+            "module": "ci.run_examples",
             "obj": "",
             "line": 10,
             "column": 0,
@@ -816,7 +816,7 @@
         },
         {
             "type": "warning",
-            "module": "run_examples",
+            "module": "ci.run_examples",
             "obj": "",
             "line": 11,
             "column": 0,
@@ -827,7 +827,7 @@
         },
         {
             "type": "warning",
-            "module": "run_examples",
+            "module": "ci.run_examples",
             "obj": "TestExamples._run_example",
             "line": 45,
             "column": 12,
@@ -838,7 +838,7 @@
         },
         {
             "type": "convention",
-            "module": "run_examples",
+            "module": "ci.run_examples",
             "obj": "TestExamples.test_room_mas",
             "line": 61,
             "column": 8,
@@ -849,7 +849,7 @@
         },
         {
             "type": "convention",
-            "module": "run_examples",
+            "module": "ci.run_examples",
             "obj": "",
             "line": 8,
             "column": 0,
@@ -860,7 +860,7 @@
         },
         {
             "type": "convention",
-            "module": "run_examples",
+            "module": "ci.run_examples",
             "obj": "",
             "line": 10,
             "column": 0,
@@ -871,7 +871,7 @@
         },
         {
             "type": "convention",
-            "module": "run_examples",
+            "module": "ci.run_examples",
             "obj": "",
             "line": 11,
             "column": 0,
@@ -1088,6 +1088,171 @@
             "symbol": "attribute-defined-outside-init",
             "message": "Attribute '_still_running' defined outside __init__",
             "message-id": "W0201"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_agentlogger",
+            "obj": "",
+            "line": 173,
+            "column": 0,
+            "path": "tests/test_agentlogger.py",
+            "symbol": "missing-final-newline",
+            "message": "Final newline missing",
+            "message-id": "C0304"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_agentlogger",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "tests/test_agentlogger.py",
+            "symbol": "missing-module-docstring",
+            "message": "Missing module docstring",
+            "message-id": "C0114"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_agentlogger",
+            "obj": "TestAgentLogger",
+            "line": 13,
+            "column": 0,
+            "path": "tests/test_agentlogger.py",
+            "symbol": "missing-class-docstring",
+            "message": "Missing class docstring",
+            "message-id": "C0115"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_agentlogger",
+            "obj": "TestAgentLogger.test_logging_values",
+            "line": 60,
+            "column": 8,
+            "path": "tests/test_agentlogger.py",
+            "symbol": "protected-access",
+            "message": "Access to a protected member _callback_values of a client class",
+            "message-id": "W0212"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_agentlogger",
+            "obj": "TestAgentLogger.test_logging_values",
+            "line": 61,
+            "column": 8,
+            "path": "tests/test_agentlogger.py",
+            "symbol": "protected-access",
+            "message": "Access to a protected member _log of a client class",
+            "message-id": "W0212"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_agentlogger",
+            "obj": "TestAgentLogger.test_logging_full",
+            "line": 79,
+            "column": 8,
+            "path": "tests/test_agentlogger.py",
+            "symbol": "protected-access",
+            "message": "Access to a protected member _callback_full of a client class",
+            "message-id": "W0212"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_agentlogger",
+            "obj": "TestAgentLogger.test_logging_full",
+            "line": 80,
+            "column": 8,
+            "path": "tests/test_agentlogger.py",
+            "symbol": "protected-access",
+            "message": "Access to a protected member _log of a client class",
+            "message-id": "W0212"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_agentlogger",
+            "obj": "TestAgentLogger.test_file_overwrite",
+            "line": 95,
+            "column": 8,
+            "path": "tests/test_agentlogger.py",
+            "symbol": "protected-access",
+            "message": "Access to a protected member _callback_values of a client class",
+            "message-id": "W0212"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_agentlogger",
+            "obj": "TestAgentLogger.test_file_overwrite",
+            "line": 96,
+            "column": 8,
+            "path": "tests/test_agentlogger.py",
+            "symbol": "protected-access",
+            "message": "Access to a protected member _log of a client class",
+            "message-id": "W0212"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_agentlogger",
+            "obj": "TestAgentLogger.test_file_overwrite",
+            "line": 111,
+            "column": 8,
+            "path": "tests/test_agentlogger.py",
+            "symbol": "protected-access",
+            "message": "Access to a protected member _callback_values of a client class",
+            "message-id": "W0212"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_agentlogger",
+            "obj": "TestAgentLogger.test_file_overwrite",
+            "line": 112,
+            "column": 8,
+            "path": "tests/test_agentlogger.py",
+            "symbol": "protected-access",
+            "message": "Access to a protected member _log of a client class",
+            "message-id": "W0212"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_agentlogger",
+            "obj": "TestAgentLogger.test_cleanup",
+            "line": 129,
+            "column": 8,
+            "path": "tests/test_agentlogger.py",
+            "symbol": "protected-access",
+            "message": "Access to a protected member _callback_values of a client class",
+            "message-id": "W0212"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_agentlogger",
+            "obj": "TestAgentLogger.test_cleanup",
+            "line": 130,
+            "column": 8,
+            "path": "tests/test_agentlogger.py",
+            "symbol": "protected-access",
+            "message": "Access to a protected member _log of a client class",
+            "message-id": "W0212"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_agentlogger",
+            "obj": "TestAgentLogger.test_load_from_file",
+            "line": 150,
+            "column": 12,
+            "path": "tests/test_agentlogger.py",
+            "symbol": "protected-access",
+            "message": "Access to a protected member _callback_values of a client class",
+            "message-id": "W0212"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_agentlogger",
+            "obj": "TestAgentLogger.test_load_from_file",
+            "line": 151,
+            "column": 8,
+            "path": "tests/test_agentlogger.py",
+            "symbol": "protected-access",
+            "message": "Access to a protected member _log of a client class",
+            "message-id": "W0212"
         },
         {
             "type": "convention",
@@ -2749,6 +2914,17 @@
             "symbol": "duplicate-code",
             "message": "Similar lines in 2 files\n==tests.test_agent:[203:211]\n==tests.test_environment:[61:69]\n        try:\n            os.remove(self.filepath)\n        except FileNotFoundError:\n            pass\n\n\nif __name__ == \"__main__\":\n    unittest.main()",
             "message-id": "R0801"
+        },
+        {
+            "type": "refactor",
+            "module": "tests.test_utils",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "tests/test_utils.py",
+            "symbol": "duplicate-code",
+            "message": "Similar lines in 2 files\n==tests.test_agentlogger:[23:31]\n==tests.test_simulator:[60:68]\n        env_config = {\"rt\": False, \"factor\": 1}\n        agent_config = {\"id\": \"TestAgent\", \"modules\": []}\n        env = Environment(config=env_config)\n        return Agent(env=env, config=agent_config)\n\n    def _get_module_cfg(self, **kwargs):\n        \"\"\"Dynamically build config to avoid duplicate code:\"\"\"\n        return {",
+            "message-id": "R0801"
         }
     ],
     "stats": {
@@ -2777,7 +2953,7 @@
                 "statement": 6,
                 "warning": 0
             },
-            "run_examples": {
+            "ci.run_examples": {
                 "convention": 4,
                 "error": 0,
                 "fatal": 0,
@@ -2803,6 +2979,15 @@
                 "refactor": 1,
                 "statement": 132,
                 "warning": 7
+            },
+            "tests.test_agentlogger": {
+                "convention": 3,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 83,
+                "warning": 12
             },
             "tests.test_communicator": {
                 "convention": 5,
@@ -2926,7 +3111,7 @@
                 "error": 0,
                 "fatal": 0,
                 "info": 0,
-                "refactor": 2,
+                "refactor": 3,
                 "statement": 59,
                 "warning": 1
             }
@@ -2936,16 +3121,17 @@
             "broad-exception-raised": 3,
             "import-outside-toplevel": 1,
             "ungrouped-imports": 4,
-            "missing-class-docstring": 19,
+            "missing-class-docstring": 20,
             "too-many-instance-attributes": 2,
             "unspecified-encoding": 8,
             "missing-function-docstring": 45,
             "invalid-name": 15,
             "attribute-defined-outside-init": 6,
-            "missing-module-docstring": 5,
+            "missing-final-newline": 1,
+            "missing-module-docstring": 6,
+            "protected-access": 43,
             "unnecessary-dunder-call": 3,
             "line-too-long": 2,
-            "protected-access": 31,
             "unused-variable": 4,
             "unused-argument": 2,
             "unused-import": 3,
@@ -2955,7 +3141,7 @@
             "abstract-class-instantiated": 1,
             "pointless-statement": 1,
             "no-else-return": 1,
-            "duplicate-code": 2
+            "duplicate-code": 3
         },
         "code_type_count": {
             "code": 0,
@@ -2966,14 +3152,15 @@
         },
         "dependencies": {
             "agentlib.core": [
-                "tests.test_environment",
-                "tests.test_n_pingpong",
-                "tests.test_data_broker",
-                "tests.test_simulator",
-                "tests.test_module",
-                "tests.test_agent",
                 "tests.test_model",
-                "agentlib"
+                "agentlib",
+                "tests.test_environment",
+                "tests.test_module",
+                "tests.test_agentlogger",
+                "tests.test_n_pingpong",
+                "tests.test_simulator",
+                "tests.test_data_broker",
+                "tests.test_agent"
             ],
             "agentlib.models": [
                 "agentlib"
@@ -2983,16 +3170,17 @@
             ],
             "agentlib.utils": [
                 "tests.test_n_pingpong",
-                "run_examples",
+                "tests.test_utils",
                 "agentlib",
-                "tests.test_utils"
+                "ci.run_examples"
             ],
             "agentlib.core.datamodels": [
-                "tests.test_n_pingpong",
-                "tests.test_simulator",
-                "tests.test_module",
                 "tests.test_model",
                 "agentlib",
+                "tests.test_module",
+                "tests.test_agentlogger",
+                "tests.test_n_pingpong",
+                "tests.test_simulator",
                 "tests.test_datamodels"
             ],
             "agentlib.utils.multi_agent_system": [
@@ -3001,50 +3189,55 @@
             ],
             "pandas": [
                 "tests.test_data_source",
-                "tests.test_simulator",
                 "tests.test_simulator_dashboard",
-                "run_examples",
+                "tests.test_agentlogger",
+                "tests.test_simulator",
+                "ci.run_examples",
                 "tests.test_datamodels"
             ],
             "agentlib.utils.local_broadcast_broker": [
-                "run_examples"
+                "ci.run_examples"
             ],
             "pydantic": [
+                "tests.test_model",
                 "tests.test_environment",
+                "tests.test_module",
                 "tests.test_n_pingpong",
                 "tests.test_simulator",
-                "tests.test_module",
-                "tests.test_agent",
-                "tests.test_model",
-                "tests.test_datamodels"
-            ],
-            "agentlib.core.agent": [
-                "tests.test_utils",
-                "tests.test_agent"
-            ],
-            "agentlib.core.errors": [
-                "tests.test_module",
-                "tests.test_utils",
                 "tests.test_datamodels",
                 "tests.test_agent"
             ],
+            "agentlib.core.agent": [
+                "tests.test_agent",
+                "tests.test_utils"
+            ],
+            "agentlib.core.errors": [
+                "tests.test_datamodels",
+                "tests.test_agent",
+                "tests.test_utils",
+                "tests.test_module"
+            ],
+            "numpy": [
+                "tests.test_model",
+                "tests.test_data_source",
+                "tests.test_agentlogger",
+                "tests.test_n_pingpong",
+                "tests.test_simulator",
+                "tests.test_databroker_limits",
+                "tests.test_data_broker"
+            ],
+            "agentlib.modules.utils.agent_logger": [
+                "tests.test_agentlogger"
+            ],
             "agentlib": [
                 "tests.test_data_source",
-                "tests.test_data_broker",
-                "tests.test_communicator",
+                "tests.test_databroker_limits",
                 "tests.test_utils",
-                "tests.test_databroker_limits"
+                "tests.test_data_broker",
+                "tests.test_communicator"
             ],
             "agentlib.modules.communicator.local": [
                 "tests.test_communicator"
-            ],
-            "numpy": [
-                "tests.test_data_source",
-                "tests.test_n_pingpong",
-                "tests.test_data_broker",
-                "tests.test_simulator",
-                "tests.test_model",
-                "tests.test_databroker_limits"
             ],
             "agentlib.core.logging_": [
                 "tests.test_data_broker"
@@ -3089,26 +3282,26 @@
         },
         "node_count": {
             "function": 4,
-            "klass": 39,
-            "method": 182,
-            "module": 18
+            "klass": 40,
+            "method": 192,
+            "module": 19
         },
         "undocumented": {
             "function": 3,
-            "klass": 24,
+            "klass": 25,
             "method": 42,
-            "module": 5
+            "module": 6
         },
-        "convention": 95,
+        "convention": 98,
         "error": 6,
         "fatal": 0,
         "info": 0,
-        "refactor": 15,
-        "statement": 1296,
-        "warning": 62,
+        "refactor": 16,
+        "statement": 1379,
+        "warning": 74,
         "global_note": 0,
-        "nb_duplicated_lines": 12,
-        "percent_duplicated_lines": 0.5035669324381032
+        "nb_duplicated_lines": 17,
+        "percent_duplicated_lines": 0.6651017214397497
     },
     "previous": {
         "bad_names": {
@@ -3136,7 +3329,7 @@
                 "statement": 6,
                 "warning": 0
             },
-            "run_examples": {
+            "ci.run_examples": {
                 "convention": 4,
                 "error": 0,
                 "fatal": 0,
@@ -3162,6 +3355,15 @@
                 "refactor": 1,
                 "statement": 132,
                 "warning": 7
+            },
+            "tests.test_agentlogger": {
+                "convention": 3,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 83,
+                "warning": 12
             },
             "tests.test_communicator": {
                 "convention": 5,
@@ -3285,7 +3487,7 @@
                 "error": 0,
                 "fatal": 0,
                 "info": 0,
-                "refactor": 2,
+                "refactor": 3,
                 "statement": 59,
                 "warning": 1
             }
@@ -3295,16 +3497,17 @@
             "broad-exception-raised": 3,
             "import-outside-toplevel": 1,
             "ungrouped-imports": 4,
-            "missing-class-docstring": 19,
+            "missing-class-docstring": 20,
             "too-many-instance-attributes": 2,
             "unspecified-encoding": 8,
             "missing-function-docstring": 45,
             "invalid-name": 15,
             "attribute-defined-outside-init": 6,
-            "missing-module-docstring": 5,
+            "missing-final-newline": 1,
+            "missing-module-docstring": 6,
+            "protected-access": 43,
             "unnecessary-dunder-call": 3,
             "line-too-long": 2,
-            "protected-access": 31,
             "unused-variable": 4,
             "unused-argument": 2,
             "unused-import": 3,
@@ -3314,7 +3517,7 @@
             "abstract-class-instantiated": 1,
             "pointless-statement": 1,
             "no-else-return": 1,
-            "duplicate-code": 2
+            "duplicate-code": 3
         },
         "code_type_count": {
             "code": 0,
@@ -3325,14 +3528,15 @@
         },
         "dependencies": {
             "agentlib.core": [
-                "tests.test_environment",
-                "tests.test_n_pingpong",
-                "tests.test_data_broker",
-                "tests.test_simulator",
-                "tests.test_module",
-                "tests.test_agent",
                 "tests.test_model",
-                "agentlib"
+                "agentlib",
+                "tests.test_environment",
+                "tests.test_module",
+                "tests.test_agentlogger",
+                "tests.test_n_pingpong",
+                "tests.test_simulator",
+                "tests.test_data_broker",
+                "tests.test_agent"
             ],
             "agentlib.models": [
                 "agentlib"
@@ -3342,16 +3546,17 @@
             ],
             "agentlib.utils": [
                 "tests.test_n_pingpong",
-                "run_examples",
+                "tests.test_utils",
                 "agentlib",
-                "tests.test_utils"
+                "ci.run_examples"
             ],
             "agentlib.core.datamodels": [
-                "tests.test_n_pingpong",
-                "tests.test_simulator",
-                "tests.test_module",
                 "tests.test_model",
                 "agentlib",
+                "tests.test_module",
+                "tests.test_agentlogger",
+                "tests.test_n_pingpong",
+                "tests.test_simulator",
                 "tests.test_datamodels"
             ],
             "agentlib.utils.multi_agent_system": [
@@ -3360,50 +3565,55 @@
             ],
             "pandas": [
                 "tests.test_data_source",
-                "tests.test_simulator",
                 "tests.test_simulator_dashboard",
-                "run_examples",
+                "tests.test_agentlogger",
+                "tests.test_simulator",
+                "ci.run_examples",
                 "tests.test_datamodels"
             ],
             "agentlib.utils.local_broadcast_broker": [
-                "run_examples"
+                "ci.run_examples"
             ],
             "pydantic": [
+                "tests.test_model",
                 "tests.test_environment",
+                "tests.test_module",
                 "tests.test_n_pingpong",
                 "tests.test_simulator",
-                "tests.test_module",
-                "tests.test_agent",
-                "tests.test_model",
-                "tests.test_datamodels"
-            ],
-            "agentlib.core.agent": [
-                "tests.test_utils",
-                "tests.test_agent"
-            ],
-            "agentlib.core.errors": [
-                "tests.test_module",
-                "tests.test_utils",
                 "tests.test_datamodels",
                 "tests.test_agent"
             ],
+            "agentlib.core.agent": [
+                "tests.test_agent",
+                "tests.test_utils"
+            ],
+            "agentlib.core.errors": [
+                "tests.test_datamodels",
+                "tests.test_agent",
+                "tests.test_utils",
+                "tests.test_module"
+            ],
+            "numpy": [
+                "tests.test_model",
+                "tests.test_data_source",
+                "tests.test_agentlogger",
+                "tests.test_n_pingpong",
+                "tests.test_simulator",
+                "tests.test_databroker_limits",
+                "tests.test_data_broker"
+            ],
+            "agentlib.modules.utils.agent_logger": [
+                "tests.test_agentlogger"
+            ],
             "agentlib": [
                 "tests.test_data_source",
-                "tests.test_data_broker",
-                "tests.test_communicator",
+                "tests.test_databroker_limits",
                 "tests.test_utils",
-                "tests.test_databroker_limits"
+                "tests.test_data_broker",
+                "tests.test_communicator"
             ],
             "agentlib.modules.communicator.local": [
                 "tests.test_communicator"
-            ],
-            "numpy": [
-                "tests.test_data_source",
-                "tests.test_n_pingpong",
-                "tests.test_data_broker",
-                "tests.test_simulator",
-                "tests.test_model",
-                "tests.test_databroker_limits"
             ],
             "agentlib.core.logging_": [
                 "tests.test_data_broker"
@@ -3448,25 +3658,25 @@
         },
         "node_count": {
             "function": 4,
-            "klass": 39,
-            "method": 182,
-            "module": 18
+            "klass": 40,
+            "method": 192,
+            "module": 19
         },
         "undocumented": {
             "function": 3,
-            "klass": 24,
+            "klass": 25,
             "method": 42,
-            "module": 5
+            "module": 6
         },
-        "convention": 95,
+        "convention": 98,
         "error": 6,
         "fatal": 0,
         "info": 0,
-        "refactor": 15,
-        "statement": 1296,
-        "warning": 62,
-        "global_note": 8.441358024691358,
-        "nb_duplicated_lines": 12,
-        "percent_duplicated_lines": 0.5035669324381032
+        "refactor": 16,
+        "statement": 1379,
+        "warning": 74,
+        "global_note": 8.41914430746918,
+        "nb_duplicated_lines": 17,
+        "percent_duplicated_lines": 0.6651017214397497
     }
 }
