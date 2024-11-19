@@ -3,17 +3,17 @@ all variables inside an agent's data_broker."""
 
 import collections
 import json
-import os
 import logging
+import os
 from ast import literal_eval
 from typing import Union
 
-from pydantic import field_validator, Field
 import pandas as pd
+from pydantic import field_validator, Field
+from pydantic_core.core_schema import FieldValidationInfo
 
 from agentlib import AgentVariable
 from agentlib.core import BaseModule, Agent, BaseModuleConfig
-
 
 logger = logging.getLogger(__name__)
 
@@ -21,11 +21,6 @@ logger = logging.getLogger(__name__)
 class AgentLoggerConfig(BaseModuleConfig):
     """Define parameters for the AgentLogger"""
 
-    filename: str = Field(
-        title="filename",
-        default=None,  # Set later when agent_id is available
-        description="The filename where the log is stored.",
-    )
     t_sample: Union[float, int] = Field(
         title="t_sample",
         default=300,
@@ -42,17 +37,36 @@ class AgentLoggerConfig(BaseModuleConfig):
         default=True,
         description="If True, file is deleted once load_log is called.",
     )
+    overwrite_log: bool = Field(
+        title="Overwrite file",
+        default=False,
+        description="If true, old logs are auto deleted when a new log should be written with that name."
+    )
+    filename: str = Field(
+        title="filename",
+        description="The filename where the log is stored.",
+    )
 
     @field_validator("filename")
     @classmethod
-    def check_existence_of_file(cls, filename):
+    def check_existence_of_file(cls, filename, info: FieldValidationInfo):
         """Checks whether the file already exists."""
         # pylint: disable=no-self-argument,no-self-use
-        if os.path.exists(filename):
-            logger.error(
-                "Specified filename already exists. "
-                "The AgentLogger will append to the file."
+        if os.path.isfile(filename):
+            # remove result file, so a new one can be created
+            if info.data["overwrite_log"]:
+                os.remove(filename)
+                return filename
+            raise FileExistsError(
+                f"Given filename at {filename} "
+                f"already exists. We won't overwrite it automatically. "
+                f"You can use the key word 'overwrite_log' to "
+                f"activate automatic overwrite."
             )
+        # Create path in case it does not exist
+        fpath = os.path.dirname(filename)
+        if fpath:
+            os.makedirs(fpath, exist_ok=True)
         return filename
 
 
@@ -69,10 +83,6 @@ class AgentLogger(BaseModule):
         which uses the agent_id."""
         super().__init__(config=config, agent=agent)
         self._filename = self.config.filename
-        if self._filename is None:
-            self._filename = os.path.join(
-                os.getcwd(), f"Agent_{self.agent.id}_Logger.log"
-            )
         self._variables_to_log = {}
         if not self.env.config.rt and self.config.t_sample < 60:
             self.logger.warning(
