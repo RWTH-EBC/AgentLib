@@ -1269,7 +1269,7 @@
             "type": "convention",
             "module": "tests.test_communicator",
             "obj": "TestCommunicator",
-            "line": 21,
+            "line": 23,
             "column": 0,
             "path": "tests/test_communicator.py",
             "symbol": "missing-class-docstring",
@@ -1280,7 +1280,7 @@
             "type": "convention",
             "module": "tests.test_communicator",
             "obj": "TestCommunicator.test_roundtrip_variable",
-            "line": 32,
+            "line": 33,
             "column": 4,
             "path": "tests/test_communicator.py",
             "symbol": "missing-function-docstring",
@@ -1291,7 +1291,7 @@
             "type": "convention",
             "module": "tests.test_communicator",
             "obj": "TestCommunicator.test_roundtrip_variable",
-            "line": 41,
+            "line": 42,
             "column": 16,
             "path": "tests/test_communicator.py",
             "symbol": "unnecessary-dunder-call",
@@ -1302,7 +1302,7 @@
             "type": "convention",
             "module": "tests.test_communicator",
             "obj": "TestCommunicator.test_roundtrip_variable",
-            "line": 41,
+            "line": 42,
             "column": 50,
             "path": "tests/test_communicator.py",
             "symbol": "unnecessary-dunder-call",
@@ -2912,7 +2912,7 @@
             "column": 0,
             "path": "tests/test_utils.py",
             "symbol": "duplicate-code",
-            "message": "Similar lines in 2 files\n==tests.test_communicator:[10:16]\n==tests.test_module:[27:33]\n    \"allowed_values\": [100, 150],\n    \"shared\": True,\n    \"unit\": \"testUnit\",\n    \"description\": \"My Doc\",\n    \"clip\": True,\n    \"rdf_class\": \"MyRDFClass\",",
+            "message": "Similar lines in 2 files\n==tests.test_communicator:[12:18]\n==tests.test_module:[27:33]\n    \"allowed_values\": [100, 150],\n    \"shared\": True,\n    \"unit\": \"testUnit\",\n    \"description\": \"My Doc\",\n    \"clip\": True,\n    \"rdf_class\": \"MyRDFClass\",",
             "message-id": "R0801"
         },
         {
@@ -3006,7 +3006,7 @@
                 "fatal": 0,
                 "info": 0,
                 "refactor": 0,
-                "statement": 20,
+                "statement": 29,
                 "warning": 0
             },
             "tests.test_data_broker": {
@@ -3164,15 +3164,15 @@
         },
         "dependencies": {
             "agentlib.core": [
-                "tests.test_data_broker",
                 "tests.test_environment",
                 "tests.test_n_pingpong",
-                "tests.test_model",
                 "tests.test_simulator",
-                "tests.test_agent",
                 "tests.test_agentlogger",
+                "tests.test_module",
+                "tests.test_agent",
+                "tests.test_model",
                 "agentlib",
-                "tests.test_module"
+                "tests.test_data_broker"
             ],
             "agentlib.models": [
                 "agentlib"
@@ -3182,71 +3182,72 @@
             ],
             "agentlib.utils": [
                 "tests.test_n_pingpong",
-                "agentlib",
                 "run_examples",
-                "tests.test_utils"
+                "tests.test_utils",
+                "agentlib"
             ],
             "agentlib.core.datamodels": [
-                "tests.test_datamodels",
                 "tests.test_n_pingpong",
-                "tests.test_model",
                 "tests.test_simulator",
                 "tests.test_agentlogger",
-                "agentlib",
-                "tests.test_module"
+                "tests.test_module",
+                "tests.test_model",
+                "tests.test_datamodels",
+                "agentlib"
             ],
             "agentlib.utils.multi_agent_system": [
                 "tests.test_n_pingpong",
                 "agentlib"
             ],
             "pandas": [
-                "run_examples",
-                "tests.test_datamodels",
-                "tests.test_simulator_dashboard",
-                "tests.test_data_source",
                 "tests.test_simulator",
-                "tests.test_agentlogger"
+                "tests.test_agentlogger",
+                "tests.test_simulator_dashboard",
+                "run_examples",
+                "tests.test_communicator",
+                "tests.test_datamodels",
+                "tests.test_data_source"
             ],
             "agentlib.utils.local_broadcast_broker": [
                 "run_examples"
             ],
             "pydantic": [
                 "tests.test_environment",
-                "tests.test_datamodels",
                 "tests.test_n_pingpong",
-                "tests.test_model",
                 "tests.test_simulator",
+                "tests.test_module",
                 "tests.test_agent",
-                "tests.test_module"
+                "tests.test_model",
+                "tests.test_datamodels"
             ],
             "agentlib.core.agent": [
                 "tests.test_agent",
                 "tests.test_utils"
             ],
             "agentlib.core.errors": [
+                "tests.test_module",
                 "tests.test_agent",
-                "tests.test_datamodels",
                 "tests.test_utils",
-                "tests.test_module"
+                "tests.test_datamodels"
             ],
             "numpy": [
-                "tests.test_data_broker",
                 "tests.test_databroker_limits",
-                "tests.test_data_source",
                 "tests.test_n_pingpong",
-                "tests.test_model",
                 "tests.test_simulator",
-                "tests.test_agentlogger"
+                "tests.test_agentlogger",
+                "tests.test_model",
+                "tests.test_data_source",
+                "tests.test_data_broker"
             ],
             "agentlib.modules.utils.agent_logger": [
                 "tests.test_agentlogger"
             ],
             "agentlib": [
-                "tests.test_data_broker",
                 "tests.test_databroker_limits",
-                "tests.test_data_source",
                 "tests.test_communicator",
-                "tests.test_utils"
+                "tests.test_utils",
+                "tests.test_data_source",
+                "tests.test_data_broker"
             ],
             "agentlib.modules.communicator.local": [
                 "tests.test_communicator"
@@ -3295,7 +3296,7 @@
         "node_count": {
             "function": 4,
             "klass": 40,
-            "method": 192,
+            "method": 193,
             "module": 19
         },
         "undocumented": {
@@ -3309,11 +3310,11 @@
         "fatal": 0,
         "info": 0,
         "refactor": 16,
-        "statement": 1379,
+        "statement": 1388,
         "warning": 74,
         "global_note": 0,
         "nb_duplicated_lines": 17,
-        "percent_duplicated_lines": 0.6651017214397497
+        "percent_duplicated_lines": 0.6622516556291391
     },
     "previous": {
         "bad_names": {
@@ -3383,7 +3384,7 @@
                 "fatal": 0,
                 "info": 0,
                 "refactor": 0,
-                "statement": 20,
+                "statement": 29,
                 "warning": 0
             },
             "tests.test_data_broker": {
@@ -3541,15 +3542,15 @@
         },
         "dependencies": {
             "agentlib.core": [
-                "tests.test_data_broker",
                 "tests.test_environment",
                 "tests.test_n_pingpong",
-                "tests.test_model",
                 "tests.test_simulator",
-                "tests.test_agent",
                 "tests.test_agentlogger",
+                "tests.test_module",
+                "tests.test_agent",
+                "tests.test_model",
                 "agentlib",
-                "tests.test_module"
+                "tests.test_data_broker"
             ],
             "agentlib.models": [
                 "agentlib"
@@ -3559,71 +3560,72 @@
             ],
             "agentlib.utils": [
                 "tests.test_n_pingpong",
-                "agentlib",
                 "run_examples",
-                "tests.test_utils"
+                "tests.test_utils",
+                "agentlib"
             ],
             "agentlib.core.datamodels": [
-                "tests.test_datamodels",
-                "tests.test_n_pingpong",
-                "tests.test_model",
                 "tests.test_simulator",
+                "tests.test_n_pingpong",
                 "tests.test_agentlogger",
-                "agentlib",
-                "tests.test_module"
+                "tests.test_module",
+                "tests.test_model",
+                "tests.test_datamodels",
+                "agentlib"
             ],
             "agentlib.utils.multi_agent_system": [
                 "tests.test_n_pingpong",
                 "agentlib"
             ],
             "pandas": [
-                "run_examples",
-                "tests.test_datamodels",
-                "tests.test_simulator_dashboard",
-                "tests.test_data_source",
                 "tests.test_simulator",
-                "tests.test_agentlogger"
+                "tests.test_agentlogger",
+                "tests.test_simulator_dashboard",
+                "run_examples",
+                "tests.test_communicator",
+                "tests.test_datamodels",
+                "tests.test_data_source"
             ],
             "agentlib.utils.local_broadcast_broker": [
                 "run_examples"
             ],
             "pydantic": [
-                "tests.test_datamodels",
                 "tests.test_environment",
                 "tests.test_n_pingpong",
-                "tests.test_model",
                 "tests.test_simulator",
+                "tests.test_module",
                 "tests.test_agent",
-                "tests.test_module"
+                "tests.test_model",
+                "tests.test_datamodels"
             ],
             "agentlib.core.agent": [
                 "tests.test_agent",
                 "tests.test_utils"
             ],
             "agentlib.core.errors": [
+                "tests.test_module",
                 "tests.test_agent",
-                "tests.test_datamodels",
                 "tests.test_utils",
-                "tests.test_module"
+                "tests.test_datamodels"
             ],
             "numpy": [
-                "tests.test_data_broker",
                 "tests.test_databroker_limits",
-                "tests.test_data_source",
                 "tests.test_n_pingpong",
-                "tests.test_model",
                 "tests.test_simulator",
-                "tests.test_agentlogger"
+                "tests.test_agentlogger",
+                "tests.test_model",
+                "tests.test_data_source",
+                "tests.test_data_broker"
             ],
             "agentlib.modules.utils.agent_logger": [
                 "tests.test_agentlogger"
             ],
             "agentlib": [
-                "tests.test_data_broker",
                 "tests.test_databroker_limits",
-                "tests.test_data_source",
                 "tests.test_communicator",
-                "tests.test_utils"
+                "tests.test_utils",
+                "tests.test_data_source",
+                "tests.test_data_broker"
             ],
             "agentlib.modules.communicator.local": [
                 "tests.test_communicator"
@@ -3672,7 +3674,7 @@
         "node_count": {
             "function": 4,
             "klass": 40,
-            "method": 192,
+            "method": 193,
             "module": 19
         },
         "undocumented": {
@@ -3686,10 +3688,10 @@
         "fatal": 0,
         "info": 0,
         "refactor": 16,
-        "statement": 1379,
+        "statement": 1388,
         "warning": 74,
-        "global_note": 8.382886149383612,
+        "global_note": 8.393371757925072,
         "nb_duplicated_lines": 17,
-        "percent_duplicated_lines": 0.6651017214397497
+        "percent_duplicated_lines": 0.6622516556291391
     }
 }
