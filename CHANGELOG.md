@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.8.6
+
+- Fix a bug, where pandas series could not be sent over network communicators or when
+  parsing json in local communication.
+
 ## 0.8.5
 
 - AgentLogger now always needs a filename. However, the MAS utility variable_logging

@@ -8,6 +8,7 @@ import queue
 import threading
 from typing import Union, List, TypedDict, Any
 
+import pandas as pd
 from pydantic import Field, field_validator
 
 from agentlib.core import Agent, BaseModule, BaseModuleConfig
@@ -110,9 +111,13 @@ class Communicator(BaseModule):
         Only contains attributes of the AgentVariable, that are relevant for other
         modules or agents. For performance and privacy reasons, this function should
         be called for communicators."""
+        if isinstance(variable.value, pd.Series):
+            value = variable.value.to_json()
+        else:
+            value = variable.value
         return CommunicationDict(
             alias=variable.alias,
-            value=variable.value,
+            value=value,
             timestamp=variable.timestamp,
             type=variable.type,
             source=self.agent.id,
