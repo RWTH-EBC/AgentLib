@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>agentlib package &mdash; agentlib 0.8.5 documentation</title>
+  <title>agentlib package &mdash; agentlib 0.8.6 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
       <link rel="stylesheet" type="text/css" href="../_static/autodoc_pydantic.css" />
@@ -1166,7 +1166,7 @@ name of the model class.</p>
 
 <dl class="py method pydantic_validator">
 <dt class="sig sig-object py" id="agentlib.ModelConfig.include_default_model_variables">
-<em class="property"><span class="pre">validator</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">include_default_model_variables</span></span><em class="autodoc_pydantic_validator_arrow property">&#160; <span class="pre">»</span>&#160; </em><a class="reference internal" href="agentlib.core.html#agentlib.core.model.ModelConfig.states" title="agentlib.core.model.ModelConfig.states"><em class="xref py py-obj"><span class="pre">states</span></em></a><em class="property"><span class="pre">,</span> </em><a class="reference internal" href="agentlib.core.html#agentlib.core.model.ModelConfig.outputs" title="agentlib.core.model.ModelConfig.outputs"><em class="xref py py-obj"><span class="pre">outputs</span></em></a><em class="property"><span class="pre">,</span> </em><a class="reference internal" href="agentlib.core.html#agentlib.core.model.ModelConfig.parameters" title="agentlib.core.model.ModelConfig.parameters"><em class="xref py py-obj"><span class="pre">parameters</span></em></a><em class="property"><span class="pre">,</span> </em><a class="reference internal" href="agentlib.core.html#agentlib.core.model.ModelConfig.inputs" title="agentlib.core.model.ModelConfig.inputs"><em class="xref py py-obj"><span class="pre">inputs</span></em></a><a class="reference internal" href="../_modules/agentlib/core/model.html#ModelConfig.include_default_model_variables"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.ModelConfig.include_default_model_variables" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">validator</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">include_default_model_variables</span></span><em class="autodoc_pydantic_validator_arrow property">&#160; <span class="pre">»</span>&#160; </em><a class="reference internal" href="agentlib.core.html#agentlib.core.model.ModelConfig.outputs" title="agentlib.core.model.ModelConfig.outputs"><em class="xref py py-obj"><span class="pre">outputs</span></em></a><em class="property"><span class="pre">,</span> </em><a class="reference internal" href="agentlib.core.html#agentlib.core.model.ModelConfig.inputs" title="agentlib.core.model.ModelConfig.inputs"><em class="xref py py-obj"><span class="pre">inputs</span></em></a><em class="property"><span class="pre">,</span> </em><a class="reference internal" href="agentlib.core.html#agentlib.core.model.ModelConfig.states" title="agentlib.core.model.ModelConfig.states"><em class="xref py py-obj"><span class="pre">states</span></em></a><em class="property"><span class="pre">,</span> </em><a class="reference internal" href="agentlib.core.html#agentlib.core.model.ModelConfig.parameters" title="agentlib.core.model.ModelConfig.parameters"><em class="xref py py-obj"><span class="pre">parameters</span></em></a><a class="reference internal" href="../_modules/agentlib/core/model.html#ModelConfig.include_default_model_variables"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.ModelConfig.include_default_model_variables" title="Permalink to this definition"></a></dt>
 <dd><p>Validator building block to merge default variables with config variables in a standard validator.
 Updates default variables when a variable with the same name is present in the config.
 Then returns the union of the default variables and the external config variables.</p>
@@ -1577,8 +1577,63 @@ run is finished</p>
 <li class="toctree-l1"><a class="reference internal" href="agentlib.models.html">agentlib.models package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="agentlib.models.html#agentlib.models.get_model_type"><code class="docutils literal notranslate"><span class="pre">get_model_type()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="agentlib.models.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="agentlib.models.html#agentlib-models-fmu-model-module">agentlib.models.fmu_model module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="agentlib.models.html#agentlib-models-scipy-model-module">agentlib.models.scipy_model module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="agentlib.models.html#module-agentlib.models.fmu_model">agentlib.models.fmu_model module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.models.html#agentlib.models.fmu_model.FmuModel"><code class="docutils literal notranslate"><span class="pre">FmuModel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.models.html#agentlib.models.fmu_model.FmuModel.do_step"><code class="docutils literal notranslate"><span class="pre">FmuModel.do_step()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.models.html#agentlib.models.fmu_model.FmuModel.extract_fmu"><code class="docutils literal notranslate"><span class="pre">FmuModel.extract_fmu</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.models.html#agentlib.models.fmu_model.FmuModel.initialize"><code class="docutils literal notranslate"><span class="pre">FmuModel.initialize()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.models.html#agentlib.models.fmu_model.FmuModel.set_input_values"><code class="docutils literal notranslate"><span class="pre">FmuModel.set_input_values()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.models.html#agentlib.models.fmu_model.FmuModel.set_parameter_values"><code class="docutils literal notranslate"><span class="pre">FmuModel.set_parameter_values()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.models.html#agentlib.models.fmu_model.FmuModel.terminate"><code class="docutils literal notranslate"><span class="pre">FmuModel.terminate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.models.html#agentlib.models.fmu_model.FmuModel.tolerance"><code class="docutils literal notranslate"><span class="pre">FmuModel.tolerance</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.models.html#agentlib.models.fmu_model.FmuModelConfig"><code class="docutils literal notranslate"><span class="pre">FmuModelConfig</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.models.html#agentlib.models.fmu_model.FmuModelConfig.description"><code class="docutils literal notranslate"><span class="pre">FmuModelConfig.description</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.models.html#agentlib.models.fmu_model.FmuModelConfig.dt"><code class="docutils literal notranslate"><span class="pre">FmuModelConfig.dt</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.models.html#agentlib.models.fmu_model.FmuModelConfig.extract_fmu"><code class="docutils literal notranslate"><span class="pre">FmuModelConfig.extract_fmu</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.models.html#agentlib.models.fmu_model.FmuModelConfig.inputs"><code class="docutils literal notranslate"><span class="pre">FmuModelConfig.inputs</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.models.html#agentlib.models.fmu_model.FmuModelConfig.log_fmu"><code class="docutils literal notranslate"><span class="pre">FmuModelConfig.log_fmu</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.models.html#agentlib.models.fmu_model.FmuModelConfig.name"><code class="docutils literal notranslate"><span class="pre">FmuModelConfig.name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.models.html#agentlib.models.fmu_model.FmuModelConfig.only_config_variables"><code class="docutils literal notranslate"><span class="pre">FmuModelConfig.only_config_variables</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.models.html#agentlib.models.fmu_model.FmuModelConfig.outputs"><code class="docutils literal notranslate"><span class="pre">FmuModelConfig.outputs</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.models.html#agentlib.models.fmu_model.FmuModelConfig.parameters"><code class="docutils literal notranslate"><span class="pre">FmuModelConfig.parameters</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.models.html#agentlib.models.fmu_model.FmuModelConfig.path"><code class="docutils literal notranslate"><span class="pre">FmuModelConfig.path</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.models.html#agentlib.models.fmu_model.FmuModelConfig.sim_time"><code class="docutils literal notranslate"><span class="pre">FmuModelConfig.sim_time</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.models.html#agentlib.models.fmu_model.FmuModelConfig.states"><code class="docutils literal notranslate"><span class="pre">FmuModelConfig.states</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.models.html#agentlib.models.fmu_model.FmuModelConfig.tolerance"><code class="docutils literal notranslate"><span class="pre">FmuModelConfig.tolerance</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.models.html#agentlib.models.fmu_model.FmuModelConfig.user_config"><code class="docutils literal notranslate"><span class="pre">FmuModelConfig.user_config</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.models.html#agentlib.models.fmu_model.FmuModelConfig.validate_variables"><code class="docutils literal notranslate"><span class="pre">FmuModelConfig.validate_variables</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.models.html#agentlib.models.fmu_model.FmuModelConfig.check_path"><code class="docutils literal notranslate"><span class="pre">FmuModelConfig.check_path</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.models.html#agentlib.models.fmu_model.FmuModelConfig.model_post_init"><code class="docutils literal notranslate"><span class="pre">FmuModelConfig.model_post_init()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="agentlib.models.html#module-agentlib.models.scipy_model">agentlib.models.scipy_model module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.models.html#agentlib.models.scipy_model.ScipyStateSpaceModel"><code class="docutils literal notranslate"><span class="pre">ScipyStateSpaceModel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.models.html#agentlib.models.scipy_model.ScipyStateSpaceModel.do_step"><code class="docutils literal notranslate"><span class="pre">ScipyStateSpaceModel.do_step()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.models.html#agentlib.models.scipy_model.ScipyStateSpaceModel.initialize"><code class="docutils literal notranslate"><span class="pre">ScipyStateSpaceModel.initialize()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.models.html#agentlib.models.scipy_model.ScipyStateSpaceModelConfig"><code class="docutils literal notranslate"><span class="pre">ScipyStateSpaceModelConfig</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.models.html#agentlib.models.scipy_model.ScipyStateSpaceModelConfig.description"><code class="docutils literal notranslate"><span class="pre">ScipyStateSpaceModelConfig.description</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.models.html#agentlib.models.scipy_model.ScipyStateSpaceModelConfig.dt"><code class="docutils literal notranslate"><span class="pre">ScipyStateSpaceModelConfig.dt</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.models.html#agentlib.models.scipy_model.ScipyStateSpaceModelConfig.inputs"><code class="docutils literal notranslate"><span class="pre">ScipyStateSpaceModelConfig.inputs</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.models.html#agentlib.models.scipy_model.ScipyStateSpaceModelConfig.name"><code class="docutils literal notranslate"><span class="pre">ScipyStateSpaceModelConfig.name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.models.html#agentlib.models.scipy_model.ScipyStateSpaceModelConfig.outputs"><code class="docutils literal notranslate"><span class="pre">ScipyStateSpaceModelConfig.outputs</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.models.html#agentlib.models.scipy_model.ScipyStateSpaceModelConfig.parameters"><code class="docutils literal notranslate"><span class="pre">ScipyStateSpaceModelConfig.parameters</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.models.html#agentlib.models.scipy_model.ScipyStateSpaceModelConfig.sim_time"><code class="docutils literal notranslate"><span class="pre">ScipyStateSpaceModelConfig.sim_time</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.models.html#agentlib.models.scipy_model.ScipyStateSpaceModelConfig.states"><code class="docutils literal notranslate"><span class="pre">ScipyStateSpaceModelConfig.states</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.models.html#agentlib.models.scipy_model.ScipyStateSpaceModelConfig.system"><code class="docutils literal notranslate"><span class="pre">ScipyStateSpaceModelConfig.system</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.models.html#agentlib.models.scipy_model.ScipyStateSpaceModelConfig.user_config"><code class="docutils literal notranslate"><span class="pre">ScipyStateSpaceModelConfig.user_config</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.models.html#agentlib.models.scipy_model.ScipyStateSpaceModelConfig.validate_variables"><code class="docutils literal notranslate"><span class="pre">ScipyStateSpaceModelConfig.validate_variables</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.models.html#agentlib.models.scipy_model.ScipyStateSpaceModelConfig.check_system"><code class="docutils literal notranslate"><span class="pre">ScipyStateSpaceModelConfig.check_system</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.models.html#agentlib.models.scipy_model.ScipyStateSpaceModelConfig.model_post_init"><code class="docutils literal notranslate"><span class="pre">ScipyStateSpaceModelConfig.model_post_init()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="agentlib.modules.html">agentlib.modules package</a><ul>
@@ -1588,30 +1643,30 @@ run is finished</p>
 <li class="toctree-l3"><a class="reference internal" href="agentlib.modules.communicator.html">agentlib.modules.communicator package</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="agentlib.modules.communicator.html#submodules">Submodules</a></li>
 <li class="toctree-l4"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib-modules-communicator-clonemap-module">agentlib.modules.communicator.clonemap module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib-modules-communicator-communicator-module">agentlib.modules.communicator.communicator module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib-modules-communicator-local-module">agentlib.modules.communicator.local module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib-modules-communicator-local-broadcast-module">agentlib.modules.communicator.local_broadcast module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib-modules-communicator-local-multiprocessing-module">agentlib.modules.communicator.local_multiprocessing module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib-modules-communicator-mqtt-module">agentlib.modules.communicator.mqtt module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.communicator.html#module-agentlib.modules.communicator.communicator">agentlib.modules.communicator.communicator module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.communicator.html#module-agentlib.modules.communicator.local">agentlib.modules.communicator.local module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.communicator.html#module-agentlib.modules.communicator.local_broadcast">agentlib.modules.communicator.local_broadcast module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.communicator.html#module-agentlib.modules.communicator.local_multiprocessing">agentlib.modules.communicator.local_multiprocessing module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.communicator.html#module-agentlib.modules.communicator.mqtt">agentlib.modules.communicator.mqtt module</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="agentlib.modules.controller.html">agentlib.modules.controller package</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="agentlib.modules.controller.html#submodules">Submodules</a></li>
-<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.controller.html#agentlib-modules-controller-bangbang-module">agentlib.modules.controller.bangbang module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.controller.html#agentlib-modules-controller-controller-module">agentlib.modules.controller.controller module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.controller.html#agentlib-modules-controller-pid-module">agentlib.modules.controller.pid module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.controller.html#module-agentlib.modules.controller.bangbang">agentlib.modules.controller.bangbang module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.controller.html#module-agentlib.modules.controller.controller">agentlib.modules.controller.controller module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.controller.html#module-agentlib.modules.controller.pid">agentlib.modules.controller.pid module</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="agentlib.modules.simulation.html">agentlib.modules.simulation package</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="agentlib.modules.simulation.html#submodules">Submodules</a></li>
-<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.simulation.html#agentlib-modules-simulation-csv-data-source-module">agentlib.modules.simulation.csv_data_source module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.simulation.html#agentlib-modules-simulation-simulator-module">agentlib.modules.simulation.simulator module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.simulation.html#module-agentlib.modules.simulation.csv_data_source">agentlib.modules.simulation.csv_data_source module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.simulation.html#module-agentlib.modules.simulation.simulator">agentlib.modules.simulation.simulator module</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="agentlib.modules.utils.html">agentlib.modules.utils package</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="agentlib.modules.utils.html#submodules">Submodules</a></li>
-<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.utils.html#agentlib-modules-utils-agent-logger-module">agentlib.modules.utils.agent_logger module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.utils.html#agentlib-modules-utils-try-sensor-module">agentlib.modules.utils.try_sensor module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.utils.html#module-agentlib.modules.utils.agent_logger">agentlib.modules.utils.agent_logger module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.utils.html#module-agentlib.modules.utils.try_sensor">agentlib.modules.utils.try_sensor module</a></li>
 </ul>
 </li>
 </ul>

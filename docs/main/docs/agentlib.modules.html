@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>agentlib.modules package &mdash; agentlib 0.8.5 documentation</title>
+  <title>agentlib.modules package &mdash; agentlib 0.8.6 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css" />
       <link rel="stylesheet" type="text/css" href="_static/autodoc_pydantic.css" />
@@ -103,26 +103,242 @@
 <li class="toctree-l1"><a class="reference internal" href="agentlib.modules.communicator.html">agentlib.modules.communicator package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="agentlib.modules.communicator.html#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib-modules-communicator-clonemap-module">agentlib.modules.communicator.clonemap module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib-modules-communicator-communicator-module">agentlib.modules.communicator.communicator module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib-modules-communicator-local-module">agentlib.modules.communicator.local module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib-modules-communicator-local-broadcast-module">agentlib.modules.communicator.local_broadcast module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib-modules-communicator-local-multiprocessing-module">agentlib.modules.communicator.local_multiprocessing module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib-modules-communicator-mqtt-module">agentlib.modules.communicator.mqtt module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="agentlib.modules.communicator.html#module-agentlib.modules.communicator.communicator">agentlib.modules.communicator.communicator module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib.modules.communicator.communicator.CommunicationDict"><code class="docutils literal notranslate"><span class="pre">CommunicationDict</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib.modules.communicator.communicator.CommunicationDict.alias"><code class="docutils literal notranslate"><span class="pre">CommunicationDict.alias</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib.modules.communicator.communicator.CommunicationDict.source"><code class="docutils literal notranslate"><span class="pre">CommunicationDict.source</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib.modules.communicator.communicator.CommunicationDict.timestamp"><code class="docutils literal notranslate"><span class="pre">CommunicationDict.timestamp</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib.modules.communicator.communicator.CommunicationDict.type"><code class="docutils literal notranslate"><span class="pre">CommunicationDict.type</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib.modules.communicator.communicator.CommunicationDict.value"><code class="docutils literal notranslate"><span class="pre">CommunicationDict.value</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib.modules.communicator.communicator.Communicator"><code class="docutils literal notranslate"><span class="pre">Communicator</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib.modules.communicator.communicator.Communicator.process"><code class="docutils literal notranslate"><span class="pre">Communicator.process()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib.modules.communicator.communicator.Communicator.register_callbacks"><code class="docutils literal notranslate"><span class="pre">Communicator.register_callbacks()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib.modules.communicator.communicator.Communicator.short_dict"><code class="docutils literal notranslate"><span class="pre">Communicator.short_dict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib.modules.communicator.communicator.Communicator.to_json"><code class="docutils literal notranslate"><span class="pre">Communicator.to_json()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib.modules.communicator.communicator.CommunicatorConfig"><code class="docutils literal notranslate"><span class="pre">CommunicatorConfig</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib.modules.communicator.communicator.CommunicatorConfig.use_orjson"><code class="docutils literal notranslate"><span class="pre">CommunicatorConfig.use_orjson</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib.modules.communicator.communicator.CommunicatorConfig.model_post_init"><code class="docutils literal notranslate"><span class="pre">CommunicatorConfig.model_post_init()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib.modules.communicator.communicator.LocalCommunicator"><code class="docutils literal notranslate"><span class="pre">LocalCommunicator</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib.modules.communicator.communicator.LocalCommunicator.broker"><code class="docutils literal notranslate"><span class="pre">LocalCommunicator.broker</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib.modules.communicator.communicator.LocalCommunicator.setup_broker"><code class="docutils literal notranslate"><span class="pre">LocalCommunicator.setup_broker()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib.modules.communicator.communicator.LocalCommunicator.terminate"><code class="docutils literal notranslate"><span class="pre">LocalCommunicator.terminate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib.modules.communicator.communicator.LocalCommunicatorConfig"><code class="docutils literal notranslate"><span class="pre">LocalCommunicatorConfig</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib.modules.communicator.communicator.LocalCommunicatorConfig.parse_json"><code class="docutils literal notranslate"><span class="pre">LocalCommunicatorConfig.parse_json</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib.modules.communicator.communicator.LocalCommunicatorConfig.model_post_init"><code class="docutils literal notranslate"><span class="pre">LocalCommunicatorConfig.model_post_init()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib.modules.communicator.communicator.SubscriptionCommunicatorConfig"><code class="docutils literal notranslate"><span class="pre">SubscriptionCommunicatorConfig</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib.modules.communicator.communicator.SubscriptionCommunicatorConfig.subscriptions"><code class="docutils literal notranslate"><span class="pre">SubscriptionCommunicatorConfig.subscriptions</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib.modules.communicator.communicator.SubscriptionCommunicatorConfig.model_post_init"><code class="docutils literal notranslate"><span class="pre">SubscriptionCommunicatorConfig.model_post_init()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="agentlib.modules.communicator.html#module-agentlib.modules.communicator.local">agentlib.modules.communicator.local module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib.modules.communicator.local.LocalClient"><code class="docutils literal notranslate"><span class="pre">LocalClient</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib.modules.communicator.local.LocalClient.setup_broker"><code class="docutils literal notranslate"><span class="pre">LocalClient.setup_broker()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib.modules.communicator.local.LocalClient.subscriptions"><code class="docutils literal notranslate"><span class="pre">LocalClient.subscriptions</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig"><code class="docutils literal notranslate"><span class="pre">LocalSubscriptionCommunicatorConfig</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.log_level"><code class="docutils literal notranslate"><span class="pre">LocalSubscriptionCommunicatorConfig.log_level</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.module_id"><code class="docutils literal notranslate"><span class="pre">LocalSubscriptionCommunicatorConfig.module_id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.parse_json"><code class="docutils literal notranslate"><span class="pre">LocalSubscriptionCommunicatorConfig.parse_json</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.shared_variable_fields"><code class="docutils literal notranslate"><span class="pre">LocalSubscriptionCommunicatorConfig.shared_variable_fields</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.type"><code class="docutils literal notranslate"><span class="pre">LocalSubscriptionCommunicatorConfig.type</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.use_orjson"><code class="docutils literal notranslate"><span class="pre">LocalSubscriptionCommunicatorConfig.use_orjson</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.validate_incoming_values"><code class="docutils literal notranslate"><span class="pre">LocalSubscriptionCommunicatorConfig.validate_incoming_values</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.model_post_init"><code class="docutils literal notranslate"><span class="pre">LocalSubscriptionCommunicatorConfig.model_post_init()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="agentlib.modules.communicator.html#module-agentlib.modules.communicator.local_broadcast">agentlib.modules.communicator.local_broadcast module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib.modules.communicator.local_broadcast.LocalBroadcastClient"><code class="docutils literal notranslate"><span class="pre">LocalBroadcastClient</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib.modules.communicator.local_broadcast.LocalBroadcastClient.setup_broker"><code class="docutils literal notranslate"><span class="pre">LocalBroadcastClient.setup_broker()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="agentlib.modules.communicator.html#module-agentlib.modules.communicator.local_multiprocessing">agentlib.modules.communicator.local_multiprocessing module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib.modules.communicator.local_multiprocessing.MultiProcessingBroadcastClient"><code class="docutils literal notranslate"><span class="pre">MultiProcessingBroadcastClient</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib.modules.communicator.local_multiprocessing.MultiProcessingBroadcastClient.process"><code class="docutils literal notranslate"><span class="pre">MultiProcessingBroadcastClient.process()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib.modules.communicator.local_multiprocessing.MultiProcessingBroadcastClient.terminate"><code class="docutils literal notranslate"><span class="pre">MultiProcessingBroadcastClient.terminate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib.modules.communicator.local_multiprocessing.MultiProcessingBroadcastClientConfig"><code class="docutils literal notranslate"><span class="pre">MultiProcessingBroadcastClientConfig</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib.modules.communicator.local_multiprocessing.MultiProcessingBroadcastClientConfig.authkey"><code class="docutils literal notranslate"><span class="pre">MultiProcessingBroadcastClientConfig.authkey</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib.modules.communicator.local_multiprocessing.MultiProcessingBroadcastClientConfig.ipv4"><code class="docutils literal notranslate"><span class="pre">MultiProcessingBroadcastClientConfig.ipv4</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib.modules.communicator.local_multiprocessing.MultiProcessingBroadcastClientConfig.port"><code class="docutils literal notranslate"><span class="pre">MultiProcessingBroadcastClientConfig.port</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib.modules.communicator.local_multiprocessing.MultiProcessingBroadcastClientConfig.model_post_init"><code class="docutils literal notranslate"><span class="pre">MultiProcessingBroadcastClientConfig.model_post_init()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="agentlib.modules.communicator.html#module-agentlib.modules.communicator.mqtt">agentlib.modules.communicator.mqtt module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib.modules.communicator.mqtt.BaseMQTTClientConfig"><code class="docutils literal notranslate"><span class="pre">BaseMQTTClientConfig</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib.modules.communicator.mqtt.BaseMQTTClientConfig.clean_start"><code class="docutils literal notranslate"><span class="pre">BaseMQTTClientConfig.clean_start</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib.modules.communicator.mqtt.BaseMQTTClientConfig.client_id"><code class="docutils literal notranslate"><span class="pre">BaseMQTTClientConfig.client_id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib.modules.communicator.mqtt.BaseMQTTClientConfig.connection_timeout"><code class="docutils literal notranslate"><span class="pre">BaseMQTTClientConfig.connection_timeout</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib.modules.communicator.mqtt.BaseMQTTClientConfig.keepalive"><code class="docutils literal notranslate"><span class="pre">BaseMQTTClientConfig.keepalive</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib.modules.communicator.mqtt.BaseMQTTClientConfig.password"><code class="docutils literal notranslate"><span class="pre">BaseMQTTClientConfig.password</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib.modules.communicator.mqtt.BaseMQTTClientConfig.prefix"><code class="docutils literal notranslate"><span class="pre">BaseMQTTClientConfig.prefix</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib.modules.communicator.mqtt.BaseMQTTClientConfig.qos"><code class="docutils literal notranslate"><span class="pre">BaseMQTTClientConfig.qos</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib.modules.communicator.mqtt.BaseMQTTClientConfig.subtopics"><code class="docutils literal notranslate"><span class="pre">BaseMQTTClientConfig.subtopics</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib.modules.communicator.mqtt.BaseMQTTClientConfig.tls_ca_certs"><code class="docutils literal notranslate"><span class="pre">BaseMQTTClientConfig.tls_ca_certs</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib.modules.communicator.mqtt.BaseMQTTClientConfig.use_tls"><code class="docutils literal notranslate"><span class="pre">BaseMQTTClientConfig.use_tls</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib.modules.communicator.mqtt.BaseMQTTClientConfig.username"><code class="docutils literal notranslate"><span class="pre">BaseMQTTClientConfig.username</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib.modules.communicator.mqtt.BaseMQTTClientConfig.model_post_init"><code class="docutils literal notranslate"><span class="pre">BaseMQTTClientConfig.model_post_init()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib.modules.communicator.mqtt.BaseMqttClient"><code class="docutils literal notranslate"><span class="pre">BaseMqttClient</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib.modules.communicator.mqtt.BaseMqttClient.connect"><code class="docutils literal notranslate"><span class="pre">BaseMqttClient.connect()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib.modules.communicator.mqtt.BaseMqttClient.disconnect"><code class="docutils literal notranslate"><span class="pre">BaseMqttClient.disconnect()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib.modules.communicator.mqtt.BaseMqttClient.mqttc_type"><code class="docutils literal notranslate"><span class="pre">BaseMqttClient.mqttc_type</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib.modules.communicator.mqtt.BaseMqttClient.terminate"><code class="docutils literal notranslate"><span class="pre">BaseMqttClient.terminate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib.modules.communicator.mqtt.BaseMqttClient.topics_size"><code class="docutils literal notranslate"><span class="pre">BaseMqttClient.topics_size</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib.modules.communicator.mqtt.MQTTClientConfig"><code class="docutils literal notranslate"><span class="pre">MQTTClientConfig</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib.modules.communicator.mqtt.MQTTClientConfig.url"><code class="docutils literal notranslate"><span class="pre">MQTTClientConfig.url</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib.modules.communicator.mqtt.MQTTClientConfig.check_url"><code class="docutils literal notranslate"><span class="pre">MQTTClientConfig.check_url</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib.modules.communicator.mqtt.MQTTClientConfig.model_post_init"><code class="docutils literal notranslate"><span class="pre">MQTTClientConfig.model_post_init()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib.modules.communicator.mqtt.MqttClient"><code class="docutils literal notranslate"><span class="pre">MqttClient</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib.modules.communicator.mqtt.MqttClient.connect"><code class="docutils literal notranslate"><span class="pre">MqttClient.connect()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib.modules.communicator.mqtt.MqttClient.generate_topic"><code class="docutils literal notranslate"><span class="pre">MqttClient.generate_topic()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib.modules.communicator.mqtt.MqttClient.pubtopic"><code class="docutils literal notranslate"><span class="pre">MqttClient.pubtopic</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.communicator.html#agentlib.modules.communicator.mqtt.MqttClient.topics_size"><code class="docutils literal notranslate"><span class="pre">MqttClient.topics_size</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="agentlib.modules.communicator.html#module-agentlib.modules.communicator">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="agentlib.modules.controller.html">agentlib.modules.controller package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="agentlib.modules.controller.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="agentlib.modules.controller.html#agentlib-modules-controller-bangbang-module">agentlib.modules.controller.bangbang module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="agentlib.modules.controller.html#agentlib-modules-controller-controller-module">agentlib.modules.controller.controller module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="agentlib.modules.controller.html#agentlib-modules-controller-pid-module">agentlib.modules.controller.pid module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="agentlib.modules.controller.html#module-contents">Module contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="agentlib.modules.controller.html#module-agentlib.modules.controller.bangbang">agentlib.modules.controller.bangbang module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.modules.controller.html#agentlib.modules.controller.bangbang.BangBang"><code class="docutils literal notranslate"><span class="pre">BangBang</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.controller.html#agentlib.modules.controller.bangbang.BangBang.do_step"><code class="docutils literal notranslate"><span class="pre">BangBang.do_step()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.controller.html#agentlib.modules.controller.bangbang.BangBang.gain"><code class="docutils literal notranslate"><span class="pre">BangBang.gain</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.controller.html#agentlib.modules.controller.bangbang.BangBang.last_out_val"><code class="docutils literal notranslate"><span class="pre">BangBang.last_out_val</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.controller.html#agentlib.modules.controller.bangbang.BangBang.loop_sim"><code class="docutils literal notranslate"><span class="pre">BangBang.loop_sim()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.modules.controller.html#agentlib.modules.controller.bangbang.BangBangConfig"><code class="docutils literal notranslate"><span class="pre">BangBangConfig</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.controller.html#agentlib.modules.controller.bangbang.BangBangConfig.gain"><code class="docutils literal notranslate"><span class="pre">BangBangConfig.gain</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.controller.html#agentlib.modules.controller.bangbang.BangBangConfig.model_post_init"><code class="docutils literal notranslate"><span class="pre">BangBangConfig.model_post_init()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="agentlib.modules.controller.html#module-agentlib.modules.controller.controller">agentlib.modules.controller.controller module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.modules.controller.html#agentlib.modules.controller.controller.Controller"><code class="docutils literal notranslate"><span class="pre">Controller</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.controller.html#agentlib.modules.controller.controller.Controller.do_step"><code class="docutils literal notranslate"><span class="pre">Controller.do_step()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.controller.html#agentlib.modules.controller.controller.Controller.loop_sim"><code class="docutils literal notranslate"><span class="pre">Controller.loop_sim()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.controller.html#agentlib.modules.controller.controller.Controller.process"><code class="docutils literal notranslate"><span class="pre">Controller.process()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.controller.html#agentlib.modules.controller.controller.Controller.step"><code class="docutils literal notranslate"><span class="pre">Controller.step</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.modules.controller.html#agentlib.modules.controller.controller.SISOController"><code class="docutils literal notranslate"><span class="pre">SISOController</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.controller.html#agentlib.modules.controller.controller.SISOController.lb"><code class="docutils literal notranslate"><span class="pre">SISOController.lb</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.controller.html#agentlib.modules.controller.controller.SISOController.register_callbacks"><code class="docutils literal notranslate"><span class="pre">SISOController.register_callbacks()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.controller.html#agentlib.modules.controller.controller.SISOController.reverse"><code class="docutils literal notranslate"><span class="pre">SISOController.reverse</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.controller.html#agentlib.modules.controller.controller.SISOController.ub"><code class="docutils literal notranslate"><span class="pre">SISOController.ub</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.modules.controller.html#agentlib.modules.controller.controller.SISOControllerConfig"><code class="docutils literal notranslate"><span class="pre">SISOControllerConfig</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.controller.html#agentlib.modules.controller.controller.SISOControllerConfig.input"><code class="docutils literal notranslate"><span class="pre">SISOControllerConfig.input</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.controller.html#agentlib.modules.controller.controller.SISOControllerConfig.lb"><code class="docutils literal notranslate"><span class="pre">SISOControllerConfig.lb</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.controller.html#agentlib.modules.controller.controller.SISOControllerConfig.output"><code class="docutils literal notranslate"><span class="pre">SISOControllerConfig.output</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.controller.html#agentlib.modules.controller.controller.SISOControllerConfig.reverse"><code class="docutils literal notranslate"><span class="pre">SISOControllerConfig.reverse</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.controller.html#agentlib.modules.controller.controller.SISOControllerConfig.ub"><code class="docutils literal notranslate"><span class="pre">SISOControllerConfig.ub</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.controller.html#agentlib.modules.controller.controller.SISOControllerConfig.check_bounds"><code class="docutils literal notranslate"><span class="pre">SISOControllerConfig.check_bounds</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.controller.html#agentlib.modules.controller.controller.SISOControllerConfig.check_value_type"><code class="docutils literal notranslate"><span class="pre">SISOControllerConfig.check_value_type</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.controller.html#agentlib.modules.controller.controller.SISOControllerConfig.model_post_init"><code class="docutils literal notranslate"><span class="pre">SISOControllerConfig.model_post_init()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="agentlib.modules.controller.html#module-agentlib.modules.controller.pid">agentlib.modules.controller.pid module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.modules.controller.html#agentlib.modules.controller.pid.PID"><code class="docutils literal notranslate"><span class="pre">PID</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.controller.html#agentlib.modules.controller.pid.PID.Kp"><code class="docutils literal notranslate"><span class="pre">PID.Kp</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.controller.html#agentlib.modules.controller.pid.PID.Td"><code class="docutils literal notranslate"><span class="pre">PID.Td</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.controller.html#agentlib.modules.controller.pid.PID.Ti"><code class="docutils literal notranslate"><span class="pre">PID.Ti</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.controller.html#agentlib.modules.controller.pid.PID.do_step"><code class="docutils literal notranslate"><span class="pre">PID.do_step()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.controller.html#agentlib.modules.controller.pid.PID.loop_sim"><code class="docutils literal notranslate"><span class="pre">PID.loop_sim()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.controller.html#agentlib.modules.controller.pid.PID.setpoint"><code class="docutils literal notranslate"><span class="pre">PID.setpoint</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.modules.controller.html#agentlib.modules.controller.pid.PIDConfig"><code class="docutils literal notranslate"><span class="pre">PIDConfig</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.controller.html#agentlib.modules.controller.pid.PIDConfig.Kp"><code class="docutils literal notranslate"><span class="pre">PIDConfig.Kp</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.controller.html#agentlib.modules.controller.pid.PIDConfig.Td"><code class="docutils literal notranslate"><span class="pre">PIDConfig.Td</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.controller.html#agentlib.modules.controller.pid.PIDConfig.Ti"><code class="docutils literal notranslate"><span class="pre">PIDConfig.Ti</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.controller.html#agentlib.modules.controller.pid.PIDConfig.setpoint"><code class="docutils literal notranslate"><span class="pre">PIDConfig.setpoint</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.controller.html#agentlib.modules.controller.pid.PIDConfig.convert_to_variable"><code class="docutils literal notranslate"><span class="pre">PIDConfig.convert_to_variable</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.controller.html#agentlib.modules.controller.pid.PIDConfig.model_post_init"><code class="docutils literal notranslate"><span class="pre">PIDConfig.model_post_init()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="agentlib.modules.controller.html#module-agentlib.modules.controller">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="agentlib.modules.utils.html">agentlib.modules.utils package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="agentlib.modules.utils.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="agentlib.modules.utils.html#agentlib-modules-utils-agent-logger-module">agentlib.modules.utils.agent_logger module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="agentlib.modules.utils.html#agentlib-modules-utils-try-sensor-module">agentlib.modules.utils.try_sensor module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="agentlib.modules.utils.html#module-agentlib.modules.utils.agent_logger">agentlib.modules.utils.agent_logger module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.modules.utils.html#agentlib.modules.utils.agent_logger.AgentLogger"><code class="docutils literal notranslate"><span class="pre">AgentLogger</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.utils.html#agentlib.modules.utils.agent_logger.AgentLogger.cleanup_results"><code class="docutils literal notranslate"><span class="pre">AgentLogger.cleanup_results()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.utils.html#agentlib.modules.utils.agent_logger.AgentLogger.filename"><code class="docutils literal notranslate"><span class="pre">AgentLogger.filename</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.utils.html#agentlib.modules.utils.agent_logger.AgentLogger.get_results"><code class="docutils literal notranslate"><span class="pre">AgentLogger.get_results()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.utils.html#agentlib.modules.utils.agent_logger.AgentLogger.load_from_file"><code class="docutils literal notranslate"><span class="pre">AgentLogger.load_from_file()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.utils.html#agentlib.modules.utils.agent_logger.AgentLogger.process"><code class="docutils literal notranslate"><span class="pre">AgentLogger.process()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.utils.html#agentlib.modules.utils.agent_logger.AgentLogger.register_callbacks"><code class="docutils literal notranslate"><span class="pre">AgentLogger.register_callbacks()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.utils.html#agentlib.modules.utils.agent_logger.AgentLogger.terminate"><code class="docutils literal notranslate"><span class="pre">AgentLogger.terminate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.modules.utils.html#agentlib.modules.utils.agent_logger.AgentLoggerConfig"><code class="docutils literal notranslate"><span class="pre">AgentLoggerConfig</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.utils.html#agentlib.modules.utils.agent_logger.AgentLoggerConfig.clean_up"><code class="docutils literal notranslate"><span class="pre">AgentLoggerConfig.clean_up</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.utils.html#agentlib.modules.utils.agent_logger.AgentLoggerConfig.filename"><code class="docutils literal notranslate"><span class="pre">AgentLoggerConfig.filename</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.utils.html#agentlib.modules.utils.agent_logger.AgentLoggerConfig.overwrite_log"><code class="docutils literal notranslate"><span class="pre">AgentLoggerConfig.overwrite_log</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.utils.html#agentlib.modules.utils.agent_logger.AgentLoggerConfig.t_sample"><code class="docutils literal notranslate"><span class="pre">AgentLoggerConfig.t_sample</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.utils.html#agentlib.modules.utils.agent_logger.AgentLoggerConfig.values_only"><code class="docutils literal notranslate"><span class="pre">AgentLoggerConfig.values_only</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.utils.html#agentlib.modules.utils.agent_logger.AgentLoggerConfig.check_existence_of_file"><code class="docutils literal notranslate"><span class="pre">AgentLoggerConfig.check_existence_of_file</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.utils.html#agentlib.modules.utils.agent_logger.AgentLoggerConfig.model_post_init"><code class="docutils literal notranslate"><span class="pre">AgentLoggerConfig.model_post_init()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="agentlib.modules.utils.html#module-agentlib.modules.utils.try_sensor">agentlib.modules.utils.try_sensor module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.modules.utils.html#agentlib.modules.utils.try_sensor.TRYSensor"><code class="docutils literal notranslate"><span class="pre">TRYSensor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.utils.html#agentlib.modules.utils.try_sensor.TRYSensor.filename"><code class="docutils literal notranslate"><span class="pre">TRYSensor.filename</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.utils.html#agentlib.modules.utils.try_sensor.TRYSensor.get_data_now"><code class="docutils literal notranslate"><span class="pre">TRYSensor.get_data_now()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.utils.html#agentlib.modules.utils.try_sensor.TRYSensor.process"><code class="docutils literal notranslate"><span class="pre">TRYSensor.process()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.utils.html#agentlib.modules.utils.try_sensor.TRYSensor.register_callbacks"><code class="docutils literal notranslate"><span class="pre">TRYSensor.register_callbacks()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.utils.html#agentlib.modules.utils.try_sensor.TRYSensor.t_sample"><code class="docutils literal notranslate"><span class="pre">TRYSensor.t_sample</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.modules.utils.html#agentlib.modules.utils.try_sensor.TRYSensorConfig"><code class="docutils literal notranslate"><span class="pre">TRYSensorConfig</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.utils.html#agentlib.modules.utils.try_sensor.TRYSensorConfig.filename"><code class="docutils literal notranslate"><span class="pre">TRYSensorConfig.filename</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.utils.html#agentlib.modules.utils.try_sensor.TRYSensorConfig.outputs"><code class="docutils literal notranslate"><span class="pre">TRYSensorConfig.outputs</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.utils.html#agentlib.modules.utils.try_sensor.TRYSensorConfig.shared_variable_fields"><code class="docutils literal notranslate"><span class="pre">TRYSensorConfig.shared_variable_fields</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.utils.html#agentlib.modules.utils.try_sensor.TRYSensorConfig.t_sample"><code class="docutils literal notranslate"><span class="pre">TRYSensorConfig.t_sample</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.utils.html#agentlib.modules.utils.try_sensor.TRYSensorConfig.model_post_init"><code class="docutils literal notranslate"><span class="pre">TRYSensorConfig.model_post_init()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.modules.utils.html#agentlib.modules.utils.try_sensor.read_dat_file"><code class="docutils literal notranslate"><span class="pre">read_dat_file()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="agentlib.modules.utils.html#module-agentlib.modules.utils">Module contents</a></li>
 </ul>
 </li>

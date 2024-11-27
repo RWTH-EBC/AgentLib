@@ -118,10 +118,10 @@ tests/test_agentlogger.py:150:12: W0212: Access to a protected member _callback_
 tests/test_agentlogger.py:151:8: W0212: Access to a protected member _log of a client class (protected-access)
 ************* Module tests.test_communicator
 tests/test_communicator.py:1:0: C0114: Missing module docstring (missing-module-docstring)
-tests/test_communicator.py:21:0: C0115: Missing class docstring (missing-class-docstring)
-tests/test_communicator.py:32:4: C0116: Missing function or method docstring (missing-function-docstring)
-tests/test_communicator.py:41:16: C2801: Unnecessarily calls dunder method __getattribute__. Access attribute directly or use getattr built-in function. (unnecessary-dunder-call)
-tests/test_communicator.py:41:50: C2801: Unnecessarily calls dunder method __getattribute__. Access attribute directly or use getattr built-in function. (unnecessary-dunder-call)
+tests/test_communicator.py:23:0: C0115: Missing class docstring (missing-class-docstring)
+tests/test_communicator.py:33:4: C0116: Missing function or method docstring (missing-function-docstring)
+tests/test_communicator.py:42:16: C2801: Unnecessarily calls dunder method __getattribute__. Access attribute directly or use getattr built-in function. (unnecessary-dunder-call)
+tests/test_communicator.py:42:50: C2801: Unnecessarily calls dunder method __getattribute__. Access attribute directly or use getattr built-in function. (unnecessary-dunder-call)
 ************* Module tests.test_data_broker
 tests/test_data_broker.py:124:0: C0301: Line too long (111/100) (line-too-long)
 tests/test_data_broker.py:32:4: C0116: Missing function or method docstring (missing-function-docstring)
@@ -227,6 +227,7 @@ tests/test_model.py:140:18: W0212: Access to a protected member _create_time_sam
 tests/test_module.py:41:0: C0115: Missing class docstring (missing-class-docstring)
 tests/test_module.py:49:0: C0115: Missing class docstring (missing-class-docstring)
 tests/test_module.py:59:0: C0115: Missing class docstring (missing-class-docstring)
+tests/test_module.py:158:24: E1136: Value 'CustomModuleConfig.model_fields' is unsubscriptable (unsubscriptable-object)
 tests/test_module.py:163:8: R1705: Unnecessary "elif" after "return", remove the leading "el" from "elif" (no-else-return)
 tests/test_module.py:187:25: W0212: Access to a protected member _user_config of a client class (protected-access)
 tests/test_module.py:256:12: W0612: Unused variable 'mod' (unused-variable)
@@ -280,7 +281,7 @@ tests/test_utils.py:81:17: W1514: Using open without explicitly specifying an en
 tests/test_utils.py:81:45: C0103: Variable name "f" doesn't conform to snake_case naming style (invalid-name)
 tests/test_utils.py:89:4: C0116: Missing function or method docstring (missing-function-docstring)
 tests/test_utils.py:1:0: R0801: Similar lines in 2 files
-==tests.test_communicator:[10:16]
+==tests.test_communicator:[12:18]
 ==tests.test_module:[27:33]
     "allowed_values": [100, 150],
     "shared": True,
@@ -312,5 +313,5 @@ tests/test_utils.py:1:0: R0801: Similar lines in 2 files
         return { (duplicate-code)
 
 -----------------------------------
-Your code has been rated at 8.42/10
+Your code has been rated at 8.39/10
 
