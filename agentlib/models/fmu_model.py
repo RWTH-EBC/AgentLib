@@ -40,6 +40,7 @@ class FmuModelConfig(ModelConfig):
     tolerance: float = 0.001
     extract_fmu: bool = False
     log_fmu: bool = True
+    restart_on_failure: bool = False
     only_config_variables: bool = pydantic.Field(
         default=True,
         description="If True, only the variables passed to this model by a simulator "
@@ -110,10 +111,17 @@ class FmuModel(Model):
                     communicationStepSize=t_samples[_idx + 1] - _t_sample,
                 )
         except FMICallException as e:
-            # Raise a different error, as simpy does not work well with FMI Errors
-            raise RuntimeError(
-                "The fmu had an internal error. Please check the logs to analyze it."
-            ) from e
+            if self.config.restart_on_failure:
+                logger.warning("The FMU had an internal error and restarts: %s", e)
+                self.system.reset()
+                self.system.setupExperiment(startTime=t_start+t_sample)
+                self.system.enterInitializationMode()
+                self.system.exitInitializationMode()
+            else:
+                # Raise a different error, as simpy does not work well with FMI Errors
+                raise RuntimeError(
+                    "The FMU had an internal error. Please check the logs to analyze it."
+                ) from e
         # Read current values from system
         self.__read_values()
         return True
