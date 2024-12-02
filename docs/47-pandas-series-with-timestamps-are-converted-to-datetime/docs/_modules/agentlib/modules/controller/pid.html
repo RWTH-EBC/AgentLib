@@ -1,0 +1,271 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>agentlib.modules.controller.pid &mdash; agentlib 0.8.6 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/autodoc_pydantic.css" />
+
+  
+      <script src="../../../../_static/jquery.js"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+      <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+      <script src="../../../../_static/doctools.js"></script>
+      <script src="../../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            agentlib
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Tutorials/tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../ModulesList.html">List of standard modules and models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../AgentVariable.html">AgentVariables and ModelVariables</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../agentlib.html">agentlib package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">agentlib</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+          <li class="breadcrumb-item"><a href="../../modules.html">agentlib.modules</a></li>
+      <li class="breadcrumb-item active">agentlib.modules.controller.pid</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for agentlib.modules.controller.pid</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">inf</span><span class="p">,</span> <span class="n">isclose</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span>
+
+<span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">field_validator</span>
+<span class="kn">from</span> <span class="nn">pydantic_core.core_schema</span> <span class="kn">import</span> <span class="n">FieldValidationInfo</span>
+
+<span class="kn">from</span> <span class="nn">agentlib.modules.controller</span> <span class="kn">import</span> <span class="n">SISOController</span><span class="p">,</span> <span class="n">SISOControllerConfig</span>
+<span class="kn">from</span> <span class="nn">agentlib.core.datamodels</span> <span class="kn">import</span> <span class="n">AgentVariable</span>
+<span class="kn">from</span> <span class="nn">agentlib.core.errors</span> <span class="kn">import</span> <span class="n">ConfigurationError</span>
+
+
+<div class="viewcode-block" id="PIDConfig"><a class="viewcode-back" href="../../../../code/agentlib.modules.controller.html#agentlib.modules.controller.pid.PIDConfig">[docs]</a><span class="k">class</span> <span class="nc">PIDConfig</span><span class="p">(</span><span class="n">SISOControllerConfig</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Pydantic data model for pid controller configuration parser</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">setpoint</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">AgentVariable</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">AgentVariable</span><span class="p">(</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;setpoint&quot;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Pid Setpoint&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span>
+    <span class="p">)</span>
+    <span class="n">Kp</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">AgentVariable</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">AgentVariable</span><span class="p">(</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Kp&quot;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Proportional gain&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">1</span>
+    <span class="p">)</span>
+    <span class="n">Ti</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">AgentVariable</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">AgentVariable</span><span class="p">(</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Ti&quot;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Integration time in s&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">inf</span>
+    <span class="p">)</span>
+    <span class="n">Td</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">AgentVariable</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">AgentVariable</span><span class="p">(</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Td&quot;</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Derivative time in s&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;float&quot;</span><span class="p">,</span>
+        <span class="n">value</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;seconds&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+<div class="viewcode-block" id="PIDConfig.convert_to_variable"><a class="viewcode-back" href="../../../../code/agentlib.modules.controller.html#agentlib.modules.controller.pid.PIDConfig.convert_to_variable">[docs]</a>    <span class="nd">@field_validator</span><span class="p">(</span><span class="s2">&quot;Kp&quot;</span><span class="p">,</span> <span class="s2">&quot;Ti&quot;</span><span class="p">,</span> <span class="s2">&quot;Td&quot;</span><span class="p">,</span> <span class="s2">&quot;setpoint&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;before&quot;</span><span class="p">)</span>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">convert_to_variable</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">parameter</span><span class="p">,</span> <span class="n">info</span><span class="p">:</span> <span class="n">FieldValidationInfo</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">parameter</span><span class="p">,</span> <span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">)):</span>
+            <span class="n">default</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="n">field_name</span><span class="p">)</span>
+            <span class="n">parameter</span> <span class="o">=</span> <span class="n">default</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">update</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="n">parameter</span><span class="p">})</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">parameter</span><span class="p">,</span> <span class="n">AgentVariable</span><span class="p">):</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">parameter</span><span class="o">.</span><span class="n">value</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">parameter</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;value&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ConfigurationError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;PID needs a value for the variable &#39;</span><span class="si">{</span><span class="n">parameter</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39;.&quot;</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">parameter</span></div></div>
+
+
+<div class="viewcode-block" id="PID"><a class="viewcode-back" href="../../../../code/agentlib.modules.controller.html#agentlib.modules.controller.pid.PID">[docs]</a><span class="k">class</span> <span class="nc">PID</span><span class="p">(</span><span class="n">SISOController</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A proportional–integral–derivative controller (PID</span>
+<span class="sd">    controller or three-term controller) with anti-wind up.</span>
+<span class="sd">    It continuously calculates an error value e(t)  as the difference between a</span>
+<span class="sd">    desired set point and a measured process variable and applies a correction</span>
+<span class="sd">    based on proportional, integral, and derivative terms</span>
+<span class="sd">    (denoted P, I, and D respectively)</span>
+<span class="sd">    +--------------------+---------------+---------------+---------------------+</span>
+<span class="sd">    | Parameter          | Kp            | Ki=(Kp/Ti)    | Kd=(Kp*Td)          |</span>
+<span class="sd">    +--------------------+---------------+---------------+---------------------+</span>
+<span class="sd">    | Rise time          | Decrease      | Decrease      | Minor change        |</span>
+<span class="sd">    | Overshoot          | Increase      | Increase      | Decrease            |</span>
+<span class="sd">    | Settling time      | Small change  | Increase      | Decrease            |</span>
+<span class="sd">    | Steady-state error | Decrease      | Eliminate     | No effect in theory |</span>
+<span class="sd">    | Stability          | Degrade       | Degrade       | Improve if Kd small |</span>
+<span class="sd">    +--------------------+---------------+---------------+---------------------+</span>
+
+<span class="sd">    Configs:</span>
+<span class="sd">        setpoint (float): Set point of the controller</span>
+<span class="sd">        Kp (float): proportional gain</span>
+<span class="sd">        Ti (float): integration time in s</span>
+<span class="sd">        Td (float): derivative time in s</span>
+<span class="sd">        ub (float): high control limit</span>
+<span class="sd">        lb (float): low control limit</span>
+<span class="sd">        reverse(boolean): change of sign</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">config</span><span class="p">:</span> <span class="n">PIDConfig</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">agent</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">integral</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">e_last</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_time</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">e_der_t</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">,</span> <span class="n">agent</span><span class="o">=</span><span class="n">agent</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">setpoint</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the current setpoint value from data_broker or config&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">setpoint</span><span class="o">.</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">value</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">Kp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the current Kp value from data_broker or config&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">Kp</span><span class="o">.</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">value</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">Ti</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the current Ti value from data_broker or config&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">Ti</span><span class="o">.</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">value</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">Td</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the current Td value from data_broker or config&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">Td</span><span class="o">.</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">value</span>
+
+<div class="viewcode-block" id="PID.loop_sim"><a class="viewcode-back" href="../../../../code/agentlib.modules.controller.html#agentlib.modules.controller.pid.PID.loop_sim">[docs]</a>    <span class="k">def</span> <span class="nf">loop_sim</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">time</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="n">inp_var</span> <span class="o">=</span> <span class="k">yield</span> <span class="n">y</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">do_step</span><span class="p">(</span><span class="n">inp_var</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="PID.do_step"><a class="viewcode-back" href="../../../../code/agentlib.modules.controller.html#agentlib.modules.controller.pid.PID.do_step">[docs]</a>    <span class="k">def</span> <span class="nf">do_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inp_var</span><span class="p">:</span> <span class="n">AgentVariable</span><span class="p">):</span>
+        <span class="n">u</span> <span class="o">=</span> <span class="n">inp_var</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">curr_time</span> <span class="o">=</span> <span class="n">inp_var</span><span class="o">.</span><span class="n">timestamp</span>
+
+        <span class="n">t_sample</span> <span class="o">=</span> <span class="n">curr_time</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_time</span>
+        <span class="k">if</span> <span class="n">t_sample</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+                <span class="s2">&quot;t_sample is smaller equal zero. </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="s2">&quot; Can&#39;t compute integral part.&quot;</span><span class="p">,</span>
+                <span class="n">t_sample</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="c1"># calculate control difference</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">reverse</span><span class="p">:</span>
+            <span class="n">e</span> <span class="o">=</span> <span class="n">u</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">setpoint</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">e</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">setpoint</span> <span class="o">-</span> <span class="n">u</span>
+
+        <span class="c1"># calculate integral</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">Ti</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">integral</span> <span class="o">+=</span> <span class="mi">1</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">Ti</span> <span class="o">*</span> <span class="n">e</span> <span class="o">*</span> <span class="n">t_sample</span>
+
+        <span class="c1"># calculate differential.</span>
+        <span class="c1"># Assert that t_sample is numerically feasible to use in division</span>
+        <span class="k">if</span> <span class="n">isclose</span><span class="p">(</span><span class="n">t_sample</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">rel_tol</span><span class="o">=</span><span class="mf">1e-12</span><span class="p">,</span> <span class="n">abs_tol</span><span class="o">=</span><span class="mf">0.0</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+                <span class="s2">&quot;Sample rate to high! t_sample: </span><span class="si">%s</span><span class="s2">. &quot;</span>
+                <span class="s2">&quot;Can&#39;t calculate differential part of PID&quot;</span><span class="p">,</span>
+                <span class="n">t_sample</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">e_der_t</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">e_der_t</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Td</span> <span class="o">*</span> <span class="p">(</span><span class="n">e</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">e_last</span><span class="p">)</span> <span class="o">/</span> <span class="n">t_sample</span>
+
+        <span class="c1"># PID output</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Kp</span> <span class="o">*</span> <span class="p">(</span><span class="n">e</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">integral</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">e_der_t</span><span class="p">)</span>
+
+        <span class="c1"># Limiter</span>
+        <span class="k">if</span> <span class="n">y</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">lb</span><span class="p">:</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lb</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">integral</span> <span class="o">=</span> <span class="n">y</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">Kp</span> <span class="o">-</span> <span class="n">e</span>
+        <span class="k">elif</span> <span class="n">y</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">ub</span><span class="p">:</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ub</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">integral</span> <span class="o">=</span> <span class="n">y</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">Kp</span> <span class="o">-</span> <span class="n">e</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">e_last</span> <span class="o">=</span> <span class="n">e</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_time</span> <span class="o">=</span> <span class="n">curr_time</span>  <span class="c1"># Set the value for the next iteration</span>
+        <span class="k">return</span> <span class="n">y</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, AGENT-Project Associates.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

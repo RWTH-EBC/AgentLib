@@ -1,0 +1,219 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>agentlib.modules.communicator.local_multiprocessing &mdash; agentlib 0.8.6 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/autodoc_pydantic.css" />
+
+  
+      <script src="../../../../_static/jquery.js"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+      <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+      <script src="../../../../_static/doctools.js"></script>
+      <script src="../../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            agentlib
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Tutorials/tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../ModulesList.html">List of standard modules and models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../AgentVariable.html">AgentVariables and ModelVariables</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../agentlib.html">agentlib package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">agentlib</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+          <li class="breadcrumb-item"><a href="../../modules.html">agentlib.modules</a></li>
+      <li class="breadcrumb-item active">agentlib.modules.communicator.local_multiprocessing</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for agentlib.modules.communicator.local_multiprocessing</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">multiprocessing</span>
+<span class="kn">import</span> <span class="nn">threading</span>
+
+<span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">Field</span>
+<span class="kn">from</span> <span class="nn">ipaddress</span> <span class="kn">import</span> <span class="n">IPv4Address</span>
+
+<span class="kn">from</span> <span class="nn">agentlib.core</span> <span class="kn">import</span> <span class="n">Agent</span>
+<span class="kn">from</span> <span class="nn">agentlib.core.datamodels</span> <span class="kn">import</span> <span class="n">AgentVariable</span>
+<span class="kn">from</span> <span class="nn">agentlib.modules.communicator.communicator</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">Communicator</span><span class="p">,</span>
+    <span class="n">CommunicationDict</span><span class="p">,</span>
+    <span class="n">CommunicatorConfig</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">agentlib.utils</span> <span class="kn">import</span> <span class="n">multi_processing_broker</span>
+
+
+<div class="viewcode-block" id="MultiProcessingBroadcastClientConfig"><a class="viewcode-back" href="../../../../code/agentlib.modules.communicator.html#agentlib.modules.communicator.local_multiprocessing.MultiProcessingBroadcastClientConfig">[docs]</a><span class="k">class</span> <span class="nc">MultiProcessingBroadcastClientConfig</span><span class="p">(</span><span class="n">CommunicatorConfig</span><span class="p">):</span>
+    <span class="n">ipv4</span><span class="p">:</span> <span class="n">IPv4Address</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">&quot;127.0.0.1&quot;</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;IP Address for the communication server. Defaults to localhost.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">port</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="mi">50_000</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Port for setting up the connection with the broker.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">authkey</span><span class="p">:</span> <span class="nb">bytes</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="sa">b</span><span class="s2">&quot;useTheAgentlib&quot;</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Authorization key for the connection with the broker.&quot;</span><span class="p">,</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="MultiProcessingBroadcastClient"><a class="viewcode-back" href="../../../../code/agentlib.modules.communicator.html#agentlib.modules.communicator.local_multiprocessing.MultiProcessingBroadcastClient">[docs]</a><span class="k">class</span> <span class="nc">MultiProcessingBroadcastClient</span><span class="p">(</span><span class="n">Communicator</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This communicator implements the communication between agents via a</span>
+<span class="sd">    central process broker.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">config</span><span class="p">:</span> <span class="n">MultiProcessingBroadcastClientConfig</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">agent</span><span class="p">:</span> <span class="n">Agent</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">,</span> <span class="n">agent</span><span class="o">=</span><span class="n">agent</span><span class="p">)</span>
+        <span class="n">manager</span> <span class="o">=</span> <span class="n">multi_processing_broker</span><span class="o">.</span><span class="n">BrokerManager</span><span class="p">(</span>
+            <span class="n">address</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">ipv4</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">port</span><span class="p">),</span> <span class="n">authkey</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">authkey</span>
+        <span class="p">)</span>
+        <span class="n">started_wait</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">manager</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
+                <span class="k">break</span>
+            <span class="k">except</span> <span class="ne">ConnectionRefusedError</span><span class="p">:</span>
+                <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">started_wait</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Could not connect to the server.&quot;</span><span class="p">)</span>
+
+        <span class="n">signup_queue</span> <span class="o">=</span> <span class="n">manager</span><span class="o">.</span><span class="n">get_queue</span><span class="p">()</span>
+        <span class="n">client_read</span><span class="p">,</span> <span class="n">broker_write</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Pipe</span><span class="p">(</span><span class="n">duplex</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">broker_read</span><span class="p">,</span> <span class="n">client_write</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Pipe</span><span class="p">(</span><span class="n">duplex</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">signup</span> <span class="o">=</span> <span class="n">multi_processing_broker</span><span class="o">.</span><span class="n">MPClient</span><span class="p">(</span>
+            <span class="n">agent_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">read</span><span class="o">=</span><span class="n">broker_read</span><span class="p">,</span> <span class="n">write</span><span class="o">=</span><span class="n">broker_write</span>
+        <span class="p">)</span>
+
+        <span class="n">signup_queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">signup</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_client_write</span> <span class="o">=</span> <span class="n">client_write</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_broker_write</span> <span class="o">=</span> <span class="n">broker_write</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_client_read</span> <span class="o">=</span> <span class="n">client_read</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_broker_read</span> <span class="o">=</span> <span class="n">broker_read</span>
+
+        <span class="c1"># ensure the broker has set up the connection and sends its ack</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_client_read</span><span class="o">.</span><span class="n">recv</span><span class="p">()</span>
+
+<div class="viewcode-block" id="MultiProcessingBroadcastClient.process"><a class="viewcode-back" href="../../../../code/agentlib.modules.communicator.html#agentlib.modules.communicator.local_multiprocessing.MultiProcessingBroadcastClient.process">[docs]</a>    <span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Only start the loop once the env is running.&quot;&quot;&quot;</span>
+        <span class="n">_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span>
+            <span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_message_handler</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="p">),</span> <span class="n">daemon</span><span class="o">=</span><span class="kc">True</span>
+        <span class="p">)</span>
+        <span class="n">_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">register_thread</span><span class="p">(</span><span class="n">thread</span><span class="o">=</span><span class="n">_thread</span><span class="p">)</span>
+        <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">event</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="nf">_message_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Reads messages that were put in the message queue.&quot;&quot;&quot;</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client_read</span><span class="o">.</span><span class="n">recv</span><span class="p">()</span>
+            <span class="k">except</span> <span class="ne">EOFError</span><span class="p">:</span>
+                <span class="k">break</span>
+            <span class="n">variable</span> <span class="o">=</span> <span class="n">AgentVariable</span><span class="o">.</span><span class="n">from_json</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Received variable </span><span class="si">{</span><span class="n">variable</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">data_broker</span><span class="o">.</span><span class="n">send_variable</span><span class="p">(</span><span class="n">variable</span><span class="p">)</span>
+
+<div class="viewcode-block" id="MultiProcessingBroadcastClient.terminate"><a class="viewcode-back" href="../../../../code/agentlib.modules.communicator.html#agentlib.modules.communicator.local_multiprocessing.MultiProcessingBroadcastClient.terminate">[docs]</a>    <span class="k">def</span> <span class="nf">terminate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Closes all of the connections.&quot;&quot;&quot;</span>
+        <span class="c1"># Terminating is important when running multiple</span>
+        <span class="c1"># simulations/environments, otherwise the broker will keep spamming all</span>
+        <span class="c1"># agents from the previous simulation, potentially filling their queues.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_client_write</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_client_read</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_broker_write</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_broker_read</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">terminate</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="nf">_send</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">payload</span><span class="p">:</span> <span class="n">CommunicationDict</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Sends a variable to the Broker.&quot;&quot;&quot;</span>
+        <span class="n">agent_id</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;source&quot;</span><span class="p">]</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="n">multi_processing_broker</span><span class="o">.</span><span class="n">Message</span><span class="p">(</span>
+            <span class="n">agent_id</span><span class="o">=</span><span class="n">agent_id</span><span class="p">,</span> <span class="n">payload</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_client_write</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, AGENT-Project Associates.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
