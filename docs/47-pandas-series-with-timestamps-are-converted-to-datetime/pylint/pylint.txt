@@ -182,23 +182,20 @@ tests/test_databroker_limits.py:137:4: C0116: Missing function or method docstri
 tests/test_databroker_limits.py:6:0: C0412: Imports from package time are not grouped (ungrouped-imports)
 tests/test_databroker_limits.py:8:0: W0611: Unused numpy imported as np (unused-import)
 ************* Module tests.test_datamodels
-tests/test_datamodels.py:21:4: C0116: Missing function or method docstring (missing-function-docstring)
-tests/test_datamodels.py:35:12: R1735: Consider using '{"name": 'test', "value": 100.0, "type": 'float'}' instead of a call to 'dict'. (use-dict-literal)
-tests/test_datamodels.py:49:12: R1735: Consider using '{"name": 'test', "value": srs, "type": 'pd.Series'}' instead of a call to 'dict'. (use-dict-literal)
-tests/test_datamodels.py:61:16: R1735: Consider using '{"name": 'test', "type": 'not_supported'}' instead of a call to 'dict'. (use-dict-literal)
-tests/test_datamodels.py:64:50: R1735: Consider using '{"name": 'test', "type": float}' instead of a call to 'dict'. (use-dict-literal)
-tests/test_datamodels.py:70:16: R1735: Consider using '{"name": 'test', "type": 'float', "ub": 10, "lb": 0, "clip": True}' instead of a call to 'dict'. (use-dict-literal)
-tests/test_datamodels.py:80:12: R1735: Consider using '{"name": 'test', "type": 'float', "value": 20.0, "allowed_values": ['0', '10', 20, 30.0], ... }' instead of a call to 'dict'. (use-dict-literal)
-tests/test_datamodels.py:87:12: C0103: Variable name "v" doesn't conform to snake_case naming style (invalid-name)
-tests/test_datamodels.py:99:16: R1735: Consider using '{"name": 'test', "type": 'pd.Series', "value": value, "ub": 10, "lb": 5, ... }' instead of a call to 'dict'. (use-dict-literal)
-tests/test_datamodels.py:121:50: R1735: Consider using '{"name": 'test', "ub": 100, "lb": 200}' instead of a call to 'dict'. (use-dict-literal)
-tests/test_datamodels.py:125:12: R1735: Consider using '{"name": 'test', "clip": True, "ub": 100, "lb": 0, "value": 10000}' instead of a call to 'dict'. (use-dict-literal)
-tests/test_datamodels.py:129:12: R1735: Consider using '{"name": 'test', "clip": True, "ub": 100, "lb": 0, "value": -10000, ... }' instead of a call to 'dict'. (use-dict-literal)
-tests/test_datamodels.py:215:4: C0116: Missing function or method docstring (missing-function-docstring)
-tests/test_datamodels.py:217:30: C2801: Unnecessarily calls dunder method __str__. Use str built-in function. (unnecessary-dunder-call)
-tests/test_datamodels.py:6:0: C0411: third party import "import pandas as pd" should be placed before "from agentlib.core import datamodels, errors" (wrong-import-order)
-tests/test_datamodels.py:4:0: W0611: Unused ValidationError imported from pydantic (unused-import)
-tests/test_datamodels.py:5:0: W0611: Unused errors imported from agentlib.core (unused-import)
+tests/test_datamodels.py:23:4: C0116: Missing function or method docstring (missing-function-docstring)
+tests/test_datamodels.py:37:12: R1735: Consider using '{"name": 'test', "value": 100.0, "type": 'float'}' instead of a call to 'dict'. (use-dict-literal)
+tests/test_datamodels.py:51:12: R1735: Consider using '{"name": 'test', "value": srs, "type": 'pd.Series'}' instead of a call to 'dict'. (use-dict-literal)
+tests/test_datamodels.py:63:16: R1735: Consider using '{"name": 'test', "type": 'not_supported'}' instead of a call to 'dict'. (use-dict-literal)
+tests/test_datamodels.py:66:50: R1735: Consider using '{"name": 'test', "type": float}' instead of a call to 'dict'. (use-dict-literal)
+tests/test_datamodels.py:72:16: R1735: Consider using '{"name": 'test', "type": 'float', "ub": 10, "lb": 0, "clip": True}' instead of a call to 'dict'. (use-dict-literal)
+tests/test_datamodels.py:82:12: R1735: Consider using '{"name": 'test', "type": 'float', "value": 20.0, "allowed_values": ['0', '10', 20, 30.0], ... }' instead of a call to 'dict'. (use-dict-literal)
+tests/test_datamodels.py:89:12: C0103: Variable name "v" doesn't conform to snake_case naming style (invalid-name)
+tests/test_datamodels.py:101:16: R1735: Consider using '{"name": 'test', "type": 'pd.Series', "value": value, "ub": 10, "lb": 5, ... }' instead of a call to 'dict'. (use-dict-literal)
+tests/test_datamodels.py:183:50: R1735: Consider using '{"name": 'test', "ub": 100, "lb": 200}' instead of a call to 'dict'. (use-dict-literal)
+tests/test_datamodels.py:187:12: R1735: Consider using '{"name": 'test', "clip": True, "ub": 100, "lb": 0, "value": 10000}' instead of a call to 'dict'. (use-dict-literal)
+tests/test_datamodels.py:191:12: R1735: Consider using '{"name": 'test', "clip": True, "ub": 100, "lb": 0, "value": -10000, ... }' instead of a call to 'dict'. (use-dict-literal)
+tests/test_datamodels.py:277:4: C0116: Missing function or method docstring (missing-function-docstring)
+tests/test_datamodels.py:279:30: C2801: Unnecessarily calls dunder method __str__. Use str built-in function. (unnecessary-dunder-call)
 ************* Module tests.test_environment
 tests/test_environment.py:39:8: W0212: Access to a protected member _config of a client class (protected-access)
 tests/test_environment.py:40:30: E1101: Instance of 'Environment' has no 'config' member; maybe '_config'? (no-member)
@@ -309,9 +306,9 @@ tests/test_utils.py:1:0: R0801: Similar lines in 2 files
         return Agent(env=env, config=agent_config)
 
     def _get_module_cfg(self, **kwargs):
-        """Helper method to create logger config"""
+        """Dynamically build config to avoid duplicate code:"""
         return { (duplicate-code)
 
 -----------------------------------
-Your code has been rated at 8.39/10
+Your code has been rated at 8.44/10
 
