@@ -640,6 +640,8 @@ def convert_to_pd_series(value):
         )
     if isinstance(srs.index[0], str):
         srs.index = srs.index.astype(float)
+    if isinstance(srs.index, pd.DatetimeIndex):
+        srs.index = pd.to_numeric(srs.index) / 10**9
     return srs
 
 
