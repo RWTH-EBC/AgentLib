@@ -105,13 +105,13 @@ class Communicator(BaseModule):
             "This method needs to be implemented " "individually for each communicator"
         )
 
-    def short_dict(self, variable: AgentVariable) -> CommunicationDict:
+    def short_dict(self, variable: AgentVariable, parse_json: bool = True) -> CommunicationDict:
         """Creates a short dict serialization of the Variable.
 
         Only contains attributes of the AgentVariable, that are relevant for other
         modules or agents. For performance and privacy reasons, this function should
         be called for communicators."""
-        if isinstance(variable.value, pd.Series):
+        if isinstance(variable.value, pd.Series) and parse_json:
             value = variable.value.to_json()
         else:
             value = variable.value
@@ -186,6 +186,15 @@ class LocalCommunicator(Communicator):
         raise NotImplementedError(
             "This method needs to be implemented " "individually for each communicator"
         )
+
+    def _send_only_shared_variables(self, variable: AgentVariable):
+        """Send only variables with field ``shared=True``"""
+        if not self._variable_can_be_send(variable):
+            return
+
+        payload = self.short_dict(variable, parse_json=self.config.parse_json)
+        self.logger.debug("Sending variable %s=%s", variable.alias, variable.value)
+        self._send(payload=payload)
 
     def _process(self):
         """Waits for new messages, sends them to the broker."""
