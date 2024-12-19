@@ -117,6 +117,7 @@ tests/test_agentlogger.py:130:8: W0212: Access to a protected member _log of a c
 tests/test_agentlogger.py:150:12: W0212: Access to a protected member _callback_values of a client class (protected-access)
 tests/test_agentlogger.py:151:8: W0212: Access to a protected member _log of a client class (protected-access)
 ************* Module tests.test_communicator
+tests/test_communicator.py:50:0: C0301: Line too long (108/100) (line-too-long)
 tests/test_communicator.py:1:0: C0114: Missing module docstring (missing-module-docstring)
 tests/test_communicator.py:23:0: C0115: Missing class docstring (missing-class-docstring)
 tests/test_communicator.py:33:4: C0116: Missing function or method docstring (missing-function-docstring)
@@ -306,7 +307,7 @@ tests/test_utils.py:1:0: R0801: Similar lines in 2 files
         return Agent(env=env, config=agent_config)
 
     def _get_module_cfg(self, **kwargs):
-        """Dynamically build config to avoid duplicate code:"""
+        """Helper method to create logger config"""
         return { (duplicate-code)
 
 -----------------------------------

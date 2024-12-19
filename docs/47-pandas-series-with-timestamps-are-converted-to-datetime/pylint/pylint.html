@@ -36,7 +36,7 @@
 
         <h2>Messages</h2>
         
-        <h3>Module <code>ci.run_examples</code> (<code>ci/run_examples.py</code>)</h3>
+        <h3>Module <code>run_examples</code> (<code>ci/run_examples.py</code>)</h3>
         <table>
             <tr>
                 <th>Line</th>
@@ -1292,6 +1292,16 @@
                 <td>C2801</td>
                 <td>TestCommunicator.test_roundtrip_variable</td>
                 <td><pre>Unnecessarily calls dunder method __getattribute__. Access attribute directly or use getattr built-in function.</pre></td>
+            </tr>
+            
+            <tr>
+                <td>50</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>line-too-long</code></td>
+                <td>C0301</td>
+                <td></td>
+                <td><pre>Line too long (108/100)</pre></td>
             </tr>
             
         </table>
@@ -2910,7 +2920,7 @@ if __name__ == &#34;__main__&#34;:
         return Agent(env=env, config=agent_config)
 
     def _get_module_cfg(self, **kwargs):
-        &#34;&#34;&#34;Helper method to create logger config&#34;&#34;&#34;
+        &#34;&#34;&#34;Dynamically build config to avoid duplicate code:&#34;&#34;&#34;
         return {</pre></td>
             </tr>
             
@@ -2979,7 +2989,7 @@ if __name__ == &#34;__main__&#34;:
             
             <tr>
                 <td>convention</td>
-                <td>97</td>
+                <td>98</td>
             </tr>
             
             <tr>
@@ -3073,13 +3083,13 @@ if __name__ == &#34;__main__&#34;:
             </tr>
             
             <tr>
-                <td>unnecessary-dunder-call</td>
+                <td>line-too-long</td>
                 <td>3</td>
             </tr>
             
             <tr>
-                <td>line-too-long</td>
-                <td>2</td>
+                <td>unnecessary-dunder-call</td>
+                <td>3</td>
             </tr>
             
             <tr>
@@ -3148,7 +3158,7 @@ if __name__ == &#34;__main__&#34;:
             </tr>
             
             <tr>
-                <td>ci.run_examples</td>
+                <td>run_examples</td>
                 <td>8</td>
             </tr>
             
@@ -3164,7 +3174,7 @@ if __name__ == &#34;__main__&#34;:
             
             <tr>
                 <td>tests.test_communicator</td>
-                <td>5</td>
+                <td>6</td>
             </tr>
             
             <tr>
@@ -3264,7 +3274,7 @@ if __name__ == &#34;__main__&#34;:
             
             <tr>
                 <td>tests/test_communicator.py</td>
-                <td>5</td>
+                <td>6</td>
             </tr>
             
             <tr>
