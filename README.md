@@ -31,7 +31,7 @@ pip install -e .[full]
 ```
 
 ## Optional Dependencies
-The AgentLib has a number of optional dependencies, ranging from additional features to performance improvements:
+AgentLib has a number of optional dependencies, ranging from additional features to performance improvements:
  
  - **fmu**: Support simulation of FMU models (https://fmi-standard.org/).
  - **scipy**: Support simulation of linear state space models, based on scipy.
@@ -41,6 +41,12 @@ The AgentLib has a number of optional dependencies, ranging from additional feat
  - **fuzz**: Improves error messages when providing wrong configurations.
 
 **clonemap**: Support the execution of agents and their communication through [clonemap](https://github.com/sogno-platform/clonemap). As clonemapy is not available through PYPI, please install it from source, or through the AgentLib's ``requirements.txt`` .
+
+## Plugins
+AgentLib supports extension, especially in the form of additional modules through plugins.
+Official Plugins available are:
+  - **[AgentLib_MPC](https://github.com/RWTH-EBC/AgentLib-MPC)**: Provides modules for model predictive control.
+  - **[AgentLib_FIWARE](https://github.com/RWTH-EBC/AgentLib-FIWARE)**: Provides communicators for the IoT Platform FIWARE.
 
 ## Referencing the AgentLib
 
