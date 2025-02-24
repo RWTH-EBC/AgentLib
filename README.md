@@ -9,6 +9,8 @@
 
 This is a collection of base classes for the implementation of agents in Python.
 The original purpose of this library is the execution of distributed simulations and controllers for energy systems, however it is not limited to any specific field.
+You can find the motivation, core principles and several exemplary applications in the associated [journal paper](https://doi.org/10.1016/j.apenergy.2025.125496) and in the [documentation](https://rwth-ebc.github.io/AgentLib/main/docs/index.html).
+
 To get started, please check out our examples.
 
 ### Installation
@@ -50,10 +52,9 @@ Official Plugins available are:
 
 ## Referencing the AgentLib
 
-A publication regarding the AgentLib is currently in the work.
-A preprint is available under http://dx.doi.org/10.2139/ssrn.4884846 and can be cited as: 
+To cite the AgentLib, please use the following paper:
 
-> Eser, Steffen and Storek, Thomas and Wüllhorst, Fabian and Dähling, Stefan and Gall, Jan and Stoffel, Phillip and Müller, Dirk, A Modular Python Framework for Rapid Development of Advanced Control Algorithms for Energy Systems. Available at SSRN: https://ssrn.com/abstract=4884846 or http://dx.doi.org/10.2139/ssrn.4884846 
+> Eser, Steffen and Storek, Thomas and Wüllhorst, Fabian and Dähling, Stefan and Gall, Jan and Stoffel, Phillip and Müller, Dirk, A Modular Python Framework for Rapid Development of Advanced Control Algorithms for Energy Systems. Available at SSRN: [https://doi.org/10.1016/j.apenergy.2025.1254969](https://www.sciencedirect.com/science/article/pii/S0306261925002260)
 
 ## Copyright and license
 
