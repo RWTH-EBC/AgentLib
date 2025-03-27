@@ -33,6 +33,11 @@ class CommunicatorConfig(BaseModuleConfig):
         description="If true, the faster orjson library will be used for serialization "
         "deserialization. Requires the optional dependency.",
     )
+    parse_series_to_json: bool = Field(
+        title="parse_series_to_json",
+        default=True,
+        description="If true, thee default, all pd.Series values will be converted to json before being send."
+    )
 
 
 class SubscriptionCommunicatorConfig(CommunicatorConfig):
@@ -111,7 +116,7 @@ class Communicator(BaseModule):
         Only contains attributes of the AgentVariable, that are relevant for other
         modules or agents. For performance and privacy reasons, this function should
         be called for communicators."""
-        if isinstance(variable.value, pd.Series):
+        if isinstance(variable.value, pd.Series) and self.config.parse_series_to_json:
             value = variable.value.to_json()
         else:
             value = variable.value
@@ -141,6 +146,10 @@ class LocalCommunicatorConfig(CommunicatorConfig):
         "which use MQTT or similar.",
         default=False,
     )
+    queue_size: int = Field(
+        title="Size of the queue",
+        default=10000
+    )
 
 
 class LocalCommunicator(Communicator):
@@ -165,7 +174,7 @@ class LocalCommunicator(Communicator):
 
         super().__init__(config=config, agent=agent)
         self.broker = self.setup_broker()
-        self._msg_q_in = queue.Queue(100)
+        self._msg_q_in = queue.Queue(self.config.queue_size)
         self.broker.register_client(client=self)
 
     @property
