@@ -46,4 +46,16 @@ def create_logger(env: "Environment", name: str) -> CustomLogger:
     stream_handler = logging.StreamHandler()
     stream_handler.setFormatter(formatter)
     custom_logger.addHandler(stream_handler)
+
+    # Check if root logger has any FileHandlers and add similar ones to our custom logger
+    for handler in logging.root.handlers:
+        if isinstance(handler, logging.FileHandler):
+            # Create a similar FileHandler for our custom logger
+            file_handler = logging.FileHandler(handler.baseFilename,
+                                               mode=handler.mode,
+                                               encoding=handler.encoding)
+            file_handler.setFormatter(formatter)
+            file_handler.setLevel(handler.level)
+            custom_logger.addHandler(file_handler)
+
     return custom_logger
