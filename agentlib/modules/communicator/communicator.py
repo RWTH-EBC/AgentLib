@@ -150,6 +150,11 @@ class LocalCommunicatorConfig(CommunicatorConfig):
         title="Size of the queue",
         default=10000
     )
+    parse_series_to_json: bool = Field(
+        title="parse_series_to_json",
+        default=False,
+        description="If true, thee default, all pd.Series values will be converted to json before being send."
+    )
 
 
 class LocalCommunicator(Communicator):
