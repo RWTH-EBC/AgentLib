@@ -33,11 +33,6 @@ class CommunicatorConfig(BaseModuleConfig):
         description="If true, the faster orjson library will be used for serialization "
         "deserialization. Requires the optional dependency.",
     )
-    parse_series_to_json: bool = Field(
-        title="parse_series_to_json",
-        default=True,
-        description="If true, thee default, all pd.Series values will be converted to json before being send."
-    )
 
 
 class SubscriptionCommunicatorConfig(CommunicatorConfig):
@@ -116,17 +111,18 @@ class Communicator(BaseModule):
         Only contains attributes of the AgentVariable, that are relevant for other
         modules or agents. For performance and privacy reasons, this function should
         be called for communicators."""
-        if isinstance(variable.value, pd.Series) and self.config.parse_series_to_json:
-            value = variable.value.to_json()
-        else:
-            value = variable.value
         return CommunicationDict(
             alias=variable.alias,
-            value=value,
+            value=self._value_to_json(variable.value),
             timestamp=variable.timestamp,
             type=variable.type,
             source=self.agent.id,
         )
+
+    def _value_to_json(self, value):
+        if isinstance(value, pd.Series):
+            return value.to_json()
+        return value
 
     def to_json(self, payload: CommunicationDict) -> Union[bytes, str]:
         """Transforms the payload into json serialized form. Dynamically uses orjson
@@ -149,11 +145,6 @@ class LocalCommunicatorConfig(CommunicatorConfig):
     queue_size: int = Field(
         title="Size of the queue",
         default=10000
-    )
-    parse_series_to_json: bool = Field(
-        title="parse_series_to_json",
-        default=False,
-        description="If true, thee default, all pd.Series values will be converted to json before being send."
     )
 
 
@@ -254,3 +245,8 @@ class LocalCommunicator(Communicator):
         # agents from the previous simulation, potentially filling their queues.
         self.broker.delete_client(self)
         super().terminate()
+
+    def _value_to_json(self, value):
+        if self.config.parse_json:
+            return super()._value_to_json(value)
+        return value

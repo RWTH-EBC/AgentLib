@@ -25,7 +25,7 @@ class TestCommunicator(unittest.TestCase):
         self.test_config = {
             "type": "local_broadcast",
             "module_id": "comm_module",
-            "parse_json": True,
+            "parse_json": True
         }
         self.agent_send = Agent(config={"id": "Send", "modules": []}, env=Environment())
         self.agent_rec = Agent(config={"id": "Rec", "modules": []}, env=Environment())
@@ -51,6 +51,16 @@ class TestCommunicator(unittest.TestCase):
         var_json = comm.to_json(payload)
         variable2 = AgentVariable.from_json(var_json)
         pd.testing.assert_series_equal(variable.value, variable2.value)
+
+    def test_pd_series_no_json(self):
+        """Tests whether pandas series are sent correctly"""
+        data = {**default_data, "value": pd.Series({0: 1, 10: 2}), "type": "pd.Series"}
+        variable = AgentVariable(**data)
+        _config = self.test_config.copy()
+        _config["parse_json"] = False
+        comm = LocalClient(config=_config, agent=self.agent_send)
+        payload = comm.short_dict(variable)
+        pd.testing.assert_series_equal(variable.value, payload["value"])
 
 
 if __name__ == "__main__":

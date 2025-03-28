@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.8.7
+
+- Add an option to not parse series to json in local communicator #48
+- Increase default queue size #53
+
 ## 0.8.6
 
 - Fix a bug, where pandas series could not be sent over network communicators or when
