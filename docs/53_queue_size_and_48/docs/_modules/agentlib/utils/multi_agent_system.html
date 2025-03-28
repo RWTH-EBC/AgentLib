@@ -1,0 +1,444 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>agentlib.utils.multi_agent_system &mdash; agentlib 0.8.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/autodoc_pydantic.css" />
+
+  
+      <script src="../../../_static/jquery.js"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+      <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+      <script src="../../../_static/doctools.js"></script>
+      <script src="../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            agentlib
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Tutorials/tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ModulesList.html">List of standard modules and models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../AgentVariable.html">AgentVariables and ModelVariables</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../agentlib.html">agentlib package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">agentlib</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+          <li class="breadcrumb-item"><a href="../utils.html">agentlib.utils</a></li>
+      <li class="breadcrumb-item active">agentlib.utils.multi_agent_system</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for agentlib.utils.multi_agent_system</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Module containing a local agency to test any LocalMASAgency system</span>
+<span class="sd">without the need of cloneMAP.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">abc</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">multiprocessing</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">threading</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Any</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">field_validator</span><span class="p">,</span>
+    <span class="n">ConfigDict</span><span class="p">,</span>
+    <span class="n">BaseModel</span><span class="p">,</span>
+    <span class="n">PrivateAttr</span><span class="p">,</span>
+    <span class="n">Field</span><span class="p">,</span>
+    <span class="n">FilePath</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">agentlib.core</span><span class="w"> </span><span class="kn">import</span> <span class="n">Agent</span><span class="p">,</span> <span class="n">Environment</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agentlib.core.agent</span><span class="w"> </span><span class="kn">import</span> <span class="n">AgentConfig</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agentlib.utils.load_config</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_config</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="MAS"><a class="viewcode-back" href="../../../code/agentlib.utils.html#agentlib.MAS">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">MAS</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Parent class for all MAS&quot;&quot;&quot;</span>
+
+    <span class="n">model_config</span> <span class="o">=</span> <span class="n">ConfigDict</span><span class="p">(</span><span class="n">arbitrary_types_allowed</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">agent_configs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">dict</span><span class="p">,</span> <span class="n">FilePath</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span>
+    <span class="n">env</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Environment</span><span class="p">,</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">FilePath</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default_factory</span><span class="o">=</span><span class="n">Environment</span><span class="p">,</span>
+        <span class="n">title</span><span class="o">=</span><span class="s2">&quot;env&quot;</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;The environment for the agents.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">variable_logging</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">title</span><span class="o">=</span><span class="s2">&quot;variable_logging&quot;</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Enable variable logging in all agents with sampling rate of environment.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">_agent_configs</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">AgentConfig</span><span class="p">]</span> <span class="o">=</span> <span class="n">PrivateAttr</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="p">{})</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">data</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Add all agents as Agent object&quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">agent_config</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">agent_configs</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">add_agent</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">agent_config</span><span class="p">)</span>
+
+<div class="viewcode-block" id="MAS.setup_agents"><a class="viewcode-back" href="../../../code/agentlib.utils.html#agentlib.MAS.setup_agents">[docs]</a>    <span class="nd">@field_validator</span><span class="p">(</span><span class="s2">&quot;agent_configs&quot;</span><span class="p">)</span>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">setup_agents</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">agent_configs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Load agent configs and add them.&quot;&quot;&quot;</span>
+        <span class="n">cfgs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">cfg</span> <span class="ow">in</span> <span class="n">agent_configs</span><span class="p">:</span>
+            <span class="n">cfgs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">load_config</span><span class="p">(</span><span class="n">cfg</span><span class="p">,</span> <span class="n">config_type</span><span class="o">=</span><span class="n">AgentConfig</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">cfgs</span></div>
+
+<div class="viewcode-block" id="MAS.add_agent"><a class="viewcode-back" href="../../../code/agentlib.utils.html#agentlib.MAS.add_agent">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">add_agent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">AgentConfig</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add an agent to the local agency with the</span>
+<span class="sd">        given agent config.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            config Dict: agent config</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">variable_logging</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                <span class="n">config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_agent_logger</span><span class="p">(</span>
+                    <span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">,</span> <span class="n">sampling</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;t_sample&quot;</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+                <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_agent_logger</span><span class="p">(</span>
+                    <span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">,</span> <span class="n">sampling</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">t_sample</span>
+                <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_agent_configs</span><span class="p">[</span><span class="n">config</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">model_copy</span><span class="p">()</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Registered agent </span><span class="si">%s</span><span class="s2"> in agency&quot;</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">id</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MAS.add_agent_logger"><a class="viewcode-back" href="../../../code/agentlib.utils.html#agentlib.MAS.add_agent_logger">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_agent_logger</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="n">AgentConfig</span><span class="p">,</span> <span class="n">sampling</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AgentConfig</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Adds the AgentLogger to the list of configs.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            config dict: The config to be updated</span>
+<span class="sd">            sampling=</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Add Logger config</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;variable_logs//Agent_</span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">_Logger.log&quot;</span>
+        <span class="n">cfg</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;module_id&quot;</span><span class="p">:</span> <span class="s2">&quot;AgentLogger&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;AgentLogger&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;t_sample&quot;</span><span class="p">:</span> <span class="n">sampling</span><span class="p">,</span>
+            <span class="s2">&quot;values_only&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+            <span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="n">filename</span><span class="p">,</span>
+            <span class="s2">&quot;overwrite_log&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+            <span class="s2">&quot;clean_up&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="n">config</span><span class="o">.</span><span class="n">modules</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cfg</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">config</span></div>
+
+<div class="viewcode-block" id="MAS.run"><a class="viewcode-back" href="../../../code/agentlib.utils.html#agentlib.MAS.run">[docs]</a>    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">until</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Run the MAS.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            until: The time until which the simulation should run.</span>
+
+<span class="sd">        Returns:</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;&#39;run&#39; is not implemented by the parent class MAS.&quot;</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="LocalMASAgency"><a class="viewcode-back" href="../../../code/agentlib.utils.html#agentlib.LocalMASAgency">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">LocalMASAgency</span><span class="p">(</span><span class="n">MAS</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Local LocalMASAgency agency class which holds the agents in a common environment,</span>
+<span class="sd">    executes and terminates them.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">_agents</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Agent</span><span class="p">]</span> <span class="o">=</span> <span class="n">PrivateAttr</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="p">{})</span>
+
+<div class="viewcode-block" id="LocalMASAgency.setup_env"><a class="viewcode-back" href="../../../code/agentlib.utils.html#agentlib.LocalMASAgency.setup_env">[docs]</a>    <span class="nd">@field_validator</span><span class="p">(</span><span class="s2">&quot;env&quot;</span><span class="p">)</span>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">setup_env</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">env</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Setup the env if a config is given.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">Environment</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">env</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="p">(</span><span class="n">Path</span><span class="p">,</span> <span class="nb">str</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">Path</span><span class="p">(</span><span class="n">env</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                    <span class="n">env</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Environment</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">env</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="LocalMASAgency.add_agent"><a class="viewcode-back" href="../../../code/agentlib.utils.html#agentlib.LocalMASAgency.add_agent">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">add_agent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">AgentConfig</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Also setup the agent directly&quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">add_agent</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setup_agent</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">id</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="LocalMASAgency.stop_agency"><a class="viewcode-back" href="../../../code/agentlib.utils.html#agentlib.LocalMASAgency.stop_agency">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">stop_agency</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Stop all threads&quot;&quot;&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Stopping agency&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">terminate_agents</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="LocalMASAgency.run"><a class="viewcode-back" href="../../../code/agentlib.utils.html#agentlib.LocalMASAgency.run">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">until</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Execute the LocalMASAgency and terminate it after run is finished&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">until</span><span class="o">=</span><span class="n">until</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stop_agency</span><span class="p">()</span></div>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Enable &#39;with&#39; statement&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exc_type</span><span class="p">,</span> <span class="n">exc_val</span><span class="p">,</span> <span class="n">exc_tb</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;On exit in &#39;with&#39; statement, stop the agency&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stop_agency</span><span class="p">()</span>
+
+<div class="viewcode-block" id="LocalMASAgency.terminate_agents"><a class="viewcode-back" href="../../../code/agentlib.utils.html#agentlib.LocalMASAgency.terminate_agents">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">terminate_agents</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Terminate all agents modules.&quot;&quot;&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Terminating all agent modules&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">agent</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_agents</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="n">agent</span><span class="o">.</span><span class="n">terminate</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="LocalMASAgency.setup_agent"><a class="viewcode-back" href="../../../code/agentlib.utils.html#agentlib.LocalMASAgency.setup_agent">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">setup_agent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Agent</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Setup the agent matching the given id&quot;&quot;&quot;</span>
+        <span class="c1"># pylint: disable=redefined-builtin</span>
+        <span class="n">agent</span> <span class="o">=</span> <span class="n">Agent</span><span class="p">(</span><span class="n">env</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_agent_configs</span><span class="p">[</span><span class="nb">id</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_agents</span><span class="p">[</span><span class="n">agent</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">agent</span>
+        <span class="k">return</span> <span class="n">agent</span></div>
+
+<div class="viewcode-block" id="LocalMASAgency.get_agent"><a class="viewcode-back" href="../../../code/agentlib.utils.html#agentlib.LocalMASAgency.get_agent">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">get_agent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Agent</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the agent matching the given id&quot;&quot;&quot;</span>
+        <span class="c1"># pylint: disable=redefined-builtin, inconsistent-return-statements</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_agents</span><span class="p">[</span><span class="nb">id</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="ne">KeyError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Given id &#39;</span><span class="si">{</span><span class="nb">id</span><span class="si">}</span><span class="s2">&#39; is not in the set of agents.&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="LocalMASAgency.get_results"><a class="viewcode-back" href="../../../code/agentlib.utils.html#agentlib.LocalMASAgency.get_results">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">get_results</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cleanup</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get all results of the agentLogger</span>
+<span class="sd">        Args:</span>
+<span class="sd">            cleanup: If true, read files are deleted.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Dict[str, pd.DataFrame]: key is the agent_id, value the dataframe</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">agent</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_agents</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="n">new_res</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">get_results</span><span class="p">(</span><span class="n">cleanup</span><span class="o">=</span><span class="n">cleanup</span><span class="p">)</span>
+            <span class="n">results</span><span class="p">[</span><span class="n">agent</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_res</span>
+        <span class="k">return</span> <span class="n">results</span></div></div>
+
+
+<div class="viewcode-block" id="LocalCloneMAPAgency"><a class="viewcode-back" href="../../../code/agentlib.utils.html#agentlib.LocalCloneMAPAgency">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">LocalCloneMAPAgency</span><span class="p">(</span><span class="n">LocalMASAgency</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Local LocalMASAgency agency class which tries to mimic cloneMAP</span>
+<span class="sd">    behaviour for the local execution.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># todo-fwu delete or add to clonemap example. But I dont think we need the threads, since we have simpy</span>
+
+<div class="viewcode-block" id="LocalCloneMAPAgency.run"><a class="viewcode-back" href="../../../code/agentlib.utils.html#agentlib.LocalCloneMAPAgency.run">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">until</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">pass</span>  <span class="c1"># Already running</span></div>
+
+<div class="viewcode-block" id="LocalCloneMAPAgency.terminate_agents"><a class="viewcode-back" href="../../../code/agentlib.utils.html#agentlib.LocalCloneMAPAgency.terminate_agents">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">terminate_agents</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Terminate all agents modules.&quot;&quot;&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Can&#39;t terminate agents yet in this MAS&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="LocalCloneMAPAgency.setup_agent"><a class="viewcode-back" href="../../../code/agentlib.utils.html#agentlib.LocalCloneMAPAgency.setup_agent">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">setup_agent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Setup the agent matching the given id&quot;&quot;&quot;</span>
+
+        <span class="c1"># pylint: disable=redefined-builtin</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">_get_ag</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">ag_config</span><span class="p">):</span>
+            <span class="n">ag</span> <span class="o">=</span> <span class="n">Agent</span><span class="p">(</span><span class="n">env</span><span class="o">=</span><span class="n">Environment</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">env</span><span class="p">),</span> <span class="n">config</span><span class="o">=</span><span class="n">ag_config</span><span class="p">)</span>
+            <span class="n">ag</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">ag</span>
+
+        <span class="n">thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span>
+            <span class="n">target</span><span class="o">=</span><span class="n">_get_ag</span><span class="p">,</span>
+            <span class="n">kwargs</span><span class="o">=</span><span class="p">{</span>
+                <span class="s2">&quot;env&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">model_copy</span><span class="p">(),</span>
+                <span class="s2">&quot;ag_config&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_agent_configs</span><span class="p">[</span><span class="nb">id</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span>
+            <span class="p">},</span>
+        <span class="p">)</span>
+        <span class="n">thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_agents</span><span class="p">[</span><span class="nb">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">thread</span></div></div>
+
+
+<div class="viewcode-block" id="agent_process"><a class="viewcode-back" href="../../../code/agentlib.utils.html#agentlib.agent_process">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">agent_process</span><span class="p">(</span>
+    <span class="n">agent_config</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">dict</span><span class="p">,</span> <span class="n">FilePath</span><span class="p">],</span>
+    <span class="n">until</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">env</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">dict</span><span class="p">,</span> <span class="n">FilePath</span><span class="p">],</span>
+    <span class="n">results_dict</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
+    <span class="n">cleanup</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">log_level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">ERROR</span><span class="p">,</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Function to initialize and start an agent in its own process.</span>
+<span class="sd">    Collects results from the agent and stores them</span>
+<span class="sd">    in the passed results_dict.</span>
+<span class="sd">    Args:</span>
+<span class="sd">        cleanup:</span>
+<span class="sd">        agent_config: Config for an agent.</span>
+<span class="sd">        until: Simulation runtime</span>
+<span class="sd">        env: config for an environment</span>
+<span class="sd">        results_dict: dict from process manager</span>
+<span class="sd">        log_level: the log level for this process</span>
+
+<span class="sd">    Returns:</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">log_level</span><span class="p">)</span>
+    <span class="n">env</span> <span class="o">=</span> <span class="n">Environment</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">env</span><span class="p">)</span>
+    <span class="n">agent</span> <span class="o">=</span> <span class="n">Agent</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">agent_config</span><span class="p">,</span> <span class="n">env</span><span class="o">=</span><span class="n">env</span><span class="p">)</span>
+    <span class="n">agent</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">until</span><span class="o">=</span><span class="n">until</span><span class="p">)</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">get_results</span><span class="p">(</span><span class="n">cleanup</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">mod</span> <span class="ow">in</span> <span class="n">agent</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
+        <span class="n">mod</span><span class="o">.</span><span class="n">terminate</span><span class="p">()</span>
+    <span class="n">results_dict</span><span class="p">[</span><span class="n">agent</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">results</span></div>
+
+
+<div class="viewcode-block" id="MultiProcessingMAS"><a class="viewcode-back" href="../../../code/agentlib.utils.html#agentlib.MultiProcessingMAS">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">MultiProcessingMAS</span><span class="p">(</span><span class="n">MAS</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Helper class to conveniently run multi-agent-systems in separate processes.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">env</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">dict</span><span class="p">,</span> <span class="n">FilePath</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default_factory</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="n">Environment</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;rt&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}),</span>
+        <span class="n">title</span><span class="o">=</span><span class="s2">&quot;env&quot;</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;The environment for the agents.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">cleanup</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Whether agents should clean the results files after &quot;</span> <span class="s2">&quot;running.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">log_level</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">ERROR</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Loglevel to set for the processes.&quot;</span>
+    <span class="p">)</span>
+
+    <span class="n">_processes</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">]</span> <span class="o">=</span> <span class="n">PrivateAttr</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="p">[])</span>
+    <span class="n">_results_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]</span> <span class="o">=</span> <span class="n">PrivateAttr</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="p">{})</span>
+
+<div class="viewcode-block" id="MultiProcessingMAS.setup_env"><a class="viewcode-back" href="../../../code/agentlib.utils.html#agentlib.MultiProcessingMAS.setup_env">[docs]</a>    <span class="nd">@field_validator</span><span class="p">(</span><span class="s2">&quot;env&quot;</span><span class="p">)</span>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">setup_env</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">env</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Setup the env if a config is given.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="n">Environment</span><span class="p">):</span>
+            <span class="n">env</span> <span class="o">=</span> <span class="n">env</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">model_dump</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="p">(</span><span class="n">Path</span><span class="p">,</span> <span class="nb">str</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">Path</span><span class="p">(</span><span class="n">env</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">env</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                    <span class="n">env</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">env</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;rt&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">),</span> <span class="p">(</span>
+            <span class="s2">&quot;Synchronization between processes relies on time, RealTimeEnvironment &quot;</span>
+            <span class="s2">&quot;is required.&quot;</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">env</span></div>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">data</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">manager</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Manager</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_results_dict</span> <span class="o">=</span> <span class="n">manager</span><span class="o">.</span><span class="n">dict</span><span class="p">()</span>
+
+<div class="viewcode-block" id="MultiProcessingMAS.run"><a class="viewcode-back" href="../../../code/agentlib.utils.html#agentlib.MultiProcessingMAS.run">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">until</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Execute the multi-agent-system in parallel and terminate it after</span>
+<span class="sd">        run is finished&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">agent</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_agent_configs</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;agent_config&quot;</span><span class="p">:</span> <span class="n">agent</span><span class="p">,</span>
+                <span class="s2">&quot;until&quot;</span><span class="p">:</span> <span class="n">until</span><span class="p">,</span>
+                <span class="s2">&quot;env&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="p">,</span>
+                <span class="s2">&quot;results_dict&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_results_dict</span><span class="p">,</span>
+                <span class="s2">&quot;cleanup&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleanup</span><span class="p">,</span>
+                <span class="s2">&quot;log_level&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_level</span><span class="p">,</span>
+            <span class="p">}</span>
+            <span class="n">process</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span>
+                <span class="n">target</span><span class="o">=</span><span class="n">agent_process</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">agent</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">kwargs</span><span class="o">=</span><span class="n">kwargs</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_processes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">process</span><span class="p">)</span>
+            <span class="n">process</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">process</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_processes</span><span class="p">:</span>
+            <span class="n">process</span><span class="o">.</span><span class="n">join</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="MultiProcessingMAS.get_results"><a class="viewcode-back" href="../../../code/agentlib.utils.html#agentlib.MultiProcessingMAS.get_results">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">get_results</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get all results of the agentLogger</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            Dict[str, pd.DataFrame]: key is the agent_id, value the dataframe</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_results_dict</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, AGENT-Project Associates.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

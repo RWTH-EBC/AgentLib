@@ -1,0 +1,712 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>agentlib.modules.simulation package &mdash; agentlib 0.8.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/autodoc_pydantic.css" />
+
+  
+      <script src="../_static/jquery.js"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+      <script src="../_static/doctools.js"></script>
+      <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            agentlib
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Tutorials/tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ModulesList.html">List of standard modules and models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../AgentVariable.html">AgentVariables and ModelVariables</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../agentlib.html">agentlib package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">agentlib</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">agentlib.modules.simulation package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/code/agentlib.modules.simulation.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-agentlib.modules.simulation">
+<span id="agentlib-modules-simulation-package"></span><h1>agentlib.modules.simulation package<a class="headerlink" href="#module-agentlib.modules.simulation" title="Permalink to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
+</section>
+<section id="module-agentlib.modules.simulation.csv_data_source">
+<span id="agentlib-modules-simulation-csv-data-source-module"></span><h2>agentlib.modules.simulation.csv_data_source module<a class="headerlink" href="#module-agentlib.modules.simulation.csv_data_source" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="agentlib.modules.simulation.csv_data_source.CSVDataSource">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agentlib.modules.simulation.csv_data_source.</span></span><span class="sig-name descname"><span class="pre">CSVDataSource</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="agentlib.core.html#agentlib.core.agent.Agent" title="agentlib.core.agent.Agent"><span class="pre">Agent</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/modules/simulation/csv_data_source.html#CSVDataSource"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.simulation.csv_data_source.CSVDataSource" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="agentlib.core.html#agentlib.core.module.BaseModule" title="agentlib.core.module.BaseModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModule</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.modules.simulation.csv_data_source.CSVDataSource.backwards_iterator">
+<span class="sig-name descname"><span class="pre">backwards_iterator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/modules/simulation/csv_data_source.html#CSVDataSource.backwards_iterator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.simulation.csv_data_source.CSVDataSource.backwards_iterator" title="Permalink to this definition"></a></dt>
+<dd><p>Iterator for backwards extrapolation</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.modules.simulation.csv_data_source.CSVDataSource.create_iterator">
+<span class="sig-name descname"><span class="pre">create_iterator</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/modules/simulation/csv_data_source.html#CSVDataSource.create_iterator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.simulation.csv_data_source.CSVDataSource.create_iterator" title="Permalink to this definition"></a></dt>
+<dd><p>Create a custom iterator based on the extrapolation method</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.modules.simulation.csv_data_source.CSVDataSource.process">
+<span class="sig-name descname"><span class="pre">process</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/modules/simulation/csv_data_source.html#CSVDataSource.process"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.simulation.csv_data_source.CSVDataSource.process" title="Permalink to this definition"></a></dt>
+<dd><p>Write the current data values into data_broker every t_sample</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.modules.simulation.csv_data_source.CSVDataSource.register_callbacks">
+<span class="sig-name descname"><span class="pre">register_callbacks</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/modules/simulation/csv_data_source.html#CSVDataSource.register_callbacks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.simulation.csv_data_source.CSVDataSource.register_callbacks" title="Permalink to this definition"></a></dt>
+<dd><p>Don’t do anything as this module is not event-triggered</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class pydantic_model">
+<dt class="sig sig-object py" id="agentlib.modules.simulation.csv_data_source.CSVDataSourceConfig">
+<em class="property"><span class="pre">pydantic</span> <span class="pre">model</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agentlib.modules.simulation.csv_data_source.</span></span><span class="sig-name descname"><span class="pre">CSVDataSourceConfig</span></span><a class="reference internal" href="../_modules/agentlib/modules/simulation/csv_data_source.html#CSVDataSourceConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.simulation.csv_data_source.CSVDataSourceConfig" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="agentlib.core.html#agentlib.core.module.BaseModuleConfig" title="agentlib.core.module.BaseModuleConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModuleConfig</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Config<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>arbitrary_types_allowed</strong>: <em>bool = True</em></p></li>
+<li><p><strong>validate_assignment</strong>: <em>bool = True</em></p></li>
+<li><p><strong>extra</strong>: <em>str = forbid</em></p></li>
+<li><p><strong>frozen</strong>: <em>bool = True</em></p></li>
+</ul>
+</dd>
+<dt class="field-even">Fields<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="#agentlib.modules.simulation.csv_data_source.CSVDataSourceConfig.data" title="agentlib.modules.simulation.csv_data_source.CSVDataSourceConfig.data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">data</span> <span class="pre">(pandas.core.frame.DataFrame</span> <span class="pre">|</span> <span class="pre">pathlib.Path)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#agentlib.modules.simulation.csv_data_source.CSVDataSourceConfig.data_offset" title="agentlib.modules.simulation.csv_data_source.CSVDataSourceConfig.data_offset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">data_offset</span> <span class="pre">(pandas._libs.tslibs.timedeltas.Timedelta</span> <span class="pre">|</span> <span class="pre">float</span> <span class="pre">|</span> <span class="pre">None)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#agentlib.modules.simulation.csv_data_source.CSVDataSourceConfig.extrapolation" title="agentlib.modules.simulation.csv_data_source.CSVDataSourceConfig.extrapolation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">extrapolation</span> <span class="pre">(Literal['constant',</span> <span class="pre">'repeat',</span> <span class="pre">'backwards'])</span></code></a></p></li>
+<li><p><a class="reference internal" href="#agentlib.modules.simulation.csv_data_source.CSVDataSourceConfig.outputs" title="agentlib.modules.simulation.csv_data_source.CSVDataSourceConfig.outputs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">outputs</span> <span class="pre">(List[agentlib.core.datamodels.AgentVariable])</span></code></a></p></li>
+<li><p><a class="reference internal" href="#agentlib.modules.simulation.csv_data_source.CSVDataSourceConfig.shared_variable_fields" title="agentlib.modules.simulation.csv_data_source.CSVDataSourceConfig.shared_variable_fields"><code class="xref py py-obj docutils literal notranslate"><span class="pre">shared_variable_fields</span> <span class="pre">(List[str])</span></code></a></p></li>
+<li><p><a class="reference internal" href="#agentlib.modules.simulation.csv_data_source.CSVDataSourceConfig.t_sample" title="agentlib.modules.simulation.csv_data_source.CSVDataSourceConfig.t_sample"><code class="xref py py-obj docutils literal notranslate"><span class="pre">t_sample</span> <span class="pre">(float</span> <span class="pre">|</span> <span class="pre">int)</span></code></a></p></li>
+</ul>
+</dd>
+<dt class="field-odd">Validators<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="#agentlib.modules.simulation.csv_data_source.CSVDataSourceConfig.check_data" title="agentlib.modules.simulation.csv_data_source.CSVDataSourceConfig.check_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_data</span></code></a> » <a class="reference internal" href="#agentlib.modules.simulation.csv_data_source.CSVDataSourceConfig.data" title="agentlib.modules.simulation.csv_data_source.CSVDataSourceConfig.data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">data</span></code></a></p></li>
+<li><p><a class="reference internal" href="agentlib.core.html#agentlib.core.module.BaseModuleConfig.check_valid_fields" title="agentlib.core.module.BaseModuleConfig.check_valid_fields"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_valid_fields</span></code></a> » <a class="reference internal" href="#agentlib.modules.simulation.csv_data_source.CSVDataSourceConfig.shared_variable_fields" title="agentlib.modules.simulation.csv_data_source.CSVDataSourceConfig.shared_variable_fields"><code class="xref py py-obj docutils literal notranslate"><span class="pre">shared_variable_fields</span></code></a></p></li>
+<li><p><a class="reference internal" href="#agentlib.modules.simulation.csv_data_source.CSVDataSourceConfig.validate_data" title="agentlib.modules.simulation.csv_data_source.CSVDataSourceConfig.validate_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">validate_data</span></code></a> » <code class="xref py py-obj docutils literal notranslate"><span class="pre">all</span> <span class="pre">fields</span></code></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.simulation.csv_data_source.CSVDataSourceConfig.data">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">data</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">Empty</span> <span class="pre">DataFrame</span> <span class="pre">Columns:</span> <span class="pre">[]</span> <span class="pre">Index:</span> <span class="pre">[]</span></em><a class="headerlink" href="#agentlib.modules.simulation.csv_data_source.CSVDataSourceConfig.data" title="Permalink to this definition"></a></dt>
+<dd><p>Data that should be communicated during execution. Index should be either numeric or Datetime, numeric values are interpreted as seconds.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Validated by<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="#agentlib.modules.simulation.csv_data_source.CSVDataSourceConfig.check_data" title="agentlib.modules.simulation.csv_data_source.CSVDataSourceConfig.check_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_data</span></code></a></p></li>
+<li><p><a class="reference internal" href="#agentlib.modules.simulation.csv_data_source.CSVDataSourceConfig.validate_data" title="agentlib.modules.simulation.csv_data_source.CSVDataSourceConfig.validate_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">validate_data</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.simulation.csv_data_source.CSVDataSourceConfig.data_offset">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">data_offset</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Timedelta</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#agentlib.modules.simulation.csv_data_source.CSVDataSourceConfig.data_offset" title="Permalink to this definition"></a></dt>
+<dd><p>Offset will be subtracted from index, allowing you to start at any point in your data. I.e. if your environment starts at 0, and you want your data-source to start at 1000 seconds, you should set this to 1000.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Validated by<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="#agentlib.modules.simulation.csv_data_source.CSVDataSourceConfig.validate_data" title="agentlib.modules.simulation.csv_data_source.CSVDataSourceConfig.validate_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">validate_data</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.simulation.csv_data_source.CSVDataSourceConfig.extrapolation">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">extrapolation</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'constant'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'repeat'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'backwards'</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'constant'</span></em><a class="headerlink" href="#agentlib.modules.simulation.csv_data_source.CSVDataSourceConfig.extrapolation" title="Permalink to this definition"></a></dt>
+<dd><p>Determines what to do, when the data source runs out. ‘constant’ returns the last value, ‘repeat’ repeats the data from the start, and ‘backwards’ goes through the data backwards, bouncing indefinitely.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Validated by<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="#agentlib.modules.simulation.csv_data_source.CSVDataSourceConfig.validate_data" title="agentlib.modules.simulation.csv_data_source.CSVDataSourceConfig.validate_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">validate_data</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.simulation.csv_data_source.CSVDataSourceConfig.outputs">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">outputs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="agentlib.core.html#agentlib.core.datamodels.AgentVariable" title="agentlib.core.datamodels.AgentVariable"><span class="pre">AgentVariable</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#agentlib.modules.simulation.csv_data_source.CSVDataSourceConfig.outputs" title="Permalink to this definition"></a></dt>
+<dd><p>Optional list of columns of data frame that should be sent. If ommited, all datapoint in frame are sent.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Validated by<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="#agentlib.modules.simulation.csv_data_source.CSVDataSourceConfig.validate_data" title="agentlib.modules.simulation.csv_data_source.CSVDataSourceConfig.validate_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">validate_data</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.simulation.csv_data_source.CSVDataSourceConfig.shared_variable_fields">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">shared_variable_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['outputs']</span></em><a class="headerlink" href="#agentlib.modules.simulation.csv_data_source.CSVDataSourceConfig.shared_variable_fields" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Validated by<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="agentlib.core.html#agentlib.core.module.BaseModuleConfig.check_valid_fields" title="agentlib.core.module.BaseModuleConfig.check_valid_fields"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_valid_fields</span></code></a></p></li>
+<li><p><a class="reference internal" href="#agentlib.modules.simulation.csv_data_source.CSVDataSourceConfig.validate_data" title="agentlib.modules.simulation.csv_data_source.CSVDataSourceConfig.validate_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">validate_data</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.simulation.csv_data_source.CSVDataSourceConfig.t_sample">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">t_sample</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#agentlib.modules.simulation.csv_data_source.CSVDataSourceConfig.t_sample" title="Permalink to this definition"></a></dt>
+<dd><p>Sampling time. Data source sends an interpolated value from the data every &lt;t_sample&gt; seconds. Default is 1 s.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Constraints<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ge</strong> = 0</p></li>
+</ul>
+</dd>
+<dt class="field-even">Validated by<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="#agentlib.modules.simulation.csv_data_source.CSVDataSourceConfig.validate_data" title="agentlib.modules.simulation.csv_data_source.CSVDataSourceConfig.validate_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">validate_data</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method pydantic_validator">
+<dt class="sig sig-object py" id="agentlib.modules.simulation.csv_data_source.CSVDataSourceConfig.check_data">
+<em class="property"><span class="pre">validator</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">check_data</span></span><em class="autodoc_pydantic_validator_arrow property">&#160; <span class="pre">»</span>&#160; </em><a class="reference internal" href="#agentlib.modules.simulation.csv_data_source.CSVDataSourceConfig.data" title="agentlib.modules.simulation.csv_data_source.CSVDataSourceConfig.data"><em class="xref py py-obj"><span class="pre">data</span></em></a><a class="reference internal" href="../_modules/agentlib/modules/simulation/csv_data_source.html#CSVDataSourceConfig.check_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.simulation.csv_data_source.CSVDataSourceConfig.check_data" title="Permalink to this definition"></a></dt>
+<dd><p>Makes sure data is a data frame, and loads it if required.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.modules.simulation.csv_data_source.CSVDataSourceConfig.model_post_init">
+<span class="sig-name descname"><span class="pre">model_post_init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#agentlib.modules.simulation.csv_data_source.CSVDataSourceConfig.model_post_init" title="Permalink to this definition"></a></dt>
+<dd><p>This function is meant to behave like a BaseModel method to initialise private attributes.</p>
+<p>It takes context as an argument since that’s what pydantic-core passes when calling it.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>self</strong> – The BaseModel instance.</p></li>
+<li><p><strong>context</strong> – The context.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.modules.simulation.csv_data_source.CSVDataSourceConfig.transform_to_numeric_index">
+<span class="sig-name descname"><span class="pre">transform_to_numeric_index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="../_modules/agentlib/modules/simulation/csv_data_source.html#CSVDataSourceConfig.transform_to_numeric_index"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.simulation.csv_data_source.CSVDataSourceConfig.transform_to_numeric_index" title="Permalink to this definition"></a></dt>
+<dd><p>Handles the index and ensures it is numeric, with correct offset</p>
+</dd></dl>
+
+<dl class="py method pydantic_validator">
+<dt class="sig sig-object py" id="agentlib.modules.simulation.csv_data_source.CSVDataSourceConfig.validate_data">
+<em class="property"><span class="pre">validator</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">validate_data</span></span><em class="autodoc_pydantic_validator_arrow property">&#160; <span class="pre">»</span>&#160; </em><em class="xref py py-obj"><span class="pre">all</span> <span class="pre">fields</span></em><a class="reference internal" href="../_modules/agentlib/modules/simulation/csv_data_source.html#CSVDataSourceConfig.validate_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.simulation.csv_data_source.CSVDataSourceConfig.validate_data" title="Permalink to this definition"></a></dt>
+<dd><p>Checks if outputs and data columns match, and ensures a numeric index.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-agentlib.modules.simulation.simulator">
+<span id="agentlib-modules-simulation-simulator-module"></span><h2>agentlib.modules.simulation.simulator module<a class="headerlink" href="#module-agentlib.modules.simulation.simulator" title="Permalink to this heading"></a></h2>
+<p>Module contains the Simulator, used to simulate any model.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.Simulator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agentlib.modules.simulation.simulator.</span></span><span class="sig-name descname"><span class="pre">Simulator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="agentlib.core.html#agentlib.core.agent.Agent" title="agentlib.core.agent.Agent"><span class="pre">Agent</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/modules/simulation/simulator.html#Simulator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.simulation.simulator.Simulator" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="agentlib.core.html#agentlib.core.module.BaseModule" title="agentlib.core.module.BaseModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModule</span></code></a></p>
+<p>The Simulator is the interface between simulation models
+and further other implementations. It contains all interface functions for
+interacting with the standard model class.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.Simulator.do_step">
+<span class="sig-name descname"><span class="pre">do_step</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/modules/simulation/simulator.html#Simulator.do_step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.simulation.simulator.Simulator.do_step" title="Permalink to this definition"></a></dt>
+<dd><p>Generator function to perform a simulation step,
+update inputs, outputs and model results.</p>
+<p>In a simulation step following happens:
+1. Update inputs (only necessary if self.update_inputs_on_callback = False)
+2. Specify the end time of the simulation from the agents perspective.
+<strong>Important note</strong>: The agents use unix-time as a timestamp and start
+the simulation with the current datetime (represented by self.env.time),
+the model starts at 0 seconds (represented by self.env.now).
+3. Directly after the simulation we send the updated output values
+to other modules and agents by setting them the data_broker.
+Even though the environment time is not already at the end time specified above,
+we explicitly add the timestamp to the variables.
+This way other agents and communication has the maximum time possible to
+process the outputs and send input signals to the simulation.
+4. Call the timeout in the environment,
+hence actually increase the environment time.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.Simulator.get_results">
+<span class="sig-name descname"><span class="pre">get_results</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/agentlib/modules/simulation/simulator.html#Simulator.get_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.simulation.simulator.Simulator.get_results" title="Permalink to this definition"></a></dt>
+<dd><p>Return the current results.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The results DataFrame.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.Simulator.model">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">model</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="agentlib.core.html#agentlib.core.model.Model" title="agentlib.core.model.Model"><span class="pre">Model</span></a></em><a class="headerlink" href="#agentlib.modules.simulation.simulator.Simulator.model" title="Permalink to this definition"></a></dt>
+<dd><p>Getter for current simulation model</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Current simulation model</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="agentlib.core.html#agentlib.core.model.Model" title="agentlib.core.model.Model">agentlib.core.model.Model</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.Simulator.process">
+<span class="sig-name descname"><span class="pre">process</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/modules/simulation/simulator.html#Simulator.process"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.simulation.simulator.Simulator.process" title="Permalink to this definition"></a></dt>
+<dd><p>This function creates a endless loop for the single simulation step event.
+The do_step() function needs to return a generator.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.Simulator.register_callbacks">
+<span class="sig-name descname"><span class="pre">register_callbacks</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/modules/simulation/simulator.html#Simulator.register_callbacks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.simulation.simulator.Simulator.register_callbacks" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.Simulator.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">until</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/modules/simulation/simulator.html#Simulator.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.simulation.simulator.Simulator.run" title="Permalink to this definition"></a></dt>
+<dd><p>Runs the simulator in stand-alone mode if needed
+Attention: If the environment is connected to another environment
+all scheduled process will be started in this environment.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.Simulator.terminate">
+<span class="sig-name descname"><span class="pre">terminate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/modules/simulation/simulator.html#Simulator.terminate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.simulation.simulator.Simulator.terminate" title="Permalink to this definition"></a></dt>
+<dd><p>Terminate the model</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.Simulator.update_model_inputs">
+<span class="sig-name descname"><span class="pre">update_model_inputs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/modules/simulation/simulator.html#Simulator.update_model_inputs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.simulation.simulator.Simulator.update_model_inputs" title="Permalink to this definition"></a></dt>
+<dd><p>Internal method to write current data_broker to simulation model.
+Only update values, not other module_types.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.Simulator.update_module_vars">
+<span class="sig-name descname"><span class="pre">update_module_vars</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/modules/simulation/simulator.html#Simulator.update_module_vars"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.simulation.simulator.Simulator.update_module_vars" title="Permalink to this definition"></a></dt>
+<dd><p>Method to write current model output and states
+values to the module outputs and states.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class pydantic_model">
+<dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.SimulatorConfig">
+<em class="property"><span class="pre">pydantic</span> <span class="pre">model</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agentlib.modules.simulation.simulator.</span></span><span class="sig-name descname"><span class="pre">SimulatorConfig</span></span><a class="reference internal" href="../_modules/agentlib/modules/simulation/simulator.html#SimulatorConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.simulation.simulator.SimulatorConfig" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="agentlib.core.html#agentlib.core.module.BaseModuleConfig" title="agentlib.core.module.BaseModuleConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModuleConfig</span></code></a></p>
+<p>Pydantic data model for simulator configuration parser</p>
+<dl class="field-list simple">
+<dt class="field-odd">Config<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>arbitrary_types_allowed</strong>: <em>bool = True</em></p></li>
+<li><p><strong>validate_assignment</strong>: <em>bool = True</em></p></li>
+<li><p><strong>extra</strong>: <em>str = forbid</em></p></li>
+<li><p><strong>frozen</strong>: <em>bool = True</em></p></li>
+</ul>
+</dd>
+<dt class="field-even">Fields<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.inputs" title="agentlib.modules.simulation.simulator.SimulatorConfig.inputs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inputs</span> <span class="pre">(List[agentlib.core.datamodels.AgentVariable])</span></code></a></p></li>
+<li><p><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.measurement_uncertainty" title="agentlib.modules.simulation.simulator.SimulatorConfig.measurement_uncertainty"><code class="xref py py-obj docutils literal notranslate"><span class="pre">measurement_uncertainty</span> <span class="pre">(Dict[str,</span> <span class="pre">float]</span> <span class="pre">|</span> <span class="pre">float)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.model" title="agentlib.modules.simulation.simulator.SimulatorConfig.model"><code class="xref py py-obj docutils literal notranslate"><span class="pre">model</span> <span class="pre">(Dict)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.outputs" title="agentlib.modules.simulation.simulator.SimulatorConfig.outputs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">outputs</span> <span class="pre">(List[agentlib.core.datamodels.AgentVariable])</span></code></a></p></li>
+<li><p><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.overwrite_result_file" title="agentlib.modules.simulation.simulator.SimulatorConfig.overwrite_result_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">overwrite_result_file</span> <span class="pre">(bool)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.parameters" title="agentlib.modules.simulation.simulator.SimulatorConfig.parameters"><code class="xref py py-obj docutils literal notranslate"><span class="pre">parameters</span> <span class="pre">(List[agentlib.core.datamodels.AgentVariable])</span></code></a></p></li>
+<li><p><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.result_causalities" title="agentlib.modules.simulation.simulator.SimulatorConfig.result_causalities"><code class="xref py py-obj docutils literal notranslate"><span class="pre">result_causalities</span> <span class="pre">(List[agentlib.core.datamodels.Causality])</span></code></a></p></li>
+<li><p><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.result_filename" title="agentlib.modules.simulation.simulator.SimulatorConfig.result_filename"><code class="xref py py-obj docutils literal notranslate"><span class="pre">result_filename</span> <span class="pre">(str</span> <span class="pre">|</span> <span class="pre">None)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.result_sep" title="agentlib.modules.simulation.simulator.SimulatorConfig.result_sep"><code class="xref py py-obj docutils literal notranslate"><span class="pre">result_sep</span> <span class="pre">(str)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.save_results" title="agentlib.modules.simulation.simulator.SimulatorConfig.save_results"><code class="xref py py-obj docutils literal notranslate"><span class="pre">save_results</span> <span class="pre">(bool)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.shared_variable_fields" title="agentlib.modules.simulation.simulator.SimulatorConfig.shared_variable_fields"><code class="xref py py-obj docutils literal notranslate"><span class="pre">shared_variable_fields</span> <span class="pre">(List[str])</span></code></a></p></li>
+<li><p><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.states" title="agentlib.modules.simulation.simulator.SimulatorConfig.states"><code class="xref py py-obj docutils literal notranslate"><span class="pre">states</span> <span class="pre">(List[agentlib.core.datamodels.AgentVariable])</span></code></a></p></li>
+<li><p><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.t_sample" title="agentlib.modules.simulation.simulator.SimulatorConfig.t_sample"><code class="xref py py-obj docutils literal notranslate"><span class="pre">t_sample</span> <span class="pre">(float</span> <span class="pre">|</span> <span class="pre">int)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.t_start" title="agentlib.modules.simulation.simulator.SimulatorConfig.t_start"><code class="xref py py-obj docutils literal notranslate"><span class="pre">t_start</span> <span class="pre">(float</span> <span class="pre">|</span> <span class="pre">int)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.t_stop" title="agentlib.modules.simulation.simulator.SimulatorConfig.t_stop"><code class="xref py py-obj docutils literal notranslate"><span class="pre">t_stop</span> <span class="pre">(float</span> <span class="pre">|</span> <span class="pre">int)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.update_inputs_on_callback" title="agentlib.modules.simulation.simulator.SimulatorConfig.update_inputs_on_callback"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_inputs_on_callback</span> <span class="pre">(bool)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.validate_incoming_values" title="agentlib.modules.simulation.simulator.SimulatorConfig.validate_incoming_values"><code class="xref py py-obj docutils literal notranslate"><span class="pre">validate_incoming_values</span> <span class="pre">(bool</span> <span class="pre">|</span> <span class="pre">None)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.write_results_delay" title="agentlib.modules.simulation.simulator.SimulatorConfig.write_results_delay"><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_results_delay</span> <span class="pre">(float</span> <span class="pre">|</span> <span class="pre">None)</span></code></a></p></li>
+</ul>
+</dd>
+<dt class="field-odd">Validators<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.check_model" title="agentlib.modules.simulation.simulator.SimulatorConfig.check_model"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_model</span></code></a> » <a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.model" title="agentlib.modules.simulation.simulator.SimulatorConfig.model"><code class="xref py py-obj docutils literal notranslate"><span class="pre">model</span></code></a></p></li>
+<li><p><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.check_nonexisting_csv" title="agentlib.modules.simulation.simulator.SimulatorConfig.check_nonexisting_csv"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_nonexisting_csv</span></code></a> » <a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.result_filename" title="agentlib.modules.simulation.simulator.SimulatorConfig.result_filename"><code class="xref py py-obj docutils literal notranslate"><span class="pre">result_filename</span></code></a></p></li>
+<li><p><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.check_t_sample" title="agentlib.modules.simulation.simulator.SimulatorConfig.check_t_sample"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_t_sample</span></code></a> » <a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.t_sample" title="agentlib.modules.simulation.simulator.SimulatorConfig.t_sample"><code class="xref py py-obj docutils literal notranslate"><span class="pre">t_sample</span></code></a></p></li>
+<li><p><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.check_t_stop" title="agentlib.modules.simulation.simulator.SimulatorConfig.check_t_stop"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_t_stop</span></code></a> » <a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.t_stop" title="agentlib.modules.simulation.simulator.SimulatorConfig.t_stop"><code class="xref py py-obj docutils literal notranslate"><span class="pre">t_stop</span></code></a></p></li>
+<li><p><a class="reference internal" href="agentlib.core.html#agentlib.core.module.BaseModuleConfig.check_valid_fields" title="agentlib.core.module.BaseModuleConfig.check_valid_fields"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_valid_fields</span></code></a> » <a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.shared_variable_fields" title="agentlib.modules.simulation.simulator.SimulatorConfig.shared_variable_fields"><code class="xref py py-obj docutils literal notranslate"><span class="pre">shared_variable_fields</span></code></a></p></li>
+<li><p><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.set_default_t_sample" title="agentlib.modules.simulation.simulator.SimulatorConfig.set_default_t_sample"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_default_t_sample</span></code></a> » <a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.write_results_delay" title="agentlib.modules.simulation.simulator.SimulatorConfig.write_results_delay"><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_results_delay</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.SimulatorConfig.inputs">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">inputs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="agentlib.core.html#agentlib.core.datamodels.AgentVariable" title="agentlib.core.datamodels.AgentVariable"><span class="pre">AgentVariable</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#agentlib.modules.simulation.simulator.SimulatorConfig.inputs" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.SimulatorConfig.measurement_uncertainty">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">measurement_uncertainty</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#agentlib.modules.simulation.simulator.SimulatorConfig.measurement_uncertainty" title="Permalink to this definition"></a></dt>
+<dd><p>Either pass a float and add the percentage uncertainty to all measurements from the model.Or pass a Dict and specify the model variable name as keyand the associated uncertainty as a float</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.SimulatorConfig.model">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">model</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#agentlib.modules.simulation.simulator.SimulatorConfig.model" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Validated by<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.check_model" title="agentlib.modules.simulation.simulator.SimulatorConfig.check_model"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_model</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.SimulatorConfig.outputs">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">outputs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="agentlib.core.html#agentlib.core.datamodels.AgentVariable" title="agentlib.core.datamodels.AgentVariable"><span class="pre">AgentVariable</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#agentlib.modules.simulation.simulator.SimulatorConfig.outputs" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.SimulatorConfig.overwrite_result_file">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">overwrite_result_file</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#agentlib.modules.simulation.simulator.SimulatorConfig.overwrite_result_file" title="Permalink to this definition"></a></dt>
+<dd><p>If True, and the result file already exists, the file is overwritten.</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.SimulatorConfig.parameters">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">parameters</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="agentlib.core.html#agentlib.core.datamodels.AgentVariable" title="agentlib.core.datamodels.AgentVariable"><span class="pre">AgentVariable</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#agentlib.modules.simulation.simulator.SimulatorConfig.parameters" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.SimulatorConfig.result_causalities">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">result_causalities</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="agentlib.core.html#agentlib.core.datamodels.Causality" title="agentlib.core.datamodels.Causality"><span class="pre">Causality</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[&lt;Causality.input:</span> <span class="pre">'input'&gt;,</span> <span class="pre">&lt;Causality.output:</span> <span class="pre">'output'&gt;]</span></em><a class="headerlink" href="#agentlib.modules.simulation.simulator.SimulatorConfig.result_causalities" title="Permalink to this definition"></a></dt>
+<dd><p>List of causalities to store. Default stores only inputs and outputs</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.SimulatorConfig.result_filename">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">result_filename</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agentlib.modules.simulation.simulator.SimulatorConfig.result_filename" title="Permalink to this definition"></a></dt>
+<dd><p>If not None, results are stored in that filename.Needs to be a .csv file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Validated by<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.check_nonexisting_csv" title="agentlib.modules.simulation.simulator.SimulatorConfig.check_nonexisting_csv"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_nonexisting_csv</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.SimulatorConfig.result_sep">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">result_sep</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">','</span></em><a class="headerlink" href="#agentlib.modules.simulation.simulator.SimulatorConfig.result_sep" title="Permalink to this definition"></a></dt>
+<dd><p>Separator in the .csv file. Only relevant if result_filename is passed</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.SimulatorConfig.save_results">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">save_results</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#agentlib.modules.simulation.simulator.SimulatorConfig.save_results" title="Permalink to this definition"></a></dt>
+<dd><p>If True, results are created and stored</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.SimulatorConfig.shared_variable_fields">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">shared_variable_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['outputs']</span></em><a class="headerlink" href="#agentlib.modules.simulation.simulator.SimulatorConfig.shared_variable_fields" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Validated by<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="agentlib.core.html#agentlib.core.module.BaseModuleConfig.check_valid_fields" title="agentlib.core.module.BaseModuleConfig.check_valid_fields"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_valid_fields</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.SimulatorConfig.states">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">states</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="agentlib.core.html#agentlib.core.datamodels.AgentVariable" title="agentlib.core.datamodels.AgentVariable"><span class="pre">AgentVariable</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#agentlib.modules.simulation.simulator.SimulatorConfig.states" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.SimulatorConfig.t_sample">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">t_sample</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#agentlib.modules.simulation.simulator.SimulatorConfig.t_sample" title="Permalink to this definition"></a></dt>
+<dd><p>Simulation sample time</p>
+<dl class="field-list simple">
+<dt class="field-odd">Constraints<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ge</strong> = 0</p></li>
+</ul>
+</dd>
+<dt class="field-even">Validated by<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.check_t_sample" title="agentlib.modules.simulation.simulator.SimulatorConfig.check_t_sample"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_t_sample</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.SimulatorConfig.t_start">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">t_start</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.0</span></em><a class="headerlink" href="#agentlib.modules.simulation.simulator.SimulatorConfig.t_start" title="Permalink to this definition"></a></dt>
+<dd><p>Simulation start time</p>
+<dl class="field-list simple">
+<dt class="field-odd">Constraints<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ge</strong> = 0</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.SimulatorConfig.t_stop">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">t_stop</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">inf</span></em><a class="headerlink" href="#agentlib.modules.simulation.simulator.SimulatorConfig.t_stop" title="Permalink to this definition"></a></dt>
+<dd><p>Simulation stop time</p>
+<dl class="field-list simple">
+<dt class="field-odd">Constraints<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ge</strong> = 0</p></li>
+</ul>
+</dd>
+<dt class="field-even">Validated by<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.check_t_stop" title="agentlib.modules.simulation.simulator.SimulatorConfig.check_t_stop"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_t_stop</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.SimulatorConfig.update_inputs_on_callback">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">update_inputs_on_callback</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#agentlib.modules.simulation.simulator.SimulatorConfig.update_inputs_on_callback" title="Permalink to this definition"></a></dt>
+<dd><p>If True, model inputs are updated if they are updated in data_broker.Else, the model inputs are updated before each simulation.</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.SimulatorConfig.validate_incoming_values">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">validate_incoming_values</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#agentlib.modules.simulation.simulator.SimulatorConfig.validate_incoming_values" title="Permalink to this definition"></a></dt>
+<dd><p>If true, the validator of the AgentVariable value is called when receiving a new value from the DataBroker. In the simulator, this is False by default, as we expect to receive a lot of measurements and want to be efficient.</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.SimulatorConfig.write_results_delay">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">write_results_delay</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agentlib.modules.simulation.simulator.SimulatorConfig.write_results_delay" title="Permalink to this definition"></a></dt>
+<dd><p>Sampling interval for which the results are written to disc in seconds.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Constraints<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>gt</strong> = 0</p></li>
+</ul>
+</dd>
+<dt class="field-even">Validated by<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.set_default_t_sample" title="agentlib.modules.simulation.simulator.SimulatorConfig.set_default_t_sample"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_default_t_sample</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method pydantic_validator">
+<dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.SimulatorConfig.check_model">
+<em class="property"><span class="pre">validator</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">check_model</span></span><em class="autodoc_pydantic_validator_arrow property">&#160; <span class="pre">»</span>&#160; </em><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.model" title="agentlib.modules.simulation.simulator.SimulatorConfig.model"><em class="xref py py-obj"><span class="pre">model</span></em></a><a class="reference internal" href="../_modules/agentlib/modules/simulation/simulator.html#SimulatorConfig.check_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.simulation.simulator.SimulatorConfig.check_model" title="Permalink to this definition"></a></dt>
+<dd><p>Validate the model input</p>
+</dd></dl>
+
+<dl class="py method pydantic_validator">
+<dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.SimulatorConfig.check_nonexisting_csv">
+<em class="property"><span class="pre">validator</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">check_nonexisting_csv</span></span><em class="autodoc_pydantic_validator_arrow property">&#160; <span class="pre">»</span>&#160; </em><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.result_filename" title="agentlib.modules.simulation.simulator.SimulatorConfig.result_filename"><em class="xref py py-obj"><span class="pre">result_filename</span></em></a><a class="reference internal" href="../_modules/agentlib/modules/simulation/simulator.html#SimulatorConfig.check_nonexisting_csv"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.simulation.simulator.SimulatorConfig.check_nonexisting_csv" title="Permalink to this definition"></a></dt>
+<dd><p>Check if the result_filename is a .csv file or an hf
+and assert that it does not exist.</p>
+</dd></dl>
+
+<dl class="py method pydantic_validator">
+<dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.SimulatorConfig.check_t_sample">
+<em class="property"><span class="pre">validator</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">check_t_sample</span></span><em class="autodoc_pydantic_validator_arrow property">&#160; <span class="pre">»</span>&#160; </em><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.t_sample" title="agentlib.modules.simulation.simulator.SimulatorConfig.t_sample"><em class="xref py py-obj"><span class="pre">t_sample</span></em></a><a class="reference internal" href="../_modules/agentlib/modules/simulation/simulator.html#SimulatorConfig.check_t_sample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.simulation.simulator.SimulatorConfig.check_t_sample" title="Permalink to this definition"></a></dt>
+<dd><p>Check if t_sample is smaller than stop-start time</p>
+</dd></dl>
+
+<dl class="py method pydantic_validator">
+<dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.SimulatorConfig.check_t_stop">
+<em class="property"><span class="pre">validator</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">check_t_stop</span></span><em class="autodoc_pydantic_validator_arrow property">&#160; <span class="pre">»</span>&#160; </em><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.t_stop" title="agentlib.modules.simulation.simulator.SimulatorConfig.t_stop"><em class="xref py py-obj"><span class="pre">t_stop</span></em></a><a class="reference internal" href="../_modules/agentlib/modules/simulation/simulator.html#SimulatorConfig.check_t_stop"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.simulation.simulator.SimulatorConfig.check_t_stop" title="Permalink to this definition"></a></dt>
+<dd><p>Check if stop is greater than start time</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.SimulatorConfig.model_post_init">
+<span class="sig-name descname"><span class="pre">model_post_init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#agentlib.modules.simulation.simulator.SimulatorConfig.model_post_init" title="Permalink to this definition"></a></dt>
+<dd><p>This function is meant to behave like a BaseModel method to initialise private attributes.</p>
+<p>It takes context as an argument since that’s what pydantic-core passes when calling it.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>self</strong> – The BaseModel instance.</p></li>
+<li><p><strong>context</strong> – The context.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method pydantic_validator">
+<dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.SimulatorConfig.set_default_t_sample">
+<em class="property"><span class="pre">validator</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">set_default_t_sample</span></span><em class="autodoc_pydantic_validator_arrow property">&#160; <span class="pre">»</span>&#160; </em><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.write_results_delay" title="agentlib.modules.simulation.simulator.SimulatorConfig.write_results_delay"><em class="xref py py-obj"><span class="pre">write_results_delay</span></em></a><a class="reference internal" href="../_modules/agentlib/modules/simulation/simulator.html#SimulatorConfig.set_default_t_sample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.simulation.simulator.SimulatorConfig.set_default_t_sample" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.SimulatorResults">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agentlib.modules.simulation.simulator.</span></span><span class="sig-name descname"><span class="pre">SimulatorResults</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">variables</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="agentlib.core.html#agentlib.core.datamodels.ModelVariable" title="agentlib.core.datamodels.ModelVariable"><span class="pre">ModelVariable</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/modules/simulation/simulator.html#SimulatorResults"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.simulation.simulator.SimulatorResults" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class to organize in-memory simulator results.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.SimulatorResults.columns">
+<span class="sig-name descname"><span class="pre">columns</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">MultiIndex</span></em><a class="headerlink" href="#agentlib.modules.simulation.simulator.SimulatorResults.columns" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.SimulatorResults.data">
+<span class="sig-name descname"><span class="pre">data</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#agentlib.modules.simulation.simulator.SimulatorResults.data" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.SimulatorResults.df">
+<span class="sig-name descname"><span class="pre">df</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="../_modules/agentlib/modules/simulation/simulator.html#SimulatorResults.df"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.simulation.simulator.SimulatorResults.df" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the current results as a dataframe.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.SimulatorResults.index">
+<span class="sig-name descname"><span class="pre">index</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#agentlib.modules.simulation.simulator.SimulatorResults.index" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.SimulatorResults.initialize">
+<span class="sig-name descname"><span class="pre">initialize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/modules/simulation/simulator.html#SimulatorResults.initialize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.simulation.simulator.SimulatorResults.initialize" title="Permalink to this definition"></a></dt>
+<dd><p>Adds the first row to the data</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.SimulatorResults.write_results">
+<span class="sig-name descname"><span class="pre">write_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/modules/simulation/simulator.html#SimulatorResults.write_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.simulation.simulator.SimulatorResults.write_results" title="Permalink to this definition"></a></dt>
+<dd><p>Dumps results which are currently in memory to a file.
+On creation of the file, the header columns are dumped, as well.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.convert_agent_vars_to_list_of_dicts">
+<span class="sig-prename descclassname"><span class="pre">agentlib.modules.simulation.simulator.</span></span><span class="sig-name descname"><span class="pre">convert_agent_vars_to_list_of_dicts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">var</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="agentlib.core.html#agentlib.core.datamodels.AgentVariable" title="agentlib.core.datamodels.AgentVariable"><span class="pre">AgentVariable</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/agentlib/modules/simulation/simulator.html#convert_agent_vars_to_list_of_dicts"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.simulation.simulator.convert_agent_vars_to_list_of_dicts" title="Permalink to this definition"></a></dt>
+<dd><p>Function to convert AgentVariables to a list of dictionaries containing information for
+ModelVariables.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.read_simulator_results">
+<span class="sig-prename descclassname"><span class="pre">agentlib.modules.simulation.simulator.</span></span><span class="sig-name descname"><span class="pre">read_simulator_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/modules/simulation/simulator.html#read_simulator_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.simulation.simulator.read_simulator_results" title="Permalink to this definition"></a></dt>
+<dd><p>Reads results from file with correct multi-column format.</p>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, AGENT-Project Associates.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
