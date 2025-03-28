@@ -76,24 +76,24 @@
            <div itemprop="articleBody">
              
   <h1>Source code for agentlib.modules.communicator.local_multiprocessing</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">import</span> <span class="nn">multiprocessing</span>
-<span class="kn">import</span> <span class="nn">threading</span>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">multiprocessing</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">threading</span>
 
-<span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">Field</span>
-<span class="kn">from</span> <span class="nn">ipaddress</span> <span class="kn">import</span> <span class="n">IPv4Address</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">Field</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ipaddress</span><span class="w"> </span><span class="kn">import</span> <span class="n">IPv4Address</span>
 
-<span class="kn">from</span> <span class="nn">agentlib.core</span> <span class="kn">import</span> <span class="n">Agent</span>
-<span class="kn">from</span> <span class="nn">agentlib.core.datamodels</span> <span class="kn">import</span> <span class="n">AgentVariable</span>
-<span class="kn">from</span> <span class="nn">agentlib.modules.communicator.communicator</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agentlib.core</span><span class="w"> </span><span class="kn">import</span> <span class="n">Agent</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agentlib.core.datamodels</span><span class="w"> </span><span class="kn">import</span> <span class="n">AgentVariable</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agentlib.modules.communicator.communicator</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">Communicator</span><span class="p">,</span>
     <span class="n">CommunicationDict</span><span class="p">,</span>
     <span class="n">CommunicatorConfig</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span> <span class="nn">agentlib.utils</span> <span class="kn">import</span> <span class="n">multi_processing_broker</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agentlib.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">multi_processing_broker</span>
 
 
-<div class="viewcode-block" id="MultiProcessingBroadcastClientConfig"><a class="viewcode-back" href="../../../../code/agentlib.modules.communicator.html#agentlib.modules.communicator.local_multiprocessing.MultiProcessingBroadcastClientConfig">[docs]</a><span class="k">class</span> <span class="nc">MultiProcessingBroadcastClientConfig</span><span class="p">(</span><span class="n">CommunicatorConfig</span><span class="p">):</span>
+<div class="viewcode-block" id="MultiProcessingBroadcastClientConfig"><a class="viewcode-back" href="../../../../code/agentlib.modules.communicator.html#agentlib.modules.communicator.local_multiprocessing.MultiProcessingBroadcastClientConfig">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">MultiProcessingBroadcastClientConfig</span><span class="p">(</span><span class="n">CommunicatorConfig</span><span class="p">):</span>
     <span class="n">ipv4</span><span class="p">:</span> <span class="n">IPv4Address</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
         <span class="n">default</span><span class="o">=</span><span class="s2">&quot;127.0.0.1&quot;</span><span class="p">,</span>
         <span class="n">description</span><span class="o">=</span><span class="s2">&quot;IP Address for the communication server. Defaults to localhost.&quot;</span><span class="p">,</span>
@@ -108,7 +108,7 @@
     <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="MultiProcessingBroadcastClient"><a class="viewcode-back" href="../../../../code/agentlib.modules.communicator.html#agentlib.modules.communicator.local_multiprocessing.MultiProcessingBroadcastClient">[docs]</a><span class="k">class</span> <span class="nc">MultiProcessingBroadcastClient</span><span class="p">(</span><span class="n">Communicator</span><span class="p">):</span>
+<div class="viewcode-block" id="MultiProcessingBroadcastClient"><a class="viewcode-back" href="../../../../code/agentlib.modules.communicator.html#agentlib.modules.communicator.local_multiprocessing.MultiProcessingBroadcastClient">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">MultiProcessingBroadcastClient</span><span class="p">(</span><span class="n">Communicator</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This communicator implements the communication between agents via a</span>
 <span class="sd">    central process broker.</span>
@@ -116,7 +116,7 @@
 
     <span class="n">config</span><span class="p">:</span> <span class="n">MultiProcessingBroadcastClientConfig</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">agent</span><span class="p">:</span> <span class="n">Agent</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">agent</span><span class="p">:</span> <span class="n">Agent</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">,</span> <span class="n">agent</span><span class="o">=</span><span class="n">agent</span><span class="p">)</span>
         <span class="n">manager</span> <span class="o">=</span> <span class="n">multi_processing_broker</span><span class="o">.</span><span class="n">BrokerManager</span><span class="p">(</span>
             <span class="n">address</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">ipv4</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">port</span><span class="p">),</span> <span class="n">authkey</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">authkey</span>
@@ -149,7 +149,7 @@
         <span class="c1"># ensure the broker has set up the connection and sends its ack</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_client_read</span><span class="o">.</span><span class="n">recv</span><span class="p">()</span>
 
-<div class="viewcode-block" id="MultiProcessingBroadcastClient.process"><a class="viewcode-back" href="../../../../code/agentlib.modules.communicator.html#agentlib.modules.communicator.local_multiprocessing.MultiProcessingBroadcastClient.process">[docs]</a>    <span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="MultiProcessingBroadcastClient.process"><a class="viewcode-back" href="../../../../code/agentlib.modules.communicator.html#agentlib.modules.communicator.local_multiprocessing.MultiProcessingBroadcastClient.process">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Only start the loop once the env is running.&quot;&quot;&quot;</span>
         <span class="n">_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span>
             <span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_message_handler</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="p">),</span> <span class="n">daemon</span><span class="o">=</span><span class="kc">True</span>
@@ -158,7 +158,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">register_thread</span><span class="p">(</span><span class="n">thread</span><span class="o">=</span><span class="n">_thread</span><span class="p">)</span>
         <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">event</span><span class="p">()</span></div>
 
-    <span class="k">def</span> <span class="nf">_message_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_message_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Reads messages that were put in the message queue.&quot;&quot;&quot;</span>
         <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
@@ -169,7 +169,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Received variable </span><span class="si">{</span><span class="n">variable</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">data_broker</span><span class="o">.</span><span class="n">send_variable</span><span class="p">(</span><span class="n">variable</span><span class="p">)</span>
 
-<div class="viewcode-block" id="MultiProcessingBroadcastClient.terminate"><a class="viewcode-back" href="../../../../code/agentlib.modules.communicator.html#agentlib.modules.communicator.local_multiprocessing.MultiProcessingBroadcastClient.terminate">[docs]</a>    <span class="k">def</span> <span class="nf">terminate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="MultiProcessingBroadcastClient.terminate"><a class="viewcode-back" href="../../../../code/agentlib.modules.communicator.html#agentlib.modules.communicator.local_multiprocessing.MultiProcessingBroadcastClient.terminate">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">terminate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Closes all of the connections.&quot;&quot;&quot;</span>
         <span class="c1"># Terminating is important when running multiple</span>
         <span class="c1"># simulations/environments, otherwise the broker will keep spamming all</span>
@@ -180,7 +180,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_broker_read</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">terminate</span><span class="p">()</span></div>
 
-    <span class="k">def</span> <span class="nf">_send</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">payload</span><span class="p">:</span> <span class="n">CommunicationDict</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_send</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">payload</span><span class="p">:</span> <span class="n">CommunicationDict</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Sends a variable to the Broker.&quot;&quot;&quot;</span>
         <span class="n">agent_id</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;source&quot;</span><span class="p">]</span>
         <span class="n">msg</span> <span class="o">=</span> <span class="n">multi_processing_broker</span><span class="o">.</span><span class="n">Message</span><span class="p">(</span>

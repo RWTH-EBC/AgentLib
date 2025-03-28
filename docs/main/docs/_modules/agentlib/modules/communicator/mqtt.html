@@ -76,41 +76,41 @@
            <div itemprop="articleBody">
              
   <h1>Source code for agentlib.modules.communicator.mqtt</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">abc</span>
-<span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">cached_property</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">abc</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">cached_property</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Union</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
 
-<span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">AnyUrl</span><span class="p">,</span> <span class="n">Field</span><span class="p">,</span> <span class="n">ValidationError</span><span class="p">,</span> <span class="n">field_validator</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">AnyUrl</span><span class="p">,</span> <span class="n">Field</span><span class="p">,</span> <span class="n">ValidationError</span><span class="p">,</span> <span class="n">field_validator</span>
 
-<span class="kn">from</span> <span class="nn">agentlib.modules.communicator.communicator</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agentlib.modules.communicator.communicator</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">Communicator</span><span class="p">,</span>
     <span class="n">SubscriptionCommunicatorConfig</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span> <span class="nn">agentlib.core</span> <span class="kn">import</span> <span class="n">Agent</span>
-<span class="kn">from</span> <span class="nn">agentlib.core.datamodels</span> <span class="kn">import</span> <span class="n">AgentVariable</span>
-<span class="kn">from</span> <span class="nn">agentlib.core.errors</span> <span class="kn">import</span> <span class="n">InitializationError</span>
-<span class="kn">from</span> <span class="nn">agentlib.utils.validators</span> <span class="kn">import</span> <span class="n">convert_to_list</span>
-<span class="kn">from</span> <span class="nn">agentlib.core.errors</span> <span class="kn">import</span> <span class="n">OptionalDependencyError</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agentlib.core</span><span class="w"> </span><span class="kn">import</span> <span class="n">Agent</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agentlib.core.datamodels</span><span class="w"> </span><span class="kn">import</span> <span class="n">AgentVariable</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agentlib.core.errors</span><span class="w"> </span><span class="kn">import</span> <span class="n">InitializationError</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agentlib.utils.validators</span><span class="w"> </span><span class="kn">import</span> <span class="n">convert_to_list</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agentlib.core.errors</span><span class="w"> </span><span class="kn">import</span> <span class="n">OptionalDependencyError</span>
 
 <span class="k">try</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">paho.mqtt.client</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">paho.mqtt.client</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
         <span class="n">Client</span> <span class="k">as</span> <span class="n">PahoMQTTClient</span><span class="p">,</span>
         <span class="n">MQTTv5</span><span class="p">,</span>
         <span class="n">MQTT_CLEAN_START_FIRST_ONLY</span><span class="p">,</span>
         <span class="n">MQTT_LOG_ERR</span><span class="p">,</span>
         <span class="n">MQTT_LOG_WARNING</span><span class="p">,</span>
     <span class="p">)</span>
-    <span class="kn">from</span> <span class="nn">paho.mqtt.enums</span> <span class="kn">import</span> <span class="n">CallbackAPIVersion</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">paho.mqtt.enums</span><span class="w"> </span><span class="kn">import</span> <span class="n">CallbackAPIVersion</span>
 <span class="k">except</span> <span class="ne">ImportError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
     <span class="k">raise</span> <span class="n">OptionalDependencyError</span><span class="p">(</span>
         <span class="n">dependency_name</span><span class="o">=</span><span class="s2">&quot;mqtt&quot;</span><span class="p">,</span>
         <span class="n">dependency_install</span><span class="o">=</span><span class="s2">&quot;paho-mqtt&quot;</span><span class="p">,</span>
         <span class="n">used_object</span><span class="o">=</span><span class="s2">&quot;Module type &#39;mqtt&#39;&quot;</span><span class="p">,</span>
-    <span class="p">)</span> <span class="kn">from</span> <span class="nn">err</span>
+    <span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">err</span>
 
 
-<div class="viewcode-block" id="BaseMQTTClientConfig"><a class="viewcode-back" href="../../../../code/agentlib.modules.communicator.html#agentlib.modules.communicator.mqtt.BaseMQTTClientConfig">[docs]</a><span class="k">class</span> <span class="nc">BaseMQTTClientConfig</span><span class="p">(</span><span class="n">SubscriptionCommunicatorConfig</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseMQTTClientConfig"><a class="viewcode-back" href="../../../../code/agentlib.modules.communicator.html#agentlib.modules.communicator.mqtt.BaseMQTTClientConfig">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">BaseMQTTClientConfig</span><span class="p">(</span><span class="n">SubscriptionCommunicatorConfig</span><span class="p">):</span>
     <span class="n">keepalive</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
         <span class="n">default</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span>
         <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Maximum period in seconds between &quot;</span>
@@ -161,7 +161,7 @@
     <span class="n">check_subtopics</span> <span class="o">=</span> <span class="n">field_validator</span><span class="p">(</span><span class="s2">&quot;subtopics&quot;</span><span class="p">)(</span><span class="n">convert_to_list</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="MQTTClientConfig"><a class="viewcode-back" href="../../../../code/agentlib.modules.communicator.html#agentlib.modules.communicator.mqtt.MQTTClientConfig">[docs]</a><span class="k">class</span> <span class="nc">MQTTClientConfig</span><span class="p">(</span><span class="n">BaseMQTTClientConfig</span><span class="p">):</span>
+<div class="viewcode-block" id="MQTTClientConfig"><a class="viewcode-back" href="../../../../code/agentlib.modules.communicator.html#agentlib.modules.communicator.mqtt.MQTTClientConfig">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">MQTTClientConfig</span><span class="p">(</span><span class="n">BaseMQTTClientConfig</span><span class="p">):</span>
     <span class="n">url</span><span class="p">:</span> <span class="n">AnyUrl</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
         <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Host&quot;</span><span class="p">,</span>
         <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Host is the hostname or IP address &quot;</span> <span class="s2">&quot;of the remote broker.&quot;</span><span class="p">,</span>
@@ -169,7 +169,7 @@
 
 <div class="viewcode-block" id="MQTTClientConfig.check_url"><a class="viewcode-back" href="../../../../code/agentlib.modules.communicator.html#agentlib.modules.communicator.mqtt.MQTTClientConfig.check_url">[docs]</a>    <span class="nd">@field_validator</span><span class="p">(</span><span class="s2">&quot;url&quot;</span><span class="p">)</span>
     <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">check_url</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">check_url</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">url</span><span class="o">.</span><span class="n">scheme</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;mqtts&quot;</span><span class="p">,</span> <span class="s2">&quot;mqtt&quot;</span><span class="p">]:</span>
             <span class="k">return</span> <span class="n">url</span>
         <span class="k">if</span> <span class="n">url</span><span class="o">.</span><span class="n">scheme</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -178,14 +178,14 @@
         <span class="k">raise</span> <span class="n">ValidationError</span></div></div>
 
 
-<div class="viewcode-block" id="BaseMqttClient"><a class="viewcode-back" href="../../../../code/agentlib.modules.communicator.html#agentlib.modules.communicator.mqtt.BaseMqttClient">[docs]</a><span class="k">class</span> <span class="nc">BaseMqttClient</span><span class="p">(</span><span class="n">Communicator</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseMqttClient"><a class="viewcode-back" href="../../../../code/agentlib.modules.communicator.html#agentlib.modules.communicator.mqtt.BaseMqttClient">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">BaseMqttClient</span><span class="p">(</span><span class="n">Communicator</span><span class="p">):</span>
     <span class="c1"># We use the paho-mqtt module and are</span>
     <span class="c1"># thus required to use their function signatures and function names</span>
     <span class="c1"># pylint: disable=unused-argument,too-many-arguments,invalid-name</span>
     <span class="n">config</span><span class="p">:</span> <span class="n">BaseMQTTClientConfig</span>
     <span class="n">mqttc_type</span> <span class="o">=</span> <span class="n">PahoMQTTClient</span>
 
-    <span class="k">def</span> <span class="nf">_log_all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">,</span> <span class="n">userdata</span><span class="p">,</span> <span class="n">level</span><span class="p">,</span> <span class="n">buf</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_log_all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">,</span> <span class="n">userdata</span><span class="p">,</span> <span class="n">level</span><span class="p">,</span> <span class="n">buf</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        client:     the client instance for this callback</span>
 <span class="sd">        userdata:   the private user data as set in Client() or userdata_set()</span>
@@ -202,7 +202,7 @@
         <span class="k">if</span> <span class="n">level</span> <span class="o">==</span> <span class="n">MQTT_LOG_ERR</span> <span class="ow">or</span> <span class="n">level</span> <span class="o">==</span> <span class="n">MQTT_LOG_WARNING</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;ERROR OR WARNING: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">buf</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">agent</span><span class="p">:</span> <span class="n">Agent</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">agent</span><span class="p">:</span> <span class="n">Agent</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">,</span> <span class="n">agent</span><span class="o">=</span><span class="n">agent</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_subcribed_topics</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_mqttc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mqttc_type</span><span class="p">(</span>
@@ -247,27 +247,27 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Module is fully connected&quot;</span><span class="p">)</span>
 
 <div class="viewcode-block" id="BaseMqttClient.connect"><a class="viewcode-back" href="../../../../code/agentlib.modules.communicator.html#agentlib.modules.communicator.mqtt.BaseMqttClient.connect">[docs]</a>    <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
-    <span class="k">def</span> <span class="nf">connect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">connect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
 
-<div class="viewcode-block" id="BaseMqttClient.terminate"><a class="viewcode-back" href="../../../../code/agentlib.modules.communicator.html#agentlib.modules.communicator.mqtt.BaseMqttClient.terminate">[docs]</a>    <span class="k">def</span> <span class="nf">terminate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseMqttClient.terminate"><a class="viewcode-back" href="../../../../code/agentlib.modules.communicator.html#agentlib.modules.communicator.mqtt.BaseMqttClient.terminate">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">terminate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Disconnect from client and join loop&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">disconnect</span><span class="p">()</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">terminate</span><span class="p">()</span></div>
 
     <span class="c1"># The callback for when the client receives a CONNACK response from the server.</span>
-    <span class="k">def</span> <span class="nf">_connect_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">,</span> <span class="n">userdata</span><span class="p">,</span> <span class="n">flags</span><span class="p">,</span> <span class="n">reasonCode</span><span class="p">,</span> <span class="n">properties</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_connect_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">,</span> <span class="n">userdata</span><span class="p">,</span> <span class="n">flags</span><span class="p">,</span> <span class="n">reasonCode</span><span class="p">,</span> <span class="n">properties</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">reasonCode</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">err_msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Connection failed with error code: &#39;</span><span class="si">{</span><span class="n">reasonCode</span><span class="si">}</span><span class="s2">&#39;&quot;</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">err_msg</span><span class="p">)</span>
             <span class="k">raise</span> <span class="ne">ConnectionError</span><span class="p">(</span><span class="n">err_msg</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Connected with result code: &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span><span class="p">,</span> <span class="n">reasonCode</span><span class="p">)</span>
 
-<div class="viewcode-block" id="BaseMqttClient.disconnect"><a class="viewcode-back" href="../../../../code/agentlib.modules.communicator.html#agentlib.modules.communicator.mqtt.BaseMqttClient.disconnect">[docs]</a>    <span class="k">def</span> <span class="nf">disconnect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">reasoncode</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">properties</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseMqttClient.disconnect"><a class="viewcode-back" href="../../../../code/agentlib.modules.communicator.html#agentlib.modules.communicator.mqtt.BaseMqttClient.disconnect">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">disconnect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">reasoncode</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">properties</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Trigger the disconnect&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_mqttc</span><span class="o">.</span><span class="n">disconnect</span><span class="p">(</span><span class="n">reasoncode</span><span class="o">=</span><span class="n">reasoncode</span><span class="p">,</span> <span class="n">properties</span><span class="o">=</span><span class="n">properties</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">_disconnect_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">,</span> <span class="n">userdata</span><span class="p">,</span> <span class="n">reasonCode</span><span class="p">,</span> <span class="n">properties</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_disconnect_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">,</span> <span class="n">userdata</span><span class="p">,</span> <span class="n">reasonCode</span><span class="p">,</span> <span class="n">properties</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Stop the loop as a result of the disconnect&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
             <span class="s2">&quot;Disconnected with result code: </span><span class="si">%s</span><span class="s2"> | userdata: </span><span class="si">%s</span><span class="s2"> | properties: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
@@ -277,7 +277,7 @@
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Active: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mqttc</span><span class="o">.</span><span class="n">is_connected</span><span class="p">())</span>
 
-    <span class="k">def</span> <span class="nf">_message_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">,</span> <span class="n">userdata</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_message_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">,</span> <span class="n">userdata</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The default callback for when a PUBLISH message is</span>
 <span class="sd">        received from the server.</span>
@@ -291,7 +291,7 @@
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">data_broker</span><span class="o">.</span><span class="n">send_variable</span><span class="p">(</span><span class="n">agent_inp</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_subscribe_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">,</span> <span class="n">userdata</span><span class="p">,</span> <span class="n">mid</span><span class="p">,</span> <span class="n">reasonCodes</span><span class="p">,</span> <span class="n">properties</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_subscribe_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">,</span> <span class="n">userdata</span><span class="p">,</span> <span class="n">mid</span><span class="p">,</span> <span class="n">reasonCodes</span><span class="p">,</span> <span class="n">properties</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Log if the subscription was successful&quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">reason_code</span> <span class="ow">in</span> <span class="n">reasonCodes</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">reason_code</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">qos</span><span class="p">:</span>
@@ -307,22 +307,22 @@
                 <span class="k">raise</span> <span class="ne">ConnectionError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">topics_size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">topics_size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">subtopics</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">subscriptions</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="MqttClient"><a class="viewcode-back" href="../../../../code/agentlib.modules.communicator.html#agentlib.modules.communicator.mqtt.MqttClient">[docs]</a><span class="k">class</span> <span class="nc">MqttClient</span><span class="p">(</span><span class="n">BaseMqttClient</span><span class="p">):</span>
+<div class="viewcode-block" id="MqttClient"><a class="viewcode-back" href="../../../../code/agentlib.modules.communicator.html#agentlib.modules.communicator.mqtt.MqttClient">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">MqttClient</span><span class="p">(</span><span class="n">BaseMqttClient</span><span class="p">):</span>
     <span class="n">config</span><span class="p">:</span> <span class="n">MQTTClientConfig</span>
 
     <span class="nd">@cached_property</span>
-    <span class="k">def</span> <span class="nf">pubtopic</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">pubtopic</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_topic</span><span class="p">(</span><span class="n">agent_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">subscription</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">topics_size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">topics_size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_all_topics</span><span class="p">())</span>
 
-<div class="viewcode-block" id="MqttClient.generate_topic"><a class="viewcode-back" href="../../../../code/agentlib.modules.communicator.html#agentlib.modules.communicator.mqtt.MqttClient.generate_topic">[docs]</a>    <span class="k">def</span> <span class="nf">generate_topic</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">subscription</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="MqttClient.generate_topic"><a class="viewcode-back" href="../../../../code/agentlib.modules.communicator.html#agentlib.modules.communicator.mqtt.MqttClient.generate_topic">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">generate_topic</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">subscription</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate the topic with the given agent_id and</span>
 <span class="sd">        configs prefix</span>
@@ -334,7 +334,7 @@
         <span class="n">topic</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;//&quot;</span><span class="p">,</span> <span class="s2">&quot;/&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">topic</span></div>
 
-<div class="viewcode-block" id="MqttClient.connect"><a class="viewcode-back" href="../../../../code/agentlib.modules.communicator.html#agentlib.modules.communicator.mqtt.MqttClient.connect">[docs]</a>    <span class="k">def</span> <span class="nf">connect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="MqttClient.connect"><a class="viewcode-back" href="../../../../code/agentlib.modules.communicator.html#agentlib.modules.communicator.mqtt.MqttClient.connect">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">connect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">port</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">port</span>
         <span class="k">if</span> <span class="n">port</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">port</span> <span class="o">=</span> <span class="mi">1883</span>
@@ -350,7 +350,7 @@
             <span class="n">properties</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">_get_all_topics</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_all_topics</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Helper function to return all topics the client</span>
 <span class="sd">        should listen to.</span>
@@ -361,7 +361,7 @@
         <span class="n">topics</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">subtopics</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">topics</span>
 
-    <span class="k">def</span> <span class="nf">_connect_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">,</span> <span class="n">userdata</span><span class="p">,</span> <span class="n">flags</span><span class="p">,</span> <span class="n">reasonCode</span><span class="p">,</span> <span class="n">properties</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_connect_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">,</span> <span class="n">userdata</span><span class="p">,</span> <span class="n">flags</span><span class="p">,</span> <span class="n">reasonCode</span><span class="p">,</span> <span class="n">properties</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_connect_callback</span><span class="p">(</span>
             <span class="n">client</span><span class="o">=</span><span class="n">client</span><span class="p">,</span>
             <span class="n">userdata</span><span class="o">=</span><span class="n">userdata</span><span class="p">,</span>
@@ -377,7 +377,7 @@
             <span class="n">client</span><span class="o">.</span><span class="n">subscribe</span><span class="p">(</span><span class="n">topic</span><span class="o">=</span><span class="n">topic</span><span class="p">,</span> <span class="n">qos</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">qos</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Subscribes to: &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span><span class="p">,</span> <span class="n">topic</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_send</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">payload</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_send</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">payload</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Publish the given output&quot;&quot;&quot;</span>
         <span class="n">topic</span> <span class="o">=</span> <span class="s2">&quot;/&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">pubtopic</span><span class="p">,</span> <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;alias&quot;</span><span class="p">]])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_mqttc</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span>

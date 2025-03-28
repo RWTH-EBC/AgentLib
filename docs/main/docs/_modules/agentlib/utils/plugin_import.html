@@ -80,11 +80,11 @@
 <span class="sd">Module containing all function to import new plugins</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">import</span> <span class="nn">importlib</span>
-<span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">BaseModel</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">importlib</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseModel</span>
 
 
-<div class="viewcode-block" id="ModuleImport"><a class="viewcode-back" href="../../../code/agentlib.utils.html#agentlib.utils.plugin_import.ModuleImport">[docs]</a><span class="k">class</span> <span class="nc">ModuleImport</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="ModuleImport"><a class="viewcode-back" href="../../../code/agentlib.utils.html#agentlib.utils.plugin_import.ModuleImport">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">ModuleImport</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Data-Class to import a given python file</span>
 <span class="sd">    from ``import_path`` and load the given</span>
@@ -94,19 +94,19 @@
     <span class="n">import_path</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">class_name</span><span class="p">:</span> <span class="nb">str</span>
 
-<div class="viewcode-block" id="ModuleImport.import_class"><a class="viewcode-back" href="../../../code/agentlib.utils.html#agentlib.utils.plugin_import.ModuleImport.import_class">[docs]</a>    <span class="k">def</span> <span class="nf">import_class</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ModuleImport.import_class"><a class="viewcode-back" href="../../../code/agentlib.utils.html#agentlib.utils.plugin_import.ModuleImport.import_class">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">import_class</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Import the Module with class_name from the import path&quot;&quot;&quot;</span>
         <span class="n">module</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">import_path</span><span class="p">)</span>
         <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">class_name</span><span class="p">)</span></div></div>
 
 
-<div class="viewcode-block" id="SaveUpdateDict"><a class="viewcode-back" href="../../../code/agentlib.utils.html#agentlib.utils.plugin_import.SaveUpdateDict">[docs]</a><span class="k">class</span> <span class="nc">SaveUpdateDict</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
+<div class="viewcode-block" id="SaveUpdateDict"><a class="viewcode-back" href="../../../code/agentlib.utils.html#agentlib.utils.plugin_import.SaveUpdateDict">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">SaveUpdateDict</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Custom object to safely update the dictionary.</span>
 <span class="sd">    Duplicate entries will raise an error.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="SaveUpdateDict.update"><a class="viewcode-back" href="../../../code/agentlib.utils.html#agentlib.utils.plugin_import.SaveUpdateDict.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_dict</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="SaveUpdateDict.update"><a class="viewcode-back" href="../../../code/agentlib.utils.html#agentlib.utils.plugin_import.SaveUpdateDict.update">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_dict</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Check if all modules have distinct identifier strings</span>
 
 <span class="sd">        Args:</span>
@@ -123,7 +123,7 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">new_dict</span><span class="p">)</span></div></div>
 
 
-<div class="viewcode-block" id="load_plugin"><a class="viewcode-back" href="../../../code/agentlib.utils.html#agentlib.utils.plugin_import.load_plugin">[docs]</a><span class="k">def</span> <span class="nf">load_plugin</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">loaded_classes</span><span class="p">:</span> <span class="n">SaveUpdateDict</span><span class="p">,</span> <span class="n">plugin_types_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<div class="viewcode-block" id="load_plugin"><a class="viewcode-back" href="../../../code/agentlib.utils.html#agentlib.utils.plugin_import.load_plugin">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">load_plugin</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">loaded_classes</span><span class="p">:</span> <span class="n">SaveUpdateDict</span><span class="p">,</span> <span class="n">plugin_types_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Loads the plugin based on the given name.</span>
 
@@ -143,7 +143,7 @@
     <span class="k">try</span><span class="p">:</span>
         <span class="n">plugin</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">ImportError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Plugin &#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39; is not installed.&quot;</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">err</span>
+        <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Plugin &#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39; is not installed.&quot;</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">err</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">plugin_dict</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">plugin</span><span class="p">,</span> <span class="n">plugin_types_name</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>

@@ -76,18 +76,18 @@
            <div itemprop="articleBody">
              
   <h1>Source code for agentlib.utils.fuzzy_matching</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">List</span>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">List</span>
 
 <span class="k">try</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">rapidfuzz</span> <span class="kn">import</span> <span class="n">process</span> <span class="k">as</span> <span class="n">fuz_process</span>
-    <span class="kn">from</span> <span class="nn">rapidfuzz</span> <span class="kn">import</span> <span class="n">fuzz</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">rapidfuzz</span><span class="w"> </span><span class="kn">import</span> <span class="n">process</span> <span class="k">as</span> <span class="n">fuz_process</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">rapidfuzz</span><span class="w"> </span><span class="kn">import</span> <span class="n">fuzz</span>
 
     <span class="n">RAPIDFUZZ_IS_INSTALLED</span> <span class="o">=</span> <span class="kc">True</span>
 <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
     <span class="n">RAPIDFUZZ_IS_INSTALLED</span> <span class="o">=</span> <span class="kc">False</span>
 
 
-<div class="viewcode-block" id="fuzzy_match"><a class="viewcode-back" href="../../../code/agentlib.utils.html#agentlib.utils.fuzzy_matching.fuzzy_match">[docs]</a><span class="k">def</span> <span class="nf">fuzzy_match</span><span class="p">(</span><span class="n">target</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">choices</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
+<div class="viewcode-block" id="fuzzy_match"><a class="viewcode-back" href="../../../code/agentlib.utils.html#agentlib.utils.fuzzy_matching.fuzzy_match">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">fuzzy_match</span><span class="p">(</span><span class="n">target</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">choices</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">RAPIDFUZZ_IS_INSTALLED</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">None</span>
     <span class="n">matches</span> <span class="o">=</span> <span class="n">fuz_process</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">query</span><span class="o">=</span><span class="n">target</span><span class="p">,</span> <span class="n">choices</span><span class="o">=</span><span class="n">choices</span><span class="p">,</span> <span class="n">scorer</span><span class="o">=</span><span class="n">fuzz</span><span class="o">.</span><span class="n">WRatio</span><span class="p">)</span>

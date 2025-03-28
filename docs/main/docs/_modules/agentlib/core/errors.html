@@ -79,26 +79,26 @@
 <span class="sd">a better understand of errors in the agentlib&quot;&quot;&quot;</span>
 
 
-<div class="viewcode-block" id="InitializationError"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.core.errors.InitializationError">[docs]</a><span class="k">class</span> <span class="nc">InitializationError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+<div class="viewcode-block" id="InitializationError"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.core.errors.InitializationError">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">InitializationError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Exception raised for errors due to wrong initialization of modules.</span>
 <span class="sd">    &quot;&quot;&quot;</span></div>
 
 
-<div class="viewcode-block" id="ConfigurationError"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.core.errors.ConfigurationError">[docs]</a><span class="k">class</span> <span class="nc">ConfigurationError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+<div class="viewcode-block" id="ConfigurationError"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.core.errors.ConfigurationError">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">ConfigurationError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Exception raised for errors due to wrong configuration of modules.</span>
 <span class="sd">    &quot;&quot;&quot;</span></div>
 
 
-<div class="viewcode-block" id="OptionalDependencyError"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.core.errors.OptionalDependencyError">[docs]</a><span class="k">class</span> <span class="nc">OptionalDependencyError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+<div class="viewcode-block" id="OptionalDependencyError"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.core.errors.OptionalDependencyError">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">OptionalDependencyError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Exception to indicate that an optional dependency is missing</span>
 <span class="sd">    which can always be fixed by installing the missing</span>
 <span class="sd">    dependency.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">used_object</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">dependency_install</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>

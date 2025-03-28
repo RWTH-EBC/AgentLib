@@ -165,8 +165,16 @@ thus using yield instead of return</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="agentlib.modules.controller.bangbang.BangBangConfig.model_post_init">
 <span class="sig-name descname"><span class="pre">model_post_init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#agentlib.modules.controller.bangbang.BangBangConfig.model_post_init" title="Permalink to this definition"></a></dt>
-<dd><p>We need to both initialize private attributes and call the user-defined model_post_init
-method.</p>
+<dd><p>This function is meant to behave like a BaseModel method to initialise private attributes.</p>
+<p>It takes context as an argument since that’s what pydantic-core passes when calling it.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>self</strong> – The BaseModel instance.</p></li>
+<li><p><strong>context</strong> – The context.</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -334,8 +342,16 @@ reverser: Change of sign.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="agentlib.modules.controller.controller.SISOControllerConfig.model_post_init">
 <span class="sig-name descname"><span class="pre">model_post_init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#agentlib.modules.controller.controller.SISOControllerConfig.model_post_init" title="Permalink to this definition"></a></dt>
-<dd><p>We need to both initialize private attributes and call the user-defined model_post_init
-method.</p>
+<dd><p>This function is meant to behave like a BaseModel method to initialise private attributes.</p>
+<p>It takes context as an argument since that’s what pydantic-core passes when calling it.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>self</strong> – The BaseModel instance.</p></li>
+<li><p><strong>context</strong> – The context.</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -492,14 +508,22 @@ thus using yield instead of return</p>
 
 <dl class="py method pydantic_validator">
 <dt class="sig sig-object py" id="agentlib.modules.controller.pid.PIDConfig.convert_to_variable">
-<em class="property"><span class="pre">validator</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">convert_to_variable</span></span><em class="autodoc_pydantic_validator_arrow property">&#160; <span class="pre">»</span>&#160; </em><a class="reference internal" href="code/agentlib.modules.controller.html#agentlib.modules.controller.pid.PIDConfig.Kp" title="agentlib.modules.controller.pid.PIDConfig.Kp"><em class="xref py py-obj"><span class="pre">Kp</span></em></a><em class="property"><span class="pre">,</span> </em><a class="reference internal" href="code/agentlib.modules.controller.html#agentlib.modules.controller.pid.PIDConfig.setpoint" title="agentlib.modules.controller.pid.PIDConfig.setpoint"><em class="xref py py-obj"><span class="pre">setpoint</span></em></a><em class="property"><span class="pre">,</span> </em><a class="reference internal" href="code/agentlib.modules.controller.html#agentlib.modules.controller.pid.PIDConfig.Td" title="agentlib.modules.controller.pid.PIDConfig.Td"><em class="xref py py-obj"><span class="pre">Td</span></em></a><em class="property"><span class="pre">,</span> </em><a class="reference internal" href="code/agentlib.modules.controller.html#agentlib.modules.controller.pid.PIDConfig.Ti" title="agentlib.modules.controller.pid.PIDConfig.Ti"><em class="xref py py-obj"><span class="pre">Ti</span></em></a><a class="reference internal" href="_modules/agentlib/modules/controller/pid.html#PIDConfig.convert_to_variable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.controller.pid.PIDConfig.convert_to_variable" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">validator</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">convert_to_variable</span></span><em class="autodoc_pydantic_validator_arrow property">&#160; <span class="pre">»</span>&#160; </em><a class="reference internal" href="code/agentlib.modules.controller.html#agentlib.modules.controller.pid.PIDConfig.Ti" title="agentlib.modules.controller.pid.PIDConfig.Ti"><em class="xref py py-obj"><span class="pre">Ti</span></em></a><em class="property"><span class="pre">,</span> </em><a class="reference internal" href="code/agentlib.modules.controller.html#agentlib.modules.controller.pid.PIDConfig.Td" title="agentlib.modules.controller.pid.PIDConfig.Td"><em class="xref py py-obj"><span class="pre">Td</span></em></a><em class="property"><span class="pre">,</span> </em><a class="reference internal" href="code/agentlib.modules.controller.html#agentlib.modules.controller.pid.PIDConfig.setpoint" title="agentlib.modules.controller.pid.PIDConfig.setpoint"><em class="xref py py-obj"><span class="pre">setpoint</span></em></a><em class="property"><span class="pre">,</span> </em><a class="reference internal" href="code/agentlib.modules.controller.html#agentlib.modules.controller.pid.PIDConfig.Kp" title="agentlib.modules.controller.pid.PIDConfig.Kp"><em class="xref py py-obj"><span class="pre">Kp</span></em></a><a class="reference internal" href="_modules/agentlib/modules/controller/pid.html#PIDConfig.convert_to_variable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.controller.pid.PIDConfig.convert_to_variable" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="agentlib.modules.controller.pid.PIDConfig.model_post_init">
 <span class="sig-name descname"><span class="pre">model_post_init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#agentlib.modules.controller.pid.PIDConfig.model_post_init" title="Permalink to this definition"></a></dt>
-<dd><p>We need to both initialize private attributes and call the user-defined model_post_init
-method.</p>
+<dd><p>This function is meant to behave like a BaseModel method to initialise private attributes.</p>
+<p>It takes context as an argument since that’s what pydantic-core passes when calling it.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>self</strong> – The BaseModel instance.</p></li>
+<li><p><strong>context</strong> – The context.</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>

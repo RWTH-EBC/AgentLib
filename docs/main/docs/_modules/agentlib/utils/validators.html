@@ -80,15 +80,15 @@
 <span class="sd">Module with validator function used in multiple parts of the agentlib</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
 
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Type</span>
-<span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
-<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Type</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">copy</span><span class="w"> </span><span class="kn">import</span> <span class="n">deepcopy</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
 
-<span class="kn">import</span> <span class="nn">pydantic</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pydantic</span>
 
-<span class="kn">from</span> <span class="nn">agentlib.core.datamodels</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agentlib.core.datamodels</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">AgentVariable</span><span class="p">,</span>
     <span class="n">AgentVariables</span><span class="p">,</span>
     <span class="n">Source</span><span class="p">,</span>
@@ -97,7 +97,7 @@
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="convert_to_list"><a class="viewcode-back" href="../../../code/agentlib.utils.html#agentlib.utils.validators.convert_to_list">[docs]</a><span class="k">def</span> <span class="nf">convert_to_list</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+<div class="viewcode-block" id="convert_to_list"><a class="viewcode-back" href="../../../code/agentlib.utils.html#agentlib.utils.validators.convert_to_list">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">convert_to_list</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Function to convert an object to a list.</span>
 <span class="sd">    Either is is already a list.</span>
 <span class="sd">    Or it is None, then [] is returned,</span>
@@ -110,7 +110,7 @@
     <span class="k">return</span> <span class="p">[</span><span class="n">obj</span><span class="p">]</span></div>
 
 
-<div class="viewcode-block" id="include_defaults_in_root"><a class="viewcode-back" href="../../../code/agentlib.utils.html#agentlib.utils.validators.include_defaults_in_root">[docs]</a><span class="k">def</span> <span class="nf">include_defaults_in_root</span><span class="p">(</span>
+<div class="viewcode-block" id="include_defaults_in_root"><a class="viewcode-back" href="../../../code/agentlib.utils.html#agentlib.utils.validators.include_defaults_in_root">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">include_defaults_in_root</span><span class="p">(</span>
     <span class="n">variables</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">],</span>
     <span class="n">field</span><span class="p">:</span> <span class="n">pydantic</span><span class="o">.</span><span class="n">fields</span><span class="o">.</span><span class="n">FieldInfo</span><span class="p">,</span>
     <span class="n">make_shared</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
@@ -158,7 +158,7 @@
     <span class="k">return</span> <span class="n">default</span></div>
 
 
-<div class="viewcode-block" id="update_default_agent_variable"><a class="viewcode-back" href="../../../code/agentlib.utils.html#agentlib.utils.validators.update_default_agent_variable">[docs]</a><span class="k">def</span> <span class="nf">update_default_agent_variable</span><span class="p">(</span>
+<div class="viewcode-block" id="update_default_agent_variable"><a class="viewcode-back" href="../../../code/agentlib.utils.html#agentlib.utils.validators.update_default_agent_variable">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">update_default_agent_variable</span><span class="p">(</span>
     <span class="n">default_var</span><span class="p">:</span> <span class="n">AgentVariable</span><span class="p">,</span>
     <span class="n">user_data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
     <span class="n">make_shared</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
@@ -191,12 +191,12 @@
     <span class="k">return</span> <span class="n">agent_variable</span></div>
 
 
-<div class="viewcode-block" id="is_list_of_agent_variables"><a class="viewcode-back" href="../../../code/agentlib.utils.html#agentlib.utils.validators.is_list_of_agent_variables">[docs]</a><span class="k">def</span> <span class="nf">is_list_of_agent_variables</span><span class="p">(</span><span class="n">ls</span><span class="p">:</span> <span class="n">Any</span><span class="p">):</span>
+<div class="viewcode-block" id="is_list_of_agent_variables"><a class="viewcode-back" href="../../../code/agentlib.utils.html#agentlib.utils.validators.is_list_of_agent_variables">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">is_list_of_agent_variables</span><span class="p">(</span><span class="n">ls</span><span class="p">:</span> <span class="n">Any</span><span class="p">):</span>
     <span class="c1"># TODO move somewhere more appropriate</span>
     <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ls</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ls</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ls</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">AgentVariable</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="is_valid_agent_var_config"><a class="viewcode-back" href="../../../code/agentlib.utils.html#agentlib.utils.validators.is_valid_agent_var_config">[docs]</a><span class="k">def</span> <span class="nf">is_valid_agent_var_config</span><span class="p">(</span>
+<div class="viewcode-block" id="is_valid_agent_var_config"><a class="viewcode-back" href="../../../code/agentlib.utils.html#agentlib.utils.validators.is_valid_agent_var_config">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">is_valid_agent_var_config</span><span class="p">(</span>
     <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">field_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">type_</span><span class="p">:</span> <span class="n">AgentVariable</span> <span class="o">=</span> <span class="n">AgentVariable</span>
 <span class="p">):</span>
     <span class="k">if</span> <span class="n">data</span> <span class="o">==</span> <span class="p">{}:</span>

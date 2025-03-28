@@ -81,16 +81,16 @@
 <span class="sd">enables local communication with subscriptions.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Union</span>
 
-<span class="kn">from</span> <span class="nn">.broker</span> <span class="kn">import</span> <span class="n">Broker</span>
-<span class="kn">from</span> <span class="nn">agentlib.core</span> <span class="kn">import</span> <span class="n">datamodels</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.broker</span><span class="w"> </span><span class="kn">import</span> <span class="n">Broker</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agentlib.core</span><span class="w"> </span><span class="kn">import</span> <span class="n">datamodels</span>
 
 
-<div class="viewcode-block" id="LocalBroker"><a class="viewcode-back" href="../../../code/agentlib.utils.html#agentlib.utils.local_broker.LocalBroker">[docs]</a><span class="k">class</span> <span class="nc">LocalBroker</span><span class="p">(</span><span class="n">Broker</span><span class="p">):</span>
+<div class="viewcode-block" id="LocalBroker"><a class="viewcode-back" href="../../../code/agentlib.utils.html#agentlib.utils.local_broker.LocalBroker">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">LocalBroker</span><span class="p">(</span><span class="n">Broker</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Local broker class which sends messages&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="LocalBroker.send"><a class="viewcode-back" href="../../../code/agentlib.utils.html#agentlib.utils.local_broker.LocalBroker.send">[docs]</a>    <span class="k">def</span> <span class="nf">send</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="n">datamodels</span><span class="o">.</span><span class="n">AgentVariable</span><span class="p">]):</span>
+<div class="viewcode-block" id="LocalBroker.send"><a class="viewcode-back" href="../../../code/agentlib.utils.html#agentlib.utils.local_broker.LocalBroker.send">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">send</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agent_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="n">datamodels</span><span class="o">.</span><span class="n">AgentVariable</span><span class="p">]):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Send the given message to all clients if the source</span>
 <span class="sd">        matches.</span>

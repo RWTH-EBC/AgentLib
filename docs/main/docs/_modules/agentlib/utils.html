@@ -83,17 +83,17 @@
 <span class="sd">dynamic loading of custom models and modules.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">import</span> <span class="nn">importlib.util</span>
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">importlib.util</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
 
-<span class="kn">from</span> <span class="nn">.local_broadcast_broker</span> <span class="kn">import</span> <span class="n">LocalBroadcastBroker</span>
-<span class="kn">from</span> <span class="nn">.local_broker</span> <span class="kn">import</span> <span class="n">LocalBroker</span>
-<span class="kn">from</span> <span class="nn">.multi_processing_broker</span> <span class="kn">import</span> <span class="n">MultiProcessingBroker</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.local_broadcast_broker</span><span class="w"> </span><span class="kn">import</span> <span class="n">LocalBroadcastBroker</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.local_broker</span><span class="w"> </span><span class="kn">import</span> <span class="n">LocalBroker</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.multi_processing_broker</span><span class="w"> </span><span class="kn">import</span> <span class="n">MultiProcessingBroker</span>
 
 
-<div class="viewcode-block" id="custom_injection"><a class="viewcode-back" href="../../code/agentlib.utils.html#agentlib.utils.custom_injection">[docs]</a><span class="k">def</span> <span class="nf">custom_injection</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">module_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="custom_injection"><a class="viewcode-back" href="../../code/agentlib.utils.html#agentlib.utils.custom_injection">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">custom_injection</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">module_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Function to dynamically load new python files into</span>
 <span class="sd">    the agentlib. Using this, users may use custom modules</span>
@@ -155,7 +155,7 @@
             <span class="s2">&quot;error. Carefully check for circular imports and partially &quot;</span>
             <span class="s2">&quot;imported objects based on the following error message: &quot;</span>
             <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">err</span><span class="si">}</span><span class="s2">&quot;</span>
-        <span class="p">)</span> <span class="kn">from</span> <span class="nn">err</span>
+        <span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">err</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">custom_module</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">class_name</span><span class="p">]</span>
     <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>

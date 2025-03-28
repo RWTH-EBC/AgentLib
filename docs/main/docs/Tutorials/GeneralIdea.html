@@ -218,22 +218,22 @@ Every time an <code class="docutils literal notranslate"><span class="pre">Agent
 <section id="further-examples">
 <h4>Further examples<a class="headerlink" href="#further-examples" title="Permalink to this heading"></a></h4>
 <p>To show how different callbacks may be realized, the following short example should clear things up.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">agentlib.core</span> <span class="kn">import</span> <span class="n">RTDataBroker</span><span class="p">,</span> <span class="n">AgentVariable</span><span class="p">,</span> <span class="n">Source</span><span class="p">,</span> <span class="n">Environment</span>
-<span class="kn">import</span> <span class="nn">time</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">agentlib.core</span><span class="w"> </span><span class="kn">import</span> <span class="n">RTDataBroker</span><span class="p">,</span> <span class="n">AgentVariable</span><span class="p">,</span> <span class="n">Source</span><span class="p">,</span> <span class="n">Environment</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
 
 <span class="n">env</span> <span class="o">=</span> <span class="n">Environment</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;rt&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">})</span>
 <span class="n">data_broker</span> <span class="o">=</span> <span class="n">RTDataBroker</span><span class="p">(</span><span class="n">env</span><span class="o">=</span><span class="n">env</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">print_all_callback</span><span class="p">(</span><span class="n">variable</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">print_all_callback</span><span class="p">(</span><span class="n">variable</span><span class="p">):</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Each variable&quot;</span><span class="p">,</span> <span class="n">variable</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">variable</span><span class="o">.</span><span class="n">source</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">print_only_T_oda</span><span class="p">(</span><span class="n">variable</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">print_only_T_oda</span><span class="p">(</span><span class="n">variable</span><span class="p">):</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;T_oda&quot;</span><span class="p">,</span> <span class="n">variable</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">variable</span><span class="o">.</span><span class="n">source</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">print_only_T_oda_of_room_agent</span><span class="p">(</span><span class="n">variable</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">print_only_T_oda_of_room_agent</span><span class="p">(</span><span class="n">variable</span><span class="p">):</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;T_oda of agent RoomAgent&quot;</span><span class="p">,</span> <span class="n">variable</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">variable</span><span class="o">.</span><span class="n">source</span><span class="p">)</span>
 
 
@@ -293,24 +293,24 @@ The <code class="docutils literal notranslate"><span class="pre">process</span><
 </ol>
 <p>This following example demonstrates the usage of the <code class="docutils literal notranslate"><span class="pre">Environment</span></code>:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import the Environment</span>
-<span class="kn">from</span> <span class="nn">agentlib.core</span> <span class="kn">import</span> <span class="n">Environment</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agentlib.core</span><span class="w"> </span><span class="kn">import</span> <span class="n">Environment</span>
 
 
-<span class="k">def</span> <span class="nf">my_first_process</span><span class="p">(</span><span class="n">env</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">my_first_process</span><span class="p">(</span><span class="n">env</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Define a dummy process. It uses env.timeout to tell simpy how long a step takes.&quot;&quot;&quot;</span>
     <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Doing first task at time:&quot;</span><span class="p">,</span> <span class="n">env</span><span class="o">.</span><span class="n">time</span><span class="p">)</span>
         <span class="k">yield</span> <span class="n">env</span><span class="o">.</span><span class="n">timeout</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">my_second_process</span><span class="p">(</span><span class="n">env</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">my_second_process</span><span class="p">(</span><span class="n">env</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Define a second dummy process.&quot;&quot;&quot;</span>
     <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Doing second task at time:&quot;</span><span class="p">,</span> <span class="n">env</span><span class="o">.</span><span class="n">time</span><span class="p">)</span>
         <span class="k">yield</span> <span class="n">env</span><span class="o">.</span><span class="n">timeout</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">simulate</span><span class="p">(</span><span class="n">config</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">simulate</span><span class="p">(</span><span class="n">config</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Just a small function to prevent duplicate code&quot;&quot;&quot;</span>
     <span class="n">env</span> <span class="o">=</span> <span class="n">Environment</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">)</span>
     <span class="c1"># You can add as many custom processes as you wish</span>

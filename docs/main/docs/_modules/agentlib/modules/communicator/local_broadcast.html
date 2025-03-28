@@ -76,16 +76,16 @@
            <div itemprop="articleBody">
              
   <h1>Source code for agentlib.modules.communicator.local_broadcast</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">agentlib.core.datamodels</span> <span class="kn">import</span> <span class="n">AgentVariable</span>
-<span class="kn">from</span> <span class="nn">agentlib.modules.communicator.communicator</span> <span class="kn">import</span> <span class="p">(</span>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">agentlib.core.datamodels</span><span class="w"> </span><span class="kn">import</span> <span class="n">AgentVariable</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agentlib.modules.communicator.communicator</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">CommunicationDict</span><span class="p">,</span>
     <span class="n">LocalCommunicatorConfig</span><span class="p">,</span>
     <span class="n">LocalCommunicator</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span> <span class="nn">agentlib.utils</span> <span class="kn">import</span> <span class="n">LocalBroadcastBroker</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agentlib.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">LocalBroadcastBroker</span>
 
 
-<div class="viewcode-block" id="LocalBroadcastClient"><a class="viewcode-back" href="../../../../code/agentlib.modules.communicator.html#agentlib.modules.communicator.local_broadcast.LocalBroadcastClient">[docs]</a><span class="k">class</span> <span class="nc">LocalBroadcastClient</span><span class="p">(</span><span class="n">LocalCommunicator</span><span class="p">):</span>
+<div class="viewcode-block" id="LocalBroadcastClient"><a class="viewcode-back" href="../../../../code/agentlib.modules.communicator.html#agentlib.modules.communicator.local_broadcast.LocalBroadcastClient">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">LocalBroadcastClient</span><span class="p">(</span><span class="n">LocalCommunicator</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This communicator implements the communication between agents via a</span>
 <span class="sd">    broadcast broker central process.</span>
@@ -96,11 +96,11 @@
     <span class="n">broker</span><span class="p">:</span> <span class="n">LocalBroadcastBroker</span>
     <span class="n">config</span><span class="p">:</span> <span class="n">LocalCommunicatorConfig</span>
 
-<div class="viewcode-block" id="LocalBroadcastClient.setup_broker"><a class="viewcode-back" href="../../../../code/agentlib.modules.communicator.html#agentlib.modules.communicator.local_broadcast.LocalBroadcastClient.setup_broker">[docs]</a>    <span class="k">def</span> <span class="nf">setup_broker</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="LocalBroadcastClient.setup_broker"><a class="viewcode-back" href="../../../../code/agentlib.modules.communicator.html#agentlib.modules.communicator.local_broadcast.LocalBroadcastClient.setup_broker">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">setup_broker</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Use the LocalBroadCastBroker&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">LocalBroadcastBroker</span><span class="p">()</span></div>
 
-    <span class="k">def</span> <span class="nf">_send</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">payload</span><span class="p">:</span> <span class="n">CommunicationDict</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_send</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">payload</span><span class="p">:</span> <span class="n">CommunicationDict</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">parse_json</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">broker</span><span class="o">.</span><span class="n">broadcast</span><span class="p">(</span><span class="n">payload</span><span class="p">[</span><span class="s2">&quot;source&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">payload</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>

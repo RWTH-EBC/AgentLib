@@ -79,12 +79,12 @@
 <span></span><span class="sd">&quot;&quot;&quot;This module contains a SensorModule which reads a .dat file</span>
 <span class="sd">from the Deutsche Wetterdienst (DWD).&quot;&quot;&quot;</span>
 
-<span class="kn">import</span> <span class="nn">io</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span><span class="p">,</span> <span class="n">List</span>
-<span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">FilePath</span><span class="p">,</span> <span class="n">Field</span><span class="p">,</span> <span class="n">validator</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">agentlib.core</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">io</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Union</span><span class="p">,</span> <span class="n">List</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">FilePath</span><span class="p">,</span> <span class="n">Field</span><span class="p">,</span> <span class="n">validator</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agentlib.core</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">BaseModule</span><span class="p">,</span>
     <span class="n">Agent</span><span class="p">,</span>
     <span class="n">AgentVariable</span><span class="p">,</span>
@@ -93,7 +93,7 @@
 <span class="p">)</span>
 
 
-<div class="viewcode-block" id="TRYSensorConfig"><a class="viewcode-back" href="../../../../code/agentlib.modules.utils.html#agentlib.modules.utils.try_sensor.TRYSensorConfig">[docs]</a><span class="k">class</span> <span class="nc">TRYSensorConfig</span><span class="p">(</span><span class="n">BaseModuleConfig</span><span class="p">):</span>
+<div class="viewcode-block" id="TRYSensorConfig"><a class="viewcode-back" href="../../../../code/agentlib.modules.utils.html#agentlib.modules.utils.try_sensor.TRYSensorConfig">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">TRYSensorConfig</span><span class="p">(</span><span class="n">BaseModuleConfig</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Define parameters for the TRYSensor&quot;&quot;&quot;</span>
 
     <span class="n">outputs</span><span class="p">:</span> <span class="n">AgentVariables</span> <span class="o">=</span> <span class="p">[</span>
@@ -158,7 +158,7 @@
     <span class="n">shared_variable_fields</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;outputs&quot;</span><span class="p">]</span></div>
 
 
-<div class="viewcode-block" id="TRYSensor"><a class="viewcode-back" href="../../../../code/agentlib.modules.utils.html#agentlib.modules.utils.try_sensor.TRYSensor">[docs]</a><span class="k">class</span> <span class="nc">TRYSensor</span><span class="p">(</span><span class="n">BaseModule</span><span class="p">):</span>
+<div class="viewcode-block" id="TRYSensor"><a class="viewcode-back" href="../../../../code/agentlib.modules.utils.html#agentlib.modules.utils.try_sensor.TRYSensor">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">TRYSensor</span><span class="p">(</span><span class="n">BaseModule</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;A module that emulates a sensor using the TRY</span>
 <span class="sd">    data of the DWD.</span>
 <span class="sd">    The module casts the following AgentVariables into the data_broker:</span>
@@ -178,7 +178,7 @@
 
     <span class="n">config</span><span class="p">:</span> <span class="n">TRYSensorConfig</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">agent</span><span class="p">:</span> <span class="n">Agent</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">agent</span><span class="p">:</span> <span class="n">Agent</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Overwrite init to enable a custom default filename</span>
 <span class="sd">        which uses the agent_id.&quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">,</span> <span class="n">agent</span><span class="o">=</span><span class="n">agent</span><span class="p">)</span>
@@ -196,16 +196,16 @@
             <span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">filename</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">filename</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the filename.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">filename</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">t_sample</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">t_sample</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the sample rate.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">t_sample</span>
 
-<div class="viewcode-block" id="TRYSensor.process"><a class="viewcode-back" href="../../../../code/agentlib.modules.utils.html#agentlib.modules.utils.try_sensor.TRYSensor.process">[docs]</a>    <span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TRYSensor.process"><a class="viewcode-back" href="../../../../code/agentlib.modules.utils.html#agentlib.modules.utils.try_sensor.TRYSensor.process">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Write the current TRY values into data_broker every other t_sample&quot;&quot;&quot;</span>
         <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
             <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_data_now</span><span class="p">()</span>
@@ -213,7 +213,7 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">val</span><span class="p">)</span>
             <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">timeout</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">t_sample</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="TRYSensor.get_data_now"><a class="viewcode-back" href="../../../../code/agentlib.modules.utils.html#agentlib.modules.utils.try_sensor.TRYSensor.get_data_now">[docs]</a>    <span class="k">def</span> <span class="nf">get_data_now</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TRYSensor.get_data_now"><a class="viewcode-back" href="../../../../code/agentlib.modules.utils.html#agentlib.modules.utils.try_sensor.TRYSensor.get_data_now">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">get_data_now</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the data at the current env time.</span>
 <span class="sd">        Reiterate the year if necessary.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -225,11 +225,11 @@
         <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">now</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
         <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span><span class="o">.</span><span class="n">interpolate</span><span class="p">()</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">now</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="TRYSensor.register_callbacks"><a class="viewcode-back" href="../../../../code/agentlib.modules.utils.html#agentlib.modules.utils.try_sensor.TRYSensor.register_callbacks">[docs]</a>    <span class="k">def</span> <span class="nf">register_callbacks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TRYSensor.register_callbacks"><a class="viewcode-back" href="../../../../code/agentlib.modules.utils.html#agentlib.modules.utils.try_sensor.TRYSensor.register_callbacks">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">register_callbacks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Dont do anything as this BaseModule is not event-triggered&quot;&quot;&quot;</span></div></div>
 
 
-<div class="viewcode-block" id="read_dat_file"><a class="viewcode-back" href="../../../../code/agentlib.modules.utils.html#agentlib.modules.utils.try_sensor.read_dat_file">[docs]</a><span class="k">def</span> <span class="nf">read_dat_file</span><span class="p">(</span><span class="n">dat_file</span><span class="p">):</span>
+<div class="viewcode-block" id="read_dat_file"><a class="viewcode-back" href="../../../../code/agentlib.modules.utils.html#agentlib.modules.utils.try_sensor.read_dat_file">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">read_dat_file</span><span class="p">(</span><span class="n">dat_file</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Read a .dat file from the DWD&#39;s TRY data from the given .dat-file</span>
 

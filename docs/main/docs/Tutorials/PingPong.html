@@ -109,9 +109,9 @@ To set up a multi-agent-system by hand, the following steps are required:</p>
 <li><p>Run the simulation by calling the run() method of the environment.</p></li>
 </ol>
 <p>Let’s go through the example from top to bottom. First, look at the imports.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">import</span> <span class="nn">pingpong_module</span>
-<span class="kn">from</span> <span class="nn">agentlib.core</span> <span class="kn">import</span> <span class="n">Environment</span><span class="p">,</span> <span class="n">Agent</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pingpong_module</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agentlib.core</span><span class="w"> </span><span class="kn">import</span> <span class="n">Environment</span><span class="p">,</span> <span class="n">Agent</span>
 </pre></div>
 </div>
 <p>We import logging, the pingpong_module from the same directory and
@@ -198,12 +198,12 @@ inside the agents and how to implement your own functionality. The pingpong
 module is located at
 <code class="docutils literal notranslate"><span class="pre">examples/multi-agent-systems/pingpong/pingpong_module.py</span></code>.</p>
 <p>As usual, the file begins with the module-level imports.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">Field</span>
-<span class="kn">from</span> <span class="nn">agentlib.core</span> <span class="kn">import</span> <span class="n">BaseModule</span><span class="p">,</span> <span class="n">BaseModuleConfig</span>
-<span class="kn">from</span> <span class="nn">agentlib.core.datamodels</span> <span class="kn">import</span> <span class="n">AgentVariable</span><span class="p">,</span> <span class="n">Causality</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">Field</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agentlib.core</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseModule</span><span class="p">,</span> <span class="n">BaseModuleConfig</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agentlib.core.datamodels</span><span class="w"> </span><span class="kn">import</span> <span class="n">AgentVariable</span><span class="p">,</span> <span class="n">Causality</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 </pre></div>
@@ -218,7 +218,7 @@ from, <code class="docutils literal notranslate"><span class="pre">BaseModuleCon
 communicated throughout a MAS. In a sense, they can simply be interpreted as
 message objects. <code class="docutils literal notranslate"><span class="pre">AgentVariable</span></code> is, as the name implies, a message that
 should be sent to other agents. We will look at <code class="docutils literal notranslate"><span class="pre">Causality</span></code> later.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">PingPongConfig</span><span class="p">(</span><span class="n">BaseModuleConfig</span><span class="p">):</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">PingPongConfig</span><span class="p">(</span><span class="n">BaseModuleConfig</span><span class="p">):</span>
     <span class="n">start</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
         <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
         <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Indicates if the agent should start communication&quot;</span>
@@ -228,7 +228,7 @@ should be sent to other agents. We will look at <code class="docutils literal no
         <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Wait the given amount of seconds before starting.&quot;</span>
     <span class="p">)</span>
 
-<span class="k">class</span> <span class="nc">PingPong</span><span class="p">(</span><span class="n">BaseModule</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">PingPong</span><span class="p">(</span><span class="n">BaseModule</span><span class="p">):</span>
 
     <span class="n">config</span><span class="p">:</span> <span class="n">PingPongConfig</span>
 </pre></div>
@@ -251,7 +251,7 @@ name corresponding to a variable that was defined in the config.</p>
 Using yield statements, the control over the simulation flow is given back
 to the event manager of the environment. However in this example, the only
 function of the process is to start the pingpong game.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="k">def</span><span class="w"> </span><span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">start</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Waiting </span><span class="si">%s</span><span class="s2"> s before starting&quot;</span><span class="p">,</span>
                               <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">initial_wait</span><span class="p">)</span>
@@ -280,7 +280,7 @@ executed, when variables are written to the data_broker. Since we are playing
 Pingpong, we want to answer when we receive a message.
 Let’s look at the second method we
 need to overwrite, <code class="docutils literal notranslate"><span class="pre">register_callbacks()</span></code>.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">register_callbacks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">register_callbacks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="s2">&quot;Ping&quot;</span><span class="p">:</span>
         <span class="n">alias</span> <span class="o">=</span> <span class="s2">&quot;Pong&quot;</span>
     <span class="k">else</span><span class="p">:</span>
@@ -301,7 +301,7 @@ alias will listen to the message with alias <em>Pong</em> and vice-versa.</p>
 function always takes an AgentVariable as its single argument. This function
 logs the received variable to the console, waits a second and then also
 sends a variable.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">variable</span><span class="p">:</span> <span class="n">AgentVariable</span><span class="p">):</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">variable</span><span class="p">:</span> <span class="n">AgentVariable</span><span class="p">):</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> received: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">variable</span><span class="o">.</span><span class="n">json</span><span class="p">())</span>
     <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>

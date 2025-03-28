@@ -88,12 +88,12 @@
 
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">import</span> <span class="nn">abc</span>
-<span class="kn">import</span> <span class="nn">inspect</span>
-<span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">import</span> <span class="nn">queue</span>
-<span class="kn">import</span> <span class="nn">threading</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">abc</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">inspect</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">queue</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">threading</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">List</span><span class="p">,</span>
     <span class="n">Callable</span><span class="p">,</span>
     <span class="n">Dict</span><span class="p">,</span>
@@ -102,15 +102,15 @@
     <span class="n">Union</span><span class="p">,</span>
 <span class="p">)</span>
 
-<span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">field_validator</span><span class="p">,</span> <span class="n">model_validator</span><span class="p">,</span> <span class="n">ConfigDict</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">field_validator</span><span class="p">,</span> <span class="n">model_validator</span><span class="p">,</span> <span class="n">ConfigDict</span>
 
-<span class="kn">from</span> <span class="nn">agentlib.core.datamodels</span> <span class="kn">import</span> <span class="n">AgentVariable</span><span class="p">,</span> <span class="n">Source</span>
-<span class="kn">from</span> <span class="nn">agentlib.core.environment</span> <span class="kn">import</span> <span class="n">Environment</span>
-<span class="kn">from</span> <span class="nn">agentlib.core.logging_</span> <span class="kn">import</span> <span class="n">CustomLogger</span>
-<span class="kn">from</span> <span class="nn">agentlib.core.module</span> <span class="kn">import</span> <span class="n">BaseModule</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agentlib.core.datamodels</span><span class="w"> </span><span class="kn">import</span> <span class="n">AgentVariable</span><span class="p">,</span> <span class="n">Source</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agentlib.core.environment</span><span class="w"> </span><span class="kn">import</span> <span class="n">Environment</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agentlib.core.logging_</span><span class="w"> </span><span class="kn">import</span> <span class="n">CustomLogger</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agentlib.core.module</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseModule</span>
 
 
-<div class="viewcode-block" id="NoCopyBrokerCallback"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.core.data_broker.NoCopyBrokerCallback">[docs]</a><span class="k">class</span> <span class="nc">NoCopyBrokerCallback</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<div class="viewcode-block" id="NoCopyBrokerCallback"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.core.data_broker.NoCopyBrokerCallback">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">NoCopyBrokerCallback</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Basic broker callback.</span>
 <span class="sd">    This object does not copy the AgentVariable</span>
@@ -144,7 +144,7 @@
 
 <div class="viewcode-block" id="NoCopyBrokerCallback.check_valid_callback_function"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.core.data_broker.NoCopyBrokerCallback.check_valid_callback_function">[docs]</a>    <span class="nd">@model_validator</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;before&quot;</span><span class="p">)</span>
     <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">check_valid_callback_function</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">check_valid_callback_function</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Ensures the callback function signature is valid.&quot;&quot;&quot;</span>
         <span class="n">func_params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">inspect</span><span class="o">.</span><span class="n">signature</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;callback&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">parameters</span><span class="p">)</span>
         <span class="n">par</span> <span class="o">=</span> <span class="n">func_params</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">func_params</span><span class="p">)))</span>
@@ -193,7 +193,7 @@
         <span class="n">data</span><span class="p">[</span><span class="s2">&quot;module_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">module_id</span>
         <span class="k">return</span> <span class="n">data</span></div>
 
-    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s2">&quot;NoCopyBrokerCallback&quot;</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s2">&quot;NoCopyBrokerCallback&quot;</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Check equality to another callback using equality of all fields</span>
 <span class="sd">        and the name of the callback function</span>
@@ -213,7 +213,7 @@
         <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="BrokerCallback"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.core.data_broker.BrokerCallback">[docs]</a><span class="k">class</span> <span class="nc">BrokerCallback</span><span class="p">(</span><span class="n">NoCopyBrokerCallback</span><span class="p">):</span>
+<div class="viewcode-block" id="BrokerCallback"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.core.data_broker.BrokerCallback">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">BrokerCallback</span><span class="p">(</span><span class="n">NoCopyBrokerCallback</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This broker callback always creates a deep-copy of the</span>
 <span class="sd">    AgentVariable it is going to send.</span>
@@ -224,17 +224,17 @@
 
 <div class="viewcode-block" id="BrokerCallback.auto_copy"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.core.data_broker.BrokerCallback.auto_copy">[docs]</a>    <span class="nd">@field_validator</span><span class="p">(</span><span class="s2">&quot;callback&quot;</span><span class="p">)</span>
     <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">auto_copy</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">callback_func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">auto_copy</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">callback_func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Automatically supply the callback function with a copy&quot;&quot;&quot;</span>
 
-        <span class="k">def</span> <span class="nf">callback_copy</span><span class="p">(</span><span class="n">variable</span><span class="p">:</span> <span class="n">AgentVariable</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">callback_copy</span><span class="p">(</span><span class="n">variable</span><span class="p">:</span> <span class="n">AgentVariable</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
             <span class="n">callback_func</span><span class="p">(</span><span class="n">variable</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">deep</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
         <span class="n">callback_copy</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">=</span> <span class="n">callback_func</span><span class="o">.</span><span class="vm">__name__</span>
         <span class="k">return</span> <span class="n">callback_copy</span></div></div>
 
 
-<div class="viewcode-block" id="DataBroker"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.core.data_broker.DataBroker">[docs]</a><span class="k">class</span> <span class="nc">DataBroker</span><span class="p">(</span><span class="n">abc</span><span class="o">.</span><span class="n">ABC</span><span class="p">):</span>
+<div class="viewcode-block" id="DataBroker"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.core.data_broker.DataBroker">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">DataBroker</span><span class="p">(</span><span class="n">abc</span><span class="o">.</span><span class="n">ABC</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Handles communication and Callback triggers within an agent.</span>
 <span class="sd">    Write variables to the broker with ``send_variable()``.</span>
@@ -247,7 +247,7 @@
 <span class="sd">    with ``register_callback`` and ``deregister_callback``.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">logger</span><span class="p">:</span> <span class="n">CustomLogger</span><span class="p">,</span> <span class="n">max_queue_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">logger</span><span class="p">:</span> <span class="n">CustomLogger</span><span class="p">,</span> <span class="n">max_queue_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initialize lock, callbacks and entries</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -257,7 +257,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_unmapped_callbacks</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">BrokerCallback</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_variable_queue</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">Queue</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="n">max_queue_size</span><span class="p">)</span>
 
-<div class="viewcode-block" id="DataBroker.send_variable"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.core.data_broker.DataBroker.send_variable">[docs]</a>    <span class="k">def</span> <span class="nf">send_variable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">variable</span><span class="p">:</span> <span class="n">AgentVariable</span><span class="p">,</span> <span class="n">copy</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="DataBroker.send_variable"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.core.data_broker.DataBroker.send_variable">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">send_variable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">variable</span><span class="p">:</span> <span class="n">AgentVariable</span><span class="p">,</span> <span class="n">copy</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Send variable to data_broker. Evokes callbacks associated with this variable.</span>
 
@@ -273,7 +273,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_send_variable_to_modules</span><span class="p">(</span><span class="n">variable</span><span class="o">=</span><span class="n">variable</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">_send_variable_to_modules</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">variable</span><span class="p">:</span> <span class="n">AgentVariable</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_send_variable_to_modules</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">variable</span><span class="p">:</span> <span class="n">AgentVariable</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Enqueue AgentVariable in local queue for executing relevant callbacks.</span>
 
@@ -282,7 +282,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_variable_queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">variable</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_execute_callbacks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_execute_callbacks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Run relevant callbacks for AgentVariable&#39;s from local queue.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -306,7 +306,7 @@
         <span class="c1"># Then run the callbacks</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_run_callbacks</span><span class="p">(</span><span class="n">callbacks</span><span class="p">,</span> <span class="n">variable</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_filter_unmapped_callbacks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">map_tuple</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">BrokerCallback</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_filter_unmapped_callbacks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">map_tuple</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">BrokerCallback</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Filter the unmapped callbacks according to the given</span>
 <span class="sd">        tuple of variable information.</span>
@@ -333,7 +333,7 @@
 
         <span class="k">return</span> <span class="n">callbacks</span>
 
-<div class="viewcode-block" id="DataBroker.register_callback"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.core.data_broker.DataBroker.register_callback">[docs]</a>    <span class="k">def</span> <span class="nf">register_callback</span><span class="p">(</span>
+<div class="viewcode-block" id="DataBroker.register_callback"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.core.data_broker.DataBroker.register_callback">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">register_callback</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">callback</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span>
         <span class="n">alias</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -371,7 +371,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_mapped_callbacks</span><span class="p">[</span><span class="n">_map_tuple</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">callback_</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">callback_</span></div>
 
-<div class="viewcode-block" id="DataBroker.deregister_callback"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.core.data_broker.DataBroker.deregister_callback">[docs]</a>    <span class="k">def</span> <span class="nf">deregister_callback</span><span class="p">(</span>
+<div class="viewcode-block" id="DataBroker.deregister_callback"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.core.data_broker.DataBroker.deregister_callback">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">deregister_callback</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">alias</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">source</span><span class="p">:</span> <span class="n">Source</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
     <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -400,7 +400,7 @@
             <span class="k">pass</span></div>
 
 <div class="viewcode-block" id="DataBroker.any_is_none"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.core.data_broker.DataBroker.any_is_none">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">any_is_none</span><span class="p">(</span><span class="n">alias</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">source</span><span class="p">:</span> <span class="n">Source</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">any_is_none</span><span class="p">(</span><span class="n">alias</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">source</span><span class="p">:</span> <span class="n">Source</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return True if any of alias or source are None.</span>
 
@@ -418,16 +418,16 @@
         <span class="p">)</span></div>
 
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">_run_callbacks</span><span class="p">(</span><span class="n">callbacks</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">BrokerCallback</span><span class="p">],</span> <span class="n">variable</span><span class="p">:</span> <span class="n">AgentVariable</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_run_callbacks</span><span class="p">(</span><span class="n">callbacks</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">BrokerCallback</span><span class="p">],</span> <span class="n">variable</span><span class="p">:</span> <span class="n">AgentVariable</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Runs the callbacks on a single AgentVariable.&quot;&quot;&quot;</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
 
 
-<div class="viewcode-block" id="LocalDataBroker"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.core.data_broker.LocalDataBroker">[docs]</a><span class="k">class</span> <span class="nc">LocalDataBroker</span><span class="p">(</span><span class="n">DataBroker</span><span class="p">):</span>
+<div class="viewcode-block" id="LocalDataBroker"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.core.data_broker.LocalDataBroker">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">LocalDataBroker</span><span class="p">(</span><span class="n">DataBroker</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Local variation of the DataBroker written for fast-as-possible</span>
 <span class="sd">    simulation within a single non-realtime Environment.&quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">env</span><span class="p">:</span> <span class="n">Environment</span><span class="p">,</span> <span class="n">logger</span><span class="p">:</span> <span class="n">CustomLogger</span><span class="p">,</span> <span class="n">max_queue_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span>
     <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -437,7 +437,7 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">logger</span><span class="o">=</span><span class="n">logger</span><span class="p">,</span> <span class="n">max_queue_size</span><span class="o">=</span><span class="n">max_queue_size</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_callbacks_available</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">event</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">_send_variable_to_modules</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">variable</span><span class="p">:</span> <span class="n">AgentVariable</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_send_variable_to_modules</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">variable</span><span class="p">:</span> <span class="n">AgentVariable</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Enqueue AgentVariable in local queue for executing relevant callbacks.</span>
 
@@ -449,24 +449,24 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_callbacks_available</span><span class="o">.</span><span class="n">succeed</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_callbacks_available</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">event</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">_execute_callback_simpy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ignored</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_execute_callback_simpy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ignored</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Run relevant callbacks for AgentVariable&#39;s from local queue.</span>
 <span class="sd">        To be appended to the callback of the callbacks available event.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_execute_callbacks</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">_run_callbacks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callbacks</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">BrokerCallback</span><span class="p">],</span> <span class="n">variable</span><span class="p">:</span> <span class="n">AgentVariable</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_run_callbacks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callbacks</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">BrokerCallback</span><span class="p">],</span> <span class="n">variable</span><span class="p">:</span> <span class="n">AgentVariable</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Runs callbacks of an agent on a single AgentVariable in sequence.</span>
 <span class="sd">        Used in fast-as-possible execution mode.&quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">cb</span> <span class="ow">in</span> <span class="n">callbacks</span><span class="p">:</span>
             <span class="n">cb</span><span class="o">.</span><span class="n">callback</span><span class="p">(</span><span class="n">variable</span><span class="p">,</span> <span class="o">**</span><span class="n">cb</span><span class="o">.</span><span class="n">kwargs</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="RTDataBroker"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.core.data_broker.RTDataBroker">[docs]</a><span class="k">class</span> <span class="nc">RTDataBroker</span><span class="p">(</span><span class="n">DataBroker</span><span class="p">):</span>
+<div class="viewcode-block" id="RTDataBroker"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.core.data_broker.RTDataBroker">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">RTDataBroker</span><span class="p">(</span><span class="n">DataBroker</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;DataBroker written for Realtime operation regardless of Environment.&quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">env</span><span class="p">:</span> <span class="n">Environment</span><span class="p">,</span> <span class="n">logger</span><span class="p">:</span> <span class="n">CustomLogger</span><span class="p">,</span> <span class="n">max_queue_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span>
     <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -485,7 +485,7 @@
 
         <span class="n">env</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_start_executing_callbacks</span><span class="p">(</span><span class="n">env</span><span class="p">))</span>
 
-    <span class="k">def</span> <span class="nf">_start_executing_callbacks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">env</span><span class="p">:</span> <span class="n">Environment</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_start_executing_callbacks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">env</span><span class="p">:</span> <span class="n">Environment</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Starts the callback thread.</span>
 <span class="sd">        Thread is started after it is registered by the agent. Should be fine, since</span>
@@ -494,7 +494,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
         <span class="k">yield</span> <span class="n">env</span><span class="o">.</span><span class="n">event</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">_callback_thread</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_callback_thread</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Thread to check and process the callback queue in Realtime</span>
 <span class="sd">        applications.&quot;&quot;&quot;</span>
         <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
@@ -502,10 +502,10 @@
                 <span class="n">err</span><span class="p">,</span> <span class="n">module_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stop_queue</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
                 <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
                     <span class="sa">f</span><span class="s2">&quot;A callback failed in the module </span><span class="si">{</span><span class="n">module_id</span><span class="si">}</span><span class="s2">.&quot;</span>
-                <span class="p">)</span> <span class="kn">from</span> <span class="nn">err</span>
+                <span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">err</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_execute_callbacks</span><span class="p">()</span>
 
-<div class="viewcode-block" id="RTDataBroker.register_callback"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.core.data_broker.RTDataBroker.register_callback">[docs]</a>    <span class="k">def</span> <span class="nf">register_callback</span><span class="p">(</span>
+<div class="viewcode-block" id="RTDataBroker.register_callback"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.core.data_broker.RTDataBroker.register_callback">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">register_callback</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">callback</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span>
         <span class="n">alias</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -525,7 +525,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_start_module_thread</span><span class="p">(</span><span class="n">callback</span><span class="o">.</span><span class="n">module_id</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">callback</span></div>
 
-    <span class="k">def</span> <span class="nf">_start_module_thread</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_start_module_thread</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Starts a consumer thread for callbacks registered from a module.&quot;&quot;&quot;</span>
         <span class="n">module_queue</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">Queue</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_max_queue_size</span><span class="p">)</span>
         <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span>
@@ -536,7 +536,7 @@
         <span class="p">)</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_module_queues</span><span class="p">[</span><span class="n">module_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">module_queue</span>
 
-    <span class="k">def</span> <span class="nf">_execute_callbacks_of_module</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">queue</span><span class="p">:</span> <span class="n">queue</span><span class="o">.</span><span class="n">SimpleQueue</span><span class="p">,</span> <span class="n">module_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_execute_callbacks_of_module</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">queue</span><span class="p">:</span> <span class="n">queue</span><span class="o">.</span><span class="n">SimpleQueue</span><span class="p">,</span> <span class="n">module_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Executes the callbacks associated with a specific module.&quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
@@ -546,7 +546,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_stop_queue</span><span class="o">.</span><span class="n">put</span><span class="p">((</span><span class="n">e</span><span class="p">,</span> <span class="n">module_id</span><span class="p">))</span>
             <span class="k">raise</span> <span class="n">e</span>
 
-    <span class="k">def</span> <span class="nf">_run_callbacks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callbacks</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">BrokerCallback</span><span class="p">],</span> <span class="n">variable</span><span class="p">:</span> <span class="n">AgentVariable</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_run_callbacks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callbacks</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">BrokerCallback</span><span class="p">],</span> <span class="n">variable</span><span class="p">:</span> <span class="n">AgentVariable</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Distributes callbacks to the threads running for each module.&quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">cb</span> <span class="ow">in</span> <span class="n">callbacks</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_module_queues</span><span class="p">[</span><span class="n">cb</span><span class="o">.</span><span class="n">module_id</span><span class="p">]</span><span class="o">.</span><span class="n">put_nowait</span><span class="p">((</span><span class="n">cb</span><span class="p">,</span> <span class="n">variable</span><span class="p">))</span>
@@ -558,7 +558,7 @@
             <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="log_queue_status"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.core.data_broker.log_queue_status">[docs]</a><span class="k">def</span> <span class="nf">log_queue_status</span><span class="p">(</span>
+<div class="viewcode-block" id="log_queue_status"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.core.data_broker.log_queue_status">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">log_queue_status</span><span class="p">(</span>
     <span class="n">logger</span><span class="p">:</span> <span class="n">logging</span><span class="o">.</span><span class="n">Logger</span><span class="p">,</span>
     <span class="n">queue_object</span><span class="p">:</span> <span class="n">queue</span><span class="o">.</span><span class="n">Queue</span><span class="p">,</span>
     <span class="n">max_queue_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>

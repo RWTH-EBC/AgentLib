@@ -81,17 +81,17 @@
 <span class="sd">to load module classes from this package.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">List</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">List</span>
 
-<span class="kn">from</span> <span class="nn">agentlib.utils</span> <span class="kn">import</span> <span class="n">plugin_import</span>
-<span class="kn">from</span> <span class="nn">agentlib.utils.fuzzy_matching</span> <span class="kn">import</span> <span class="n">fuzzy_match</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agentlib.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">plugin_import</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agentlib.utils.fuzzy_matching</span><span class="w"> </span><span class="kn">import</span> <span class="n">fuzzy_match</span>
 
 <span class="c1"># Global modules:</span>
 <span class="n">_MODULE_TYPES</span> <span class="o">=</span> <span class="n">plugin_import</span><span class="o">.</span><span class="n">SaveUpdateDict</span><span class="p">()</span>
 <span class="n">_LOADED_CORE_MODULES</span> <span class="o">=</span> <span class="kc">False</span>
 
 
-<span class="k">def</span> <span class="nf">_import_modules</span><span class="p">():</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_import_modules</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Import the module information,</span>
 <span class="sd">    but only if it has not been loaded yet.</span>
@@ -104,28 +104,28 @@
     <span class="k">return</span> <span class="n">_MODULE_TYPES</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 
 
-<span class="k">def</span> <span class="nf">_load_core_modules</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_load_core_modules</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="k">global</span> <span class="n">_LOADED_CORE_MODULES</span><span class="p">,</span> <span class="n">_MODULE_TYPES</span>
     <span class="c1"># Communicator</span>
-    <span class="kn">import</span> <span class="nn">agentlib.modules.communicator</span> <span class="k">as</span> <span class="nn">communicator</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">agentlib.modules.communicator</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">communicator</span>
 
     <span class="n">_MODULE_TYPES</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">communicator</span><span class="o">.</span><span class="n">MODULE_TYPES</span><span class="p">)</span>
     <span class="c1"># Controller</span>
-    <span class="kn">import</span> <span class="nn">agentlib.modules.controller</span> <span class="k">as</span> <span class="nn">controller</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">agentlib.modules.controller</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">controller</span>
 
     <span class="n">_MODULE_TYPES</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">controller</span><span class="o">.</span><span class="n">MODULE_TYPES</span><span class="p">)</span>
     <span class="c1"># Utils</span>
-    <span class="kn">import</span> <span class="nn">agentlib.modules.utils</span> <span class="k">as</span> <span class="nn">utils</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">agentlib.modules.utils</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">utils</span>
 
     <span class="n">_MODULE_TYPES</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">utils</span><span class="o">.</span><span class="n">MODULE_TYPES</span><span class="p">)</span>
     <span class="c1"># Simulator</span>
-    <span class="kn">import</span> <span class="nn">agentlib.modules.simulation</span> <span class="k">as</span> <span class="nn">simulation</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">agentlib.modules.simulation</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">simulation</span>
 
     <span class="n">_MODULE_TYPES</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">simulation</span><span class="o">.</span><span class="n">MODULE_TYPES</span><span class="p">)</span>
     <span class="n">_LOADED_CORE_MODULES</span> <span class="o">=</span> <span class="kc">True</span>
 
 
-<div class="viewcode-block" id="get_module_type"><a class="viewcode-back" href="../../code/agentlib.modules.html#agentlib.modules.get_module_type">[docs]</a><span class="k">def</span> <span class="nf">get_module_type</span><span class="p">(</span><span class="n">module_type</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">Dict</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">]:</span>
+<div class="viewcode-block" id="get_module_type"><a class="viewcode-back" href="../../code/agentlib.modules.html#agentlib.modules.get_module_type">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">get_module_type</span><span class="p">(</span><span class="n">module_type</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">Dict</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Return and load the given module type</span>
 
@@ -162,7 +162,7 @@
     <span class="k">raise</span> <span class="ne">ModuleNotFoundError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="get_all_module_types"><a class="viewcode-back" href="../../code/agentlib.modules.html#agentlib.modules.get_all_module_types">[docs]</a><span class="k">def</span> <span class="nf">get_all_module_types</span><span class="p">(</span><span class="n">plugins</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="get_all_module_types"><a class="viewcode-back" href="../../code/agentlib.modules.html#agentlib.modules.get_all_module_types">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">get_all_module_types</span><span class="p">(</span><span class="n">plugins</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns all available module types</span>
 

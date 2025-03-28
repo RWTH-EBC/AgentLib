@@ -76,18 +76,18 @@
            <div itemprop="articleBody">
              
   <h1>Source code for agentlib.modules.controller.pid</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">inf</span><span class="p">,</span> <span class="n">isclose</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">math</span><span class="w"> </span><span class="kn">import</span> <span class="n">inf</span><span class="p">,</span> <span class="n">isclose</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Union</span>
 
-<span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">field_validator</span>
-<span class="kn">from</span> <span class="nn">pydantic_core.core_schema</span> <span class="kn">import</span> <span class="n">FieldValidationInfo</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">field_validator</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pydantic_core.core_schema</span><span class="w"> </span><span class="kn">import</span> <span class="n">FieldValidationInfo</span>
 
-<span class="kn">from</span> <span class="nn">agentlib.modules.controller</span> <span class="kn">import</span> <span class="n">SISOController</span><span class="p">,</span> <span class="n">SISOControllerConfig</span>
-<span class="kn">from</span> <span class="nn">agentlib.core.datamodels</span> <span class="kn">import</span> <span class="n">AgentVariable</span>
-<span class="kn">from</span> <span class="nn">agentlib.core.errors</span> <span class="kn">import</span> <span class="n">ConfigurationError</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agentlib.modules.controller</span><span class="w"> </span><span class="kn">import</span> <span class="n">SISOController</span><span class="p">,</span> <span class="n">SISOControllerConfig</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agentlib.core.datamodels</span><span class="w"> </span><span class="kn">import</span> <span class="n">AgentVariable</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agentlib.core.errors</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConfigurationError</span>
 
 
-<div class="viewcode-block" id="PIDConfig"><a class="viewcode-back" href="../../../../code/agentlib.modules.controller.html#agentlib.modules.controller.pid.PIDConfig">[docs]</a><span class="k">class</span> <span class="nc">PIDConfig</span><span class="p">(</span><span class="n">SISOControllerConfig</span><span class="p">):</span>
+<div class="viewcode-block" id="PIDConfig"><a class="viewcode-back" href="../../../../code/agentlib.modules.controller.html#agentlib.modules.controller.pid.PIDConfig">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">PIDConfig</span><span class="p">(</span><span class="n">SISOControllerConfig</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Pydantic data model for pid controller configuration parser</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -111,7 +111,7 @@
 
 <div class="viewcode-block" id="PIDConfig.convert_to_variable"><a class="viewcode-back" href="../../../../code/agentlib.modules.controller.html#agentlib.modules.controller.pid.PIDConfig.convert_to_variable">[docs]</a>    <span class="nd">@field_validator</span><span class="p">(</span><span class="s2">&quot;Kp&quot;</span><span class="p">,</span> <span class="s2">&quot;Ti&quot;</span><span class="p">,</span> <span class="s2">&quot;Td&quot;</span><span class="p">,</span> <span class="s2">&quot;setpoint&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;before&quot;</span><span class="p">)</span>
     <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">convert_to_variable</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">parameter</span><span class="p">,</span> <span class="n">info</span><span class="p">:</span> <span class="n">FieldValidationInfo</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">convert_to_variable</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">parameter</span><span class="p">,</span> <span class="n">info</span><span class="p">:</span> <span class="n">FieldValidationInfo</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">parameter</span><span class="p">,</span> <span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">)):</span>
             <span class="n">default</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">default</span><span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="n">field_name</span><span class="p">)</span>
             <span class="n">parameter</span> <span class="o">=</span> <span class="n">default</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">update</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="n">parameter</span><span class="p">})</span>
@@ -126,7 +126,7 @@
         <span class="k">return</span> <span class="n">parameter</span></div></div>
 
 
-<div class="viewcode-block" id="PID"><a class="viewcode-back" href="../../../../code/agentlib.modules.controller.html#agentlib.modules.controller.pid.PID">[docs]</a><span class="k">class</span> <span class="nc">PID</span><span class="p">(</span><span class="n">SISOController</span><span class="p">):</span>
+<div class="viewcode-block" id="PID"><a class="viewcode-back" href="../../../../code/agentlib.modules.controller.html#agentlib.modules.controller.pid.PID">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">PID</span><span class="p">(</span><span class="n">SISOController</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A proportional–integral–derivative controller (PID</span>
 <span class="sd">    controller or three-term controller) with anti-wind up.</span>
@@ -157,7 +157,7 @@
 
     <span class="n">config</span><span class="p">:</span> <span class="n">PIDConfig</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">agent</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">agent</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">integral</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">e_last</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">last_time</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mi">0</span>
@@ -165,33 +165,33 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">,</span> <span class="n">agent</span><span class="o">=</span><span class="n">agent</span><span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">setpoint</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">setpoint</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the current setpoint value from data_broker or config&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">setpoint</span><span class="o">.</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">value</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">Kp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">Kp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the current Kp value from data_broker or config&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">Kp</span><span class="o">.</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">value</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">Ti</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">Ti</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the current Ti value from data_broker or config&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">Ti</span><span class="o">.</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">value</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">Td</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">Td</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the current Td value from data_broker or config&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">Td</span><span class="o">.</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">value</span>
 
-<div class="viewcode-block" id="PID.loop_sim"><a class="viewcode-back" href="../../../../code/agentlib.modules.controller.html#agentlib.modules.controller.pid.PID.loop_sim">[docs]</a>    <span class="k">def</span> <span class="nf">loop_sim</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="PID.loop_sim"><a class="viewcode-back" href="../../../../code/agentlib.modules.controller.html#agentlib.modules.controller.pid.PID.loop_sim">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">loop_sim</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">last_time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">time</span>
         <span class="n">y</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
             <span class="n">inp_var</span> <span class="o">=</span> <span class="k">yield</span> <span class="n">y</span>
             <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">do_step</span><span class="p">(</span><span class="n">inp_var</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="PID.do_step"><a class="viewcode-back" href="../../../../code/agentlib.modules.controller.html#agentlib.modules.controller.pid.PID.do_step">[docs]</a>    <span class="k">def</span> <span class="nf">do_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inp_var</span><span class="p">:</span> <span class="n">AgentVariable</span><span class="p">):</span>
+<div class="viewcode-block" id="PID.do_step"><a class="viewcode-back" href="../../../../code/agentlib.modules.controller.html#agentlib.modules.controller.pid.PID.do_step">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">do_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inp_var</span><span class="p">:</span> <span class="n">AgentVariable</span><span class="p">):</span>
         <span class="n">u</span> <span class="o">=</span> <span class="n">inp_var</span><span class="o">.</span><span class="n">value</span>
         <span class="n">curr_time</span> <span class="o">=</span> <span class="n">inp_var</span><span class="o">.</span><span class="n">timestamp</span>
 
