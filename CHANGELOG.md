@@ -9,6 +9,11 @@
 
 - Fix a bug, where pandas series could not be sent over network communicators or when
   parsing json in local communication.
+- AgentLogger has default filename back.
+- Default value for cleanup parameter in ``mas.get_results()`` and ``agent.get_results()`` is now false.
+- Simulator now properly cleans result file if specified.
+- Logging now displays the percentage of simulation time when a limit is specified.
+- Environment logging is now in the same style as module logging.
 
 ## 0.8.5
 

@@ -32,7 +32,8 @@ class CustomLogger(logging.Logger):
         _until = self.env.pretty_until()
         _time = self.env.pretty_time()
         if _until is None:
-            record.env_time = _time
+            # Add "INIT" prefix to clearly indicate initialization phase
+            record.env_time = f"<INIT> {_time}"
         else:
             record.env_time = _time + "/" + _until
         return record

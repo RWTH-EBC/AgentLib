@@ -181,7 +181,7 @@ class LocalMASAgency(MAS):
         except KeyError:
             KeyError(f"Given id '{id}' is not in the set of agents.")
 
-    def get_results(self, cleanup: bool = True) -> Dict[str, pd.DataFrame]:
+    def get_results(self, cleanup: bool = False) -> Dict[str, pd.DataFrame]:
         """
         Get all results of the agentLogger
         Args:

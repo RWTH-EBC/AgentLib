@@ -494,6 +494,12 @@ class Simulator(BaseModule):
         df = df.droplevel(level=2, axis=1).droplevel(level=0, axis=1)
         return df
 
+    def cleanup_results(self):
+        if not self.config.save_results or not self.config.result_filename:
+            return
+        os.remove(self.config.result_filename)
+
+
     def _update_results(self):
         """
         Adds model variables to the SimulationResult object
