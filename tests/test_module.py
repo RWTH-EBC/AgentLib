@@ -253,7 +253,7 @@ class TestModule(unittest.TestCase):
     def test_missing_config_type(self):
         """Tests if a proper error is raised when the type is missing."""
         with self.assertRaises(ConfigurationError):
-            mod = BrokenCustomModule(config=self.test_config, agent=self.agent)
+            BrokenCustomModule(config=self.test_config, agent=self.agent)
 
     def test_properties(self):
         """Test properties of module"""

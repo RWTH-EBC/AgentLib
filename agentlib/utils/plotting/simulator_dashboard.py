@@ -9,8 +9,8 @@ from agentlib.core.errors import OptionalDependencyError
 
 try:
     import dash
-    from dash import dcc, html, callback_context
-    from dash.dependencies import Input, Output, State, ALL, ClientsideFunction
+    from dash import dcc, html
+    from dash.dependencies import Input, Output, State, ALL
     import dash_bootstrap_components as dbc
     import plotly.graph_objs as go
 except ImportError:
