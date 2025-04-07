@@ -109,7 +109,8 @@
         <span class="n">_until</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">pretty_until</span><span class="p">()</span>
         <span class="n">_time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">pretty_time</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">_until</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">record</span><span class="o">.</span><span class="n">env_time</span> <span class="o">=</span> <span class="n">_time</span>
+            <span class="c1"># Add &quot;INIT&quot; prefix to clearly indicate initialization phase</span>
+            <span class="n">record</span><span class="o">.</span><span class="n">env_time</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&lt;INIT&gt; </span><span class="si">{</span><span class="n">_time</span><span class="si">}</span><span class="s2">&quot;</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">record</span><span class="o">.</span><span class="n">env_time</span> <span class="o">=</span> <span class="n">_time</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">_until</span>
         <span class="k">return</span> <span class="n">record</span></div></div>
