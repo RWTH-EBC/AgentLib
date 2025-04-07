@@ -29,7 +29,12 @@ class CustomLogger(logging.Logger):
         record = super().makeRecord(
             name, level, fn, lno, msg, args, exc_info, func, extra, sinfo
         )
-        record.env_time = self.env.pretty_time()
+        _until = self.env.pretty_until()
+        _time = self.env.pretty_time()
+        if _until is None:
+            record.env_time = _time
+        else:
+            record.env_time = _time + "/" + _until
         return record
 
 
