@@ -169,7 +169,7 @@ not an abstract method.</p>
 <dt class="field-even">Fields<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
 <li><p><a class="reference internal" href="#agentlib.modules.utils.agent_logger.AgentLoggerConfig.clean_up" title="agentlib.modules.utils.agent_logger.AgentLoggerConfig.clean_up"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clean_up</span> <span class="pre">(bool)</span></code></a></p></li>
-<li><p><a class="reference internal" href="#agentlib.modules.utils.agent_logger.AgentLoggerConfig.filename" title="agentlib.modules.utils.agent_logger.AgentLoggerConfig.filename"><code class="xref py py-obj docutils literal notranslate"><span class="pre">filename</span> <span class="pre">(str)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#agentlib.modules.utils.agent_logger.AgentLoggerConfig.filename" title="agentlib.modules.utils.agent_logger.AgentLoggerConfig.filename"><code class="xref py py-obj docutils literal notranslate"><span class="pre">filename</span> <span class="pre">(str</span> <span class="pre">|</span> <span class="pre">None)</span></code></a></p></li>
 <li><p><a class="reference internal" href="#agentlib.modules.utils.agent_logger.AgentLoggerConfig.log_level" title="agentlib.modules.utils.agent_logger.AgentLoggerConfig.log_level"><code class="xref py py-obj docutils literal notranslate"><span class="pre">log_level</span> <span class="pre">(Optional[str])</span></code></a></p></li>
 <li><p><a class="reference internal" href="#agentlib.modules.utils.agent_logger.AgentLoggerConfig.module_id" title="agentlib.modules.utils.agent_logger.AgentLoggerConfig.module_id"><code class="xref py py-obj docutils literal notranslate"><span class="pre">module_id</span> <span class="pre">(str)</span></code></a></p></li>
 <li><p><a class="reference internal" href="#agentlib.modules.utils.agent_logger.AgentLoggerConfig.overwrite_log" title="agentlib.modules.utils.agent_logger.AgentLoggerConfig.overwrite_log"><code class="xref py py-obj docutils literal notranslate"><span class="pre">overwrite_log</span> <span class="pre">(bool)</span></code></a></p></li>
@@ -196,8 +196,8 @@ not an abstract method.</p>
 
 <dl class="py attribute pydantic_field">
 <dt class="sig sig-object py" id="agentlib.modules.utils.agent_logger.AgentLoggerConfig.filename">
-<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">filename</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#agentlib.modules.utils.agent_logger.AgentLoggerConfig.filename" title="Permalink to this definition"></a></dt>
-<dd><p>The filename where the log is stored.</p>
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">filename</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agentlib.modules.utils.agent_logger.AgentLoggerConfig.filename" title="Permalink to this definition"></a></dt>
+<dd><p>The filename where the log is stored. If None, will use ‘agent_logs/{agent_id}_log.json’</p>
 <dl class="field-list simple">
 <dt class="field-odd">Validated by<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">

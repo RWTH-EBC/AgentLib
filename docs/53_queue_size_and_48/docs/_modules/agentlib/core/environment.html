@@ -103,7 +103,6 @@
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
@@ -118,7 +117,7 @@
 <span class="p">)</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">simpy.core</span><span class="w"> </span><span class="kn">import</span> <span class="n">SimTime</span><span class="p">,</span> <span class="n">Event</span>
 
-<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="vm">__name__</span><span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agentlib.core</span><span class="w"> </span><span class="kn">import</span> <span class="n">logging_</span> <span class="k">as</span> <span class="n">agentlib_logging</span>
 
 
 <div class="viewcode-block" id="EnvironmentConfig"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.EnvironmentConfig">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">EnvironmentConfig</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
@@ -201,7 +200,7 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Define a clock loop to increase the now-timer every other second</span>
 <span class="sd">        (Or whatever t_sample is)&quot;&quot;&quot;</span>
         <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Current simulation time: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pretty_time</span><span class="p">())</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Current simulation time: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pretty_time</span><span class="p">())</span>
             <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">t_sample</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="CustomSimpyEnvironment.pretty_time"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.CustomSimpyEnvironment.pretty_time">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">pretty_time</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="o">...</span></div>
@@ -217,6 +216,8 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">initial_time</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">offset</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_config</span> <span class="o">=</span> <span class="n">config</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_until</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="c1"># Create an environment-specific logger using CustomLogger</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">agentlib_logging</span><span class="o">.</span><span class="n">create_logger</span><span class="p">(</span><span class="n">env</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;environment&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">clock</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">clock</span><span class="p">())</span>
 
@@ -246,6 +247,7 @@
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_until</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_config</span> <span class="o">=</span> <span class="n">config</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">agentlib_logging</span><span class="o">.</span><span class="n">create_logger</span><span class="p">(</span><span class="n">env</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;environment&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">clock</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">clock</span><span class="p">())</span>
         <span class="k">else</span><span class="p">:</span>
@@ -289,6 +291,7 @@
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_config</span> <span class="o">=</span> <span class="n">config</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_until</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">agentlib_logging</span><span class="o">.</span><span class="n">create_logger</span><span class="p">(</span><span class="n">env</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;environment&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">clock</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">clock</span><span class="p">())</span>
         <span class="k">else</span><span class="p">:</span>
