@@ -26,7 +26,6 @@ Simpy is distributed under the MIT License
 """
 
 import json
-import logging
 import time
 from datetime import datetime
 from pathlib import Path
@@ -41,7 +40,7 @@ from pydantic import (
 )
 from simpy.core import SimTime, Event
 
-logger = logging.getLogger(name=__name__)
+from agentlib.core import logging_ as agentlib_logging
 
 
 class EnvironmentConfig(BaseModel):
@@ -124,7 +123,7 @@ class CustomSimpyEnvironment(simpy.Environment):
         """Define a clock loop to increase the now-timer every other second
         (Or whatever t_sample is)"""
         while True:
-            logger.info("Current simulation time: %s", self.pretty_time())
+            self.logger.info("Current simulation time: %s", self.pretty_time())
             yield self.timeout(self.config.t_sample)
 
     def pretty_time(self): ...
@@ -140,6 +139,8 @@ class InstantEnvironment(CustomSimpyEnvironment):
         super().__init__(initial_time=config.offset)
         self._config = config
         self._until = None
+        # Create an environment-specific logger using CustomLogger
+        self.logger = agentlib_logging.create_logger(env=self, name="environment")
         if self.config.clock:
             self.process(self.clock())
 
@@ -169,6 +170,7 @@ class RealtimeEnvironment(simpy.RealtimeEnvironment, CustomSimpyEnvironment):
         )
         self._until = None
         self._config = config
+        self.logger = agentlib_logging.create_logger(env=self, name="environment")
         if self.config.clock:
             self.process(self.clock())
         else:
@@ -212,6 +214,7 @@ class ScaledRealtimeEnvironment(simpy.RealtimeEnvironment, CustomSimpyEnvironmen
         )
         self._config = config
         self._until = None
+        self.logger = agentlib_logging.create_logger(env=self, name="environment")
         if self.config.clock:
             self.process(self.clock())
         else:
