@@ -795,41 +795,8 @@
         {
             "type": "warning",
             "module": "run_examples",
-            "obj": "",
-            "line": 8,
-            "column": 0,
-            "path": "ci/run_examples.py",
-            "symbol": "reimported",
-            "message": "Reimport 'os' (imported line 5)",
-            "message-id": "W0404"
-        },
-        {
-            "type": "warning",
-            "module": "run_examples",
-            "obj": "",
-            "line": 10,
-            "column": 0,
-            "path": "ci/run_examples.py",
-            "symbol": "reimported",
-            "message": "Reimport 'subprocess' (imported line 6)",
-            "message-id": "W0404"
-        },
-        {
-            "type": "warning",
-            "module": "run_examples",
-            "obj": "",
-            "line": 11,
-            "column": 0,
-            "path": "ci/run_examples.py",
-            "symbol": "reimported",
-            "message": "Reimport 'unittest' (imported line 4)",
-            "message-id": "W0404"
-        },
-        {
-            "type": "warning",
-            "module": "run_examples",
             "obj": "TestExamples._run_example",
-            "line": 45,
+            "line": 42,
             "column": 12,
             "path": "ci/run_examples.py",
             "symbol": "broad-exception-raised",
@@ -840,45 +807,12 @@
             "type": "convention",
             "module": "run_examples",
             "obj": "TestExamples.test_room_mas",
-            "line": 61,
+            "line": 58,
             "column": 8,
             "path": "ci/run_examples.py",
             "symbol": "import-outside-toplevel",
             "message": "Import outside toplevel (sys)",
             "message-id": "C0415"
-        },
-        {
-            "type": "convention",
-            "module": "run_examples",
-            "obj": "",
-            "line": 8,
-            "column": 0,
-            "path": "ci/run_examples.py",
-            "symbol": "ungrouped-imports",
-            "message": "Imports from package os are not grouped",
-            "message-id": "C0412"
-        },
-        {
-            "type": "convention",
-            "module": "run_examples",
-            "obj": "",
-            "line": 10,
-            "column": 0,
-            "path": "ci/run_examples.py",
-            "symbol": "ungrouped-imports",
-            "message": "Imports from package subprocess are not grouped",
-            "message-id": "C0412"
-        },
-        {
-            "type": "convention",
-            "module": "run_examples",
-            "obj": "",
-            "line": 11,
-            "column": 0,
-            "path": "ci/run_examples.py",
-            "symbol": "ungrouped-imports",
-            "message": "Imports from package unittest are not grouped",
-            "message-id": "C0412"
         },
         {
             "type": "convention",
@@ -1761,21 +1695,10 @@
             "message-id": "W0212"
         },
         {
-            "type": "warning",
-            "module": "tests.test_databroker_limits",
-            "obj": "",
-            "line": 6,
-            "column": 0,
-            "path": "tests/test_databroker_limits.py",
-            "symbol": "reimported",
-            "message": "Reimport 'time' (imported line 3)",
-            "message-id": "W0404"
-        },
-        {
             "type": "convention",
             "module": "tests.test_databroker_limits",
             "obj": "DataBrokerExplosionTest",
-            "line": 14,
+            "line": 12,
             "column": 0,
             "path": "tests/test_databroker_limits.py",
             "symbol": "missing-class-docstring",
@@ -1786,7 +1709,7 @@
             "type": "convention",
             "module": "tests.test_databroker_limits",
             "obj": "Sender",
-            "line": 33,
+            "line": 31,
             "column": 0,
             "path": "tests/test_databroker_limits.py",
             "symbol": "missing-class-docstring",
@@ -1797,7 +1720,7 @@
             "type": "convention",
             "module": "tests.test_databroker_limits",
             "obj": "SlowReceiver",
-            "line": 47,
+            "line": 45,
             "column": 0,
             "path": "tests/test_databroker_limits.py",
             "symbol": "missing-class-docstring",
@@ -1808,7 +1731,7 @@
             "type": "convention",
             "module": "tests.test_databroker_limits",
             "obj": "FaultyReceiver",
-            "line": 63,
+            "line": 61,
             "column": 0,
             "path": "tests/test_databroker_limits.py",
             "symbol": "missing-class-docstring",
@@ -1819,7 +1742,7 @@
             "type": "warning",
             "module": "tests.test_databroker_limits",
             "obj": "FaultyReceiver._do_some_slow_stuff",
-            "line": 73,
+            "line": 71,
             "column": 8,
             "path": "tests/test_databroker_limits.py",
             "symbol": "broad-exception-raised",
@@ -1830,7 +1753,7 @@
             "type": "convention",
             "module": "tests.test_databroker_limits",
             "obj": "exploding_modules",
-            "line": 76,
+            "line": 74,
             "column": 0,
             "path": "tests/test_databroker_limits.py",
             "symbol": "missing-function-docstring",
@@ -1841,7 +1764,7 @@
             "type": "convention",
             "module": "tests.test_databroker_limits",
             "obj": "slow_module",
-            "line": 97,
+            "line": 95,
             "column": 0,
             "path": "tests/test_databroker_limits.py",
             "symbol": "missing-function-docstring",
@@ -1852,7 +1775,7 @@
             "type": "convention",
             "module": "tests.test_databroker_limits",
             "obj": "faulty_module",
-            "line": 112,
+            "line": 110,
             "column": 0,
             "path": "tests/test_databroker_limits.py",
             "symbol": "missing-function-docstring",
@@ -1863,7 +1786,7 @@
             "type": "convention",
             "module": "tests.test_databroker_limits",
             "obj": "TestDataBrokerLimits",
-            "line": 126,
+            "line": 124,
             "column": 0,
             "path": "tests/test_databroker_limits.py",
             "symbol": "missing-class-docstring",
@@ -1874,7 +1797,7 @@
             "type": "convention",
             "module": "tests.test_databroker_limits",
             "obj": "TestDataBrokerLimits.test_slow_module",
-            "line": 127,
+            "line": 125,
             "column": 4,
             "path": "tests/test_databroker_limits.py",
             "symbol": "missing-function-docstring",
@@ -1885,7 +1808,7 @@
             "type": "convention",
             "module": "tests.test_databroker_limits",
             "obj": "TestDataBrokerLimits.test_exploding_module",
-            "line": 132,
+            "line": 130,
             "column": 4,
             "path": "tests/test_databroker_limits.py",
             "symbol": "missing-function-docstring",
@@ -1896,7 +1819,7 @@
             "type": "convention",
             "module": "tests.test_databroker_limits",
             "obj": "TestDataBrokerLimits.test_faulty_module",
-            "line": 137,
+            "line": 135,
             "column": 4,
             "path": "tests/test_databroker_limits.py",
             "symbol": "missing-function-docstring",
@@ -1905,31 +1828,9 @@
         },
         {
             "type": "convention",
-            "module": "tests.test_databroker_limits",
-            "obj": "",
-            "line": 6,
-            "column": 0,
-            "path": "tests/test_databroker_limits.py",
-            "symbol": "ungrouped-imports",
-            "message": "Imports from package time are not grouped",
-            "message-id": "C0412"
-        },
-        {
-            "type": "warning",
-            "module": "tests.test_databroker_limits",
-            "obj": "",
-            "line": 8,
-            "column": 0,
-            "path": "tests/test_databroker_limits.py",
-            "symbol": "unused-import",
-            "message": "Unused numpy imported as np",
-            "message-id": "W0611"
-        },
-        {
-            "type": "convention",
             "module": "tests.test_datamodels",
             "obj": "TestVariables.test_base_model_variable",
-            "line": 21,
+            "line": 20,
             "column": 4,
             "path": "tests/test_datamodels.py",
             "symbol": "missing-function-docstring",
@@ -1940,7 +1841,7 @@
             "type": "refactor",
             "module": "tests.test_datamodels",
             "obj": "TestVariables.test_value_conversion",
-            "line": 35,
+            "line": 34,
             "column": 12,
             "path": "tests/test_datamodels.py",
             "symbol": "use-dict-literal",
@@ -1951,7 +1852,7 @@
             "type": "refactor",
             "module": "tests.test_datamodels",
             "obj": "TestVariables.test_series_sending",
-            "line": 49,
+            "line": 48,
             "column": 12,
             "path": "tests/test_datamodels.py",
             "symbol": "use-dict-literal",
@@ -1962,7 +1863,7 @@
             "type": "refactor",
             "module": "tests.test_datamodels",
             "obj": "TestVariables.test_type",
-            "line": 61,
+            "line": 60,
             "column": 16,
             "path": "tests/test_datamodels.py",
             "symbol": "use-dict-literal",
@@ -1973,7 +1874,7 @@
             "type": "refactor",
             "module": "tests.test_datamodels",
             "obj": "TestVariables.test_type",
-            "line": 64,
+            "line": 63,
             "column": 50,
             "path": "tests/test_datamodels.py",
             "symbol": "use-dict-literal",
@@ -1984,7 +1885,7 @@
             "type": "refactor",
             "module": "tests.test_datamodels",
             "obj": "TestVariables.test_allowed_values",
-            "line": 70,
+            "line": 69,
             "column": 16,
             "path": "tests/test_datamodels.py",
             "symbol": "use-dict-literal",
@@ -1995,7 +1896,7 @@
             "type": "refactor",
             "module": "tests.test_datamodels",
             "obj": "TestVariables.test_allowed_values",
-            "line": 80,
+            "line": 79,
             "column": 12,
             "path": "tests/test_datamodels.py",
             "symbol": "use-dict-literal",
@@ -2006,7 +1907,7 @@
             "type": "convention",
             "module": "tests.test_datamodels",
             "obj": "TestVariables.test_allowed_values",
-            "line": 87,
+            "line": 86,
             "column": 12,
             "path": "tests/test_datamodels.py",
             "symbol": "invalid-name",
@@ -2017,7 +1918,7 @@
             "type": "refactor",
             "module": "tests.test_datamodels",
             "obj": "TestVariables.test_pd_series",
-            "line": 99,
+            "line": 98,
             "column": 16,
             "path": "tests/test_datamodels.py",
             "symbol": "use-dict-literal",
@@ -2028,7 +1929,7 @@
             "type": "refactor",
             "module": "tests.test_datamodels",
             "obj": "TestVariables.test_bounds",
-            "line": 121,
+            "line": 120,
             "column": 50,
             "path": "tests/test_datamodels.py",
             "symbol": "use-dict-literal",
@@ -2039,7 +1940,7 @@
             "type": "refactor",
             "module": "tests.test_datamodels",
             "obj": "TestVariables.test_bounds",
-            "line": 125,
+            "line": 124,
             "column": 12,
             "path": "tests/test_datamodels.py",
             "symbol": "use-dict-literal",
@@ -2050,7 +1951,7 @@
             "type": "refactor",
             "module": "tests.test_datamodels",
             "obj": "TestVariables.test_bounds",
-            "line": 129,
+            "line": 128,
             "column": 12,
             "path": "tests/test_datamodels.py",
             "symbol": "use-dict-literal",
@@ -2061,7 +1962,7 @@
             "type": "convention",
             "module": "tests.test_datamodels",
             "obj": "TestVariables.test_source",
-            "line": 215,
+            "line": 214,
             "column": 4,
             "path": "tests/test_datamodels.py",
             "symbol": "missing-function-docstring",
@@ -2072,7 +1973,7 @@
             "type": "convention",
             "module": "tests.test_datamodels",
             "obj": "TestVariables.test_source",
-            "line": 217,
+            "line": 216,
             "column": 30,
             "path": "tests/test_datamodels.py",
             "symbol": "unnecessary-dunder-call",
@@ -2083,34 +1984,12 @@
             "type": "convention",
             "module": "tests.test_datamodels",
             "obj": "",
-            "line": 6,
-            "column": 0,
-            "path": "tests/test_datamodels.py",
-            "symbol": "wrong-import-order",
-            "message": "third party import \"import pandas as pd\" should be placed before \"from agentlib.core import datamodels, errors\"",
-            "message-id": "C0411"
-        },
-        {
-            "type": "warning",
-            "module": "tests.test_datamodels",
-            "obj": "",
-            "line": 4,
-            "column": 0,
-            "path": "tests/test_datamodels.py",
-            "symbol": "unused-import",
-            "message": "Unused ValidationError imported from pydantic",
-            "message-id": "W0611"
-        },
-        {
-            "type": "warning",
-            "module": "tests.test_datamodels",
-            "obj": "",
             "line": 5,
             "column": 0,
             "path": "tests/test_datamodels.py",
-            "symbol": "unused-import",
-            "message": "Unused errors imported from agentlib.core",
-            "message-id": "W0611"
+            "symbol": "wrong-import-order",
+            "message": "third party import \"import pandas as pd\" should be placed before \"from agentlib.core import datamodels\"",
+            "message-id": "C0411"
         },
         {
             "type": "warning",
@@ -2249,22 +2128,11 @@
             "module": "tests.test_model",
             "obj": "TestModel.test_abc",
             "line": 88,
-            "column": 20,
+            "column": 12,
             "path": "tests/test_model.py",
             "symbol": "abstract-class-instantiated",
             "message": "Abstract class 'Model' with abstract methods instantiated",
             "message-id": "E0110"
-        },
-        {
-            "type": "warning",
-            "module": "tests.test_model",
-            "obj": "TestModel.test_abc",
-            "line": 88,
-            "column": 12,
-            "path": "tests/test_model.py",
-            "symbol": "unused-variable",
-            "message": "Unused variable 'model'",
-            "message-id": "W0612"
         },
         {
             "type": "warning",
@@ -2408,17 +2276,6 @@
             "symbol": "protected-access",
             "message": "Access to a protected member _user_config of a client class",
             "message-id": "W0212"
-        },
-        {
-            "type": "warning",
-            "module": "tests.test_module",
-            "obj": "TestModule.test_missing_config_type",
-            "line": 256,
-            "column": 12,
-            "path": "tests/test_module.py",
-            "symbol": "unused-variable",
-            "message": "Unused variable 'mod'",
-            "message-id": "W0612"
         },
         {
             "type": "warning",
@@ -2965,13 +2822,13 @@
                 "warning": 0
             },
             "run_examples": {
-                "convention": 4,
+                "convention": 1,
                 "error": 0,
                 "fatal": 0,
                 "info": 0,
                 "refactor": 0,
-                "statement": 58,
-                "warning": 4
+                "statement": 55,
+                "warning": 1
             },
             "tests.__init__": {
                 "convention": 0,
@@ -3028,13 +2885,13 @@
                 "warning": 2
             },
             "tests.test_databroker_limits": {
-                "convention": 12,
+                "convention": 11,
                 "error": 0,
                 "fatal": 0,
                 "info": 0,
                 "refactor": 0,
-                "statement": 67,
-                "warning": 3
+                "statement": 65,
+                "warning": 1
             },
             "tests.test_datamodels": {
                 "convention": 5,
@@ -3042,8 +2899,8 @@
                 "fatal": 0,
                 "info": 0,
                 "refactor": 10,
-                "statement": 126,
-                "warning": 2
+                "statement": 125,
+                "warning": 0
             },
             "tests.test_environment": {
                 "convention": 0,
@@ -3070,7 +2927,7 @@
                 "info": 0,
                 "refactor": 0,
                 "statement": 127,
-                "warning": 7
+                "warning": 6
             },
             "tests.test_module": {
                 "convention": 5,
@@ -3079,7 +2936,7 @@
                 "info": 0,
                 "refactor": 1,
                 "statement": 198,
-                "warning": 12
+                "warning": 11
             },
             "tests.test_n_pingpong": {
                 "convention": 7,
@@ -3128,10 +2985,8 @@
             }
         },
         "by_msg": {
-            "reimported": 4,
             "broad-exception-raised": 3,
             "import-outside-toplevel": 1,
-            "ungrouped-imports": 4,
             "missing-class-docstring": 20,
             "too-many-instance-attributes": 2,
             "unspecified-encoding": 8,
@@ -3143,9 +2998,8 @@
             "protected-access": 43,
             "unnecessary-dunder-call": 3,
             "line-too-long": 2,
-            "unused-variable": 4,
+            "unused-variable": 2,
             "unused-argument": 2,
-            "unused-import": 3,
             "use-dict-literal": 10,
             "wrong-import-order": 1,
             "no-member": 5,
@@ -3164,14 +3018,14 @@
         },
         "dependencies": {
             "agentlib.core": [
-                "tests.test_simulator",
-                "tests.test_n_pingpong",
                 "agentlib",
-                "tests.test_model",
                 "tests.test_module",
+                "tests.test_n_pingpong",
                 "tests.test_agent",
                 "tests.test_agentlogger",
+                "tests.test_model",
                 "tests.test_environment",
+                "tests.test_simulator",
                 "tests.test_data_broker"
             ],
             "agentlib.models": [
@@ -3182,72 +3036,69 @@
             ],
             "agentlib.utils": [
                 "agentlib",
-                "run_examples",
                 "tests.test_n_pingpong",
+                "run_examples",
                 "tests.test_utils"
             ],
             "agentlib.core.datamodels": [
-                "tests.test_simulator",
+                "agentlib",
                 "tests.test_datamodels",
                 "tests.test_n_pingpong",
-                "agentlib",
                 "tests.test_model",
+                "tests.test_agentlogger",
                 "tests.test_module",
-                "tests.test_agentlogger"
+                "tests.test_simulator"
             ],
             "agentlib.utils.multi_agent_system": [
                 "agentlib",
                 "tests.test_n_pingpong"
             ],
             "pandas": [
-                "tests.test_simulator",
                 "run_examples",
                 "tests.test_datamodels",
-                "tests.test_data_source",
-                "tests.test_communicator",
                 "tests.test_simulator_dashboard",
-                "tests.test_agentlogger"
+                "tests.test_data_source",
+                "tests.test_agentlogger",
+                "tests.test_communicator",
+                "tests.test_simulator"
             ],
             "agentlib.utils.local_broadcast_broker": [
                 "run_examples"
             ],
             "pydantic": [
-                "tests.test_simulator",
-                "tests.test_datamodels",
                 "tests.test_n_pingpong",
+                "tests.test_agent",
                 "tests.test_model",
                 "tests.test_module",
-                "tests.test_agent",
-                "tests.test_environment"
+                "tests.test_environment",
+                "tests.test_simulator"
             ],
             "agentlib.core.agent": [
-                "tests.test_agent",
-                "tests.test_utils"
+                "tests.test_utils",
+                "tests.test_agent"
             ],
             "agentlib.core.errors": [
+                "tests.test_utils",
                 "tests.test_agent",
-                "tests.test_datamodels",
-                "tests.test_module",
-                "tests.test_utils"
+                "tests.test_module"
             ],
             "numpy": [
-                "tests.test_simulator",
-                "tests.test_n_pingpong",
                 "tests.test_data_source",
-                "tests.test_model",
-                "tests.test_databroker_limits",
+                "tests.test_n_pingpong",
                 "tests.test_agentlogger",
+                "tests.test_model",
+                "tests.test_simulator",
                 "tests.test_data_broker"
             ],
             "agentlib.modules.utils.agent_logger": [
                 "tests.test_agentlogger"
             ],
             "agentlib": [
-                "tests.test_data_source",
+                "tests.test_utils",
                 "tests.test_databroker_limits",
+                "tests.test_data_source",
                 "tests.test_communicator",
-                "tests.test_data_broker",
-                "tests.test_utils"
+                "tests.test_data_broker"
             ],
             "agentlib.modules.communicator.local": [
                 "tests.test_communicator"
@@ -3305,16 +3156,16 @@
             "method": 42,
             "module": 6
         },
-        "convention": 98,
+        "convention": 94,
         "error": 7,
         "fatal": 0,
         "info": 0,
         "refactor": 16,
-        "statement": 1396,
-        "warning": 74,
+        "statement": 1390,
+        "warning": 65,
         "global_note": 0,
         "nb_duplicated_lines": 17,
-        "percent_duplicated_lines": 0.6596818005432674
+        "percent_duplicated_lines": 0.661221314663555
     },
     "previous": {
         "bad_names": {
@@ -3342,14 +3193,14 @@
                 "statement": 6,
                 "warning": 0
             },
-            "ci.run_examples": {
-                "convention": 4,
+            "run_examples": {
+                "convention": 1,
                 "error": 0,
                 "fatal": 0,
                 "info": 0,
                 "refactor": 0,
-                "statement": 58,
-                "warning": 4
+                "statement": 55,
+                "warning": 1
             },
             "tests.__init__": {
                 "convention": 0,
@@ -3406,13 +3257,13 @@
                 "warning": 2
             },
             "tests.test_databroker_limits": {
-                "convention": 12,
+                "convention": 11,
                 "error": 0,
                 "fatal": 0,
                 "info": 0,
                 "refactor": 0,
-                "statement": 67,
-                "warning": 3
+                "statement": 65,
+                "warning": 1
             },
             "tests.test_datamodels": {
                 "convention": 5,
@@ -3420,8 +3271,8 @@
                 "fatal": 0,
                 "info": 0,
                 "refactor": 10,
-                "statement": 126,
-                "warning": 2
+                "statement": 125,
+                "warning": 0
             },
             "tests.test_environment": {
                 "convention": 0,
@@ -3448,7 +3299,7 @@
                 "info": 0,
                 "refactor": 0,
                 "statement": 127,
-                "warning": 7
+                "warning": 6
             },
             "tests.test_module": {
                 "convention": 5,
@@ -3457,7 +3308,7 @@
                 "info": 0,
                 "refactor": 1,
                 "statement": 198,
-                "warning": 12
+                "warning": 11
             },
             "tests.test_n_pingpong": {
                 "convention": 7,
@@ -3506,10 +3357,8 @@
             }
         },
         "by_msg": {
-            "reimported": 4,
             "broad-exception-raised": 3,
             "import-outside-toplevel": 1,
-            "ungrouped-imports": 4,
             "missing-class-docstring": 20,
             "too-many-instance-attributes": 2,
             "unspecified-encoding": 8,
@@ -3521,9 +3370,8 @@
             "protected-access": 43,
             "unnecessary-dunder-call": 3,
             "line-too-long": 2,
-            "unused-variable": 4,
+            "unused-variable": 2,
             "unused-argument": 2,
-            "unused-import": 3,
             "use-dict-literal": 10,
             "wrong-import-order": 1,
             "no-member": 5,
@@ -3542,15 +3390,15 @@
         },
         "dependencies": {
             "agentlib.core": [
-                "tests.test_simulator",
-                "tests.test_n_pingpong",
-                "tests.test_data_broker",
                 "agentlib",
-                "tests.test_module",
+                "tests.test_n_pingpong",
+                "tests.test_agent",
                 "tests.test_model",
                 "tests.test_agentlogger",
+                "tests.test_module",
                 "tests.test_environment",
-                "tests.test_agent"
+                "tests.test_simulator",
+                "tests.test_data_broker"
             ],
             "agentlib.models": [
                 "agentlib"
@@ -3559,73 +3407,70 @@
                 "agentlib"
             ],
             "agentlib.utils": [
+                "tests.test_utils",
                 "agentlib",
-                "ci.run_examples",
                 "tests.test_n_pingpong",
-                "tests.test_utils"
+                "run_examples"
             ],
             "agentlib.core.datamodels": [
-                "tests.test_simulator",
+                "agentlib",
                 "tests.test_datamodels",
                 "tests.test_n_pingpong",
-                "agentlib",
-                "tests.test_module",
                 "tests.test_model",
-                "tests.test_agentlogger"
+                "tests.test_agentlogger",
+                "tests.test_module",
+                "tests.test_simulator"
             ],
             "agentlib.utils.multi_agent_system": [
                 "agentlib",
                 "tests.test_n_pingpong"
             ],
             "pandas": [
-                "tests.test_simulator",
+                "run_examples",
                 "tests.test_datamodels",
-                "ci.run_examples",
-                "tests.test_data_source",
-                "tests.test_communicator",
                 "tests.test_simulator_dashboard",
-                "tests.test_agentlogger"
+                "tests.test_data_source",
+                "tests.test_agentlogger",
+                "tests.test_communicator",
+                "tests.test_simulator"
             ],
             "agentlib.utils.local_broadcast_broker": [
-                "ci.run_examples"
+                "run_examples"
             ],
             "pydantic": [
-                "tests.test_simulator",
-                "tests.test_datamodels",
-                "tests.test_n_pingpong",
                 "tests.test_module",
-                "tests.test_model",
+                "tests.test_n_pingpong",
                 "tests.test_agent",
-                "tests.test_environment"
+                "tests.test_model",
+                "tests.test_environment",
+                "tests.test_simulator"
             ],
             "agentlib.core.agent": [
-                "tests.test_agent",
-                "tests.test_utils"
+                "tests.test_utils",
+                "tests.test_agent"
             ],
             "agentlib.core.errors": [
-                "tests.test_agent",
-                "tests.test_module",
                 "tests.test_utils",
-                "tests.test_datamodels"
+                "tests.test_agent",
+                "tests.test_module"
             ],
             "numpy": [
-                "tests.test_simulator",
-                "tests.test_n_pingpong",
                 "tests.test_data_source",
-                "tests.test_model",
-                "tests.test_databroker_limits",
+                "tests.test_n_pingpong",
                 "tests.test_agentlogger",
+                "tests.test_model",
+                "tests.test_simulator",
                 "tests.test_data_broker"
             ],
             "agentlib.modules.utils.agent_logger": [
                 "tests.test_agentlogger"
             ],
             "agentlib": [
-                "tests.test_data_source",
+                "tests.test_utils",
                 "tests.test_databroker_limits",
+                "tests.test_data_source",
                 "tests.test_communicator",
-                "tests.test_data_broker",
-                "tests.test_utils"
+                "tests.test_data_broker"
             ],
             "agentlib.modules.communicator.local": [
                 "tests.test_communicator"
@@ -3683,15 +3528,15 @@
             "method": 42,
             "module": 6
         },
-        "convention": 98,
+        "convention": 94,
         "error": 7,
         "fatal": 0,
         "info": 0,
         "refactor": 16,
-        "statement": 1396,
-        "warning": 74,
-        "global_note": 8.402578796561604,
+        "statement": 1390,
+        "warning": 65,
+        "global_note": 8.489208633093526,
         "nb_duplicated_lines": 17,
-        "percent_duplicated_lines": 0.6596818005432674
+        "percent_duplicated_lines": 0.661221314663555
     }
 }
