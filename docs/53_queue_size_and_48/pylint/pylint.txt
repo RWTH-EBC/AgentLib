@@ -309,7 +309,7 @@ tests/test_utils.py:1:0: R0801: Similar lines in 2 files
         return Agent(env=env, config=agent_config)
 
     def _get_module_cfg(self, **kwargs):
-        """Dynamically build config to avoid duplicate code:"""
+        """Helper method to create logger config"""
         return { (duplicate-code)
 
 -----------------------------------

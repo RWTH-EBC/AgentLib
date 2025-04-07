@@ -106,7 +106,12 @@
         <span class="n">record</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">makeRecord</span><span class="p">(</span>
             <span class="n">name</span><span class="p">,</span> <span class="n">level</span><span class="p">,</span> <span class="n">fn</span><span class="p">,</span> <span class="n">lno</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">exc_info</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="n">extra</span><span class="p">,</span> <span class="n">sinfo</span>
         <span class="p">)</span>
-        <span class="n">record</span><span class="o">.</span><span class="n">env_time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">pretty_time</span><span class="p">()</span>
+        <span class="n">_until</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">pretty_until</span><span class="p">()</span>
+        <span class="n">_time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">pretty_time</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">_until</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">record</span><span class="o">.</span><span class="n">env_time</span> <span class="o">=</span> <span class="n">_time</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">record</span><span class="o">.</span><span class="n">env_time</span> <span class="o">=</span> <span class="n">_time</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">_until</span>
         <span class="k">return</span> <span class="n">record</span></div></div>
 
 
