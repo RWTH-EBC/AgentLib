@@ -120,7 +120,7 @@
     <span class="n">overwrite_log</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
         <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Overwrite file&quot;</span><span class="p">,</span>
         <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;If true, old logs are auto deleted when a new log should be written with that name.&quot;</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;If true, old logs are auto deleted when a new log should be written with that name.&quot;</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">filename</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
         <span class="n">title</span><span class="o">=</span><span class="s2">&quot;filename&quot;</span><span class="p">,</span>
@@ -151,9 +151,9 @@
                 <span class="sa">f</span><span class="s2">&quot;activate automatic overwrite.&quot;</span>
             <span class="p">)</span>
         <span class="c1"># Create path in case it does not exist</span>
-        <span class="k">if</span> <span class="n">file_path</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>  <span class="c1"># Check if parent directory exists</span>
-            <span class="n">file_path</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">file_path</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">filename</span></div></div>
+
 
 <div class="viewcode-block" id="AgentLogger"><a class="viewcode-back" href="../../../../code/agentlib.modules.utils.html#agentlib.modules.utils.agent_logger.AgentLogger">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">AgentLogger</span><span class="p">(</span><span class="n">BaseModule</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>

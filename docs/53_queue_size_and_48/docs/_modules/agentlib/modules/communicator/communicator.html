@@ -183,24 +183,23 @@
             <span class="s2">&quot;This method needs to be implemented &quot;</span> <span class="s2">&quot;individually for each communicator&quot;</span>
         <span class="p">)</span>
 
-<div class="viewcode-block" id="Communicator.short_dict"><a class="viewcode-back" href="../../../../code/agentlib.modules.communicator.html#agentlib.modules.communicator.communicator.Communicator.short_dict">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">short_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">variable</span><span class="p">:</span> <span class="n">AgentVariable</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CommunicationDict</span><span class="p">:</span>
+<div class="viewcode-block" id="Communicator.short_dict"><a class="viewcode-back" href="../../../../code/agentlib.modules.communicator.html#agentlib.modules.communicator.communicator.Communicator.short_dict">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">short_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">variable</span><span class="p">:</span> <span class="n">AgentVariable</span><span class="p">,</span> <span class="n">parse_json</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CommunicationDict</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Creates a short dict serialization of the Variable.</span>
 
 <span class="sd">        Only contains attributes of the AgentVariable, that are relevant for other</span>
 <span class="sd">        modules or agents. For performance and privacy reasons, this function should</span>
 <span class="sd">        be called for communicators.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">variable</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">)</span> <span class="ow">and</span> <span class="n">parse_json</span><span class="p">:</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">variable</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">to_json</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">variable</span><span class="o">.</span><span class="n">value</span>
         <span class="k">return</span> <span class="n">CommunicationDict</span><span class="p">(</span>
             <span class="n">alias</span><span class="o">=</span><span class="n">variable</span><span class="o">.</span><span class="n">alias</span><span class="p">,</span>
-            <span class="n">value</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_value_to_json</span><span class="p">(</span><span class="n">variable</span><span class="o">.</span><span class="n">value</span><span class="p">),</span>
+            <span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">,</span>
             <span class="n">timestamp</span><span class="o">=</span><span class="n">variable</span><span class="o">.</span><span class="n">timestamp</span><span class="p">,</span>
             <span class="nb">type</span><span class="o">=</span><span class="n">variable</span><span class="o">.</span><span class="n">type</span><span class="p">,</span>
             <span class="n">source</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
         <span class="p">)</span></div>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">_value_to_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">):</span>
-            <span class="k">return</span> <span class="n">value</span><span class="o">.</span><span class="n">to_json</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">value</span>
 
 <div class="viewcode-block" id="Communicator.to_json"><a class="viewcode-back" href="../../../../code/agentlib.modules.communicator.html#agentlib.modules.communicator.communicator.Communicator.to_json">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">to_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">payload</span><span class="p">:</span> <span class="n">CommunicationDict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bytes</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Transforms the payload into json serialized form. Dynamically uses orjson</span>
@@ -270,6 +269,15 @@
             <span class="s2">&quot;This method needs to be implemented &quot;</span> <span class="s2">&quot;individually for each communicator&quot;</span>
         <span class="p">)</span></div>
 
+    <span class="k">def</span><span class="w"> </span><span class="nf">_send_only_shared_variables</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">variable</span><span class="p">:</span> <span class="n">AgentVariable</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Send only variables with field ``shared=True``&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_variable_can_be_send</span><span class="p">(</span><span class="n">variable</span><span class="p">):</span>
+            <span class="k">return</span>
+
+        <span class="n">payload</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">short_dict</span><span class="p">(</span><span class="n">variable</span><span class="p">,</span> <span class="n">parse_json</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">parse_json</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Sending variable </span><span class="si">%s</span><span class="s2">=</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">variable</span><span class="o">.</span><span class="n">alias</span><span class="p">,</span> <span class="n">variable</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_send</span><span class="p">(</span><span class="n">payload</span><span class="o">=</span><span class="n">payload</span><span class="p">)</span>
+
     <span class="k">def</span><span class="w"> </span><span class="nf">_process</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Waits for new messages, sends them to the broker.&quot;&quot;&quot;</span>
         <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">event</span><span class="p">()</span>
@@ -322,12 +330,7 @@
         <span class="c1"># simulations/environments, otherwise the broker will keep spamming all</span>
         <span class="c1"># agents from the previous simulation, potentially filling their queues.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">broker</span><span class="o">.</span><span class="n">delete_client</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">terminate</span><span class="p">()</span></div>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">_value_to_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">parse_json</span><span class="p">:</span>
-            <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_value_to_json</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">value</span></div>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">terminate</span><span class="p">()</span></div></div>
 </pre></div>
 
            </div>
