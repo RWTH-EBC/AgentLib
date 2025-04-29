@@ -1,8 +1,11 @@
 """Module to test all datamodels in the agentlib"""
 
 import unittest
-from agentlib.core import datamodels
+
+import numpy as np
 import pandas as pd
+
+from agentlib.core import datamodels
 
 
 class TestVariables(unittest.TestCase):
@@ -107,6 +110,66 @@ class TestVariables(unittest.TestCase):
             )
             self.assertEqual(var.allowed_values, [])
             self.assertIsInstance(var.value, pd.Series)
+
+    def test_pd_series_index_handling(self):
+        """Test pd.Series index handling, especially for datetime and numeric indices."""
+
+        # Test datetime index conversion
+        datetime_index = pd.date_range('2023-01-01', periods=5, freq='D')
+        original_series = pd.Series([1., 2., 3., 4., 5.], index=datetime_index)
+
+        # Convert to JSON (simulating sending)
+        series_dict = original_series.to_dict()
+        converted_series = datamodels.convert_to_pd_series(series_dict)
+
+        # Check that index is numeric (float)
+        self.assertTrue(converted_series.index.dtype == np.float64)
+
+        # Check values are preserved
+        pd.testing.assert_series_equal(
+            converted_series,
+            pd.Series(original_series.values, index=pd.to_numeric(datetime_index) / 10**9)
+        )
+
+        # Test numeric index preservation
+        numeric_index = [1.5, 2.5, 3.5, 4.5, 5.5]
+        original_series = pd.Series([1., 2., 3., 4., 5.], index=numeric_index)
+        series_dict = original_series.to_dict()
+        converted_series = datamodels.convert_to_pd_series(series_dict)
+
+        # Check that numeric index remains numeric
+        self.assertTrue(converted_series.index.dtype == np.float64)
+        pd.testing.assert_series_equal(converted_series, original_series)
+
+        # Test string index conversion
+        string_index = ['1.0', '2.0', '3.0', '4.0', '5.0']
+        original_series = pd.Series([1., 2., 3., 4., 5.], index=string_index)
+        series_dict = original_series.to_dict()
+        converted_series = datamodels.convert_to_pd_series(series_dict)
+
+        # Check that string index is converted to float
+        self.assertTrue(converted_series.index.dtype == np.float64)
+        pd.testing.assert_series_equal(
+            converted_series,
+            pd.Series(original_series.values, index=[float(x) for x in string_index])
+        )
+
+        # Test full variable serialization/deserialization with datetime index
+        datetime_series = pd.Series([1., 2., 3.],
+                                    index=pd.date_range('2023-01-01', periods=3))
+        datetime_series.index = pd.to_numeric(datetime_series.index) / 10**9
+        var = datamodels.AgentVariable(
+            name="test",
+            type="pd.Series",
+            value=datetime_series
+        )
+
+        # Serialize and deserialize
+        json_str = var.json()
+        var_after = datamodels.AgentVariable.from_json(json_str)
+
+        # Check that the index remained numeric and didn't convert back to datetime
+        self.assertTrue(var_after.value.index.dtype == np.float64)
 
     def test_bounds(self):
         """Test if ub and lb work"""

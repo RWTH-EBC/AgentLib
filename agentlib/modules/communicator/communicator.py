@@ -105,24 +105,23 @@ class Communicator(BaseModule):
             "This method needs to be implemented " "individually for each communicator"
         )
 
-    def short_dict(self, variable: AgentVariable) -> CommunicationDict:
+    def short_dict(self, variable: AgentVariable, parse_json: bool = True) -> CommunicationDict:
         """Creates a short dict serialization of the Variable.
 
         Only contains attributes of the AgentVariable, that are relevant for other
         modules or agents. For performance and privacy reasons, this function should
         be called for communicators."""
+        if isinstance(variable.value, pd.Series) and parse_json:
+            value = variable.value.to_json()
+        else:
+            value = variable.value
         return CommunicationDict(
             alias=variable.alias,
-            value=self._value_to_json(variable.value),
+            value=value,
             timestamp=variable.timestamp,
             type=variable.type,
             source=self.agent.id,
         )
-
-    def _value_to_json(self, value):
-        if isinstance(value, pd.Series):
-            return value.to_json()
-        return value
 
     def to_json(self, payload: CommunicationDict) -> Union[bytes, str]:
         """Transforms the payload into json serialized form. Dynamically uses orjson
@@ -192,6 +191,15 @@ class LocalCommunicator(Communicator):
             "This method needs to be implemented " "individually for each communicator"
         )
 
+    def _send_only_shared_variables(self, variable: AgentVariable):
+        """Send only variables with field ``shared=True``"""
+        if not self._variable_can_be_send(variable):
+            return
+
+        payload = self.short_dict(variable, parse_json=self.config.parse_json)
+        self.logger.debug("Sending variable %s=%s", variable.alias, variable.value)
+        self._send(payload=payload)
+
     def _process(self):
         """Waits for new messages, sends them to the broker."""
         yield self.env.event()
@@ -245,8 +253,3 @@ class LocalCommunicator(Communicator):
         # agents from the previous simulation, potentially filling their queues.
         self.broker.delete_client(self)
         super().terminate()
-
-    def _value_to_json(self, value):
-        if self.config.parse_json:
-            return super()._value_to_json(value)
-        return value
