@@ -73,8 +73,7 @@ class AgentLoggerConfig(BaseModuleConfig):
                 f"activate automatic overwrite."
             )
         # Create path in case it does not exist
-        if file_path.parent.name:  # Check if parent directory exists
-            file_path.parent.mkdir(parents=True, exist_ok=True)
+        file_path.parent.mkdir(parents=True, exist_ok=True)
         return filename
 
 class AgentLogger(BaseModule):
