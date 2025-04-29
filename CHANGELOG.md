@@ -4,16 +4,18 @@
 
 - Add an option to not parse series to json in local communicator #48
 - Increase default queue size #53
-
-## 0.8.6
-
-- Fix a bug, where pandas series could not be sent over network communicators or when
-  parsing json in local communication.
 - AgentLogger has default filename back.
 - Default value for cleanup parameter in ``mas.get_results()`` and ``agent.get_results()`` is now false.
 - Simulator now properly cleans result file if specified.
 - Logging now displays the percentage of simulation time when a limit is specified.
 - Environment logging is now in the same style as module logging.
+- Fix a bug, where pandas series were parsed to string but not back when using local communicators.
+
+## 0.8.6
+
+- Fix a bug, where pandas series could not be sent over network communicators or when
+  parsing json in local communication.
+
 
 ## 0.8.5
 
