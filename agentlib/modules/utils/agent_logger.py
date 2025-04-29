@@ -42,7 +42,7 @@ class AgentLoggerConfig(BaseModuleConfig):
     overwrite_log: bool = Field(
         title="Overwrite file",
         default=False,
-        description="If true, old logs are auto deleted when a new log should be written with that name."
+        description="If true, old logs are auto deleted when a new log should be written with that name.",
     )
     filename: Optional[str] = Field(
         title="filename",
@@ -75,6 +75,7 @@ class AgentLoggerConfig(BaseModuleConfig):
         # Create path in case it does not exist
         file_path.parent.mkdir(parents=True, exist_ok=True)
         return filename
+
 
 class AgentLogger(BaseModule):
     """
