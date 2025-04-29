@@ -42,6 +42,8 @@ from simpy.core import SimTime, Event
 
 from agentlib.core import logging_ as agentlib_logging
 
+UNTIL_UNSET = object()  # sentinel value to check if an until value has been set
+
 
 class EnvironmentConfig(BaseModel):
     """Config for the Environment"""
@@ -138,7 +140,7 @@ class InstantEnvironment(CustomSimpyEnvironment):
     def __init__(self, *, config: EnvironmentConfig):
         super().__init__(initial_time=config.offset)
         self._config = config
-        self._until = None
+        self._until = UNTIL_UNSET
         # Create an environment-specific logger using CustomLogger
         self.logger = agentlib_logging.create_logger(env=self, name="environment")
         if self.config.clock:
@@ -154,8 +156,8 @@ class InstantEnvironment(CustomSimpyEnvironment):
 
     def pretty_until(self) -> Union[str, None]:
         """Returns the time in seconds."""
-        if self._until is None:
-            return None
+        if self._until is None or self._until is UNTIL_UNSET:
+            return self._until
         _percent_finished = round(self.time / self._until * 100, 1)
         return f"{self._until:.2f}s" + f" ({_percent_finished} %)"
 
@@ -168,7 +170,7 @@ class RealtimeEnvironment(simpy.RealtimeEnvironment, CustomSimpyEnvironment):
         super().__init__(
             initial_time=config.offset, factor=config.factor, strict=config.strict
         )
-        self._until = None
+        self._until = UNTIL_UNSET
         self._config = config
         self.logger = agentlib_logging.create_logger(env=self, name="environment")
         if self.config.clock:
@@ -193,10 +195,13 @@ class RealtimeEnvironment(simpy.RealtimeEnvironment, CustomSimpyEnvironment):
 
     def pretty_until(self) -> Union[str, None]:
         """Returns the time in a datetime format."""
-        if self._until is None:
-            return None
+        if self._until is None or self._until is UNTIL_UNSET:
+            return self._until
         _percent_finished = round(self.time / self._until * 100, 1)
-        return datetime.fromtimestamp(self._until).strftime("%d-%b-%Y %H:%M:%S") + f" ({_percent_finished} %)"
+        return (
+            datetime.fromtimestamp(self._until).strftime("%d-%b-%Y %H:%M:%S")
+            + f" ({_percent_finished} %)"
+        )
 
     def silent_clock(self):
         """A silent clock, which does not log anything."""
@@ -213,7 +218,7 @@ class ScaledRealtimeEnvironment(simpy.RealtimeEnvironment, CustomSimpyEnvironmen
             initial_time=config.offset, factor=config.factor, strict=config.strict
         )
         self._config = config
-        self._until = None
+        self._until = UNTIL_UNSET
         self.logger = agentlib_logging.create_logger(env=self, name="environment")
         if self.config.clock:
             self.process(self.clock())
@@ -236,8 +241,8 @@ class ScaledRealtimeEnvironment(simpy.RealtimeEnvironment, CustomSimpyEnvironmen
 
     def pretty_until(self) -> Union[str, None]:
         """Returns the time in seconds."""
-        if self._until is None:
-            return None
+        if self._until is None or self._until is UNTIL_UNSET:
+            return self._until
         _percent_finished = round(self.time / self._until * 100, 1)
         return f"{self._until:.2f}s" + f" ({_percent_finished} %)"
 
