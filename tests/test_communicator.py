@@ -47,7 +47,9 @@ class TestCommunicator(unittest.TestCase):
         data = {**default_data, "value": pd.Series({0: 1, 10: 2}), "type": "pd.Series"}
         variable = AgentVariable(**data)
         comm_parse = LocalClient(config=self.test_config, agent=self.agent_send)
-        comm_no_parse = LocalClient(config={**self.test_config, "parse_json": False}, agent=self.agent_send)
+        comm_no_parse = LocalClient(
+            config={**self.test_config, "parse_json": False}, agent=self.agent_send
+        )
 
         # communicator with json parsing
         payload = comm_parse.short_dict(variable)
@@ -56,7 +58,9 @@ class TestCommunicator(unittest.TestCase):
         pd.testing.assert_series_equal(variable.value, variable2.value)
 
         # communicator without json parsing
-        payload = comm_no_parse.short_dict(variable, parse_json=comm_no_parse.config.parse_json)
+        payload = comm_no_parse.short_dict(
+            variable, parse_json=comm_no_parse.config.parse_json
+        )
         payload["name"] = payload["alias"]
         variable2 = AgentVariable(**payload)
         pd.testing.assert_series_equal(variable.value, variable2.value)
@@ -68,7 +72,7 @@ class TestCommunicator(unittest.TestCase):
         _config = self.test_config.copy()
         _config["parse_json"] = False
         comm = LocalClient(config=_config, agent=self.agent_send)
-        payload = comm.short_dict(variable)
+        payload = comm.short_dict(variable, parse_json=comm.config.parse_json)
         pd.testing.assert_series_equal(variable.value, payload["value"])
 
 
