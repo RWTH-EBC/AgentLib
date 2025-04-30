@@ -26,7 +26,6 @@ Simpy is distributed under the MIT License
 """
 
 import json
-import logging
 import time
 from datetime import datetime
 from pathlib import Path
@@ -41,7 +40,9 @@ from pydantic import (
 )
 from simpy.core import SimTime, Event
 
-logger = logging.getLogger(name=__name__)
+from agentlib.core import logging_ as agentlib_logging
+
+UNTIL_UNSET = object()  # sentinel value to check if an until value has been set
 
 
 class EnvironmentConfig(BaseModel):
@@ -124,10 +125,12 @@ class CustomSimpyEnvironment(simpy.Environment):
         """Define a clock loop to increase the now-timer every other second
         (Or whatever t_sample is)"""
         while True:
-            logger.info("Current simulation time: %s", self.pretty_time())
+            self.logger.info("Current simulation time: %s", self.pretty_time())
             yield self.timeout(self.config.t_sample)
 
     def pretty_time(self): ...
+
+    def pretty_until(self): ...
 
 
 class InstantEnvironment(CustomSimpyEnvironment):
@@ -137,12 +140,26 @@ class InstantEnvironment(CustomSimpyEnvironment):
     def __init__(self, *, config: EnvironmentConfig):
         super().__init__(initial_time=config.offset)
         self._config = config
+        self._until = UNTIL_UNSET
+        # Create an environment-specific logger using CustomLogger
+        self.logger = agentlib_logging.create_logger(env=self, name="environment")
         if self.config.clock:
             self.process(self.clock())
 
     def pretty_time(self) -> str:
         """Returns the time in seconds."""
         return f"{self.time:.2f}s"
+
+    def run(self, until: Optional[Union[SimTime, Event]] = None) -> Optional[Any]:
+        self._until = until
+        return super().run(until=until)
+
+    def pretty_until(self) -> Union[str, None]:
+        """Returns the time in seconds."""
+        if self._until is None or self._until is UNTIL_UNSET:
+            return self._until
+        _percent_finished = round(self.time / self._until * 100, 1)
+        return f"{self._until:.2f}s" + f" ({_percent_finished} %)"
 
 
 class RealtimeEnvironment(simpy.RealtimeEnvironment, CustomSimpyEnvironment):
@@ -153,7 +170,9 @@ class RealtimeEnvironment(simpy.RealtimeEnvironment, CustomSimpyEnvironment):
         super().__init__(
             initial_time=config.offset, factor=config.factor, strict=config.strict
         )
+        self._until = UNTIL_UNSET
         self._config = config
+        self.logger = agentlib_logging.create_logger(env=self, name="environment")
         if self.config.clock:
             self.process(self.clock())
         else:
@@ -161,6 +180,7 @@ class RealtimeEnvironment(simpy.RealtimeEnvironment, CustomSimpyEnvironment):
 
     def run(self, until: Optional[Union[SimTime, Event]] = None) -> Optional[Any]:
         self.sync()
+        self._until = until
         return super().run(until=until)
 
     @property
@@ -172,6 +192,16 @@ class RealtimeEnvironment(simpy.RealtimeEnvironment, CustomSimpyEnvironment):
     def pretty_time(self) -> str:
         """Returns the time in a datetime format."""
         return datetime.fromtimestamp(self.time).strftime("%d-%b-%Y %H:%M:%S")
+
+    def pretty_until(self) -> Union[str, None]:
+        """Returns the time in a datetime format."""
+        if self._until is None or self._until is UNTIL_UNSET:
+            return self._until
+        _percent_finished = round(self.time / self._until * 100, 1)
+        return (
+            datetime.fromtimestamp(self._until).strftime("%d-%b-%Y %H:%M:%S")
+            + f" ({_percent_finished} %)"
+        )
 
     def silent_clock(self):
         """A silent clock, which does not log anything."""
@@ -188,6 +218,8 @@ class ScaledRealtimeEnvironment(simpy.RealtimeEnvironment, CustomSimpyEnvironmen
             initial_time=config.offset, factor=config.factor, strict=config.strict
         )
         self._config = config
+        self._until = UNTIL_UNSET
+        self.logger = agentlib_logging.create_logger(env=self, name="environment")
         if self.config.clock:
             self.process(self.clock())
         else:
@@ -195,6 +227,7 @@ class ScaledRealtimeEnvironment(simpy.RealtimeEnvironment, CustomSimpyEnvironmen
 
     def run(self, until: Optional[Union[SimTime, Event]] = None) -> Optional[Any]:
         self.sync()
+        self._until = until
         return super().run(until=until)
 
     @property
@@ -205,6 +238,13 @@ class ScaledRealtimeEnvironment(simpy.RealtimeEnvironment, CustomSimpyEnvironmen
     def pretty_time(self) -> str:
         """Returns the time in seconds."""
         return f"{self.time:.2f}s"
+
+    def pretty_until(self) -> Union[str, None]:
+        """Returns the time in seconds."""
+        if self._until is None or self._until is UNTIL_UNSET:
+            return self._until
+        _percent_finished = round(self.time / self._until * 100, 1)
+        return f"{self._until:.2f}s" + f" ({_percent_finished} %)"
 
     def silent_clock(self):
         """A silent clock, which does not log anything."""

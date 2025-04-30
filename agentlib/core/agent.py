@@ -4,9 +4,9 @@ Module containing only the Agent class.
 
 import json
 import threading
+from pathlib import Path
 from typing import Union, List, Dict, TypeVar, Optional
 
-from pathlib import Path
 from pydantic import field_validator, BaseModel, FilePath, Field
 
 import agentlib
@@ -274,7 +274,7 @@ class Agent:
                     {_module_id: module_cls(agent=self, config=module_config)}
                 )
 
-    def get_results(self, cleanup=True):
+    def get_results(self, cleanup=False):
         """
         Gets the results of this agent.
         Args:
@@ -282,7 +282,11 @@ class Agent:
         """
         results = {}
         for module in self.modules:
-            result = module.get_results()
+            try:
+                result = module.get_results()
+            except BaseException as e:
+                self.logger.error(f"Error reading results of module {module.id}: {e}")
+                result = None
             if result is not None:
                 results[module.id] = result
         if cleanup:

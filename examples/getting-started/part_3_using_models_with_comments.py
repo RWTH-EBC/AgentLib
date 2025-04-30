@@ -32,9 +32,6 @@ import agentlib as ag
 
 
 # define the inputs, outputs, states and parameters of your model
-from agentlib.utils.multi_agent_system import LocalMASAgency
-
-
 class HeatedRoomConfig(ag.ModelConfig):
     inputs: List[ag.ModelInput] = [
         ag.ModelInput(name="heating_power_in_watt", value=100)

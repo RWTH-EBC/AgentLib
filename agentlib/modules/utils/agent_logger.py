@@ -5,8 +5,10 @@ import collections
 import json
 import logging
 import os
+import time
 from ast import literal_eval
-from typing import Union
+from pathlib import Path
+from typing import Union, Optional
 
 import pandas as pd
 from pydantic import field_validator, Field
@@ -40,11 +42,12 @@ class AgentLoggerConfig(BaseModuleConfig):
     overwrite_log: bool = Field(
         title="Overwrite file",
         default=False,
-        description="If true, old logs are auto deleted when a new log should be written with that name."
+        description="If true, old logs are auto deleted when a new log should be written with that name.",
     )
-    filename: str = Field(
+    filename: Optional[str] = Field(
         title="filename",
-        description="The filename where the log is stored.",
+        default=None,
+        description="The filename where the log is stored. If None, will use 'agent_logs/{agent_id}_log.json'",
     )
 
     @field_validator("filename")
@@ -52,10 +55,16 @@ class AgentLoggerConfig(BaseModuleConfig):
     def check_existence_of_file(cls, filename, info: FieldValidationInfo):
         """Checks whether the file already exists."""
         # pylint: disable=no-self-argument,no-self-use
-        if os.path.isfile(filename):
+
+        # Skip check for None, as it will be replaced in __init__
+        if filename is None:
+            return filename
+
+        file_path = Path(filename)
+        if file_path.exists():
             # remove result file, so a new one can be created
             if info.data["overwrite_log"]:
-                os.remove(filename)
+                file_path.unlink()
                 return filename
             raise FileExistsError(
                 f"Given filename at {filename} "
@@ -64,9 +73,7 @@ class AgentLoggerConfig(BaseModuleConfig):
                 f"activate automatic overwrite."
             )
         # Create path in case it does not exist
-        fpath = os.path.dirname(filename)
-        if fpath:
-            os.makedirs(fpath, exist_ok=True)
+        file_path.parent.mkdir(parents=True, exist_ok=True)
         return filename
 
 
@@ -79,10 +86,23 @@ class AgentLogger(BaseModule):
     config: AgentLoggerConfig
 
     def __init__(self, *, config: dict, agent: Agent):
-        """Overwrite init to enable a custom default filename
-        which uses the agent_id."""
         super().__init__(config=config, agent=agent)
-        self._filename = self.config.filename
+
+        # If filename is None, create a custom one using the agent ID
+        if self.config.filename is None:
+            # Use agent ID to create a default filename
+            logs_dir = Path("agent_logs")
+            logs_dir.mkdir(exist_ok=True)
+            self._filename = str(logs_dir / f"{self.agent.id}.jsonl")
+
+            # Handle file exists case based on overwrite_log setting
+            if Path(self._filename).exists() and not self.config.overwrite_log:
+                # Generate a unique filename by appending a timestamp
+                timestamp = int(time.time())
+                self._filename = str(logs_dir / f"{self.agent.id}_{timestamp}.jsonl")
+        else:
+            self._filename = self.config.filename
+
         self._variables_to_log = {}
         if not self.env.config.rt and self.config.t_sample < 60:
             self.logger.warning(

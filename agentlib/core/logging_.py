@@ -1,6 +1,8 @@
 import logging
 from typing import TYPE_CHECKING
 
+from agentlib.core import environment
+
 if TYPE_CHECKING:
     from agentlib import Environment
 
@@ -29,7 +31,15 @@ class CustomLogger(logging.Logger):
         record = super().makeRecord(
             name, level, fn, lno, msg, args, exc_info, func, extra, sinfo
         )
-        record.env_time = self.env.pretty_time()
+        _until = self.env.pretty_until()
+        _time = self.env.pretty_time()
+        if _until is environment.UNTIL_UNSET:
+            # Add "INIT" prefix to clearly indicate initialization phase
+            record.env_time = f"<INIT>"
+        elif _until is None:
+            record.env_time = _time
+        else:
+            record.env_time = _time + "/" + _until
         return record
 
 
@@ -46,4 +56,16 @@ def create_logger(env: "Environment", name: str) -> CustomLogger:
     stream_handler = logging.StreamHandler()
     stream_handler.setFormatter(formatter)
     custom_logger.addHandler(stream_handler)
+
+    # Check if root logger has any FileHandlers and add similar ones to our custom logger
+    for handler in logging.root.handlers:
+        if isinstance(handler, logging.FileHandler):
+            # Create a similar FileHandler for our custom logger
+            file_handler = logging.FileHandler(
+                handler.baseFilename, mode=handler.mode, encoding=handler.encoding
+            )
+            file_handler.setFormatter(formatter)
+            file_handler.setLevel(handler.level)
+            custom_logger.addHandler(file_handler)
+
     return custom_logger
