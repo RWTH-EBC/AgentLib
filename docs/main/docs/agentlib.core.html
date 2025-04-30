@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>agentlib.core package &mdash; agentlib 0.8.6 documentation</title>
+  <title>agentlib.core package &mdash; agentlib 0.8.7 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css" />
       <link rel="stylesheet" type="text/css" href="_static/autodoc_pydantic.css" />
@@ -188,7 +188,7 @@ If no such module exists, None is returned
 
 <dl class="py method">
 <dt class="sig sig-object py" id="agentlib.core.agent.Agent.get_results">
-<span class="sig-name descname"><span class="pre">get_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cleanup</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agentlib/core/agent.html#Agent.get_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.core.agent.Agent.get_results" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cleanup</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agentlib/core/agent.html#Agent.get_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.core.agent.Agent.get_results" title="Permalink to this definition"></a></dt>
 <dd><p>Gets the results of this agent.
 :param cleanup: If true, created files are deleted.</p>
 </dd></dl>
@@ -1106,6 +1106,11 @@ processes and manages time for instant execution mode.</p>
 <span class="sig-name descname"><span class="pre">pretty_time</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/agentlib/core/environment.html#CustomSimpyEnvironment.pretty_time"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.core.environment.CustomSimpyEnvironment.pretty_time" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.core.environment.CustomSimpyEnvironment.pretty_until">
+<span class="sig-name descname"><span class="pre">pretty_until</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/agentlib/core/environment.html#CustomSimpyEnvironment.pretty_until"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.core.environment.CustomSimpyEnvironment.pretty_until" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
 <dl class="py property">
 <dt class="sig sig-object py" id="agentlib.core.environment.CustomSimpyEnvironment.time">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">time</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#agentlib.core.environment.CustomSimpyEnvironment.time" title="Permalink to this definition"></a></dt>
@@ -1205,6 +1210,28 @@ processes and manages time for instant execution mode.</p>
 <dd><p>Returns the time in seconds.</p>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.core.environment.InstantEnvironment.pretty_until">
+<span class="sig-name descname"><span class="pre">pretty_until</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/agentlib/core/environment.html#InstantEnvironment.pretty_until"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.core.environment.InstantEnvironment.pretty_until" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the time in seconds.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.core.environment.InstantEnvironment.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">until</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Event</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/agentlib/core/environment.html#InstantEnvironment.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.core.environment.InstantEnvironment.run" title="Permalink to this definition"></a></dt>
+<dd><p>Executes <code class="xref py py-meth docutils literal notranslate"><span class="pre">step()</span></code> until the given criterion <em>until</em> is met.</p>
+<ul class="simple">
+<li><p>If it is <code class="docutils literal notranslate"><span class="pre">None</span></code> (which is the default), this method will return
+when there are no further events to be processed.</p></li>
+<li><p>If it is an <code class="xref py py-class docutils literal notranslate"><span class="pre">Event</span></code>, the method will continue
+stepping until this event has been triggered and will return its
+value.  Raises a <code class="xref py py-exc docutils literal notranslate"><span class="pre">RuntimeError</span></code> if there are no further events
+to be processed and the <em>until</em> event was not triggered.</p></li>
+<li><p>If it is a number, the method will continue stepping
+until the environment’s time reaches <em>until</em>.</p></li>
+</ul>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -1216,6 +1243,12 @@ processes and manages time for real time execution mode.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="agentlib.core.environment.RealtimeEnvironment.pretty_time">
 <span class="sig-name descname"><span class="pre">pretty_time</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/agentlib/core/environment.html#RealtimeEnvironment.pretty_time"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.core.environment.RealtimeEnvironment.pretty_time" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the time in a datetime format.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.core.environment.RealtimeEnvironment.pretty_until">
+<span class="sig-name descname"><span class="pre">pretty_until</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/agentlib/core/environment.html#RealtimeEnvironment.pretty_until"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.core.environment.RealtimeEnvironment.pretty_until" title="Permalink to this definition"></a></dt>
 <dd><p>Returns the time in a datetime format.</p>
 </dd></dl>
 
@@ -1259,6 +1292,12 @@ processes and manages time for scaled real time execution mode.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="agentlib.core.environment.ScaledRealtimeEnvironment.pretty_time">
 <span class="sig-name descname"><span class="pre">pretty_time</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/agentlib/core/environment.html#ScaledRealtimeEnvironment.pretty_time"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.core.environment.ScaledRealtimeEnvironment.pretty_time" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the time in seconds.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.core.environment.ScaledRealtimeEnvironment.pretty_until">
+<span class="sig-name descname"><span class="pre">pretty_until</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/agentlib/core/environment.html#ScaledRealtimeEnvironment.pretty_until"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.core.environment.ScaledRealtimeEnvironment.pretty_until" title="Permalink to this definition"></a></dt>
 <dd><p>Returns the time in seconds.</p>
 </dd></dl>
 
@@ -1760,7 +1799,7 @@ name of the model class.</p>
 
 <dl class="py method pydantic_validator">
 <dt class="sig sig-object py" id="agentlib.core.model.ModelConfig.include_default_model_variables">
-<em class="property"><span class="pre">validator</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">include_default_model_variables</span></span><em class="autodoc_pydantic_validator_arrow property">&#160; <span class="pre">»</span>&#160; </em><a class="reference internal" href="code/agentlib.core.html#agentlib.core.model.ModelConfig.inputs" title="agentlib.core.model.ModelConfig.inputs"><em class="xref py py-obj"><span class="pre">inputs</span></em></a><em class="property"><span class="pre">,</span> </em><a class="reference internal" href="code/agentlib.core.html#agentlib.core.model.ModelConfig.parameters" title="agentlib.core.model.ModelConfig.parameters"><em class="xref py py-obj"><span class="pre">parameters</span></em></a><em class="property"><span class="pre">,</span> </em><a class="reference internal" href="code/agentlib.core.html#agentlib.core.model.ModelConfig.outputs" title="agentlib.core.model.ModelConfig.outputs"><em class="xref py py-obj"><span class="pre">outputs</span></em></a><em class="property"><span class="pre">,</span> </em><a class="reference internal" href="code/agentlib.core.html#agentlib.core.model.ModelConfig.states" title="agentlib.core.model.ModelConfig.states"><em class="xref py py-obj"><span class="pre">states</span></em></a><a class="reference internal" href="_modules/agentlib/core/model.html#ModelConfig.include_default_model_variables"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.core.model.ModelConfig.include_default_model_variables" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">validator</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">include_default_model_variables</span></span><em class="autodoc_pydantic_validator_arrow property">&#160; <span class="pre">»</span>&#160; </em><a class="reference internal" href="code/agentlib.core.html#agentlib.core.model.ModelConfig.parameters" title="agentlib.core.model.ModelConfig.parameters"><em class="xref py py-obj"><span class="pre">parameters</span></em></a><em class="property"><span class="pre">,</span> </em><a class="reference internal" href="code/agentlib.core.html#agentlib.core.model.ModelConfig.outputs" title="agentlib.core.model.ModelConfig.outputs"><em class="xref py py-obj"><span class="pre">outputs</span></em></a><em class="property"><span class="pre">,</span> </em><a class="reference internal" href="code/agentlib.core.html#agentlib.core.model.ModelConfig.states" title="agentlib.core.model.ModelConfig.states"><em class="xref py py-obj"><span class="pre">states</span></em></a><em class="property"><span class="pre">,</span> </em><a class="reference internal" href="code/agentlib.core.html#agentlib.core.model.ModelConfig.inputs" title="agentlib.core.model.ModelConfig.inputs"><em class="xref py py-obj"><span class="pre">inputs</span></em></a><a class="reference internal" href="_modules/agentlib/core/model.html#ModelConfig.include_default_model_variables"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.core.model.ModelConfig.include_default_model_variables" title="Permalink to this definition"></a></dt>
 <dd><p>Validator building block to merge default variables with config variables in a standard validator.
 Updates default variables when a variable with the same name is present in the config.
 Then returns the union of the default variables and the external config variables.</p>

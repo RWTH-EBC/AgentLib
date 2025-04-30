@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>agentlib.modules.simulation package &mdash; agentlib 0.8.6 documentation</title>
+  <title>agentlib.modules.simulation package &mdash; agentlib 0.8.7 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
       <link rel="stylesheet" type="text/css" href="../_static/autodoc_pydantic.css" />
@@ -273,6 +273,13 @@
 <p>The Simulator is the interface between simulation models
 and further other implementations. It contains all interface functions for
 interacting with the standard model class.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.Simulator.cleanup_results">
+<span class="sig-name descname"><span class="pre">cleanup_results</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/modules/simulation/simulator.html#Simulator.cleanup_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.simulation.simulator.Simulator.cleanup_results" title="Permalink to this definition"></a></dt>
+<dd><p>Deletes all files this module created.</p>
+<p>Override this method, if your module creates e.g. results files etc.</p>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.Simulator.do_step">
 <span class="sig-name descname"><span class="pre">do_step</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/modules/simulation/simulator.html#Simulator.do_step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.simulation.simulator.Simulator.do_step" title="Permalink to this definition"></a></dt>
