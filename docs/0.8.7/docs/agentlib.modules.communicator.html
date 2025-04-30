@@ -1,0 +1,878 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>agentlib.modules.communicator package &mdash; agentlib 0.8.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="_static/autodoc_pydantic.css" />
+
+  
+      <script src="_static/jquery.js"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+      <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+      <script src="_static/doctools.js"></script>
+      <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="agentlib.modules.controller package" href="agentlib.modules.controller.html" />
+    <link rel="prev" title="agentlib.modules package" href="agentlib.modules.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            agentlib
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Tutorials/tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ModulesList.html">List of standard modules and models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="AgentVariable.html">AgentVariables and ModelVariables</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="agentlib.html">agentlib package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="agentlib.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="agentlib.core.html">agentlib.core package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.models.html">agentlib.models package</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="agentlib.modules.html">agentlib.modules package</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="agentlib.modules.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.html#agentlib-modules-simulator-module">agentlib.modules.simulator module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.html#module-agentlib.modules">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.utils.html">agentlib.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="agentlib.html#module-agentlib">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">agentlib</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="agentlib.html">agentlib package</a></li>
+          <li class="breadcrumb-item"><a href="agentlib.modules.html">agentlib.modules package</a></li>
+      <li class="breadcrumb-item active">agentlib.modules.communicator package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/agentlib.modules.communicator.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="agentlib-modules-communicator-package">
+<h1>agentlib.modules.communicator package<a class="headerlink" href="#agentlib-modules-communicator-package" title="Permalink to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
+</section>
+<section id="agentlib-modules-communicator-clonemap-module">
+<span id="clonemap"></span><h2>agentlib.modules.communicator.clonemap module<a class="headerlink" href="#agentlib-modules-communicator-clonemap-module" title="Permalink to this heading"></a></h2>
+</section>
+<section id="module-agentlib.modules.communicator.communicator">
+<span id="agentlib-modules-communicator-communicator-module"></span><h2>agentlib.modules.communicator.communicator module<a class="headerlink" href="#module-agentlib.modules.communicator.communicator" title="Permalink to this heading"></a></h2>
+<p>Module contains basics communicator modules</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.communicator.CommunicationDict">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agentlib.modules.communicator.communicator.</span></span><span class="sig-name descname"><span class="pre">CommunicationDict</span></span><a class="reference internal" href="_modules/agentlib/modules/communicator/communicator.html#CommunicationDict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.communicator.communicator.CommunicationDict" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">TypedDict</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.communicator.CommunicationDict.alias">
+<span class="sig-name descname"><span class="pre">alias</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#agentlib.modules.communicator.communicator.CommunicationDict.alias" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.communicator.CommunicationDict.source">
+<span class="sig-name descname"><span class="pre">source</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#agentlib.modules.communicator.communicator.CommunicationDict.source" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.communicator.CommunicationDict.timestamp">
+<span class="sig-name descname"><span class="pre">timestamp</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#agentlib.modules.communicator.communicator.CommunicationDict.timestamp" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.communicator.CommunicationDict.type">
+<span class="sig-name descname"><span class="pre">type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#agentlib.modules.communicator.communicator.CommunicationDict.type" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.communicator.CommunicationDict.value">
+<span class="sig-name descname"><span class="pre">value</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Any</span></em><a class="headerlink" href="#agentlib.modules.communicator.communicator.CommunicationDict.value" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.communicator.Communicator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agentlib.modules.communicator.communicator.</span></span><span class="sig-name descname"><span class="pre">Communicator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="code/agentlib.core.html#agentlib.core.agent.Agent" title="agentlib.core.agent.Agent"><span class="pre">Agent</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agentlib/modules/communicator/communicator.html#Communicator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.communicator.communicator.Communicator" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="code/agentlib.core.html#agentlib.core.module.BaseModule" title="agentlib.core.module.BaseModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModule</span></code></a></p>
+<p>Base class for all communicators</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.communicator.Communicator.process">
+<span class="sig-name descname"><span class="pre">process</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/agentlib/modules/communicator/communicator.html#Communicator.process"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.communicator.communicator.Communicator.process" title="Permalink to this definition"></a></dt>
+<dd><p>This abstract method must be implemented in order to sync the module
+with the other processes of the agent and the whole MAS.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.communicator.Communicator.register_callbacks">
+<span class="sig-name descname"><span class="pre">register_callbacks</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/agentlib/modules/communicator/communicator.html#Communicator.register_callbacks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.communicator.communicator.Communicator.register_callbacks" title="Permalink to this definition"></a></dt>
+<dd><p>Register all outputs to the callback function</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.communicator.Communicator.short_dict">
+<span class="sig-name descname"><span class="pre">short_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">variable</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="code/agentlib.core.html#agentlib.core.datamodels.AgentVariable" title="agentlib.core.datamodels.AgentVariable"><span class="pre">AgentVariable</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">parse_json</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="code/agentlib.modules.communicator.html#agentlib.modules.communicator.communicator.CommunicationDict" title="agentlib.modules.communicator.communicator.CommunicationDict"><span class="pre">CommunicationDict</span></a></span></span><a class="reference internal" href="_modules/agentlib/modules/communicator/communicator.html#Communicator.short_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.communicator.communicator.Communicator.short_dict" title="Permalink to this definition"></a></dt>
+<dd><p>Creates a short dict serialization of the Variable.</p>
+<p>Only contains attributes of the AgentVariable, that are relevant for other
+modules or agents. For performance and privacy reasons, this function should
+be called for communicators.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.communicator.Communicator.to_json">
+<span class="sig-name descname"><span class="pre">to_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">payload</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="code/agentlib.modules.communicator.html#agentlib.modules.communicator.communicator.CommunicationDict" title="agentlib.modules.communicator.communicator.CommunicationDict"><span class="pre">CommunicationDict</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bytes</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span></span><a class="reference internal" href="_modules/agentlib/modules/communicator/communicator.html#Communicator.to_json"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.communicator.communicator.Communicator.to_json" title="Permalink to this definition"></a></dt>
+<dd><p>Transforms the payload into json serialized form. Dynamically uses orjson
+if it is installed, and the builtin json otherwise.</p>
+<p>Returns bytes or str depending on the library used, but this has not mattered
+with the communicators as of now.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class pydantic_model">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.communicator.CommunicatorConfig">
+<em class="property"><span class="pre">pydantic</span> <span class="pre">model</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agentlib.modules.communicator.communicator.</span></span><span class="sig-name descname"><span class="pre">CommunicatorConfig</span></span><a class="reference internal" href="_modules/agentlib/modules/communicator/communicator.html#CommunicatorConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.communicator.communicator.CommunicatorConfig" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="code/agentlib.core.html#agentlib.core.module.BaseModuleConfig" title="agentlib.core.module.BaseModuleConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModuleConfig</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Config<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>arbitrary_types_allowed</strong>: <em>bool = True</em></p></li>
+<li><p><strong>validate_assignment</strong>: <em>bool = True</em></p></li>
+<li><p><strong>extra</strong>: <em>str = forbid</em></p></li>
+<li><p><strong>frozen</strong>: <em>bool = True</em></p></li>
+</ul>
+</dd>
+<dt class="field-even">Fields<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="code/agentlib.modules.communicator.html#agentlib.modules.communicator.communicator.CommunicatorConfig.use_orjson" title="agentlib.modules.communicator.communicator.CommunicatorConfig.use_orjson"><code class="xref py py-obj docutils literal notranslate"><span class="pre">use_orjson</span> <span class="pre">(bool)</span></code></a></p></li>
+</ul>
+</dd>
+<dt class="field-odd">Validators<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.communicator.CommunicatorConfig.use_orjson">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">use_orjson</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#agentlib.modules.communicator.communicator.CommunicatorConfig.use_orjson" title="Permalink to this definition"></a></dt>
+<dd><p>If true, the faster orjson library will be used for serialization deserialization. Requires the optional dependency.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.communicator.CommunicatorConfig.model_post_init">
+<span class="sig-name descname"><span class="pre">model_post_init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#agentlib.modules.communicator.communicator.CommunicatorConfig.model_post_init" title="Permalink to this definition"></a></dt>
+<dd><p>This function is meant to behave like a BaseModel method to initialise private attributes.</p>
+<p>It takes context as an argument since that’s what pydantic-core passes when calling it.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>self</strong> – The BaseModel instance.</p></li>
+<li><p><strong>context</strong> – The context.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.communicator.LocalCommunicator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agentlib.modules.communicator.communicator.</span></span><span class="sig-name descname"><span class="pre">LocalCommunicator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="code/agentlib.core.html#agentlib.core.agent.Agent" title="agentlib.core.agent.Agent"><span class="pre">Agent</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agentlib/modules/communicator/communicator.html#LocalCommunicator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.communicator.communicator.LocalCommunicator" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="code/agentlib.modules.communicator.html#agentlib.modules.communicator.communicator.Communicator" title="agentlib.modules.communicator.communicator.Communicator"><code class="xref py py-class docutils literal notranslate"><span class="pre">Communicator</span></code></a></p>
+<p>Base class for local communicators.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.communicator.LocalCommunicator.broker">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">broker</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="code/agentlib.utils.html#agentlib.utils.broker.Broker" title="agentlib.utils.broker.Broker"><span class="pre">Broker</span></a></em><a class="headerlink" href="#agentlib.modules.communicator.communicator.LocalCommunicator.broker" title="Permalink to this definition"></a></dt>
+<dd><p>Broker used by LocalCommunicator</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.communicator.LocalCommunicator.setup_broker">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">setup_broker</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/agentlib/modules/communicator/communicator.html#LocalCommunicator.setup_broker"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.communicator.communicator.LocalCommunicator.setup_broker" title="Permalink to this definition"></a></dt>
+<dd><p>Function to set up the broker object.
+Needs to return a valid broker option.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.communicator.LocalCommunicator.terminate">
+<span class="sig-name descname"><span class="pre">terminate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/agentlib/modules/communicator/communicator.html#LocalCommunicator.terminate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.communicator.communicator.LocalCommunicator.terminate" title="Permalink to this definition"></a></dt>
+<dd><p>Terminate all relevant processes of the module.
+This is necessary to correctly terminate an agent
+at runtime. Not all modules may need this, hence it is
+not an abstract method.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class pydantic_model">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.communicator.LocalCommunicatorConfig">
+<em class="property"><span class="pre">pydantic</span> <span class="pre">model</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agentlib.modules.communicator.communicator.</span></span><span class="sig-name descname"><span class="pre">LocalCommunicatorConfig</span></span><a class="reference internal" href="_modules/agentlib/modules/communicator/communicator.html#LocalCommunicatorConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.communicator.communicator.LocalCommunicatorConfig" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="code/agentlib.modules.communicator.html#agentlib.modules.communicator.communicator.CommunicatorConfig" title="agentlib.modules.communicator.communicator.CommunicatorConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">CommunicatorConfig</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Config<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>arbitrary_types_allowed</strong>: <em>bool = True</em></p></li>
+<li><p><strong>validate_assignment</strong>: <em>bool = True</em></p></li>
+<li><p><strong>extra</strong>: <em>str = forbid</em></p></li>
+<li><p><strong>frozen</strong>: <em>bool = True</em></p></li>
+</ul>
+</dd>
+<dt class="field-even">Fields<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="code/agentlib.modules.communicator.html#agentlib.modules.communicator.communicator.LocalCommunicatorConfig.parse_json" title="agentlib.modules.communicator.communicator.LocalCommunicatorConfig.parse_json"><code class="xref py py-obj docutils literal notranslate"><span class="pre">parse_json</span> <span class="pre">(bool)</span></code></a></p></li>
+<li><p><a class="reference internal" href="code/agentlib.modules.communicator.html#agentlib.modules.communicator.communicator.LocalCommunicatorConfig.queue_size" title="agentlib.modules.communicator.communicator.LocalCommunicatorConfig.queue_size"><code class="xref py py-obj docutils literal notranslate"><span class="pre">queue_size</span> <span class="pre">(int)</span></code></a></p></li>
+</ul>
+</dd>
+<dt class="field-odd">Validators<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.communicator.LocalCommunicatorConfig.parse_json">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">parse_json</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#agentlib.modules.communicator.communicator.LocalCommunicatorConfig.parse_json" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.communicator.LocalCommunicatorConfig.queue_size">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">queue_size</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">10000</span></em><a class="headerlink" href="#agentlib.modules.communicator.communicator.LocalCommunicatorConfig.queue_size" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.communicator.LocalCommunicatorConfig.model_post_init">
+<span class="sig-name descname"><span class="pre">model_post_init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#agentlib.modules.communicator.communicator.LocalCommunicatorConfig.model_post_init" title="Permalink to this definition"></a></dt>
+<dd><p>This function is meant to behave like a BaseModel method to initialise private attributes.</p>
+<p>It takes context as an argument since that’s what pydantic-core passes when calling it.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>self</strong> – The BaseModel instance.</p></li>
+<li><p><strong>context</strong> – The context.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class pydantic_model">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.communicator.SubscriptionCommunicatorConfig">
+<em class="property"><span class="pre">pydantic</span> <span class="pre">model</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agentlib.modules.communicator.communicator.</span></span><span class="sig-name descname"><span class="pre">SubscriptionCommunicatorConfig</span></span><a class="reference internal" href="_modules/agentlib/modules/communicator/communicator.html#SubscriptionCommunicatorConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.communicator.communicator.SubscriptionCommunicatorConfig" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="code/agentlib.modules.communicator.html#agentlib.modules.communicator.communicator.CommunicatorConfig" title="agentlib.modules.communicator.communicator.CommunicatorConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">CommunicatorConfig</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Config<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>arbitrary_types_allowed</strong>: <em>bool = True</em></p></li>
+<li><p><strong>validate_assignment</strong>: <em>bool = True</em></p></li>
+<li><p><strong>extra</strong>: <em>str = forbid</em></p></li>
+<li><p><strong>frozen</strong>: <em>bool = True</em></p></li>
+</ul>
+</dd>
+<dt class="field-even">Fields<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="code/agentlib.modules.communicator.html#agentlib.modules.communicator.communicator.SubscriptionCommunicatorConfig.subscriptions" title="agentlib.modules.communicator.communicator.SubscriptionCommunicatorConfig.subscriptions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">subscriptions</span> <span class="pre">(List[str]</span> <span class="pre">|</span> <span class="pre">str)</span></code></a></p></li>
+</ul>
+</dd>
+<dt class="field-odd">Validators<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="code/agentlib.utils.html#agentlib.utils.validators.convert_to_list" title="agentlib.utils.validators.convert_to_list"><code class="xref py py-obj docutils literal notranslate"><span class="pre">convert_to_list</span></code></a> » <a class="reference internal" href="code/agentlib.modules.communicator.html#agentlib.modules.communicator.communicator.SubscriptionCommunicatorConfig.subscriptions" title="agentlib.modules.communicator.communicator.SubscriptionCommunicatorConfig.subscriptions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">subscriptions</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.communicator.SubscriptionCommunicatorConfig.subscriptions">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">subscriptions</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#agentlib.modules.communicator.communicator.SubscriptionCommunicatorConfig.subscriptions" title="Permalink to this definition"></a></dt>
+<dd><p>List of agent-id strings to subscribe to</p>
+<dl class="field-list simple">
+<dt class="field-odd">Validated by<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="code/agentlib.utils.html#agentlib.utils.validators.convert_to_list" title="agentlib.utils.validators.convert_to_list"><code class="xref py py-obj docutils literal notranslate"><span class="pre">convert_to_list</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.communicator.SubscriptionCommunicatorConfig.model_post_init">
+<span class="sig-name descname"><span class="pre">model_post_init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#agentlib.modules.communicator.communicator.SubscriptionCommunicatorConfig.model_post_init" title="Permalink to this definition"></a></dt>
+<dd><p>This function is meant to behave like a BaseModel method to initialise private attributes.</p>
+<p>It takes context as an argument since that’s what pydantic-core passes when calling it.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>self</strong> – The BaseModel instance.</p></li>
+<li><p><strong>context</strong> – The context.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-agentlib.modules.communicator.local">
+<span id="agentlib-modules-communicator-local-module"></span><span id="local-comm"></span><h2>agentlib.modules.communicator.local module<a class="headerlink" href="#module-agentlib.modules.communicator.local" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.local.LocalClient">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agentlib.modules.communicator.local.</span></span><span class="sig-name descname"><span class="pre">LocalClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="code/agentlib.core.html#agentlib.core.agent.Agent" title="agentlib.core.agent.Agent"><span class="pre">Agent</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agentlib/modules/communicator/local.html#LocalClient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.communicator.local.LocalClient" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="code/agentlib.modules.communicator.html#agentlib.modules.communicator.communicator.LocalCommunicator" title="agentlib.modules.communicator.communicator.LocalCommunicator"><code class="xref py py-class docutils literal notranslate"><span class="pre">LocalCommunicator</span></code></a></p>
+<p>This communicator implements the communication between agents via a
+central process broker.
+Note: The broker is implemented as singleton this means that all agents must
+be in the same process!</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.local.LocalClient.setup_broker">
+<span class="sig-name descname"><span class="pre">setup_broker</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/agentlib/modules/communicator/local.html#LocalClient.setup_broker"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.communicator.local.LocalClient.setup_broker" title="Permalink to this definition"></a></dt>
+<dd><p>Use the LocalBroker</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.local.LocalClient.subscriptions">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">subscriptions</span></span><a class="headerlink" href="#agentlib.modules.communicator.local.LocalClient.subscriptions" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class pydantic_model">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig">
+<em class="property"><span class="pre">pydantic</span> <span class="pre">model</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agentlib.modules.communicator.local.</span></span><span class="sig-name descname"><span class="pre">LocalSubscriptionCommunicatorConfig</span></span><a class="reference internal" href="_modules/agentlib/modules/communicator/local.html#LocalSubscriptionCommunicatorConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="code/agentlib.modules.communicator.html#agentlib.modules.communicator.communicator.LocalCommunicatorConfig" title="agentlib.modules.communicator.communicator.LocalCommunicatorConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">LocalCommunicatorConfig</span></code></a>, <a class="reference internal" href="code/agentlib.modules.communicator.html#agentlib.modules.communicator.communicator.SubscriptionCommunicatorConfig" title="agentlib.modules.communicator.communicator.SubscriptionCommunicatorConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">SubscriptionCommunicatorConfig</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Config<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>arbitrary_types_allowed</strong>: <em>bool = True</em></p></li>
+<li><p><strong>validate_assignment</strong>: <em>bool = True</em></p></li>
+<li><p><strong>extra</strong>: <em>str = forbid</em></p></li>
+<li><p><strong>frozen</strong>: <em>bool = True</em></p></li>
+</ul>
+</dd>
+<dt class="field-even">Fields<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="code/agentlib.modules.communicator.html#agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.log_level" title="agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.log_level"><code class="xref py py-obj docutils literal notranslate"><span class="pre">log_level</span> <span class="pre">(Optional[str])</span></code></a></p></li>
+<li><p><a class="reference internal" href="code/agentlib.modules.communicator.html#agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.module_id" title="agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.module_id"><code class="xref py py-obj docutils literal notranslate"><span class="pre">module_id</span> <span class="pre">(str)</span></code></a></p></li>
+<li><p><a class="reference internal" href="code/agentlib.modules.communicator.html#agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.parse_json" title="agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.parse_json"><code class="xref py py-obj docutils literal notranslate"><span class="pre">parse_json</span> <span class="pre">(bool)</span></code></a></p></li>
+<li><p><a class="reference internal" href="code/agentlib.modules.communicator.html#agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.queue_size" title="agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.queue_size"><code class="xref py py-obj docutils literal notranslate"><span class="pre">queue_size</span> <span class="pre">(int)</span></code></a></p></li>
+<li><p><a class="reference internal" href="code/agentlib.modules.communicator.html#agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.shared_variable_fields" title="agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.shared_variable_fields"><code class="xref py py-obj docutils literal notranslate"><span class="pre">shared_variable_fields</span> <span class="pre">(List[str])</span></code></a></p></li>
+<li><p><a class="reference internal" href="code/agentlib.modules.communicator.html#agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.type" title="agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">type</span> <span class="pre">(Union[str,</span> <span class="pre">Dict[str,</span> <span class="pre">str]])</span></code></a></p></li>
+<li><p><a class="reference internal" href="code/agentlib.modules.communicator.html#agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.use_orjson" title="agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.use_orjson"><code class="xref py py-obj docutils literal notranslate"><span class="pre">use_orjson</span> <span class="pre">(bool)</span></code></a></p></li>
+<li><p><a class="reference internal" href="code/agentlib.modules.communicator.html#agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.validate_incoming_values" title="agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.validate_incoming_values"><code class="xref py py-obj docutils literal notranslate"><span class="pre">validate_incoming_values</span> <span class="pre">(Optional[bool])</span></code></a></p></li>
+</ul>
+</dd>
+<dt class="field-odd">Validators<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="code/agentlib.core.html#agentlib.core.module.BaseModuleConfig.check_valid_fields" title="agentlib.core.module.BaseModuleConfig.check_valid_fields"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_valid_fields</span></code></a> » <a class="reference internal" href="code/agentlib.modules.communicator.html#agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.shared_variable_fields" title="agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.shared_variable_fields"><code class="xref py py-obj docutils literal notranslate"><span class="pre">shared_variable_fields</span></code></a></p></li>
+<li><p><a class="reference internal" href="code/agentlib.core.html#agentlib.core.module.BaseModuleConfig.check_valid_level" title="agentlib.core.module.BaseModuleConfig.check_valid_level"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_valid_level</span></code></a> » <a class="reference internal" href="code/agentlib.modules.communicator.html#agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.log_level" title="agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.log_level"><code class="xref py py-obj docutils literal notranslate"><span class="pre">log_level</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.log_level">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">log_level</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.log_level" title="Permalink to this definition"></a></dt>
+<dd><p>The log level for this Module. Default uses the root-loggers level.Options: DEBUG; INFO; WARNING; ERROR; CRITICAL</p>
+<dl class="field-list simple">
+<dt class="field-odd">Validated by<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="code/agentlib.core.html#agentlib.core.module.BaseModuleConfig.check_valid_level" title="agentlib.core.module.BaseModuleConfig.check_valid_level"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_valid_level</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.module_id">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">module_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.module_id" title="Permalink to this definition"></a></dt>
+<dd><p>The unqiue id of the module within an agent, used only to communicate withing the agent.</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.parse_json">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">parse_json</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.parse_json" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.queue_size">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">queue_size</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">10000</span></em><a class="headerlink" href="#agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.queue_size" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.shared_variable_fields">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">shared_variable_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.shared_variable_fields" title="Permalink to this definition"></a></dt>
+<dd><p>A list of strings with each string being a field of the Modules configs. The field must be or contain an AgentVariable. If the field is added to this list, all shared attributes of the AgentVariables will be set to True.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Validated by<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="code/agentlib.core.html#agentlib.core.module.BaseModuleConfig.check_valid_fields" title="agentlib.core.module.BaseModuleConfig.check_valid_fields"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_valid_fields</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.type">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.type" title="Permalink to this definition"></a></dt>
+<dd><p>The type of the Module. Used to find the Python-Object from all agentlib-core and plugin Module options. If a dict is given,it must contain the keys ‘file’ and ‘class_name’. ‘file’ is the filepath of a python file containing the Module.’class_name’ is the name of the Module class within this file.</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.use_orjson">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">use_orjson</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.use_orjson" title="Permalink to this definition"></a></dt>
+<dd><p>If true, the faster orjson library will be used for serialization deserialization. Requires the optional dependency.</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.validate_incoming_values">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">validate_incoming_values</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.validate_incoming_values" title="Permalink to this definition"></a></dt>
+<dd><p>If true, the validator of the AgentVariable value is called when receiving a new value from the DataBroker.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.model_post_init">
+<span class="sig-name descname"><span class="pre">model_post_init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.model_post_init" title="Permalink to this definition"></a></dt>
+<dd><p>This function is meant to behave like a BaseModel method to initialise private attributes.</p>
+<p>It takes context as an argument since that’s what pydantic-core passes when calling it.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>self</strong> – The BaseModel instance.</p></li>
+<li><p><strong>context</strong> – The context.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-agentlib.modules.communicator.local_broadcast">
+<span id="agentlib-modules-communicator-local-broadcast-module"></span><span id="local-broadcast"></span><h2>agentlib.modules.communicator.local_broadcast module<a class="headerlink" href="#module-agentlib.modules.communicator.local_broadcast" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.local_broadcast.LocalBroadcastClient">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agentlib.modules.communicator.local_broadcast.</span></span><span class="sig-name descname"><span class="pre">LocalBroadcastClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="code/agentlib.core.html#agentlib.core.agent.Agent" title="agentlib.core.agent.Agent"><span class="pre">Agent</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agentlib/modules/communicator/local_broadcast.html#LocalBroadcastClient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.communicator.local_broadcast.LocalBroadcastClient" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="code/agentlib.modules.communicator.html#agentlib.modules.communicator.communicator.LocalCommunicator" title="agentlib.modules.communicator.communicator.LocalCommunicator"><code class="xref py py-class docutils literal notranslate"><span class="pre">LocalCommunicator</span></code></a></p>
+<p>This communicator implements the communication between agents via a
+broadcast broker central process.
+Note: The broker is implemented as singleton. This means that all agents must
+be in the same process!</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.local_broadcast.LocalBroadcastClient.setup_broker">
+<span class="sig-name descname"><span class="pre">setup_broker</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/agentlib/modules/communicator/local_broadcast.html#LocalBroadcastClient.setup_broker"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.communicator.local_broadcast.LocalBroadcastClient.setup_broker" title="Permalink to this definition"></a></dt>
+<dd><p>Use the LocalBroadCastBroker</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-agentlib.modules.communicator.local_multiprocessing">
+<span id="agentlib-modules-communicator-local-multiprocessing-module"></span><span id="local-multiprocessing"></span><h2>agentlib.modules.communicator.local_multiprocessing module<a class="headerlink" href="#module-agentlib.modules.communicator.local_multiprocessing" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.local_multiprocessing.MultiProcessingBroadcastClient">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agentlib.modules.communicator.local_multiprocessing.</span></span><span class="sig-name descname"><span class="pre">MultiProcessingBroadcastClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="code/agentlib.core.html#agentlib.core.agent.Agent" title="agentlib.core.agent.Agent"><span class="pre">Agent</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agentlib/modules/communicator/local_multiprocessing.html#MultiProcessingBroadcastClient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.communicator.local_multiprocessing.MultiProcessingBroadcastClient" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="code/agentlib.modules.communicator.html#agentlib.modules.communicator.communicator.Communicator" title="agentlib.modules.communicator.communicator.Communicator"><code class="xref py py-class docutils literal notranslate"><span class="pre">Communicator</span></code></a></p>
+<p>This communicator implements the communication between agents via a
+central process broker.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.local_multiprocessing.MultiProcessingBroadcastClient.process">
+<span class="sig-name descname"><span class="pre">process</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/agentlib/modules/communicator/local_multiprocessing.html#MultiProcessingBroadcastClient.process"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.communicator.local_multiprocessing.MultiProcessingBroadcastClient.process" title="Permalink to this definition"></a></dt>
+<dd><p>Only start the loop once the env is running.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.local_multiprocessing.MultiProcessingBroadcastClient.terminate">
+<span class="sig-name descname"><span class="pre">terminate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/agentlib/modules/communicator/local_multiprocessing.html#MultiProcessingBroadcastClient.terminate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.communicator.local_multiprocessing.MultiProcessingBroadcastClient.terminate" title="Permalink to this definition"></a></dt>
+<dd><p>Closes all of the connections.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class pydantic_model">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.local_multiprocessing.MultiProcessingBroadcastClientConfig">
+<em class="property"><span class="pre">pydantic</span> <span class="pre">model</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agentlib.modules.communicator.local_multiprocessing.</span></span><span class="sig-name descname"><span class="pre">MultiProcessingBroadcastClientConfig</span></span><a class="reference internal" href="_modules/agentlib/modules/communicator/local_multiprocessing.html#MultiProcessingBroadcastClientConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.communicator.local_multiprocessing.MultiProcessingBroadcastClientConfig" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="code/agentlib.modules.communicator.html#agentlib.modules.communicator.communicator.CommunicatorConfig" title="agentlib.modules.communicator.communicator.CommunicatorConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">CommunicatorConfig</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Config<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>arbitrary_types_allowed</strong>: <em>bool = True</em></p></li>
+<li><p><strong>validate_assignment</strong>: <em>bool = True</em></p></li>
+<li><p><strong>extra</strong>: <em>str = forbid</em></p></li>
+<li><p><strong>frozen</strong>: <em>bool = True</em></p></li>
+</ul>
+</dd>
+<dt class="field-even">Fields<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="code/agentlib.modules.communicator.html#agentlib.modules.communicator.local_multiprocessing.MultiProcessingBroadcastClientConfig.authkey" title="agentlib.modules.communicator.local_multiprocessing.MultiProcessingBroadcastClientConfig.authkey"><code class="xref py py-obj docutils literal notranslate"><span class="pre">authkey</span> <span class="pre">(bytes)</span></code></a></p></li>
+<li><p><a class="reference internal" href="code/agentlib.modules.communicator.html#agentlib.modules.communicator.local_multiprocessing.MultiProcessingBroadcastClientConfig.ipv4" title="agentlib.modules.communicator.local_multiprocessing.MultiProcessingBroadcastClientConfig.ipv4"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ipv4</span> <span class="pre">(ipaddress.IPv4Address)</span></code></a></p></li>
+<li><p><a class="reference internal" href="code/agentlib.modules.communicator.html#agentlib.modules.communicator.local_multiprocessing.MultiProcessingBroadcastClientConfig.port" title="agentlib.modules.communicator.local_multiprocessing.MultiProcessingBroadcastClientConfig.port"><code class="xref py py-obj docutils literal notranslate"><span class="pre">port</span> <span class="pre">(int)</span></code></a></p></li>
+</ul>
+</dd>
+<dt class="field-odd">Validators<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.local_multiprocessing.MultiProcessingBroadcastClientConfig.authkey">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">authkey</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bytes</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">b'useTheAgentlib'</span></em><a class="headerlink" href="#agentlib.modules.communicator.local_multiprocessing.MultiProcessingBroadcastClientConfig.authkey" title="Permalink to this definition"></a></dt>
+<dd><p>Authorization key for the connection with the broker.</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.local_multiprocessing.MultiProcessingBroadcastClientConfig.ipv4">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ipv4</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">IPv4Address</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'127.0.0.1'</span></em><a class="headerlink" href="#agentlib.modules.communicator.local_multiprocessing.MultiProcessingBroadcastClientConfig.ipv4" title="Permalink to this definition"></a></dt>
+<dd><p>IP Address for the communication server. Defaults to localhost.</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.local_multiprocessing.MultiProcessingBroadcastClientConfig.port">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">port</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">50000</span></em><a class="headerlink" href="#agentlib.modules.communicator.local_multiprocessing.MultiProcessingBroadcastClientConfig.port" title="Permalink to this definition"></a></dt>
+<dd><p>Port for setting up the connection with the broker.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.local_multiprocessing.MultiProcessingBroadcastClientConfig.model_post_init">
+<span class="sig-name descname"><span class="pre">model_post_init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#agentlib.modules.communicator.local_multiprocessing.MultiProcessingBroadcastClientConfig.model_post_init" title="Permalink to this definition"></a></dt>
+<dd><p>This function is meant to behave like a BaseModel method to initialise private attributes.</p>
+<p>It takes context as an argument since that’s what pydantic-core passes when calling it.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>self</strong> – The BaseModel instance.</p></li>
+<li><p><strong>context</strong> – The context.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-agentlib.modules.communicator.mqtt">
+<span id="agentlib-modules-communicator-mqtt-module"></span><span id="mqtt-comm"></span><h2>agentlib.modules.communicator.mqtt module<a class="headerlink" href="#module-agentlib.modules.communicator.mqtt" title="Permalink to this heading"></a></h2>
+<dl class="py class pydantic_model">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.mqtt.BaseMQTTClientConfig">
+<em class="property"><span class="pre">pydantic</span> <span class="pre">model</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agentlib.modules.communicator.mqtt.</span></span><span class="sig-name descname"><span class="pre">BaseMQTTClientConfig</span></span><a class="reference internal" href="_modules/agentlib/modules/communicator/mqtt.html#BaseMQTTClientConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.communicator.mqtt.BaseMQTTClientConfig" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="code/agentlib.modules.communicator.html#agentlib.modules.communicator.communicator.SubscriptionCommunicatorConfig" title="agentlib.modules.communicator.communicator.SubscriptionCommunicatorConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">SubscriptionCommunicatorConfig</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Config<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>arbitrary_types_allowed</strong>: <em>bool = True</em></p></li>
+<li><p><strong>validate_assignment</strong>: <em>bool = True</em></p></li>
+<li><p><strong>extra</strong>: <em>str = forbid</em></p></li>
+<li><p><strong>frozen</strong>: <em>bool = True</em></p></li>
+</ul>
+</dd>
+<dt class="field-even">Fields<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="code/agentlib.modules.communicator.html#agentlib.modules.communicator.mqtt.BaseMQTTClientConfig.clean_start" title="agentlib.modules.communicator.mqtt.BaseMQTTClientConfig.clean_start"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clean_start</span> <span class="pre">(bool)</span></code></a></p></li>
+<li><p><a class="reference internal" href="code/agentlib.modules.communicator.html#agentlib.modules.communicator.mqtt.BaseMQTTClientConfig.client_id" title="agentlib.modules.communicator.mqtt.BaseMQTTClientConfig.client_id"><code class="xref py py-obj docutils literal notranslate"><span class="pre">client_id</span> <span class="pre">(str</span> <span class="pre">|</span> <span class="pre">None)</span></code></a></p></li>
+<li><p><a class="reference internal" href="code/agentlib.modules.communicator.html#agentlib.modules.communicator.mqtt.BaseMQTTClientConfig.connection_timeout" title="agentlib.modules.communicator.mqtt.BaseMQTTClientConfig.connection_timeout"><code class="xref py py-obj docutils literal notranslate"><span class="pre">connection_timeout</span> <span class="pre">(float)</span></code></a></p></li>
+<li><p><a class="reference internal" href="code/agentlib.modules.communicator.html#agentlib.modules.communicator.mqtt.BaseMQTTClientConfig.keepalive" title="agentlib.modules.communicator.mqtt.BaseMQTTClientConfig.keepalive"><code class="xref py py-obj docutils literal notranslate"><span class="pre">keepalive</span> <span class="pre">(int)</span></code></a></p></li>
+<li><p><a class="reference internal" href="code/agentlib.modules.communicator.html#agentlib.modules.communicator.mqtt.BaseMQTTClientConfig.password" title="agentlib.modules.communicator.mqtt.BaseMQTTClientConfig.password"><code class="xref py py-obj docutils literal notranslate"><span class="pre">password</span> <span class="pre">(str</span> <span class="pre">|</span> <span class="pre">None)</span></code></a></p></li>
+<li><p><a class="reference internal" href="code/agentlib.modules.communicator.html#agentlib.modules.communicator.mqtt.BaseMQTTClientConfig.prefix" title="agentlib.modules.communicator.mqtt.BaseMQTTClientConfig.prefix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">prefix</span> <span class="pre">(str)</span></code></a></p></li>
+<li><p><a class="reference internal" href="code/agentlib.modules.communicator.html#agentlib.modules.communicator.mqtt.BaseMQTTClientConfig.qos" title="agentlib.modules.communicator.mqtt.BaseMQTTClientConfig.qos"><code class="xref py py-obj docutils literal notranslate"><span class="pre">qos</span> <span class="pre">(int)</span></code></a></p></li>
+<li><p><a class="reference internal" href="code/agentlib.modules.communicator.html#agentlib.modules.communicator.mqtt.BaseMQTTClientConfig.subtopics" title="agentlib.modules.communicator.mqtt.BaseMQTTClientConfig.subtopics"><code class="xref py py-obj docutils literal notranslate"><span class="pre">subtopics</span> <span class="pre">(List[str]</span> <span class="pre">|</span> <span class="pre">str)</span></code></a></p></li>
+<li><p><a class="reference internal" href="code/agentlib.modules.communicator.html#agentlib.modules.communicator.mqtt.BaseMQTTClientConfig.tls_ca_certs" title="agentlib.modules.communicator.mqtt.BaseMQTTClientConfig.tls_ca_certs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tls_ca_certs</span> <span class="pre">(str</span> <span class="pre">|</span> <span class="pre">None)</span></code></a></p></li>
+<li><p><a class="reference internal" href="code/agentlib.modules.communicator.html#agentlib.modules.communicator.mqtt.BaseMQTTClientConfig.use_tls" title="agentlib.modules.communicator.mqtt.BaseMQTTClientConfig.use_tls"><code class="xref py py-obj docutils literal notranslate"><span class="pre">use_tls</span> <span class="pre">(bool</span> <span class="pre">|</span> <span class="pre">None)</span></code></a></p></li>
+<li><p><a class="reference internal" href="code/agentlib.modules.communicator.html#agentlib.modules.communicator.mqtt.BaseMQTTClientConfig.username" title="agentlib.modules.communicator.mqtt.BaseMQTTClientConfig.username"><code class="xref py py-obj docutils literal notranslate"><span class="pre">username</span> <span class="pre">(str</span> <span class="pre">|</span> <span class="pre">None)</span></code></a></p></li>
+</ul>
+</dd>
+<dt class="field-odd">Validators<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="code/agentlib.utils.html#agentlib.utils.validators.convert_to_list" title="agentlib.utils.validators.convert_to_list"><code class="xref py py-obj docutils literal notranslate"><span class="pre">convert_to_list</span></code></a> » <a class="reference internal" href="code/agentlib.modules.communicator.html#agentlib.modules.communicator.mqtt.BaseMQTTClientConfig.subtopics" title="agentlib.modules.communicator.mqtt.BaseMQTTClientConfig.subtopics"><code class="xref py py-obj docutils literal notranslate"><span class="pre">subtopics</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.mqtt.BaseMQTTClientConfig.clean_start">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">clean_start</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#agentlib.modules.communicator.mqtt.BaseMQTTClientConfig.clean_start" title="Permalink to this definition"></a></dt>
+<dd><p>True, False or MQTT_CLEAN_START_FIRST_ONLY.Sets the MQTT v5.0 clean_start flag always, never or on the first successful connect only, respectively.  MQTT session data (such as outstanding messages and subscriptions) is cleared on successful connect when the clean_start flag is set.</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.mqtt.BaseMQTTClientConfig.client_id">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">client_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agentlib.modules.communicator.mqtt.BaseMQTTClientConfig.client_id" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.mqtt.BaseMQTTClientConfig.connection_timeout">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">connection_timeout</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">10</span></em><a class="headerlink" href="#agentlib.modules.communicator.mqtt.BaseMQTTClientConfig.connection_timeout" title="Permalink to this definition"></a></dt>
+<dd><p>Number of seconds to wait for the initial connection until throwing an Error.</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.mqtt.BaseMQTTClientConfig.keepalive">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">keepalive</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">60</span></em><a class="headerlink" href="#agentlib.modules.communicator.mqtt.BaseMQTTClientConfig.keepalive" title="Permalink to this definition"></a></dt>
+<dd><p>Maximum period in seconds between communications with the broker. If no other messages are being exchanged, this controls the rate at which the client will send ping messages to the broker.</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.mqtt.BaseMQTTClientConfig.password">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">password</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agentlib.modules.communicator.mqtt.BaseMQTTClientConfig.password" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.mqtt.BaseMQTTClientConfig.prefix">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">prefix</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'/agentlib'</span></em><a class="headerlink" href="#agentlib.modules.communicator.mqtt.BaseMQTTClientConfig.prefix" title="Permalink to this definition"></a></dt>
+<dd><p>Prefix for MQTT-Topic</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.mqtt.BaseMQTTClientConfig.qos">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">qos</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#agentlib.modules.communicator.mqtt.BaseMQTTClientConfig.qos" title="Permalink to this definition"></a></dt>
+<dd><p>Quality of Service</p>
+<dl class="field-list simple">
+<dt class="field-odd">Constraints<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ge</strong> = 0</p></li>
+<li><p><strong>le</strong> = 2</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.mqtt.BaseMQTTClientConfig.subtopics">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">subtopics</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#agentlib.modules.communicator.mqtt.BaseMQTTClientConfig.subtopics" title="Permalink to this definition"></a></dt>
+<dd><p>Topics to that the agent subscribes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Validated by<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="code/agentlib.utils.html#agentlib.utils.validators.convert_to_list" title="agentlib.utils.validators.convert_to_list"><code class="xref py py-obj docutils literal notranslate"><span class="pre">convert_to_list</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.mqtt.BaseMQTTClientConfig.tls_ca_certs">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">tls_ca_certs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agentlib.modules.communicator.mqtt.BaseMQTTClientConfig.tls_ca_certs" title="Permalink to this definition"></a></dt>
+<dd><p>Path to the Certificate Authority certificate files. If None, windows certificate will be used.</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.mqtt.BaseMQTTClientConfig.use_tls">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">use_tls</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agentlib.modules.communicator.mqtt.BaseMQTTClientConfig.use_tls" title="Permalink to this definition"></a></dt>
+<dd><p>Option to use TLS certificates</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.mqtt.BaseMQTTClientConfig.username">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">username</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agentlib.modules.communicator.mqtt.BaseMQTTClientConfig.username" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.mqtt.BaseMQTTClientConfig.model_post_init">
+<span class="sig-name descname"><span class="pre">model_post_init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#agentlib.modules.communicator.mqtt.BaseMQTTClientConfig.model_post_init" title="Permalink to this definition"></a></dt>
+<dd><p>This function is meant to behave like a BaseModel method to initialise private attributes.</p>
+<p>It takes context as an argument since that’s what pydantic-core passes when calling it.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>self</strong> – The BaseModel instance.</p></li>
+<li><p><strong>context</strong> – The context.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.mqtt.BaseMqttClient">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agentlib.modules.communicator.mqtt.</span></span><span class="sig-name descname"><span class="pre">BaseMqttClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="code/agentlib.core.html#agentlib.core.agent.Agent" title="agentlib.core.agent.Agent"><span class="pre">Agent</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agentlib/modules/communicator/mqtt.html#BaseMqttClient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.communicator.mqtt.BaseMqttClient" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="code/agentlib.modules.communicator.html#agentlib.modules.communicator.communicator.Communicator" title="agentlib.modules.communicator.communicator.Communicator"><code class="xref py py-class docutils literal notranslate"><span class="pre">Communicator</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.mqtt.BaseMqttClient.connect">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">connect</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/agentlib/modules/communicator/mqtt.html#BaseMqttClient.connect"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.communicator.mqtt.BaseMqttClient.connect" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.mqtt.BaseMqttClient.disconnect">
+<span class="sig-name descname"><span class="pre">disconnect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reasoncode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">properties</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agentlib/modules/communicator/mqtt.html#BaseMqttClient.disconnect"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.communicator.mqtt.BaseMqttClient.disconnect" title="Permalink to this definition"></a></dt>
+<dd><p>Trigger the disconnect</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.mqtt.BaseMqttClient.mqttc_type">
+<span class="sig-name descname"><span class="pre">mqttc_type</span></span><a class="headerlink" href="#agentlib.modules.communicator.mqtt.BaseMqttClient.mqttc_type" title="Permalink to this definition"></a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">Client</span></code></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.mqtt.BaseMqttClient.terminate">
+<span class="sig-name descname"><span class="pre">terminate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/agentlib/modules/communicator/mqtt.html#BaseMqttClient.terminate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.communicator.mqtt.BaseMqttClient.terminate" title="Permalink to this definition"></a></dt>
+<dd><p>Disconnect from client and join loop</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.mqtt.BaseMqttClient.topics_size">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">topics_size</span></span><a class="headerlink" href="#agentlib.modules.communicator.mqtt.BaseMqttClient.topics_size" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class pydantic_model">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.mqtt.MQTTClientConfig">
+<em class="property"><span class="pre">pydantic</span> <span class="pre">model</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agentlib.modules.communicator.mqtt.</span></span><span class="sig-name descname"><span class="pre">MQTTClientConfig</span></span><a class="reference internal" href="_modules/agentlib/modules/communicator/mqtt.html#MQTTClientConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.communicator.mqtt.MQTTClientConfig" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="code/agentlib.modules.communicator.html#agentlib.modules.communicator.mqtt.BaseMQTTClientConfig" title="agentlib.modules.communicator.mqtt.BaseMQTTClientConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseMQTTClientConfig</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Config<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>arbitrary_types_allowed</strong>: <em>bool = True</em></p></li>
+<li><p><strong>validate_assignment</strong>: <em>bool = True</em></p></li>
+<li><p><strong>extra</strong>: <em>str = forbid</em></p></li>
+<li><p><strong>frozen</strong>: <em>bool = True</em></p></li>
+</ul>
+</dd>
+<dt class="field-even">Fields<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="code/agentlib.modules.communicator.html#agentlib.modules.communicator.mqtt.MQTTClientConfig.url" title="agentlib.modules.communicator.mqtt.MQTTClientConfig.url"><code class="xref py py-obj docutils literal notranslate"><span class="pre">url</span> <span class="pre">(pydantic.networks.AnyUrl)</span></code></a></p></li>
+</ul>
+</dd>
+<dt class="field-odd">Validators<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="code/agentlib.modules.communicator.html#agentlib.modules.communicator.mqtt.MQTTClientConfig.check_url" title="agentlib.modules.communicator.mqtt.MQTTClientConfig.check_url"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_url</span></code></a> » <a class="reference internal" href="code/agentlib.modules.communicator.html#agentlib.modules.communicator.mqtt.MQTTClientConfig.url" title="agentlib.modules.communicator.mqtt.MQTTClientConfig.url"><code class="xref py py-obj docutils literal notranslate"><span class="pre">url</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.mqtt.MQTTClientConfig.url">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">url</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">AnyUrl</span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#agentlib.modules.communicator.mqtt.MQTTClientConfig.url" title="Permalink to this definition"></a></dt>
+<dd><p>Host is the hostname or IP address of the remote broker.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Validated by<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="code/agentlib.modules.communicator.html#agentlib.modules.communicator.mqtt.MQTTClientConfig.check_url" title="agentlib.modules.communicator.mqtt.MQTTClientConfig.check_url"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_url</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method pydantic_validator">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.mqtt.MQTTClientConfig.check_url">
+<em class="property"><span class="pre">validator</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">check_url</span></span><em class="autodoc_pydantic_validator_arrow property">&#160; <span class="pre">»</span>&#160; </em><a class="reference internal" href="code/agentlib.modules.communicator.html#agentlib.modules.communicator.mqtt.MQTTClientConfig.url" title="agentlib.modules.communicator.mqtt.MQTTClientConfig.url"><em class="xref py py-obj"><span class="pre">url</span></em></a><a class="reference internal" href="_modules/agentlib/modules/communicator/mqtt.html#MQTTClientConfig.check_url"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.communicator.mqtt.MQTTClientConfig.check_url" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.mqtt.MQTTClientConfig.model_post_init">
+<span class="sig-name descname"><span class="pre">model_post_init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#agentlib.modules.communicator.mqtt.MQTTClientConfig.model_post_init" title="Permalink to this definition"></a></dt>
+<dd><p>This function is meant to behave like a BaseModel method to initialise private attributes.</p>
+<p>It takes context as an argument since that’s what pydantic-core passes when calling it.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>self</strong> – The BaseModel instance.</p></li>
+<li><p><strong>context</strong> – The context.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.mqtt.MqttClient">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agentlib.modules.communicator.mqtt.</span></span><span class="sig-name descname"><span class="pre">MqttClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="code/agentlib.core.html#agentlib.core.agent.Agent" title="agentlib.core.agent.Agent"><span class="pre">Agent</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agentlib/modules/communicator/mqtt.html#MqttClient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.communicator.mqtt.MqttClient" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="code/agentlib.modules.communicator.html#agentlib.modules.communicator.mqtt.BaseMqttClient" title="agentlib.modules.communicator.mqtt.BaseMqttClient"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseMqttClient</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.mqtt.MqttClient.connect">
+<span class="sig-name descname"><span class="pre">connect</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/agentlib/modules/communicator/mqtt.html#MqttClient.connect"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.communicator.mqtt.MqttClient.connect" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.mqtt.MqttClient.generate_topic">
+<span class="sig-name descname"><span class="pre">generate_topic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agent_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subscription</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agentlib/modules/communicator/mqtt.html#MqttClient.generate_topic"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.communicator.mqtt.MqttClient.generate_topic" title="Permalink to this definition"></a></dt>
+<dd><p>Generate the topic with the given agent_id and
+configs prefix</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.mqtt.MqttClient.pubtopic">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">pubtopic</span></span><a class="headerlink" href="#agentlib.modules.communicator.mqtt.MqttClient.pubtopic" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.mqtt.MqttClient.topics_size">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">topics_size</span></span><a class="headerlink" href="#agentlib.modules.communicator.mqtt.MqttClient.topics_size" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-agentlib.modules.communicator">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-agentlib.modules.communicator" title="Permalink to this heading"></a></h2>
+<p>Package contains all modules to communicate messages with</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="agentlib.modules.html" class="btn btn-neutral float-left" title="agentlib.modules package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="agentlib.modules.controller.html" class="btn btn-neutral float-right" title="agentlib.modules.controller package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, AGENT-Project Associates.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
