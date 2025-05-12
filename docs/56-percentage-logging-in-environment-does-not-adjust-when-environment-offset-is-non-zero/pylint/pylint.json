@@ -1,0 +1,3531 @@
+{
+    "messages": [
+        {
+            "type": "refactor",
+            "module": "/builds/EBC/EBC_all/github_ci/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'print-statement' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/builds/EBC/EBC_all/github_ci/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'parameter-unpacking' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/builds/EBC/EBC_all/github_ci/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'unpacking-in-except' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/builds/EBC/EBC_all/github_ci/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'old-raise-syntax' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/builds/EBC/EBC_all/github_ci/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'backtick' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/builds/EBC/EBC_all/github_ci/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'import-star-module-level' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/builds/EBC/EBC_all/github_ci/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'apply-builtin' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/builds/EBC/EBC_all/github_ci/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'basestring-builtin' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/builds/EBC/EBC_all/github_ci/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'buffer-builtin' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/builds/EBC/EBC_all/github_ci/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'cmp-builtin' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/builds/EBC/EBC_all/github_ci/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'coerce-builtin' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/builds/EBC/EBC_all/github_ci/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'execfile-builtin' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/builds/EBC/EBC_all/github_ci/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'file-builtin' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/builds/EBC/EBC_all/github_ci/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'long-builtin' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/builds/EBC/EBC_all/github_ci/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'raw_input-builtin' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/builds/EBC/EBC_all/github_ci/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'reduce-builtin' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/builds/EBC/EBC_all/github_ci/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'standarderror-builtin' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/builds/EBC/EBC_all/github_ci/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'unicode-builtin' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/builds/EBC/EBC_all/github_ci/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'xrange-builtin' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/builds/EBC/EBC_all/github_ci/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'coerce-method' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/builds/EBC/EBC_all/github_ci/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'delslice-method' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/builds/EBC/EBC_all/github_ci/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'getslice-method' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/builds/EBC/EBC_all/github_ci/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'setslice-method' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/builds/EBC/EBC_all/github_ci/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'no-absolute-import' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/builds/EBC/EBC_all/github_ci/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'old-division' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/builds/EBC/EBC_all/github_ci/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'dict-iter-method' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/builds/EBC/EBC_all/github_ci/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'dict-view-method' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/builds/EBC/EBC_all/github_ci/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'next-method-called' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/builds/EBC/EBC_all/github_ci/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'metaclass-assignment' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/builds/EBC/EBC_all/github_ci/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'indexing-exception' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/builds/EBC/EBC_all/github_ci/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'raising-string' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/builds/EBC/EBC_all/github_ci/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'reload-builtin' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/builds/EBC/EBC_all/github_ci/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'oct-method' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/builds/EBC/EBC_all/github_ci/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'hex-method' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/builds/EBC/EBC_all/github_ci/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'nonzero-method' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/builds/EBC/EBC_all/github_ci/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'cmp-method' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/builds/EBC/EBC_all/github_ci/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'input-builtin' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/builds/EBC/EBC_all/github_ci/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'round-builtin' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/builds/EBC/EBC_all/github_ci/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'intern-builtin' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/builds/EBC/EBC_all/github_ci/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'unichr-builtin' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/builds/EBC/EBC_all/github_ci/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'map-builtin-not-iterating' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/builds/EBC/EBC_all/github_ci/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'zip-builtin-not-iterating' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/builds/EBC/EBC_all/github_ci/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'range-builtin-not-iterating' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/builds/EBC/EBC_all/github_ci/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'filter-builtin-not-iterating' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/builds/EBC/EBC_all/github_ci/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'using-cmp-argument' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/builds/EBC/EBC_all/github_ci/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'div-method' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/builds/EBC/EBC_all/github_ci/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'idiv-method' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/builds/EBC/EBC_all/github_ci/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'rdiv-method' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/builds/EBC/EBC_all/github_ci/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'exception-message-attribute' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/builds/EBC/EBC_all/github_ci/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'invalid-str-codec' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/builds/EBC/EBC_all/github_ci/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'sys-max-int' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/builds/EBC/EBC_all/github_ci/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'bad-python3-import' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/builds/EBC/EBC_all/github_ci/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'deprecated-string-function' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/builds/EBC/EBC_all/github_ci/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'deprecated-str-translate-call' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/builds/EBC/EBC_all/github_ci/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'deprecated-itertools-function' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/builds/EBC/EBC_all/github_ci/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'deprecated-types-field' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/builds/EBC/EBC_all/github_ci/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'next-method-defined' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/builds/EBC/EBC_all/github_ci/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'dict-items-not-iterating' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/builds/EBC/EBC_all/github_ci/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'dict-keys-not-iterating' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/builds/EBC/EBC_all/github_ci/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'dict-values-not-iterating' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/builds/EBC/EBC_all/github_ci/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'deprecated-operator-function' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/builds/EBC/EBC_all/github_ci/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'deprecated-urllib-function' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/builds/EBC/EBC_all/github_ci/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'xreadlines-attribute' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/builds/EBC/EBC_all/github_ci/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'deprecated-sys-function' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/builds/EBC/EBC_all/github_ci/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'exception-escape' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/builds/EBC/EBC_all/github_ci/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'comprehension-escape' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/builds/EBC/EBC_all/github_ci/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'no-self-use' was moved to an optional extension, see https://pylint.readthedocs.io/en/latest/whatsnew/2/2.14/summary.html#removed-checkers.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "warning",
+            "module": "/builds/EBC/EBC_all/github_ci/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "unknown-option-value",
+            "message": "Unknown option value for '--disable', expected a valid pylint message and got 'long-suffix'",
+            "message-id": "W0012"
+        },
+        {
+            "type": "warning",
+            "module": "/builds/EBC/EBC_all/github_ci/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "unknown-option-value",
+            "message": "Unknown option value for '--disable', expected a valid pylint message and got 'old-ne-operator'",
+            "message-id": "W0012"
+        },
+        {
+            "type": "warning",
+            "module": "/builds/EBC/EBC_all/github_ci/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "unknown-option-value",
+            "message": "Unknown option value for '--disable', expected a valid pylint message and got 'old-octal-literal'",
+            "message-id": "W0012"
+        },
+        {
+            "type": "warning",
+            "module": "/builds/EBC/EBC_all/github_ci/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "unknown-option-value",
+            "message": "Unknown option value for '--disable', expected a valid pylint message and got 'non-ascii-bytes-literal'",
+            "message-id": "W0012"
+        },
+        {
+            "type": "warning",
+            "module": "/builds/EBC/EBC_all/github_ci/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "unknown-option-value",
+            "message": "Unknown option value for '--disable', expected a valid pylint message and got 'eq-without-hash'",
+            "message-id": "W0012"
+        },
+        {
+            "type": "warning",
+            "module": "run_examples",
+            "obj": "TestExamples._run_example",
+            "line": 42,
+            "column": 12,
+            "path": "ci/run_examples.py",
+            "symbol": "broad-exception-raised",
+            "message": "Raising too general exception: Exception",
+            "message-id": "W0719"
+        },
+        {
+            "type": "convention",
+            "module": "run_examples",
+            "obj": "TestExamples.test_room_mas",
+            "line": 58,
+            "column": 8,
+            "path": "ci/run_examples.py",
+            "symbol": "import-outside-toplevel",
+            "message": "Import outside toplevel (sys)",
+            "message-id": "C0415"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_agent",
+            "obj": "UpdateModuleConfigTest",
+            "line": 25,
+            "column": 0,
+            "path": "tests/test_agent.py",
+            "symbol": "missing-class-docstring",
+            "message": "Missing class docstring",
+            "message-id": "C0115"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_agent",
+            "obj": "UpdateModuleTest",
+            "line": 29,
+            "column": 0,
+            "path": "tests/test_agent.py",
+            "symbol": "missing-class-docstring",
+            "message": "Missing class docstring",
+            "message-id": "C0115"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_agent",
+            "obj": "HealthCheckTest",
+            "line": 39,
+            "column": 0,
+            "path": "tests/test_agent.py",
+            "symbol": "missing-class-docstring",
+            "message": "Missing class docstring",
+            "message-id": "C0115"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_agent",
+            "obj": "HealthCheckTest._cb",
+            "line": 52,
+            "column": 12,
+            "path": "tests/test_agent.py",
+            "symbol": "broad-exception-raised",
+            "message": "Raising too general exception: Exception",
+            "message-id": "W0719"
+        },
+        {
+            "type": "refactor",
+            "module": "tests.test_agent",
+            "obj": "TestAgent",
+            "line": 55,
+            "column": 0,
+            "path": "tests/test_agent.py",
+            "symbol": "too-many-instance-attributes",
+            "message": "Too many instance attributes (8/7)",
+            "message-id": "R0902"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_agent",
+            "obj": "TestAgent.test_filepath_module_settings",
+            "line": 79,
+            "column": 13,
+            "path": "tests/test_agent.py",
+            "symbol": "unspecified-encoding",
+            "message": "Using open without explicitly specifying an encoding",
+            "message-id": "W1514"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_agent",
+            "obj": "TestAgent.test_getters",
+            "line": 83,
+            "column": 4,
+            "path": "tests/test_agent.py",
+            "symbol": "missing-function-docstring",
+            "message": "Missing function or method docstring",
+            "message-id": "C0116"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_agent",
+            "obj": "TestAgent.test_getters",
+            "line": 84,
+            "column": 8,
+            "path": "tests/test_agent.py",
+            "symbol": "invalid-name",
+            "message": "Variable name \"ag\" doesn't conform to snake_case naming style",
+            "message-id": "C0103"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_agent",
+            "obj": "TestAgent.test_set_config",
+            "line": 95,
+            "column": 8,
+            "path": "tests/test_agent.py",
+            "symbol": "invalid-name",
+            "message": "Variable name \"ag\" doesn't conform to snake_case naming style",
+            "message-id": "C0103"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_agent",
+            "obj": "TestAgent.test_config_setter",
+            "line": 113,
+            "column": 8,
+            "path": "tests/test_agent.py",
+            "symbol": "invalid-name",
+            "message": "Variable name \"ag\" doesn't conform to snake_case naming style",
+            "message-id": "C0103"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_agent",
+            "obj": "TestAgent.test_config_setter",
+            "line": 116,
+            "column": 13,
+            "path": "tests/test_agent.py",
+            "symbol": "unspecified-encoding",
+            "message": "Using open without explicitly specifying an encoding",
+            "message-id": "W1514"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_agent",
+            "obj": "TestAgent.test_register_modules",
+            "line": 133,
+            "column": 8,
+            "path": "tests/test_agent.py",
+            "symbol": "invalid-name",
+            "message": "Variable name \"ag\" doesn't conform to snake_case naming style",
+            "message-id": "C0103"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_agent",
+            "obj": "TestAgent.test_health_check",
+            "line": 150,
+            "column": 8,
+            "path": "tests/test_agent.py",
+            "symbol": "invalid-name",
+            "message": "Variable name \"ag\" doesn't conform to snake_case naming style",
+            "message-id": "C0103"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_agent",
+            "obj": "TestAgent.test_health_check",
+            "line": 154,
+            "column": 8,
+            "path": "tests/test_agent.py",
+            "symbol": "invalid-name",
+            "message": "Variable name \"ag\" doesn't conform to snake_case naming style",
+            "message-id": "C0103"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_agent",
+            "obj": "TestAgent.test_health_check",
+            "line": 165,
+            "column": 8,
+            "path": "tests/test_agent.py",
+            "symbol": "invalid-name",
+            "message": "Variable name \"ag\" doesn't conform to snake_case naming style",
+            "message-id": "C0103"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_agent",
+            "obj": "TestAgent.test_health_check",
+            "line": 160,
+            "column": 8,
+            "path": "tests/test_agent.py",
+            "symbol": "attribute-defined-outside-init",
+            "message": "Attribute '_stop_test' defined outside __init__",
+            "message-id": "W0201"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_agent",
+            "obj": "TestAgent.test_health_check",
+            "line": 177,
+            "column": 12,
+            "path": "tests/test_agent.py",
+            "symbol": "attribute-defined-outside-init",
+            "message": "Attribute '_stop_test' defined outside __init__",
+            "message-id": "W0201"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_agent",
+            "obj": "TestAgent.test_health_check",
+            "line": 173,
+            "column": 12,
+            "path": "tests/test_agent.py",
+            "symbol": "attribute-defined-outside-init",
+            "message": "Attribute '_still_running' defined outside __init__",
+            "message-id": "W0201"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_agent",
+            "obj": "TestAgent._no_daemon_thread",
+            "line": 186,
+            "column": 12,
+            "path": "tests/test_agent.py",
+            "symbol": "attribute-defined-outside-init",
+            "message": "Attribute '_still_running' defined outside __init__",
+            "message-id": "W0201"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_agentlogger",
+            "obj": "",
+            "line": 173,
+            "column": 0,
+            "path": "tests/test_agentlogger.py",
+            "symbol": "missing-final-newline",
+            "message": "Final newline missing",
+            "message-id": "C0304"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_agentlogger",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "tests/test_agentlogger.py",
+            "symbol": "missing-module-docstring",
+            "message": "Missing module docstring",
+            "message-id": "C0114"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_agentlogger",
+            "obj": "TestAgentLogger",
+            "line": 13,
+            "column": 0,
+            "path": "tests/test_agentlogger.py",
+            "symbol": "missing-class-docstring",
+            "message": "Missing class docstring",
+            "message-id": "C0115"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_agentlogger",
+            "obj": "TestAgentLogger.test_logging_values",
+            "line": 60,
+            "column": 8,
+            "path": "tests/test_agentlogger.py",
+            "symbol": "protected-access",
+            "message": "Access to a protected member _callback_values of a client class",
+            "message-id": "W0212"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_agentlogger",
+            "obj": "TestAgentLogger.test_logging_values",
+            "line": 61,
+            "column": 8,
+            "path": "tests/test_agentlogger.py",
+            "symbol": "protected-access",
+            "message": "Access to a protected member _log of a client class",
+            "message-id": "W0212"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_agentlogger",
+            "obj": "TestAgentLogger.test_logging_full",
+            "line": 79,
+            "column": 8,
+            "path": "tests/test_agentlogger.py",
+            "symbol": "protected-access",
+            "message": "Access to a protected member _callback_full of a client class",
+            "message-id": "W0212"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_agentlogger",
+            "obj": "TestAgentLogger.test_logging_full",
+            "line": 80,
+            "column": 8,
+            "path": "tests/test_agentlogger.py",
+            "symbol": "protected-access",
+            "message": "Access to a protected member _log of a client class",
+            "message-id": "W0212"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_agentlogger",
+            "obj": "TestAgentLogger.test_file_overwrite",
+            "line": 95,
+            "column": 8,
+            "path": "tests/test_agentlogger.py",
+            "symbol": "protected-access",
+            "message": "Access to a protected member _callback_values of a client class",
+            "message-id": "W0212"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_agentlogger",
+            "obj": "TestAgentLogger.test_file_overwrite",
+            "line": 96,
+            "column": 8,
+            "path": "tests/test_agentlogger.py",
+            "symbol": "protected-access",
+            "message": "Access to a protected member _log of a client class",
+            "message-id": "W0212"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_agentlogger",
+            "obj": "TestAgentLogger.test_file_overwrite",
+            "line": 111,
+            "column": 8,
+            "path": "tests/test_agentlogger.py",
+            "symbol": "protected-access",
+            "message": "Access to a protected member _callback_values of a client class",
+            "message-id": "W0212"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_agentlogger",
+            "obj": "TestAgentLogger.test_file_overwrite",
+            "line": 112,
+            "column": 8,
+            "path": "tests/test_agentlogger.py",
+            "symbol": "protected-access",
+            "message": "Access to a protected member _log of a client class",
+            "message-id": "W0212"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_agentlogger",
+            "obj": "TestAgentLogger.test_cleanup",
+            "line": 129,
+            "column": 8,
+            "path": "tests/test_agentlogger.py",
+            "symbol": "protected-access",
+            "message": "Access to a protected member _callback_values of a client class",
+            "message-id": "W0212"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_agentlogger",
+            "obj": "TestAgentLogger.test_cleanup",
+            "line": 130,
+            "column": 8,
+            "path": "tests/test_agentlogger.py",
+            "symbol": "protected-access",
+            "message": "Access to a protected member _log of a client class",
+            "message-id": "W0212"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_agentlogger",
+            "obj": "TestAgentLogger.test_load_from_file",
+            "line": 150,
+            "column": 12,
+            "path": "tests/test_agentlogger.py",
+            "symbol": "protected-access",
+            "message": "Access to a protected member _callback_values of a client class",
+            "message-id": "W0212"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_agentlogger",
+            "obj": "TestAgentLogger.test_load_from_file",
+            "line": 151,
+            "column": 8,
+            "path": "tests/test_agentlogger.py",
+            "symbol": "protected-access",
+            "message": "Access to a protected member _log of a client class",
+            "message-id": "W0212"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_communicator",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "tests/test_communicator.py",
+            "symbol": "missing-module-docstring",
+            "message": "Missing module docstring",
+            "message-id": "C0114"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_communicator",
+            "obj": "TestCommunicator",
+            "line": 23,
+            "column": 0,
+            "path": "tests/test_communicator.py",
+            "symbol": "missing-class-docstring",
+            "message": "Missing class docstring",
+            "message-id": "C0115"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_communicator",
+            "obj": "TestCommunicator.test_roundtrip_variable",
+            "line": 33,
+            "column": 4,
+            "path": "tests/test_communicator.py",
+            "symbol": "missing-function-docstring",
+            "message": "Missing function or method docstring",
+            "message-id": "C0116"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_communicator",
+            "obj": "TestCommunicator.test_roundtrip_variable",
+            "line": 42,
+            "column": 16,
+            "path": "tests/test_communicator.py",
+            "symbol": "unnecessary-dunder-call",
+            "message": "Unnecessarily calls dunder method __getattribute__. Access attribute directly or use getattr built-in function.",
+            "message-id": "C2801"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_communicator",
+            "obj": "TestCommunicator.test_roundtrip_variable",
+            "line": 42,
+            "column": 50,
+            "path": "tests/test_communicator.py",
+            "symbol": "unnecessary-dunder-call",
+            "message": "Unnecessarily calls dunder method __getattribute__. Access attribute directly or use getattr built-in function.",
+            "message-id": "C2801"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_data_broker",
+            "obj": "",
+            "line": 124,
+            "column": 0,
+            "path": "tests/test_data_broker.py",
+            "symbol": "line-too-long",
+            "message": "Line too long (111/100)",
+            "message-id": "C0301"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_data_broker",
+            "obj": "TestLocalDataBroker.perform_callbacks",
+            "line": 32,
+            "column": 4,
+            "path": "tests/test_data_broker.py",
+            "symbol": "missing-function-docstring",
+            "message": "Missing function or method docstring",
+            "message-id": "C0116"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_data_broker",
+            "obj": "TestLocalDataBroker.perform_callbacks",
+            "line": 33,
+            "column": 23,
+            "path": "tests/test_data_broker.py",
+            "symbol": "protected-access",
+            "message": "Access to a protected member _variable_queue of a client class",
+            "message-id": "W0212"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_data_broker",
+            "obj": "TestLocalDataBroker.perform_callbacks",
+            "line": 34,
+            "column": 12,
+            "path": "tests/test_data_broker.py",
+            "symbol": "protected-access",
+            "message": "Access to a protected member _execute_callbacks of a client class",
+            "message-id": "W0212"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_data_broker",
+            "obj": "TestLocalDataBroker.test_callback",
+            "line": 41,
+            "column": 29,
+            "path": "tests/test_data_broker.py",
+            "symbol": "protected-access",
+            "message": "Access to a protected member _unmapped_callbacks of a client class",
+            "message-id": "W0212"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_data_broker",
+            "obj": "TestLocalDataBroker.test_callback",
+            "line": 54,
+            "column": 29,
+            "path": "tests/test_data_broker.py",
+            "symbol": "protected-access",
+            "message": "Access to a protected member _unmapped_callbacks of a client class",
+            "message-id": "W0212"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_data_broker",
+            "obj": "TestLocalDataBroker.test_callback",
+            "line": 60,
+            "column": 29,
+            "path": "tests/test_data_broker.py",
+            "symbol": "protected-access",
+            "message": "Access to a protected member _mapped_callbacks of a client class",
+            "message-id": "W0212"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_data_broker",
+            "obj": "TestLocalDataBroker.test_callback",
+            "line": 74,
+            "column": 19,
+            "path": "tests/test_data_broker.py",
+            "symbol": "protected-access",
+            "message": "Access to a protected member _mapped_callbacks of a client class",
+            "message-id": "W0212"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_data_broker",
+            "obj": "TestLocalDataBroker.test_callback",
+            "line": 74,
+            "column": 8,
+            "path": "tests/test_data_broker.py",
+            "symbol": "unused-variable",
+            "message": "Unused variable 'key'",
+            "message-id": "W0612"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_data_broker",
+            "obj": "TestLocalDataBroker.dummy_callback",
+            "line": 77,
+            "column": 4,
+            "path": "tests/test_data_broker.py",
+            "symbol": "missing-function-docstring",
+            "message": "Missing function or method docstring",
+            "message-id": "C0116"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_data_broker",
+            "obj": "TestLocalDataBroker.test_trigger_recursion_error",
+            "line": 80,
+            "column": 4,
+            "path": "tests/test_data_broker.py",
+            "symbol": "missing-function-docstring",
+            "message": "Missing function or method docstring",
+            "message-id": "C0116"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_data_broker",
+            "obj": "TestLocalDataBroker.recursion_callback_1",
+            "line": 93,
+            "column": 4,
+            "path": "tests/test_data_broker.py",
+            "symbol": "missing-function-docstring",
+            "message": "Missing function or method docstring",
+            "message-id": "C0116"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_data_broker",
+            "obj": "TestLocalDataBroker.recursion_callback_1",
+            "line": 93,
+            "column": 35,
+            "path": "tests/test_data_broker.py",
+            "symbol": "unused-argument",
+            "message": "Unused argument 'variable'",
+            "message-id": "W0613"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_data_broker",
+            "obj": "TestLocalDataBroker.recursion_callback_2",
+            "line": 96,
+            "column": 4,
+            "path": "tests/test_data_broker.py",
+            "symbol": "missing-function-docstring",
+            "message": "Missing function or method docstring",
+            "message-id": "C0116"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_data_broker",
+            "obj": "TestLocalDataBroker.recursion_callback_2",
+            "line": 96,
+            "column": 35,
+            "path": "tests/test_data_broker.py",
+            "symbol": "unused-argument",
+            "message": "Unused argument 'variable'",
+            "message-id": "W0613"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_data_broker",
+            "obj": "TestLocalDataBroker.test_modules_cannot_overwrite_each_others_callbacks.Module",
+            "line": 110,
+            "column": 8,
+            "path": "tests/test_data_broker.py",
+            "symbol": "missing-class-docstring",
+            "message": "Missing class docstring",
+            "message-id": "C0115"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_data_broker",
+            "obj": "TestLocalDataBroker.test_modules_cannot_overwrite_each_others_callbacks",
+            "line": 121,
+            "column": 47,
+            "path": "tests/test_data_broker.py",
+            "symbol": "protected-access",
+            "message": "Access to a protected member _callback_config_vars of a client class",
+            "message-id": "W0212"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_data_broker",
+            "obj": "TestLocalDataBroker.test_modules_cannot_overwrite_each_others_callbacks",
+            "line": 126,
+            "column": 47,
+            "path": "tests/test_data_broker.py",
+            "symbol": "protected-access",
+            "message": "Access to a protected member _callback_config_vars of a client class",
+            "message-id": "W0212"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_data_broker",
+            "obj": "TestLocalDataBroker.test_modules_cannot_overwrite_each_others_callbacks",
+            "line": 128,
+            "column": 29,
+            "path": "tests/test_data_broker.py",
+            "symbol": "protected-access",
+            "message": "Access to a protected member _unmapped_callbacks of a client class",
+            "message-id": "W0212"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_data_broker",
+            "obj": "TestLocalDataBroker.test_modules_cannot_overwrite_each_others_callbacks",
+            "line": 131,
+            "column": 47,
+            "path": "tests/test_data_broker.py",
+            "symbol": "protected-access",
+            "message": "Access to a protected member _callback_config_vars of a client class",
+            "message-id": "W0212"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_data_broker",
+            "obj": "TestLocalDataBroker.test_modules_cannot_overwrite_each_others_callbacks",
+            "line": 133,
+            "column": 29,
+            "path": "tests/test_data_broker.py",
+            "symbol": "protected-access",
+            "message": "Access to a protected member _unmapped_callbacks of a client class",
+            "message-id": "W0212"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_data_broker",
+            "obj": "TestLocalDataBroker.test_trigger_recursion_error",
+            "line": 81,
+            "column": 8,
+            "path": "tests/test_data_broker.py",
+            "symbol": "attribute-defined-outside-init",
+            "message": "Attribute 'never_reached' defined outside __init__",
+            "message-id": "W0201"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_data_broker",
+            "obj": "TestLocalDataBroker.recursion_callback_2",
+            "line": 98,
+            "column": 8,
+            "path": "tests/test_data_broker.py",
+            "symbol": "attribute-defined-outside-init",
+            "message": "Attribute 'never_reached' defined outside __init__",
+            "message-id": "W0201"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_data_broker",
+            "obj": "TestRTDataBroker",
+            "line": 158,
+            "column": 0,
+            "path": "tests/test_data_broker.py",
+            "symbol": "missing-class-docstring",
+            "message": "Missing class docstring",
+            "message-id": "C0115"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_data_broker",
+            "obj": "TestRTDataBroker.setUp",
+            "line": 165,
+            "column": 13,
+            "path": "tests/test_data_broker.py",
+            "symbol": "protected-access",
+            "message": "Access to a protected member _start_executing_callbacks of a client class",
+            "message-id": "W0212"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_data_source",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "tests/test_data_source.py",
+            "symbol": "missing-module-docstring",
+            "message": "Missing module docstring",
+            "message-id": "C0114"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_data_source",
+            "obj": "TestCSVDataSource",
+            "line": 15,
+            "column": 0,
+            "path": "tests/test_data_source.py",
+            "symbol": "missing-class-docstring",
+            "message": "Missing class docstring",
+            "message-id": "C0115"
+        },
+        {
+            "type": "refactor",
+            "module": "tests.test_data_source",
+            "obj": "TestCSVDataSource",
+            "line": 15,
+            "column": 0,
+            "path": "tests/test_data_source.py",
+            "symbol": "too-many-instance-attributes",
+            "message": "Too many instance attributes (9/7)",
+            "message-id": "R0902"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_data_source",
+            "obj": "TestCSVDataSource.create_test_df",
+            "line": 35,
+            "column": 4,
+            "path": "tests/test_data_source.py",
+            "symbol": "missing-function-docstring",
+            "message": "Missing function or method docstring",
+            "message-id": "C0116"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_data_source",
+            "obj": "TestCSVDataSource.test_datetime_index",
+            "line": 50,
+            "column": 4,
+            "path": "tests/test_data_source.py",
+            "symbol": "missing-function-docstring",
+            "message": "Missing function or method docstring",
+            "message-id": "C0116"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_data_source",
+            "obj": "TestCSVDataSource.test_float_index",
+            "line": 58,
+            "column": 4,
+            "path": "tests/test_data_source.py",
+            "symbol": "missing-function-docstring",
+            "message": "Missing function or method docstring",
+            "message-id": "C0116"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_data_source",
+            "obj": "TestCSVDataSource.test_string_number_index",
+            "line": 66,
+            "column": 4,
+            "path": "tests/test_data_source.py",
+            "symbol": "missing-function-docstring",
+            "message": "Missing function or method docstring",
+            "message-id": "C0116"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_data_source",
+            "obj": "TestCSVDataSource.test_non_convertible_index",
+            "line": 74,
+            "column": 4,
+            "path": "tests/test_data_source.py",
+            "symbol": "missing-function-docstring",
+            "message": "Missing function or method docstring",
+            "message-id": "C0116"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_data_source",
+            "obj": "TestCSVDataSource.get_data_source_config",
+            "line": 81,
+            "column": 4,
+            "path": "tests/test_data_source.py",
+            "symbol": "missing-function-docstring",
+            "message": "Missing function or method docstring",
+            "message-id": "C0116"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_data_source",
+            "obj": "TestCSVDataSource.test_data_source_initialization",
+            "line": 91,
+            "column": 4,
+            "path": "tests/test_data_source.py",
+            "symbol": "missing-function-docstring",
+            "message": "Missing function or method docstring",
+            "message-id": "C0116"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_data_source",
+            "obj": "TestCSVDataSource.test_data_loading",
+            "line": 98,
+            "column": 4,
+            "path": "tests/test_data_source.py",
+            "symbol": "missing-function-docstring",
+            "message": "Missing function or method docstring",
+            "message-id": "C0116"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_data_source",
+            "obj": "TestCSVDataSource.test_data_offset",
+            "line": 104,
+            "column": 4,
+            "path": "tests/test_data_source.py",
+            "symbol": "missing-function-docstring",
+            "message": "Missing function or method docstring",
+            "message-id": "C0116"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_data_source",
+            "obj": "TestCSVDataSource.test_interpolation",
+            "line": 110,
+            "column": 4,
+            "path": "tests/test_data_source.py",
+            "symbol": "missing-function-docstring",
+            "message": "Missing function or method docstring",
+            "message-id": "C0116"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_data_source",
+            "obj": "TestCSVDataSource.test_data_exhaustion",
+            "line": 117,
+            "column": 4,
+            "path": "tests/test_data_source.py",
+            "symbol": "missing-function-docstring",
+            "message": "Missing function or method docstring",
+            "message-id": "C0116"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_data_source",
+            "obj": "TestCSVDataSource.test_data_exhaustion",
+            "line": 121,
+            "column": 12,
+            "path": "tests/test_data_source.py",
+            "symbol": "protected-access",
+            "message": "Access to a protected member _get_next_data of a client class",
+            "message-id": "W0212"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_data_source",
+            "obj": "TestCSVDataSource.test_data_exhaustion",
+            "line": 122,
+            "column": 20,
+            "path": "tests/test_data_source.py",
+            "symbol": "protected-access",
+            "message": "Access to a protected member _get_next_data of a client class",
+            "message-id": "W0212"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_databroker_limits",
+            "obj": "DataBrokerExplosionTest",
+            "line": 12,
+            "column": 0,
+            "path": "tests/test_databroker_limits.py",
+            "symbol": "missing-class-docstring",
+            "message": "Missing class docstring",
+            "message-id": "C0115"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_databroker_limits",
+            "obj": "Sender",
+            "line": 31,
+            "column": 0,
+            "path": "tests/test_databroker_limits.py",
+            "symbol": "missing-class-docstring",
+            "message": "Missing class docstring",
+            "message-id": "C0115"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_databroker_limits",
+            "obj": "SlowReceiver",
+            "line": 45,
+            "column": 0,
+            "path": "tests/test_databroker_limits.py",
+            "symbol": "missing-class-docstring",
+            "message": "Missing class docstring",
+            "message-id": "C0115"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_databroker_limits",
+            "obj": "FaultyReceiver",
+            "line": 61,
+            "column": 0,
+            "path": "tests/test_databroker_limits.py",
+            "symbol": "missing-class-docstring",
+            "message": "Missing class docstring",
+            "message-id": "C0115"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_databroker_limits",
+            "obj": "FaultyReceiver._do_some_slow_stuff",
+            "line": 71,
+            "column": 8,
+            "path": "tests/test_databroker_limits.py",
+            "symbol": "broad-exception-raised",
+            "message": "Raising too general exception: Exception",
+            "message-id": "W0719"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_databroker_limits",
+            "obj": "exploding_modules",
+            "line": 74,
+            "column": 0,
+            "path": "tests/test_databroker_limits.py",
+            "symbol": "missing-function-docstring",
+            "message": "Missing function or method docstring",
+            "message-id": "C0116"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_databroker_limits",
+            "obj": "slow_module",
+            "line": 95,
+            "column": 0,
+            "path": "tests/test_databroker_limits.py",
+            "symbol": "missing-function-docstring",
+            "message": "Missing function or method docstring",
+            "message-id": "C0116"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_databroker_limits",
+            "obj": "faulty_module",
+            "line": 110,
+            "column": 0,
+            "path": "tests/test_databroker_limits.py",
+            "symbol": "missing-function-docstring",
+            "message": "Missing function or method docstring",
+            "message-id": "C0116"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_databroker_limits",
+            "obj": "TestDataBrokerLimits",
+            "line": 124,
+            "column": 0,
+            "path": "tests/test_databroker_limits.py",
+            "symbol": "missing-class-docstring",
+            "message": "Missing class docstring",
+            "message-id": "C0115"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_databroker_limits",
+            "obj": "TestDataBrokerLimits.test_slow_module",
+            "line": 125,
+            "column": 4,
+            "path": "tests/test_databroker_limits.py",
+            "symbol": "missing-function-docstring",
+            "message": "Missing function or method docstring",
+            "message-id": "C0116"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_databroker_limits",
+            "obj": "TestDataBrokerLimits.test_exploding_module",
+            "line": 130,
+            "column": 4,
+            "path": "tests/test_databroker_limits.py",
+            "symbol": "missing-function-docstring",
+            "message": "Missing function or method docstring",
+            "message-id": "C0116"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_databroker_limits",
+            "obj": "TestDataBrokerLimits.test_faulty_module",
+            "line": 135,
+            "column": 4,
+            "path": "tests/test_databroker_limits.py",
+            "symbol": "missing-function-docstring",
+            "message": "Missing function or method docstring",
+            "message-id": "C0116"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_datamodels",
+            "obj": "TestVariables.test_base_model_variable",
+            "line": 23,
+            "column": 4,
+            "path": "tests/test_datamodels.py",
+            "symbol": "missing-function-docstring",
+            "message": "Missing function or method docstring",
+            "message-id": "C0116"
+        },
+        {
+            "type": "refactor",
+            "module": "tests.test_datamodels",
+            "obj": "TestVariables.test_value_conversion",
+            "line": 37,
+            "column": 12,
+            "path": "tests/test_datamodels.py",
+            "symbol": "use-dict-literal",
+            "message": "Consider using '{\"name\": 'test', \"value\": 100.0, \"type\": 'float'}' instead of a call to 'dict'.",
+            "message-id": "R1735"
+        },
+        {
+            "type": "refactor",
+            "module": "tests.test_datamodels",
+            "obj": "TestVariables.test_series_sending",
+            "line": 51,
+            "column": 12,
+            "path": "tests/test_datamodels.py",
+            "symbol": "use-dict-literal",
+            "message": "Consider using '{\"name\": 'test', \"value\": srs, \"type\": 'pd.Series'}' instead of a call to 'dict'.",
+            "message-id": "R1735"
+        },
+        {
+            "type": "refactor",
+            "module": "tests.test_datamodels",
+            "obj": "TestVariables.test_type",
+            "line": 63,
+            "column": 16,
+            "path": "tests/test_datamodels.py",
+            "symbol": "use-dict-literal",
+            "message": "Consider using '{\"name\": 'test', \"type\": 'not_supported'}' instead of a call to 'dict'.",
+            "message-id": "R1735"
+        },
+        {
+            "type": "refactor",
+            "module": "tests.test_datamodels",
+            "obj": "TestVariables.test_type",
+            "line": 66,
+            "column": 50,
+            "path": "tests/test_datamodels.py",
+            "symbol": "use-dict-literal",
+            "message": "Consider using '{\"name\": 'test', \"type\": float}' instead of a call to 'dict'.",
+            "message-id": "R1735"
+        },
+        {
+            "type": "refactor",
+            "module": "tests.test_datamodels",
+            "obj": "TestVariables.test_allowed_values",
+            "line": 72,
+            "column": 16,
+            "path": "tests/test_datamodels.py",
+            "symbol": "use-dict-literal",
+            "message": "Consider using '{\"name\": 'test', \"type\": 'float', \"ub\": 10, \"lb\": 0, \"clip\": True}' instead of a call to 'dict'.",
+            "message-id": "R1735"
+        },
+        {
+            "type": "refactor",
+            "module": "tests.test_datamodels",
+            "obj": "TestVariables.test_allowed_values",
+            "line": 82,
+            "column": 12,
+            "path": "tests/test_datamodels.py",
+            "symbol": "use-dict-literal",
+            "message": "Consider using '{\"name\": 'test', \"type\": 'float', \"value\": 20.0, \"allowed_values\": ['0', '10', 20, 30.0], ... }' instead of a call to 'dict'.",
+            "message-id": "R1735"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_datamodels",
+            "obj": "TestVariables.test_allowed_values",
+            "line": 89,
+            "column": 12,
+            "path": "tests/test_datamodels.py",
+            "symbol": "invalid-name",
+            "message": "Variable name \"v\" doesn't conform to snake_case naming style",
+            "message-id": "C0103"
+        },
+        {
+            "type": "refactor",
+            "module": "tests.test_datamodels",
+            "obj": "TestVariables.test_pd_series",
+            "line": 101,
+            "column": 16,
+            "path": "tests/test_datamodels.py",
+            "symbol": "use-dict-literal",
+            "message": "Consider using '{\"name\": 'test', \"type\": 'pd.Series', \"value\": value, \"ub\": 10, \"lb\": 5, ... }' instead of a call to 'dict'.",
+            "message-id": "R1735"
+        },
+        {
+            "type": "refactor",
+            "module": "tests.test_datamodels",
+            "obj": "TestVariables.test_bounds",
+            "line": 183,
+            "column": 50,
+            "path": "tests/test_datamodels.py",
+            "symbol": "use-dict-literal",
+            "message": "Consider using '{\"name\": 'test', \"ub\": 100, \"lb\": 200}' instead of a call to 'dict'.",
+            "message-id": "R1735"
+        },
+        {
+            "type": "refactor",
+            "module": "tests.test_datamodels",
+            "obj": "TestVariables.test_bounds",
+            "line": 187,
+            "column": 12,
+            "path": "tests/test_datamodels.py",
+            "symbol": "use-dict-literal",
+            "message": "Consider using '{\"name\": 'test', \"clip\": True, \"ub\": 100, \"lb\": 0, \"value\": 10000}' instead of a call to 'dict'.",
+            "message-id": "R1735"
+        },
+        {
+            "type": "refactor",
+            "module": "tests.test_datamodels",
+            "obj": "TestVariables.test_bounds",
+            "line": 191,
+            "column": 12,
+            "path": "tests/test_datamodels.py",
+            "symbol": "use-dict-literal",
+            "message": "Consider using '{\"name\": 'test', \"clip\": True, \"ub\": 100, \"lb\": 0, \"value\": -10000, ... }' instead of a call to 'dict'.",
+            "message-id": "R1735"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_datamodels",
+            "obj": "TestVariables.test_source",
+            "line": 277,
+            "column": 4,
+            "path": "tests/test_datamodels.py",
+            "symbol": "missing-function-docstring",
+            "message": "Missing function or method docstring",
+            "message-id": "C0116"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_datamodels",
+            "obj": "TestVariables.test_source",
+            "line": 279,
+            "column": 30,
+            "path": "tests/test_datamodels.py",
+            "symbol": "unnecessary-dunder-call",
+            "message": "Unnecessarily calls dunder method __str__. Use str built-in function.",
+            "message-id": "C2801"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_environment",
+            "obj": "TestEnvironment.test_config_setter",
+            "line": 39,
+            "column": 8,
+            "path": "tests/test_environment.py",
+            "symbol": "protected-access",
+            "message": "Access to a protected member _config of a client class",
+            "message-id": "W0212"
+        },
+        {
+            "type": "error",
+            "module": "tests.test_environment",
+            "obj": "TestEnvironment.test_config_setter",
+            "line": 40,
+            "column": 30,
+            "path": "tests/test_environment.py",
+            "symbol": "no-member",
+            "message": "Instance of 'Environment' has no 'config' member; maybe '_config'?",
+            "message-id": "E1101"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_environment",
+            "obj": "TestEnvironment.test_config_setter",
+            "line": 42,
+            "column": 13,
+            "path": "tests/test_environment.py",
+            "symbol": "unspecified-encoding",
+            "message": "Using open without explicitly specifying an encoding",
+            "message-id": "W1514"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_environment",
+            "obj": "TestEnvironment.test_config_setter",
+            "line": 44,
+            "column": 8,
+            "path": "tests/test_environment.py",
+            "symbol": "protected-access",
+            "message": "Access to a protected member _config of a client class",
+            "message-id": "W0212"
+        },
+        {
+            "type": "error",
+            "module": "tests.test_environment",
+            "obj": "TestEnvironment.test_config_setter",
+            "line": 45,
+            "column": 30,
+            "path": "tests/test_environment.py",
+            "symbol": "no-member",
+            "message": "Instance of 'Environment' has no 'config' member; maybe '_config'?",
+            "message-id": "E1101"
+        },
+        {
+            "type": "error",
+            "module": "tests.test_environment",
+            "obj": "TestEnvironment.test_rt",
+            "line": 52,
+            "column": 8,
+            "path": "tests/test_environment.py",
+            "symbol": "no-member",
+            "message": "Instance of 'Environment' has no 'run' member",
+            "message-id": "E1101"
+        },
+        {
+            "type": "error",
+            "module": "tests.test_environment",
+            "obj": "TestEnvironment.test_rt",
+            "line": 53,
+            "column": 32,
+            "path": "tests/test_environment.py",
+            "symbol": "no-member",
+            "message": "Instance of 'Environment' has no 'time' member",
+            "message-id": "E1101"
+        },
+        {
+            "type": "error",
+            "module": "tests.test_environment",
+            "obj": "TestEnvironment.test_no_config",
+            "line": 58,
+            "column": 30,
+            "path": "tests/test_environment.py",
+            "symbol": "no-member",
+            "message": "Instance of 'Environment' has no 'config' member; maybe '_config'?",
+            "message-id": "E1101"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_mas",
+            "obj": "TestMAS.test_local_mas",
+            "line": 15,
+            "column": 4,
+            "path": "tests/test_mas.py",
+            "symbol": "missing-function-docstring",
+            "message": "Missing function or method docstring",
+            "message-id": "C0116"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_mas",
+            "obj": "TestMAS.test_multiprocessing_mas",
+            "line": 17,
+            "column": 4,
+            "path": "tests/test_mas.py",
+            "symbol": "missing-function-docstring",
+            "message": "Missing function or method docstring",
+            "message-id": "C0116"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_mas",
+            "obj": "TestMAS.test_clonemap_mas",
+            "line": 19,
+            "column": 4,
+            "path": "tests/test_mas.py",
+            "symbol": "missing-function-docstring",
+            "message": "Missing function or method docstring",
+            "message-id": "C0116"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_model",
+            "obj": "DummyModel",
+            "line": 15,
+            "column": 0,
+            "path": "tests/test_model.py",
+            "symbol": "missing-class-docstring",
+            "message": "Missing class docstring",
+            "message-id": "C0115"
+        },
+        {
+            "type": "error",
+            "module": "tests.test_model",
+            "obj": "TestModel.test_abc",
+            "line": 88,
+            "column": 12,
+            "path": "tests/test_model.py",
+            "symbol": "abstract-class-instantiated",
+            "message": "Abstract class 'Model' with abstract methods instantiated",
+            "message-id": "E0110"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_model",
+            "obj": "TestModel.test_get_attr",
+            "line": 94,
+            "column": 12,
+            "path": "tests/test_model.py",
+            "symbol": "pointless-statement",
+            "message": "Statement seems to have no effect",
+            "message-id": "W0104"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_model",
+            "obj": "TestModel.test_generate_config",
+            "line": 100,
+            "column": 13,
+            "path": "tests/test_model.py",
+            "symbol": "unspecified-encoding",
+            "message": "Using open without explicitly specifying an encoding",
+            "message-id": "W1514"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_model",
+            "obj": "TestModel.test_get_set",
+            "line": 108,
+            "column": 4,
+            "path": "tests/test_model.py",
+            "symbol": "missing-function-docstring",
+            "message": "Missing function or method docstring",
+            "message-id": "C0116"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_model",
+            "obj": "TestModel.test_get_set",
+            "line": 121,
+            "column": 8,
+            "path": "tests/test_model.py",
+            "symbol": "protected-access",
+            "message": "Access to a protected member _set_state_value of a client class",
+            "message-id": "W0212"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_model",
+            "obj": "TestModel.test_get_set",
+            "line": 123,
+            "column": 8,
+            "path": "tests/test_model.py",
+            "symbol": "protected-access",
+            "message": "Access to a protected member _set_output_value of a client class",
+            "message-id": "W0212"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_model",
+            "obj": "TestModel.test_create_time_samples",
+            "line": 138,
+            "column": 18,
+            "path": "tests/test_model.py",
+            "symbol": "protected-access",
+            "message": "Access to a protected member _create_time_samples of a client class",
+            "message-id": "W0212"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_model",
+            "obj": "TestModel.test_create_time_samples",
+            "line": 140,
+            "column": 18,
+            "path": "tests/test_model.py",
+            "symbol": "protected-access",
+            "message": "Access to a protected member _create_time_samples of a client class",
+            "message-id": "W0212"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_module",
+            "obj": "CustomModuleConfig",
+            "line": 41,
+            "column": 0,
+            "path": "tests/test_module.py",
+            "symbol": "missing-class-docstring",
+            "message": "Missing class docstring",
+            "message-id": "C0115"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_module",
+            "obj": "CustomModule",
+            "line": 49,
+            "column": 0,
+            "path": "tests/test_module.py",
+            "symbol": "missing-class-docstring",
+            "message": "Missing class docstring",
+            "message-id": "C0115"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_module",
+            "obj": "BrokenCustomModule",
+            "line": 59,
+            "column": 0,
+            "path": "tests/test_module.py",
+            "symbol": "missing-class-docstring",
+            "message": "Missing class docstring",
+            "message-id": "C0115"
+        },
+        {
+            "type": "error",
+            "module": "tests.test_module",
+            "obj": "TestModuleConfig._check_source",
+            "line": 158,
+            "column": 24,
+            "path": "tests/test_module.py",
+            "symbol": "unsubscriptable-object",
+            "message": "Value 'CustomModuleConfig.model_fields' is unsubscriptable",
+            "message-id": "E1136"
+        },
+        {
+            "type": "refactor",
+            "module": "tests.test_module",
+            "obj": "TestModuleConfig._check_source",
+            "line": 163,
+            "column": 8,
+            "path": "tests/test_module.py",
+            "symbol": "no-else-return",
+            "message": "Unnecessary \"elif\" after \"return\", remove the leading \"el\" from \"elif\"",
+            "message-id": "R1705"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_module",
+            "obj": "TestModuleConfig.test_user_config",
+            "line": 187,
+            "column": 25,
+            "path": "tests/test_module.py",
+            "symbol": "protected-access",
+            "message": "Access to a protected member _user_config of a client class",
+            "message-id": "W0212"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_module",
+            "obj": "TestModule.test_properties",
+            "line": 265,
+            "column": 30,
+            "path": "tests/test_module.py",
+            "symbol": "protected-access",
+            "message": "Access to a protected member _variables_dict of a client class",
+            "message-id": "W0212"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_module",
+            "obj": "TestModule.test_get_set",
+            "line": 282,
+            "column": 35,
+            "path": "tests/test_module.py",
+            "symbol": "protected-access",
+            "message": "Access to a protected member _variables_dict of a client class",
+            "message-id": "W0212"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_module",
+            "obj": "TestModule.test_get_set",
+            "line": 283,
+            "column": 35,
+            "path": "tests/test_module.py",
+            "symbol": "protected-access",
+            "message": "Access to a protected member _variables_dict of a client class",
+            "message-id": "W0212"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_module",
+            "obj": "TestModule.test_get_set",
+            "line": 289,
+            "column": 35,
+            "path": "tests/test_module.py",
+            "symbol": "protected-access",
+            "message": "Access to a protected member _variables_dict of a client class",
+            "message-id": "W0212"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_module",
+            "obj": "TestModule.test_get_set",
+            "line": 290,
+            "column": 35,
+            "path": "tests/test_module.py",
+            "symbol": "protected-access",
+            "message": "Access to a protected member _variables_dict of a client class",
+            "message-id": "W0212"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_module",
+            "obj": "TestModule.test_get_set",
+            "line": 291,
+            "column": 25,
+            "path": "tests/test_module.py",
+            "symbol": "protected-access",
+            "message": "Access to a protected member _variables_dict of a client class",
+            "message-id": "W0212"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_module",
+            "obj": "TestModule.test_get_value",
+            "line": 304,
+            "column": 37,
+            "path": "tests/test_module.py",
+            "symbol": "protected-access",
+            "message": "Access to a protected member _variables_dict of a client class",
+            "message-id": "W0212"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_module",
+            "obj": "TestModule.test_get_value",
+            "line": 305,
+            "column": 37,
+            "path": "tests/test_module.py",
+            "symbol": "protected-access",
+            "message": "Access to a protected member _variables_dict of a client class",
+            "message-id": "W0212"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_module",
+            "obj": "TestModuleLogging",
+            "line": 345,
+            "column": 0,
+            "path": "tests/test_module.py",
+            "symbol": "missing-class-docstring",
+            "message": "Missing class docstring",
+            "message-id": "C0115"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_module",
+            "obj": "TestModuleLogging.tearDown",
+            "line": 355,
+            "column": 12,
+            "path": "tests/test_module.py",
+            "symbol": "invalid-name",
+            "message": "Variable name \"h\" doesn't conform to snake_case naming style",
+            "message-id": "C0103"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_module",
+            "obj": "TestModuleLogging._clear_file",
+            "line": 391,
+            "column": 13,
+            "path": "tests/test_module.py",
+            "symbol": "unspecified-encoding",
+            "message": "Using open without explicitly specifying an encoding",
+            "message-id": "W1514"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_module",
+            "obj": "TestModuleLogging._read_file",
+            "line": 396,
+            "column": 13,
+            "path": "tests/test_module.py",
+            "symbol": "unspecified-encoding",
+            "message": "Using open without explicitly specifying an encoding",
+            "message-id": "W1514"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_n_pingpong",
+            "obj": "",
+            "line": 98,
+            "column": 0,
+            "path": "tests/test_n_pingpong.py",
+            "symbol": "line-too-long",
+            "message": "Line too long (118/100)",
+            "message-id": "C0301"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_n_pingpong",
+            "obj": "NPingPong.n",
+            "line": 60,
+            "column": 4,
+            "path": "tests/test_n_pingpong.py",
+            "symbol": "missing-function-docstring",
+            "message": "Missing function or method docstring",
+            "message-id": "C0116"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_n_pingpong",
+            "obj": "NPingPong.n",
+            "line": 60,
+            "column": 4,
+            "path": "tests/test_n_pingpong.py",
+            "symbol": "invalid-name",
+            "message": "Attribute name \"n\" doesn't conform to snake_case naming style",
+            "message-id": "C0103"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_n_pingpong",
+            "obj": "TestNPingPong.setUp",
+            "line": 93,
+            "column": 8,
+            "path": "tests/test_n_pingpong.py",
+            "symbol": "invalid-name",
+            "message": "Attribute name \"n\" doesn't conform to snake_case naming style",
+            "message-id": "C0103"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_n_pingpong",
+            "obj": "TestNPingPong.test_local_communicators",
+            "line": 101,
+            "column": 8,
+            "path": "tests/test_n_pingpong.py",
+            "symbol": "invalid-name",
+            "message": "Variable name \"rt\" doesn't conform to snake_case naming style",
+            "message-id": "C0103"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_n_pingpong",
+            "obj": "TestNPingPong.test_local_communicators",
+            "line": 103,
+            "column": 34,
+            "path": "tests/test_n_pingpong.py",
+            "symbol": "invalid-name",
+            "message": "Variable name \"rt\" doesn't conform to snake_case naming style",
+            "message-id": "C0103"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_n_pingpong",
+            "obj": "TestNPingPong.test_multiprocessing_broadcast",
+            "line": 117,
+            "column": 8,
+            "path": "tests/test_n_pingpong.py",
+            "symbol": "unused-variable",
+            "message": "Unused variable 'broker'",
+            "message-id": "W0612"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_n_pingpong",
+            "obj": "TestNPingPong._create_2n_pingpong_agents",
+            "line": 130,
+            "column": 59,
+            "path": "tests/test_n_pingpong.py",
+            "symbol": "invalid-name",
+            "message": "Argument name \"rt\" doesn't conform to snake_case naming style",
+            "message-id": "C0103"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_plugins",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "tests/test_plugins.py",
+            "symbol": "missing-module-docstring",
+            "message": "Missing module docstring",
+            "message-id": "C0114"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_plugins",
+            "obj": "TestPlugin.test_model_plugin",
+            "line": 11,
+            "column": 4,
+            "path": "tests/test_plugins.py",
+            "symbol": "missing-function-docstring",
+            "message": "Missing function or method docstring",
+            "message-id": "C0116"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_plugins",
+            "obj": "TestPlugin.test_module_plugin",
+            "line": 13,
+            "column": 4,
+            "path": "tests/test_plugins.py",
+            "symbol": "missing-function-docstring",
+            "message": "Missing function or method docstring",
+            "message-id": "C0116"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_plugins",
+            "obj": "TestPlugin.test_module_not_found_error",
+            "line": 15,
+            "column": 4,
+            "path": "tests/test_plugins.py",
+            "symbol": "missing-function-docstring",
+            "message": "Missing function or method docstring",
+            "message-id": "C0116"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_simulator",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "tests/test_simulator.py",
+            "symbol": "missing-module-docstring",
+            "message": "Missing module docstring",
+            "message-id": "C0114"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_simulator",
+            "obj": "TestSimulator.get_agent",
+            "line": 60,
+            "column": 4,
+            "path": "tests/test_simulator.py",
+            "symbol": "missing-function-docstring",
+            "message": "Missing function or method docstring",
+            "message-id": "C0116"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_simulator",
+            "obj": "TestSimulator.test_simulation",
+            "line": 94,
+            "column": 4,
+            "path": "tests/test_simulator.py",
+            "symbol": "missing-function-docstring",
+            "message": "Missing function or method docstring",
+            "message-id": "C0116"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_simulator",
+            "obj": "TestSimulator.test_inputs_and_pars",
+            "line": 101,
+            "column": 4,
+            "path": "tests/test_simulator.py",
+            "symbol": "missing-function-docstring",
+            "message": "Missing function or method docstring",
+            "message-id": "C0116"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_simulator",
+            "obj": "TestSimulator.test_inputs_and_pars",
+            "line": 103,
+            "column": 8,
+            "path": "tests/test_simulator.py",
+            "symbol": "protected-access",
+            "message": "Access to a protected member _callback_update_model_input of a client class",
+            "message-id": "W0212"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_simulator",
+            "obj": "TestSimulator.test_inputs_and_pars",
+            "line": 106,
+            "column": 8,
+            "path": "tests/test_simulator.py",
+            "symbol": "protected-access",
+            "message": "Access to a protected member _callback_update_model_parameter of a client class",
+            "message-id": "W0212"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_simulator",
+            "obj": "TestSimulator.test_save_results",
+            "line": 114,
+            "column": 4,
+            "path": "tests/test_simulator.py",
+            "symbol": "missing-function-docstring",
+            "message": "Missing function or method docstring",
+            "message-id": "C0116"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_simulator",
+            "obj": "TestSimulator.test_wrong_causality",
+            "line": 141,
+            "column": 4,
+            "path": "tests/test_simulator.py",
+            "symbol": "missing-function-docstring",
+            "message": "Missing function or method docstring",
+            "message-id": "C0116"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_simulator",
+            "obj": "TestSimulator.test_no_files",
+            "line": 148,
+            "column": 4,
+            "path": "tests/test_simulator.py",
+            "symbol": "missing-function-docstring",
+            "message": "Missing function or method docstring",
+            "message-id": "C0116"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_simulator",
+            "obj": "TestSimulator.test_model_injection",
+            "line": 174,
+            "column": 13,
+            "path": "tests/test_simulator.py",
+            "symbol": "unspecified-encoding",
+            "message": "Using open without explicitly specifying an encoding",
+            "message-id": "W1514"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_simulator_dashboard",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "tests/test_simulator_dashboard.py",
+            "symbol": "missing-module-docstring",
+            "message": "Missing module docstring",
+            "message-id": "C0114"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_simulator_dashboard",
+            "obj": "TestSimulatorDashboard",
+            "line": 15,
+            "column": 0,
+            "path": "tests/test_simulator_dashboard.py",
+            "symbol": "missing-class-docstring",
+            "message": "Missing class docstring",
+            "message-id": "C0115"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_simulator_dashboard",
+            "obj": "TestSimulatorDashboard.test_load_new_data",
+            "line": 17,
+            "column": 4,
+            "path": "tests/test_simulator_dashboard.py",
+            "symbol": "missing-function-docstring",
+            "message": "Missing function or method docstring",
+            "message-id": "C0116"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_simulator_dashboard",
+            "obj": "TestSimulatorDashboard.test_update_data",
+            "line": 46,
+            "column": 4,
+            "path": "tests/test_simulator_dashboard.py",
+            "symbol": "missing-function-docstring",
+            "message": "Missing function or method docstring",
+            "message-id": "C0116"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_simulator_dashboard",
+            "obj": "TestSimulatorDashboard.test_format_time_axis",
+            "line": 74,
+            "column": 4,
+            "path": "tests/test_simulator_dashboard.py",
+            "symbol": "missing-function-docstring",
+            "message": "Missing function or method docstring",
+            "message-id": "C0116"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_simulator_dashboard",
+            "obj": "TestSimulatorDashboard.test_create_plot",
+            "line": 79,
+            "column": 4,
+            "path": "tests/test_simulator_dashboard.py",
+            "symbol": "missing-function-docstring",
+            "message": "Missing function or method docstring",
+            "message-id": "C0116"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_utils",
+            "obj": "TestLoadConfig",
+            "line": 58,
+            "column": 0,
+            "path": "tests/test_utils.py",
+            "symbol": "missing-class-docstring",
+            "message": "Missing class docstring",
+            "message-id": "C0115"
+        },
+        {
+            "type": "warning",
+            "module": "tests.test_utils",
+            "obj": "TestLoadConfig.test_load_config",
+            "line": 81,
+            "column": 17,
+            "path": "tests/test_utils.py",
+            "symbol": "unspecified-encoding",
+            "message": "Using open without explicitly specifying an encoding",
+            "message-id": "W1514"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_utils",
+            "obj": "TestLoadConfig.test_load_config",
+            "line": 81,
+            "column": 45,
+            "path": "tests/test_utils.py",
+            "symbol": "invalid-name",
+            "message": "Variable name \"f\" doesn't conform to snake_case naming style",
+            "message-id": "C0103"
+        },
+        {
+            "type": "convention",
+            "module": "tests.test_utils",
+            "obj": "TestLoadConfig.test_load_config_error",
+            "line": 89,
+            "column": 4,
+            "path": "tests/test_utils.py",
+            "symbol": "missing-function-docstring",
+            "message": "Missing function or method docstring",
+            "message-id": "C0116"
+        },
+        {
+            "type": "refactor",
+            "module": "tests.test_utils",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "tests/test_utils.py",
+            "symbol": "duplicate-code",
+            "message": "Similar lines in 2 files\n==tests.test_communicator:[12:18]\n==tests.test_module:[27:33]\n    \"allowed_values\": [100, 150],\n    \"shared\": True,\n    \"unit\": \"testUnit\",\n    \"description\": \"My Doc\",\n    \"clip\": True,\n    \"rdf_class\": \"MyRDFClass\",",
+            "message-id": "R0801"
+        },
+        {
+            "type": "refactor",
+            "module": "tests.test_utils",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "tests/test_utils.py",
+            "symbol": "duplicate-code",
+            "message": "Similar lines in 2 files\n==tests.test_agent:[203:211]\n==tests.test_environment:[61:69]\n        try:\n            os.remove(self.filepath)\n        except FileNotFoundError:\n            pass\n\n\nif __name__ == \"__main__\":\n    unittest.main()",
+            "message-id": "R0801"
+        },
+        {
+            "type": "refactor",
+            "module": "tests.test_utils",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "tests/test_utils.py",
+            "symbol": "duplicate-code",
+            "message": "Similar lines in 2 files\n==tests.test_agentlogger:[23:31]\n==tests.test_simulator:[60:68]\n        env_config = {\"rt\": False, \"factor\": 1}\n        agent_config = {\"id\": \"TestAgent\", \"modules\": []}\n        env = Environment(config=env_config)\n        return Agent(env=env, config=agent_config)\n\n    def _get_module_cfg(self, **kwargs):\n        \"\"\"Helper method to create logger config\"\"\"\n        return {",
+            "message-id": "R0801"
+        }
+    ],
+    "stats": {
+        "bad_names": {
+            "argument": 1,
+            "attr": 2,
+            "klass": 0,
+            "class_attribute": 0,
+            "class_const": 0,
+            "const": 0,
+            "inlinevar": 0,
+            "function": 0,
+            "method": 0,
+            "module": 0,
+            "variable": 12,
+            "typevar": 0,
+            "typealias": 0
+        },
+        "by_module": {
+            "agentlib.__init__": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 6,
+                "warning": 0
+            },
+            "run_examples": {
+                "convention": 1,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 55,
+                "warning": 1
+            },
+            "tests.__init__": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "tests.test_agent": {
+                "convention": 11,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 1,
+                "statement": 132,
+                "warning": 7
+            },
+            "tests.test_agentlogger": {
+                "convention": 3,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 83,
+                "warning": 12
+            },
+            "tests.test_communicator": {
+                "convention": 5,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 42,
+                "warning": 0
+            },
+            "tests.test_data_broker": {
+                "convention": 8,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 99,
+                "warning": 17
+            },
+            "tests.test_data_source": {
+                "convention": 13,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 1,
+                "statement": 93,
+                "warning": 2
+            },
+            "tests.test_databroker_limits": {
+                "convention": 11,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 65,
+                "warning": 1
+            },
+            "tests.test_datamodels": {
+                "convention": 4,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 10,
+                "statement": 151,
+                "warning": 0
+            },
+            "tests.test_environment": {
+                "convention": 0,
+                "error": 5,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 42,
+                "warning": 3
+            },
+            "tests.test_mas": {
+                "convention": 3,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 10,
+                "warning": 0
+            },
+            "tests.test_model": {
+                "convention": 2,
+                "error": 1,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 127,
+                "warning": 6
+            },
+            "tests.test_module": {
+                "convention": 5,
+                "error": 1,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 1,
+                "statement": 198,
+                "warning": 11
+            },
+            "tests.test_n_pingpong": {
+                "convention": 7,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 110,
+                "warning": 1
+            },
+            "tests.test_plugins": {
+                "convention": 4,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 10,
+                "warning": 0
+            },
+            "tests.test_simulator": {
+                "convention": 7,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 92,
+                "warning": 3
+            },
+            "tests.test_simulator_dashboard": {
+                "convention": 6,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 47,
+                "warning": 0
+            },
+            "tests.test_utils": {
+                "convention": 3,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 3,
+                "statement": 59,
+                "warning": 1
+            }
+        },
+        "by_msg": {
+            "broad-exception-raised": 3,
+            "import-outside-toplevel": 1,
+            "missing-class-docstring": 20,
+            "too-many-instance-attributes": 2,
+            "unspecified-encoding": 8,
+            "missing-function-docstring": 45,
+            "invalid-name": 15,
+            "attribute-defined-outside-init": 6,
+            "missing-final-newline": 1,
+            "missing-module-docstring": 6,
+            "protected-access": 43,
+            "unnecessary-dunder-call": 3,
+            "line-too-long": 2,
+            "unused-variable": 2,
+            "unused-argument": 2,
+            "use-dict-literal": 10,
+            "no-member": 5,
+            "abstract-class-instantiated": 1,
+            "pointless-statement": 1,
+            "unsubscriptable-object": 1,
+            "no-else-return": 1,
+            "duplicate-code": 3
+        },
+        "code_type_count": {
+            "code": 0,
+            "comment": 0,
+            "docstring": 0,
+            "empty": 0,
+            "total": 0
+        },
+        "dependencies": {
+            "agentlib.core": [
+                "tests.test_data_broker",
+                "tests.test_model",
+                "tests.test_simulator",
+                "tests.test_module",
+                "tests.test_environment",
+                "tests.test_agentlogger",
+                "agentlib",
+                "tests.test_n_pingpong",
+                "tests.test_agent"
+            ],
+            "agentlib.models": [
+                "agentlib"
+            ],
+            "agentlib.modules": [
+                "agentlib"
+            ],
+            "agentlib.utils": [
+                "agentlib",
+                "tests.test_utils",
+                "run_examples",
+                "tests.test_n_pingpong"
+            ],
+            "agentlib.core.datamodels": [
+                "tests.test_model",
+                "tests.test_datamodels",
+                "tests.test_module",
+                "tests.test_simulator",
+                "tests.test_agentlogger",
+                "agentlib",
+                "tests.test_n_pingpong"
+            ],
+            "agentlib.utils.multi_agent_system": [
+                "agentlib",
+                "tests.test_n_pingpong"
+            ],
+            "pandas": [
+                "tests.test_communicator",
+                "tests.test_simulator_dashboard",
+                "tests.test_datamodels",
+                "tests.test_simulator",
+                "tests.test_agentlogger",
+                "tests.test_data_source",
+                "run_examples"
+            ],
+            "agentlib.utils.local_broadcast_broker": [
+                "run_examples"
+            ],
+            "pydantic": [
+                "tests.test_model",
+                "tests.test_simulator",
+                "tests.test_module",
+                "tests.test_environment",
+                "tests.test_n_pingpong",
+                "tests.test_agent"
+            ],
+            "agentlib.core.agent": [
+                "tests.test_agent",
+                "tests.test_utils"
+            ],
+            "agentlib.core.errors": [
+                "tests.test_module",
+                "tests.test_agent",
+                "tests.test_utils"
+            ],
+            "numpy": [
+                "tests.test_data_broker",
+                "tests.test_model",
+                "tests.test_datamodels",
+                "tests.test_simulator",
+                "tests.test_agentlogger",
+                "tests.test_n_pingpong",
+                "tests.test_data_source"
+            ],
+            "agentlib.modules.utils.agent_logger": [
+                "tests.test_agentlogger"
+            ],
+            "agentlib": [
+                "tests.test_data_broker",
+                "tests.test_communicator",
+                "tests.test_databroker_limits",
+                "tests.test_utils",
+                "tests.test_data_source"
+            ],
+            "agentlib.modules.communicator.local": [
+                "tests.test_communicator"
+            ],
+            "agentlib.core.logging_": [
+                "tests.test_data_broker"
+            ],
+            "agentlib.modules.simulation.csv_data_source": [
+                "tests.test_data_source"
+            ],
+            "agentlib.core.environment": [
+                "tests.test_environment"
+            ],
+            "agentlib.models.scipy_model": [
+                "tests.test_model"
+            ],
+            "agentlib.models.fmu_model": [
+                "tests.test_model"
+            ],
+            "agentlib.modules.simulation.simulator": [
+                "tests.test_simulator"
+            ],
+            "dash.html": [
+                "tests.test_simulator_dashboard"
+            ],
+            "dash.dcc": [
+                "tests.test_simulator_dashboard"
+            ],
+            "agentlib.utils.plotting.simulator_dashboard": [
+                "tests.test_simulator_dashboard"
+            ],
+            "agentlib.utils.validators": [
+                "tests.test_utils"
+            ],
+            "agentlib.utils.broker": [
+                "tests.test_utils"
+            ],
+            "agentlib.utils.load_config": [
+                "tests.test_utils"
+            ]
+        },
+        "duplicated_lines": {
+            "nb_duplicated_lines": 0,
+            "percent_duplicated_lines": 0.0
+        },
+        "node_count": {
+            "function": 4,
+            "klass": 40,
+            "method": 195,
+            "module": 19
+        },
+        "undocumented": {
+            "function": 3,
+            "klass": 25,
+            "method": 42,
+            "module": 6
+        },
+        "convention": 93,
+        "error": 7,
+        "fatal": 0,
+        "info": 0,
+        "refactor": 16,
+        "statement": 1421,
+        "warning": 65,
+        "global_note": 0,
+        "nb_duplicated_lines": 17,
+        "percent_duplicated_lines": 0.6422364941443143
+    },
+    "previous": {
+        "bad_names": {
+            "argument": 1,
+            "attr": 2,
+            "klass": 0,
+            "class_attribute": 0,
+            "class_const": 0,
+            "const": 0,
+            "inlinevar": 0,
+            "function": 0,
+            "method": 0,
+            "module": 0,
+            "variable": 12,
+            "typevar": 0,
+            "typealias": 0
+        },
+        "by_module": {
+            "agentlib.__init__": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 6,
+                "warning": 0
+            },
+            "ci.run_examples": {
+                "convention": 1,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 55,
+                "warning": 1
+            },
+            "tests.__init__": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "tests.test_agent": {
+                "convention": 11,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 1,
+                "statement": 132,
+                "warning": 7
+            },
+            "tests.test_agentlogger": {
+                "convention": 3,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 83,
+                "warning": 12
+            },
+            "tests.test_communicator": {
+                "convention": 5,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 42,
+                "warning": 0
+            },
+            "tests.test_data_broker": {
+                "convention": 8,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 99,
+                "warning": 17
+            },
+            "tests.test_data_source": {
+                "convention": 13,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 1,
+                "statement": 93,
+                "warning": 2
+            },
+            "tests.test_databroker_limits": {
+                "convention": 11,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 65,
+                "warning": 1
+            },
+            "tests.test_datamodels": {
+                "convention": 4,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 10,
+                "statement": 151,
+                "warning": 0
+            },
+            "tests.test_environment": {
+                "convention": 0,
+                "error": 5,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 42,
+                "warning": 3
+            },
+            "tests.test_mas": {
+                "convention": 3,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 10,
+                "warning": 0
+            },
+            "tests.test_model": {
+                "convention": 2,
+                "error": 1,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 127,
+                "warning": 6
+            },
+            "tests.test_module": {
+                "convention": 5,
+                "error": 1,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 1,
+                "statement": 198,
+                "warning": 11
+            },
+            "tests.test_n_pingpong": {
+                "convention": 7,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 110,
+                "warning": 1
+            },
+            "tests.test_plugins": {
+                "convention": 4,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 10,
+                "warning": 0
+            },
+            "tests.test_simulator": {
+                "convention": 7,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 92,
+                "warning": 3
+            },
+            "tests.test_simulator_dashboard": {
+                "convention": 6,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 47,
+                "warning": 0
+            },
+            "tests.test_utils": {
+                "convention": 3,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 3,
+                "statement": 59,
+                "warning": 1
+            }
+        },
+        "by_msg": {
+            "broad-exception-raised": 3,
+            "import-outside-toplevel": 1,
+            "missing-class-docstring": 20,
+            "too-many-instance-attributes": 2,
+            "unspecified-encoding": 8,
+            "missing-function-docstring": 45,
+            "invalid-name": 15,
+            "attribute-defined-outside-init": 6,
+            "missing-final-newline": 1,
+            "missing-module-docstring": 6,
+            "protected-access": 43,
+            "unnecessary-dunder-call": 3,
+            "line-too-long": 2,
+            "unused-variable": 2,
+            "unused-argument": 2,
+            "use-dict-literal": 10,
+            "no-member": 5,
+            "abstract-class-instantiated": 1,
+            "pointless-statement": 1,
+            "unsubscriptable-object": 1,
+            "no-else-return": 1,
+            "duplicate-code": 3
+        },
+        "code_type_count": {
+            "code": 0,
+            "comment": 0,
+            "docstring": 0,
+            "empty": 0,
+            "total": 0
+        },
+        "dependencies": {
+            "agentlib.core": [
+                "tests.test_data_broker",
+                "tests.test_model",
+                "tests.test_simulator",
+                "tests.test_module",
+                "tests.test_environment",
+                "tests.test_agentlogger",
+                "tests.test_n_pingpong",
+                "agentlib",
+                "tests.test_agent"
+            ],
+            "agentlib.models": [
+                "agentlib"
+            ],
+            "agentlib.modules": [
+                "agentlib"
+            ],
+            "agentlib.utils": [
+                "tests.test_n_pingpong",
+                "agentlib",
+                "ci.run_examples",
+                "tests.test_utils"
+            ],
+            "agentlib.core.datamodels": [
+                "tests.test_model",
+                "tests.test_simulator",
+                "tests.test_module",
+                "tests.test_datamodels",
+                "tests.test_agentlogger",
+                "tests.test_n_pingpong",
+                "agentlib"
+            ],
+            "agentlib.utils.multi_agent_system": [
+                "tests.test_n_pingpong",
+                "agentlib"
+            ],
+            "pandas": [
+                "tests.test_communicator",
+                "tests.test_simulator_dashboard",
+                "tests.test_simulator",
+                "tests.test_datamodels",
+                "ci.run_examples",
+                "tests.test_agentlogger",
+                "tests.test_data_source"
+            ],
+            "agentlib.utils.local_broadcast_broker": [
+                "ci.run_examples"
+            ],
+            "pydantic": [
+                "tests.test_model",
+                "tests.test_simulator",
+                "tests.test_module",
+                "tests.test_environment",
+                "tests.test_n_pingpong",
+                "tests.test_agent"
+            ],
+            "agentlib.core.agent": [
+                "tests.test_agent",
+                "tests.test_utils"
+            ],
+            "agentlib.core.errors": [
+                "tests.test_module",
+                "tests.test_agent",
+                "tests.test_utils"
+            ],
+            "numpy": [
+                "tests.test_data_broker",
+                "tests.test_model",
+                "tests.test_simulator",
+                "tests.test_datamodels",
+                "tests.test_agentlogger",
+                "tests.test_n_pingpong",
+                "tests.test_data_source"
+            ],
+            "agentlib.modules.utils.agent_logger": [
+                "tests.test_agentlogger"
+            ],
+            "agentlib": [
+                "tests.test_data_broker",
+                "tests.test_communicator",
+                "tests.test_databroker_limits",
+                "tests.test_utils",
+                "tests.test_data_source"
+            ],
+            "agentlib.modules.communicator.local": [
+                "tests.test_communicator"
+            ],
+            "agentlib.core.logging_": [
+                "tests.test_data_broker"
+            ],
+            "agentlib.modules.simulation.csv_data_source": [
+                "tests.test_data_source"
+            ],
+            "agentlib.core.environment": [
+                "tests.test_environment"
+            ],
+            "agentlib.models.scipy_model": [
+                "tests.test_model"
+            ],
+            "agentlib.models.fmu_model": [
+                "tests.test_model"
+            ],
+            "agentlib.modules.simulation.simulator": [
+                "tests.test_simulator"
+            ],
+            "dash.html": [
+                "tests.test_simulator_dashboard"
+            ],
+            "dash.dcc": [
+                "tests.test_simulator_dashboard"
+            ],
+            "agentlib.utils.plotting.simulator_dashboard": [
+                "tests.test_simulator_dashboard"
+            ],
+            "agentlib.utils.validators": [
+                "tests.test_utils"
+            ],
+            "agentlib.utils.broker": [
+                "tests.test_utils"
+            ],
+            "agentlib.utils.load_config": [
+                "tests.test_utils"
+            ]
+        },
+        "duplicated_lines": {
+            "nb_duplicated_lines": 0,
+            "percent_duplicated_lines": 0.0
+        },
+        "node_count": {
+            "function": 4,
+            "klass": 40,
+            "method": 195,
+            "module": 19
+        },
+        "undocumented": {
+            "function": 3,
+            "klass": 25,
+            "method": 42,
+            "module": 6
+        },
+        "convention": 93,
+        "error": 7,
+        "fatal": 0,
+        "info": 0,
+        "refactor": 16,
+        "statement": 1421,
+        "warning": 65,
+        "global_note": 8.52920478536242,
+        "nb_duplicated_lines": 17,
+        "percent_duplicated_lines": 0.6422364941443143
+    }
+}
