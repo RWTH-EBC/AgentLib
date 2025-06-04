@@ -1,0 +1,306 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>agentlib &mdash; agentlib 0.8.7 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/autodoc_pydantic.css" />
+
+  
+      <script src="../_static/jquery.js"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+      <script src="../_static/doctools.js"></script>
+      <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            agentlib
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Tutorials/tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ModulesList.html">List of standard modules and models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../AgentVariable.html">AgentVariables and ModelVariables</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../agentlib.html">agentlib package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">agentlib</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">agentlib</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/code/modules.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="agentlib">
+<h1>agentlib<a class="headerlink" href="#agentlib" title="Permalink to this heading"></a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="agentlib.html">agentlib package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="agentlib.html#agentlib.Agent"><code class="docutils literal notranslate"><span class="pre">Agent</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.Agent.clean_results"><code class="docutils literal notranslate"><span class="pre">Agent.clean_results()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.Agent.config"><code class="docutils literal notranslate"><span class="pre">Agent.config</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.Agent.data_broker"><code class="docutils literal notranslate"><span class="pre">Agent.data_broker</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.Agent.env"><code class="docutils literal notranslate"><span class="pre">Agent.env</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.Agent.get_module"><code class="docutils literal notranslate"><span class="pre">Agent.get_module()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.Agent.get_results"><code class="docutils literal notranslate"><span class="pre">Agent.get_results()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.Agent.id"><code class="docutils literal notranslate"><span class="pre">Agent.id</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.Agent.modules"><code class="docutils literal notranslate"><span class="pre">Agent.modules</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.Agent.register_thread"><code class="docutils literal notranslate"><span class="pre">Agent.register_thread()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.Agent.terminate"><code class="docutils literal notranslate"><span class="pre">Agent.terminate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="agentlib.html#agentlib.AgentVariable"><code class="docutils literal notranslate"><span class="pre">AgentVariable</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.AgentVariable.alias"><code class="docutils literal notranslate"><span class="pre">AgentVariable.alias</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.AgentVariable.copy"><code class="docutils literal notranslate"><span class="pre">AgentVariable.copy()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.AgentVariable.dict"><code class="docutils literal notranslate"><span class="pre">AgentVariable.dict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.AgentVariable.from_json"><code class="docutils literal notranslate"><span class="pre">AgentVariable.from_json()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.AgentVariable.rdf_class"><code class="docutils literal notranslate"><span class="pre">AgentVariable.rdf_class</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.AgentVariable.run_validation"><code class="docutils literal notranslate"><span class="pre">AgentVariable.run_validation()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.AgentVariable.shared"><code class="docutils literal notranslate"><span class="pre">AgentVariable.shared</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.AgentVariable.source"><code class="docutils literal notranslate"><span class="pre">AgentVariable.source</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="agentlib.html#agentlib.BaseModule"><code class="docutils literal notranslate"><span class="pre">BaseModule</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.BaseModule.agent"><code class="docutils literal notranslate"><span class="pre">BaseModule.agent</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.BaseModule.cleanup_results"><code class="docutils literal notranslate"><span class="pre">BaseModule.cleanup_results()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.BaseModule.config"><code class="docutils literal notranslate"><span class="pre">BaseModule.config</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.BaseModule.env"><code class="docutils literal notranslate"><span class="pre">BaseModule.env</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.BaseModule.get"><code class="docutils literal notranslate"><span class="pre">BaseModule.get()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.BaseModule.get_config_type"><code class="docutils literal notranslate"><span class="pre">BaseModule.get_config_type()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.BaseModule.get_results"><code class="docutils literal notranslate"><span class="pre">BaseModule.get_results()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.BaseModule.get_value"><code class="docutils literal notranslate"><span class="pre">BaseModule.get_value()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.BaseModule.id"><code class="docutils literal notranslate"><span class="pre">BaseModule.id</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.BaseModule.process"><code class="docutils literal notranslate"><span class="pre">BaseModule.process()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.BaseModule.register_callbacks"><code class="docutils literal notranslate"><span class="pre">BaseModule.register_callbacks()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.BaseModule.set"><code class="docutils literal notranslate"><span class="pre">BaseModule.set()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.BaseModule.source"><code class="docutils literal notranslate"><span class="pre">BaseModule.source</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.BaseModule.terminate"><code class="docutils literal notranslate"><span class="pre">BaseModule.terminate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.BaseModule.update_variables"><code class="docutils literal notranslate"><span class="pre">BaseModule.update_variables()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.BaseModule.variables"><code class="docutils literal notranslate"><span class="pre">BaseModule.variables</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.BaseModule.visualize_results"><code class="docutils literal notranslate"><span class="pre">BaseModule.visualize_results()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="agentlib.html#agentlib.BaseModuleConfig"><code class="docutils literal notranslate"><span class="pre">BaseModuleConfig</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.BaseModuleConfig.log_level"><code class="docutils literal notranslate"><span class="pre">BaseModuleConfig.log_level</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.BaseModuleConfig.module_id"><code class="docutils literal notranslate"><span class="pre">BaseModuleConfig.module_id</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.BaseModuleConfig.shared_variable_fields"><code class="docutils literal notranslate"><span class="pre">BaseModuleConfig.shared_variable_fields</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.BaseModuleConfig.type"><code class="docutils literal notranslate"><span class="pre">BaseModuleConfig.type</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.BaseModuleConfig.validate_incoming_values"><code class="docutils literal notranslate"><span class="pre">BaseModuleConfig.validate_incoming_values</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.BaseModuleConfig.check_if_variables_are_unique"><code class="docutils literal notranslate"><span class="pre">BaseModuleConfig.check_if_variables_are_unique()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.BaseModuleConfig.check_valid_fields"><code class="docutils literal notranslate"><span class="pre">BaseModuleConfig.check_valid_fields</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.BaseModuleConfig.check_valid_level"><code class="docutils literal notranslate"><span class="pre">BaseModuleConfig.check_valid_level</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.BaseModuleConfig.default"><code class="docutils literal notranslate"><span class="pre">BaseModuleConfig.default()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.BaseModuleConfig.get_variables"><code class="docutils literal notranslate"><span class="pre">BaseModuleConfig.get_variables()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.BaseModuleConfig.merge_variables"><code class="docutils literal notranslate"><span class="pre">BaseModuleConfig.merge_variables()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.BaseModuleConfig.model_json_schema"><code class="docutils literal notranslate"><span class="pre">BaseModuleConfig.model_json_schema()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.BaseModuleConfig.model_post_init"><code class="docutils literal notranslate"><span class="pre">BaseModuleConfig.model_post_init()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="agentlib.html#agentlib.Environment"><code class="docutils literal notranslate"><span class="pre">Environment</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="agentlib.html#agentlib.LocalCloneMAPAgency"><code class="docutils literal notranslate"><span class="pre">LocalCloneMAPAgency</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.LocalCloneMAPAgency.model_post_init"><code class="docutils literal notranslate"><span class="pre">LocalCloneMAPAgency.model_post_init()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.LocalCloneMAPAgency.run"><code class="docutils literal notranslate"><span class="pre">LocalCloneMAPAgency.run()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.LocalCloneMAPAgency.setup_agent"><code class="docutils literal notranslate"><span class="pre">LocalCloneMAPAgency.setup_agent()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.LocalCloneMAPAgency.terminate_agents"><code class="docutils literal notranslate"><span class="pre">LocalCloneMAPAgency.terminate_agents()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="agentlib.html#agentlib.LocalMASAgency"><code class="docutils literal notranslate"><span class="pre">LocalMASAgency</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.LocalMASAgency.add_agent"><code class="docutils literal notranslate"><span class="pre">LocalMASAgency.add_agent()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.LocalMASAgency.get_agent"><code class="docutils literal notranslate"><span class="pre">LocalMASAgency.get_agent()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.LocalMASAgency.get_results"><code class="docutils literal notranslate"><span class="pre">LocalMASAgency.get_results()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.LocalMASAgency.model_post_init"><code class="docutils literal notranslate"><span class="pre">LocalMASAgency.model_post_init()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.LocalMASAgency.run"><code class="docutils literal notranslate"><span class="pre">LocalMASAgency.run()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.LocalMASAgency.setup_agent"><code class="docutils literal notranslate"><span class="pre">LocalMASAgency.setup_agent()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.LocalMASAgency.setup_env"><code class="docutils literal notranslate"><span class="pre">LocalMASAgency.setup_env</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.LocalMASAgency.show_results_dashboard"><code class="docutils literal notranslate"><span class="pre">LocalMASAgency.show_results_dashboard()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.LocalMASAgency.stop_agency"><code class="docutils literal notranslate"><span class="pre">LocalMASAgency.stop_agency()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.LocalMASAgency.terminate_agents"><code class="docutils literal notranslate"><span class="pre">LocalMASAgency.terminate_agents()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="agentlib.html#agentlib.Model"><code class="docutils literal notranslate"><span class="pre">Model</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.Model.config"><code class="docutils literal notranslate"><span class="pre">Model.config</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.Model.description"><code class="docutils literal notranslate"><span class="pre">Model.description</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.Model.do_step"><code class="docutils literal notranslate"><span class="pre">Model.do_step()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.Model.dt"><code class="docutils literal notranslate"><span class="pre">Model.dt</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.Model.generate_variables_config"><code class="docutils literal notranslate"><span class="pre">Model.generate_variables_config()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.Model.get"><code class="docutils literal notranslate"><span class="pre">Model.get()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.Model.get_config_type"><code class="docutils literal notranslate"><span class="pre">Model.get_config_type()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.Model.get_input"><code class="docutils literal notranslate"><span class="pre">Model.get_input()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.Model.get_input_names"><code class="docutils literal notranslate"><span class="pre">Model.get_input_names()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.Model.get_inputs"><code class="docutils literal notranslate"><span class="pre">Model.get_inputs()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.Model.get_output"><code class="docutils literal notranslate"><span class="pre">Model.get_output()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.Model.get_output_names"><code class="docutils literal notranslate"><span class="pre">Model.get_output_names()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.Model.get_outputs"><code class="docutils literal notranslate"><span class="pre">Model.get_outputs()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.Model.get_parameter"><code class="docutils literal notranslate"><span class="pre">Model.get_parameter()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.Model.get_parameter_names"><code class="docutils literal notranslate"><span class="pre">Model.get_parameter_names()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.Model.get_parameters"><code class="docutils literal notranslate"><span class="pre">Model.get_parameters()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.Model.get_state"><code class="docutils literal notranslate"><span class="pre">Model.get_state()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.Model.get_state_names"><code class="docutils literal notranslate"><span class="pre">Model.get_state_names()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.Model.get_states"><code class="docutils literal notranslate"><span class="pre">Model.get_states()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.Model.initialize"><code class="docutils literal notranslate"><span class="pre">Model.initialize()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.Model.inputs"><code class="docutils literal notranslate"><span class="pre">Model.inputs</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.Model.name"><code class="docutils literal notranslate"><span class="pre">Model.name</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.Model.outputs"><code class="docutils literal notranslate"><span class="pre">Model.outputs</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.Model.parameters"><code class="docutils literal notranslate"><span class="pre">Model.parameters</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.Model.set"><code class="docutils literal notranslate"><span class="pre">Model.set()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.Model.set_input_value"><code class="docutils literal notranslate"><span class="pre">Model.set_input_value()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.Model.set_input_values"><code class="docutils literal notranslate"><span class="pre">Model.set_input_values()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.Model.set_parameter_value"><code class="docutils literal notranslate"><span class="pre">Model.set_parameter_value()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.Model.set_parameter_values"><code class="docutils literal notranslate"><span class="pre">Model.set_parameter_values()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.Model.sim_time"><code class="docutils literal notranslate"><span class="pre">Model.sim_time</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.Model.states"><code class="docutils literal notranslate"><span class="pre">Model.states</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.Model.terminate"><code class="docutils literal notranslate"><span class="pre">Model.terminate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.Model.variables"><code class="docutils literal notranslate"><span class="pre">Model.variables</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="agentlib.html#agentlib.ModelConfig"><code class="docutils literal notranslate"><span class="pre">ModelConfig</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.ModelConfig.description"><code class="docutils literal notranslate"><span class="pre">ModelConfig.description</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.ModelConfig.dt"><code class="docutils literal notranslate"><span class="pre">ModelConfig.dt</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.ModelConfig.inputs"><code class="docutils literal notranslate"><span class="pre">ModelConfig.inputs</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.ModelConfig.name"><code class="docutils literal notranslate"><span class="pre">ModelConfig.name</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.ModelConfig.outputs"><code class="docutils literal notranslate"><span class="pre">ModelConfig.outputs</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.ModelConfig.parameters"><code class="docutils literal notranslate"><span class="pre">ModelConfig.parameters</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.ModelConfig.sim_time"><code class="docutils literal notranslate"><span class="pre">ModelConfig.sim_time</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.ModelConfig.states"><code class="docutils literal notranslate"><span class="pre">ModelConfig.states</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.ModelConfig.user_config"><code class="docutils literal notranslate"><span class="pre">ModelConfig.user_config</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.ModelConfig.validate_variables"><code class="docutils literal notranslate"><span class="pre">ModelConfig.validate_variables</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.ModelConfig.check_name"><code class="docutils literal notranslate"><span class="pre">ModelConfig.check_name</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.ModelConfig.get_variable_names"><code class="docutils literal notranslate"><span class="pre">ModelConfig.get_variable_names()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.ModelConfig.include_default_model_variables"><code class="docutils literal notranslate"><span class="pre">ModelConfig.include_default_model_variables</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.ModelConfig.model_post_init"><code class="docutils literal notranslate"><span class="pre">ModelConfig.model_post_init()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="agentlib.html#agentlib.MultiProcessingMAS"><code class="docutils literal notranslate"><span class="pre">MultiProcessingMAS</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.MultiProcessingMAS.agent_configs"><code class="docutils literal notranslate"><span class="pre">MultiProcessingMAS.agent_configs</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.MultiProcessingMAS.cleanup"><code class="docutils literal notranslate"><span class="pre">MultiProcessingMAS.cleanup</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.MultiProcessingMAS.env"><code class="docutils literal notranslate"><span class="pre">MultiProcessingMAS.env</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.MultiProcessingMAS.log_level"><code class="docutils literal notranslate"><span class="pre">MultiProcessingMAS.log_level</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.MultiProcessingMAS.variable_logging"><code class="docutils literal notranslate"><span class="pre">MultiProcessingMAS.variable_logging</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.MultiProcessingMAS.get_results"><code class="docutils literal notranslate"><span class="pre">MultiProcessingMAS.get_results()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.MultiProcessingMAS.model_post_init"><code class="docutils literal notranslate"><span class="pre">MultiProcessingMAS.model_post_init()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.MultiProcessingMAS.run"><code class="docutils literal notranslate"><span class="pre">MultiProcessingMAS.run()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.html#agentlib.MultiProcessingMAS.setup_env"><code class="docutils literal notranslate"><span class="pre">MultiProcessingMAS.setup_env</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="agentlib.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.core.html">agentlib.core package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#module-agentlib.core.agent">agentlib.core.agent module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#module-agentlib.core.data_broker">agentlib.core.data_broker module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#module-agentlib.core.datamodels">agentlib.core.datamodels module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#module-agentlib.core.environment">agentlib.core.environment module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#module-agentlib.core.errors">agentlib.core.errors module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#module-agentlib.core.logging_">agentlib.core.logging_ module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#module-agentlib.core.model">agentlib.core.model module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#module-agentlib.core.module">agentlib.core.module module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.models.html">agentlib.models package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.models.html#agentlib.models.get_model_type"><code class="docutils literal notranslate"><span class="pre">get_model_type()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.models.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.models.html#module-agentlib.models.fmu_model">agentlib.models.fmu_model module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.models.html#module-agentlib.models.scipy_model">agentlib.models.scipy_model module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.modules.html">agentlib.modules package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.html#agentlib.modules.get_all_module_types"><code class="docutils literal notranslate"><span class="pre">get_all_module_types()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.html#agentlib.modules.get_module_type"><code class="docutils literal notranslate"><span class="pre">get_module_type()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.modules.html#subpackages">Subpackages</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.utils.html">agentlib.utils package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.utils.html#agentlib.utils.custom_injection"><code class="docutils literal notranslate"><span class="pre">custom_injection()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.utils.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.utils.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.utils.html#module-agentlib.utils.broker">agentlib.utils.broker module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.utils.html#module-agentlib.utils.fuzzy_matching">agentlib.utils.fuzzy_matching module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.utils.html#module-agentlib.utils.load_config">agentlib.utils.load_config module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.utils.html#module-agentlib.utils.local_broadcast_broker">agentlib.utils.local_broadcast_broker module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.utils.html#module-agentlib.utils.local_broker">agentlib.utils.local_broker module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.utils.html#module-agentlib.utils.multi_agent_system">agentlib.utils.multi_agent_system module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.utils.html#module-agentlib.utils.multi_processing_broker">agentlib.utils.multi_processing_broker module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.utils.html#module-agentlib.utils.plugin_import">agentlib.utils.plugin_import module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.utils.html#module-agentlib.utils.validators">agentlib.utils.validators module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, AGENT-Project Associates.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
