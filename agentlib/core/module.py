@@ -32,7 +32,7 @@ from agentlib.core.datamodels import (
     AttrsToPydanticAdaptor,
 )
 from agentlib.core.environment import CustomSimpyEnvironment
-from agentlib.core.errors import ConfigurationError
+from agentlib.core.errors import ConfigurationError, OptionalDependencyError
 from agentlib.utils.fuzzy_matching import fuzzy_match, RAPIDFUZZ_IS_INSTALLED
 from agentlib.utils.validators import (
     include_defaults_in_root,
@@ -44,6 +44,7 @@ from agentlib.utils.validators import (
 if TYPE_CHECKING:
     # this avoids circular import
     from agentlib.core import Agent
+    from dash import html  # For type hinting
 
 
 logger = logging.getLogger(__name__)
@@ -656,6 +657,45 @@ class BaseModule(abc.ABC):
     def _copy_list_to_dict(ls: List[AgentVariable]):
         # pylint: disable=invalid-name
         return {var.name: var for var in ls.copy()}
+
+    @classmethod
+    def visualize_results(
+        cls, results_data: Any, module_id: str, agent_id: str
+    ) -> Optional["html.Div"]:
+        """
+        Generate a visualization for the module's results.
+        This method should be overridden by subclasses to provide
+        custom visualizations.
+
+        Args:
+            results_data: The data returned by the module's get_results() method.
+            module_id: The ID of the module instance.
+            agent_id: The ID of the agent this module belongs to.
+
+        Returns:
+            A Dash HTML component (e.g., dash.html.Div) containing the visualization,
+            or None if not implemented or Dash is unavailable.
+        """
+        try:
+            # Import here to avoid circular dependency issues at module load time
+            # and to only require Dash when this method is actually called.
+            from dash import html as dash_html 
+        except ImportError:
+            raise OptionalDependencyError(
+                used_object=f"{cls.__name__}.visualize_results",
+                dependency_install="agentlib[interactive]",
+                dependency_name="interactive",
+            )
+        # Base implementation returns None, indicating no visualization is provided.
+        # Subclasses should override this method.
+        logger.debug(
+            "Visualization not implemented for module type %s (module_id: '%s', agent_id: '%s'). "
+            "Returning None.",
+            cls.__name__,
+            module_id,
+            agent_id,
+        )
+        return None
 
     def get_results(self):
         """

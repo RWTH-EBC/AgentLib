@@ -16,6 +16,9 @@ from pydantic_core.core_schema import FieldValidationInfo
 
 from agentlib import AgentVariable
 from agentlib.core import BaseModule, Agent, BaseModuleConfig
+from agentlib.core.errors import OptionalDependencyError
+from typing import Optional
+import pandas as pd
 
 logger = logging.getLogger(__name__)
 
@@ -216,3 +219,103 @@ class AgentLogger(BaseModule):
         # when terminating, we log one last time, since otherwise the data since the
         # last log interval is lost
         self._log()
+
+    @classmethod
+    def visualize_results(
+        cls, results_data: pd.DataFrame, module_id: str, agent_id: str
+    ) -> "Optional[html.Div]":
+        try:
+            from dash import dcc, html
+            import plotly.graph_objs as go
+        except ImportError:
+            raise OptionalDependencyError(
+                used_object=f"{cls.__name__}.visualize_results",
+                dependency_install="agentlib[interactive]",
+                dependency_name="interactive",
+            )
+
+        if results_data is None or results_data.empty:
+            cls.logger.debug(f"No results data for AgentLogger '{module_id}' in agent '{agent_id}'.")
+            return None
+
+        if not isinstance(results_data, pd.DataFrame):
+            cls.logger.error(
+                f"Expected pandas DataFrame for AgentLogger results for '{module_id}', got {type(results_data)}."
+            )
+            return None
+        
+        # AgentLogger results often have MultiIndex columns: (alias, source_info_string)
+        # or just alias if merge_sources=True was used in load_from_file.
+        # We'll try to plot each series.
+
+        plots = []
+        try:
+            for col_name in results_data.columns:
+                series = results_data[col_name].dropna()
+                if series.empty:
+                    continue
+
+                # Attempt to convert to numeric if possible, otherwise plot as categorical/occurrence
+                try:
+                    numeric_series = pd.to_numeric(series)
+                    is_numeric = True
+                except (ValueError, TypeError):
+                    is_numeric = False
+                    numeric_series = series # Keep original for hover text
+
+                fig = go.Figure()
+                if is_numeric:
+                    fig.add_trace(
+                        go.Scatter(
+                            x=series.index, # Timestamps
+                            y=numeric_series,
+                            mode="lines+markers",
+                            name=str(col_name),
+                        )
+                    )
+                    y_axis_title = "Value"
+                else:
+                    # For non-numeric, plot occurrences or categorical data
+                    # A simple way is to plot markers at y=1 and use hover text
+                    fig.add_trace(
+                        go.Scatter(
+                            x=series.index,
+                            y=[1] * len(series), # Plot all at y=1
+                            mode="markers",
+                            name=str(col_name),
+                            hovertext=[str(v) for v in series.values],
+                            hoverinfo="x+text"
+                        )
+                    )
+                    y_axis_title = "Occurrence"
+                
+                title = str(col_name)
+                if isinstance(col_name, tuple): # Handle MultiIndex columns
+                    title = f"{col_name[0]} (Source: {col_name[1]})"
+
+
+                fig.update_layout(
+                    title=title,
+                    xaxis_title="Time",
+                    yaxis_title=y_axis_title,
+                    margin=dict(l=40, r=20, t=60, b=30), # Increased top margin for title
+                    height=300,
+                )
+                plots.append(dcc.Graph(figure=fig))
+        except Exception as e:
+            cls.logger.error(f"Error creating plots for AgentLogger '{module_id}': {e}")
+            return None
+
+        if not plots:
+            cls.logger.debug(f"No plottable data generated for AgentLogger '{module_id}'.")
+            return None
+
+        return html.Div(
+            children=[
+                html.H4(
+                    f"AgentLogger Results: {module_id} (Agent: {agent_id})"
+                )
+            ]
+            + plots,
+            style={"padding": "10px"},
+        )

@@ -26,6 +26,8 @@ from agentlib.core import (
 from agentlib.core.errors import OptionalDependencyError
 from agentlib.models import get_model_type, UNINSTALLED_MODEL_TYPES
 from agentlib.utils import custom_injection
+import pandas as pd
+from typing import Optional 
 
 
 @dataclass
@@ -499,6 +501,68 @@ class Simulator(BaseModule):
             return
         os.remove(self.config.result_filename)
 
+
+    @classmethod
+    def visualize_results(
+        cls, results_data: pd.DataFrame, module_id: str, agent_id: str
+    ) -> "Optional[html.Div]":
+        try:
+            from dash import dcc, html
+            import plotly.graph_objs as go
+        except ImportError:
+            raise OptionalDependencyError(
+                used_object=f"{cls.__name__}.visualize_results",
+                dependency_install="agentlib[interactive]",
+                dependency_name="interactive",
+            )
+
+        if results_data is None or results_data.empty:
+            cls.logger.debug(f"No results data for Simulator '{module_id}' in agent '{agent_id}'.")
+            return None
+        
+        if not isinstance(results_data, pd.DataFrame):
+            cls.logger.error(
+                f"Expected pandas DataFrame for Simulator results for '{module_id}', got {type(results_data)}."
+            )
+            return None
+
+        plots = []
+        try:
+            for column in results_data.columns:
+                fig = go.Figure()
+                fig.add_trace(
+                    go.Scatter(
+                        x=results_data.index,
+                        y=results_data[column],
+                        mode="lines",
+                        name=str(column),
+                    )
+                )
+                fig.update_layout(
+                    title=str(column), # Use str(column) in case column name is not a string
+                    xaxis_title="Time",
+                    yaxis_title="Value",
+                    margin=dict(l=40, r=20, t=40, b=30),
+                    height=300,
+                )
+                plots.append(dcc.Graph(figure=fig))
+        except Exception as e:
+            cls.logger.error(f"Error creating plots for Simulator '{module_id}': {e}")
+            return None # Return None on plotting error
+
+        if not plots:
+            cls.logger.debug(f"No plottable data generated for Simulator '{module_id}'.")
+            return None
+
+        return html.Div(
+            children=[
+                html.H4(
+                    f"Simulator Results: {module_id} (Agent: {agent_id})"
+                )
+            ]
+            + plots,
+            style={"padding": "10px"},
+        )
 
     def _update_results(self):
         """

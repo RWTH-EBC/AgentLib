@@ -166,6 +166,35 @@ class LocalMASAgency(MAS):
         for agent in self._agents.values():
             agent.terminate()
 
+    def show_results_dashboard(self, cleanup_results: bool = False):
+        """
+        Launches an interactive dashboard to visualize the results of the MAS.
+
+        Args:
+            cleanup_results (bool): If True, result files might be cleaned up
+                                    by modules after being read for the dashboard.
+                                    Defaults to False to preserve results.
+        """
+        logger.info("Launching MAS Results Dashboard...")
+        try:
+            from agentlib.utils.plotting.mas_dashboard import launch_mas_dashboard
+        except ImportError:
+            logger.error(
+                "Failed to import launch_mas_dashboard. Ensure Dash and its dependencies are installed: "
+                "pip install agentlib[interactive]"
+            )
+            return
+
+        results = self.get_results(cleanup=cleanup_results)
+        if not results:
+            logger.warning("No results found to display in the dashboard.")
+            return
+
+        try:
+            launch_mas_dashboard(mas=self, mas_results=results)
+        except Exception as e:
+            logger.error(f"Error launching MAS dashboard: {e}", exc_info=True)
+
     def setup_agent(self, id: str) -> Agent:
         """Setup the agent matching the given id"""
         # pylint: disable=redefined-builtin

@@ -31,6 +31,10 @@ def run_example(until, with_plots=True, log_level=logging.INFO):
     # Simulate
     mas.run(until=until)
     # Load results:
+    try:
+        mas.show_results_dashboard(cleanup_results=False)  # Keep results for dashboard
+    except Exception as e:
+        logger.error(f"Could not launch MAS dashboard: {e}")
     results = mas.get_results(cleanup=True)
 
     if not with_plots:
@@ -96,8 +100,9 @@ def run_example(until, with_plots=True, log_level=logging.INFO):
         )
 
     plt.show()
+
     return results
 
 
 if __name__ == "__main__":
-    run_example(until=86400 / 10, with_plots=True)
+    run_example(until=86400 / 10, with_plots=False)
