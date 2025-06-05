@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>agentlib.core package &mdash; agentlib 0.8.7 documentation</title>
+  <title>agentlib.core package &mdash; agentlib 0.9.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
       <link rel="stylesheet" type="text/css" href="../_static/autodoc_pydantic.css" />
@@ -1065,6 +1065,12 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
 <p>A customized version of the simpy environment. Handles execution of modules
 processes and manages time for instant execution mode.</p>
 <dl class="py method">
+<dt class="sig sig-object py" id="agentlib.core.environment.CustomSimpyEnvironment.calculate_percentage_for_pretty_until">
+<span class="sig-name descname"><span class="pre">calculate_percentage_for_pretty_until</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="../_modules/agentlib/core/environment.html#CustomSimpyEnvironment.calculate_percentage_for_pretty_until"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.core.environment.CustomSimpyEnvironment.calculate_percentage_for_pretty_until" title="Permalink to this definition"></a></dt>
+<dd><p>Calculate the percentage of completion, accounting for offset.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="agentlib.core.environment.CustomSimpyEnvironment.clock">
 <span class="sig-name descname"><span class="pre">clock</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/core/environment.html#CustomSimpyEnvironment.clock"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.core.environment.CustomSimpyEnvironment.clock" title="Permalink to this definition"></a></dt>
 <dd><p>Define a clock loop to increase the now-timer every other second
@@ -1090,7 +1096,7 @@ processes and manages time for instant execution mode.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="agentlib.core.environment.CustomSimpyEnvironment.pretty_until">
-<span class="sig-name descname"><span class="pre">pretty_until</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/core/environment.html#CustomSimpyEnvironment.pretty_until"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.core.environment.CustomSimpyEnvironment.pretty_until" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">pretty_until</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/agentlib/core/environment.html#CustomSimpyEnvironment.pretty_until"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.core.environment.CustomSimpyEnvironment.pretty_until" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
@@ -1229,12 +1235,6 @@ processes and manages time for real time execution mode.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="agentlib.core.environment.RealtimeEnvironment.pretty_until">
-<span class="sig-name descname"><span class="pre">pretty_until</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/agentlib/core/environment.html#RealtimeEnvironment.pretty_until"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.core.environment.RealtimeEnvironment.pretty_until" title="Permalink to this definition"></a></dt>
-<dd><p>Returns the time in a datetime format.</p>
-</dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="agentlib.core.environment.RealtimeEnvironment.run">
 <span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">until</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Event</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/agentlib/core/environment.html#RealtimeEnvironment.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.core.environment.RealtimeEnvironment.run" title="Permalink to this definition"></a></dt>
 <dd><p>Executes <code class="xref py py-meth docutils literal notranslate"><span class="pre">step()</span></code> until the given criterion <em>until</em> is met.</p>
@@ -1274,12 +1274,6 @@ processes and manages time for scaled real time execution mode.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="agentlib.core.environment.ScaledRealtimeEnvironment.pretty_time">
 <span class="sig-name descname"><span class="pre">pretty_time</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/agentlib/core/environment.html#ScaledRealtimeEnvironment.pretty_time"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.core.environment.ScaledRealtimeEnvironment.pretty_time" title="Permalink to this definition"></a></dt>
-<dd><p>Returns the time in seconds.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="agentlib.core.environment.ScaledRealtimeEnvironment.pretty_until">
-<span class="sig-name descname"><span class="pre">pretty_until</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/agentlib/core/environment.html#ScaledRealtimeEnvironment.pretty_until"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.core.environment.ScaledRealtimeEnvironment.pretty_until" title="Permalink to this definition"></a></dt>
 <dd><p>Returns the time in seconds.</p>
 </dd></dl>
 
