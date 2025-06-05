@@ -17,8 +17,6 @@ from pydantic_core.core_schema import FieldValidationInfo
 from agentlib import AgentVariable
 from agentlib.core import BaseModule, Agent, BaseModuleConfig
 from agentlib.core.errors import OptionalDependencyError
-from typing import Optional
-import pandas as pd
 
 logger = logging.getLogger(__name__)
 
@@ -50,7 +48,12 @@ class AgentLoggerConfig(BaseModuleConfig):
     filename: Optional[str] = Field(
         title="filename",
         default=None,
-        description="The filename where the log is stored. If None, will use 'agent_logs/{agent_id}_log.json'",
+        description="The filename where the log is stored. If None, will use 'agent_logs/{agent_id}_log.jsonl'",
+    )
+    merge_sources: bool = Field(
+        title="Merge Sources",
+        default=True,
+        description="When loading the results file, automatically merges variables by sources, leaving only alias in the columns.",
     )
 
     @field_validator("filename")
@@ -201,7 +204,9 @@ class AgentLogger(BaseModule):
     def get_results(self) -> pd.DataFrame:
         """Load the own filename"""
         return self.load_from_file(
-            filename=self.filename, values_only=self.config.values_only
+            filename=self.filename,
+            values_only=self.config.values_only,
+            merge_sources=self.config.merge_sources,
         )
 
     def cleanup_results(self):
@@ -227,6 +232,7 @@ class AgentLogger(BaseModule):
         try:
             from dash import dcc, html
             import plotly.graph_objs as go
+            import dash_bootstrap_components as dbc  # Added for responsive layout
         except ImportError:
             raise OptionalDependencyError(
                 used_object=f"{cls.__name__}.visualize_results",
@@ -235,7 +241,9 @@ class AgentLogger(BaseModule):
             )
 
         if results_data is None or results_data.empty:
-            cls.logger.debug(f"No results data for AgentLogger '{module_id}' in agent '{agent_id}'.")
+            cls.logger.debug(
+                f"No results data for AgentLogger '{module_id}' in agent '{agent_id}'."
+            )
             return None
 
         if not isinstance(results_data, pd.DataFrame):
@@ -243,79 +251,92 @@ class AgentLogger(BaseModule):
                 f"Expected pandas DataFrame for AgentLogger results for '{module_id}', got {type(results_data)}."
             )
             return None
-        
-        # AgentLogger results often have MultiIndex columns: (alias, source_info_string)
-        # or just alias if merge_sources=True was used in load_from_file.
-        # We'll try to plot each series.
 
-        plots = []
+        rows = []
+        current_row_children = []
         try:
-            for col_name in results_data.columns:
+            for i, col_name in enumerate(results_data.columns):
                 series = results_data[col_name].dropna()
                 if series.empty:
                     continue
 
-                # Attempt to convert to numeric if possible, otherwise plot as categorical/occurrence
                 try:
-                    numeric_series = pd.to_numeric(series)
-                    is_numeric = True
+                    numeric_series = pd.to_numeric(series, errors="coerce")
+                    if numeric_series.isnull().all() and not series.isnull().all():
+                        is_numeric = False
+                    else:
+                        is_numeric = True
+                        series_to_plot = numeric_series
                 except (ValueError, TypeError):
                     is_numeric = False
-                    numeric_series = series # Keep original for hover text
+
+                if not is_numeric:
+                    series_to_plot = series
 
                 fig = go.Figure()
+                y_axis_title = "Value"
+
                 if is_numeric:
                     fig.add_trace(
                         go.Scatter(
-                            x=series.index, # Timestamps
-                            y=numeric_series,
+                            x=series_to_plot.index,
+                            y=series_to_plot,
                             mode="lines+markers",
                             name=str(col_name),
                         )
                     )
-                    y_axis_title = "Value"
                 else:
-                    # For non-numeric, plot occurrences or categorical data
-                    # A simple way is to plot markers at y=1 and use hover text
                     fig.add_trace(
                         go.Scatter(
-                            x=series.index,
-                            y=[1] * len(series), # Plot all at y=1
+                            x=series_to_plot.index,
+                            y=[1] * len(series_to_plot),
                             mode="markers",
                             name=str(col_name),
-                            hovertext=[str(v) for v in series.values],
-                            hoverinfo="x+text"
+                            hovertext=[str(v) for v in series_to_plot.values],
+                            hoverinfo="x+text",
                         )
                     )
                     y_axis_title = "Occurrence"
-                
-                title = str(col_name)
-                if isinstance(col_name, tuple): # Handle MultiIndex columns
-                    title = f"{col_name[0]} (Source: {col_name[1]})"
 
+                title_str = str(col_name)
+                if isinstance(col_name, tuple) and len(col_name) > 0:
+                    title_str = f"{col_name[0]}"
+                    if len(col_name) > 1 and col_name[1]:
+                        title_str += f" (Source: {col_name[1]})"
 
                 fig.update_layout(
-                    title=title,
+                    title=title_str,
                     xaxis_title="Time",
                     yaxis_title=y_axis_title,
-                    margin=dict(l=40, r=20, t=60, b=30), # Increased top margin for title
-                    height=300,
+                    margin=dict(l=40, r=20, t=40, b=30),
+                    height=250,
                 )
-                plots.append(dcc.Graph(figure=fig))
+                current_row_children.append(dbc.Col(dcc.Graph(figure=fig), md=6))
+
+                if len(current_row_children) == 2 or i == len(results_data.columns) - 1:
+                    rows.append(dbc.Row(current_row_children, className="mb-3"))
+                    current_row_children = []
+
         except Exception as e:
-            cls.logger.error(f"Error creating plots for AgentLogger '{module_id}': {e}")
+            cls.logger.error(
+                f"Error creating plots for AgentLogger '{module_id}': {e}",
+                exc_info=True,
+            )
             return None
 
-        if not plots:
-            cls.logger.debug(f"No plottable data generated for AgentLogger '{module_id}'.")
+        if not rows:
+            cls.logger.debug(
+                f"No plottable data generated for AgentLogger '{module_id}'."
+            )
             return None
 
         return html.Div(
             children=[
                 html.H4(
-                    f"AgentLogger Results: {module_id} (Agent: {agent_id})"
+                    f"AgentLogger Results: {module_id} (Agent: {agent_id})",
+                    className="mb-3",
                 )
             ]
-            + plots,
+            + rows,
             style={"padding": "10px"},
         )

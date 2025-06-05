@@ -509,6 +509,7 @@ class Simulator(BaseModule):
         try:
             from dash import dcc, html
             import plotly.graph_objs as go
+            import dash_bootstrap_components as dbc
         except ImportError:
             raise OptionalDependencyError(
                 used_object=f"{cls.__name__}.visualize_results",
@@ -526,9 +527,10 @@ class Simulator(BaseModule):
             )
             return None
 
-        plots = []
+        rows = []
+        current_row_children = []
         try:
-            for column in results_data.columns:
+            for i, column in enumerate(results_data.columns):
                 fig = go.Figure()
                 fig.add_trace(
                     go.Scatter(
@@ -539,28 +541,36 @@ class Simulator(BaseModule):
                     )
                 )
                 fig.update_layout(
-                    title=str(column), # Use str(column) in case column name is not a string
+                    title=str(column),
                     xaxis_title="Time",
                     yaxis_title="Value",
-                    margin=dict(l=40, r=20, t=40, b=30),
-                    height=300,
+                    margin=dict(l=40, r=20, t=40, b=30), # Compact margins
+                    height=250,  # Reduced height for compactness
                 )
-                plots.append(dcc.Graph(figure=fig))
+                # Add plot to a column, aim for 2 plots per row on medium screens
+                current_row_children.append(dbc.Col(dcc.Graph(figure=fig), md=6))
+
+                # If two plots are in the current row, or it's the last plot
+                if len(current_row_children) == 2 or i == len(results_data.columns) - 1:
+                    rows.append(dbc.Row(current_row_children, className="mb-3"))
+                    current_row_children = []
+                    
         except Exception as e:
             cls.logger.error(f"Error creating plots for Simulator '{module_id}': {e}")
-            return None # Return None on plotting error
+            return None 
 
-        if not plots:
+        if not rows:
             cls.logger.debug(f"No plottable data generated for Simulator '{module_id}'.")
             return None
 
         return html.Div(
             children=[
                 html.H4(
-                    f"Simulator Results: {module_id} (Agent: {agent_id})"
+                    f"Simulator Results: {module_id} (Agent: {agent_id})",
+                    className="mb-3" # Add some margin below the title
                 )
             ]
-            + plots,
+            + rows, # Add the list of dbc.Row components
             style={"padding": "10px"},
         )
 

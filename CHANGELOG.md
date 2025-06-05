@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.9.0
+- Add an optional dashboard function to the mas utility.
+
 ## 0.8.8
 - Percentage display in logging now only appears in simulation speed, not realtime. Fixed percentage when environment has an offset.
 
