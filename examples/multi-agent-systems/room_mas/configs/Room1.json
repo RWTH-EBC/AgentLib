@@ -11,6 +11,7 @@
       "measurement_uncertainty": 0.0001,
       "t_sample": 50,
       "save_results": true,
+      "overwrite_result_file": true,
       "result_filename": "res_room1.csv",
       "overwrite_result_file": true,
       "inputs": [
