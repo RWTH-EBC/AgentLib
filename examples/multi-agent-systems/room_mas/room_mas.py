@@ -32,7 +32,9 @@ def run_example(until, with_plots=True, log_level=logging.INFO):
     mas.run(until=until)
     # Load results:
     try:
-        mas.show_results_dashboard(cleanup_results=False)  # Keep results for dashboard
+        mas.show_results_dashboard(
+            cleanup_results=False, block_main=False
+        )  # Keep results for dashboard
     except Exception as e:
         logger.error(f"Could not launch MAS dashboard: {e}")
     results = mas.get_results(cleanup=True)
@@ -105,4 +107,4 @@ def run_example(until, with_plots=True, log_level=logging.INFO):
 
 
 if __name__ == "__main__":
-    run_example(until=86400 / 10, with_plots=False)
+    run_example(until=86400 / 10, with_plots=True)

@@ -166,7 +166,7 @@ class LocalMASAgency(MAS):
         for agent in self._agents.values():
             agent.terminate()
 
-    def show_results_dashboard(self, cleanup_results: bool = False):
+    def show_results_dashboard(self, cleanup_results: bool = False, block_main=True):
         """
         Launches an interactive dashboard to visualize the results of the MAS.
 
@@ -188,12 +188,17 @@ class LocalMASAgency(MAS):
         results = self.get_results(cleanup=cleanup_results)
         if not results:
             logger.warning("No results found to display in the dashboard.")
-            return
+            return None  # Return None if no dashboard is launched
 
         try:
-            launch_mas_dashboard(mas=self, mas_results=results)
+            # launch_mas_dashboard now returns the process
+            dashboard_process = launch_mas_dashboard(
+                mas=self, mas_results=results, block_main=block_main
+            )
+            return dashboard_process
         except Exception as e:
             logger.error(f"Error launching MAS dashboard: {e}", exc_info=True)
+            return None  # Return None on error
 
     def setup_agent(self, id: str) -> Agent:
         """Setup the agent matching the given id"""
