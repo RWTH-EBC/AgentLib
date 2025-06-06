@@ -348,41 +348,6 @@ class Communicator(BaseModule):
             return pd.DataFrame()  # Return empty DataFrame if file doesn't exist
         return None
 
-    @classmethod
-    def _load_detail_log_incremental(
-        cls, filename: str, start_line_index: int
-    ) -> tuple[Optional[pd.DataFrame], int]:
-        """
-        Loads detail log file from a specific line index.
-        Returns a DataFrame chunk and the number of lines read from that point.
-        """
-        log_entries = []
-        lines_read_count = 0
-        try:
-            with open(filename, "r", encoding="utf-8") as f:
-                for i, line in enumerate(f):
-                    if i < start_line_index:
-                        continue
-                    log_entries.append(json.loads(line))
-                    lines_read_count += 1
-        except FileNotFoundError:
-            logger.warning(
-                f"Detail log file {filename} not found for incremental load."
-            )
-            return None, 0
-
-        if not log_entries:
-            return None, 0
-
-        try:
-            df = pd.DataFrame(log_entries)
-            return df, lines_read_count
-        except Exception as e:  # pragma: no cover
-            logger.error(
-                f"Error creating DataFrame from incremental detail log {filename}: {e}"
-            )
-            return None, lines_read_count
-
     def get_results_incremental(
         self, update_token: Optional[Any] = None
     ) -> tuple[Optional[Union[dict, pd.DataFrame]], Optional[Any]]:
@@ -391,72 +356,65 @@ class Communicator(BaseModule):
 
         if log_level == "none":
             return None, None
-
         elif log_level == "basic":
             current_counts = {
                 "sent_counts": dict(self._sent_alias_counts or {}),
                 "received_counts": {
-                    str(
-                        k
-                    ): v  # Ensure keys are strings for JSON compatibility if ever needed
+                    str(k): v
                     for k, v in (self._received_source_alias_counts or {}).items()
                 },
             }
-            # For basic, token could be a hash of the dict, or just the dict itself for comparison.
-            # If no token, or token is different from current, send current.
             if update_token is None or update_token != current_counts:
-                return current_counts, current_counts  # Next token is the current state
-            return None, update_token  # No change
-
+                return current_counts, current_counts
+            return None, update_token
         elif log_level == "detail":
-            self._flush_detail_log()  # Ensure all data is written
+            self._flush_detail_log()
+
             if (
                 not self._communication_log_filename
                 or not Path(self._communication_log_filename).exists()
             ):
-                return None, update_token if update_token is not None else 0
+                return None, 0
 
-            if update_token is None:  # Initial call, load all
-                try:
-                    # Use existing get_results which handles loading full detail log
-                    df = self.get_results()
-                    lines_in_file = 0
-                    if df is not None and not df.empty:
-                        # Count lines in the file for the next token
-                        with open(
-                            self._communication_log_filename, "r", encoding="utf-8"
-                        ) as f:
-                            lines_in_file = sum(1 for _ in f)
-                    elif (
-                        df is None
-                    ):  # get_results might return None if file is empty or error
-                        df = pd.DataFrame()  # Ensure we return a DataFrame
-                    return df, lines_in_file
-                except Exception as e:  # pragma: no cover
-                    self.logger.error(
-                        f"Error in initial detail log load for get_results_incremental: {e}"
-                    )
+            if update_token is None:  # Initial call
+                df = self.get_results()
+                if df is None or df.empty:
                     return pd.DataFrame(), 0
-            else:  # Incremental call, update_token is previous line count
-                try:
-                    start_line_index = int(update_token)
-                except ValueError:  # pragma: no cover
-                    self.logger.error(
-                        f"Invalid update_token for detail log: {update_token}. Expected int."
-                    )
-                    return (
-                        pd.DataFrame(),
-                        0,
-                    )  # Fallback to sending empty and resetting token
-
+                with open(self._communication_log_filename, "r", encoding="utf-8") as f:
+                    lines_in_file = sum(1 for _ in f)
+                return df, lines_in_file
+            else:  # Incremental call
                 df_chunk, lines_read = self._load_detail_log_incremental(
                     filename=self._communication_log_filename,
-                    start_line_index=start_line_index,
+                    start_line_index=update_token,
                 )
                 if df_chunk is None or df_chunk.empty:
-                    return None, start_line_index  # No new data, token unchanged
-                return df_chunk, start_line_index + lines_read
-        return None, None
+                    return None, update_token
+                return df_chunk, update_token + lines_read
+
+    @classmethod
+    def _load_detail_log_incremental(
+        cls, filename: str, start_line_index: int
+    ) -> tuple[Optional[pd.DataFrame], int]:
+        """Loads detail log file from a specific line index."""
+        log_entries = []
+        lines_read_count = 0
+
+        try:
+            with open(filename, "r", encoding="utf-8") as f:
+                for i, line in enumerate(f):
+                    if i < start_line_index:
+                        continue
+                    log_entries.append(json.loads(line))
+                    lines_read_count += 1
+        except FileNotFoundError:
+            return None, 0
+
+        if not log_entries:
+            return None, 0
+
+        df = pd.DataFrame(log_entries)
+        return df, lines_read_count
 
     def cleanup_results(self):
         """Deletes the communication log file if 'detail' logging was active."""

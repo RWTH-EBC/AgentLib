@@ -9,11 +9,11 @@ Runs in a separate process to avoid blocking the main thread.
 import importlib
 import logging
 import multiprocessing
-import socket
-import webbrowser
-import threading
 import queue  # For queue.Empty
-from typing import Dict, Optional, Tuple, Any, List
+import socket
+import threading
+import webbrowser
+from typing import Dict, Optional, Tuple
 
 try:
     import dash
@@ -69,11 +69,15 @@ def _ipc_listener_loop(
                                 f"Module {module_id} in agent {agent_id} does not have "
                                 f"'get_results_incremental' method. Falling back to 'get_results'."
                             )
-                            if update_token is None: # Only call get_results for initial load
+                            if (
+                                update_token is None
+                            ):  # Only call get_results for initial load
                                 data_chunk = module.get_results()
                             # next_token remains None, implying no further incremental updates from this fallback
                     else:
-                        logger.error(f"IPC listener: Module {module_id} not found in agent {agent_id}")
+                        logger.error(
+                            f"IPC listener: Module {module_id} not found in agent {agent_id}"
+                        )
                 else:
                     logger.error(f"IPC listener: Agent {agent_id} not found in MAS")
             except Exception as e:
@@ -87,7 +91,8 @@ def _ipc_listener_loop(
         except Exception as e:
             logger.error(f"IPC listener: Unexpected error in loop: {e}", exc_info=True)
             import time
-            time.sleep(0.1) # Avoid busy-looping
+
+            time.sleep(0.1)  # Avoid busy-looping
     logger.info("IPC listener thread stopped for MAS dashboard.")
 
 
@@ -105,7 +110,7 @@ def create_dash_app(
 
     # In-memory cache for DataFrames within the Dash app process
     # This dict is accessible to callbacks defined within create_dash_app
-    app_data_cache = {} 
+    app_data_cache = {}
 
     layout_components = [
         html.H1("Multi-Agent System Results Dashboard", className="my-4"),
@@ -144,16 +149,24 @@ def create_dash_app(
     ]
 
     if live_update:
-        layout_components.extend([
-            # dcc.Store(id='data-cache', data={}), # Removed: DataFrames not JSON serializable for Store
-            dcc.Store(id='token-cache', data={}), # Stores { "agent/module": next_token }
-            dcc.Store(id='data-update-trigger', data=0), # Dummy store to trigger visualization updates
-            dcc.Interval(
-                id='live-update-interval',
-                interval=int(update_interval_sec * 1000) if update_interval_sec else 5000,
-                n_intervals=0
-            )
-        ])
+        layout_components.extend(
+            [
+                # dcc.Store(id='data-cache', data={}), # Removed: DataFrames not JSON serializable for Store
+                dcc.Store(
+                    id="token-cache", data={}
+                ),  # Stores { "agent/module": next_token }
+                dcc.Store(
+                    id="data-update-trigger", data=0
+                ),  # Dummy store to trigger visualization updates
+                dcc.Interval(
+                    id="live-update-interval",
+                    interval=(
+                        int(update_interval_sec * 1000) if update_interval_sec else 5000
+                    ),
+                    n_intervals=0,
+                ),
+            ]
+        )
 
     app.layout = dbc.Container(layout_components, fluid=True)
 
@@ -177,7 +190,9 @@ def create_dash_app(
                     first_module_id = module_id
             elif static_results:
                 agent_modules_data = static_results.get(selected_agent_id, {})
-                if module_id in agent_modules_data: # Check if results exist for this module
+                if (
+                    module_id in agent_modules_data
+                ):  # Check if results exist for this module
                     module_options.append({"label": module_id, "value": module_id})
                     if first_module_id is None:
                         first_module_id = module_id
@@ -185,61 +200,125 @@ def create_dash_app(
 
     # Callback for fetching data in live mode
     if live_update:
+
         @app.callback(
-            [Output('token-cache', 'data'), Output('data-update-trigger', 'data')],
-            [Input('live-update-interval', 'n_intervals'),
-             Input("agent-selector", "value"),
-             Input("module-selector", "value")],
-            [State('token-cache', 'data'), State('data-update-trigger', 'data')]
+            [Output("token-cache", "data"), Output("data-update-trigger", "data")],
+            [
+                Input("live-update-interval", "n_intervals"),
+                Input("agent-selector", "value"),
+                Input("module-selector", "value"),
+            ],
+            [State("token-cache", "data"), State("data-update-trigger", "data")],
         )
-        def fetch_live_data(n_intervals, selected_agent_id, selected_module_id,
-                            current_token_cache, current_trigger_val):
+        def fetch_live_data(
+            n_intervals,
+            selected_agent_id,
+            selected_module_id,
+            current_token_cache,
+            current_trigger_val,
+        ):
             ctx = dash.callback_context
-            triggered_prop_id = ctx.triggered[0]['prop_id'] if ctx.triggered else "initial_load"
+            triggered_prop_id = (
+                ctx.triggered[0]["prop_id"] if ctx.triggered else "initial_load"
+            )
 
             if not selected_agent_id or not selected_module_id or not ipc_queues:
-                return current_token_cache, dash.no_update # No change to trigger if no selection
+                return (
+                    current_token_cache,
+                    dash.no_update,
+                )
 
             request_q, response_q = ipc_queues
             module_key = f"{selected_agent_id}/{selected_module_id}"
-            
-            update_token_to_send = None
-            if 'live-update-interval.n_intervals' in triggered_prop_id:
-                update_token_to_send = current_token_cache.get(module_key)
-            
-            logger.debug(f"Dash app: Requesting data for {module_key} with token: {update_token_to_send}")
-            try:
-                request_q.put((selected_agent_id, selected_module_id, update_token_to_send))
-                data_chunk, next_token = response_q.get(timeout=(update_interval_sec * 0.9) if update_interval_sec else 4.5)
-                logger.debug(f"Dash app: Received data for {module_key}. Next token: {next_token}")
 
-                # Update in-memory Python dictionary for DataFrames
-                app_data_cache[module_key] = data_chunk 
-                
+            # Check if agent/module selection changed - if so, clear cache for this module
+            if any(
+                trigger["prop_id"] in ["agent-selector.value", "module-selector.value"]
+                for trigger in ctx.triggered
+                if trigger["prop_id"] != ""
+            ):
+                app_data_cache[module_key] = None  # Clear cache for new selection
+                update_token_to_send = None  # Start fresh
+            else:
+                update_token_to_send = current_token_cache.get(module_key)
+
+            logger.debug(
+                f"Dash app: Requesting data for {module_key} with token: {update_token_to_send}"
+            )
+            try:
+                request_q.put(
+                    (selected_agent_id, selected_module_id, update_token_to_send)
+                )
+                data_chunk, next_token = response_q.get(
+                    timeout=(update_interval_sec * 0.9) if update_interval_sec else 4.5
+                )
+                logger.debug(
+                    f"Dash app: Received data for {module_key}. Next token: {next_token}"
+                )
+
+                # Accumulate data in memory
+                if data_chunk is not None:
+                    if (
+                        app_data_cache.get(module_key) is None
+                        or update_token_to_send is None
+                    ):
+                        # First load or fresh start
+                        app_data_cache[module_key] = data_chunk
+                    else:
+                        # Append new data to existing dataframe
+                        existing_df = app_data_cache[module_key]
+                        if hasattr(data_chunk, "index") and hasattr(
+                            existing_df, "index"
+                        ):
+                            # Both are DataFrames - concatenate
+                            import pandas as pd
+
+                            app_data_cache[module_key] = pd.concat(
+                                [existing_df, data_chunk]
+                            )
+                        else:
+                            # Handle other data types as needed
+                            app_data_cache[module_key] = data_chunk
+
                 new_token_cache = current_token_cache.copy()
                 new_token_cache[module_key] = next_token
-                
+
                 # Increment trigger to signal data update for visualization callback
-                new_trigger_val = (current_trigger_val + 1) if current_trigger_val is not None else 0
+                new_trigger_val = (
+                    (current_trigger_val + 1) if current_trigger_val is not None else 0
+                )
                 return new_token_cache, new_trigger_val
 
             except queue.Empty:
-                logger.warning(f"Dash app: Timeout waiting for data from IPC for {module_key}")
-                return current_token_cache, dash.no_update 
+                logger.warning(
+                    f"Dash app: Timeout waiting for data from IPC for {module_key}"
+                )
+                return current_token_cache, dash.no_update
             except Exception as e:
-                logger.error(f"Dash app: Error in fetch_live_data for {module_key}: {e}", exc_info=True)
+                logger.error(
+                    f"Dash app: Error in fetch_live_data for {module_key}: {e}",
+                    exc_info=True,
+                )
                 return current_token_cache, dash.no_update
 
     # Callback for displaying module visualization
     @app.callback(
         Output("module-visualization-content", "children"),
-        [Input("agent-selector", "value"), 
-         Input("module-selector", "value"),
-         Input('data-update-trigger', 'data') if live_update else Input("module-selector", "value")],
+        [
+            Input("agent-selector", "value"),
+            Input("module-selector", "value"),
+            (
+                Input("data-update-trigger", "data")
+                if live_update
+                else Input("module-selector", "value")
+            ),
+        ],
         # The dummy Input for static mode (using module-selector again) is just to make Dash happy
         # with the conditional Input list. The value of this dummy input isn't used in static mode for this logic.
     )
-    def display_module_visualization(selected_agent_id, selected_module_id, data_update_trigger_val_or_dummy):
+    def display_module_visualization(
+        selected_agent_id, selected_module_id, data_update_trigger_val_or_dummy
+    ):
         if not selected_agent_id or not selected_module_id:
             return html.P("Select an agent and a module to view visualization.")
 
@@ -248,24 +327,33 @@ def create_dash_app(
             module_key = f"{selected_agent_id}/{selected_module_id}"
             # Read from the in-memory Python dictionary
             current_results_data = app_data_cache.get(module_key)
-            
+
             if current_results_data is None:
                 ctx = dash.callback_context
                 # Check if triggered by agent/module selection, if so, data is being fetched.
-                if ctx.triggered and any(trigger['prop_id'] in ['agent-selector.value', 'module-selector.value'] for trigger in ctx.triggered):
+                if ctx.triggered and any(
+                    trigger["prop_id"]
+                    in ["agent-selector.value", "module-selector.value"]
+                    for trigger in ctx.triggered
+                ):
                     return html.P(f"Fetching live data for {selected_module_id}...")
-                return html.P(f"No live data currently available for module '{selected_module_id}'.")
-        else: # Static mode
+                return html.P(
+                    f"No live data currently available for module '{selected_module_id}'."
+                )
+        else:  # Static mode
             if not static_results:
-                 return html.P("Static results not available.")
+                return html.P("Static results not available.")
             current_results_data = static_results.get(selected_agent_id, {}).get(
                 selected_module_id, "__no_key__"
             )
-            if isinstance(current_results_data, str) and current_results_data == "__no_key__":
+            if (
+                isinstance(current_results_data, str)
+                and current_results_data == "__no_key__"
+            ):
                 return html.P(
                     f"No results data key found for module '{selected_module_id}' in agent '{selected_agent_id}' (static mode)."
                 )
-        
+
         agent_modules_meta = agent_module_info.get(selected_agent_id, [])
         module_info_dict = next(
             (m for m in agent_modules_meta if m["id"] == selected_module_id), None
@@ -275,7 +363,7 @@ def create_dash_app(
             return html.P(
                 f"Module metadata for '{selected_module_id}' not found in agent '{selected_agent_id}'."
             )
-        
+
         try:
             class_path = module_info_dict["class_path"]
             module_path_str, class_name_str = class_path.rsplit(".", 1)
@@ -315,11 +403,12 @@ def create_dash_app(
                 f"An error occurred while generating the visualization for "
                 f"module '{selected_module_id}': {str(e)}"
             )
+
     return app
 
 
 def _run_dash_server(
-    app_factory_func, # This is create_dash_app
+    app_factory_func,  # This is create_dash_app
     # Args for create_dash_app:
     agent_module_info_arg: Dict,
     live_update_arg: bool,
@@ -343,7 +432,7 @@ def _run_dash_server(
     logger.info(f"Dash app server starting on http://{host}:{port}")
     try:
         # Set use_reloader=False to prevent issues with multiprocessing and threads
-        app.run_server(debug=False, port=port, host=host, use_reloader=False)
+        app.run(debug=False, port=port, host=host, use_reloader=False)
     except Exception as e:
         logger.error(f"Error running Dash server: {e}", exc_info=True)
 
@@ -358,7 +447,7 @@ def get_free_port():
                 return port
             except OSError:
                 port += 1
-        if port > 9000: # Avoid infinite loop in rare cases
+        if port > 9000:  # Avoid infinite loop in rare cases
             raise OSError("Could not find a free port between 8050 and 9000.")
 
 
@@ -405,7 +494,9 @@ def launch_mas_dashboard(
                         {"id": module_instance.id, "class_path": class_path}
                     )
     if not agent_module_info_for_app:
-        logger.warning("No agents or modules found in the MAS instance. Dashboard might be empty.")
+        logger.warning(
+            "No agents or modules found in the MAS instance. Dashboard might be empty."
+        )
 
     port = get_free_port()
     host = "0.0.0.0"
@@ -418,26 +509,26 @@ def launch_mas_dashboard(
         "update_interval_sec": update_interval_sec if live_update else None,
     }
 
-    ipc_listener_thread_obj = None # To store the thread object
-    stop_ipc_event_obj = None # To store the event object
+    ipc_listener_thread_obj = None  # To store the thread object
+    stop_ipc_event_obj = None  # To store the event object
 
     if live_update:
         request_q = multiprocessing.Queue()
         response_q = multiprocessing.Queue()
         factory_args_for_create_dash_app["ipc_queues"] = (request_q, response_q)
-        
+
         stop_ipc_event_obj = threading.Event()
         ipc_listener_thread_obj = threading.Thread(
             target=_ipc_listener_loop,
             args=(mas, request_q, response_q, stop_ipc_event_obj),
-            daemon=True
+            daemon=True,
         )
         ipc_listener_thread_obj.start()
-        
+
     webbrowser.open_new_tab(f"http://localhost:{port}")
 
     process_args_for_run_server = (
-        create_dash_app, # app_factory_func
+        create_dash_app,  # app_factory_func
         factory_args_for_create_dash_app["agent_module_info"],
         factory_args_for_create_dash_app["live_update"],
         factory_args_for_create_dash_app["static_results"],
@@ -451,10 +542,9 @@ def launch_mas_dashboard(
     if not block_main:
         ctx = multiprocessing.get_context("spawn")
         dashboard_process = ctx.Process(
-            target=_run_dash_server,
-            args=process_args_for_run_server
+            target=_run_dash_server, args=process_args_for_run_server
         )
-        dashboard_process.daemon = False # So main program can wait for it if needed
+        dashboard_process.daemon = False  # So main program can wait for it if needed
         dashboard_process.start()
         logger.info(
             f"MAS Dashboard is launching in a separate process on http://localhost:{port}"
@@ -467,14 +557,18 @@ def launch_mas_dashboard(
         # Run in main process
         _run_dash_server(*process_args_for_run_server)
         if live_update and stop_ipc_event_obj and ipc_listener_thread_obj:
-            logger.info("Main process dashboard finished. Attempting to stop IPC listener.")
+            logger.info(
+                "Main process dashboard finished. Attempting to stop IPC listener."
+            )
             stop_ipc_event_obj.set()
             # Send a stop signal through the queue as well to break out of q.get()
             if factory_args_for_create_dash_app["ipc_queues"]:
                 try:
-                    factory_args_for_create_dash_app["ipc_queues"][0].put((_STOP_IPC_LISTENER, None, None), timeout=0.1)
-                except Exception: # pragma: no cover
-                    pass 
+                    factory_args_for_create_dash_app["ipc_queues"][0].put(
+                        (_STOP_IPC_LISTENER, None, None), timeout=0.1
+                    )
+                except Exception:  # pragma: no cover
+                    pass
             ipc_listener_thread_obj.join(timeout=1.0)
             if ipc_listener_thread_obj.is_alive():
                 logger.warning("IPC listener thread did not stop in time.")

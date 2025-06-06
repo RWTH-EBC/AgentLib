@@ -201,69 +201,10 @@ class AgentLogger(BaseModule):
             df = df.loc[:, ~df.columns.duplicated(keep="first")]
         return df.sort_index()
 
-    @classmethod
-    def load_from_file_incremental(
-        cls,
-        filename: str,
-        start_line_index: int,
-        values_only: bool = True,
-        merge_sources: bool = True,
-    ) -> tuple[Optional[pd.DataFrame], int]:
-        """
-        Loads log file from a specific line index and consolidates it as a pandas DataFrame.
-
-        Args:
-            filename: The file to load.
-            start_line_index: The 0-based index of the line to start reading from.
-            values_only: If true, loads a file that only has values saved.
-            merge_sources: Merges variables by sources if True.
-
-        Returns:
-            A tuple (DataFrame_chunk, lines_read). DataFrame_chunk is None if no new lines.
-        """
-        chunks = []
-        lines_read_count = 0
-        try:
-            with open(filename, "r") as file:
-                for i, data_line in enumerate(file):
-                    if i < start_line_index:
-                        continue
-                    chunks.append(json.loads(data_line))
-                    lines_read_count += 1
-        except FileNotFoundError:
-            logger.warning(f"Log file {filename} not found for incremental load.")
-            return None, 0
-        
-        if not chunks:
-            return None, 0
-
-        full_dict = collections.ChainMap(*chunks)
-        df = pd.DataFrame.from_dict(full_dict, orient="index")
-        if df.empty:
-            return None, lines_read_count
-            
-        df.index = df.index.astype(float)
-        columns = (literal_eval(column) for column in df.columns)
-        df.columns = pd.MultiIndex.from_tuples(columns)
-
-        if not values_only:
-            def _load_agent_variable(var):
-                try:
-                    return AgentVariable.validate_data(var)
-                except TypeError:
-                    pass # pragma: no cover
-            df = df.applymap(_load_agent_variable)
-
-        if merge_sources:
-            df = df.droplevel(1, axis=1)
-            df = df.loc[:, ~df.columns.duplicated(keep="first")]
-        
-        return df.sort_index(), lines_read_count
-
     def get_results(self) -> pd.DataFrame:
         """Load the own filename"""
         # Ensure current in-memory logs are flushed before reading for static results
-        self._log() 
+        self._log()
         return self.load_from_file(
             filename=self.filename,
             values_only=self.config.values_only,
@@ -286,52 +227,81 @@ class AgentLogger(BaseModule):
         # last log interval is lost
         self._log()
 
-    def get_results_incremental(self, update_token: Optional[int] = None) -> tuple[Optional[pd.DataFrame], Optional[int]]:
-        """
-        Fetches results incrementally for live dashboard.
-        The update_token is the number of lines previously read.
-        """
-        self._log()  # Ensure all current in-memory logs are written to file
+    def get_results_incremental(
+        self, update_token: Optional[int] = None
+    ) -> tuple[Optional[pd.DataFrame], Optional[int]]:
+        """Fetches results incrementally for live dashboard."""
+        self._log()  # Ensure current logs are written
 
         if update_token is None:  # Initial call
+            df = self.load_from_file(
+                filename=self.filename,
+                values_only=self.config.values_only,
+                merge_sources=self.config.merge_sources,
+            )
             try:
-                df = self.load_from_file(
-                    filename=self.filename,
-                    values_only=self.config.values_only,
-                    merge_sources=self.config.merge_sources,
-                )
-                # Count lines in the file for the next token
-                lines_in_file = 0
-                try:
-                    with open(self.filename, "r") as f:
-                        lines_in_file = sum(1 for _ in f)
-                except FileNotFoundError:
-                    pass # File might have been cleaned up if empty initially
-                return df, lines_in_file
+                with open(self.filename, "r") as f:
+                    lines_in_file = sum(1 for _ in f)
             except FileNotFoundError:
-                logger.warning(f"Log file {self.filename} not found for initial load.")
-                return None, 0 # No data, next token is 0 lines
-            except Exception as e:
-                logger.error(f"Error during initial load_from_file for {self.filename}: {e}", exc_info=True)
-                return None, 0
-
-        else:  # Subsequent calls, update_token is the start_line_index
-            start_line_index = update_token
+                lines_in_file = 0
+            return df, lines_in_file
+        else:  # Incremental call
             df_chunk, lines_read = self.load_from_file_incremental(
                 filename=self.filename,
-                start_line_index=start_line_index,
+                start_line_index=update_token,
                 values_only=self.config.values_only,
                 merge_sources=self.config.merge_sources,
             )
             if df_chunk is None or df_chunk.empty:
-                return None, start_line_index # No new data, token remains same
-            
-            # The current implementation of load_from_file_incremental returns a full df
-            # of new lines. For dashboard, we might want to append or replace.
-            # For now, returning the chunk of new data.
-            # The dashboard will need to handle merging if it maintains a global state.
-            # However, our mas_dashboard currently replaces data.
-            return df_chunk, start_line_index + lines_read
+                return None, update_token
+            return df_chunk, update_token + lines_read
+
+    @classmethod
+    def load_from_file_incremental(
+        cls,
+        filename: str,
+        start_line_index: int,
+        values_only: bool = True,
+        merge_sources: bool = True,
+    ) -> tuple[Optional[pd.DataFrame], int]:
+        """Loads log file from a specific line index."""
+        chunks = []
+        lines_read_count = 0
+
+        try:
+            with open(filename, "r") as file:
+                for i, data_line in enumerate(file):
+                    if i < start_line_index:
+                        continue
+                    chunks.append(json.loads(data_line))
+                    lines_read_count += 1
+        except FileNotFoundError:
+            return None, 0
+
+        if not chunks:
+            return None, 0
+
+        full_dict = collections.ChainMap(*chunks)
+        df = pd.DataFrame.from_dict(full_dict, orient="index")
+        df.index = df.index.astype(float)
+        columns = (literal_eval(column) for column in df.columns)
+        df.columns = pd.MultiIndex.from_tuples(columns)
+
+        if not values_only:
+
+            def _load_agent_variable(var):
+                try:
+                    return AgentVariable.validate_data(var)
+                except TypeError:
+                    pass
+
+            df = df.applymap(_load_agent_variable)
+
+        if merge_sources:
+            df = df.droplevel(1, axis=1)
+            df = df.loc[:, ~df.columns.duplicated(keep="first")]
+
+        return df.sort_index(), lines_read_count
 
     @classmethod
     def visualize_results(

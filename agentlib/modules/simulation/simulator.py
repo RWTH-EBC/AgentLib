@@ -187,7 +187,7 @@ class SimulatorConfig(BaseModuleConfig):
         if not result_filename.endswith(".csv"):
             raise TypeError(
                 f"Given result_filename ends with "
-                f'{result_filename.split(".")[-1]} '
+                f"{result_filename.split('.')[-1]} "
                 f"but should be a .csv file"
             )
         if os.path.isfile(result_filename):
@@ -251,7 +251,7 @@ class SimulatorConfig(BaseModuleConfig):
         states = info.data.get("states")
         if "type" not in model:
             raise KeyError(
-                "Given model config does not " "contain key 'type' (type of the model)."
+                "Given model config does not contain key 'type' (type of the model)."
             )
         _type = model.pop("type")
         if isinstance(_type, dict):
@@ -500,79 +500,73 @@ class Simulator(BaseModule):
         if self.config.result_filename and Path(self.config.result_filename).exists():
             os.remove(self.config.result_filename)
 
-    def get_results_incremental(self, update_token: Optional[int] = None) -> tuple[Optional[pd.DataFrame], Optional[int]]:
-        """
-        Fetches simulation results incrementally.
-        If a result_filename is configured, it reads new data from the CSV.
-        Otherwise, it uses the in-memory SimulatorResults.
-        The update_token typically represents the number of data rows previously sent.
-        """
+    def get_results_incremental(
+        self, update_token: Optional[int] = None
+    ) -> tuple[Optional[pd.DataFrame], Optional[int]]:
+        """Fetches simulation results incrementally."""
         if not self.config.save_results:
             return None, None
 
         if self.config.result_filename:
-            # Results are being written to a CSV file
-            if self._result is not None and hasattr(self._result, 'write_results'):
-                 # Ensure latest in-memory portion is flushed to CSV
-                self._result.write_results(self.config.result_filename)
-            
+            # Results are in CSV file
+            self._result.write_results(self.config.result_filename)
             file_path = Path(self.config.result_filename)
-            if not file_path.exists():
-                return None, 0 # Or update_token if not None? Consistent with others: 0 for no file.
 
-            if update_token is None: # Initial call
+            if not file_path.exists():
+                return None, 0
+
+            if update_token is None:  # Initial call
+                df = read_simulator_results(str(file_path))
+                # Apply same processing as get_results()
+                df = df.droplevel(level=2, axis=1).droplevel(level=0, axis=1)
+                return df, len(df)
+            else:  # Incremental call
                 try:
-                    df = read_simulator_results(str(file_path))
-                    return df, len(df) if df is not None else 0
-                except Exception as e:
-                    self.logger.error(f"Error reading full result file {file_path} for incremental: {e}")
-                    return None, 0
-            else: # Incremental call, update_token is previous row count
-                try:
-                    # skiprows needs to account for header (1 line) + previous data rows
-                    df_chunk = pd.read_csv(file_path, header=[0, 1, 2], index_col=0, skiprows=range(1, update_token + 1))
+                    # Skip header (3 lines) + previous data rows
+                    df_chunk = pd.read_csv(
+                        file_path,
+                        header=[0, 1, 2],
+                        index_col=0,
+                        skiprows=range(1, update_token + 1),
+                    )
                     if df_chunk.empty:
                         return None, update_token
+                    # Apply same processing as get_results()
+                    df_chunk = df_chunk.droplevel(level=2, axis=1).droplevel(
+                        level=0, axis=1
+                    )
                     return df_chunk, update_token + len(df_chunk)
-                except Exception as e:
-                    self.logger.error(f"Error reading incremental result file {file_path}: {e}")
-                    return None, update_token # Return old token on error
+                except pd.errors.EmptyDataError:
+                    return None, update_token
         else:
-            # Results are in memory (self._result)
-            if self._result is None: # Should not happen if save_results is True
-                return None, None
-
-            current_total_rows = len(self._result.index) -1 # -1 because last row is often incomplete
+            # Results are in memory
+            current_total_rows = (
+                len(self._result.index) - 1
+            )  # Exclude incomplete last row
             if current_total_rows <= 0:
                 return None, 0
 
-            if update_token is None: # Initial call
-                df = self._result.df() # Gets all valid rows
-                return df, len(df) if df is not None else 0
-            else: # Incremental call
-                prev_rows_sent = update_token
-                if prev_rows_sent >= current_total_rows:
-                    return None, prev_rows_sent # No new rows
+            if update_token is None:  # Initial call
+                df = self._result.df()
+                df = df.droplevel(level=2, axis=1).droplevel(level=0, axis=1)
+                return df, len(df)
+            else:  # Incremental call
+                if update_token >= current_total_rows:
+                    return None, update_token
 
-                # Slice the new data. self._result.data and .index include the potentially incomplete last row.
-                # self._result.df() correctly excludes it.
-                # We need to be careful with indices.
-                # Let's re-construct a DF from the slice of valid data.
-                
-                # Valid data is up to current_total_rows (exclusive of the last item in self.data/index)
-                new_data_slice = self._result.data[prev_rows_sent:current_total_rows]
-                new_index_slice = self._result.index[prev_rows_sent:current_total_rows]
+                new_data_slice = self._result.data[update_token:current_total_rows]
+                new_index_slice = self._result.index[update_token:current_total_rows]
 
                 if not new_data_slice:
-                    return None, prev_rows_sent
+                    return None, update_token
 
-                df_chunk = pd.DataFrame(new_data_slice, index=new_index_slice, columns=self._result.columns)
-                
-                # df_chunk might need droplevel like in get_results()
-                df_chunk_processed = df_chunk.droplevel(level=2, axis=1).droplevel(level=0, axis=1)
-                
-                return df_chunk_processed, current_total_rows
-        return None, None # Fallback
+                df_chunk = pd.DataFrame(
+                    new_data_slice, index=new_index_slice, columns=self._result.columns
+                )
+                df_chunk = df_chunk.droplevel(level=2, axis=1).droplevel(
+                    level=0, axis=1
+                )
+                return df_chunk, current_total_rows
 
     @classmethod
     def visualize_results(
@@ -590,9 +584,11 @@ class Simulator(BaseModule):
             )
 
         if results_data is None or results_data.empty:
-            cls.logger.debug(f"No results data for Simulator '{module_id}' in agent '{agent_id}'.")
+            cls.logger.debug(
+                f"No results data for Simulator '{module_id}' in agent '{agent_id}'."
+            )
             return None
-        
+
         if not isinstance(results_data, pd.DataFrame):
             cls.logger.error(
                 f"Expected pandas DataFrame for Simulator results for '{module_id}', got {type(results_data)}."
@@ -616,7 +612,7 @@ class Simulator(BaseModule):
                     title=str(column),
                     xaxis_title="Time",
                     yaxis_title="Value",
-                    margin=dict(l=40, r=20, t=40, b=30), # Compact margins
+                    margin=dict(l=40, r=20, t=40, b=30),  # Compact margins
                     height=250,  # Reduced height for compactness
                 )
                 # Add plot to a column, aim for 2 plots per row on medium screens
@@ -626,23 +622,25 @@ class Simulator(BaseModule):
                 if len(current_row_children) == 2 or i == len(results_data.columns) - 1:
                     rows.append(dbc.Row(current_row_children, className="mb-3"))
                     current_row_children = []
-                    
+
         except Exception as e:
             cls.logger.error(f"Error creating plots for Simulator '{module_id}': {e}")
-            return None 
+            return None
 
         if not rows:
-            cls.logger.debug(f"No plottable data generated for Simulator '{module_id}'.")
+            cls.logger.debug(
+                f"No plottable data generated for Simulator '{module_id}'."
+            )
             return None
 
         return html.Div(
             children=[
                 html.H4(
                     f"Simulator Results: {module_id} (Agent: {agent_id})",
-                    className="mb-3" # Add some margin below the title
+                    className="mb-3",  # Add some margin below the title
                 )
             ]
-            + rows, # Add the list of dbc.Row components
+            + rows,  # Add the list of dbc.Row components
             style={"padding": "10px"},
         )
 
