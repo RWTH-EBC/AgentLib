@@ -708,6 +708,43 @@ class BaseModule(abc.ABC):
             Some form of results data, often in the form of a pandas DataFrame.
         """
 
+    def get_results_incremental(self, update_token: Optional[Any] = None) -> tuple[Any, Optional[Any]]:
+        """
+        Fetches results suitable for incremental updates in a live dashboard.
+
+        This method is intended to be overridden by subclasses that support
+        incremental data fetching for live visualization. The `update_token`
+        allows the module to return only new or changed data since the last
+        call.
+
+        Args:
+            update_token: An optional token from the previous call. If None,
+                          the module should typically return its full current data.
+                          The nature of the token is module-specific.
+
+        Returns:
+            A tuple (results_chunk, next_update_token):
+            - results_chunk: The data to be sent to the dashboard (e.g.,
+                             a pandas DataFrame, a list of new entries).
+            - next_update_token: A token for the dashboard to use in the
+                                 next call to this method. Can be None if no
+                                 further incremental updates are supported by
+                                 this specific call or if the module doesn't
+                                 support incremental updates beyond the initial fetch.
+        """
+        if update_token is None:
+            # Default behavior for the first call or for modules not fully
+            # implementing incremental logic: return all results from the
+            # existing get_results() method. The None token indicates that
+            # this is the complete data for now, or that no further
+            # *incremental* steps are defined by this default implementation.
+            return self.get_results(), None
+        # If an update_token is provided but this base method is called
+        # (i.e., not overridden with more specific incremental logic),
+        # it implies no further *new* data based on this token according
+        # to the default implementation.
+        return None, None
+
     def cleanup_results(self):
         """
         Deletes all files this module created.

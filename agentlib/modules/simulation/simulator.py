@@ -497,8 +497,82 @@ class Simulator(BaseModule):
     def cleanup_results(self):
         if not self.config.save_results or not self.config.result_filename:
             return
-        os.remove(self.config.result_filename)
+        if self.config.result_filename and Path(self.config.result_filename).exists():
+            os.remove(self.config.result_filename)
 
+    def get_results_incremental(self, update_token: Optional[int] = None) -> tuple[Optional[pd.DataFrame], Optional[int]]:
+        """
+        Fetches simulation results incrementally.
+        If a result_filename is configured, it reads new data from the CSV.
+        Otherwise, it uses the in-memory SimulatorResults.
+        The update_token typically represents the number of data rows previously sent.
+        """
+        if not self.config.save_results:
+            return None, None
+
+        if self.config.result_filename:
+            # Results are being written to a CSV file
+            if self._result is not None and hasattr(self._result, 'write_results'):
+                 # Ensure latest in-memory portion is flushed to CSV
+                self._result.write_results(self.config.result_filename)
+            
+            file_path = Path(self.config.result_filename)
+            if not file_path.exists():
+                return None, 0 # Or update_token if not None? Consistent with others: 0 for no file.
+
+            if update_token is None: # Initial call
+                try:
+                    df = read_simulator_results(str(file_path))
+                    return df, len(df) if df is not None else 0
+                except Exception as e:
+                    self.logger.error(f"Error reading full result file {file_path} for incremental: {e}")
+                    return None, 0
+            else: # Incremental call, update_token is previous row count
+                try:
+                    # skiprows needs to account for header (1 line) + previous data rows
+                    df_chunk = pd.read_csv(file_path, header=[0, 1, 2], index_col=0, skiprows=range(1, update_token + 1))
+                    if df_chunk.empty:
+                        return None, update_token
+                    return df_chunk, update_token + len(df_chunk)
+                except Exception as e:
+                    self.logger.error(f"Error reading incremental result file {file_path}: {e}")
+                    return None, update_token # Return old token on error
+        else:
+            # Results are in memory (self._result)
+            if self._result is None: # Should not happen if save_results is True
+                return None, None
+
+            current_total_rows = len(self._result.index) -1 # -1 because last row is often incomplete
+            if current_total_rows <= 0:
+                return None, 0
+
+            if update_token is None: # Initial call
+                df = self._result.df() # Gets all valid rows
+                return df, len(df) if df is not None else 0
+            else: # Incremental call
+                prev_rows_sent = update_token
+                if prev_rows_sent >= current_total_rows:
+                    return None, prev_rows_sent # No new rows
+
+                # Slice the new data. self._result.data and .index include the potentially incomplete last row.
+                # self._result.df() correctly excludes it.
+                # We need to be careful with indices.
+                # Let's re-construct a DF from the slice of valid data.
+                
+                # Valid data is up to current_total_rows (exclusive of the last item in self.data/index)
+                new_data_slice = self._result.data[prev_rows_sent:current_total_rows]
+                new_index_slice = self._result.index[prev_rows_sent:current_total_rows]
+
+                if not new_data_slice:
+                    return None, prev_rows_sent
+
+                df_chunk = pd.DataFrame(new_data_slice, index=new_index_slice, columns=self._result.columns)
+                
+                # df_chunk might need droplevel like in get_results()
+                df_chunk_processed = df_chunk.droplevel(level=2, axis=1).droplevel(level=0, axis=1)
+                
+                return df_chunk_processed, current_total_rows
+        return None, None # Fallback
 
     @classmethod
     def visualize_results(

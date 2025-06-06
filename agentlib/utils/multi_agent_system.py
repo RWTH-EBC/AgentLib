@@ -166,7 +166,9 @@ class LocalMASAgency(MAS):
         for agent in self._agents.values():
             agent.terminate()
 
-    def show_results_dashboard(self, cleanup_results: bool = False, block_main=True):
+    def show_results_dashboard(
+        self, cleanup_results: bool = False, block_main=True, live=False
+    ):
         """
         Launches an interactive dashboard to visualize the results of the MAS.
 
@@ -193,7 +195,7 @@ class LocalMASAgency(MAS):
         try:
             # launch_mas_dashboard now returns the process
             dashboard_process = launch_mas_dashboard(
-                mas=self, mas_results=results, block_main=block_main
+                mas=self, mas_results=results, block_main=block_main, live_update=live
             )
             return dashboard_process
         except Exception as e:

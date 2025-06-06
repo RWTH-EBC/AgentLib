@@ -5,6 +5,7 @@ Module contains basics communicator modules
 import abc
 import collections
 import json
+import logging
 import os
 import queue
 import threading
@@ -19,6 +20,8 @@ from agentlib.core.datamodels import AgentVariable
 from agentlib.core.errors import OptionalDependencyError
 from agentlib.utils.broker import Broker
 from agentlib.utils.validators import convert_to_list
+
+logger = logging.getLogger(__name__)  # Added logger initialization
 
 
 class CommunicationDict(TypedDict):
@@ -129,7 +132,8 @@ class Communicator(BaseModule):
             )
 
         if (
-            Path(self._communication_log_filename).exists()
+            self._communication_log_filename is not None  # Ensure filename is not None
+            and Path(self._communication_log_filename).exists()
             and self.config.communication_log_overwrite
         ):
             try:
@@ -196,9 +200,15 @@ class Communicator(BaseModule):
         self.logger.debug("Sending variable %s=%s", variable.alias, variable.value)
 
         # Logging for 'sent' messages
-        if self.config.communication_log_level == "basic":
+        if (
+            self.config.communication_log_level == "basic"
+            and self._sent_alias_counts is not None
+        ):
             self._sent_alias_counts[payload["alias"]] += 1
-        elif self.config.communication_log_level == "detail":
+        elif (
+            self.config.communication_log_level == "detail"
+            and self._communication_log_batch is not None
+        ):
             log_entry = {
                 "timestamp": self.env.time,
                 "direction": "sent",
@@ -326,6 +336,8 @@ class Communicator(BaseModule):
                     ) as f:
                         for line in f:
                             log_entries.append(json.loads(line))
+                    if not log_entries:  # Handle empty log file
+                        return pd.DataFrame()
                     df = pd.DataFrame(log_entries)
                     return df
                 except Exception as e:
@@ -336,17 +348,132 @@ class Communicator(BaseModule):
             return pd.DataFrame()  # Return empty DataFrame if file doesn't exist
         return None
 
-    def cleanup_results(self):
-        """Deletes the communication log file if 'detail' logging was active and cleanup is configured."""
+    @classmethod
+    def _load_detail_log_incremental(
+        cls, filename: str, start_line_index: int
+    ) -> tuple[Optional[pd.DataFrame], int]:
+        """
+        Loads detail log file from a specific line index.
+        Returns a DataFrame chunk and the number of lines read from that point.
+        """
+        log_entries = []
+        lines_read_count = 0
         try:
-            os.remove(self._communication_log_filename)
-            self.logger.info(
-                f"Cleaned up communication log file: {self._communication_log_filename}"
+            with open(filename, "r", encoding="utf-8") as f:
+                for i, line in enumerate(f):
+                    if i < start_line_index:
+                        continue
+                    log_entries.append(json.loads(line))
+                    lines_read_count += 1
+        except FileNotFoundError:
+            logger.warning(
+                f"Detail log file {filename} not found for incremental load."
             )
-        except OSError as e:
-            self.logger.error(
-                f"Error cleaning up communication log file {self._communication_log_filename}: {e}"
+            return None, 0
+
+        if not log_entries:
+            return None, 0
+
+        try:
+            df = pd.DataFrame(log_entries)
+            return df, lines_read_count
+        except Exception as e:  # pragma: no cover
+            logger.error(
+                f"Error creating DataFrame from incremental detail log {filename}: {e}"
             )
+            return None, lines_read_count
+
+    def get_results_incremental(
+        self, update_token: Optional[Any] = None
+    ) -> tuple[Optional[Union[dict, pd.DataFrame]], Optional[Any]]:
+        """Returns logged communication data incrementally."""
+        log_level = self.config.communication_log_level
+
+        if log_level == "none":
+            return None, None
+
+        elif log_level == "basic":
+            current_counts = {
+                "sent_counts": dict(self._sent_alias_counts or {}),
+                "received_counts": {
+                    str(
+                        k
+                    ): v  # Ensure keys are strings for JSON compatibility if ever needed
+                    for k, v in (self._received_source_alias_counts or {}).items()
+                },
+            }
+            # For basic, token could be a hash of the dict, or just the dict itself for comparison.
+            # If no token, or token is different from current, send current.
+            if update_token is None or update_token != current_counts:
+                return current_counts, current_counts  # Next token is the current state
+            return None, update_token  # No change
+
+        elif log_level == "detail":
+            self._flush_detail_log()  # Ensure all data is written
+            if (
+                not self._communication_log_filename
+                or not Path(self._communication_log_filename).exists()
+            ):
+                return None, update_token if update_token is not None else 0
+
+            if update_token is None:  # Initial call, load all
+                try:
+                    # Use existing get_results which handles loading full detail log
+                    df = self.get_results()
+                    lines_in_file = 0
+                    if df is not None and not df.empty:
+                        # Count lines in the file for the next token
+                        with open(
+                            self._communication_log_filename, "r", encoding="utf-8"
+                        ) as f:
+                            lines_in_file = sum(1 for _ in f)
+                    elif (
+                        df is None
+                    ):  # get_results might return None if file is empty or error
+                        df = pd.DataFrame()  # Ensure we return a DataFrame
+                    return df, lines_in_file
+                except Exception as e:  # pragma: no cover
+                    self.logger.error(
+                        f"Error in initial detail log load for get_results_incremental: {e}"
+                    )
+                    return pd.DataFrame(), 0
+            else:  # Incremental call, update_token is previous line count
+                try:
+                    start_line_index = int(update_token)
+                except ValueError:  # pragma: no cover
+                    self.logger.error(
+                        f"Invalid update_token for detail log: {update_token}. Expected int."
+                    )
+                    return (
+                        pd.DataFrame(),
+                        0,
+                    )  # Fallback to sending empty and resetting token
+
+                df_chunk, lines_read = self._load_detail_log_incremental(
+                    filename=self._communication_log_filename,
+                    start_line_index=start_line_index,
+                )
+                if df_chunk is None or df_chunk.empty:
+                    return None, start_line_index  # No new data, token unchanged
+                return df_chunk, start_line_index + lines_read
+        return None, None
+
+    def cleanup_results(self):
+        """Deletes the communication log file if 'detail' logging was active."""
+        if (
+            self.config.communication_log_level == "detail"
+            and self._communication_log_filename
+        ):
+            try:
+                if Path(self._communication_log_filename).exists():
+                    os.remove(self._communication_log_filename)
+                    self.logger.info(
+                        f"Cleaned up communication log file: {self._communication_log_filename}"
+                    )
+            except OSError as e:
+                self.logger.error(
+                    f"Error cleaning up communication log file {self._communication_log_filename}: {e}"
+                )
 
     @classmethod
     def visualize_results(
