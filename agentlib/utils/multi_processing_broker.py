@@ -4,16 +4,16 @@ enables communication across different processes.
 """
 
 import json
+import logging
 import multiprocessing
-from ipaddress import IPv4Address
-from multiprocessing.managers import SyncManager
 import threading
 import time
 from collections import namedtuple
-from typing import Union
-import logging
-
+from ipaddress import IPv4Address
+from multiprocessing.managers import SyncManager
 from pathlib import Path
+from typing import Union
+
 from pydantic import BaseModel, Field, FilePath
 
 from .broker import Broker
@@ -23,6 +23,9 @@ logger = logging.getLogger(__name__)
 
 MPClient = namedtuple("MPClient", ["agent_id", "read", "write"])
 Message = namedtuple("Message", ["agent_id", "payload"])
+MPSubscriptionClient = namedtuple(
+    "MPSubscriptionClient", ["agent_id", "read", "write", "subscriptions"]
+)
 
 
 class BrokerManager(SyncManager):
@@ -67,6 +70,10 @@ class MultiProcessingBroker(Broker):
             self.config = MultiProcessingBrokerConfig()
         else:
             self.config = config
+
+        logger.info(
+            f"Starting Multiprocessing Broker on {(self.config.ipv4, self.config.port)}"
+        )
         server = multiprocessing.Process(
             target=self._server, name="Broker_Server", args=(self.config,), daemon=True
         )
@@ -181,6 +188,74 @@ class MultiProcessingBroker(Broker):
         with self.lock:
             for client in list(self._clients):
                 if client.agent_id != source:
+                    try:
+                        client.write.send(message)
+                    except BrokenPipeError:
+                        pass
+
+
+class MultiProcessingSubscriptionBroker(MultiProcessingBroker):
+    """
+    Subscription-based multiprocessing broker that only sends messages to
+    clients subscribed to the sender's agent_id.
+    """
+
+    def _signup_handler(self):
+        """Connects to the manager queue and processes the signup requests. Starts a
+        child thread listening to messages from each client."""
+        from multiprocessing.managers import BaseManager
+
+        class QueueManager(BaseManager):
+            pass
+
+        QueueManager.register("get_queue")
+        m = QueueManager(
+            address=(self.config.ipv4, self.config.port), authkey=self.config.authkey
+        )
+        started_wait = time.time()
+        while True:
+            try:
+                m.connect()
+                break
+            except ConnectionRefusedError:
+                time.sleep(0.01)
+            if time.time() - started_wait > 10:
+                raise RuntimeError("Could not connect to server.")
+
+        signup_queue = m.get_queue()
+
+        while True:
+            try:
+                client = signup_queue.get()
+            except ConnectionResetError:
+                logger.info("Multiprocessing Subscription Broker disconnected.")
+                break
+
+            with self.lock:
+                self._clients.add(client)
+
+            # send the client an ack its messages are now being received
+            client.write.send(1)
+            threading.Thread(
+                target=self._client_loop,
+                args=(client,),
+                name=f"MPSubBroker_{client.agent_id}",
+                daemon=True,
+            ).start()
+
+    def send(self, source, message):
+        """
+        Send the given message to subscribed clients only.
+        Args:
+            source: Source agent_id to match against subscriptions
+            message: The message to send
+        """
+        # lock is required so the clients loop does not change size during
+        # iteration if clients are added or removed
+        with self.lock:
+            for client in list(self._clients):
+                # Check if this client is subscribed to the source agent
+                if source in client.subscriptions:
                     try:
                         client.write.send(message)
                     except BrokenPipeError:

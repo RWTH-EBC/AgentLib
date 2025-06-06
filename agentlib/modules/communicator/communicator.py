@@ -240,6 +240,48 @@ class Communicator(BaseModule):
             source=self.agent.id,
         )
 
+    def _handle_received_variable(
+        self, variable: AgentVariable, remote_agent_id: Optional[str] = None
+    ):
+        """
+        Centralized handler for received variables that manages logging and forwarding.
+
+        Args:
+            variable: The received AgentVariable
+            remote_agent_id: ID of the sending agent (if known and different from variable.source.agent_id)
+        """
+        # Use remote_agent_id if provided, otherwise fall back to variable's source
+        source_agent_id = remote_agent_id or variable.source.agent_id
+
+        # Handle logging for received messages
+        if (
+            self.config.communication_log_level == "basic"
+            and self._received_source_alias_counts is not None
+        ):
+            self._received_source_alias_counts[(source_agent_id, variable.alias)] += 1
+        elif (
+            self.config.communication_log_level == "detail"
+            and self._communication_log_batch is not None
+        ):
+            log_entry = {
+                "timestamp": self.env.time,
+                "direction": "received",
+                "own_agent_id": self.agent.id,
+                "remote_agent_id": source_agent_id,
+                "alias": variable.alias,
+            }
+            self._communication_log_batch.append(log_entry)
+
+        # Forward to data broker
+        self.agent.data_broker.send_variable(variable)
+
+        self.logger.debug(
+            "Received and processed variable %s=%s from source %s",
+            variable.alias,
+            variable.value,
+            source_agent_id,
+        )
+
     def to_json(self, payload: CommunicationDict) -> Union[bytes, str]:
         """Transforms the payload into json serialized form. Dynamically uses orjson
         if it is installed, and the builtin json otherwise.
@@ -587,7 +629,7 @@ class LocalCommunicator(Communicator):
         """Function to set up the broker object.
         Needs to return a valid broker option."""
         raise NotImplementedError(
-            "This method needs to be implemented " "individually for each communicator"
+            "This method needs to be implemented individually for each communicator"
         )
 
     def _process(self):
@@ -607,30 +649,8 @@ class LocalCommunicator(Communicator):
     def _send_simpy(self, ignored):
         """Sends new messages to the broker when receiving them, adhering to the
         simpy event queue. To be appended to a simpy event callback."""
-        variable = self._msg_q_in.get_nowait()  # This is an AgentVariable
-
-        # Logging for 'received' messages (SimPy path)
-        if (
-            self.config.communication_log_level == "basic"
-            and self._received_source_alias_counts is not None
-        ):
-            self._received_source_alias_counts[
-                (variable.source.agent_id, variable.alias)
-            ] += 1
-        elif (
-            self.config.communication_log_level == "detail"
-            and self._communication_log_batch is not None
-        ):
-            log_entry = {
-                "timestamp": self.env.time,  # Log at time of processing from queue
-                "direction": "received",
-                "own_agent_id": self.agent.id,
-                "remote_agent_id": variable.source.agent_id,
-                "alias": variable.alias,
-            }
-            self._communication_log_batch.append(log_entry)
-
-        self.agent.data_broker.send_variable(variable)
+        variable = self._msg_q_in.get_nowait()
+        self._handle_received_variable(variable)
 
     def _receive(self, msg_obj):  # msg_obj is raw from broker
         """Receive a given message and put it in the queue and set the
@@ -654,30 +674,8 @@ class LocalCommunicator(Communicator):
     def _message_handler(self):  # Realtime message handler
         """Reads messages that were put in the message queue."""
         while True:
-            variable = self._msg_q_in.get()  # This is an AgentVariable
-            log_time = self.env.time
-
-            if (
-                self.config.communication_log_level == "basic"
-                and self._received_source_alias_counts is not None
-            ):
-                self._received_source_alias_counts[
-                    (variable.source.agent_id, variable.alias)
-                ] += 1
-            elif (
-                self.config.communication_log_level == "detail"
-                and self._communication_log_batch is not None
-            ):
-                log_entry = {
-                    "timestamp": log_time,
-                    "direction": "received",
-                    "own_agent_id": self.agent.id,
-                    "remote_agent_id": variable.source.agent_id,
-                    "alias": variable.alias,
-                }
-                self._communication_log_batch.append(log_entry)
-
-            self.agent.data_broker.send_variable(variable)
+            variable = self._msg_q_in.get()
+            self._handle_received_variable(variable)
 
     def terminate(self):
         self.broker.delete_client(self)

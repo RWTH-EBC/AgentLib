@@ -5,15 +5,14 @@ from typing import Union, List, Optional
 
 from pydantic import AnyUrl, Field, ValidationError, field_validator
 
+from agentlib.core import Agent
+from agentlib.core.datamodels import AgentVariable
+from agentlib.core.errors import InitializationError, OptionalDependencyError
 from agentlib.modules.communicator.communicator import (
     Communicator,
     SubscriptionCommunicatorConfig,
 )
-from agentlib.core import Agent
-from agentlib.core.datamodels import AgentVariable
-from agentlib.core.errors import InitializationError
 from agentlib.utils.validators import convert_to_list
-from agentlib.core.errors import OptionalDependencyError
 
 try:
     from paho.mqtt.client import (
@@ -206,12 +205,11 @@ class BaseMqttClient(Communicator):
         """
         agent_inp = AgentVariable.from_json(msg.payload)
         self.logger.debug(
-            "Received variable %s = %s from source %s",
+            "Received MQTT message for variable %s from source %s",
             agent_inp.alias,
-            agent_inp.value,
             agent_inp.source,
         )
-        self.agent.data_broker.send_variable(agent_inp)
+        self._handle_received_variable(agent_inp)
 
     def _subscribe_callback(self, client, userdata, mid, reasonCodes, properties):
         """Log if the subscription was successful"""
