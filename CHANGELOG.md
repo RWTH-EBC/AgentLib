@@ -3,6 +3,7 @@
 ## 0.9.0
 - Add an optional dashboard function to the mas utility.
 - Add optional results logging for communicators.
+- Add subcription based multiprocessing.
 
 ## 0.8.8
 - Percentage display in logging now only appears in simulation speed, not realtime. Fixed percentage when environment has an offset.
