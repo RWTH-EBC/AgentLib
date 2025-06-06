@@ -29,11 +29,11 @@ def run_example(until, with_plots=True, log_level=logging.INFO, with_dashboard=F
         variable_logging=True,
     )
     # Simulate
-    if with_dashboard:
-        mas.show_results_dashboard(cleanup_results=False, block_main=False, live=True)
+
     mas.run(until=until)
     # Load results:
-
+    if with_dashboard:
+        mas.show_results_dashboard(cleanup_results=False, block_main=False, live=False)
     results = mas.get_results(cleanup=True)
 
     if not with_plots:
@@ -104,4 +104,4 @@ def run_example(until, with_plots=True, log_level=logging.INFO, with_dashboard=F
 
 
 if __name__ == "__main__":
-    run_example(until=86400 / 0.0001, with_plots=True, with_dashboard=True)
+    run_example(until=86400 / 10, with_plots=True, with_dashboard=True)
