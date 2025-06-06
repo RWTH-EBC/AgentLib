@@ -13,7 +13,6 @@
       "save_results": true,
       "overwrite_result_file": true,
       "result_filename": "res_room1.csv",
-      "overwrite_result_file": true,
       "inputs": [
         {
           "name": "Q_flow_heat",
@@ -22,7 +21,8 @@
         {
           "name": "T_oda",
           "value": 273.15
-        }],
+        }
+      ],
       "outputs": [
         {
           "name": "T_air"
@@ -32,8 +32,12 @@
     {
       "module_id": "ComLocal",
       "type": "local",
-      "subscriptions": ["PIDAgent", "TRYSensorAgent"],
-      "parse_json": true
+      "subscriptions": [
+        "PIDAgent",
+        "TRYSensorAgent"
+      ],
+      "parse_json": true,
+      "communication_log_level": "detail"
     }
   ]
 }

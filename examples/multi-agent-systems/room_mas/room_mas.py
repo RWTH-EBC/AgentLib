@@ -8,7 +8,7 @@ from agentlib.utils.multi_agent_system import LocalMASAgency
 logger = logging.getLogger(__name__)
 
 
-def run_example(until, with_plots=True, log_level=logging.INFO):
+def run_example(until, with_plots=True, log_level=logging.INFO, with_dashboard=False):
     # Start by setting the log-level
     logging.basicConfig(level=log_level)
 
@@ -31,12 +31,9 @@ def run_example(until, with_plots=True, log_level=logging.INFO):
     # Simulate
     mas.run(until=until)
     # Load results:
-    try:
-        mas.show_results_dashboard(
-            cleanup_results=False, block_main=False
-        )  # Keep results for dashboard
-    except Exception as e:
-        logger.error(f"Could not launch MAS dashboard: {e}")
+    if with_dashboard:
+        mas.show_results_dashboard(cleanup_results=False, block_main=False)
+
     results = mas.get_results(cleanup=True)
 
     if not with_plots:
@@ -107,4 +104,4 @@ def run_example(until, with_plots=True, log_level=logging.INFO):
 
 
 if __name__ == "__main__":
-    run_example(until=86400 / 10, with_plots=True)
+    run_example(until=86400 / 10, with_plots=True, with_dashboard=True)

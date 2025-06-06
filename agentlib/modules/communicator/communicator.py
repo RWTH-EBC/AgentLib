@@ -47,7 +47,7 @@ class CommunicatorConfig(BaseModuleConfig):
         description="Filename for 'detail' logging. Defaults to 'communicator_logs/{agent_id}_{module_id}.jsonl'.",
     )
     communication_log_overwrite: bool = Field(
-        default=False,
+        default=True,
         title="Overwrite Communication Log",
         description="If true, existing log file will be overwritten at the start.",
     )
