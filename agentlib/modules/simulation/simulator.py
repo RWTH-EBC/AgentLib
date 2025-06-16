@@ -509,7 +509,6 @@ class Simulator(BaseModule):
 
         if self.config.result_filename:
             # Results are in CSV file
-            self._result.write_results(self.config.result_filename)
             file_path = Path(self.config.result_filename)
 
             if not file_path.exists():
@@ -584,16 +583,12 @@ class Simulator(BaseModule):
             )
 
         if results_data is None or results_data.empty:
-            cls.logger.debug(
-                f"No results data for Simulator '{module_id}' in agent '{agent_id}'."
-            )
             return None
 
         if not isinstance(results_data, pd.DataFrame):
-            cls.logger.error(
+            raise ValueError(
                 f"Expected pandas DataFrame for Simulator results for '{module_id}', got {type(results_data)}."
             )
-            return None
 
         rows = []
         current_row_children = []
