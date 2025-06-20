@@ -5,7 +5,6 @@ import collections
 import json
 import logging
 import os
-import time
 from ast import literal_eval
 from pathlib import Path
 from typing import Union, Optional
@@ -99,13 +98,24 @@ class AgentLogger(BaseModule):
             # Use agent ID to create a default filename
             logs_dir = Path("agent_logs")
             logs_dir.mkdir(exist_ok=True)
-            self._filename = str(logs_dir / f"{self.agent.id}.jsonl")
+            default_filename = logs_dir / f"{self.agent.id}.jsonl"
 
-            # Handle file exists case based on overwrite_log setting
-            if Path(self._filename).exists() and not self.config.overwrite_log:
-                # Generate a unique filename by appending a timestamp
-                timestamp = int(time.time())
-                self._filename = str(logs_dir / f"{self.agent.id}_{timestamp}.jsonl")
+            # Handle file existence based on overwrite_log setting
+            if default_filename.exists():
+                if self.config.overwrite_log:
+                    # If overwrite is true, delete the existing file
+                    default_filename.unlink()
+                    self._filename = str(default_filename)
+                else:
+                    raise FileExistsError(
+                        f"Default log filename at {default_filename} "
+                        f"already exists. We won't overwrite it automatically. "
+                        f"You can use the key word 'overwrite_log' to "
+                        f"activate automatic overwrite."
+                    )
+            else:
+                # If file does not exist, use the default name
+                self._filename = str(default_filename)
         else:
             self._filename = self.config.filename
 
