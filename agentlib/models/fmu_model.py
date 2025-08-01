@@ -99,12 +99,14 @@ class FmuModel(Model):
     def do_step(self, *, t_start, t_sample=None):
         if t_sample is None:
             t_sample = self.dt
-        # Write current values to system
-        while not self._variables_to_write.empty():
-            self.__write_value(self._variables_to_write.get_nowait())
         t_samples = self._create_time_samples(t_sample=t_sample) + t_start
         try:
             for _idx, _t_sample in enumerate(t_samples[:-1]):
+                # Write current values to system
+                while not self._variables_to_write.empty():
+                    self.__write_value(self._variables_to_write.get_nowait())
+
+                # do step
                 self.system.doStep(
                     currentCommunicationPoint=_t_sample,
                     communicationStepSize=t_samples[_idx + 1] - _t_sample,

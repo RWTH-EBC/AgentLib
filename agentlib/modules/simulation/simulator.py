@@ -3,6 +3,7 @@ Module contains the Simulator, used to simulate any model.
 """
 
 import os
+import warnings
 from dataclasses import dataclass
 from math import inf
 from pathlib import Path
@@ -65,8 +66,8 @@ class SimulatorResults:
         self.data = []
 
     def initialize(
-        self,
-        time: float,
+            self,
+            time: float,
     ):
         """Adds the first row to the data"""
 
@@ -104,8 +105,6 @@ class SimulatorConfig(BaseModuleConfig):
     outputs: AgentVariables = []
     states: AgentVariables = []
     shared_variable_fields: List[str] = ["outputs"]
-    model: Dict
-
     t_start: Union[float, int] = Field(
         title="t_start", default=0.0, ge=0, description="Simulation start time"
     )
@@ -113,8 +112,31 @@ class SimulatorConfig(BaseModuleConfig):
         title="t_stop", default=inf, ge=0, description="Simulation stop time"
     )
     t_sample: Union[float, int] = Field(
-        title="t_sample", default=1, ge=0, description="Simulation sample time"
+        title="t_sample",
+        default=1,
+        ge=0,
+        description="Deprecated option."
     )
+    t_sample_communication: Union[float, int] = Field(
+        title="t_sample",
+        default=1,
+        ge=0,
+        description="Sample time of a full simulation step relevant for communication, including:"
+                    "1. if update_inputs_on_callback=False update model inputs,"
+                    "2. Perform simulation with t_sample_simulation"
+                    "3. Update model results and send output values to other Agents or Modules."
+    )
+    t_sample_simulation: Union[float, int] = Field(
+        title="t_sample_simulation",
+        default=1,
+        ge=0,
+        description="Sample time of the simulation itself. "
+                    "If update_inputs_on_callback=True, the inputs of the models "
+                    "may be updated every other t_sample_simulation, as long as the "
+                    "model supports this. Used to override dt of the model."
+    )
+    model: Dict
+
     # Model results
     save_results: bool = Field(
         title="save_results",
@@ -130,19 +152,19 @@ class SimulatorConfig(BaseModuleConfig):
         title="result_filename",
         default=None,
         description="If not None, results are stored in that filename."
-        "Needs to be a .csv file",
+                    "Needs to be a .csv file",
     )
     result_sep: str = Field(
         title="result_sep",
         default=",",
         description="Separator in the .csv file. Only relevant if "
-        "result_filename is passed",
+                    "result_filename is passed",
     )
     result_causalities: List[Causality] = Field(
         title="result_causalities",
         default=[Causality.input, Causality.output],
         description="List of causalities to store. Default stores "
-        "only inputs and outputs",
+                    "only inputs and outputs",
     )
     write_results_delay: Optional[float] = Field(
         title="Write Results Delay",
@@ -155,23 +177,23 @@ class SimulatorConfig(BaseModuleConfig):
         title="update_inputs_on_callback",
         default=True,
         description="If True, model inputs are updated if they are updated in data_broker."
-        "Else, the model inputs are updated before each simulation.",
+                    "Else, the model inputs are updated before each simulation.",
     )
     measurement_uncertainty: Union[Dict[str, float], float] = Field(
         title="measurement_uncertainty",
         default=0,
         description="Either pass a float and add the percentage uncertainty "
-        "to all measurements from the model."
-        "Or pass a Dict and specify the model variable name as key"
-        "and the associated uncertainty as a float",
+                    "to all measurements from the model."
+                    "Or pass a Dict and specify the model variable name as key"
+                    "and the associated uncertainty as a float",
     )
     validate_incoming_values: Optional[bool] = Field(
         default=False,  # we overwrite the default True in base, to be more efficient
         title="Validate Incoming Values",
         description="If true, the validator of the AgentVariable value is called when "
-        "receiving a new value from the DataBroker. In the simulator, this "
-        "is False by default, as we expect to receive a lot of measurements"
-        " and want to be efficient.",
+                    "receiving a new value from the DataBroker. In the simulator, this "
+                    "is False by default, as we expect to receive a lot of measurements"
+                    " and want to be efficient.",
     )
 
     @field_validator("result_filename")
@@ -215,15 +237,28 @@ class SimulatorConfig(BaseModuleConfig):
         assert t_stop > t_start, "t_stop must be greater than t_start"
         return t_stop
 
-    @field_validator("t_sample")
+    @field_validator("t_sample_communication", "t_sample_simulation")
     @classmethod
     def check_t_sample(cls, t_sample, info: FieldValidationInfo):
         """Check if t_sample is smaller than stop-start time"""
         t_start = info.data.get("t_start")
         t_stop = info.data.get("t_stop")
+        t_sample_old = info.data.get("t_sample")
+        if t_sample_old is not None:
+            t_sample = t_sample_old
         assert (
-            t_start + t_sample <= t_stop
+                t_start + t_sample <= t_stop
         ), "t_stop-t_start must be greater than t_sample"
+        return t_sample
+
+    @field_validator("t_sample")
+    @classmethod
+    def deprecate_t_sample(cls, t_sample, info: FieldValidationInfo):
+        """Check if t_sample is smaller than stop-start time"""
+        warnings.warn(
+            "t_sample is deprecated, use t_sample_communication, "
+            "t_sample_simulation for a concise separation of the two.",
+        )
         return t_sample
 
     @field_validator("write_results_delay")
@@ -249,6 +284,14 @@ class SimulatorConfig(BaseModuleConfig):
         inputs = info.data.get("inputs")
         outputs = info.data.get("outputs")
         states = info.data.get("states")
+        dt = info.data.get("t_sample_simulation")
+        if "dt" in model and dt != model["dt"]:
+            warnings.warn(
+                f"Given model {model['dt']=} differs from {dt=} of simulator. "
+                f"Using models dt, consider switching to t_sample_simulation."
+            )
+        else:
+            model["dt"] = dt
         if "type" not in model:
             raise KeyError(
                 "Given model config does not " "contain key 'type' (type of the model)."
@@ -362,10 +405,10 @@ class Simulator(BaseModule):
         # Outputs and states are always the result of the model
         # "Complicated" double for-loop to avoid boilerplate code
         for _type, model_var_names, ag_vars, callback in zip(
-            ["input", "parameter"],
-            [self.model.get_input_names(), self.model.get_parameter_names()],
-            [self.config.inputs, self.config.parameters],
-            [self._callback_update_model_input, self._callback_update_model_parameter],
+                ["input", "parameter"],
+                [self.model.get_input_names(), self.model.get_parameter_names()],
+                [self.config.inputs, self.config.parameters],
+                [self._callback_update_model_input, self._callback_update_model_parameter],
         ):
             for var in ag_vars:
                 if var.name in model_var_names:
@@ -397,19 +440,8 @@ class Simulator(BaseModule):
 
     def process(self):
         """
-        This function creates a endless loop for the single simulation step event.
-        The do_step() function needs to return a generator.
-        """
-        self._update_result_outputs(self.env.time)
-        while True:
-            self.do_step()
-            yield self.env.timeout(self.config.t_sample)
-            self.update_module_vars()
-
-    def do_step(self):
-        """
-        Generator function to perform a simulation step,
-        update inputs, outputs and model results.
+        This function creates a endless loop for the single simulation step event,
+        updating inputs, simulating, model results and then outputs.
 
         In a simulation step following happens:
         1. Update inputs (only necessary if self.update_inputs_on_callback = False)
@@ -417,24 +449,26 @@ class Simulator(BaseModule):
         **Important note**: The agents use unix-time as a timestamp and start
         the simulation with the current datetime (represented by self.env.time),
         the model starts at 0 seconds (represented by self.env.now).
-        3. Directly after the simulation we send the updated output values
-        to other modules and agents by setting them the data_broker.
-        Even though the environment time is not already at the end time specified above,
-        we explicitly add the timestamp to the variables.
-        This way other agents and communication has the maximum time possible to
-        process the outputs and send input signals to the simulation.
-        4. Call the timeout in the environment,
+        3. Directly after the simulation we store the results with
+        the output time and then call the timeout in the environment,
         hence actually increase the environment time.
+        4. Once the environment time reached the simulation time,
+        we send the updated output values to other modules and agents by setting
+        them the data_broker.
         """
-        if not self.config.update_inputs_on_callback:
-            # Update inputs manually
-            self.update_model_inputs()
-        # Simulate
-        self.model.do_step(
-            t_start=(self.env.now + self.config.t_start), t_sample=self.config.t_sample
-        )
-        # Update the results and outputs
-        self._update_results()
+        self._update_result_outputs(self.env.time)
+        while True:
+            if not self.config.update_inputs_on_callback:
+                # Update inputs manually
+                self.update_model_inputs()
+            # Simulate
+            self.model.do_step(
+                t_start=(self.env.now + self.config.t_start), t_sample=self.config.t_sample_communication
+            )
+            # Update the results and outputs
+            self._update_results()
+            yield self.env.timeout(self.config.t_sample_communication)
+            self.update_module_vars()
 
     def update_model_inputs(self):
         """
@@ -442,7 +476,7 @@ class Simulator(BaseModule):
         Only update values, not other module_types.
         """
         model_input_names = (
-            self.model.get_input_names() + self.model.get_parameter_names()
+                self.model.get_input_names() + self.model.get_parameter_names()
         )
         for inp in self.variables:
             if inp.name in model_input_names:
@@ -456,9 +490,9 @@ class Simulator(BaseModule):
         """
         # pylint: disable=logging-fstring-interpolation
         for _type, model_get, agent_vars in zip(
-            ["state", "output"],
-            [self.model.get_state, self.model.get_output],
-            [self.config.states, self.config.outputs],
+                ["state", "output"],
+                [self.model.get_state, self.model.get_output],
+                [self.config.states, self.config.outputs],
         ):
             for var in agent_vars:
                 mo_var = model_get(var.name)
@@ -499,7 +533,6 @@ class Simulator(BaseModule):
             return
         os.remove(self.config.result_filename)
 
-
     def _update_results(self):
         """
         Adds model variables to the SimulationResult object
@@ -507,7 +540,7 @@ class Simulator(BaseModule):
         """
         if not self.config.save_results:
             return
-        timestamp = self.env.time + self.config.t_sample
+        timestamp = self.env.time + self.config.t_sample_communication
         inp_values = [var.value for var in self._get_result_input_variables()]
 
         # add inputs in the time stamp before adding outputs, as they are active from
@@ -517,8 +550,8 @@ class Simulator(BaseModule):
         # above will point to the wrong entry
         self._update_result_outputs(timestamp)
         if (
-            self.config.result_filename is not None
-            and timestamp // (self.config.write_results_delay * self._save_count) > 0
+                self.config.result_filename is not None
+                and timestamp // (self.config.write_results_delay * self._save_count) > 0
         ):
             self._save_count += 1
             self._result.write_results(self.config.result_filename)
