@@ -4,6 +4,7 @@
 - Add an optional dashboard function to the mas utility.
 - Add optional results logging for communicators.
 - Add subcription based multiprocessing.
+- Fixed a bug, where the AgentLogger would load an old run when no filename was specified, but overwrite_log was true
 
 ## 0.8.8
 - Percentage display in logging now only appears in simulation speed, not realtime. Fixed percentage when environment has an offset.
