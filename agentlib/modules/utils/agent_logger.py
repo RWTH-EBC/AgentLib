@@ -7,7 +7,7 @@ import logging
 import os
 from ast import literal_eval
 from pathlib import Path
-from typing import Union, Optional
+from typing import Union, Optional, Tuple
 
 import pandas as pd
 from pydantic import field_validator, Field
@@ -220,7 +220,7 @@ class AgentLogger(BaseModule):
 
     def get_results_incremental(
         self, update_token: Optional[int] = None
-    ) -> tuple[Optional[pd.DataFrame], Optional[int]]:
+    ) -> Tuple[Optional[pd.DataFrame], Optional[int]]:
         """Fetches results incrementally for live dashboard."""
         self._log()  # Ensure current logs are written
 
@@ -254,7 +254,7 @@ class AgentLogger(BaseModule):
         start_line_index: int,
         values_only: bool = True,
         merge_sources: bool = True,
-    ) -> tuple[Optional[pd.DataFrame], int]:
+    ) -> Tuple[Optional[pd.DataFrame], int]:
         """Loads log file from a specific line index."""
         chunks = []
         lines_read_count = 0

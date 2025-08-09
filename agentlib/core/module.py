@@ -16,6 +16,7 @@ from typing import (
     Optional,
     get_type_hints,
     Type,
+    Tuple,
 )
 
 import pydantic
@@ -708,7 +709,7 @@ class BaseModule(abc.ABC):
             Some form of results data, often in the form of a pandas DataFrame.
         """
 
-    def get_results_incremental(self, update_token: Optional[Any] = None) -> tuple[Any, Optional[Any]]:
+    def get_results_incremental(self, update_token: Optional[Any] = None) -> Tuple[Any, Optional[Any]]:
         """
         Fetches results suitable for incremental updates in a live dashboard.
 

@@ -10,7 +10,7 @@ import os
 import queue
 import threading
 from pathlib import Path
-from typing import Union, List, TypedDict, Any, Optional, Literal
+from typing import Union, List, TypedDict, Any, Optional, Literal, Tuple
 
 import pandas as pd
 from pydantic import Field, field_validator
@@ -350,7 +350,7 @@ class Communicator(BaseModule):
 
     def get_results_incremental(
         self, update_token: Optional[Any] = None
-    ) -> tuple[Optional[Union[dict, pd.DataFrame]], Optional[Any]]:
+    ) -> Tuple[Optional[Union[dict, pd.DataFrame]], Optional[Any]]:
         """Returns logged communication data incrementally."""
         log_level = self.config.communication_log_level
 
