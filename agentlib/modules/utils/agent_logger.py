@@ -55,32 +55,6 @@ class AgentLoggerConfig(BaseModuleConfig):
         description="When loading the results file, automatically merges variables by sources, leaving only alias in the columns.",
     )
 
-    @field_validator("filename")
-    @classmethod
-    def check_existence_of_file(cls, filename, info: FieldValidationInfo):
-        """Checks whether the file already exists."""
-        # pylint: disable=no-self-argument,no-self-use
-
-        # Skip check for None, as it will be replaced in __init__
-        if filename is None:
-            return filename
-
-        file_path = Path(filename)
-        if file_path.exists():
-            # remove result file, so a new one can be created
-            if info.data["overwrite_log"]:
-                file_path.unlink()
-                return filename
-            raise FileExistsError(
-                f"Given filename at {filename} "
-                f"already exists. We won't overwrite it automatically. "
-                f"You can use the key word 'overwrite_log' to "
-                f"activate automatic overwrite."
-            )
-        # Create path in case it does not exist
-        file_path.parent.mkdir(parents=True, exist_ok=True)
-        return filename
-
 
 class AgentLogger(BaseModule):
     """
@@ -94,30 +68,7 @@ class AgentLogger(BaseModule):
         super().__init__(config=config, agent=agent)
 
         # If filename is None, create a custom one using the agent ID
-        if self.config.filename is None:
-            # Use agent ID to create a default filename
-            logs_dir = Path("agent_logs")
-            logs_dir.mkdir(exist_ok=True)
-            default_filename = logs_dir / f"{self.agent.id}.jsonl"
-
-            # Handle file existence based on overwrite_log setting
-            if default_filename.exists():
-                if self.config.overwrite_log:
-                    # If overwrite is true, delete the existing file
-                    default_filename.unlink()
-                    self._filename = str(default_filename)
-                else:
-                    raise FileExistsError(
-                        f"Default log filename at {default_filename} "
-                        f"already exists. We won't overwrite it automatically. "
-                        f"You can use the key word 'overwrite_log' to "
-                        f"activate automatic overwrite."
-                    )
-            else:
-                # If file does not exist, use the default name
-                self._filename = str(default_filename)
-        else:
-            self._filename = self.config.filename
+        self._filename = self._setup_log_file()
 
         self._variables_to_log = {}
         if not self.env.config.rt and self.config.t_sample < 60:
@@ -127,6 +78,36 @@ class AgentLogger(BaseModule):
                 self.id,
                 self.config.t_sample,
             )
+
+    def _setup_log_file(self) -> str:
+        """Centralized file setup logic"""
+        # Determine the target filename
+        if self.config.filename is None:
+            logs_dir = Path("agent_logs")
+            target_file = logs_dir / f"{self.agent.id}.jsonl"
+        else:
+            target_file = Path(self.config.filename)
+
+        # Handle file existence and overwrite logic
+        return self._handle_file_existence(target_file)
+
+    def _handle_file_existence(self, file_path: Path) -> str:
+        """Consistent file existence and overwrite handling"""
+        # Create parent directories if they don't exist
+        file_path.parent.mkdir(parents=True, exist_ok=True)
+
+        # Handle existing file
+        if file_path.exists():
+            if self.config.overwrite_log:
+                file_path.unlink()
+                self.logger.info(f"Overwrote existing log file: {file_path}")
+            else:
+                raise FileExistsError(
+                    f"Log file '{file_path}' already exists. "
+                    f"Set 'overwrite_log=True' to enable automatic overwrite."
+                )
+
+        return str(file_path)
 
     @property
     def filename(self):
