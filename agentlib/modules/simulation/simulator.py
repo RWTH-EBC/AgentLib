@@ -6,7 +6,7 @@ import os
 from dataclasses import dataclass
 from math import inf
 from pathlib import Path
-from typing import Union, Dict, List, Optional
+from typing import Union, Dict, List, Optional, Tuple
 
 import numpy as np
 import pandas as pd
@@ -502,7 +502,7 @@ class Simulator(BaseModule):
 
     def get_results_incremental(
         self, update_token: Optional[int] = None
-    ) -> tuple[Optional[pd.DataFrame], Optional[int]]:
+    ) -> Tuple[Optional[pd.DataFrame], Optional[int]]:
         """Fetches simulation results incrementally."""
         if not self.config.save_results:
             return None, None

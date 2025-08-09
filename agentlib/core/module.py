@@ -16,6 +16,7 @@ from typing import (
     Optional,
     get_type_hints,
     Type,
+    Tuple,
 )
 
 import pydantic
@@ -679,7 +680,7 @@ class BaseModule(abc.ABC):
         try:
             # Import here to avoid circular dependency issues at module load time
             # and to only require Dash when this method is actually called.
-            from dash import html as dash_html 
+            from dash import html as dash_html
         except ImportError:
             raise OptionalDependencyError(
                 used_object=f"{cls.__name__}.visualize_results",
@@ -708,7 +709,9 @@ class BaseModule(abc.ABC):
             Some form of results data, often in the form of a pandas DataFrame.
         """
 
-    def get_results_incremental(self, update_token: Optional[Any] = None) -> tuple[Any, Optional[Any]]:
+    def get_results_incremental(
+        self, update_token: Optional[Any] = None
+    ) -> Tuple[Any, Optional[Any]]:
         """
         Fetches results suitable for incremental updates in a live dashboard.
 
