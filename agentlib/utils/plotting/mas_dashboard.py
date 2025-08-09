@@ -441,14 +441,16 @@ def get_free_port():
     """Get an available port by trying to bind to a socket."""
     port = 8050
     while True:
-        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-            try:
-                s.bind(("localhost", port))
+        port = 8050
+        while True:
+            with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+                is_free = s.connect_ex(("localhost", port)) != 0
+            if is_free:
                 return port
-            except OSError:
+            else:
                 port += 1
-        if port > 9000:  # Avoid infinite loop in rare cases
-            raise OSError("Could not find a free port between 8050 and 9000.")
+            if port > 9000:  # Avoid infinite loop in rare cases
+                raise OSError("Could not find a free port between 8050 and 9000.")
 
 
 def launch_mas_dashboard(

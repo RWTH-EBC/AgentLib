@@ -592,41 +592,35 @@ class Simulator(BaseModule):
 
         rows = []
         current_row_children = []
-        try:
-            for i, column in enumerate(results_data.columns):
-                fig = go.Figure()
-                fig.add_trace(
-                    go.Scatter(
-                        x=results_data.index,
-                        y=results_data[column],
-                        mode="lines",
-                        name=str(column),
-                    )
+        for i, column in enumerate(results_data.columns):
+            fig = go.Figure()
+            fig.add_trace(
+                go.Scatter(
+                    x=results_data.index,
+                    y=results_data[column],
+                    mode="lines",
+                    name=str(column),
                 )
-                fig.update_layout(
-                    title=str(column),
-                    xaxis_title="Time",
-                    yaxis_title="Value",
-                    margin=dict(l=40, r=20, t=40, b=30),  # Compact margins
-                    height=250,  # Reduced height for compactness
-                )
-                # Add plot to a column, aim for 2 plots per row on medium screens
-                current_row_children.append(dbc.Col(dcc.Graph(figure=fig), md=6))
+            )
+            fig.update_layout(
+                title=str(column),
+                xaxis_title="Time",
+                yaxis_title="Value",
+                margin=dict(l=40, r=20, t=40, b=30),  # Compact margins
+                height=250,  # Reduced height for compactness
+            )
+            # Add plot to a column, aim for 2 plots per row on medium screens
+            current_row_children.append(dbc.Col(dcc.Graph(figure=fig), md=6))
 
-                # If two plots are in the current row, or it's the last plot
-                if len(current_row_children) == 2 or i == len(results_data.columns) - 1:
-                    rows.append(dbc.Row(current_row_children, className="mb-3"))
-                    current_row_children = []
-
-        except Exception as e:
-            cls.logger.error(f"Error creating plots for Simulator '{module_id}': {e}")
-            return None
+            # If two plots are in the current row, or it's the last plot
+            if len(current_row_children) == 2 or i == len(results_data.columns) - 1:
+                rows.append(dbc.Row(current_row_children, className="mb-3"))
+                current_row_children = []
 
         if not rows:
-            cls.logger.debug(
+            raise ValueError(
                 f"No plottable data generated for Simulator '{module_id}'."
             )
-            return None
 
         return html.Div(
             children=[
