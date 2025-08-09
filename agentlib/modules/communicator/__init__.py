@@ -24,4 +24,8 @@ MODULE_TYPES = {
         import_path="agentlib.modules.communicator.local_multiprocessing",
         class_name="MultiProcessingBroadcastClient",
     ),
+    "multiprocessing_subscription": ModuleImport(
+        import_path="agentlib.modules.communicator.local_multiprocessing_subscription",
+        class_name="MultiProcessingSubscriptionClient",
+    ),
 }

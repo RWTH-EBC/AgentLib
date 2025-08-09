@@ -25,6 +25,7 @@
       "module_id": "ComLocal",
       "type": "local",
       "subscriptions": ["Room1Agent"],
+      "communication_log_level": "basic",
       "parse_json": true
     }
   ]

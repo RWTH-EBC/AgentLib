@@ -21,7 +21,8 @@
         {
           "name": "T_oda",
           "value": 273.15
-        }],
+        }
+      ],
       "outputs": [
         {
           "name": "T_air"
@@ -31,8 +32,12 @@
     {
       "module_id": "ComLocal",
       "type": "local",
-      "subscriptions": ["PIDAgent", "TRYSensorAgent"],
-      "parse_json": true
+      "subscriptions": [
+        "PIDAgent",
+        "TRYSensorAgent"
+      ],
+      "parse_json": true,
+      "communication_log_level": "detail"
     }
   ]
 }

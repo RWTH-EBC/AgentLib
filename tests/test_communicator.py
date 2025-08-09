@@ -58,9 +58,7 @@ class TestCommunicator(unittest.TestCase):
         pd.testing.assert_series_equal(variable.value, variable2.value)
 
         # communicator without json parsing
-        payload = comm_no_parse.short_dict(
-            variable, parse_json=comm_no_parse.config.parse_json
-        )
+        payload = comm_no_parse.short_dict(variable)
         payload["name"] = payload["alias"]
         variable2 = AgentVariable(**payload)
         pd.testing.assert_series_equal(variable.value, variable2.value)
@@ -72,7 +70,7 @@ class TestCommunicator(unittest.TestCase):
         _config = self.test_config.copy()
         _config["parse_json"] = False
         comm = LocalClient(config=_config, agent=self.agent_send)
-        payload = comm.short_dict(variable, parse_json=comm.config.parse_json)
+        payload = comm.short_dict(variable)
         pd.testing.assert_series_equal(variable.value, payload["value"])
 
 

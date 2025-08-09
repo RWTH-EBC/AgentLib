@@ -10,18 +10,18 @@ from agentlib.core.datamodels import AgentVariable
 from agentlib.modules.communicator.communicator import (
     Communicator,
     CommunicationDict,
-    CommunicatorConfig,
+    SubscriptionCommunicatorConfig,
 )
 from agentlib.utils import multi_processing_broker
 
 
-class MultiProcessingBroadcastClientConfig(CommunicatorConfig):
+class MultiProcessingSubscriptionClientConfig(SubscriptionCommunicatorConfig):
     ipv4: IPv4Address = Field(
         default="127.0.0.1",
         description="IP Address for the communication server. Defaults to localhost.",
     )
     port: int = Field(
-        default=50_000,
+        default=50_001,
         description="Port for setting up the connection with the broker.",
     )
     authkey: bytes = Field(
@@ -30,13 +30,13 @@ class MultiProcessingBroadcastClientConfig(CommunicatorConfig):
     )
 
 
-class MultiProcessingBroadcastClient(Communicator):
+class MultiProcessingSubscriptionClient(Communicator):
     """
-    This communicator implements the communication between agents via a
-    central process broker.
+    This communicator implements subscription-based communication between agents
+    via a central process broker.
     """
 
-    config: MultiProcessingBroadcastClientConfig
+    config: MultiProcessingSubscriptionClientConfig
 
     def __init__(self, config: dict, agent: Agent):
         super().__init__(config=config, agent=agent)
@@ -57,8 +57,13 @@ class MultiProcessingBroadcastClient(Communicator):
         signup_queue = manager.get_queue()
         client_read, broker_write = multiprocessing.Pipe(duplex=False)
         broker_read, client_write = multiprocessing.Pipe(duplex=False)
-        signup = multi_processing_broker.MPClient(
-            agent_id=self.agent.id, read=broker_read, write=broker_write
+
+        # Create subscription client with subscription information
+        signup = multi_processing_broker.MPSubscriptionClient(
+            agent_id=self.agent.id,
+            read=broker_read,
+            write=broker_write,
+            subscriptions=tuple(self.config.subscriptions),
         )
 
         signup_queue.put(signup)
@@ -88,16 +93,11 @@ class MultiProcessingBroadcastClient(Communicator):
             except EOFError:
                 break
             variable = AgentVariable.from_json(msg)
-            self.logger.debug(
-                f"Received multiprocessing message for variable {variable.alias}."
-            )
+            self.logger.debug(f"Received variable {variable.alias}.")
             self._handle_received_variable(variable)
 
     def terminate(self):
         """Closes all of the connections."""
-        # Terminating is important when running multiple
-        # simulations/environments, otherwise the broker will keep spamming all
-        # agents from the previous simulation, potentially filling their queues.
         self._client_write.close()
         self._client_read.close()
         self._broker_write.close()

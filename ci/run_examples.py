@@ -1,6 +1,8 @@
 """Module with functions to test the if examples are
 executable."""
 
+import shutil
+import tempfile
 import unittest
 import os
 import subprocess
@@ -17,14 +19,18 @@ class TestExamples(unittest.TestCase):
     """Test all examples inside the agentlib"""
 
     def setUp(self) -> None:
-        self.timeout = 10  # Seconds which the script is allowed to run
+        self.timeout = 10
         self.main_cwd = os.getcwd()
+        # Create a unique temp directory for each test
+        self.temp_dir = tempfile.mkdtemp(prefix="agentlib_test_")
+        os.chdir(self.temp_dir)
 
     def tearDown(self) -> None:
         broker = LocalBroadcastBroker()
         broker.delete_all_clients()
-        # Change back cwd:
         os.chdir(self.main_cwd)
+        # Clean up the temporary directory
+        shutil.rmtree(self.temp_dir, ignore_errors=True)
 
     def _run_example(self, example, timeout=None):
         if timeout is None:
@@ -100,23 +106,22 @@ class TestExamples(unittest.TestCase):
             func_name="run_example",
             with_plots=False,
             log_level=logging.FATAL,
-            extrapolation="constant"
+            extrapolation="constant",
         )
         self._run_example_with_return(
             file="simulation//csv_data_source.py",
             func_name="run_example",
             with_plots=False,
             log_level=logging.FATAL,
-            extrapolation="repeat"
+            extrapolation="repeat",
         )
         self._run_example_with_return(
             file="simulation//csv_data_source.py",
             func_name="run_example",
             with_plots=False,
             log_level=logging.FATAL,
-            extrapolation="backwards"
+            extrapolation="backwards",
         )
-
 
     def test_scipy_model(self):
         """Tests the scipy model example"""
