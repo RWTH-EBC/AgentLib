@@ -1,5 +1,6 @@
 import logging
 import os
+from typing import Union, Literal
 
 from matplotlib.ticker import AutoMinorLocator
 
@@ -8,7 +9,12 @@ from agentlib.utils.multi_agent_system import LocalMASAgency
 logger = logging.getLogger(__name__)
 
 
-def run_example(until, with_plots=True, log_level=logging.INFO, with_dashboard=False):
+def run_example(
+    until,
+    with_plots=True,
+    log_level=logging.INFO,
+    with_dashboard: Union[bool, Literal["live", "after"]] = "after",
+):
     # Start by setting the log-level
     logging.basicConfig(level=log_level)
 
@@ -29,12 +35,12 @@ def run_example(until, with_plots=True, log_level=logging.INFO, with_dashboard=F
         variable_logging=True,
     )
     # Simulate
-
+    if with_dashboard == "live":
+        mas.show_results_dashboard(live=True)
     mas.run(until=until)
-    # Load results:
     if with_dashboard:
         mas.show_results_dashboard(cleanup_results=False, block_main=False, live=False)
-    results = mas.get_results(cleanup=True)
+    results = mas.get_results(cleanup=False)
 
     if not with_plots:
         return results
@@ -104,4 +110,4 @@ def run_example(until, with_plots=True, log_level=logging.INFO, with_dashboard=F
 
 
 if __name__ == "__main__":
-    run_example(until=86400 / 10, with_plots=True, with_dashboard=True)
+    run_example(until=86400 / 5, with_plots=True, with_dashboard=False)

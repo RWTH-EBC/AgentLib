@@ -7,15 +7,18 @@ import logging
 import os
 from ast import literal_eval
 from pathlib import Path
-from typing import Union, Optional, Tuple
+from typing import Union, Optional, Tuple, TYPE_CHECKING
 
 import pandas as pd
-from pydantic import field_validator, Field
-from pydantic_core.core_schema import FieldValidationInfo
+from pydantic import Field
 
 from agentlib import AgentVariable
 from agentlib.core import BaseModule, Agent, BaseModuleConfig
 from agentlib.core.errors import OptionalDependencyError
+
+if TYPE_CHECKING:
+    from dash import html
+
 
 logger = logging.getLogger(__name__)
 
@@ -269,7 +272,7 @@ class AgentLogger(BaseModule):
         except FileNotFoundError:
             return None, 0
 
-        if not chunks:
+        if not any(chunks):
             return None, 0
 
         full_dict = collections.ChainMap(*chunks)
@@ -310,94 +313,79 @@ class AgentLogger(BaseModule):
             )
 
         if results_data is None or results_data.empty:
-            cls.logger.debug(
+            raise ValueError(
                 f"No results data for AgentLogger '{module_id}' in agent '{agent_id}'."
-            )
-            return None
-
-        if not isinstance(results_data, pd.DataFrame):
-            cls.logger.error(
-                f"Expected pandas DataFrame for AgentLogger results for '{module_id}', got {type(results_data)}."
             )
             return None
 
         rows = []
         current_row_children = []
-        try:
-            for i, col_name in enumerate(results_data.columns):
-                series = results_data[col_name].dropna()
-                if series.empty:
-                    continue
+        for i, col_name in enumerate(results_data.columns):
+            series = results_data[col_name].dropna()
+            if series.empty:
+                continue
 
-                try:
-                    numeric_series = pd.to_numeric(series, errors="coerce")
-                    if numeric_series.isnull().all() and not series.isnull().all():
-                        is_numeric = False
-                    else:
-                        is_numeric = True
-                        series_to_plot = numeric_series
-                except (ValueError, TypeError):
+            try:
+                numeric_series = pd.to_numeric(series, errors="coerce")
+                if numeric_series.isnull().all() and not series.isnull().all():
                     is_numeric = False
-
-                if not is_numeric:
-                    series_to_plot = series
-
-                fig = go.Figure()
-                y_axis_title = "Value"
-
-                if is_numeric:
-                    fig.add_trace(
-                        go.Scatter(
-                            x=series_to_plot.index,
-                            y=series_to_plot,
-                            mode="lines+markers",
-                            name=str(col_name),
-                        )
-                    )
                 else:
-                    fig.add_trace(
-                        go.Scatter(
-                            x=series_to_plot.index,
-                            y=[1] * len(series_to_plot),
-                            mode="markers",
-                            name=str(col_name),
-                            hovertext=[str(v) for v in series_to_plot.values],
-                            hoverinfo="x+text",
-                        )
+                    is_numeric = True
+                    series_to_plot = numeric_series
+            except (ValueError, TypeError):
+                is_numeric = False
+
+            if not is_numeric:
+                series_to_plot = series
+
+            fig = go.Figure()
+            y_axis_title = "Value"
+
+            if is_numeric:
+                fig.add_trace(
+                    go.Scatter(
+                        x=series_to_plot.index,
+                        y=series_to_plot,
+                        mode="lines+markers",
+                        name=str(col_name),
                     )
-                    y_axis_title = "Occurrence"
-
-                title_str = str(col_name)
-                if isinstance(col_name, tuple) and len(col_name) > 0:
-                    title_str = f"{col_name[0]}"
-                    if len(col_name) > 1 and col_name[1]:
-                        title_str += f" (Source: {col_name[1]})"
-
-                fig.update_layout(
-                    title=title_str,
-                    xaxis_title="Time",
-                    yaxis_title=y_axis_title,
-                    margin=dict(l=40, r=20, t=40, b=30),
-                    height=250,
                 )
-                current_row_children.append(dbc.Col(dcc.Graph(figure=fig), md=6))
+            else:
+                fig.add_trace(
+                    go.Scatter(
+                        x=series_to_plot.index,
+                        y=[1] * len(series_to_plot),
+                        mode="markers",
+                        name=str(col_name),
+                        hovertext=[str(v) for v in series_to_plot.values],
+                        hoverinfo="x+text",
+                    )
+                )
+                y_axis_title = "Occurrence"
 
-                if len(current_row_children) == 2 or i == len(results_data.columns) - 1:
-                    rows.append(dbc.Row(current_row_children, className="mb-3"))
-                    current_row_children = []
+            title_str = str(col_name)
+            if isinstance(col_name, tuple) and len(col_name) > 0:
+                title_str = f"{col_name[0]}"
+                if len(col_name) > 1 and col_name[1]:
+                    title_str += f" (Source: {col_name[1]})"
 
-        except Exception as e:
-            cls.logger.error(
-                f"Error creating plots for AgentLogger '{module_id}': {e}",
-                exc_info=True,
+            fig.update_layout(
+                title=title_str,
+                xaxis_title="Time",
+                yaxis_title=y_axis_title,
+                margin=dict(l=40, r=20, t=40, b=30),
+                height=250,
             )
-            return None
+            current_row_children.append(dbc.Col(dcc.Graph(figure=fig), md=6))
+
+            if len(current_row_children) == 2 or i == len(results_data.columns) - 1:
+                rows.append(dbc.Row(current_row_children, className="mb-3"))
+                current_row_children = []
 
         if not rows:
-            cls.logger.debug(
+            raise ValueError(
                 f"No plottable data generated for AgentLogger '{module_id}'."
             )
-            return None
 
         return html.Div(
             children=[
