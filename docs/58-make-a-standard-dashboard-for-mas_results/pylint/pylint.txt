@@ -71,7 +71,7 @@ pylintrc:1:0: W0012: Unknown option value for '--disable', expected a valid pyli
 pylintrc:1:0: W0012: Unknown option value for '--disable', expected a valid pylint message and got 'old-octal-literal' (unknown-option-value)
 pylintrc:1:0: W0012: Unknown option value for '--disable', expected a valid pylint message and got 'non-ascii-bytes-literal' (unknown-option-value)
 pylintrc:1:0: W0012: Unknown option value for '--disable', expected a valid pylint message and got 'eq-without-hash' (unknown-option-value)
-************* Module run_examples
+************* Module ci.run_examples
 ci/run_examples.py:48:12: W0719: Raising too general exception: Exception (broad-exception-raised)
 ci/run_examples.py:64:8: C0415: Import outside toplevel (sys) (import-outside-toplevel)
 ************* Module tests.test_agent
