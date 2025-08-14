@@ -174,6 +174,8 @@ class AgentLogger(BaseModule):
         with open(filename, "r") as file:
             for data_line in file.readlines():
                 chunks.append(json.loads(data_line))
+        if not any(chunks):
+            return pd.DataFrame()
         full_dict = collections.ChainMap(*chunks)
         df = pd.DataFrame.from_dict(full_dict, orient="index")
         df.index = df.index.astype(float)

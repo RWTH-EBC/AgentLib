@@ -483,6 +483,8 @@ def launch_mas_dashboard(
     if not live_update and mas_results is None:
         logger.error("mas_results must be provided if not in live_update mode.")
         return None
+    if live_update:
+        block_main = False
 
     agent_module_info_for_app = {}
     if hasattr(mas, "_agents"):
