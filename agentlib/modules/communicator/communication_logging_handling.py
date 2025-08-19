@@ -7,7 +7,7 @@ import json
 import logging
 import os
 from pathlib import Path
-from typing import Union, List, Any, Optional, Tuple
+from typing import Union, List, Any, Optional, Tuple, Callable
 
 import pandas as pd
 
@@ -26,21 +26,40 @@ class CommunicationLogger:
         self.env = env
         self.logger = logging.getLogger(f"{__name__}.{agent_id}.{module_id}")
 
-        # Initialize logging attributes based on the validated config
+        # Initialize attributes that might be used
         self._sent_alias_counts: Optional[collections.Counter] = None
         self._received_source_alias_counts: Optional[collections.Counter] = None
         self._communication_log_filename: Optional[str] = None
         self._communication_log_batch: Optional[List[dict]] = None
 
-        if self.config.communication_log_level == "basic":
-            self._sent_alias_counts = collections.Counter()
-            self._received_source_alias_counts = collections.Counter()
-        elif self.config.communication_log_level == "detail":
+        # Set up logging methods based on level
+        self._setup_logging_strategy()
+
+    def _setup_logging_strategy(self):
+        """Set up the appropriate logging methods based on config level"""
+        log_level = self.config.communication_log_level
+
+        if log_level == "none":
+            self.log_sent_message = self._log_sent_none
+            self.log_received_message = self._log_received_none
+        elif log_level == "basic":
+            self._init_basic_logging()
+            self.log_sent_message = self._log_sent_basic
+            self.log_received_message = self._log_received_basic
+        elif log_level == "detail":
             self._init_detail_logging()
+            self.log_sent_message = self._log_sent_detail
+            self.log_received_message = self._log_received_detail
+
+    def _init_basic_logging(self):
+        """Initialize basic logging with counters"""
+        self._sent_alias_counts = collections.Counter()
+        self._received_source_alias_counts = collections.Counter()
 
     def _init_detail_logging(self):
-        """Helper to initialize attributes for 'detail' logging."""
+        """Initialize detail logging with file handling"""
         self._communication_log_batch = []
+
         if self.config.communication_log_file is None:
             logs_dir = Path("communicator_logs")
             logs_dir.mkdir(parents=True, exist_ok=True)
@@ -55,7 +74,7 @@ class CommunicationLogger:
             )
 
         if (
-            self._communication_log_filename is not None  # Ensure filename is not None
+            self._communication_log_filename is not None
             and Path(self._communication_log_filename).exists()
             and self.config.communication_log_overwrite
         ):
@@ -71,6 +90,56 @@ class CommunicationLogger:
             self.logger.info(
                 "communication_log_t_sample <= 0, detail logs will only be written on terminate."
             )
+
+    # No-op logging methods for "none" level
+    def _log_sent_none(self, alias: str):
+        """No-op logging for sent messages"""
+        pass
+
+    def _log_received_none(self, alias: str, source_agent_id: Optional[str]):
+        """No-op logging for received messages"""
+        pass
+
+    # Basic logging methods
+    def _log_sent_basic(self, alias: str):
+        """Log sent message for basic level"""
+        self._sent_alias_counts[alias] += 1
+
+    def _log_received_basic(self, alias: str, source_agent_id: Optional[str]):
+        """Log received message for basic level"""
+        self._received_source_alias_counts[(source_agent_id, alias)] += 1
+
+    # Detail logging methods
+    def _log_sent_detail(self, alias: str):
+        """Log sent message for detail level"""
+        log_entry = {
+            "timestamp": self.env.time,
+            "direction": "sent",
+            "own_agent_id": self.agent_id,
+            "remote_agent_id": None,  # Cannot be known for sent messages generally
+            "alias": alias,
+        }
+        self._communication_log_batch.append(log_entry)
+
+    def _log_received_detail(self, alias: str, source_agent_id: Optional[str]):
+        """Log received message for detail level"""
+        log_entry = {
+            "timestamp": self.env.time,
+            "direction": "received",
+            "own_agent_id": self.agent_id,
+            "remote_agent_id": source_agent_id,
+            "alias": alias,
+        }
+        self._communication_log_batch.append(log_entry)
+
+    # These methods will be assigned during init
+    def log_sent_message(self, alias: str):
+        """Log a sent message - implementation assigned during init"""
+        pass
+
+    def log_received_message(self, alias: str, source_agent_id: Optional[str]):
+        """Log a received message - implementation assigned during init"""
+        pass
 
     def _log_detail_process(self):
         """SimPy process to periodically flush detail logs."""
@@ -99,46 +168,6 @@ class CommunicationLogger:
             self.logger.error(
                 f"Error writing communication detail log to {self._communication_log_filename}: {e}"
             )
-
-    def log_sent_message(self, alias: str):
-        """Log a sent message"""
-        if (
-            self.config.communication_log_level == "basic"
-            and self._sent_alias_counts is not None
-        ):
-            self._sent_alias_counts[alias] += 1
-        elif (
-            self.config.communication_log_level == "detail"
-            and self._communication_log_batch is not None
-        ):
-            log_entry = {
-                "timestamp": self.env.time,
-                "direction": "sent",
-                "own_agent_id": self.agent_id,
-                "remote_agent_id": None,  # Cannot be known for sent messages generally
-                "alias": alias,
-            }
-            self._communication_log_batch.append(log_entry)
-
-    def log_received_message(self, alias: str, source_agent_id: Optional[str]):
-        """Log a received message"""
-        if (
-            self.config.communication_log_level == "basic"
-            and self._received_source_alias_counts is not None
-        ):
-            self._received_source_alias_counts[(source_agent_id, alias)] += 1
-        elif (
-            self.config.communication_log_level == "detail"
-            and self._communication_log_batch is not None
-        ):
-            log_entry = {
-                "timestamp": self.env.time,
-                "direction": "received",
-                "own_agent_id": self.agent_id,
-                "remote_agent_id": source_agent_id,
-                "alias": alias,
-            }
-            self._communication_log_batch.append(log_entry)
 
     def terminate(self):
         """Handle termination cleanup"""

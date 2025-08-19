@@ -83,14 +83,12 @@ class Communicator(BaseModule):
         super().__init__(config=config, agent=agent)
 
         # Initialize communication logger
-        self._communication_logger = None
-        if self.config.communication_log_level != "none":
-            self._communication_logger = CommunicationLogger(
-                config=self.config,
-                agent_id=self.agent.id,
-                module_id=self.id,
-                env=self.env,
-            )
+        self._communication_logger = CommunicationLogger(
+            config=self.config,
+            agent_id=self.agent.id,
+            module_id=self.id,
+            env=self.env,
+        )
 
         if self.config.use_orjson:
             try:
@@ -131,8 +129,7 @@ class Communicator(BaseModule):
         self.logger.debug("Sending variable %s=%s", variable.alias, variable.value)
 
         # Delegate logging to communication logger
-        if self._communication_logger:
-            self._communication_logger.log_sent_message(payload["alias"])
+        self._communication_logger.log_sent_message(payload["alias"])
 
         self._send(payload=payload)
 
@@ -175,10 +172,7 @@ class Communicator(BaseModule):
         source_agent_id = remote_agent_id or variable.source.agent_id
 
         # Delegate logging to communication logger
-        if self._communication_logger:
-            self._communication_logger.log_received_message(
-                variable.alias, source_agent_id
-            )
+        self._communication_logger.log_received_message(variable.alias, source_agent_id)
 
         # Forward to data broker
         self.agent.data_broker.send_variable(variable)
@@ -201,28 +195,22 @@ class Communicator(BaseModule):
         pass
 
     def terminate(self):
-        if self._communication_logger:
-            self._communication_logger.terminate()
+        self._communication_logger.terminate()
         super().terminate()
 
     def get_results(self) -> Optional[Union[dict, pd.DataFrame]]:
         """Returns logged communication data based on the log level."""
-        if self._communication_logger:
-            return self._communication_logger.get_results()
-        return None
+        return self._communication_logger.get_results()
 
     def get_results_incremental(
         self, update_token: Optional[Any] = None
     ) -> Tuple[Optional[Union[dict, pd.DataFrame]], Optional[Any]]:
         """Returns logged communication data incrementally."""
-        if self._communication_logger:
-            return self._communication_logger.get_results_incremental(update_token)
-        return None, None
+        return self._communication_logger.get_results_incremental(update_token)
 
     def cleanup_results(self):
         """Deletes the communication log file if 'detail' logging was active."""
-        if self._communication_logger:
-            self._communication_logger.cleanup_results()
+        self._communication_logger.cleanup_results()
 
     @classmethod
     def visualize_results(
