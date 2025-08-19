@@ -17,6 +17,14 @@ agentlib.modules.communicator.clonemap module
    :undoc-members:
    :show-inheritance:
 
+agentlib.modules.communicator.communication\_logging\_handling module
+---------------------------------------------------------------------
+
+.. automodule:: agentlib.modules.communicator.communication_logging_handling
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 agentlib.modules.communicator.communicator module
 -------------------------------------------------
 

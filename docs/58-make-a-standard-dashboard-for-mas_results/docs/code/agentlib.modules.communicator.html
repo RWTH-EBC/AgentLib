@@ -84,6 +84,58 @@
 <section id="agentlib-modules-communicator-clonemap-module">
 <h2>agentlib.modules.communicator.clonemap module<a class="headerlink" href="#agentlib-modules-communicator-clonemap-module" title="Permalink to this heading"></a></h2>
 </section>
+<section id="module-agentlib.modules.communicator.communication_logging_handling">
+<span id="agentlib-modules-communicator-communication-logging-handling-module"></span><h2>agentlib.modules.communicator.communication_logging_handling module<a class="headerlink" href="#module-agentlib.modules.communicator.communication_logging_handling" title="Permalink to this heading"></a></h2>
+<p>Communication logging and result handling functionality</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.communication_logging_handling.CommunicationLogger">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agentlib.modules.communicator.communication_logging_handling.</span></span><span class="sig-name descname"><span class="pre">CommunicationLogger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">env</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/modules/communicator/communication_logging_handling.html#CommunicationLogger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.communicator.communication_logging_handling.CommunicationLogger" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Handles all communication logging and result processing</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.communication_logging_handling.CommunicationLogger.cleanup_results">
+<span class="sig-name descname"><span class="pre">cleanup_results</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/modules/communicator/communication_logging_handling.html#CommunicationLogger.cleanup_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.communicator.communication_logging_handling.CommunicationLogger.cleanup_results" title="Permalink to this definition"></a></dt>
+<dd><p>Deletes the communication log file if ‘detail’ logging was active.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.communication_logging_handling.CommunicationLogger.get_results">
+<span class="sig-name descname"><span class="pre">get_results</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/agentlib/modules/communicator/communication_logging_handling.html#CommunicationLogger.get_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.communicator.communication_logging_handling.CommunicationLogger.get_results" title="Permalink to this definition"></a></dt>
+<dd><p>Returns logged communication data based on the log level.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.communication_logging_handling.CommunicationLogger.get_results_incremental">
+<span class="sig-name descname"><span class="pre">get_results_incremental</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">update_token</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/agentlib/modules/communicator/communication_logging_handling.html#CommunicationLogger.get_results_incremental"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.communicator.communication_logging_handling.CommunicationLogger.get_results_incremental" title="Permalink to this definition"></a></dt>
+<dd><p>Returns logged communication data incrementally.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.communication_logging_handling.CommunicationLogger.log_received_message">
+<span class="sig-name descname"><span class="pre">log_received_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alias</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_agent_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/modules/communicator/communication_logging_handling.html#CommunicationLogger.log_received_message"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.communicator.communication_logging_handling.CommunicationLogger.log_received_message" title="Permalink to this definition"></a></dt>
+<dd><p>Log a received message</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.communication_logging_handling.CommunicationLogger.log_sent_message">
+<span class="sig-name descname"><span class="pre">log_sent_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alias</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/modules/communicator/communication_logging_handling.html#CommunicationLogger.log_sent_message"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.communicator.communication_logging_handling.CommunicationLogger.log_sent_message" title="Permalink to this definition"></a></dt>
+<dd><p>Log a sent message</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.communication_logging_handling.CommunicationLogger.terminate">
+<span class="sig-name descname"><span class="pre">terminate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/modules/communicator/communication_logging_handling.html#CommunicationLogger.terminate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.communicator.communication_logging_handling.CommunicationLogger.terminate" title="Permalink to this definition"></a></dt>
+<dd><p>Handle termination cleanup</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.communication_logging_handling.CommunicationLogger.visualize_results">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">visualize_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">results_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">html.Div</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/agentlib/modules/communicator/communication_logging_handling.html#CommunicationLogger.visualize_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.communicator.communication_logging_handling.CommunicationLogger.visualize_results" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
 <section id="module-agentlib.modules.communicator.communicator">
 <span id="agentlib-modules-communicator-communicator-module"></span><h2>agentlib.modules.communicator.communicator module<a class="headerlink" href="#module-agentlib.modules.communicator.communicator" title="Permalink to this heading"></a></h2>
 <p>Module contains basics communicator modules</p>

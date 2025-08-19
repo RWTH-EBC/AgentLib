@@ -297,7 +297,7 @@
         <span class="k">for</span> <span class="n">field_name</span><span class="p">,</span> <span class="n">field</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">model_fields</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="c1"># If field is missing in values, validation of field was not</span>
             <span class="c1"># successful. Continue and pydantic will later raise the ValidationError</span>
-            <span class="k">if</span> <span class="n">field_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">pre_validated_instance</span><span class="o">.</span><span class="n">model_fields</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">field_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">model_fields</span><span class="p">:</span>
                 <span class="k">continue</span>
 
             <span class="n">pre_merged_attr</span> <span class="o">=</span> <span class="n">pre_validated_instance</span><span class="o">.</span><span class="fm">__getattribute__</span><span class="p">(</span><span class="n">field_name</span><span class="p">)</span>

@@ -204,7 +204,7 @@
 <span class="sd">            t_start (float): Start time of simulation</span>
 <span class="sd">            t_stop (float): Stop time of simulation</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Initializing model...&quot;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Initializing model...&quot;</span><span class="p">)</span>
         <span class="c1"># Handle Logging of the FMU itself:</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">callbacks</span> <span class="o">=</span> <span class="n">fmpy</span><span class="o">.</span><span class="n">fmi2</span><span class="o">.</span><span class="n">fmi2CallbackFunctions</span><span class="p">()</span>
@@ -234,7 +234,7 @@
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">enterInitializationMode</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">exitInitializationMode</span><span class="p">()</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Model: </span><span class="si">%s</span><span class="s2"> initialized&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span></div>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Model: </span><span class="si">%s</span><span class="s2"> initialized&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span></div>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_fmu_logger</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">component</span><span class="p">,</span> <span class="n">instanceName</span><span class="p">,</span> <span class="n">status</span><span class="p">,</span> <span class="n">category</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Print the FMU&#39;s log messages to the command line (works for both FMI 1.0 and 2.0)&quot;&quot;&quot;</span>
