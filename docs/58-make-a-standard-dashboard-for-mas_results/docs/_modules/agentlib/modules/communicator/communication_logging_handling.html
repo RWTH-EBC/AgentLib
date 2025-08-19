@@ -85,7 +85,7 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Union</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Union</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Callable</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 
@@ -104,21 +104,40 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">env</span> <span class="o">=</span> <span class="n">env</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">agent_id</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">module_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
-        <span class="c1"># Initialize logging attributes based on the validated config</span>
+        <span class="c1"># Initialize attributes that might be used</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_sent_alias_counts</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">collections</span><span class="o">.</span><span class="n">Counter</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_received_source_alias_counts</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">collections</span><span class="o">.</span><span class="n">Counter</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_communication_log_filename</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_communication_log_batch</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">dict</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
 
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">communication_log_level</span> <span class="o">==</span> <span class="s2">&quot;basic&quot;</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_sent_alias_counts</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">Counter</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_received_source_alias_counts</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">Counter</span><span class="p">()</span>
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">communication_log_level</span> <span class="o">==</span> <span class="s2">&quot;detail&quot;</span><span class="p">:</span>
+        <span class="c1"># Set up logging methods based on level</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_setup_logging_strategy</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_setup_logging_strategy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Set up the appropriate logging methods based on config level&quot;&quot;&quot;</span>
+        <span class="n">log_level</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">communication_log_level</span>
+
+        <span class="k">if</span> <span class="n">log_level</span> <span class="o">==</span> <span class="s2">&quot;none&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">log_sent_message</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_log_sent_none</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">log_received_message</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_log_received_none</span>
+        <span class="k">elif</span> <span class="n">log_level</span> <span class="o">==</span> <span class="s2">&quot;basic&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_init_basic_logging</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">log_sent_message</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_log_sent_basic</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">log_received_message</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_log_received_basic</span>
+        <span class="k">elif</span> <span class="n">log_level</span> <span class="o">==</span> <span class="s2">&quot;detail&quot;</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_init_detail_logging</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">log_sent_message</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_log_sent_detail</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">log_received_message</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_log_received_detail</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_init_basic_logging</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize basic logging with counters&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sent_alias_counts</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">Counter</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_received_source_alias_counts</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">Counter</span><span class="p">()</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_init_detail_logging</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Helper to initialize attributes for &#39;detail&#39; logging.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize detail logging with file handling&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_communication_log_batch</span> <span class="o">=</span> <span class="p">[]</span>
+
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">communication_log_file</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">logs_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;communicator_logs&quot;</span><span class="p">)</span>
             <span class="n">logs_dir</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -133,7 +152,7 @@
             <span class="p">)</span>
 
         <span class="k">if</span> <span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_communication_log_filename</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>  <span class="c1"># Ensure filename is not None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_communication_log_filename</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
             <span class="ow">and</span> <span class="n">Path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_communication_log_filename</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span>
             <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">communication_log_overwrite</span>
         <span class="p">):</span>
@@ -149,6 +168,56 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
                 <span class="s2">&quot;communication_log_t_sample &lt;= 0, detail logs will only be written on terminate.&quot;</span>
             <span class="p">)</span>
+
+    <span class="c1"># No-op logging methods for &quot;none&quot; level</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_log_sent_none</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alias</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;No-op logging for sent messages&quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_log_received_none</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alias</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">source_agent_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;No-op logging for received messages&quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+
+    <span class="c1"># Basic logging methods</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_log_sent_basic</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alias</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Log sent message for basic level&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sent_alias_counts</span><span class="p">[</span><span class="n">alias</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_log_received_basic</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alias</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">source_agent_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Log received message for basic level&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_received_source_alias_counts</span><span class="p">[(</span><span class="n">source_agent_id</span><span class="p">,</span> <span class="n">alias</span><span class="p">)]</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="c1"># Detail logging methods</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_log_sent_detail</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alias</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Log sent message for detail level&quot;&quot;&quot;</span>
+        <span class="n">log_entry</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;timestamp&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">time</span><span class="p">,</span>
+            <span class="s2">&quot;direction&quot;</span><span class="p">:</span> <span class="s2">&quot;sent&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;own_agent_id&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">agent_id</span><span class="p">,</span>
+            <span class="s2">&quot;remote_agent_id&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>  <span class="c1"># Cannot be known for sent messages generally</span>
+            <span class="s2">&quot;alias&quot;</span><span class="p">:</span> <span class="n">alias</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_communication_log_batch</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">log_entry</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_log_received_detail</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alias</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">source_agent_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Log received message for detail level&quot;&quot;&quot;</span>
+        <span class="n">log_entry</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;timestamp&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">time</span><span class="p">,</span>
+            <span class="s2">&quot;direction&quot;</span><span class="p">:</span> <span class="s2">&quot;received&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;own_agent_id&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">agent_id</span><span class="p">,</span>
+            <span class="s2">&quot;remote_agent_id&quot;</span><span class="p">:</span> <span class="n">source_agent_id</span><span class="p">,</span>
+            <span class="s2">&quot;alias&quot;</span><span class="p">:</span> <span class="n">alias</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_communication_log_batch</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">log_entry</span><span class="p">)</span>
+
+    <span class="c1"># These methods will be assigned during init</span>
+<div class="viewcode-block" id="CommunicationLogger.log_sent_message"><a class="viewcode-back" href="../../../../code/agentlib.modules.communicator.html#agentlib.modules.communicator.communication_logging_handling.CommunicationLogger.log_sent_message">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">log_sent_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alias</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Log a sent message - implementation assigned during init&quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="CommunicationLogger.log_received_message"><a class="viewcode-back" href="../../../../code/agentlib.modules.communicator.html#agentlib.modules.communicator.communication_logging_handling.CommunicationLogger.log_received_message">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">log_received_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alias</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">source_agent_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Log a received message - implementation assigned during init&quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_log_detail_process</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;SimPy process to periodically flush detail logs.&quot;&quot;&quot;</span>
@@ -177,46 +246,6 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;Error writing communication detail log to </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_communication_log_filename</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span>
             <span class="p">)</span>
-
-<div class="viewcode-block" id="CommunicationLogger.log_sent_message"><a class="viewcode-back" href="../../../../code/agentlib.modules.communicator.html#agentlib.modules.communicator.communication_logging_handling.CommunicationLogger.log_sent_message">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">log_sent_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alias</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Log a sent message&quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">communication_log_level</span> <span class="o">==</span> <span class="s2">&quot;basic&quot;</span>
-            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sent_alias_counts</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
-        <span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_sent_alias_counts</span><span class="p">[</span><span class="n">alias</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
-        <span class="k">elif</span> <span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">communication_log_level</span> <span class="o">==</span> <span class="s2">&quot;detail&quot;</span>
-            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_communication_log_batch</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
-        <span class="p">):</span>
-            <span class="n">log_entry</span> <span class="o">=</span> <span class="p">{</span>
-                <span class="s2">&quot;timestamp&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">time</span><span class="p">,</span>
-                <span class="s2">&quot;direction&quot;</span><span class="p">:</span> <span class="s2">&quot;sent&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;own_agent_id&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">agent_id</span><span class="p">,</span>
-                <span class="s2">&quot;remote_agent_id&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>  <span class="c1"># Cannot be known for sent messages generally</span>
-                <span class="s2">&quot;alias&quot;</span><span class="p">:</span> <span class="n">alias</span><span class="p">,</span>
-            <span class="p">}</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_communication_log_batch</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">log_entry</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="CommunicationLogger.log_received_message"><a class="viewcode-back" href="../../../../code/agentlib.modules.communicator.html#agentlib.modules.communicator.communication_logging_handling.CommunicationLogger.log_received_message">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">log_received_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alias</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">source_agent_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Log a received message&quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">communication_log_level</span> <span class="o">==</span> <span class="s2">&quot;basic&quot;</span>
-            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_received_source_alias_counts</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
-        <span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_received_source_alias_counts</span><span class="p">[(</span><span class="n">source_agent_id</span><span class="p">,</span> <span class="n">alias</span><span class="p">)]</span> <span class="o">+=</span> <span class="mi">1</span>
-        <span class="k">elif</span> <span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">communication_log_level</span> <span class="o">==</span> <span class="s2">&quot;detail&quot;</span>
-            <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_communication_log_batch</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
-        <span class="p">):</span>
-            <span class="n">log_entry</span> <span class="o">=</span> <span class="p">{</span>
-                <span class="s2">&quot;timestamp&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">time</span><span class="p">,</span>
-                <span class="s2">&quot;direction&quot;</span><span class="p">:</span> <span class="s2">&quot;received&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;own_agent_id&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">agent_id</span><span class="p">,</span>
-                <span class="s2">&quot;remote_agent_id&quot;</span><span class="p">:</span> <span class="n">source_agent_id</span><span class="p">,</span>
-                <span class="s2">&quot;alias&quot;</span><span class="p">:</span> <span class="n">alias</span><span class="p">,</span>
-            <span class="p">}</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_communication_log_batch</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">log_entry</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="CommunicationLogger.terminate"><a class="viewcode-back" href="../../../../code/agentlib.modules.communicator.html#agentlib.modules.communicator.communication_logging_handling.CommunicationLogger.terminate">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">terminate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Handle termination cleanup&quot;&quot;&quot;</span>
