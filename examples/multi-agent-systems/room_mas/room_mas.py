@@ -77,7 +77,7 @@ def run_example(
     axes[2, 1].plot(df_se["T_oda"], color="green", linestyle="-.", label="SensorAgent")
     # Legend, titles etc:
     axes[0, 0].set_ylabel("$T_{Room}$ / K")
-    axes[1, 0].set_ylabel("$\dot{Q}_{Room\,,in}$ / W")
+    axes[1, 0].set_ylabel(r"$\dot{Q}_{Room\,,in}$ / W")
     axes[2, 0].set_ylabel("$T_{oda}$ / K")
     axes[2, 0].set_xlabel("Time / s")
     axes[2, 1].set_xlabel("Time / s")
@@ -110,4 +110,4 @@ def run_example(
 
 
 if __name__ == "__main__":
-    run_example(until=86400 / 5, with_plots=True, with_dashboard=False)
+    run_example(until=86400 / 10, with_plots=True, with_dashboard=True)

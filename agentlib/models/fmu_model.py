@@ -126,7 +126,7 @@ class FmuModel(Model):
             t_start (float): Start time of simulation
             t_stop (float): Stop time of simulation
         """
-        logger.info("Initializing model...")
+        logger.debug("Initializing model...")
         # Handle Logging of the FMU itself:
         try:
             callbacks = fmpy.fmi2.fmi2CallbackFunctions()
@@ -156,7 +156,7 @@ class FmuModel(Model):
         )
         self.system.enterInitializationMode()
         self.system.exitInitializationMode()
-        logger.info("Model: %s initialized", self.name)
+        logger.debug("Model: %s initialized", self.name)
 
     def _fmu_logger(self, component, instanceName, status, category, message):
         """Print the FMU's log messages to the command line (works for both FMI 1.0 and 2.0)"""

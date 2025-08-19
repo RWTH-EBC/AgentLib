@@ -220,7 +220,7 @@ class BaseModuleConfig(BaseModel):
         for field_name, field in cls.model_fields.items():
             # If field is missing in values, validation of field was not
             # successful. Continue and pydantic will later raise the ValidationError
-            if field_name not in pre_validated_instance.model_fields:
+            if field_name not in cls.model_fields:
                 continue
 
             pre_merged_attr = pre_validated_instance.__getattribute__(field_name)

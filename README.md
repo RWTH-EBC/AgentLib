@@ -41,6 +41,8 @@ AgentLib has a number of optional dependencies, ranging from additional features
  - **plot**: Installs matplotlib, allows to plot the result of examples.
  - **orjson**: Faster json library, improves performance when using network communicators.
  - **fuzz**: Improves error messages when providing wrong configurations.
+ - **interactive**: Supports result visualization in dashboards using plotly dash.
+
 
 **clonemap**: Support the execution of agents and their communication through [clonemap](https://github.com/sogno-platform/clonemap). As clonemapy is not available through PYPI, please install it from source, or through the AgentLib's ``requirements.txt`` .
 

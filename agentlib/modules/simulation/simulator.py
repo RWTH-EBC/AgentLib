@@ -340,7 +340,7 @@ class Simulator(BaseModule):
             t_start=self.config.t_start + self.env.config.offset,
             t_stop=self.config.t_stop,
         )
-        self.logger.info("Model successfully loaded model: %s", self.model.name)
+        self.logger.debug("Model successfully loaded model: %s", self.model.name)
 
     def run(self, until=None):
         """
@@ -369,7 +369,7 @@ class Simulator(BaseModule):
         ):
             for var in ag_vars:
                 if var.name in model_var_names:
-                    self.logger.info(
+                    self.logger.debug(
                         "Registered callback for model %s %s ", _type, var.name
                     )
                     self.agent.data_broker.register_callback(
