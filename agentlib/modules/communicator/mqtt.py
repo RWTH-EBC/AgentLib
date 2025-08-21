@@ -188,7 +188,9 @@ class BaseMqttClient(Communicator):
         """Trigger the disconnect"""
         self._mqttc.disconnect(reasoncode=reasoncode, properties=properties)
 
-    def _disconnect_callback(self, client, userdata, disconnect_flag, reasonCode, properties):
+    def _disconnect_callback(
+        self, client, userdata, disconnect_flag, reasonCode, properties
+    ):
         """Stop the loop as a result of the disconnect"""
         self.logger.warning(
             "Disconnected with result code: %s | userdata: %s | properties: %s",
