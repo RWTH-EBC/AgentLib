@@ -104,13 +104,31 @@ class AgentLogger(BaseModule):
             if self.config.overwrite_log:
                 file_path.unlink()
                 self.logger.info(f"Overwrote existing log file: {file_path}")
+            elif self.config.filename is None:
+                # Auto-increment for default filenames to support quick iteration
+                file_path = self._get_incremented_filename(file_path)
+                self.logger.info(f"Using auto-incremented filename: {file_path}")
             else:
+                # Custom filename with overwrite disabled - maintain strict behavior
                 raise FileExistsError(
                     f"Log file '{file_path}' already exists. "
                     f"Set 'overwrite_log=True' to enable automatic overwrite."
                 )
 
         return str(file_path)
+
+    def _get_incremented_filename(self, base_path: Path) -> Path:
+        """Generate an auto-incremented filename"""
+        counter = 1
+        stem = base_path.stem
+        suffix = base_path.suffix
+        parent = base_path.parent
+
+        while True:
+            new_path = parent / f"{stem}_{counter}{suffix}"
+            if not new_path.exists():
+                return new_path
+            counter += 1
 
     @property
     def filename(self):

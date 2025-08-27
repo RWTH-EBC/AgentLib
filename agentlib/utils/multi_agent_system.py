@@ -91,13 +91,11 @@ class MAS(BaseModel):
             sampling=
         """
         # Add Logger config
-        filename = f"variable_logs//Agent_{config.id}_Logger.log"
         cfg = {
             "module_id": "AgentLogger",
             "type": "AgentLogger",
             "t_sample": sampling,
             "values_only": True,
-            "filename": filename,
             "overwrite_log": True,
             "clean_up": False,
         }
