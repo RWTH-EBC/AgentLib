@@ -169,13 +169,11 @@
 <span class="sd">            sampling=</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Add Logger config</span>
-        <span class="n">filename</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;variable_logs//Agent_</span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">_Logger.log&quot;</span>
         <span class="n">cfg</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s2">&quot;module_id&quot;</span><span class="p">:</span> <span class="s2">&quot;AgentLogger&quot;</span><span class="p">,</span>
             <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;AgentLogger&quot;</span><span class="p">,</span>
             <span class="s2">&quot;t_sample&quot;</span><span class="p">:</span> <span class="n">sampling</span><span class="p">,</span>
             <span class="s2">&quot;values_only&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
-            <span class="s2">&quot;filename&quot;</span><span class="p">:</span> <span class="n">filename</span><span class="p">,</span>
             <span class="s2">&quot;overwrite_log&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
             <span class="s2">&quot;clean_up&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
         <span class="p">}</span>
