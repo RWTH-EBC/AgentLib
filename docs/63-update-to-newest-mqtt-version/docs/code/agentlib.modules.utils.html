@@ -1,0 +1,513 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>agentlib.modules.utils package &mdash; agentlib 0.8.8 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/autodoc_pydantic.css" />
+
+  
+      <script src="../_static/jquery.js"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+      <script src="../_static/doctools.js"></script>
+      <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            agentlib
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Tutorials/tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ModulesList.html">List of standard modules and models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../AgentVariable.html">AgentVariables and ModelVariables</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../agentlib.html">agentlib package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">agentlib</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">agentlib.modules.utils package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/code/agentlib.modules.utils.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-agentlib.modules.utils">
+<span id="agentlib-modules-utils-package"></span><h1>agentlib.modules.utils package<a class="headerlink" href="#module-agentlib.modules.utils" title="Permalink to this heading"></a></h1>
+<p>Package containing utility modules.</p>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
+</section>
+<section id="module-agentlib.modules.utils.agent_logger">
+<span id="agentlib-modules-utils-agent-logger-module"></span><h2>agentlib.modules.utils.agent_logger module<a class="headerlink" href="#module-agentlib.modules.utils.agent_logger" title="Permalink to this heading"></a></h2>
+<p>This module contains a custom Module to log
+all variables inside an agent’s data_broker.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="agentlib.modules.utils.agent_logger.AgentLogger">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agentlib.modules.utils.agent_logger.</span></span><span class="sig-name descname"><span class="pre">AgentLogger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="agentlib.core.html#agentlib.core.agent.Agent" title="agentlib.core.agent.Agent"><span class="pre">Agent</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/modules/utils/agent_logger.html#AgentLogger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.utils.agent_logger.AgentLogger" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="agentlib.core.html#agentlib.core.module.BaseModule" title="agentlib.core.module.BaseModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModule</span></code></a></p>
+<p>A custom logger for Agents to write variables
+which are updated in data_broker into a file.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.modules.utils.agent_logger.AgentLogger.cleanup_results">
+<span class="sig-name descname"><span class="pre">cleanup_results</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/modules/utils/agent_logger.html#AgentLogger.cleanup_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.utils.agent_logger.AgentLogger.cleanup_results" title="Permalink to this definition"></a></dt>
+<dd><p>Deletes the log if wanted.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="agentlib.modules.utils.agent_logger.AgentLogger.filename">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">filename</span></span><a class="headerlink" href="#agentlib.modules.utils.agent_logger.AgentLogger.filename" title="Permalink to this definition"></a></dt>
+<dd><p>Return the filename where to log.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.modules.utils.agent_logger.AgentLogger.get_results">
+<span class="sig-name descname"><span class="pre">get_results</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="../_modules/agentlib/modules/utils/agent_logger.html#AgentLogger.get_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.utils.agent_logger.AgentLogger.get_results" title="Permalink to this definition"></a></dt>
+<dd><p>Load the own filename</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.modules.utils.agent_logger.AgentLogger.load_from_file">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">load_from_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">values_only</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">merge_sources</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="../_modules/agentlib/modules/utils/agent_logger.html#AgentLogger.load_from_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.utils.agent_logger.AgentLogger.load_from_file" title="Permalink to this definition"></a></dt>
+<dd><p>Loads the log file and consolidates it as a pandas DataFrame.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> – The file to load</p></li>
+<li><p><strong>values_only</strong> – If true, loads a file that only has values saved (default True)</p></li>
+<li><p><strong>merge_sources</strong> – When there are variables with the same alias from multiple
+sources, they are saved in different columns. For backwards
+compatibility, they are merged into a single column. However, if you
+specify False for this parameter, you can view them separately,
+resulting in a multi-indexed return column index</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.modules.utils.agent_logger.AgentLogger.process">
+<span class="sig-name descname"><span class="pre">process</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/modules/utils/agent_logger.html#AgentLogger.process"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.utils.agent_logger.AgentLogger.process" title="Permalink to this definition"></a></dt>
+<dd><p>Calls the logger every other t_sample
+is used.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.modules.utils.agent_logger.AgentLogger.register_callbacks">
+<span class="sig-name descname"><span class="pre">register_callbacks</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/modules/utils/agent_logger.html#AgentLogger.register_callbacks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.utils.agent_logger.AgentLogger.register_callbacks" title="Permalink to this definition"></a></dt>
+<dd><p>Callbacks trigger the log_cache function</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.modules.utils.agent_logger.AgentLogger.terminate">
+<span class="sig-name descname"><span class="pre">terminate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/modules/utils/agent_logger.html#AgentLogger.terminate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.utils.agent_logger.AgentLogger.terminate" title="Permalink to this definition"></a></dt>
+<dd><p>Terminate all relevant processes of the module.
+This is necessary to correctly terminate an agent
+at runtime. Not all modules may need this, hence it is
+not an abstract method.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class pydantic_model">
+<dt class="sig sig-object py" id="agentlib.modules.utils.agent_logger.AgentLoggerConfig">
+<em class="property"><span class="pre">pydantic</span> <span class="pre">model</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agentlib.modules.utils.agent_logger.</span></span><span class="sig-name descname"><span class="pre">AgentLoggerConfig</span></span><a class="reference internal" href="../_modules/agentlib/modules/utils/agent_logger.html#AgentLoggerConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.utils.agent_logger.AgentLoggerConfig" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="agentlib.core.html#agentlib.core.module.BaseModuleConfig" title="agentlib.core.module.BaseModuleConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModuleConfig</span></code></a></p>
+<p>Define parameters for the AgentLogger</p>
+<dl class="field-list simple">
+<dt class="field-odd">Config<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>arbitrary_types_allowed</strong>: <em>bool = True</em></p></li>
+<li><p><strong>validate_assignment</strong>: <em>bool = True</em></p></li>
+<li><p><strong>extra</strong>: <em>str = forbid</em></p></li>
+<li><p><strong>frozen</strong>: <em>bool = True</em></p></li>
+</ul>
+</dd>
+<dt class="field-even">Fields<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="#agentlib.modules.utils.agent_logger.AgentLoggerConfig.clean_up" title="agentlib.modules.utils.agent_logger.AgentLoggerConfig.clean_up"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clean_up</span> <span class="pre">(bool)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#agentlib.modules.utils.agent_logger.AgentLoggerConfig.filename" title="agentlib.modules.utils.agent_logger.AgentLoggerConfig.filename"><code class="xref py py-obj docutils literal notranslate"><span class="pre">filename</span> <span class="pre">(str</span> <span class="pre">|</span> <span class="pre">None)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#agentlib.modules.utils.agent_logger.AgentLoggerConfig.log_level" title="agentlib.modules.utils.agent_logger.AgentLoggerConfig.log_level"><code class="xref py py-obj docutils literal notranslate"><span class="pre">log_level</span> <span class="pre">(Optional[str])</span></code></a></p></li>
+<li><p><a class="reference internal" href="#agentlib.modules.utils.agent_logger.AgentLoggerConfig.module_id" title="agentlib.modules.utils.agent_logger.AgentLoggerConfig.module_id"><code class="xref py py-obj docutils literal notranslate"><span class="pre">module_id</span> <span class="pre">(str)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#agentlib.modules.utils.agent_logger.AgentLoggerConfig.overwrite_log" title="agentlib.modules.utils.agent_logger.AgentLoggerConfig.overwrite_log"><code class="xref py py-obj docutils literal notranslate"><span class="pre">overwrite_log</span> <span class="pre">(bool)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#agentlib.modules.utils.agent_logger.AgentLoggerConfig.shared_variable_fields" title="agentlib.modules.utils.agent_logger.AgentLoggerConfig.shared_variable_fields"><code class="xref py py-obj docutils literal notranslate"><span class="pre">shared_variable_fields</span> <span class="pre">(List[str])</span></code></a></p></li>
+<li><p><a class="reference internal" href="#agentlib.modules.utils.agent_logger.AgentLoggerConfig.t_sample" title="agentlib.modules.utils.agent_logger.AgentLoggerConfig.t_sample"><code class="xref py py-obj docutils literal notranslate"><span class="pre">t_sample</span> <span class="pre">(float</span> <span class="pre">|</span> <span class="pre">int)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#agentlib.modules.utils.agent_logger.AgentLoggerConfig.type" title="agentlib.modules.utils.agent_logger.AgentLoggerConfig.type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">type</span> <span class="pre">(Union[str,</span> <span class="pre">Dict[str,</span> <span class="pre">str]])</span></code></a></p></li>
+<li><p><a class="reference internal" href="#agentlib.modules.utils.agent_logger.AgentLoggerConfig.validate_incoming_values" title="agentlib.modules.utils.agent_logger.AgentLoggerConfig.validate_incoming_values"><code class="xref py py-obj docutils literal notranslate"><span class="pre">validate_incoming_values</span> <span class="pre">(Optional[bool])</span></code></a></p></li>
+<li><p><a class="reference internal" href="#agentlib.modules.utils.agent_logger.AgentLoggerConfig.values_only" title="agentlib.modules.utils.agent_logger.AgentLoggerConfig.values_only"><code class="xref py py-obj docutils literal notranslate"><span class="pre">values_only</span> <span class="pre">(bool)</span></code></a></p></li>
+</ul>
+</dd>
+<dt class="field-odd">Validators<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="#agentlib.modules.utils.agent_logger.AgentLoggerConfig.check_existence_of_file" title="agentlib.modules.utils.agent_logger.AgentLoggerConfig.check_existence_of_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_existence_of_file</span></code></a> » <a class="reference internal" href="#agentlib.modules.utils.agent_logger.AgentLoggerConfig.filename" title="agentlib.modules.utils.agent_logger.AgentLoggerConfig.filename"><code class="xref py py-obj docutils literal notranslate"><span class="pre">filename</span></code></a></p></li>
+<li><p><a class="reference internal" href="agentlib.core.html#agentlib.core.module.BaseModuleConfig.check_valid_fields" title="agentlib.core.module.BaseModuleConfig.check_valid_fields"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_valid_fields</span></code></a> » <a class="reference internal" href="#agentlib.modules.utils.agent_logger.AgentLoggerConfig.shared_variable_fields" title="agentlib.modules.utils.agent_logger.AgentLoggerConfig.shared_variable_fields"><code class="xref py py-obj docutils literal notranslate"><span class="pre">shared_variable_fields</span></code></a></p></li>
+<li><p><a class="reference internal" href="agentlib.core.html#agentlib.core.module.BaseModuleConfig.check_valid_level" title="agentlib.core.module.BaseModuleConfig.check_valid_level"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_valid_level</span></code></a> » <a class="reference internal" href="#agentlib.modules.utils.agent_logger.AgentLoggerConfig.log_level" title="agentlib.modules.utils.agent_logger.AgentLoggerConfig.log_level"><code class="xref py py-obj docutils literal notranslate"><span class="pre">log_level</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.utils.agent_logger.AgentLoggerConfig.clean_up">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">clean_up</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#agentlib.modules.utils.agent_logger.AgentLoggerConfig.clean_up" title="Permalink to this definition"></a></dt>
+<dd><p>If True, file is deleted once load_log is called.</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.utils.agent_logger.AgentLoggerConfig.filename">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">filename</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agentlib.modules.utils.agent_logger.AgentLoggerConfig.filename" title="Permalink to this definition"></a></dt>
+<dd><p>The filename where the log is stored. If None, will use ‘agent_logs/{agent_id}_log.json’</p>
+<dl class="field-list simple">
+<dt class="field-odd">Validated by<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="#agentlib.modules.utils.agent_logger.AgentLoggerConfig.check_existence_of_file" title="agentlib.modules.utils.agent_logger.AgentLoggerConfig.check_existence_of_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_existence_of_file</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.utils.agent_logger.AgentLoggerConfig.log_level">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">log_level</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agentlib.modules.utils.agent_logger.AgentLoggerConfig.log_level" title="Permalink to this definition"></a></dt>
+<dd><p>The log level for this Module. Default uses the root-loggers level.Options: DEBUG; INFO; WARNING; ERROR; CRITICAL</p>
+<dl class="field-list simple">
+<dt class="field-odd">Validated by<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="agentlib.core.html#agentlib.core.module.BaseModuleConfig.check_valid_level" title="agentlib.core.module.BaseModuleConfig.check_valid_level"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_valid_level</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.utils.agent_logger.AgentLoggerConfig.module_id">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">module_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#agentlib.modules.utils.agent_logger.AgentLoggerConfig.module_id" title="Permalink to this definition"></a></dt>
+<dd><p>The unqiue id of the module within an agent, used only to communicate withing the agent.</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.utils.agent_logger.AgentLoggerConfig.overwrite_log">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">overwrite_log</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#agentlib.modules.utils.agent_logger.AgentLoggerConfig.overwrite_log" title="Permalink to this definition"></a></dt>
+<dd><p>If true, old logs are auto deleted when a new log should be written with that name.</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.utils.agent_logger.AgentLoggerConfig.shared_variable_fields">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">shared_variable_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#agentlib.modules.utils.agent_logger.AgentLoggerConfig.shared_variable_fields" title="Permalink to this definition"></a></dt>
+<dd><p>A list of strings with each string being a field of the Modules configs. The field must be or contain an AgentVariable. If the field is added to this list, all shared attributes of the AgentVariables will be set to True.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Validated by<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="agentlib.core.html#agentlib.core.module.BaseModuleConfig.check_valid_fields" title="agentlib.core.module.BaseModuleConfig.check_valid_fields"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_valid_fields</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.utils.agent_logger.AgentLoggerConfig.t_sample">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">t_sample</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">300</span></em><a class="headerlink" href="#agentlib.modules.utils.agent_logger.AgentLoggerConfig.t_sample" title="Permalink to this definition"></a></dt>
+<dd><p>The log is saved every other t_sample seconds.</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.utils.agent_logger.AgentLoggerConfig.type">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#agentlib.modules.utils.agent_logger.AgentLoggerConfig.type" title="Permalink to this definition"></a></dt>
+<dd><p>The type of the Module. Used to find the Python-Object from all agentlib-core and plugin Module options. If a dict is given,it must contain the keys ‘file’ and ‘class_name’. ‘file’ is the filepath of a python file containing the Module.’class_name’ is the name of the Module class within this file.</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.utils.agent_logger.AgentLoggerConfig.validate_incoming_values">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">validate_incoming_values</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#agentlib.modules.utils.agent_logger.AgentLoggerConfig.validate_incoming_values" title="Permalink to this definition"></a></dt>
+<dd><p>If true, the validator of the AgentVariable value is called when receiving a new value from the DataBroker.</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.utils.agent_logger.AgentLoggerConfig.values_only">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">values_only</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#agentlib.modules.utils.agent_logger.AgentLoggerConfig.values_only" title="Permalink to this definition"></a></dt>
+<dd><p>If True, only the values are logged. Else, allfields in the AgentVariable are logged.</p>
+</dd></dl>
+
+<dl class="py method pydantic_validator">
+<dt class="sig sig-object py" id="agentlib.modules.utils.agent_logger.AgentLoggerConfig.check_existence_of_file">
+<em class="property"><span class="pre">validator</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">check_existence_of_file</span></span><em class="autodoc_pydantic_validator_arrow property">&#160; <span class="pre">»</span>&#160; </em><a class="reference internal" href="#agentlib.modules.utils.agent_logger.AgentLoggerConfig.filename" title="agentlib.modules.utils.agent_logger.AgentLoggerConfig.filename"><em class="xref py py-obj"><span class="pre">filename</span></em></a><a class="reference internal" href="../_modules/agentlib/modules/utils/agent_logger.html#AgentLoggerConfig.check_existence_of_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.utils.agent_logger.AgentLoggerConfig.check_existence_of_file" title="Permalink to this definition"></a></dt>
+<dd><p>Checks whether the file already exists.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.modules.utils.agent_logger.AgentLoggerConfig.model_post_init">
+<span class="sig-name descname"><span class="pre">model_post_init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#agentlib.modules.utils.agent_logger.AgentLoggerConfig.model_post_init" title="Permalink to this definition"></a></dt>
+<dd><p>This function is meant to behave like a BaseModel method to initialise private attributes.</p>
+<p>It takes context as an argument since that’s what pydantic-core passes when calling it.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>self</strong> – The BaseModel instance.</p></li>
+<li><p><strong>context</strong> – The context.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-agentlib.modules.utils.try_sensor">
+<span id="agentlib-modules-utils-try-sensor-module"></span><h2>agentlib.modules.utils.try_sensor module<a class="headerlink" href="#module-agentlib.modules.utils.try_sensor" title="Permalink to this heading"></a></h2>
+<p>This module contains a SensorModule which reads a .dat file
+from the Deutsche Wetterdienst (DWD).</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="agentlib.modules.utils.try_sensor.TRYSensor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agentlib.modules.utils.try_sensor.</span></span><span class="sig-name descname"><span class="pre">TRYSensor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="agentlib.core.html#agentlib.core.agent.Agent" title="agentlib.core.agent.Agent"><span class="pre">Agent</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/modules/utils/try_sensor.html#TRYSensor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.utils.try_sensor.TRYSensor" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="agentlib.core.html#agentlib.core.module.BaseModule" title="agentlib.core.module.BaseModule"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModule</span></code></a></p>
+<p>A module that emulates a sensor using the TRY
+data of the DWD.
+The module casts the following AgentVariables into the data_broker:</p>
+<ul class="simple">
+<li><p>T_oda:               Air temperature 2m over ground [K]</p></li>
+<li><p>pressure:            Air pressure in standard height [hPa]</p></li>
+<li><p>wind_direction:      Wind direction 10 m above gorund [Grad] {0..360;999}</p></li>
+<li><p>wind_speed:          Wind speed 10 m above ground [m/s]</p></li>
+<li><p>coverage:            [eighth]  {0..8;9}</p></li>
+<li><p>absolute_humidity:   [g/kg]</p></li>
+<li><p>relative_humidity:   Relative humidity 2 m above ground [%] {1..100}</p></li>
+<li><p>beam_direct:         Direct beam of sun (hor. plane) [W/m^2]   downwards: positive</p></li>
+<li><p>beam_diffuse:        Diffuse beam of sun (hor. plane) [W/m^2] downwards: positive</p></li>
+<li><p>beam_atm:            Beam of atmospheric heat (hor. plane)    [W/m^2] downwards: positive</p></li>
+<li><p>beam_terr:           Beam of terrestrial heat [W/m^2] upwards: negative</p></li>
+</ul>
+<dl class="py property">
+<dt class="sig sig-object py" id="agentlib.modules.utils.try_sensor.TRYSensor.filename">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">filename</span></span><a class="headerlink" href="#agentlib.modules.utils.try_sensor.TRYSensor.filename" title="Permalink to this definition"></a></dt>
+<dd><p>Return the filename.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.modules.utils.try_sensor.TRYSensor.get_data_now">
+<span class="sig-name descname"><span class="pre">get_data_now</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/modules/utils/try_sensor.html#TRYSensor.get_data_now"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.utils.try_sensor.TRYSensor.get_data_now" title="Permalink to this definition"></a></dt>
+<dd><p>Get the data at the current env time.
+Reiterate the year if necessary.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.modules.utils.try_sensor.TRYSensor.process">
+<span class="sig-name descname"><span class="pre">process</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/modules/utils/try_sensor.html#TRYSensor.process"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.utils.try_sensor.TRYSensor.process" title="Permalink to this definition"></a></dt>
+<dd><p>Write the current TRY values into data_broker every other t_sample</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.modules.utils.try_sensor.TRYSensor.register_callbacks">
+<span class="sig-name descname"><span class="pre">register_callbacks</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/modules/utils/try_sensor.html#TRYSensor.register_callbacks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.utils.try_sensor.TRYSensor.register_callbacks" title="Permalink to this definition"></a></dt>
+<dd><p>Dont do anything as this BaseModule is not event-triggered</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="agentlib.modules.utils.try_sensor.TRYSensor.t_sample">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">t_sample</span></span><a class="headerlink" href="#agentlib.modules.utils.try_sensor.TRYSensor.t_sample" title="Permalink to this definition"></a></dt>
+<dd><p>Return the sample rate.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class pydantic_model">
+<dt class="sig sig-object py" id="agentlib.modules.utils.try_sensor.TRYSensorConfig">
+<em class="property"><span class="pre">pydantic</span> <span class="pre">model</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agentlib.modules.utils.try_sensor.</span></span><span class="sig-name descname"><span class="pre">TRYSensorConfig</span></span><a class="reference internal" href="../_modules/agentlib/modules/utils/try_sensor.html#TRYSensorConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.utils.try_sensor.TRYSensorConfig" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="agentlib.core.html#agentlib.core.module.BaseModuleConfig" title="agentlib.core.module.BaseModuleConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModuleConfig</span></code></a></p>
+<p>Define parameters for the TRYSensor</p>
+<dl class="field-list simple">
+<dt class="field-odd">Config<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>arbitrary_types_allowed</strong>: <em>bool = True</em></p></li>
+<li><p><strong>validate_assignment</strong>: <em>bool = True</em></p></li>
+<li><p><strong>extra</strong>: <em>str = forbid</em></p></li>
+<li><p><strong>frozen</strong>: <em>bool = True</em></p></li>
+</ul>
+</dd>
+<dt class="field-even">Fields<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="#agentlib.modules.utils.try_sensor.TRYSensorConfig.filename" title="agentlib.modules.utils.try_sensor.TRYSensorConfig.filename"><code class="xref py py-obj docutils literal notranslate"><span class="pre">filename</span> <span class="pre">(pathlib.Path)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#agentlib.modules.utils.try_sensor.TRYSensorConfig.log_level" title="agentlib.modules.utils.try_sensor.TRYSensorConfig.log_level"><code class="xref py py-obj docutils literal notranslate"><span class="pre">log_level</span> <span class="pre">(Optional[str])</span></code></a></p></li>
+<li><p><a class="reference internal" href="#agentlib.modules.utils.try_sensor.TRYSensorConfig.module_id" title="agentlib.modules.utils.try_sensor.TRYSensorConfig.module_id"><code class="xref py py-obj docutils literal notranslate"><span class="pre">module_id</span> <span class="pre">(str)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#agentlib.modules.utils.try_sensor.TRYSensorConfig.outputs" title="agentlib.modules.utils.try_sensor.TRYSensorConfig.outputs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">outputs</span> <span class="pre">(List[agentlib.core.datamodels.AgentVariable])</span></code></a></p></li>
+<li><p><a class="reference internal" href="#agentlib.modules.utils.try_sensor.TRYSensorConfig.shared_variable_fields" title="agentlib.modules.utils.try_sensor.TRYSensorConfig.shared_variable_fields"><code class="xref py py-obj docutils literal notranslate"><span class="pre">shared_variable_fields</span> <span class="pre">(List[str])</span></code></a></p></li>
+<li><p><a class="reference internal" href="#agentlib.modules.utils.try_sensor.TRYSensorConfig.t_sample" title="agentlib.modules.utils.try_sensor.TRYSensorConfig.t_sample"><code class="xref py py-obj docutils literal notranslate"><span class="pre">t_sample</span> <span class="pre">(float</span> <span class="pre">|</span> <span class="pre">int)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#agentlib.modules.utils.try_sensor.TRYSensorConfig.type" title="agentlib.modules.utils.try_sensor.TRYSensorConfig.type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">type</span> <span class="pre">(Union[str,</span> <span class="pre">Dict[str,</span> <span class="pre">str]])</span></code></a></p></li>
+<li><p><a class="reference internal" href="#agentlib.modules.utils.try_sensor.TRYSensorConfig.validate_incoming_values" title="agentlib.modules.utils.try_sensor.TRYSensorConfig.validate_incoming_values"><code class="xref py py-obj docutils literal notranslate"><span class="pre">validate_incoming_values</span> <span class="pre">(Optional[bool])</span></code></a></p></li>
+</ul>
+</dd>
+<dt class="field-odd">Validators<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="agentlib.core.html#agentlib.core.module.BaseModuleConfig.check_valid_fields" title="agentlib.core.module.BaseModuleConfig.check_valid_fields"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_valid_fields</span></code></a> » <a class="reference internal" href="#agentlib.modules.utils.try_sensor.TRYSensorConfig.shared_variable_fields" title="agentlib.modules.utils.try_sensor.TRYSensorConfig.shared_variable_fields"><code class="xref py py-obj docutils literal notranslate"><span class="pre">shared_variable_fields</span></code></a></p></li>
+<li><p><a class="reference internal" href="agentlib.core.html#agentlib.core.module.BaseModuleConfig.check_valid_level" title="agentlib.core.module.BaseModuleConfig.check_valid_level"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_valid_level</span></code></a> » <a class="reference internal" href="#agentlib.modules.utils.try_sensor.TRYSensorConfig.log_level" title="agentlib.modules.utils.try_sensor.TRYSensorConfig.log_level"><code class="xref py py-obj docutils literal notranslate"><span class="pre">log_level</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.utils.try_sensor.TRYSensorConfig.filename">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">filename</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Path</span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#agentlib.modules.utils.try_sensor.TRYSensorConfig.filename" title="Permalink to this definition"></a></dt>
+<dd><p>The filepath to the data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Constraints<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path_type</strong> = file</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.utils.try_sensor.TRYSensorConfig.log_level">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">log_level</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agentlib.modules.utils.try_sensor.TRYSensorConfig.log_level" title="Permalink to this definition"></a></dt>
+<dd><p>The log level for this Module. Default uses the root-loggers level.Options: DEBUG; INFO; WARNING; ERROR; CRITICAL</p>
+<dl class="field-list simple">
+<dt class="field-odd">Validated by<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="agentlib.core.html#agentlib.core.module.BaseModuleConfig.check_valid_level" title="agentlib.core.module.BaseModuleConfig.check_valid_level"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_valid_level</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.utils.try_sensor.TRYSensorConfig.module_id">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">module_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#agentlib.modules.utils.try_sensor.TRYSensorConfig.module_id" title="Permalink to this definition"></a></dt>
+<dd><p>The unqiue id of the module within an agent, used only to communicate withing the agent.</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.utils.try_sensor.TRYSensorConfig.outputs">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">outputs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="agentlib.core.html#agentlib.core.datamodels.AgentVariable" title="agentlib.core.datamodels.AgentVariable"><span class="pre">AgentVariable</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[AgentVariable(name='T_oda',</span> <span class="pre">type=None,</span> <span class="pre">timestamp=None,</span> <span class="pre">unit='K',</span> <span class="pre">description='Air</span> <span class="pre">temperature</span> <span class="pre">2m</span> <span class="pre">over</span> <span class="pre">ground</span> <span class="pre">[K]',</span> <span class="pre">ub=inf,</span> <span class="pre">lb=-inf,</span> <span class="pre">clip=False,</span> <span class="pre">allowed_values=[],</span> <span class="pre">value=None,</span> <span class="pre">alias='T_oda',</span> <span class="pre">source=Source(agent_id=None,</span> <span class="pre">module_id=None),</span> <span class="pre">shared=None,</span> <span class="pre">rdf_class=None),</span> <span class="pre">AgentVariable(name='pressure',</span> <span class="pre">type=None,</span> <span class="pre">timestamp=None,</span> <span class="pre">unit='hPa',</span> <span class="pre">description='Air</span> <span class="pre">pressure</span> <span class="pre">in</span> <span class="pre">standard</span> <span class="pre">height</span> <span class="pre">[hPa]',</span> <span class="pre">ub=inf,</span> <span class="pre">lb=-inf,</span> <span class="pre">clip=False,</span> <span class="pre">allowed_values=[],</span> <span class="pre">value=None,</span> <span class="pre">alias='pressure',</span> <span class="pre">source=Source(agent_id=None,</span> <span class="pre">module_id=None),</span> <span class="pre">shared=None,</span> <span class="pre">rdf_class=None),</span> <span class="pre">AgentVariable(name='wind_direction',</span> <span class="pre">type=None,</span> <span class="pre">timestamp=None,</span> <span class="pre">unit='°',</span> <span class="pre">description='Wind</span> <span class="pre">direction</span> <span class="pre">10</span> <span class="pre">m</span> <span class="pre">above</span> <span class="pre">gorund</span> <span class="pre">[Grad]</span> <span class="pre">{0..360;999}',</span> <span class="pre">ub=inf,</span> <span class="pre">lb=-inf,</span> <span class="pre">clip=False,</span> <span class="pre">allowed_values=[],</span> <span class="pre">value=None,</span> <span class="pre">alias='wind_direction',</span> <span class="pre">source=Source(agent_id=None,</span> <span class="pre">module_id=None),</span> <span class="pre">shared=None,</span> <span class="pre">rdf_class=None),</span> <span class="pre">AgentVariable(name='wind_speed',</span> <span class="pre">type=None,</span> <span class="pre">timestamp=None,</span> <span class="pre">unit='m/s',</span> <span class="pre">description='Wind</span> <span class="pre">speed</span> <span class="pre">10</span> <span class="pre">m</span> <span class="pre">above</span> <span class="pre">ground</span> <span class="pre">[m/s]',</span> <span class="pre">ub=inf,</span> <span class="pre">lb=-inf,</span> <span class="pre">clip=False,</span> <span class="pre">allowed_values=[],</span> <span class="pre">value=None,</span> <span class="pre">alias='wind_speed',</span> <span class="pre">source=Source(agent_id=None,</span> <span class="pre">module_id=None),</span> <span class="pre">shared=None,</span> <span class="pre">rdf_class=None),</span> <span class="pre">AgentVariable(name='coverage',</span> <span class="pre">type=None,</span> <span class="pre">timestamp=None,</span> <span class="pre">unit='eighth',</span> <span class="pre">description='[eighth]</span>&#160; <span class="pre">{0..8;9}',</span> <span class="pre">ub=inf,</span> <span class="pre">lb=-inf,</span> <span class="pre">clip=False,</span> <span class="pre">allowed_values=[],</span> <span class="pre">value=None,</span> <span class="pre">alias='coverage',</span> <span class="pre">source=Source(agent_id=None,</span> <span class="pre">module_id=None),</span> <span class="pre">shared=None,</span> <span class="pre">rdf_class=None),</span> <span class="pre">AgentVariable(name='absolute_humidity',</span> <span class="pre">type=None,</span> <span class="pre">timestamp=None,</span> <span class="pre">unit='g/kg',</span> <span class="pre">description='[g/kg]',</span> <span class="pre">ub=inf,</span> <span class="pre">lb=-inf,</span> <span class="pre">clip=False,</span> <span class="pre">allowed_values=[],</span> <span class="pre">value=None,</span> <span class="pre">alias='absolute_humidity',</span> <span class="pre">source=Source(agent_id=None,</span> <span class="pre">module_id=None),</span> <span class="pre">shared=None,</span> <span class="pre">rdf_class=None),</span> <span class="pre">AgentVariable(name='relative_humidity',</span> <span class="pre">type=None,</span> <span class="pre">timestamp=None,</span> <span class="pre">unit='%',</span> <span class="pre">description='Relative</span> <span class="pre">humidity</span> <span class="pre">2</span> <span class="pre">m</span> <span class="pre">above</span> <span class="pre">ground</span> <span class="pre">[%]</span> <span class="pre">{1..100}',</span> <span class="pre">ub=inf,</span> <span class="pre">lb=-inf,</span> <span class="pre">clip=False,</span> <span class="pre">allowed_values=[],</span> <span class="pre">value=None,</span> <span class="pre">alias='relative_humidity',</span> <span class="pre">source=Source(agent_id=None,</span> <span class="pre">module_id=None),</span> <span class="pre">shared=None,</span> <span class="pre">rdf_class=None),</span> <span class="pre">AgentVariable(name='beam_direct',</span> <span class="pre">type=None,</span> <span class="pre">timestamp=None,</span> <span class="pre">unit='W/m^2',</span> <span class="pre">description='Direct</span> <span class="pre">beam</span> <span class="pre">of</span> <span class="pre">sun</span> <span class="pre">(hor.</span> <span class="pre">plane)</span> <span class="pre">[W/m^2]</span> <span class="pre">downwards:</span> <span class="pre">positive',</span> <span class="pre">ub=inf,</span> <span class="pre">lb=-inf,</span> <span class="pre">clip=False,</span> <span class="pre">allowed_values=[],</span> <span class="pre">value=None,</span> <span class="pre">alias='beam_direct',</span> <span class="pre">source=Source(agent_id=None,</span> <span class="pre">module_id=None),</span> <span class="pre">shared=None,</span> <span class="pre">rdf_class=None),</span> <span class="pre">AgentVariable(name='beam_diffuse',</span> <span class="pre">type=None,</span> <span class="pre">timestamp=None,</span> <span class="pre">unit='/m^2',</span> <span class="pre">description='Diffuse</span> <span class="pre">beam</span> <span class="pre">of</span> <span class="pre">sun</span> <span class="pre">(hor.</span> <span class="pre">plane)</span> <span class="pre">[W/m^2]</span> <span class="pre">downwards:</span> <span class="pre">positive',</span> <span class="pre">ub=inf,</span> <span class="pre">lb=-inf,</span> <span class="pre">clip=False,</span> <span class="pre">allowed_values=[],</span> <span class="pre">value=None,</span> <span class="pre">alias='beam_diffuse',</span> <span class="pre">source=Source(agent_id=None,</span> <span class="pre">module_id=None),</span> <span class="pre">shared=None,</span> <span class="pre">rdf_class=None),</span> <span class="pre">AgentVariable(name='beam_atm',</span> <span class="pre">type=None,</span> <span class="pre">timestamp=None,</span> <span class="pre">unit='/m^2',</span> <span class="pre">description='Beam</span> <span class="pre">of</span> <span class="pre">atmospheric</span> <span class="pre">heat</span> <span class="pre">(hor.</span> <span class="pre">plane)</span> <span class="pre">[W/m^2]</span> <span class="pre">downwards:</span> <span class="pre">positive',</span> <span class="pre">ub=inf,</span> <span class="pre">lb=-inf,</span> <span class="pre">clip=False,</span> <span class="pre">allowed_values=[],</span> <span class="pre">value=None,</span> <span class="pre">alias='beam_atm',</span> <span class="pre">source=Source(agent_id=None,</span> <span class="pre">module_id=None),</span> <span class="pre">shared=None,</span> <span class="pre">rdf_class=None),</span> <span class="pre">AgentVariable(name='beam_terr',</span> <span class="pre">type=None,</span> <span class="pre">timestamp=None,</span> <span class="pre">unit='/m^2',</span> <span class="pre">description='Beam</span> <span class="pre">of</span> <span class="pre">terrestrial</span> <span class="pre">heat</span> <span class="pre">[W/m^2]</span> <span class="pre">upwards:</span> <span class="pre">negative',</span> <span class="pre">ub=inf,</span> <span class="pre">lb=-inf,</span> <span class="pre">clip=False,</span> <span class="pre">allowed_values=[],</span> <span class="pre">value=None,</span> <span class="pre">alias='beam_terr',</span> <span class="pre">source=Source(agent_id=None,</span> <span class="pre">module_id=None),</span> <span class="pre">shared=None,</span> <span class="pre">rdf_class=None)]</span></em><a class="headerlink" href="#agentlib.modules.utils.try_sensor.TRYSensorConfig.outputs" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.utils.try_sensor.TRYSensorConfig.shared_variable_fields">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">shared_variable_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['outputs']</span></em><a class="headerlink" href="#agentlib.modules.utils.try_sensor.TRYSensorConfig.shared_variable_fields" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Validated by<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="agentlib.core.html#agentlib.core.module.BaseModuleConfig.check_valid_fields" title="agentlib.core.module.BaseModuleConfig.check_valid_fields"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_valid_fields</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.utils.try_sensor.TRYSensorConfig.t_sample">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">t_sample</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#agentlib.modules.utils.try_sensor.TRYSensorConfig.t_sample" title="Permalink to this definition"></a></dt>
+<dd><p>Sample time of sensor. As TRY are hourly, default is 1 h</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.utils.try_sensor.TRYSensorConfig.type">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#agentlib.modules.utils.try_sensor.TRYSensorConfig.type" title="Permalink to this definition"></a></dt>
+<dd><p>The type of the Module. Used to find the Python-Object from all agentlib-core and plugin Module options. If a dict is given,it must contain the keys ‘file’ and ‘class_name’. ‘file’ is the filepath of a python file containing the Module.’class_name’ is the name of the Module class within this file.</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.utils.try_sensor.TRYSensorConfig.validate_incoming_values">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">validate_incoming_values</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#agentlib.modules.utils.try_sensor.TRYSensorConfig.validate_incoming_values" title="Permalink to this definition"></a></dt>
+<dd><p>If true, the validator of the AgentVariable value is called when receiving a new value from the DataBroker.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.modules.utils.try_sensor.TRYSensorConfig.model_post_init">
+<span class="sig-name descname"><span class="pre">model_post_init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#agentlib.modules.utils.try_sensor.TRYSensorConfig.model_post_init" title="Permalink to this definition"></a></dt>
+<dd><p>This function is meant to behave like a BaseModel method to initialise private attributes.</p>
+<p>It takes context as an argument since that’s what pydantic-core passes when calling it.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>self</strong> – The BaseModel instance.</p></li>
+<li><p><strong>context</strong> – The context.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="agentlib.modules.utils.try_sensor.read_dat_file">
+<span class="sig-prename descclassname"><span class="pre">agentlib.modules.utils.try_sensor.</span></span><span class="sig-name descname"><span class="pre">read_dat_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dat_file</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/modules/utils/try_sensor.html#read_dat_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.utils.try_sensor.read_dat_file" title="Permalink to this definition"></a></dt>
+<dd><p>Read a .dat file from the DWD’s TRY data from the given .dat-file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dat_file</strong> (<em>str</em>) – The file to read</p>
+</dd>
+</dl>
+<p>Returns:</p>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, AGENT-Project Associates.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
