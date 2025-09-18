@@ -3006,15 +3006,15 @@
         },
         "dependencies": {
             "agentlib.core": [
-                "tests.test_module",
-                "tests.test_agent",
-                "tests.test_data_broker",
+                "tests.test_agentlogger",
+                "tests.test_simulator",
                 "agentlib",
                 "tests.test_n_pingpong",
-                "tests.test_simulator",
-                "tests.test_model",
                 "tests.test_environment",
-                "tests.test_agentlogger"
+                "tests.test_data_broker",
+                "tests.test_model",
+                "tests.test_module",
+                "tests.test_agent"
             ],
             "agentlib.models": [
                 "agentlib"
@@ -3023,43 +3023,43 @@
                 "agentlib"
             ],
             "agentlib.utils": [
-                "tests.test_n_pingpong",
-                "run_examples",
                 "tests.test_utils",
-                "agentlib"
+                "tests.test_n_pingpong",
+                "agentlib",
+                "run_examples"
             ],
             "agentlib.core.datamodels": [
+                "tests.test_agentlogger",
+                "tests.test_simulator",
+                "tests.test_n_pingpong",
+                "tests.test_model",
                 "tests.test_datamodels",
                 "tests.test_module",
-                "agentlib",
-                "tests.test_n_pingpong",
-                "tests.test_simulator",
-                "tests.test_model",
-                "tests.test_agentlogger"
+                "agentlib"
             ],
             "agentlib.utils.multi_agent_system": [
                 "tests.test_n_pingpong",
                 "agentlib"
             ],
             "pandas": [
-                "tests.test_datamodels",
-                "run_examples",
-                "tests.test_data_source",
-                "tests.test_communicator",
+                "tests.test_agentlogger",
                 "tests.test_simulator",
                 "tests.test_simulator_dashboard",
-                "tests.test_agentlogger"
+                "tests.test_data_source",
+                "run_examples",
+                "tests.test_communicator",
+                "tests.test_datamodels"
             ],
             "agentlib.utils.local_broadcast_broker": [
                 "run_examples"
             ],
             "pydantic": [
-                "tests.test_module",
-                "tests.test_agent",
-                "tests.test_n_pingpong",
                 "tests.test_simulator",
+                "tests.test_n_pingpong",
+                "tests.test_environment",
                 "tests.test_model",
-                "tests.test_environment"
+                "tests.test_module",
+                "tests.test_agent"
             ],
             "agentlib.core.agent": [
                 "tests.test_utils",
@@ -3071,23 +3071,23 @@
                 "tests.test_agent"
             ],
             "numpy": [
-                "tests.test_datamodels",
+                "tests.test_agentlogger",
+                "tests.test_simulator",
+                "tests.test_n_pingpong",
                 "tests.test_data_source",
                 "tests.test_data_broker",
-                "tests.test_n_pingpong",
-                "tests.test_simulator",
                 "tests.test_model",
-                "tests.test_agentlogger"
+                "tests.test_datamodels"
             ],
             "agentlib.modules.utils.agent_logger": [
                 "tests.test_agentlogger"
             ],
             "agentlib": [
                 "tests.test_utils",
+                "tests.test_databroker_limits",
                 "tests.test_data_source",
-                "tests.test_data_broker",
                 "tests.test_communicator",
-                "tests.test_databroker_limits"
+                "tests.test_data_broker"
             ],
             "agentlib.modules.communicator.local": [
                 "tests.test_communicator"
@@ -3182,7 +3182,7 @@
                 "statement": 6,
                 "warning": 0
             },
-            "ci.run_examples": {
+            "run_examples": {
                 "convention": 1,
                 "error": 0,
                 "fatal": 0,
@@ -3378,15 +3378,15 @@
         },
         "dependencies": {
             "agentlib.core": [
-                "tests.test_module",
-                "tests.test_agent",
-                "agentlib",
-                "tests.test_data_broker",
-                "tests.test_n_pingpong",
+                "tests.test_agentlogger",
                 "tests.test_simulator",
-                "tests.test_model",
+                "agentlib",
+                "tests.test_n_pingpong",
                 "tests.test_environment",
-                "tests.test_agentlogger"
+                "tests.test_data_broker",
+                "tests.test_model",
+                "tests.test_module",
+                "tests.test_agent"
             ],
             "agentlib.models": [
                 "agentlib"
@@ -3395,71 +3395,71 @@
                 "agentlib"
             ],
             "agentlib.utils": [
-                "ci.run_examples",
-                "tests.test_n_pingpong",
                 "tests.test_utils",
-                "agentlib"
+                "tests.test_n_pingpong",
+                "agentlib",
+                "run_examples"
             ],
             "agentlib.core.datamodels": [
+                "tests.test_agentlogger",
+                "tests.test_simulator",
+                "tests.test_n_pingpong",
+                "tests.test_model",
                 "tests.test_datamodels",
                 "tests.test_module",
-                "agentlib",
-                "tests.test_n_pingpong",
-                "tests.test_simulator",
-                "tests.test_model",
-                "tests.test_agentlogger"
+                "agentlib"
             ],
             "agentlib.utils.multi_agent_system": [
                 "tests.test_n_pingpong",
                 "agentlib"
             ],
             "pandas": [
-                "tests.test_datamodels",
-                "tests.test_data_source",
-                "tests.test_communicator",
+                "tests.test_agentlogger",
                 "tests.test_simulator",
                 "tests.test_simulator_dashboard",
-                "ci.run_examples",
-                "tests.test_agentlogger"
+                "tests.test_data_source",
+                "run_examples",
+                "tests.test_communicator",
+                "tests.test_datamodels"
             ],
             "agentlib.utils.local_broadcast_broker": [
-                "ci.run_examples"
+                "run_examples"
             ],
             "pydantic": [
-                "tests.test_module",
-                "tests.test_agent",
-                "tests.test_n_pingpong",
                 "tests.test_simulator",
+                "tests.test_n_pingpong",
+                "tests.test_environment",
                 "tests.test_model",
-                "tests.test_environment"
+                "tests.test_module",
+                "tests.test_agent"
             ],
             "agentlib.core.agent": [
-                "tests.test_agent",
-                "tests.test_utils"
+                "tests.test_utils",
+                "tests.test_agent"
             ],
             "agentlib.core.errors": [
+                "tests.test_utils",
                 "tests.test_module",
-                "tests.test_agent",
-                "tests.test_utils"
+                "tests.test_agent"
             ],
             "numpy": [
-                "tests.test_datamodels",
+                "tests.test_agentlogger",
+                "tests.test_simulator",
+                "tests.test_n_pingpong",
                 "tests.test_data_source",
                 "tests.test_data_broker",
-                "tests.test_n_pingpong",
-                "tests.test_simulator",
                 "tests.test_model",
-                "tests.test_agentlogger"
+                "tests.test_datamodels"
             ],
             "agentlib.modules.utils.agent_logger": [
                 "tests.test_agentlogger"
             ],
             "agentlib": [
                 "tests.test_utils",
+                "tests.test_databroker_limits",
                 "tests.test_data_source",
-                "tests.test_data_broker",
                 "tests.test_communicator",
-                "tests.test_databroker_limits"
+                "tests.test_data_broker"
             ],
             "agentlib.modules.communicator.local": [
                 "tests.test_communicator"
