@@ -136,7 +136,10 @@ class AgentLogger(BaseModule):
     def _callback_values(self, variable: AgentVariable):
         """Save variable values to log later."""
         if not isinstance(variable.value, (float, int, str)):
-            return
+            try:
+                variable.value = float(variable.value)
+            except (TypeError, ValueError):
+                return
         current_time = self._variables_to_log.setdefault(str(self.env.time), {})
         # we merge alias and source tuple into a string so we can .json it
         current_time[str((variable.alias, str(variable.source)))] = variable.value
