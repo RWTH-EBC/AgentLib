@@ -170,15 +170,24 @@ class AgentLogger(BaseModule):
                 resulting in a multi-indexed return column index
 
         """
-        chunks = []
-        with open(filename, "r") as file:
-            for data_line in file.readlines():
-                chunks.append(json.loads(data_line))
-        full_dict = collections.ChainMap(*chunks)
-        df = pd.DataFrame.from_dict(full_dict, orient="index")
-        df.index = df.index.astype(float)
-        columns = (literal_eval(column) for column in df.columns)
-        df.columns = pd.MultiIndex.from_tuples(columns)
+        data = []
+        with open(filename, "r", encoding="utf-8") as file:
+            for line in file:
+                if not line.strip():
+                    continue
+                chunk = json.loads(line)
+                for timestamp, values in chunk.items():
+                    row = {"time": float(timestamp)}
+                    row.update(values)
+                    data.append(row)
+
+        if not data:
+            return pd.DataFrame()
+
+        df = pd.DataFrame(data).set_index("time")
+        df.columns = pd.MultiIndex.from_tuples(
+            literal_eval(c) for c in df.columns
+        )
 
         if not values_only:
 
