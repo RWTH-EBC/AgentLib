@@ -1,0 +1,30 @@
+agentlib/__init__.py:8:1: F403 `from .core.datamodels import *` used; unable to detect undefined names
+agentlib/__init__.py:17:1: F405 `AgentVariable` may be undefined, or defined from star imports
+agentlib/__init__.py:17:1: F405 `AgentVariables` may be undefined, or defined from star imports
+agentlib/core/__init__.py:10:1: F403 `from .datamodels import *` used; unable to detect undefined names
+agentlib/core/__init__.py:11:26: F401 [*] `.environment.Environment` imported but unused
+agentlib/core/__init__.py:12:26: F401 [*] `.data_broker.DataBroker` imported but unused
+agentlib/core/__init__.py:12:38: F401 [*] `.data_broker.RTDataBroker` imported but unused
+agentlib/core/__init__.py:12:52: F401 [*] `.data_broker.LocalDataBroker` imported but unused
+agentlib/core/__init__.py:12:69: F401 [*] `.data_broker.DirectCallbackDataBroker` imported but unused
+agentlib/core/__init__.py:13:21: F401 [*] `.module.BaseModule` imported but unused
+agentlib/core/__init__.py:13:33: F401 [*] `.module.BaseModuleConfig` imported but unused
+agentlib/core/__init__.py:14:20: F401 [*] `.agent.Agent` imported but unused
+agentlib/core/__init__.py:15:20: F401 [*] `.model.Model` imported but unused
+agentlib/core/__init__.py:15:27: F401 [*] `.model.ModelConfig` imported but unused
+agentlib/core/datamodels.py:736:17: F402 Import `field` from line 21 shadowed by loop variable
+agentlib/core/logging_.py:38:31: F541 [*] f-string without any placeholders
+agentlib/modules/communicator/clonemap.py:226:9: F841 Local variable `agent` is assigned to but never used
+agentlib/modules/controller/__init__.py:2:25: F401 [*] `.controller.Controller` imported but unused
+agentlib/modules/controller/__init__.py:2:37: F401 [*] `.controller.SISOController` imported but unused
+agentlib/modules/controller/__init__.py:2:53: F401 [*] `.controller.SISOControllerConfig` imported but unused
+agentlib/utils/__init__.py:14:37: F401 [*] `.local_broadcast_broker.LocalBroadcastBroker` imported but unused
+agentlib/utils/__init__.py:15:27: F401 [*] `.local_broker.LocalBroker` imported but unused
+agentlib/utils/__init__.py:16:38: F401 [*] `.multi_processing_broker.MultiProcessingBroker` imported but unused
+examples/controller/bangbang_with_simulator.py:89:5: F841 Local variable `pid_agent` is assigned to but never used
+examples/controller/pid_with_simulator.py:102:5: F841 Local variable `pid_agent` is assigned to but never used
+examples/getting-started/part_1_my_first_agent_concise.py:49:5: F841 Local variable `agent` is assigned to but never used
+examples/getting-started/part_1_my_first_agent_with_comments.py:84:5: F841 Local variable `agent` is assigned to but never used
+tests/test_n_pingpong.py:117:9: F841 Local variable `broker` is assigned to but never used
+Found 28 errors.
+[*] 17 fixable with the `--fix` option (6 hidden fixes can be enabled with the `--unsafe-fixes` option).
