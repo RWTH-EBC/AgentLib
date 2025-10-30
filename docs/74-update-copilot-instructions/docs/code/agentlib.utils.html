@@ -1,0 +1,889 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>agentlib.utils package &mdash; agentlib 0.8.9 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/autodoc_pydantic.css" />
+
+  
+      <script src="../_static/jquery.js"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+      <script src="../_static/doctools.js"></script>
+      <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            agentlib
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Tutorials/tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ModulesList.html">List of standard modules and models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../AgentVariable.html">AgentVariables and ModelVariables</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../agentlib.html">agentlib package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">agentlib</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">agentlib.utils package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/code/agentlib.utils.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-agentlib.utils">
+<span id="agentlib-utils-package"></span><h1>agentlib.utils package<a class="headerlink" href="#module-agentlib.utils" title="Permalink to this heading"></a></h1>
+<p>Module containing all util
+functions for the agentlib.</p>
+<p>Most notably, the custom injection enabling
+dynamic loading of custom models and modules.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="agentlib.utils.custom_injection">
+<span class="sig-prename descclassname"><span class="pre">agentlib.utils.</span></span><span class="sig-name descname"><span class="pre">custom_injection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/utils.html#custom_injection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.utils.custom_injection" title="Permalink to this definition"></a></dt>
+<dd><p>Function to dynamically load new python files into
+the agentlib. Using this, users may use custom modules
+oder custom models together with the existing agentlib objects.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>config</strong> (<em>dict</em>) – Config dict containing the following items:
+file (str): Filepath to a python file (.py)
+class_name (str): Name of the class to be imported</p></li>
+<li><p><strong>module_name</strong> (<em>str</em><em>, </em><em>optional</em>) – Name of the imported module
+in the sys.modules list. Carefully check if duplicate
+module keys raise unexpected behaviour. If so,
+use randomly generated strings or similar in classes
+calling this function. Default is None.
+In that case, the path is converted to a matching string.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The class object specified by class_name</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>class (object)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="agentlib.utils.plotting.html">agentlib.utils.plotting package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="agentlib.utils.plotting.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="agentlib.utils.plotting.html#module-agentlib.utils.plotting.simulator_dashboard">agentlib.utils.plotting.simulator_dashboard module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.utils.plotting.html#agentlib.utils.plotting.simulator_dashboard.create_layout"><code class="docutils literal notranslate"><span class="pre">create_layout()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.utils.plotting.html#agentlib.utils.plotting.simulator_dashboard.create_plot"><code class="docutils literal notranslate"><span class="pre">create_plot()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.utils.plotting.html#agentlib.utils.plotting.simulator_dashboard.format_time_axis"><code class="docutils literal notranslate"><span class="pre">format_time_axis()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.utils.plotting.html#agentlib.utils.plotting.simulator_dashboard.get_port"><code class="docutils literal notranslate"><span class="pre">get_port()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.utils.plotting.html#agentlib.utils.plotting.simulator_dashboard.load_new_data"><code class="docutils literal notranslate"><span class="pre">load_new_data()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.utils.plotting.html#agentlib.utils.plotting.simulator_dashboard.simulator_dashboard"><code class="docutils literal notranslate"><span class="pre">simulator_dashboard()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.utils.plotting.html#agentlib.utils.plotting.simulator_dashboard.update_data"><code class="docutils literal notranslate"><span class="pre">update_data()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
+</section>
+<section id="module-agentlib.utils.broker">
+<span id="agentlib-utils-broker-module"></span><h2>agentlib.utils.broker module<a class="headerlink" href="#module-agentlib.utils.broker" title="Permalink to this heading"></a></h2>
+<p>Module containing a basic Broker which
+may be inherited by specialized classes.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="agentlib.utils.broker.Broker">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agentlib.utils.broker.</span></span><span class="sig-name descname"><span class="pre">Broker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/utils/broker.html#Broker"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.utils.broker.Broker" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Base Broker class</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.utils.broker.Broker.delete_all_clients">
+<span class="sig-name descname"><span class="pre">delete_all_clients</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/utils/broker.html#Broker.delete_all_clients"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.utils.broker.Broker.delete_all_clients" title="Permalink to this definition"></a></dt>
+<dd><p>Delete all clients from the list of clients</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.utils.broker.Broker.delete_client">
+<span class="sig-name descname"><span class="pre">delete_client</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/utils/broker.html#Broker.delete_client"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.utils.broker.Broker.delete_client" title="Permalink to this definition"></a></dt>
+<dd><p>Delete the given client from the list of clients</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.utils.broker.Broker.register_client">
+<span class="sig-name descname"><span class="pre">register_client</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/utils/broker.html#Broker.register_client"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.utils.broker.Broker.register_client" title="Permalink to this definition"></a></dt>
+<dd><p>Append the given client to the list
+of clients.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agentlib.utils.broker.Singleton">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agentlib.utils.broker.</span></span><span class="sig-name descname"><span class="pre">Singleton</span></span><a class="reference internal" href="../_modules/agentlib/utils/broker.html#Singleton"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.utils.broker.Singleton" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">type</span></code></p>
+<p>Global singleton to ensure only one broker exists</p>
+</dd></dl>
+
+</section>
+<section id="module-agentlib.utils.fuzzy_matching">
+<span id="agentlib-utils-fuzzy-matching-module"></span><h2>agentlib.utils.fuzzy_matching module<a class="headerlink" href="#module-agentlib.utils.fuzzy_matching" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="agentlib.utils.fuzzy_matching.fuzzy_match">
+<span class="sig-prename descclassname"><span class="pre">agentlib.utils.fuzzy_matching.</span></span><span class="sig-name descname"><span class="pre">fuzzy_match</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">choices</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/agentlib/utils/fuzzy_matching.html#fuzzy_match"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.utils.fuzzy_matching.fuzzy_match" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-agentlib.utils.load_config">
+<span id="agentlib-utils-load-config-module"></span><h2>agentlib.utils.load_config module<a class="headerlink" href="#module-agentlib.utils.load_config" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="agentlib.utils.load_config.load_config">
+<span class="sig-prename descclassname"><span class="pre">agentlib.utils.load_config.</span></span><span class="sig-name descname"><span class="pre">load_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ConfigT</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Type</span><span class="p"><span class="pre">[</span></span><span class="pre">ConfigT</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ConfigT</span></span></span><a class="reference internal" href="../_modules/agentlib/utils/load_config.html#load_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.utils.load_config.load_config" title="Permalink to this definition"></a></dt>
+<dd><p>Generic config loader, either accepting a path to a json file, a json string, a
+dict or passing through a valid config object.</p>
+</dd></dl>
+
+</section>
+<section id="module-agentlib.utils.local_broadcast_broker">
+<span id="agentlib-utils-local-broadcast-broker-module"></span><h2>agentlib.utils.local_broadcast_broker module<a class="headerlink" href="#module-agentlib.utils.local_broadcast_broker" title="Permalink to this heading"></a></h2>
+<p>Module containing a LocalBroadcastBroker that
+enables local broadcast communication.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="agentlib.utils.local_broadcast_broker.LocalBroadcastBroker">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agentlib.utils.local_broadcast_broker.</span></span><span class="sig-name descname"><span class="pre">LocalBroadcastBroker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/utils/local_broadcast_broker.html#LocalBroadcastBroker"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.utils.local_broadcast_broker.LocalBroadcastBroker" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#agentlib.utils.broker.Broker" title="agentlib.utils.broker.Broker"><code class="xref py py-class docutils literal notranslate"><span class="pre">Broker</span></code></a></p>
+<p>Local broadcast broker class which broadcasts messages</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.utils.local_broadcast_broker.LocalBroadcastBroker.broadcast">
+<span class="sig-name descname"><span class="pre">broadcast</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agent_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bytes</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="agentlib.core.html#agentlib.core.datamodels.AgentVariable" title="agentlib.core.datamodels.AgentVariable"><span class="pre">AgentVariable</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/utils/local_broadcast_broker.html#LocalBroadcastBroker.broadcast"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.utils.local_broadcast_broker.LocalBroadcastBroker.broadcast" title="Permalink to this definition"></a></dt>
+<dd><p>Broadcast message object to all agents but itself</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-agentlib.utils.local_broker">
+<span id="agentlib-utils-local-broker-module"></span><h2>agentlib.utils.local_broker module<a class="headerlink" href="#module-agentlib.utils.local_broker" title="Permalink to this heading"></a></h2>
+<p>Module containing a LocalBroker that
+enables local communication with subscriptions.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="agentlib.utils.local_broker.LocalBroker">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agentlib.utils.local_broker.</span></span><span class="sig-name descname"><span class="pre">LocalBroker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/utils/local_broker.html#LocalBroker"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.utils.local_broker.LocalBroker" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#agentlib.utils.broker.Broker" title="agentlib.utils.broker.Broker"><code class="xref py py-class docutils literal notranslate"><span class="pre">Broker</span></code></a></p>
+<p>Local broker class which sends messages</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.utils.local_broker.LocalBroker.send">
+<span class="sig-name descname"><span class="pre">send</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agent_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bytes</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="agentlib.core.html#agentlib.core.datamodels.AgentVariable" title="agentlib.core.datamodels.AgentVariable"><span class="pre">AgentVariable</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/utils/local_broker.html#LocalBroker.send"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.utils.local_broker.LocalBroker.send" title="Permalink to this definition"></a></dt>
+<dd><p>Send the given message to all clients if the source
+matches.
+:param agent_id: Source to match
+:param message: The message to send</p>
+<p>Returns:</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-agentlib.utils.multi_agent_system">
+<span id="agentlib-utils-multi-agent-system-module"></span><h2>agentlib.utils.multi_agent_system module<a class="headerlink" href="#module-agentlib.utils.multi_agent_system" title="Permalink to this heading"></a></h2>
+<p>Module containing a local agency to test any LocalMASAgency system
+without the need of cloneMAP.</p>
+<dl class="py class pydantic_model">
+<dt class="sig sig-object py" id="agentlib.utils.multi_agent_system.LocalCloneMAPAgency">
+<em class="property"><span class="pre">pydantic</span> <span class="pre">model</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agentlib.utils.multi_agent_system.</span></span><span class="sig-name descname"><span class="pre">LocalCloneMAPAgency</span></span><a class="reference internal" href="../_modules/agentlib/utils/multi_agent_system.html#LocalCloneMAPAgency"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.utils.multi_agent_system.LocalCloneMAPAgency" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#agentlib.utils.multi_agent_system.LocalMASAgency" title="agentlib.utils.multi_agent_system.LocalMASAgency"><code class="xref py py-class docutils literal notranslate"><span class="pre">LocalMASAgency</span></code></a></p>
+<p>Local LocalMASAgency agency class which tries to mimic cloneMAP
+behaviour for the local execution.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Config<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>arbitrary_types_allowed</strong>: <em>bool = True</em></p></li>
+</ul>
+</dd>
+<dt class="field-even">Fields<span class="colon">:</span></dt>
+<dd class="field-even"><p></p></dd>
+<dt class="field-odd">Validators<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.utils.multi_agent_system.LocalCloneMAPAgency.model_post_init">
+<span class="sig-name descname"><span class="pre">model_post_init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#agentlib.utils.multi_agent_system.LocalCloneMAPAgency.model_post_init" title="Permalink to this definition"></a></dt>
+<dd><p>This function is meant to behave like a BaseModel method to initialise private attributes.</p>
+<p>It takes context as an argument since that’s what pydantic-core passes when calling it.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>self</strong> – The BaseModel instance.</p></li>
+<li><p><strong>context</strong> – The context.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.utils.multi_agent_system.LocalCloneMAPAgency.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">until</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/utils/multi_agent_system.html#LocalCloneMAPAgency.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.utils.multi_agent_system.LocalCloneMAPAgency.run" title="Permalink to this definition"></a></dt>
+<dd><p>Execute the LocalMASAgency and terminate it after run is finished</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.utils.multi_agent_system.LocalCloneMAPAgency.setup_agent">
+<span class="sig-name descname"><span class="pre">setup_agent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/utils/multi_agent_system.html#LocalCloneMAPAgency.setup_agent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.utils.multi_agent_system.LocalCloneMAPAgency.setup_agent" title="Permalink to this definition"></a></dt>
+<dd><p>Setup the agent matching the given id</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.utils.multi_agent_system.LocalCloneMAPAgency.terminate_agents">
+<span class="sig-name descname"><span class="pre">terminate_agents</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/utils/multi_agent_system.html#LocalCloneMAPAgency.terminate_agents"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.utils.multi_agent_system.LocalCloneMAPAgency.terminate_agents" title="Permalink to this definition"></a></dt>
+<dd><p>Terminate all agents modules.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class pydantic_model">
+<dt class="sig sig-object py" id="agentlib.utils.multi_agent_system.LocalMASAgency">
+<em class="property"><span class="pre">pydantic</span> <span class="pre">model</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agentlib.utils.multi_agent_system.</span></span><span class="sig-name descname"><span class="pre">LocalMASAgency</span></span><a class="reference internal" href="../_modules/agentlib/utils/multi_agent_system.html#LocalMASAgency"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.utils.multi_agent_system.LocalMASAgency" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#agentlib.utils.multi_agent_system.MAS" title="agentlib.utils.multi_agent_system.MAS"><code class="xref py py-class docutils literal notranslate"><span class="pre">MAS</span></code></a></p>
+<p>Local LocalMASAgency agency class which holds the agents in a common environment,
+executes and terminates them.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Config<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>arbitrary_types_allowed</strong>: <em>bool = True</em></p></li>
+</ul>
+</dd>
+<dt class="field-even">Fields<span class="colon">:</span></dt>
+<dd class="field-even"><p></p></dd>
+<dt class="field-odd">Validators<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="#agentlib.utils.multi_agent_system.LocalMASAgency.setup_env" title="agentlib.utils.multi_agent_system.LocalMASAgency.setup_env"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_env</span></code></a> » <code class="xref py py-obj docutils literal notranslate"><span class="pre">env</span></code></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.utils.multi_agent_system.LocalMASAgency.add_agent">
+<span class="sig-name descname"><span class="pre">add_agent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="agentlib.core.html#agentlib.core.agent.AgentConfig" title="agentlib.core.agent.AgentConfig"><span class="pre">AgentConfig</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/utils/multi_agent_system.html#LocalMASAgency.add_agent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.utils.multi_agent_system.LocalMASAgency.add_agent" title="Permalink to this definition"></a></dt>
+<dd><p>Also setup the agent directly</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.utils.multi_agent_system.LocalMASAgency.get_agent">
+<span class="sig-name descname"><span class="pre">get_agent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="agentlib.core.html#agentlib.core.agent.Agent" title="agentlib.core.agent.Agent"><span class="pre">Agent</span></a></span></span><a class="reference internal" href="../_modules/agentlib/utils/multi_agent_system.html#LocalMASAgency.get_agent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.utils.multi_agent_system.LocalMASAgency.get_agent" title="Permalink to this definition"></a></dt>
+<dd><p>Get the agent matching the given id</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.utils.multi_agent_system.LocalMASAgency.get_results">
+<span class="sig-name descname"><span class="pre">get_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cleanup</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">DataFrame</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/agentlib/utils/multi_agent_system.html#LocalMASAgency.get_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.utils.multi_agent_system.LocalMASAgency.get_results" title="Permalink to this definition"></a></dt>
+<dd><p>Get all results of the agentLogger
+:param cleanup: If true, read files are deleted.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>key is the agent_id, value the dataframe</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dict[str, pd.DataFrame]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.utils.multi_agent_system.LocalMASAgency.model_post_init">
+<span class="sig-name descname"><span class="pre">model_post_init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#agentlib.utils.multi_agent_system.LocalMASAgency.model_post_init" title="Permalink to this definition"></a></dt>
+<dd><p>This function is meant to behave like a BaseModel method to initialise private attributes.</p>
+<p>It takes context as an argument since that’s what pydantic-core passes when calling it.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>self</strong> – The BaseModel instance.</p></li>
+<li><p><strong>context</strong> – The context.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.utils.multi_agent_system.LocalMASAgency.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">until</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/utils/multi_agent_system.html#LocalMASAgency.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.utils.multi_agent_system.LocalMASAgency.run" title="Permalink to this definition"></a></dt>
+<dd><p>Execute the LocalMASAgency and terminate it after run is finished</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.utils.multi_agent_system.LocalMASAgency.setup_agent">
+<span class="sig-name descname"><span class="pre">setup_agent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="agentlib.core.html#agentlib.core.agent.Agent" title="agentlib.core.agent.Agent"><span class="pre">Agent</span></a></span></span><a class="reference internal" href="../_modules/agentlib/utils/multi_agent_system.html#LocalMASAgency.setup_agent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.utils.multi_agent_system.LocalMASAgency.setup_agent" title="Permalink to this definition"></a></dt>
+<dd><p>Setup the agent matching the given id</p>
+</dd></dl>
+
+<dl class="py method pydantic_validator">
+<dt class="sig sig-object py" id="agentlib.utils.multi_agent_system.LocalMASAgency.setup_env">
+<em class="property"><span class="pre">validator</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">setup_env</span></span><em class="autodoc_pydantic_validator_arrow property">&#160; <span class="pre">»</span>&#160; </em><em class="xref py py-obj"><span class="pre">env</span></em><a class="reference internal" href="../_modules/agentlib/utils/multi_agent_system.html#LocalMASAgency.setup_env"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.utils.multi_agent_system.LocalMASAgency.setup_env" title="Permalink to this definition"></a></dt>
+<dd><p>Setup the env if a config is given.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.utils.multi_agent_system.LocalMASAgency.stop_agency">
+<span class="sig-name descname"><span class="pre">stop_agency</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/utils/multi_agent_system.html#LocalMASAgency.stop_agency"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.utils.multi_agent_system.LocalMASAgency.stop_agency" title="Permalink to this definition"></a></dt>
+<dd><p>Stop all threads</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.utils.multi_agent_system.LocalMASAgency.terminate_agents">
+<span class="sig-name descname"><span class="pre">terminate_agents</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/utils/multi_agent_system.html#LocalMASAgency.terminate_agents"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.utils.multi_agent_system.LocalMASAgency.terminate_agents" title="Permalink to this definition"></a></dt>
+<dd><p>Terminate all agents modules.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class pydantic_model">
+<dt class="sig sig-object py" id="agentlib.utils.multi_agent_system.MAS">
+<em class="property"><span class="pre">pydantic</span> <span class="pre">model</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agentlib.utils.multi_agent_system.</span></span><span class="sig-name descname"><span class="pre">MAS</span></span><a class="reference internal" href="../_modules/agentlib/utils/multi_agent_system.html#MAS"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.utils.multi_agent_system.MAS" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></p>
+<p>Parent class for all MAS</p>
+<dl class="field-list simple">
+<dt class="field-odd">Config<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>arbitrary_types_allowed</strong>: <em>bool = True</em></p></li>
+</ul>
+</dd>
+<dt class="field-even">Fields<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="#agentlib.utils.multi_agent_system.MAS.agent_configs" title="agentlib.utils.multi_agent_system.MAS.agent_configs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">agent_configs</span> <span class="pre">(List[dict</span> <span class="pre">|</span> <span class="pre">pathlib.Path</span> <span class="pre">|</span> <span class="pre">str])</span></code></a></p></li>
+<li><p><a class="reference internal" href="#agentlib.utils.multi_agent_system.MAS.env" title="agentlib.utils.multi_agent_system.MAS.env"><code class="xref py py-obj docutils literal notranslate"><span class="pre">env</span> <span class="pre">(agentlib.core.environment.Environment</span> <span class="pre">|</span> <span class="pre">dict</span> <span class="pre">|</span> <span class="pre">pathlib.Path)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#agentlib.utils.multi_agent_system.MAS.use_direct_callback_databroker" title="agentlib.utils.multi_agent_system.MAS.use_direct_callback_databroker"><code class="xref py py-obj docutils literal notranslate"><span class="pre">use_direct_callback_databroker</span> <span class="pre">(bool)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#agentlib.utils.multi_agent_system.MAS.variable_logging" title="agentlib.utils.multi_agent_system.MAS.variable_logging"><code class="xref py py-obj docutils literal notranslate"><span class="pre">variable_logging</span> <span class="pre">(bool)</span></code></a></p></li>
+</ul>
+</dd>
+<dt class="field-odd">Validators<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="#agentlib.utils.multi_agent_system.MAS.setup_agents" title="agentlib.utils.multi_agent_system.MAS.setup_agents"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_agents</span></code></a> » <a class="reference internal" href="#agentlib.utils.multi_agent_system.MAS.agent_configs" title="agentlib.utils.multi_agent_system.MAS.agent_configs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">agent_configs</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.utils.multi_agent_system.MAS.agent_configs">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">agent_configs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#agentlib.utils.multi_agent_system.MAS.agent_configs" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Validated by<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="#agentlib.utils.multi_agent_system.MAS.setup_agents" title="agentlib.utils.multi_agent_system.MAS.setup_agents"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_agents</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.utils.multi_agent_system.MAS.env">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">env</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="agentlib.core.html#agentlib.core.environment.Environment" title="agentlib.core.environment.Environment"><span class="pre">Environment</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span></em><em class="property"> <span class="pre">[Optional]</span></em><a class="headerlink" href="#agentlib.utils.multi_agent_system.MAS.env" title="Permalink to this definition"></a></dt>
+<dd><p>The environment for the agents.</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.utils.multi_agent_system.MAS.use_direct_callback_databroker">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">use_direct_callback_databroker</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#agentlib.utils.multi_agent_system.MAS.use_direct_callback_databroker" title="Permalink to this definition"></a></dt>
+<dd><p>If True, the <cite>DirectCallbackDataBroker</cite> will be used in all agents</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.utils.multi_agent_system.MAS.variable_logging">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">variable_logging</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#agentlib.utils.multi_agent_system.MAS.variable_logging" title="Permalink to this definition"></a></dt>
+<dd><p>Enable variable logging in all agents with sampling rate of environment.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.utils.multi_agent_system.MAS.add_agent">
+<span class="sig-name descname"><span class="pre">add_agent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="agentlib.core.html#agentlib.core.agent.AgentConfig" title="agentlib.core.agent.AgentConfig"><span class="pre">AgentConfig</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/utils/multi_agent_system.html#MAS.add_agent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.utils.multi_agent_system.MAS.add_agent" title="Permalink to this definition"></a></dt>
+<dd><p>Add an agent to the local agency with the
+given agent config.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>Dict</strong> (<em>config</em>) – agent config</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.utils.multi_agent_system.MAS.add_agent_logger">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">add_agent_logger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="agentlib.core.html#agentlib.core.agent.AgentConfig" title="agentlib.core.agent.AgentConfig"><span class="pre">AgentConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">sampling</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">60</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="agentlib.core.html#agentlib.core.agent.AgentConfig" title="agentlib.core.agent.AgentConfig"><span class="pre">AgentConfig</span></a></span></span><a class="reference internal" href="../_modules/agentlib/utils/multi_agent_system.html#MAS.add_agent_logger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.utils.multi_agent_system.MAS.add_agent_logger" title="Permalink to this definition"></a></dt>
+<dd><p>Adds the AgentLogger to the list of configs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dict</strong> (<em>config</em>) – The config to be updated</p></li>
+<li><p><strong>sampling=</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.utils.multi_agent_system.MAS.model_post_init">
+<span class="sig-name descname"><span class="pre">model_post_init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#agentlib.utils.multi_agent_system.MAS.model_post_init" title="Permalink to this definition"></a></dt>
+<dd><p>This function is meant to behave like a BaseModel method to initialise private attributes.</p>
+<p>It takes context as an argument since that’s what pydantic-core passes when calling it.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>self</strong> – The BaseModel instance.</p></li>
+<li><p><strong>context</strong> – The context.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.utils.multi_agent_system.MAS.run">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">until</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/utils/multi_agent_system.html#MAS.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.utils.multi_agent_system.MAS.run" title="Permalink to this definition"></a></dt>
+<dd><p>Run the MAS.
+:param until: The time until which the simulation should run.</p>
+<p>Returns:</p>
+</dd></dl>
+
+<dl class="py method pydantic_validator">
+<dt class="sig sig-object py" id="agentlib.utils.multi_agent_system.MAS.setup_agents">
+<em class="property"><span class="pre">validator</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">setup_agents</span></span><em class="autodoc_pydantic_validator_arrow property">&#160; <span class="pre">»</span>&#160; </em><a class="reference internal" href="#agentlib.utils.multi_agent_system.MAS.agent_configs" title="agentlib.utils.multi_agent_system.MAS.agent_configs"><em class="xref py py-obj"><span class="pre">agent_configs</span></em></a><a class="reference internal" href="../_modules/agentlib/utils/multi_agent_system.html#MAS.setup_agents"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.utils.multi_agent_system.MAS.setup_agents" title="Permalink to this definition"></a></dt>
+<dd><p>Load agent configs and add them.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class pydantic_model">
+<dt class="sig sig-object py" id="agentlib.utils.multi_agent_system.MultiProcessingMAS">
+<em class="property"><span class="pre">pydantic</span> <span class="pre">model</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agentlib.utils.multi_agent_system.</span></span><span class="sig-name descname"><span class="pre">MultiProcessingMAS</span></span><a class="reference internal" href="../_modules/agentlib/utils/multi_agent_system.html#MultiProcessingMAS"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.utils.multi_agent_system.MultiProcessingMAS" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#agentlib.utils.multi_agent_system.MAS" title="agentlib.utils.multi_agent_system.MAS"><code class="xref py py-class docutils literal notranslate"><span class="pre">MAS</span></code></a></p>
+<p>Helper class to conveniently run multi-agent-systems in separate processes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Config<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>arbitrary_types_allowed</strong>: <em>bool = True</em></p></li>
+</ul>
+</dd>
+<dt class="field-even">Fields<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="#agentlib.utils.multi_agent_system.MultiProcessingMAS.agent_configs" title="agentlib.utils.multi_agent_system.MultiProcessingMAS.agent_configs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">agent_configs</span> <span class="pre">(List[Union[dict,</span> <span class="pre">FilePath,</span> <span class="pre">str]])</span></code></a></p></li>
+<li><p><a class="reference internal" href="#agentlib.utils.multi_agent_system.MultiProcessingMAS.cleanup" title="agentlib.utils.multi_agent_system.MultiProcessingMAS.cleanup"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cleanup</span> <span class="pre">(bool)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#agentlib.utils.multi_agent_system.MultiProcessingMAS.env" title="agentlib.utils.multi_agent_system.MultiProcessingMAS.env"><code class="xref py py-obj docutils literal notranslate"><span class="pre">env</span> <span class="pre">(dict</span> <span class="pre">|</span> <span class="pre">pathlib.Path)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#agentlib.utils.multi_agent_system.MultiProcessingMAS.log_level" title="agentlib.utils.multi_agent_system.MultiProcessingMAS.log_level"><code class="xref py py-obj docutils literal notranslate"><span class="pre">log_level</span> <span class="pre">(int)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#agentlib.utils.multi_agent_system.MultiProcessingMAS.use_direct_callback_databroker" title="agentlib.utils.multi_agent_system.MultiProcessingMAS.use_direct_callback_databroker"><code class="xref py py-obj docutils literal notranslate"><span class="pre">use_direct_callback_databroker</span> <span class="pre">(bool)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#agentlib.utils.multi_agent_system.MultiProcessingMAS.variable_logging" title="agentlib.utils.multi_agent_system.MultiProcessingMAS.variable_logging"><code class="xref py py-obj docutils literal notranslate"><span class="pre">variable_logging</span> <span class="pre">(bool)</span></code></a></p></li>
+</ul>
+</dd>
+<dt class="field-odd">Validators<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="#agentlib.utils.multi_agent_system.MAS.setup_agents" title="agentlib.utils.multi_agent_system.MAS.setup_agents"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_agents</span></code></a> » <a class="reference internal" href="#agentlib.utils.multi_agent_system.MultiProcessingMAS.agent_configs" title="agentlib.utils.multi_agent_system.MultiProcessingMAS.agent_configs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">agent_configs</span></code></a></p></li>
+<li><p><a class="reference internal" href="#agentlib.utils.multi_agent_system.MultiProcessingMAS.setup_env" title="agentlib.utils.multi_agent_system.MultiProcessingMAS.setup_env"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_env</span></code></a> » <a class="reference internal" href="#agentlib.utils.multi_agent_system.MultiProcessingMAS.env" title="agentlib.utils.multi_agent_system.MultiProcessingMAS.env"><code class="xref py py-obj docutils literal notranslate"><span class="pre">env</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.utils.multi_agent_system.MultiProcessingMAS.agent_configs">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">agent_configs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">FilePath</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#agentlib.utils.multi_agent_system.MultiProcessingMAS.agent_configs" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Validated by<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="#agentlib.utils.multi_agent_system.MAS.setup_agents" title="agentlib.utils.multi_agent_system.MAS.setup_agents"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_agents</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.utils.multi_agent_system.MultiProcessingMAS.cleanup">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">cleanup</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#agentlib.utils.multi_agent_system.MultiProcessingMAS.cleanup" title="Permalink to this definition"></a></dt>
+<dd><p>Whether agents should clean the results files after running.</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.utils.multi_agent_system.MultiProcessingMAS.env">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">env</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span></em><em class="property"> <span class="pre">[Optional]</span></em><a class="headerlink" href="#agentlib.utils.multi_agent_system.MultiProcessingMAS.env" title="Permalink to this definition"></a></dt>
+<dd><p>The environment for the agents.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Validated by<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="#agentlib.utils.multi_agent_system.MultiProcessingMAS.setup_env" title="agentlib.utils.multi_agent_system.MultiProcessingMAS.setup_env"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_env</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.utils.multi_agent_system.MultiProcessingMAS.log_level">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">log_level</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">40</span></em><a class="headerlink" href="#agentlib.utils.multi_agent_system.MultiProcessingMAS.log_level" title="Permalink to this definition"></a></dt>
+<dd><p>Loglevel to set for the processes.</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.utils.multi_agent_system.MultiProcessingMAS.use_direct_callback_databroker">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">use_direct_callback_databroker</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#agentlib.utils.multi_agent_system.MultiProcessingMAS.use_direct_callback_databroker" title="Permalink to this definition"></a></dt>
+<dd><p>If True, the <cite>DirectCallbackDataBroker</cite> will be used in all agents</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.utils.multi_agent_system.MultiProcessingMAS.variable_logging">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">variable_logging</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#agentlib.utils.multi_agent_system.MultiProcessingMAS.variable_logging" title="Permalink to this definition"></a></dt>
+<dd><p>Enable variable logging in all agents with sampling rate of environment.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.utils.multi_agent_system.MultiProcessingMAS.get_results">
+<span class="sig-name descname"><span class="pre">get_results</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">DataFrame</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/agentlib/utils/multi_agent_system.html#MultiProcessingMAS.get_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.utils.multi_agent_system.MultiProcessingMAS.get_results" title="Permalink to this definition"></a></dt>
+<dd><p>Get all results of the agentLogger
+:returns: key is the agent_id, value the dataframe
+:rtype: Dict[str, pd.DataFrame]</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.utils.multi_agent_system.MultiProcessingMAS.model_post_init">
+<span class="sig-name descname"><span class="pre">model_post_init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#agentlib.utils.multi_agent_system.MultiProcessingMAS.model_post_init" title="Permalink to this definition"></a></dt>
+<dd><p>This function is meant to behave like a BaseModel method to initialise private attributes.</p>
+<p>It takes context as an argument since that’s what pydantic-core passes when calling it.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>self</strong> – The BaseModel instance.</p></li>
+<li><p><strong>context</strong> – The context.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.utils.multi_agent_system.MultiProcessingMAS.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">until</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/utils/multi_agent_system.html#MultiProcessingMAS.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.utils.multi_agent_system.MultiProcessingMAS.run" title="Permalink to this definition"></a></dt>
+<dd><p>Execute the multi-agent-system in parallel and terminate it after
+run is finished</p>
+</dd></dl>
+
+<dl class="py method pydantic_validator">
+<dt class="sig sig-object py" id="agentlib.utils.multi_agent_system.MultiProcessingMAS.setup_env">
+<em class="property"><span class="pre">validator</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">setup_env</span></span><em class="autodoc_pydantic_validator_arrow property">&#160; <span class="pre">»</span>&#160; </em><a class="reference internal" href="#agentlib.utils.multi_agent_system.MultiProcessingMAS.env" title="agentlib.utils.multi_agent_system.MultiProcessingMAS.env"><em class="xref py py-obj"><span class="pre">env</span></em></a><a class="reference internal" href="../_modules/agentlib/utils/multi_agent_system.html#MultiProcessingMAS.setup_env"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.utils.multi_agent_system.MultiProcessingMAS.setup_env" title="Permalink to this definition"></a></dt>
+<dd><p>Setup the env if a config is given.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="agentlib.utils.multi_agent_system.agent_process">
+<span class="sig-prename descclassname"><span class="pre">agentlib.utils.multi_agent_system.</span></span><span class="sig-name descname"><span class="pre">agent_process</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agent_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">until</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">results_dict</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cleanup</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">40</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/utils/multi_agent_system.html#agent_process"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.utils.multi_agent_system.agent_process" title="Permalink to this definition"></a></dt>
+<dd><p>Function to initialize and start an agent in its own process.
+Collects results from the agent and stores them
+in the passed results_dict.
+:param cleanup:
+:param agent_config: Config for an agent.
+:param until: Simulation runtime
+:param env: config for an environment
+:param results_dict: dict from process manager
+:param log_level: the log level for this process</p>
+<p>Returns:</p>
+</dd></dl>
+
+</section>
+<section id="module-agentlib.utils.multi_processing_broker">
+<span id="agentlib-utils-multi-processing-broker-module"></span><h2>agentlib.utils.multi_processing_broker module<a class="headerlink" href="#module-agentlib.utils.multi_processing_broker" title="Permalink to this heading"></a></h2>
+<p>Module containing a MultiProcessingBroker that
+enables communication across different processes.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="agentlib.utils.multi_processing_broker.BrokerManager">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agentlib.utils.multi_processing_broker.</span></span><span class="sig-name descname"><span class="pre">BrokerManager</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">address</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">authkey</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">serializer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'pickle'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ctx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shutdown_timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/utils/multi_processing_broker.html#BrokerManager"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.utils.multi_processing_broker.BrokerManager" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">SyncManager</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.utils.multi_processing_broker.BrokerManager.get_queue">
+<span class="sig-name descname"><span class="pre">get_queue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwds</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#agentlib.utils.multi_processing_broker.BrokerManager.get_queue" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agentlib.utils.multi_processing_broker.MPClient">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agentlib.utils.multi_processing_broker.</span></span><span class="sig-name descname"><span class="pre">MPClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agent_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">read</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">write</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#agentlib.utils.multi_processing_broker.MPClient" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agentlib.utils.multi_processing_broker.MPClient.agent_id">
+<span class="sig-name descname"><span class="pre">agent_id</span></span><a class="headerlink" href="#agentlib.utils.multi_processing_broker.MPClient.agent_id" title="Permalink to this definition"></a></dt>
+<dd><p>Alias for field number 0</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agentlib.utils.multi_processing_broker.MPClient.read">
+<span class="sig-name descname"><span class="pre">read</span></span><a class="headerlink" href="#agentlib.utils.multi_processing_broker.MPClient.read" title="Permalink to this definition"></a></dt>
+<dd><p>Alias for field number 1</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agentlib.utils.multi_processing_broker.MPClient.write">
+<span class="sig-name descname"><span class="pre">write</span></span><a class="headerlink" href="#agentlib.utils.multi_processing_broker.MPClient.write" title="Permalink to this definition"></a></dt>
+<dd><p>Alias for field number 2</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agentlib.utils.multi_processing_broker.Message">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agentlib.utils.multi_processing_broker.</span></span><span class="sig-name descname"><span class="pre">Message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agent_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">payload</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#agentlib.utils.multi_processing_broker.Message" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agentlib.utils.multi_processing_broker.Message.agent_id">
+<span class="sig-name descname"><span class="pre">agent_id</span></span><a class="headerlink" href="#agentlib.utils.multi_processing_broker.Message.agent_id" title="Permalink to this definition"></a></dt>
+<dd><p>Alias for field number 0</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agentlib.utils.multi_processing_broker.Message.payload">
+<span class="sig-name descname"><span class="pre">payload</span></span><a class="headerlink" href="#agentlib.utils.multi_processing_broker.Message.payload" title="Permalink to this definition"></a></dt>
+<dd><p>Alias for field number 1</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agentlib.utils.multi_processing_broker.MultiProcessingBroker">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agentlib.utils.multi_processing_broker.</span></span><span class="sig-name descname"><span class="pre">MultiProcessingBroker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/utils/multi_processing_broker.html#MultiProcessingBroker"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.utils.multi_processing_broker.MultiProcessingBroker" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#agentlib.utils.broker.Broker" title="agentlib.utils.broker.Broker"><code class="xref py py-class docutils literal notranslate"><span class="pre">Broker</span></code></a></p>
+<p>Singleton which acts as a broker for distributed simulations among multiple
+local processes. Establishes a connection to a multiprocessing.Manager object,
+which defines a queue. This queue is used to receive connection requests from
+local clients. The clients send a Conn object (from multiprocessing.Pipe())
+object through which the connection is established.
+For each connected client, a thread waits for incoming objects.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="agentlib.utils.multi_processing_broker.MultiProcessingBroker.config">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#agentlib.utils.multi_processing_broker.MultiProcessingBrokerConfig" title="agentlib.utils.multi_processing_broker.MultiProcessingBrokerConfig"><span class="pre">MultiProcessingBrokerConfig</span></a></em><a class="headerlink" href="#agentlib.utils.multi_processing_broker.MultiProcessingBroker.config" title="Permalink to this definition"></a></dt>
+<dd><p>Return the config of the environment</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.utils.multi_processing_broker.MultiProcessingBroker.send">
+<span class="sig-name descname"><span class="pre">send</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/utils/multi_processing_broker.html#MultiProcessingBroker.send"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.utils.multi_processing_broker.MultiProcessingBroker.send" title="Permalink to this definition"></a></dt>
+<dd><p>Send the given message to all clients if the source
+matches.
+:param source: Source to match
+:param message: The message to send</p>
+<p>Returns:</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class pydantic_model">
+<dt class="sig sig-object py" id="agentlib.utils.multi_processing_broker.MultiProcessingBrokerConfig">
+<em class="property"><span class="pre">pydantic</span> <span class="pre">model</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agentlib.utils.multi_processing_broker.</span></span><span class="sig-name descname"><span class="pre">MultiProcessingBrokerConfig</span></span><a class="reference internal" href="../_modules/agentlib/utils/multi_processing_broker.html#MultiProcessingBrokerConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.utils.multi_processing_broker.MultiProcessingBrokerConfig" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></p>
+<p>Class describing the configuration options for the MultiProcessingBroker.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Fields<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="#agentlib.utils.multi_processing_broker.MultiProcessingBrokerConfig.authkey" title="agentlib.utils.multi_processing_broker.MultiProcessingBrokerConfig.authkey"><code class="xref py py-obj docutils literal notranslate"><span class="pre">authkey</span> <span class="pre">(bytes)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#agentlib.utils.multi_processing_broker.MultiProcessingBrokerConfig.ipv4" title="agentlib.utils.multi_processing_broker.MultiProcessingBrokerConfig.ipv4"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ipv4</span> <span class="pre">(ipaddress.IPv4Address)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#agentlib.utils.multi_processing_broker.MultiProcessingBrokerConfig.port" title="agentlib.utils.multi_processing_broker.MultiProcessingBrokerConfig.port"><code class="xref py py-obj docutils literal notranslate"><span class="pre">port</span> <span class="pre">(int)</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.utils.multi_processing_broker.MultiProcessingBrokerConfig.authkey">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">authkey</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bytes</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">b'useTheAgentlib'</span></em><a class="headerlink" href="#agentlib.utils.multi_processing_broker.MultiProcessingBrokerConfig.authkey" title="Permalink to this definition"></a></dt>
+<dd><p>Authorization key for the connection with the broker.</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.utils.multi_processing_broker.MultiProcessingBrokerConfig.ipv4">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ipv4</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">IPv4Address</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'127.0.0.1'</span></em><a class="headerlink" href="#agentlib.utils.multi_processing_broker.MultiProcessingBrokerConfig.ipv4" title="Permalink to this definition"></a></dt>
+<dd><p>IP Address for the communication server. Defaults to localhost.</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.utils.multi_processing_broker.MultiProcessingBrokerConfig.port">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">port</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">50000</span></em><a class="headerlink" href="#agentlib.utils.multi_processing_broker.MultiProcessingBrokerConfig.port" title="Permalink to this definition"></a></dt>
+<dd><p>Port for setting up the connection with the server.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-agentlib.utils.plugin_import">
+<span id="agentlib-utils-plugin-import-module"></span><h2>agentlib.utils.plugin_import module<a class="headerlink" href="#module-agentlib.utils.plugin_import" title="Permalink to this heading"></a></h2>
+<p>Module containing all function to import new plugins</p>
+<dl class="py class pydantic_model">
+<dt class="sig sig-object py" id="agentlib.utils.plugin_import.ModuleImport">
+<em class="property"><span class="pre">pydantic</span> <span class="pre">model</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agentlib.utils.plugin_import.</span></span><span class="sig-name descname"><span class="pre">ModuleImport</span></span><a class="reference internal" href="../_modules/agentlib/utils/plugin_import.html#ModuleImport"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.utils.plugin_import.ModuleImport" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></p>
+<p>Data-Class to import a given python file
+from <code class="docutils literal notranslate"><span class="pre">import_path</span></code> and load the given
+<code class="docutils literal notranslate"><span class="pre">class_name</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Fields<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="#agentlib.utils.plugin_import.ModuleImport.class_name" title="agentlib.utils.plugin_import.ModuleImport.class_name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">class_name</span> <span class="pre">(str)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#agentlib.utils.plugin_import.ModuleImport.import_path" title="agentlib.utils.plugin_import.ModuleImport.import_path"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_path</span> <span class="pre">(str)</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.utils.plugin_import.ModuleImport.class_name">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">class_name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#agentlib.utils.plugin_import.ModuleImport.class_name" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.utils.plugin_import.ModuleImport.import_path">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">import_path</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#agentlib.utils.plugin_import.ModuleImport.import_path" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.utils.plugin_import.ModuleImport.import_class">
+<span class="sig-name descname"><span class="pre">import_class</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/utils/plugin_import.html#ModuleImport.import_class"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.utils.plugin_import.ModuleImport.import_class" title="Permalink to this definition"></a></dt>
+<dd><p>Import the Module with class_name from the import path</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agentlib.utils.plugin_import.SaveUpdateDict">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agentlib.utils.plugin_import.</span></span><span class="sig-name descname"><span class="pre">SaveUpdateDict</span></span><a class="reference internal" href="../_modules/agentlib/utils/plugin_import.html#SaveUpdateDict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.utils.plugin_import.SaveUpdateDict" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></p>
+<p>Custom object to safely update the dictionary.
+Duplicate entries will raise an error.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.utils.plugin_import.SaveUpdateDict.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_dict</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/agentlib/utils/plugin_import.html#SaveUpdateDict.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.utils.plugin_import.SaveUpdateDict.update" title="Permalink to this definition"></a></dt>
+<dd><p>Check if all modules have distinct identifier strings</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>new_dict</strong> – </p></li>
+<li><p><strong>**kwargs</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="agentlib.utils.plugin_import.load_plugin">
+<span class="sig-prename descclassname"><span class="pre">agentlib.utils.plugin_import.</span></span><span class="sig-name descname"><span class="pre">load_plugin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loaded_classes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#agentlib.utils.plugin_import.SaveUpdateDict" title="agentlib.utils.plugin_import.SaveUpdateDict"><span class="pre">SaveUpdateDict</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">plugin_types_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/utils/plugin_import.html#load_plugin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.utils.plugin_import.load_plugin" title="Permalink to this definition"></a></dt>
+<dd><p>Loads the plugin based on the given name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>str</strong> (<em>plugin_types_name</em>) – Name of the plugin</p></li>
+<li><p><strong>SaveUpdateDict</strong> (<em>loaded_classes</em>) – SaveUpdateDict instance with already
+loaded classes (modules or models)</p></li>
+<li><p><strong>str</strong> – Name of the dictionary in the plugin.
+Typical values are “MODULE_TYPES” or “MODEL_TYPES”.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-agentlib.utils.validators">
+<span id="agentlib-utils-validators-module"></span><h2>agentlib.utils.validators module<a class="headerlink" href="#module-agentlib.utils.validators" title="Permalink to this heading"></a></h2>
+<p>Module with validator function used in multiple parts of the agentlib</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="agentlib.utils.validators.convert_to_list">
+<span class="sig-prename descclassname"><span class="pre">agentlib.utils.validators.</span></span><span class="sig-name descname"><span class="pre">convert_to_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/utils/validators.html#convert_to_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.utils.validators.convert_to_list" title="Permalink to this definition"></a></dt>
+<dd><p>Function to convert an object to a list.
+Either is is already a list.
+Or it is None, then [] is returned,
+or it is a scalar object and thus converted to a list.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="agentlib.utils.validators.include_defaults_in_root">
+<span class="sig-prename descclassname"><span class="pre">agentlib.utils.validators.</span></span><span class="sig-name descname"><span class="pre">include_defaults_in_root</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">variables:</span> <span class="pre">~typing.List[~typing.Dict],</span> <span class="pre">field:</span> <span class="pre">~pydantic.fields.FieldInfo,</span> <span class="pre">make_shared:</span> <span class="pre">bool,</span> <span class="pre">agent_id:</span> <span class="pre">str,</span> <span class="pre">field_name:</span> <span class="pre">str,</span> <span class="pre">type_:</span> <span class="pre">~typing.Type[~agentlib.core.datamodels.AgentVariable]</span> <span class="pre">=</span> <span class="pre">&lt;class</span> <span class="pre">'agentlib.core.datamodels.AgentVariable'&gt;</span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="agentlib.core.html#agentlib.core.datamodels.AgentVariable" title="agentlib.core.datamodels.AgentVariable"><span class="pre">AgentVariable</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/agentlib/utils/validators.html#include_defaults_in_root"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.utils.validators.include_defaults_in_root" title="Permalink to this definition"></a></dt>
+<dd><p>Validator building block to merge default variables with config variables in the root validator.
+Updates default variables when a variable with the same name is present in the config.
+Then returns the union of the default variables and the external config variables.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="agentlib.utils.validators.is_list_of_agent_variables">
+<span class="sig-prename descclassname"><span class="pre">agentlib.utils.validators.</span></span><span class="sig-name descname"><span class="pre">is_list_of_agent_variables</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/utils/validators.html#is_list_of_agent_variables"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.utils.validators.is_list_of_agent_variables" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="agentlib.utils.validators.is_valid_agent_var_config">
+<span class="sig-prename descclassname"><span class="pre">agentlib.utils.validators.</span></span><span class="sig-name descname"><span class="pre">is_valid_agent_var_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data:</span> <span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field_name:</span> <span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_:</span> <span class="pre">~agentlib.core.datamodels.AgentVariable</span> <span class="pre">=</span> <span class="pre">&lt;class</span> <span class="pre">'agentlib.core.datamodels.AgentVariable'&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/utils/validators.html#is_valid_agent_var_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.utils.validators.is_valid_agent_var_config" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="agentlib.utils.validators.update_default_agent_variable">
+<span class="sig-prename descclassname"><span class="pre">agentlib.utils.validators.</span></span><span class="sig-name descname"><span class="pre">update_default_agent_variable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">default_var</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="agentlib.core.html#agentlib.core.datamodels.AgentVariable" title="agentlib.core.datamodels.AgentVariable"><span class="pre">AgentVariable</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">make_shared</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/utils/validators.html#update_default_agent_variable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.utils.validators.update_default_agent_variable" title="Permalink to this definition"></a></dt>
+<dd><p>Update a variable based on it’s default</p>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, AGENT-Project Associates.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
