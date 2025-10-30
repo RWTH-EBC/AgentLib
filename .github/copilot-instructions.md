@@ -8,7 +8,7 @@
 - **Language**: Python (3.9-3.12)
 - **License**: BSD-3-Clause
 - **Testing**: unittest framework
-- **Code Quality**: pylint (target score ≥10.0)
+- **Code Quality**: pylint (target score =10.0)
 - **Dependencies**: Core (numpy, pandas, simpy, pydantic>=2.0, attrs), Optional (FMU, scipy, MQTT, matplotlib)
 - **CI/CD**: Automated testing (pytest, coverage, pylint), sphinx documentation
 - **Plugin Ecosystem**: Extensible via plugins (AgentLib-MPC, AgentLib-FIWARE)
