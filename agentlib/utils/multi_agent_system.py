@@ -44,6 +44,10 @@ class MAS(BaseModel):
         title="variable_logging",
         description="Enable variable logging in all agents with sampling rate of environment.",
     )
+    use_direct_callback_databroker: bool = Field(
+        default=False,
+        description="If True, the `DirectCallbackDataBroker` will be used in all agents"
+    )
     _agent_configs: Dict[str, AgentConfig] = PrivateAttr(default={})
 
     def __init__(self, **data: Any) -> None:
@@ -79,6 +83,15 @@ class MAS(BaseModel):
                 config = self.add_agent_logger(
                     config=config, sampling=self.env.config.t_sample
                 )
+        if config.use_direct_callback_databroker and not self.use_direct_callback_databroker:
+            logger.warning(
+                "Agent %s explicitly sets use_direct_callback_databroker=True, "
+                "won't apply the MAS.use_direct_callback_databroker=False setting.",
+                config.id
+            )
+        else:
+            config.use_direct_callback_databroker = self.use_direct_callback_databroker
+
         self._agent_configs[config.id] = config.model_copy()
         logger.info("Registered agent %s in agency", config.id)
 
@@ -233,12 +246,12 @@ class LocalCloneMAPAgency(LocalMASAgency):
 
 
 def agent_process(
-    agent_config: Union[dict, FilePath],
-    until: float,
-    env: Union[dict, FilePath],
-    results_dict: dict,
-    cleanup=True,
-    log_level=logging.ERROR,
+        agent_config: Union[dict, FilePath],
+        until: float,
+        env: Union[dict, FilePath],
+        results_dict: dict,
+        cleanup=True,
+        log_level=logging.ERROR,
 ):
     """
     Function to initialize and start an agent in its own process.

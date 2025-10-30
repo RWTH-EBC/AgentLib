@@ -8,7 +8,26 @@ from agentlib.utils.multi_agent_system import LocalMASAgency
 logger = logging.getLogger(__name__)
 
 
-def run_example(until, with_plots=True, log_level=logging.INFO):
+def run_example(until, with_plots=True, log_level=logging.INFO, use_direct_callback_databroker: bool = False):
+    """
+    Runs a multi-agent system (MAS) simulation with heating control agents.
+
+    This function configures and runs a MAS simulation with different control strategies
+    (PID and Bang-Bang controllers) for room temperature regulation. It creates multiple
+    agents including sensors, room models, and controllers, then simulates their interaction.
+
+    Parameters
+    ----------
+    until : float
+        Simulation end time in seconds.
+    with_plots : bool, default=True
+        If True, generates and displays plots of simulation results.
+    log_level : int, default=logging.INFO
+        Logging verbosity level.
+    use_direct_callback_databroker : bool, default=False
+        Whether to use direct callback execution in the databroker instead of queue-based callbacks.
+
+    """
     # Start by setting the log-level
     logging.basicConfig(level=log_level)
 
@@ -27,6 +46,7 @@ def run_example(until, with_plots=True, log_level=logging.INFO):
             "configs/BangBangAgent.json",
         ],
         variable_logging=True,
+        use_direct_callback_databroker=use_direct_callback_databroker
     )
     # Simulate
     mas.run(until=until)

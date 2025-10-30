@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.8.9
+- Add DirectCallbackDataBroker option for easier debugging and learning how AgentLib Callbacks work #67
+
 ## 0.8.8
 - Percentage display in logging now only appears in simulation speed, not realtime. Fixed percentage when environment has an offset.
 
