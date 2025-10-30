@@ -26,7 +26,7 @@
 - [ ] No breaking changes to public APIs (Agent, BaseModule, DataBroker, Environment, Model, AgentVariable)
 - [ ] New dependencies added to `pyproject.toml` (required in `dependencies` or optional in `[project.optional-dependencies]`)
 
-### Release Information
+### OPTIONAL: Release Information
 - [ ] Version number updated in `agentlib/__init__.py` (**Required for PyPI release**)
   - Version: `___.___.___`
 - [ ] CHANGELOG.md updated with description of changes (**Required for PyPI release**)

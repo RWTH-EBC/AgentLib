@@ -47,7 +47,6 @@ All components use Pydantic v2 models (e.g., `AgentConfig`, `BaseModuleConfig`, 
 - Undocumented changes to public APIs
 
 **Avoid commenting on:**
-- Style issues (handled by pylint)
 - Minor refactoring preferences
 - Well-tested internal implementation details
 
