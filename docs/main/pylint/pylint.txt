@@ -72,9 +72,9 @@ pylintrc:1:0: W0012: Unknown option value for '--disable', expected a valid pyli
 pylintrc:1:0: W0012: Unknown option value for '--disable', expected a valid pylint message and got 'non-ascii-bytes-literal' (unknown-option-value)
 pylintrc:1:0: W0012: Unknown option value for '--disable', expected a valid pylint message and got 'eq-without-hash' (unknown-option-value)
 ************* Module agentlib.modules.communicator.communicator
-agentlib/modules/communicator/communicator.py:1:0: F0002: agentlib/modules/communicator/communicator.py: Fatal error while checking 'agentlib/modules/communicator/communicator.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-11-54-27.txt'. (astroid-error)
+agentlib/modules/communicator/communicator.py:1:0: F0002: agentlib/modules/communicator/communicator.py: Fatal error while checking 'agentlib/modules/communicator/communicator.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-12-07-31.txt'. (astroid-error)
 ************* Module agentlib.modules.simulation.simulator
-agentlib/modules/simulation/simulator.py:1:0: F0002: agentlib/modules/simulation/simulator.py: Fatal error while checking 'agentlib/modules/simulation/simulator.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-11-54-27.txt'. (astroid-error)
+agentlib/modules/simulation/simulator.py:1:0: F0002: agentlib/modules/simulation/simulator.py: Fatal error while checking 'agentlib/modules/simulation/simulator.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-12-07-32.txt'. (astroid-error)
 ************* Module examples.models.scipy.scipy_example
 examples/models/scipy/scipy_example.py:4:0: C0301: Line too long (114/100) (line-too-long)
 examples/models/scipy/scipy_example.py:1:0: C0114: Missing module docstring (missing-module-docstring)
@@ -128,10 +128,10 @@ examples/getting-started/part_1_my_first_agent_concise.py:45:0: C0116: Missing f
 examples/getting-started/part_1_my_first_agent_concise.py:50:4: E1101: Instance of 'Environment' has no 'run' member (no-member)
 examples/getting-started/part_1_my_first_agent_concise.py:49:4: W0612: Unused variable 'agent' (unused-variable)
 ************* Module examples.getting-started.part_4_communicators_with_comments
-examples/getting-started/part_4_communicators_with_comments.py:1:0: F0002: examples/getting-started/part_4_communicators_with_comments.py: Fatal error while checking 'examples/getting-started/part_4_communicators_with_comments.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-11-54-28.txt'. (astroid-error)
+examples/getting-started/part_4_communicators_with_comments.py:1:0: F0002: examples/getting-started/part_4_communicators_with_comments.py: Fatal error while checking 'examples/getting-started/part_4_communicators_with_comments.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-12-07-32.txt'. (astroid-error)
 ************* Module examples.getting-started.part_3_using_models_with_comments
 examples/getting-started/part_3_using_models_with_comments.py:147:0: C0301: Line too long (117/100) (line-too-long)
-examples/getting-started/part_3_using_models_with_comments.py:1:0: F0002: examples/getting-started/part_3_using_models_with_comments.py: Fatal error while checking 'examples/getting-started/part_3_using_models_with_comments.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-11-54-28.txt'. (astroid-error)
+examples/getting-started/part_3_using_models_with_comments.py:1:0: F0002: examples/getting-started/part_3_using_models_with_comments.py: Fatal error while checking 'examples/getting-started/part_3_using_models_with_comments.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-12-07-32.txt'. (astroid-error)
 ************* Module examples.getting-started.part_2_agentvariables_with_comments
 examples/getting-started/part_2_agentvariables_with_comments.py:44:0: C0301: Line too long (106/100) (line-too-long)
 examples/getting-started/part_2_agentvariables_with_comments.py:16:0: C0115: Missing class docstring (missing-class-docstring)
@@ -145,7 +145,7 @@ examples/getting-started/part_2_agentvariables_with_comments.py:100:8: C0415: Im
 examples/getting-started/part_2_agentvariables_with_comments.py:100:8: E0401: Unable to import 'pandas' (import-error)
 examples/getting-started/part_2_agentvariables_with_comments.py:121:4: C0116: Missing function or method docstring (missing-function-docstring)
 ************* Module examples.getting-started.part_3_using_models_concise
-examples/getting-started/part_3_using_models_concise.py:1:0: F0002: examples/getting-started/part_3_using_models_concise.py: Fatal error while checking 'examples/getting-started/part_3_using_models_concise.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-11-54-28.txt'. (astroid-error)
+examples/getting-started/part_3_using_models_concise.py:1:0: F0002: examples/getting-started/part_3_using_models_concise.py: Fatal error while checking 'examples/getting-started/part_3_using_models_concise.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-12-07-32.txt'. (astroid-error)
 ************* Module examples.getting-started.part_2_agentvariables_concise
 examples/getting-started/part_2_agentvariables_concise.py:30:0: C0301: Line too long (106/100) (line-too-long)
 examples/getting-started/part_2_agentvariables_concise.py:16:0: C0115: Missing class docstring (missing-class-docstring)
@@ -165,7 +165,7 @@ examples/communicator/mqtt.py:32:4: C0116: Missing function or method docstring 
 examples/communicator/mqtt.py:33:14: E1101: Instance of 'Environment' has no 'timeout' member (no-member)
 examples/communicator/mqtt.py:38:29: E1101: Instance of 'Environment' has no 'now' member (no-member)
 examples/communicator/mqtt.py:43:18: E1101: Instance of 'Environment' has no 'timeout' member (no-member)
-************* Module csv_data_source
+************* Module examples.simulation.csv_data_source
 examples/simulation/csv_data_source.py:1:0: C0114: Missing module docstring (missing-module-docstring)
 examples/simulation/csv_data_source.py:4:0: E0401: Unable to import 'matplotlib.pyplot' (import-error)
 examples/simulation/csv_data_source.py:5:0: E0401: Unable to import 'numpy' (import-error)
@@ -190,11 +190,11 @@ examples/plugin/my_plugin/another_new_module.py:10:0: C0115: Missing class docst
 ************* Module examples.controller.bangbang_with_simulator
 examples/controller/bangbang_with_simulator.py:103:52: W1401: Anomalous backslash in string: '\d'. String constant might be missing an r prefix. (anomalous-backslash-in-string)
 examples/controller/bangbang_with_simulator.py:1:0: C0114: Missing module docstring (missing-module-docstring)
-examples/controller/bangbang_with_simulator.py:1:0: F0002: examples/controller/bangbang_with_simulator.py: Fatal error while checking 'examples/controller/bangbang_with_simulator.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-11-54-29.txt'. (astroid-error)
+examples/controller/bangbang_with_simulator.py:1:0: F0002: examples/controller/bangbang_with_simulator.py: Fatal error while checking 'examples/controller/bangbang_with_simulator.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-12-07-33.txt'. (astroid-error)
 ************* Module examples.controller.pid_with_simulator
 examples/controller/pid_with_simulator.py:114:52: W1401: Anomalous backslash in string: '\d'. String constant might be missing an r prefix. (anomalous-backslash-in-string)
-examples/controller/pid_with_simulator.py:1:0: F0002: examples/controller/pid_with_simulator.py: Fatal error while checking 'examples/controller/pid_with_simulator.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-11-54-29.txt'. (astroid-error)
-************* Module manual_labor.tools
+examples/controller/pid_with_simulator.py:1:0: F0002: examples/controller/pid_with_simulator.py: Fatal error while checking 'examples/controller/pid_with_simulator.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-12-07-33.txt'. (astroid-error)
+************* Module docs.source.manual_labor.tools
 docs/source/manual_labor/tools.py:1:0: C0114: Missing module docstring (missing-module-docstring)
 docs/source/manual_labor/tools.py:1:0: E0401: Unable to import 'attrs' (import-error)
 docs/source/manual_labor/tools.py:5:0: C0116: Missing function or method docstring (missing-function-docstring)
@@ -255,7 +255,7 @@ tests/test_communicator.py:23:0: C0115: Missing class docstring (missing-class-d
 tests/test_communicator.py:33:4: C0116: Missing function or method docstring (missing-function-docstring)
 tests/test_communicator.py:42:16: C2801: Unnecessarily calls dunder method __getattribute__. Access attribute directly or use getattr built-in function. (unnecessary-dunder-call)
 tests/test_communicator.py:42:50: C2801: Unnecessarily calls dunder method __getattribute__. Access attribute directly or use getattr built-in function. (unnecessary-dunder-call)
-tests/test_communicator.py:1:0: F0002: tests/test_communicator.py: Fatal error while checking 'tests/test_communicator.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-11-54-29.txt'. (astroid-error)
+tests/test_communicator.py:1:0: F0002: tests/test_communicator.py: Fatal error while checking 'tests/test_communicator.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-12-07-34.txt'. (astroid-error)
 ************* Module tests.test_simulator
 tests/test_simulator.py:1:0: C0114: Missing module docstring (missing-module-docstring)
 tests/test_simulator.py:1:0: C0413: Import "import os" should be placed at the top of the module (wrong-import-position)
@@ -295,7 +295,7 @@ tests/test_plugins.py:11:4: C0116: Missing function or method docstring (missing
 tests/test_plugins.py:13:4: C0116: Missing function or method docstring (missing-function-docstring)
 tests/test_plugins.py:15:4: C0116: Missing function or method docstring (missing-function-docstring)
 ************* Module tests.test_module
-tests/test_module.py:1:0: F0002: tests/test_module.py: Fatal error while checking 'tests/test_module.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-11-54-30.txt'. (astroid-error)
+tests/test_module.py:1:0: F0002: tests/test_module.py: Fatal error while checking 'tests/test_module.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-12-07-34.txt'. (astroid-error)
 ************* Module tests.test_data_broker
 tests/test_data_broker.py:124:0: C0301: Line too long (111/100) (line-too-long)
 tests/test_data_broker.py:6:0: E0401: Unable to import 'numpy' (import-error)
@@ -358,7 +358,7 @@ tests/test_databroker_limits.py:135:4: C0116: Missing function or method docstri
 tests/test_model.py:7:0: E0401: Unable to import 'pydantic' (import-error)
 tests/test_model.py:8:0: E0401: Unable to import 'numpy' (import-error)
 tests/test_model.py:15:0: C0115: Missing class docstring (missing-class-docstring)
-tests/test_model.py:1:0: F0002: tests/test_model.py: Fatal error while checking 'tests/test_model.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-11-54-30.txt'. (astroid-error)
+tests/test_model.py:1:0: F0002: tests/test_model.py: Fatal error while checking 'tests/test_model.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-12-07-34.txt'. (astroid-error)
 ************* Module tests.test_utils
 tests/test_utils.py:58:0: C0115: Missing class docstring (missing-class-docstring)
 tests/test_utils.py:81:17: W1514: Using open without explicitly specifying an encoding (unspecified-encoding)
@@ -414,9 +414,9 @@ tests/test_environment.py:53:32: E1101: Instance of 'Environment' has no 'time' 
 tests/test_environment.py:58:30: E1101: Instance of 'Environment' has no 'config' member; maybe '_config'? (no-member)
 ************* Module agentlib.models.scipy_model
 agentlib/models/scipy_model.py:35:0: R0022: Useless option value for 'disable', 'no-self-use' was moved to an optional extension, see https://pylint.readthedocs.io/en/latest/whatsnew/2/2.14/summary.html#removed-checkers. (useless-option-value)
-agentlib/models/scipy_model.py:1:0: F0002: agentlib/models/scipy_model.py: Fatal error while checking 'agentlib/models/scipy_model.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-11-54-31.txt'. (astroid-error)
+agentlib/models/scipy_model.py:1:0: F0002: agentlib/models/scipy_model.py: Fatal error while checking 'agentlib/models/scipy_model.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-12-07-35.txt'. (astroid-error)
 ************* Module agentlib.models.fmu_model
-agentlib/models/fmu_model.py:1:0: F0002: agentlib/models/fmu_model.py: Fatal error while checking 'agentlib/models/fmu_model.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-11-54-31.txt'. (astroid-error)
+agentlib/models/fmu_model.py:1:0: F0002: agentlib/models/fmu_model.py: Fatal error while checking 'agentlib/models/fmu_model.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-12-07-35.txt'. (astroid-error)
 agentlib/models/fmu_model.py:6:0: C0412: Imports from package logging are not grouped (ungrouped-imports)
 ************* Module agentlib.utils.plugin_import
 agentlib/utils/plugin_import.py:6:0: E0401: Unable to import 'pydantic' (import-error)
@@ -424,46 +424,46 @@ agentlib/utils/plugin_import.py:31:0: W0613: Unused argument 'kwargs' (unused-ar
 agentlib/utils/plugin_import.py:72:8: W0707: Consider explicitly re-raising using 'except AttributeError as exc' and 'raise ImportError(f"Plugin '{name}' has no dictionary called '{plugin_types_name}' to import plugin types.") from exc' (raise-missing-from)
 ************* Module agentlib.utils.load_config
 agentlib/utils/load_config.py:1:0: C0114: Missing module docstring (missing-module-docstring)
-agentlib/utils/load_config.py:1:0: F0002: agentlib/utils/load_config.py: Fatal error while checking 'agentlib/utils/load_config.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-11-54-31.txt'. (astroid-error)
+agentlib/utils/load_config.py:1:0: F0002: agentlib/utils/load_config.py: Fatal error while checking 'agentlib/utils/load_config.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-12-07-35.txt'. (astroid-error)
 ************* Module agentlib.utils.local_broadcast_broker
-agentlib/utils/local_broadcast_broker.py:1:0: F0002: agentlib/utils/local_broadcast_broker.py: Fatal error while checking 'agentlib/utils/local_broadcast_broker.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-11-54-32.txt'. (astroid-error)
+agentlib/utils/local_broadcast_broker.py:1:0: F0002: agentlib/utils/local_broadcast_broker.py: Fatal error while checking 'agentlib/utils/local_broadcast_broker.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-12-07-36.txt'. (astroid-error)
 ************* Module agentlib.utils.validators
-agentlib/utils/validators.py:1:0: F0002: agentlib/utils/validators.py: Fatal error while checking 'agentlib/utils/validators.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-11-54-32.txt'. (astroid-error)
+agentlib/utils/validators.py:1:0: F0002: agentlib/utils/validators.py: Fatal error while checking 'agentlib/utils/validators.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-12-07-36.txt'. (astroid-error)
 ************* Module agentlib.utils.local_broker
-agentlib/utils/local_broker.py:1:0: F0002: agentlib/utils/local_broker.py: Fatal error while checking 'agentlib/utils/local_broker.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-11-54-32.txt'. (astroid-error)
+agentlib/utils/local_broker.py:1:0: F0002: agentlib/utils/local_broker.py: Fatal error while checking 'agentlib/utils/local_broker.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-12-07-36.txt'. (astroid-error)
 ************* Module agentlib.utils.fuzzy_matching
 agentlib/utils/fuzzy_matching.py:1:0: C0114: Missing module docstring (missing-module-docstring)
-agentlib/utils/fuzzy_matching.py:1:0: F0002: agentlib/utils/fuzzy_matching.py: Fatal error while checking 'agentlib/utils/fuzzy_matching.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-11-54-32.txt'. (astroid-error)
+agentlib/utils/fuzzy_matching.py:1:0: F0002: agentlib/utils/fuzzy_matching.py: Fatal error while checking 'agentlib/utils/fuzzy_matching.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-12-07-36.txt'. (astroid-error)
 ************* Module agentlib.utils.multi_processing_broker
-agentlib/utils/multi_processing_broker.py:1:0: F0002: agentlib/utils/multi_processing_broker.py: Fatal error while checking 'agentlib/utils/multi_processing_broker.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-11-54-32.txt'. (astroid-error)
+agentlib/utils/multi_processing_broker.py:1:0: F0002: agentlib/utils/multi_processing_broker.py: Fatal error while checking 'agentlib/utils/multi_processing_broker.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-12-07-36.txt'. (astroid-error)
 ************* Module agentlib.utils
 agentlib/utils/__init__.py:85:8: W0707: Consider explicitly re-raising using 'except KeyError as exc' and 'raise ImportError(f"Given module '{custom_module}' does not contain the specified class {class_name}") from exc' (raise-missing-from)
 agentlib/utils/multi_processing_broker.py:6:0: C0412: Imports from package json are not grouped (ungrouped-imports)
 agentlib/utils/__init__.py:12:0: C0412: Imports from package pathlib are not grouped (ungrouped-imports)
 ************* Module agentlib.utils.multi_agent_system
 agentlib/utils/multi_agent_system.py:206:0: C0301: Line too long (107/100) (line-too-long)
-agentlib/utils/multi_agent_system.py:1:0: F0002: agentlib/utils/multi_agent_system.py: Fatal error while checking 'agentlib/utils/multi_agent_system.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-11-54-33.txt'. (astroid-error)
+agentlib/utils/multi_agent_system.py:1:0: F0002: agentlib/utils/multi_agent_system.py: Fatal error while checking 'agentlib/utils/multi_agent_system.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-12-07-36.txt'. (astroid-error)
 ************* Module agentlib.utils.plotting.simulator_dashboard
 agentlib/utils/plotting/simulator_dashboard.py:1:0: C0114: Missing module docstring (missing-module-docstring)
-agentlib/utils/plotting/simulator_dashboard.py:1:0: F0002: agentlib/utils/plotting/simulator_dashboard.py: Fatal error while checking 'agentlib/utils/plotting/simulator_dashboard.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-11-54-33.txt'. (astroid-error)
+agentlib/utils/plotting/simulator_dashboard.py:1:0: F0002: agentlib/utils/plotting/simulator_dashboard.py: Fatal error while checking 'agentlib/utils/plotting/simulator_dashboard.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-12-07-37.txt'. (astroid-error)
 agentlib/utils/plotting/simulator_dashboard.py:5:0: C0412: Imports from package pathlib are not grouped (ungrouped-imports)
 ************* Module agentlib.core.data_broker
-agentlib/core/data_broker.py:1:0: F0002: agentlib/core/data_broker.py: Fatal error while checking 'agentlib/core/data_broker.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-11-54-33.txt'. (astroid-error)
+agentlib/core/data_broker.py:1:0: F0002: agentlib/core/data_broker.py: Fatal error while checking 'agentlib/core/data_broker.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-12-07-37.txt'. (astroid-error)
 ************* Module agentlib.core.agent
-agentlib/core/agent.py:1:0: F0002: agentlib/core/agent.py: Fatal error while checking 'agentlib/core/agent.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-11-54-33.txt'. (astroid-error)
+agentlib/core/agent.py:1:0: F0002: agentlib/core/agent.py: Fatal error while checking 'agentlib/core/agent.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-12-07-37.txt'. (astroid-error)
 ************* Module agentlib.core.module
-agentlib/core/module.py:1:0: F0002: agentlib/core/module.py: Fatal error while checking 'agentlib/core/module.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-11-54-34.txt'. (astroid-error)
+agentlib/core/module.py:1:0: F0002: agentlib/core/module.py: Fatal error while checking 'agentlib/core/module.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-12-07-37.txt'. (astroid-error)
 ************* Module agentlib.core.logging_
 agentlib/core/logging_.py:1:0: C0114: Missing module docstring (missing-module-docstring)
-agentlib/core/logging_.py:1:0: F0002: agentlib/core/logging_.py: Fatal error while checking 'agentlib/core/logging_.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-11-54-34.txt'. (astroid-error)
+agentlib/core/logging_.py:1:0: F0002: agentlib/core/logging_.py: Fatal error while checking 'agentlib/core/logging_.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-12-07-38.txt'. (astroid-error)
 ************* Module agentlib.core.environment
-agentlib/core/environment.py:1:0: F0002: agentlib/core/environment.py: Fatal error while checking 'agentlib/core/environment.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-11-54-34.txt'. (astroid-error)
+agentlib/core/environment.py:1:0: F0002: agentlib/core/environment.py: Fatal error while checking 'agentlib/core/environment.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-12-07-38.txt'. (astroid-error)
 ************* Module agentlib.core.datamodels
-agentlib/core/datamodels.py:1:0: F0002: agentlib/core/datamodels.py: Fatal error while checking 'agentlib/core/datamodels.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-11-54-34.txt'. (astroid-error)
+agentlib/core/datamodels.py:1:0: F0002: agentlib/core/datamodels.py: Fatal error while checking 'agentlib/core/datamodels.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-12-07-38.txt'. (astroid-error)
 ************* Module agentlib.core.model
 agentlib/core/model.py:87:0: C0301: Line too long (106/100) (line-too-long)
 agentlib/core/model.py:254:0: C0301: Line too long (118/100) (line-too-long)
-agentlib/core/model.py:1:0: F0002: agentlib/core/model.py: Fatal error while checking 'agentlib/core/model.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-11-54-35.txt'. (astroid-error)
+agentlib/core/model.py:1:0: F0002: agentlib/core/model.py: Fatal error while checking 'agentlib/core/model.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-12-07-38.txt'. (astroid-error)
 agentlib/core/agent.py:6:0: C0412: Imports from package threading are not grouped (ungrouped-imports)
 agentlib/core/module.py:5:0: C0412: Imports from package abc are not grouped (ungrouped-imports)
 agentlib/core/module.py:6:0: C0412: Imports from package json are not grouped (ungrouped-imports)
@@ -481,14 +481,14 @@ agentlib/core/model.py:6:0: C0412: Imports from package logging are not grouped 
 agentlib/core/model.py:7:0: C0412: Imports from package copy are not grouped (ungrouped-imports)
 agentlib/core/model.py:8:0: C0412: Imports from package itertools are not grouped (ungrouped-imports)
 ************* Module agentlib.modules.__init__
-agentlib/modules/__init__.py:1:0: F0002: agentlib/modules/__init__.py: Fatal error while checking 'agentlib/modules/__init__.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-11-54-35.txt'. (astroid-error)
+agentlib/modules/__init__.py:1:0: F0002: agentlib/modules/__init__.py: Fatal error while checking 'agentlib/modules/__init__.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-12-07-38.txt'. (astroid-error)
 ************* Module agentlib.modules.utils.try_sensor
-agentlib/modules/utils/try_sensor.py:1:0: F0002: agentlib/modules/utils/try_sensor.py: Fatal error while checking 'agentlib/modules/utils/try_sensor.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-11-54-35.txt'. (astroid-error)
+agentlib/modules/utils/try_sensor.py:1:0: F0002: agentlib/modules/utils/try_sensor.py: Fatal error while checking 'agentlib/modules/utils/try_sensor.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-12-07-39.txt'. (astroid-error)
 ************* Module agentlib.modules.utils.agent_logger
 agentlib/modules/utils/agent_logger.py:57:0: R0022: Useless option value for 'disable', 'no-self-use' was moved to an optional extension, see https://pylint.readthedocs.io/en/latest/whatsnew/2/2.14/summary.html#removed-checkers. (useless-option-value)
 agentlib/modules/utils/agent_logger.py:45:0: C0301: Line too long (106/100) (line-too-long)
 agentlib/modules/utils/agent_logger.py:50:0: C0301: Line too long (111/100) (line-too-long)
-agentlib/modules/utils/agent_logger.py:1:0: F0002: agentlib/modules/utils/agent_logger.py: Fatal error while checking 'agentlib/modules/utils/agent_logger.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-11-54-35.txt'. (astroid-error)
+agentlib/modules/utils/agent_logger.py:1:0: F0002: agentlib/modules/utils/agent_logger.py: Fatal error while checking 'agentlib/modules/utils/agent_logger.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-12-07-39.txt'. (astroid-error)
 ************* Module agentlib.modules.communicator.local_broadcast
 agentlib/modules/communicator/local_broadcast.py:1:0: C0114: Missing module docstring (missing-module-docstring)
 ************* Module agentlib.modules.communicator.local
@@ -496,7 +496,7 @@ agentlib/modules/communicator/local.py:1:0: C0114: Missing module docstring (mis
 agentlib/modules/communicator/local.py:11:0: C0115: Missing class docstring (missing-class-docstring)
 agentlib/modules/communicator/local.py:33:4: C0116: Missing function or method docstring (missing-function-docstring)
 ************* Module agentlib.modules.communicator.clonemap
-agentlib/modules/communicator/clonemap.py:1:0: F0002: agentlib/modules/communicator/clonemap.py: Fatal error while checking 'agentlib/modules/communicator/clonemap.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-11-54-36.txt'. (astroid-error)
+agentlib/modules/communicator/clonemap.py:1:0: F0002: agentlib/modules/communicator/clonemap.py: Fatal error while checking 'agentlib/modules/communicator/clonemap.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-12-07-39.txt'. (astroid-error)
 ************* Module agentlib.modules.communicator.local_multiprocessing
 agentlib/modules/communicator/local_multiprocessing.py:1:0: C0114: Missing module docstring (missing-module-docstring)
 agentlib/modules/communicator/local_multiprocessing.py:5:0: E0401: Unable to import 'pydantic' (import-error)
@@ -507,11 +507,11 @@ agentlib/modules/communicator/local_multiprocessing.py:91:12: W1203: Use lazy % 
 agentlib/modules/communicator/local_multiprocessing.py:6:0: C0411: standard import "from ipaddress import IPv4Address" should be placed before "from pydantic import Field" (wrong-import-order)
 ************* Module agentlib.modules.communicator.mqtt
 agentlib/modules/communicator/mqtt.py:1:0: C0114: Missing module docstring (missing-module-docstring)
-agentlib/modules/communicator/mqtt.py:1:0: F0002: agentlib/modules/communicator/mqtt.py: Fatal error while checking 'agentlib/modules/communicator/mqtt.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-11-54-36.txt'. (astroid-error)
+agentlib/modules/communicator/mqtt.py:1:0: F0002: agentlib/modules/communicator/mqtt.py: Fatal error while checking 'agentlib/modules/communicator/mqtt.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-12-07-39.txt'. (astroid-error)
 ************* Module agentlib.modules.simulation.csv_data_source
 agentlib/modules/simulation/csv_data_source.py:182:0: C0301: Line too long (108/100) (line-too-long)
 agentlib/modules/simulation/csv_data_source.py:1:0: C0114: Missing module docstring (missing-module-docstring)
-agentlib/modules/simulation/csv_data_source.py:1:0: F0002: agentlib/modules/simulation/csv_data_source.py: Fatal error while checking 'agentlib/modules/simulation/csv_data_source.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-11-54-36.txt'. (astroid-error)
+agentlib/modules/simulation/csv_data_source.py:1:0: F0002: agentlib/modules/simulation/csv_data_source.py: Fatal error while checking 'agentlib/modules/simulation/csv_data_source.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-12-07-39.txt'. (astroid-error)
 ************* Module agentlib.modules.simulation
 agentlib/modules/simulation/__init__.py:1:0: C0114: Missing module docstring (missing-module-docstring)
 ************* Module agentlib.modules.controller.bangbang
@@ -519,12 +519,12 @@ agentlib/modules/controller/bangbang.py:1:0: C0114: Missing module docstring (mi
 agentlib/modules/controller/bangbang.py:1:0: E0401: Unable to import 'pydantic' (import-error)
 agentlib/modules/controller/bangbang.py:48:4: R1710: Either all return statements in a function should return an expression, or none of them should. (inconsistent-return-statements)
 ************* Module agentlib.modules.controller.controller
-agentlib/modules/controller/controller.py:1:0: F0002: agentlib/modules/controller/controller.py: Fatal error while checking 'agentlib/modules/controller/controller.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-11-54-36.txt'. (astroid-error)
+agentlib/modules/controller/controller.py:1:0: F0002: agentlib/modules/controller/controller.py: Fatal error while checking 'agentlib/modules/controller/controller.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-12-07-39.txt'. (astroid-error)
 ************* Module agentlib.modules.controller
 agentlib/modules/controller/__init__.py:1:0: C0114: Missing module docstring (missing-module-docstring)
 ************* Module agentlib.modules.controller.pid
 agentlib/modules/controller/pid.py:1:0: C0114: Missing module docstring (missing-module-docstring)
-agentlib/modules/controller/pid.py:1:0: F0002: agentlib/modules/controller/pid.py: Fatal error while checking 'agentlib/modules/controller/pid.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-11-54-36.txt'. (astroid-error)
+agentlib/modules/controller/pid.py:1:0: F0002: agentlib/modules/controller/pid.py: Fatal error while checking 'agentlib/modules/controller/pid.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-12-07-40.txt'. (astroid-error)
 agentlib/modules/controller/pid.py:1:0: R0801: Similar lines in 2 files
 ==examples.controller.bangbang_with_simulator:[43:99]
 ==examples.controller.pid_with_simulator:[56:112]
@@ -593,7 +593,6 @@ from typing import List
 import agentlib as ag
 
 
-# define the inputs, outputs, states and parameters of your model
 class HeatedRoomConfig(ag.ModelConfig):
     inputs: List[ag.ModelInput] = [
         ag.ModelInput(name="heating_power_in_watt", value=100)
@@ -609,12 +608,11 @@ class HeatedRoomConfig(ag.ModelConfig):
 
 
 class HeatedRoom(ag.Model):
-    config: HeatedRoomConfig  # match the config to the model
+    config: HeatedRoomConfig
 
     def initialize(self, **kwargs):
         pass
 
-    # define a discrete simulation step
     def do_step(self, *, t_start, t_sample):
         t = self.get("temperature_in_celsius").value  # get/set also works in models
         power = self.get("heating_power_in_watt").value
@@ -629,34 +627,14 @@ agent_config = {
     "modules": [
         {
             "module_id": "sim",
-            "type": "simulator",  # specify the simulator module
+            "type": "simulator",
             "model": {
-                # under type, we include a custom injection to our defined model
-                # other options for type are:
-                # "fmu" (see examples/multi-agent-systems/room_mas/configs/Room1.json)
-                # or "statespace"
                 "type": {"file": __file__, "class_name": "HeatedRoom"},
             },
-            # specify the interval, in which outputs are written, and inputs are updated
             "t_sample": 10,
-            # the simulator can save its own results if desired, there is no need for an AgentLogger
             "save_results": True,
-            # results are stored in RAM if not specified
             "result_filename": "results_part3.csv",
-            # define, which variable groups we want to store in the results. Note that
-            # here, we wrote locals, which maps to the states. This is a special case,
-            # where we used states instead of locals in some places, to avoid shadowing
-            # the Python builtin locals. By default, we store inputs and outputs. The
-            # locals (i.e. states) are not stored by default, as they are often of
-            # extremely high number in FMU models. Therefore, we have to activate them
-            # manually here.
-            "result_causalities": ["local"],
-            # the inputs and states fields of the simulator are lists of AgentVariables
-            # There are also the fields outputs and parameters. We do not have to
-            # specify all the variables that are given in the model config. However,
-            # only variables that we specify here, can be have their values changed
-            # from the default in the model, and only outputs defined here can be
-            # sent to other agents. (duplicate-code)
+            "result_causalities": ["local"], (duplicate-code)
 agentlib/modules/controller/pid.py:1:0: R0801: Similar lines in 2 files
 ==examples.controller.bangbang_with_simulator:[0:38]
 ==examples.controller.pid_with_simulator:[11:49]
@@ -852,16 +830,27 @@ agentlib/modules/controller/pid.py:1:0: R0801: Similar lines in 2 files
 
 def main(with_plots: bool = True):
     logging.basicConfig(level=logging.INFO)
+
     environment_config = {"rt": False, "factor": 1, "clock": False}
+    # we use the LocalMASAgency class to start our agent
+    # It can be passed a list of agent configs, and an environment config and will run
+    # all agents in this environment
     mas = ag.LocalMASAgency(agent_configs=[agent_config], env=environment_config)
+
+    # the run command now is part of the mas
     mas.run(1800)
 
     if with_plots:
         import matplotlib.pyplot as plt
         import pandas as pd
 
+        # there is also a results function for the MAS, we can get agents with their id
         results = mas.get_results()["my_agent_id"]
+
+        # key here is the module_id of the simulator
         logger_results: pd.DataFrame = results["sim"]
+
+        # key is name of the variable (it's actually the alias, more on this later!)
         logger_results["temperature_in_celsius"].plot()
         plt.ylabel("Temperature / °C")
         plt.xlabel("Time / sec")
@@ -973,49 +962,47 @@ agentlib/modules/controller/pid.py:1:0: R0801: Similar lines in 2 files
     "modules": [
         {
             "module_id": "sim",
-            "type": "simulator",  # specify the simulator module
+            "type": "simulator",
             "model": {
-                # under type, we include a custom injection to our defined model
-                # other options for type are:
-                # "fmu" (see examples/multi-agent-systems/room_mas/configs/Room1.json)
-                # or "statespace"
                 "type": {"file": __file__, "class_name": "HeatedRoom"},
             },
-            # specify the interval, in which outputs are written, and inputs are updated
             "t_sample": 10,
-            # the simulator can save its own results if desired, there is no need for an AgentLogger
             "save_results": True,
-            # results are stored in RAM if not specified
             "result_filename": "results_part3.csv",
-            # define, which variable groups we want to store in the results. Note that
-            # here, we wrote locals, which maps to the states. This is a special case,
-            # where we used states instead of locals in some places, to avoid shadowing
-            # the Python builtin locals. By default, we store inputs and outputs. The
-            # locals (i.e. states) are not stored by default, as they are often of
-            # extremely high number in FMU models. Therefore, we have to activate them
-            # manually here.
             "result_causalities": ["local"],
-            # the inputs and states fields of the simulator are lists of AgentVariables
-            # There are also the fields outputs and parameters. We do not have to
-            # specify all the variables that are given in the model config. However,
-            # only variables that we specify here, can be have their values changed
-            # from the default in the model, and only outputs defined here can be
-            # sent to other agents.
-            "inputs": [ (duplicate-code)
+            "inputs": [
+                # notice that we now included an alias in the declaration of the
+                # heating power. The alias is the public name of a variable, which is
+                # used for communication. The name is important for the
+                # internal workings of a module. In this case, the alias has to match
+                # with the other agent for communication, while the name has to match
+                # with our model implementation.
+                # If you do not declare an alias, it will be set to the name. You will
+                # see many examples, where this is the case. However it is often useful
+                # to be explicit about the alias, to better understand the
+                # communication structure of a an agent system (duplicate-code)
 agentlib/modules/controller/pid.py:1:0: R0801: Similar lines in 2 files
 ==examples.controller.pid_with_simulator:[45:56]
 ==examples.getting-started.part_4_communicators_with_comments:[95:114]
 pid_agent_config = {
-    "id": "PID",
+    "id": "PID",  # the ID here matches, what we subscribed to in the process agent
     "modules": [
         {
             "module_id": "myPid",
-            "type": "pid",
+            "type": "pid",  # pid is the key, to configure the standard PID module
             "setpoint": 21,
             "Kp": 1000,
             "Ti": 10,
             "lb": 0,
-            "ub": 500, (duplicate-code)
+            "ub": 500,
+            # the PID takes one input and one output, which in control terms are usually
+            # u and y. We define the aliases to match the alias in the process agent,
+            # while leaving the local names as u and y. Note that we also included the
+            # source key here, which is an additional filter. The input will only be
+            # updated, if it is sent from an agent with matching source. If the source
+            # is not specified, the agent will update the input with any variable that
+            # has a matching alias, from any agent. You will not see the source in many
+            # examples, however it can be a helpful filter in large mas. (duplicate-code)
 agentlib/modules/controller/pid.py:1:0: R0801: Similar lines in 2 files
 ==examples.getting-started.part_3_using_models_concise:[46:57]
 ==examples.getting-started.part_4_communicators_with_comments:[50:61]
@@ -1152,33 +1139,16 @@ agent_config = {
 agentlib/modules/controller/pid.py:1:0: R0801: Similar lines in 2 files
 ==examples.getting-started.part_1_my_first_agent_with_comments:[32:59]
 ==examples.getting-started.part_2_agentvariables_with_comments:[52:62]
-            yield self.env.timeout(1)  # timeout is in seconds
+            yield self.env.timeout(1)
 
     def register_callbacks(self):
-        # we will learn about callbacks later
         pass
 
 
-# the config of an agent can be a python dict or a JSON-file
-# the config has two keys: id and modules
 agent_config = {
-    # the id is the public name of the agent. It will become later, when using
-    # communicators. It is also displayed in log messages.
     "id": "my_agent_id",
-    # second comes a list of modules, which define the function of the agent. Usually,
-    # an agent has a communicator and a functional module, but in fact, any
-    # combination of modules is possible.
-    # In this example, there is no communication with other agents, so we only have one
-    # module
     "modules": [
-        {
-            # the type key defines the class of a module and is always required
-            # There are two ways to specify the type
-            #   1. Use a module from the core, or a plugin. You only need to write down
-            #   the string-key which maps to it.
-            #   2. Use a custom module. Under type, write down a dict, pointing to the
-            #   exact python class you want to execute.
-            # In our example, we use option two, to load the module defined above. (duplicate-code)
+        { (duplicate-code)
 agentlib/modules/controller/pid.py:1:0: R0801: Similar lines in 2 files
 ==examples.getting-started.part_1_my_first_agent_concise:[11:22]
 ==examples.getting-started.part_1_my_first_agent_with_comments:[11:23]
@@ -1187,7 +1157,6 @@ import logging
 import agentlib as ag
 
 
-# every
 class MyFirstModuleConfig(ag.BaseModuleConfig):
     name: str
     age: int = 2
@@ -1199,7 +1168,6 @@ agentlib/modules/controller/pid.py:1:0: R0801: Similar lines in 2 files
 ==examples.multi-agent-systems.pingpong.pingpong_multiprocessing:[15:23]
 logging.basicConfig(level="DEBUG")
 logger = logging.getLogger(__name__)
-
 
 env_config = {"rt": True, "factor": 1}
 agent_config1 = {
@@ -1222,7 +1190,6 @@ agentlib/modules/controller/pid.py:1:0: R0801: Similar lines in 2 files
 import logging
 import pingpong_module
 from agentlib.utils.multi_agent_system import LocalMASAgency
-
 
 logging.basicConfig(level="DEBUG")
 logger = logging.getLogger(__name__)
