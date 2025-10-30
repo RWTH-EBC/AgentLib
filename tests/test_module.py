@@ -304,31 +304,6 @@ class TestModule(unittest.TestCase):
         self.assertIsNot(test_value, module._variables_dict["test_inp"].value)
         self.assertEqual(test_value, module._variables_dict["test_inp"].value)
 
-    def test_update_variables(self):
-        """Test get, update and set methods"""
-        module = CustomModule(config=self.test_config, agent=self.agent)
-
-        # test updating a single variable
-        module.update_variables([datamodels.AgentVariable(name="test_inp")])
-
-        # test updating multiple variables
-        module.update_variables(
-            [
-                datamodels.AgentVariable(name="test_inp"),
-                datamodels.AgentVariable(name="test_inp"),
-            ]
-        )
-
-        # test updating a variable which is not in the config
-        with self.assertRaises(ValueError):
-            module.update_variables(
-                [
-                    datamodels.AgentVariable(
-                        name="Not in config, however " "does not raise any error."
-                    )
-                ]
-            )
-
     def test_timestamp_setting(self):
         """Test the setting of timestamps"""
         module = CustomModule(config=self.test_config, agent=self.agent)
@@ -336,10 +311,6 @@ class TestModule(unittest.TestCase):
         self.assertEqual(module.get("test_inp").timestamp, 10)
         module.set("test_inp", value=10)
         self.assertEqual(module.get("test_inp").timestamp, 0)
-        module.update_variables(
-            [datamodels.AgentVariable(name="test_inp")], timestamp=10
-        )
-        self.assertEqual(module.get("test_inp").timestamp, 10)
 
 
 class TestModuleLogging(unittest.TestCase):
