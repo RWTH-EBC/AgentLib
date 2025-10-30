@@ -54,6 +54,10 @@ class AgentConfig(BaseModel):
         description="Maximal number of waiting items in data-broker queues. "
         "Set to -1 for infinity",
     )
+    use_direct_callback_databroker: bool = Field(
+        default=False,
+        description="If True, the `DirectCallbackDataBroker` will be used "
+    )
 
     @field_validator("modules")
     @classmethod

@@ -12,6 +12,7 @@ from agentlib.core import (
     Source,
     Environment,
     RTDataBroker,
+    DirectCallbackDataBroker
 )
 from agentlib.core.logging_ import CustomLogger
 
@@ -78,6 +79,9 @@ class TestLocalDataBroker(unittest.TestCase):
         self.counter += 1
 
     def test_trigger_recursion_error(self):
+        self.run_recursion_error_test()
+
+    def run_recursion_error_test(self):
         self.never_reached = True
         self.data_broker.register_callback(
             alias="Test_2", source=None, callback=self.recursion_callback_1
@@ -172,6 +176,32 @@ class TestRTDataBroker(TestLocalDataBroker):
     def test_process(self):
         # skip the process test for RealTime
         ...
+
+
+class TestDirectCallbackDataBroker(TestLocalDataBroker):
+
+    def setUp(self) -> None:
+        """Setup the test-logger."""
+        env = Environment(config={"rt": True})
+        self.data_broker = DirectCallbackDataBroker(
+            logger=CustomLogger("TestLocalDataBroker", env=env)
+        )
+        self.n_vars = np.random.randint(1, 20)
+        self.counter = 0
+
+    def perform_callbacks(self):
+        time.sleep(0.1)
+
+    def test_process(self):
+        # skip the process test for RealTime
+        ...
+
+    def test_trigger_recursion_error(self):
+        pass
+
+    def test_assert_recursion_error(self):
+        with self.assertRaises(RecursionError):
+            self.run_recursion_error_test()
 
 
 if __name__ == "__main__":
