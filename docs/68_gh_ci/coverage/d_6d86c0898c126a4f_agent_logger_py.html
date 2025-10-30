@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Coverage for agentlib/modules/utils/agent_logger.py: 88%</title>
+    <title>Coverage for agentlib/modules/utils/agent_logger.py: 87%</title>
     <link rel="icon" sizes="32x32" href="favicon_32.png">
     <link rel="stylesheet" href="style.css" type="text/css">
     <script type="text/javascript" src="coverage_html.js" defer></script>
@@ -12,7 +12,7 @@
     <div class="content">
         <h1>
             <span class="text">Coverage for </span><b>agentlib/modules/utils/agent_logger.py</b>:
-            <span class="pc_cov">88%</span>
+            <span class="pc_cov">87%</span>
         </h1>
         <aside id="help_panel_wrapper">
             <input id="help_panel_state" type="checkbox">
@@ -54,9 +54,9 @@
             </div>
         </aside>
         <h2>
-            <span class="text">99 statements &nbsp;</span>
+            <span class="text">100 statements &nbsp;</span>
             <button type="button" class="run button_toggle_run" value="run" data-shortcut="r" title="Toggle lines run">87<span class="text"> run</span></button>
-            <button type="button" class="mis show_mis button_toggle_mis" value="mis" data-shortcut="m" title="Toggle lines missing">12<span class="text"> missing</span></button>
+            <button type="button" class="mis show_mis button_toggle_mis" value="mis" data-shortcut="m" title="Toggle lines missing">13<span class="text"> missing</span></button>
             <button type="button" class="exc show_exc button_toggle_exc" value="exc" data-shortcut="x" title="Toggle lines excluded">4<span class="text"> excluded</span></button>
         </h2>
         <p class="text">
@@ -65,7 +65,7 @@
             <a id="nextFileLink" class="nav" href="d_6d86c0898c126a4f_try_sensor_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.4.4">coverage.py v7.4.4</a>,
-            created at 2025-10-30 09:18 +0000
+            created at 2025-10-30 09:26 +0000
         </p>
         <aside class="hidden">
             <button type="button" class="button_next_chunk" data-shortcut="j"/>
@@ -149,10 +149,10 @@
     <p class="run"><span class="n"><a id="t67" href="#t67">67</a></span><span class="t">                <span class="nam">file_path</span><span class="op">.</span><span class="nam">unlink</span><span class="op">(</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t68" href="#t68">68</a></span><span class="t">                <span class="key">return</span> <span class="nam">filename</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t69" href="#t69">69</a></span><span class="t">            <span class="key">raise</span> <span class="nam">FileExistsError</span><span class="op">(</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t70" href="#t70">70</a></span><span class="t">                <span class="str">f"Given filename at {filename} "</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t71" href="#t71">71</a></span><span class="t">                <span class="str">f"already exists. We won't overwrite it automatically. "</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t72" href="#t72">72</a></span><span class="t">                <span class="str">f"You can use the key word 'overwrite_log' to "</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t73" href="#t73">73</a></span><span class="t">                <span class="str">f"activate automatic overwrite."</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t70" href="#t70">70</a></span><span class="t">                <span class="fst">f"</span><span class="fst">Given filename at </span><span class="op">{</span><span class="nam">filename</span><span class="op">}</span><span class="fst"> </span><span class="fst">"</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t71" href="#t71">71</a></span><span class="t">                <span class="fst">f"</span><span class="fst">already exists. We won't overwrite it automatically. </span><span class="fst">"</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t72" href="#t72">72</a></span><span class="t">                <span class="fst">f"</span><span class="fst">You can use the key word 'overwrite_log' to </span><span class="fst">"</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t73" href="#t73">73</a></span><span class="t">                <span class="fst">f"</span><span class="fst">activate automatic overwrite.</span><span class="fst">"</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t74" href="#t74">74</a></span><span class="t">            <span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t75" href="#t75">75</a></span><span class="t">        <span class="com"># Create path in case it does not exist</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t76" href="#t76">76</a></span><span class="t">        <span class="nam">file_path</span><span class="op">.</span><span class="nam">parent</span><span class="op">.</span><span class="nam">mkdir</span><span class="op">(</span><span class="nam">parents</span><span class="op">=</span><span class="key">True</span><span class="op">,</span> <span class="nam">exist_ok</span><span class="op">=</span><span class="key">True</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
@@ -175,13 +175,13 @@
     <p class="pln"><span class="n"><a id="t93" href="#t93">93</a></span><span class="t">            <span class="com"># Use agent ID to create a default filename</span>&nbsp;</span><span class="r"></span></p>
     <p class="mis show_mis"><span class="n"><a id="t94" href="#t94">94</a></span><span class="t">            <span class="nam">logs_dir</span> <span class="op">=</span> <span class="nam">Path</span><span class="op">(</span><span class="str">"agent_logs"</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="mis show_mis"><span class="n"><a id="t95" href="#t95">95</a></span><span class="t">            <span class="nam">logs_dir</span><span class="op">.</span><span class="nam">mkdir</span><span class="op">(</span><span class="nam">exist_ok</span><span class="op">=</span><span class="key">True</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t96" href="#t96">96</a></span><span class="t">            <span class="nam">self</span><span class="op">.</span><span class="nam">_filename</span> <span class="op">=</span> <span class="nam">str</span><span class="op">(</span><span class="nam">logs_dir</span> <span class="op">/</span> <span class="str">f"{self.agent.id}.jsonl"</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="mis show_mis"><span class="n"><a id="t96" href="#t96">96</a></span><span class="t">            <span class="nam">self</span><span class="op">.</span><span class="nam">_filename</span> <span class="op">=</span> <span class="nam">str</span><span class="op">(</span><span class="nam">logs_dir</span> <span class="op">/</span> <span class="fst">f"</span><span class="op">{</span><span class="nam">self</span><span class="op">.</span><span class="nam">agent</span><span class="op">.</span><span class="nam">id</span><span class="op">}</span><span class="fst">.jsonl</span><span class="fst">"</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t97" href="#t97">97</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t98" href="#t98">98</a></span><span class="t">            <span class="com"># Handle file exists case based on overwrite_log setting</span>&nbsp;</span><span class="r"></span></p>
     <p class="mis show_mis"><span class="n"><a id="t99" href="#t99">99</a></span><span class="t">            <span class="key">if</span> <span class="nam">Path</span><span class="op">(</span><span class="nam">self</span><span class="op">.</span><span class="nam">_filename</span><span class="op">)</span><span class="op">.</span><span class="nam">exists</span><span class="op">(</span><span class="op">)</span> <span class="key">and</span> <span class="key">not</span> <span class="nam">self</span><span class="op">.</span><span class="nam">config</span><span class="op">.</span><span class="nam">overwrite_log</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t100" href="#t100">100</a></span><span class="t">                <span class="com"># Generate a unique filename by appending a timestamp</span>&nbsp;</span><span class="r"></span></p>
     <p class="mis show_mis"><span class="n"><a id="t101" href="#t101">101</a></span><span class="t">                <span class="nam">timestamp</span> <span class="op">=</span> <span class="nam">int</span><span class="op">(</span><span class="nam">time</span><span class="op">.</span><span class="nam">time</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t102" href="#t102">102</a></span><span class="t">                <span class="nam">self</span><span class="op">.</span><span class="nam">_filename</span> <span class="op">=</span> <span class="nam">str</span><span class="op">(</span><span class="nam">logs_dir</span> <span class="op">/</span> <span class="str">f"{self.agent.id}_{timestamp}.jsonl"</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="mis show_mis"><span class="n"><a id="t102" href="#t102">102</a></span><span class="t">                <span class="nam">self</span><span class="op">.</span><span class="nam">_filename</span> <span class="op">=</span> <span class="nam">str</span><span class="op">(</span><span class="nam">logs_dir</span> <span class="op">/</span> <span class="fst">f"</span><span class="op">{</span><span class="nam">self</span><span class="op">.</span><span class="nam">agent</span><span class="op">.</span><span class="nam">id</span><span class="op">}</span><span class="fst">_</span><span class="op">{</span><span class="nam">timestamp</span><span class="op">}</span><span class="fst">.jsonl</span><span class="fst">"</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t103" href="#t103">103</a></span><span class="t">        <span class="key">else</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t104" href="#t104">104</a></span><span class="t">            <span class="nam">self</span><span class="op">.</span><span class="nam">_filename</span> <span class="op">=</span> <span class="nam">self</span><span class="op">.</span><span class="nam">config</span><span class="op">.</span><span class="nam">filename</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t105" href="#t105">105</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
@@ -202,7 +202,7 @@
     <p class="run"><span class="n"><a id="t120" href="#t120">120</a></span><span class="t">    <span class="key">def</span> <span class="nam">process</span><span class="op">(</span><span class="nam">self</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t121" href="#t121">121</a></span><span class="t">        <span class="str">"""Calls the logger every other t_sample</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t122" href="#t122">122</a></span><span class="t"><span class="str">        is used."""</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t123" href="#t123">123</a></span><span class="t">        <span class="key">while</span> <span class="key">True</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p class="mis show_mis"><span class="n"><a id="t123" href="#t123">123</a></span><span class="t">        <span class="key">while</span> <span class="key">True</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="mis show_mis"><span class="n"><a id="t124" href="#t124">124</a></span><span class="t">            <span class="nam">self</span><span class="op">.</span><span class="nam">_log</span><span class="op">(</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="mis show_mis"><span class="n"><a id="t125" href="#t125">125</a></span><span class="t">            <span class="key">yield</span> <span class="nam">self</span><span class="op">.</span><span class="nam">env</span><span class="op">.</span><span class="nam">timeout</span><span class="op">(</span><span class="nam">self</span><span class="op">.</span><span class="nam">config</span><span class="op">.</span><span class="nam">t_sample</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t126" href="#t126">126</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
@@ -307,7 +307,7 @@
             <a id="nextFileLink" class="nav" href="d_6d86c0898c126a4f_try_sensor_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.4.4">coverage.py v7.4.4</a>,
-            created at 2025-10-30 09:18 +0000
+            created at 2025-10-30 09:26 +0000
         </p>
     </div>
 </footer>
