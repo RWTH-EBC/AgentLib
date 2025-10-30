@@ -291,12 +291,12 @@ class BaseModuleConfig(BaseModel):
         try:
             super().__init__(*args, **kwargs)
         except pydantic.ValidationError as e:
-            better_error = self._improve_extra_field_error_messages(e)
             module_id = _user_config.get("module_id")
             module_id_text = f" / module '{module_id}" if module_id is not None else ""
-            raise ConfigurationError(
-                f"Error in Configuration of agent '{_agent_id}{module_id_text}': \n {better_error}"
+            better_error = self._improve_extra_field_error_messages(
+                e, agent_id=_agent_id, module_id=module_id_text
             )
+            raise better_error
 
         # Enable mutation
         self.model_config["frozen"] = False
@@ -312,34 +312,34 @@ class BaseModuleConfig(BaseModel):
 
     @classmethod
     def _improve_extra_field_error_messages(
-        cls, e: pydantic.ValidationError
+        cls, e: pydantic.ValidationError, agent_id: str, module_id: str
     ) -> pydantic.ValidationError:
         """Checks the validation errors for invalid fields and adds suggestions for
         correct field names to the error message."""
-        if not RAPIDFUZZ_IS_INSTALLED:
-            return e
 
         error_list = e.errors()
-        for error in error_list:
-            if not error["type"] == "extra_forbidden":
-                continue
+        title = f"configuration of agent '{agent_id}'{module_id}':"
+        if RAPIDFUZZ_IS_INSTALLED:
+            for error in error_list:
+                if not error["type"] == "extra_forbidden":
+                    continue
 
-            # change error type to literal because it allows for context
-            error["type"] = "literal_error"
-            # pydantic automatically prints the __dict__ of an error, so it is
-            # sufficient to just assign the suggestions to an arbitrary attribute of
-            # the error
-            suggestions = fuzzy_match(
-                target=error["loc"][0], choices=cls.model_fields.keys()
-            )
-            if suggestions:
-                error["ctx"] = {
-                    "expected": f"a valid Field name. Field '{error['loc'][0]}' does "
-                    f"not exist. Did you mean any of {suggestions}?"
-                }
+                # change error type to literal because it allows for context
+                error["type"] = "literal_error"
+                # pydantic automatically prints the __dict__ of an error, so it is
+                # sufficient to just assign the suggestions to an arbitrary attribute of
+                # the error
+                suggestions = fuzzy_match(
+                    target=error["loc"][0], choices=cls.model_fields.keys()
+                )
+                if suggestions:
+                    error["ctx"] = {
+                        "expected": f"a valid Field name. Field '{error['loc'][0]}' does "
+                        f"not exist. Did you mean any of {suggestions}?"
+                    }
 
         return pydantic.ValidationError.from_exception_data(
-            title=e.title, line_errors=error_list
+            title=title, line_errors=error_list
         )
 
 
