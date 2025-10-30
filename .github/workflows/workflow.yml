@@ -12,7 +12,7 @@ jobs:
       PYPI_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
     with:
       PYTHON_VERSION: "3.12"
-      PYTHON_TEST_MATRIX: '["3.8", "3.9", "3.10", "3.11", "3.12"]'
+      PYTHON_TEST_MATRIX: '["3.9", "3.10", "3.11", "3.12"]'
       USE_PYLINT: true
       USE_RUFF: true
       BUILD_PACKAGE: true
