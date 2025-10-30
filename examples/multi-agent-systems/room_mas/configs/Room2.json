@@ -9,8 +9,8 @@
         "path": "models/SimpleRoom.fmu"
       },
       "t_sample_communication": 50,
-      "t_sample_simulation": 50,
-      "update_inputs_on_callback": false,
+      "t_sample_simulation": 15,
+      "update_inputs_on_callback": true,
       "save_results": true,
       "measurement_uncertainty": {
         "T_air": 0.0001

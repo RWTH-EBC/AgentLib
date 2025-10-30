@@ -120,6 +120,7 @@ class SimulatorConfig(BaseModuleConfig):
     t_sample_communication: Union[float, int] = Field(
         title="t_sample",
         default=1,
+        validate_default=True,
         ge=0,
         description="Sample time of a full simulation step relevant for communication, including:"
                     "1. if update_inputs_on_callback=False update model inputs,"
@@ -129,6 +130,7 @@ class SimulatorConfig(BaseModuleConfig):
     t_sample_simulation: Union[float, int] = Field(
         title="t_sample_simulation",
         default=1,
+        validate_default=True,
         ge=0,
         description="Sample time of the simulation itself. "
                     "If update_inputs_on_callback=True, the inputs of the models "
@@ -244,7 +246,7 @@ class SimulatorConfig(BaseModuleConfig):
         t_start = info.data.get("t_start")
         t_stop = info.data.get("t_stop")
         t_sample_old = info.data.get("t_sample")
-        if t_sample_old is not None:
+        if t_sample_old != 1:  # A change in the default shows t_sample is still in the config of the user
             t_sample = t_sample_old
         assert (
                 t_start + t_sample <= t_stop
@@ -257,7 +259,8 @@ class SimulatorConfig(BaseModuleConfig):
         """Check if t_sample is smaller than stop-start time"""
         warnings.warn(
             "t_sample is deprecated, use t_sample_communication, "
-            "t_sample_simulation for a concise separation of the two.",
+            "t_sample_simulation for a concise separation of the two."
+            "Will use the given t_sample for both t_sample_communication and t_sample_simulation.",
         )
         return t_sample
 

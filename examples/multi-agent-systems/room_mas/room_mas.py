@@ -120,4 +120,4 @@ def run_example(until, with_plots=True, log_level=logging.INFO, use_direct_callb
 
 
 if __name__ == "__main__":
-    run_example(until=86400 / 10, with_plots=True)
+    run_example(until=86400 / 10, with_plots=True, use_direct_callback_databroker=True)
