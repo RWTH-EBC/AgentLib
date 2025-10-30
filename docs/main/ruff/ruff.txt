@@ -18,6 +18,7 @@ agentlib/modules/communicator/clonemap.py:226:9: F841 Local variable `agent` is 
 agentlib/modules/controller/__init__.py:2:25: F401 [*] `.controller.Controller` imported but unused
 agentlib/modules/controller/__init__.py:2:37: F401 [*] `.controller.SISOController` imported but unused
 agentlib/modules/controller/__init__.py:2:53: F401 [*] `.controller.SISOControllerConfig` imported but unused
+agentlib/modules/utils/agent_logger.py:4:8: F401 [*] `collections` imported but unused
 agentlib/utils/__init__.py:14:37: F401 [*] `.local_broadcast_broker.LocalBroadcastBroker` imported but unused
 agentlib/utils/__init__.py:15:27: F401 [*] `.local_broker.LocalBroker` imported but unused
 agentlib/utils/__init__.py:16:38: F401 [*] `.multi_processing_broker.MultiProcessingBroker` imported but unused
@@ -26,5 +27,5 @@ examples/controller/pid_with_simulator.py:102:5: F841 Local variable `pid_agent`
 examples/getting-started/part_1_my_first_agent_concise.py:49:5: F841 Local variable `agent` is assigned to but never used
 examples/getting-started/part_1_my_first_agent_with_comments.py:84:5: F841 Local variable `agent` is assigned to but never used
 tests/test_n_pingpong.py:117:9: F841 Local variable `broker` is assigned to but never used
-Found 28 errors.
-[*] 17 fixable with the `--fix` option (6 hidden fixes can be enabled with the `--unsafe-fixes` option).
+Found 29 errors.
+[*] 18 fixable with the `--fix` option (6 hidden fixes can be enabled with the `--unsafe-fixes` option).
