@@ -800,7 +800,7 @@
             "column": 0,
             "path": "agentlib/modules/communicator/communicator.py",
             "symbol": "astroid-error",
-            "message": "agentlib/modules/communicator/communicator.py: Fatal error while checking 'agentlib/modules/communicator/communicator.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-10-58-16.txt'.",
+            "message": "agentlib/modules/communicator/communicator.py: Fatal error while checking 'agentlib/modules/communicator/communicator.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-13-03-20.txt'.",
             "message-id": "F0002"
         },
         {
@@ -811,7 +811,7 @@
             "column": 0,
             "path": "agentlib/modules/simulation/simulator.py",
             "symbol": "astroid-error",
-            "message": "agentlib/modules/simulation/simulator.py: Fatal error while checking 'agentlib/modules/simulation/simulator.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-10-58-16.txt'.",
+            "message": "agentlib/modules/simulation/simulator.py: Fatal error while checking 'agentlib/modules/simulation/simulator.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-13-03-21.txt'.",
             "message-id": "F0002"
         },
         {
@@ -1317,7 +1317,7 @@
             "column": 0,
             "path": "examples/getting-started/part_4_communicators_with_comments.py",
             "symbol": "astroid-error",
-            "message": "examples/getting-started/part_4_communicators_with_comments.py: Fatal error while checking 'examples/getting-started/part_4_communicators_with_comments.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-10-58-16.txt'.",
+            "message": "examples/getting-started/part_4_communicators_with_comments.py: Fatal error while checking 'examples/getting-started/part_4_communicators_with_comments.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-13-03-21.txt'.",
             "message-id": "F0002"
         },
         {
@@ -1339,7 +1339,7 @@
             "column": 0,
             "path": "examples/getting-started/part_3_using_models_with_comments.py",
             "symbol": "astroid-error",
-            "message": "examples/getting-started/part_3_using_models_with_comments.py: Fatal error while checking 'examples/getting-started/part_3_using_models_with_comments.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-10-58-17.txt'.",
+            "message": "examples/getting-started/part_3_using_models_with_comments.py: Fatal error while checking 'examples/getting-started/part_3_using_models_with_comments.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-13-03-21.txt'.",
             "message-id": "F0002"
         },
         {
@@ -1471,7 +1471,7 @@
             "column": 0,
             "path": "examples/getting-started/part_3_using_models_concise.py",
             "symbol": "astroid-error",
-            "message": "examples/getting-started/part_3_using_models_concise.py: Fatal error while checking 'examples/getting-started/part_3_using_models_concise.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-10-58-17.txt'.",
+            "message": "examples/getting-started/part_3_using_models_concise.py: Fatal error while checking 'examples/getting-started/part_3_using_models_concise.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-13-03-22.txt'.",
             "message-id": "F0002"
         },
         {
@@ -1762,7 +1762,7 @@
         },
         {
             "type": "convention",
-            "module": "examples.plugin.main",
+            "module": "main",
             "obj": "main",
             "line": 24,
             "column": 0,
@@ -1773,7 +1773,7 @@
         },
         {
             "type": "convention",
-            "module": "examples.plugin.my_plugin.new_module",
+            "module": "my_plugin.new_module",
             "obj": "",
             "line": 1,
             "column": 0,
@@ -1784,7 +1784,7 @@
         },
         {
             "type": "error",
-            "module": "examples.plugin.my_plugin.new_module",
+            "module": "my_plugin.new_module",
             "obj": "",
             "line": 1,
             "column": 0,
@@ -1795,7 +1795,7 @@
         },
         {
             "type": "convention",
-            "module": "examples.plugin.my_plugin.new_module",
+            "module": "my_plugin.new_module",
             "obj": "NewModuleConf",
             "line": 6,
             "column": 0,
@@ -1806,7 +1806,7 @@
         },
         {
             "type": "convention",
-            "module": "examples.plugin.my_plugin.new_module",
+            "module": "my_plugin.new_module",
             "obj": "NewModule",
             "line": 10,
             "column": 0,
@@ -1817,7 +1817,7 @@
         },
         {
             "type": "convention",
-            "module": "examples.plugin.my_plugin.another_new_module",
+            "module": "my_plugin.another_new_module",
             "obj": "",
             "line": 1,
             "column": 0,
@@ -1828,7 +1828,7 @@
         },
         {
             "type": "error",
-            "module": "examples.plugin.my_plugin.another_new_module",
+            "module": "my_plugin.another_new_module",
             "obj": "",
             "line": 1,
             "column": 0,
@@ -1839,7 +1839,7 @@
         },
         {
             "type": "convention",
-            "module": "examples.plugin.my_plugin.another_new_module",
+            "module": "my_plugin.another_new_module",
             "obj": "NewModuleConf2",
             "line": 6,
             "column": 0,
@@ -1850,7 +1850,7 @@
         },
         {
             "type": "convention",
-            "module": "examples.plugin.my_plugin.another_new_module",
+            "module": "my_plugin.another_new_module",
             "obj": "NewModule2",
             "line": 10,
             "column": 0,
@@ -1889,7 +1889,7 @@
             "column": 0,
             "path": "examples/controller/bangbang_with_simulator.py",
             "symbol": "astroid-error",
-            "message": "examples/controller/bangbang_with_simulator.py: Fatal error while checking 'examples/controller/bangbang_with_simulator.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-10-58-17.txt'.",
+            "message": "examples/controller/bangbang_with_simulator.py: Fatal error while checking 'examples/controller/bangbang_with_simulator.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-13-03-22.txt'.",
             "message-id": "F0002"
         },
         {
@@ -1911,12 +1911,12 @@
             "column": 0,
             "path": "examples/controller/pid_with_simulator.py",
             "symbol": "astroid-error",
-            "message": "examples/controller/pid_with_simulator.py: Fatal error while checking 'examples/controller/pid_with_simulator.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-10-58-17.txt'.",
+            "message": "examples/controller/pid_with_simulator.py: Fatal error while checking 'examples/controller/pid_with_simulator.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-13-03-22.txt'.",
             "message-id": "F0002"
         },
         {
             "type": "convention",
-            "module": "tools",
+            "module": "manual_labor.tools",
             "obj": "",
             "line": 1,
             "column": 0,
@@ -1927,7 +1927,7 @@
         },
         {
             "type": "error",
-            "module": "tools",
+            "module": "manual_labor.tools",
             "obj": "",
             "line": 1,
             "column": 0,
@@ -1938,7 +1938,7 @@
         },
         {
             "type": "convention",
-            "module": "tools",
+            "module": "manual_labor.tools",
             "obj": "make_table_for_agent_variable",
             "line": 5,
             "column": 0,
@@ -1949,7 +1949,7 @@
         },
         {
             "type": "warning",
-            "module": "tools",
+            "module": "manual_labor.tools",
             "obj": "make_table_for_agent_variable",
             "line": 12,
             "column": 9,
@@ -1960,7 +1960,7 @@
         },
         {
             "type": "convention",
-            "module": "tools",
+            "module": "manual_labor.tools",
             "obj": "make_table_for_agent_variable",
             "line": 12,
             "column": 43,
@@ -2538,7 +2538,7 @@
             "column": 0,
             "path": "tests/test_communicator.py",
             "symbol": "astroid-error",
-            "message": "tests/test_communicator.py: Fatal error while checking 'tests/test_communicator.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-10-58-18.txt'.",
+            "message": "tests/test_communicator.py: Fatal error while checking 'tests/test_communicator.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-13-03-23.txt'.",
             "message-id": "F0002"
         },
         {
@@ -2945,7 +2945,7 @@
             "column": 0,
             "path": "tests/test_module.py",
             "symbol": "astroid-error",
-            "message": "tests/test_module.py: Fatal error while checking 'tests/test_module.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-10-58-18.txt'.",
+            "message": "tests/test_module.py: Fatal error while checking 'tests/test_module.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-13-03-23.txt'.",
             "message-id": "F0002"
         },
         {
@@ -3616,7 +3616,7 @@
             "column": 0,
             "path": "tests/test_model.py",
             "symbol": "astroid-error",
-            "message": "tests/test_model.py: Fatal error while checking 'tests/test_model.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-10-58-19.txt'.",
+            "message": "tests/test_model.py: Fatal error while checking 'tests/test_model.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-13-03-24.txt'.",
             "message-id": "F0002"
         },
         {
@@ -4210,7 +4210,7 @@
             "column": 0,
             "path": "agentlib/models/scipy_model.py",
             "symbol": "astroid-error",
-            "message": "agentlib/models/scipy_model.py: Fatal error while checking 'agentlib/models/scipy_model.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-10-58-19.txt'.",
+            "message": "agentlib/models/scipy_model.py: Fatal error while checking 'agentlib/models/scipy_model.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-13-03-24.txt'.",
             "message-id": "F0002"
         },
         {
@@ -4221,7 +4221,7 @@
             "column": 0,
             "path": "agentlib/models/fmu_model.py",
             "symbol": "astroid-error",
-            "message": "agentlib/models/fmu_model.py: Fatal error while checking 'agentlib/models/fmu_model.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-10-58-20.txt'.",
+            "message": "agentlib/models/fmu_model.py: Fatal error while checking 'agentlib/models/fmu_model.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-13-03-25.txt'.",
             "message-id": "F0002"
         },
         {
@@ -4287,7 +4287,7 @@
             "column": 0,
             "path": "agentlib/utils/load_config.py",
             "symbol": "astroid-error",
-            "message": "agentlib/utils/load_config.py: Fatal error while checking 'agentlib/utils/load_config.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-10-58-20.txt'.",
+            "message": "agentlib/utils/load_config.py: Fatal error while checking 'agentlib/utils/load_config.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-13-03-25.txt'.",
             "message-id": "F0002"
         },
         {
@@ -4298,7 +4298,7 @@
             "column": 0,
             "path": "agentlib/utils/local_broadcast_broker.py",
             "symbol": "astroid-error",
-            "message": "agentlib/utils/local_broadcast_broker.py: Fatal error while checking 'agentlib/utils/local_broadcast_broker.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-10-58-20.txt'.",
+            "message": "agentlib/utils/local_broadcast_broker.py: Fatal error while checking 'agentlib/utils/local_broadcast_broker.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-13-03-25.txt'.",
             "message-id": "F0002"
         },
         {
@@ -4309,7 +4309,7 @@
             "column": 0,
             "path": "agentlib/utils/validators.py",
             "symbol": "astroid-error",
-            "message": "agentlib/utils/validators.py: Fatal error while checking 'agentlib/utils/validators.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-10-58-20.txt'.",
+            "message": "agentlib/utils/validators.py: Fatal error while checking 'agentlib/utils/validators.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-13-03-25.txt'.",
             "message-id": "F0002"
         },
         {
@@ -4320,7 +4320,7 @@
             "column": 0,
             "path": "agentlib/utils/local_broker.py",
             "symbol": "astroid-error",
-            "message": "agentlib/utils/local_broker.py: Fatal error while checking 'agentlib/utils/local_broker.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-10-58-20.txt'.",
+            "message": "agentlib/utils/local_broker.py: Fatal error while checking 'agentlib/utils/local_broker.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-13-03-25.txt'.",
             "message-id": "F0002"
         },
         {
@@ -4342,7 +4342,7 @@
             "column": 0,
             "path": "agentlib/utils/fuzzy_matching.py",
             "symbol": "astroid-error",
-            "message": "agentlib/utils/fuzzy_matching.py: Fatal error while checking 'agentlib/utils/fuzzy_matching.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-10-58-20.txt'.",
+            "message": "agentlib/utils/fuzzy_matching.py: Fatal error while checking 'agentlib/utils/fuzzy_matching.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-13-03-25.txt'.",
             "message-id": "F0002"
         },
         {
@@ -4353,7 +4353,7 @@
             "column": 0,
             "path": "agentlib/utils/multi_processing_broker.py",
             "symbol": "astroid-error",
-            "message": "agentlib/utils/multi_processing_broker.py: Fatal error while checking 'agentlib/utils/multi_processing_broker.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-10-58-20.txt'.",
+            "message": "agentlib/utils/multi_processing_broker.py: Fatal error while checking 'agentlib/utils/multi_processing_broker.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-13-03-25.txt'.",
             "message-id": "F0002"
         },
         {
@@ -4408,7 +4408,7 @@
             "column": 0,
             "path": "agentlib/utils/multi_agent_system.py",
             "symbol": "astroid-error",
-            "message": "agentlib/utils/multi_agent_system.py: Fatal error while checking 'agentlib/utils/multi_agent_system.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-10-58-21.txt'.",
+            "message": "agentlib/utils/multi_agent_system.py: Fatal error while checking 'agentlib/utils/multi_agent_system.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-13-03-26.txt'.",
             "message-id": "F0002"
         },
         {
@@ -4430,7 +4430,7 @@
             "column": 0,
             "path": "agentlib/utils/plotting/simulator_dashboard.py",
             "symbol": "astroid-error",
-            "message": "agentlib/utils/plotting/simulator_dashboard.py: Fatal error while checking 'agentlib/utils/plotting/simulator_dashboard.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-10-58-21.txt'.",
+            "message": "agentlib/utils/plotting/simulator_dashboard.py: Fatal error while checking 'agentlib/utils/plotting/simulator_dashboard.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-13-03-26.txt'.",
             "message-id": "F0002"
         },
         {
@@ -4452,7 +4452,7 @@
             "column": 0,
             "path": "agentlib/core/data_broker.py",
             "symbol": "astroid-error",
-            "message": "agentlib/core/data_broker.py: Fatal error while checking 'agentlib/core/data_broker.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-10-58-22.txt'.",
+            "message": "agentlib/core/data_broker.py: Fatal error while checking 'agentlib/core/data_broker.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-13-03-27.txt'.",
             "message-id": "F0002"
         },
         {
@@ -4463,7 +4463,7 @@
             "column": 0,
             "path": "agentlib/core/agent.py",
             "symbol": "astroid-error",
-            "message": "agentlib/core/agent.py: Fatal error while checking 'agentlib/core/agent.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-10-58-22.txt'.",
+            "message": "agentlib/core/agent.py: Fatal error while checking 'agentlib/core/agent.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-13-03-27.txt'.",
             "message-id": "F0002"
         },
         {
@@ -4474,7 +4474,7 @@
             "column": 0,
             "path": "agentlib/core/module.py",
             "symbol": "astroid-error",
-            "message": "agentlib/core/module.py: Fatal error while checking 'agentlib/core/module.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-10-58-22.txt'.",
+            "message": "agentlib/core/module.py: Fatal error while checking 'agentlib/core/module.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-13-03-27.txt'.",
             "message-id": "F0002"
         },
         {
@@ -4496,7 +4496,7 @@
             "column": 0,
             "path": "agentlib/core/logging_.py",
             "symbol": "astroid-error",
-            "message": "agentlib/core/logging_.py: Fatal error while checking 'agentlib/core/logging_.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-10-58-22.txt'.",
+            "message": "agentlib/core/logging_.py: Fatal error while checking 'agentlib/core/logging_.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-13-03-27.txt'.",
             "message-id": "F0002"
         },
         {
@@ -4507,7 +4507,7 @@
             "column": 0,
             "path": "agentlib/core/environment.py",
             "symbol": "astroid-error",
-            "message": "agentlib/core/environment.py: Fatal error while checking 'agentlib/core/environment.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-10-58-22.txt'.",
+            "message": "agentlib/core/environment.py: Fatal error while checking 'agentlib/core/environment.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-13-03-27.txt'.",
             "message-id": "F0002"
         },
         {
@@ -4518,7 +4518,7 @@
             "column": 0,
             "path": "agentlib/core/datamodels.py",
             "symbol": "astroid-error",
-            "message": "agentlib/core/datamodels.py: Fatal error while checking 'agentlib/core/datamodels.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-10-58-22.txt'.",
+            "message": "agentlib/core/datamodels.py: Fatal error while checking 'agentlib/core/datamodels.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-13-03-27.txt'.",
             "message-id": "F0002"
         },
         {
@@ -4551,7 +4551,7 @@
             "column": 0,
             "path": "agentlib/core/model.py",
             "symbol": "astroid-error",
-            "message": "agentlib/core/model.py: Fatal error while checking 'agentlib/core/model.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-10-58-23.txt'.",
+            "message": "agentlib/core/model.py: Fatal error while checking 'agentlib/core/model.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-13-03-28.txt'.",
             "message-id": "F0002"
         },
         {
@@ -4738,7 +4738,7 @@
             "column": 0,
             "path": "agentlib/modules/__init__.py",
             "symbol": "astroid-error",
-            "message": "agentlib/modules/__init__.py: Fatal error while checking 'agentlib/modules/__init__.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-10-58-23.txt'.",
+            "message": "agentlib/modules/__init__.py: Fatal error while checking 'agentlib/modules/__init__.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-13-03-28.txt'.",
             "message-id": "F0002"
         },
         {
@@ -4749,7 +4749,7 @@
             "column": 0,
             "path": "agentlib/modules/utils/try_sensor.py",
             "symbol": "astroid-error",
-            "message": "agentlib/modules/utils/try_sensor.py: Fatal error while checking 'agentlib/modules/utils/try_sensor.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-10-58-23.txt'.",
+            "message": "agentlib/modules/utils/try_sensor.py: Fatal error while checking 'agentlib/modules/utils/try_sensor.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-13-03-28.txt'.",
             "message-id": "F0002"
         },
         {
@@ -4793,7 +4793,7 @@
             "column": 0,
             "path": "agentlib/modules/utils/agent_logger.py",
             "symbol": "astroid-error",
-            "message": "agentlib/modules/utils/agent_logger.py: Fatal error while checking 'agentlib/modules/utils/agent_logger.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-10-58-23.txt'.",
+            "message": "agentlib/modules/utils/agent_logger.py: Fatal error while checking 'agentlib/modules/utils/agent_logger.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-13-03-29.txt'.",
             "message-id": "F0002"
         },
         {
@@ -4848,7 +4848,7 @@
             "column": 0,
             "path": "agentlib/modules/communicator/clonemap.py",
             "symbol": "astroid-error",
-            "message": "agentlib/modules/communicator/clonemap.py: Fatal error while checking 'agentlib/modules/communicator/clonemap.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-10-58-24.txt'.",
+            "message": "agentlib/modules/communicator/clonemap.py: Fatal error while checking 'agentlib/modules/communicator/clonemap.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-13-03-29.txt'.",
             "message-id": "F0002"
         },
         {
@@ -4947,7 +4947,7 @@
             "column": 0,
             "path": "agentlib/modules/communicator/mqtt.py",
             "symbol": "astroid-error",
-            "message": "agentlib/modules/communicator/mqtt.py: Fatal error while checking 'agentlib/modules/communicator/mqtt.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-10-58-24.txt'.",
+            "message": "agentlib/modules/communicator/mqtt.py: Fatal error while checking 'agentlib/modules/communicator/mqtt.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-13-03-29.txt'.",
             "message-id": "F0002"
         },
         {
@@ -4980,7 +4980,7 @@
             "column": 0,
             "path": "agentlib/modules/simulation/csv_data_source.py",
             "symbol": "astroid-error",
-            "message": "agentlib/modules/simulation/csv_data_source.py: Fatal error while checking 'agentlib/modules/simulation/csv_data_source.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-10-58-24.txt'.",
+            "message": "agentlib/modules/simulation/csv_data_source.py: Fatal error while checking 'agentlib/modules/simulation/csv_data_source.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-13-03-29.txt'.",
             "message-id": "F0002"
         },
         {
@@ -5035,7 +5035,7 @@
             "column": 0,
             "path": "agentlib/modules/controller/controller.py",
             "symbol": "astroid-error",
-            "message": "agentlib/modules/controller/controller.py: Fatal error while checking 'agentlib/modules/controller/controller.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-10-58-24.txt'.",
+            "message": "agentlib/modules/controller/controller.py: Fatal error while checking 'agentlib/modules/controller/controller.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-13-03-29.txt'.",
             "message-id": "F0002"
         },
         {
@@ -5068,7 +5068,7 @@
             "column": 0,
             "path": "agentlib/modules/controller/pid.py",
             "symbol": "astroid-error",
-            "message": "agentlib/modules/controller/pid.py: Fatal error while checking 'agentlib/modules/controller/pid.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-10-58-24.txt'.",
+            "message": "agentlib/modules/controller/pid.py: Fatal error while checking 'agentlib/modules/controller/pid.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-30-13-03-30.txt'.",
             "message-id": "F0002"
         },
         {
@@ -5090,7 +5090,7 @@
             "column": 0,
             "path": "agentlib/modules/controller/pid.py",
             "symbol": "duplicate-code",
-            "message": "Similar lines in 2 files\n==part_3_using_models_concise:[9:57]\n==part_3_using_models_with_comments:[27:97]\nimport logging\nfrom typing import List\n\nimport agentlib as ag\n\n\nclass HeatedRoomConfig(ag.ModelConfig):\n    inputs: List[ag.ModelInput] = [\n        ag.ModelInput(name=\"heating_power_in_watt\", value=100)\n    ]\n    states: List[ag.ModelState] = [\n        ag.ModelState(name=\"temperature_in_celsius\", value=20)\n    ]\n    parameters: List[ag.ModelParameter] = [\n        ag.ModelParameter(name=\"heat_loss_in_watt\", value=150),\n        ag.ModelParameter(name=\"thermal_capacity_zone\", value=100_000),\n    ]\n    outputs: List[ag.ModelOutput] = []\n\n\nclass HeatedRoom(ag.Model):\n    config: HeatedRoomConfig\n\n    def initialize(self, **kwargs):\n        pass\n\n    def do_step(self, *, t_start, t_sample):\n        t = self.get(\"temperature_in_celsius\").value  # get/set also works in models\n        power = self.get(\"heating_power_in_watt\").value\n        loss = self.get(\"heat_loss_in_watt\").value\n        capacity = self.get(\"thermal_capacity_zone\").value\n        t = t + ((power - loss) / capacity) * t_sample\n        self.set(\"temperature_in_celsius\", t)\n\n\nagent_config = {\n    \"id\": \"my_agent_id\",\n    \"modules\": [\n        {\n            \"module_id\": \"sim\",\n            \"type\": \"simulator\",\n            \"model\": {\n                \"type\": {\"file\": __file__, \"class_name\": \"HeatedRoom\"},\n            },\n            \"t_sample\": 10,\n            \"save_results\": True,\n            \"result_filename\": \"results_part3.csv\",\n            \"result_causalities\": [\"local\"],",
+            "message": "Similar lines in 2 files\n==part_3_using_models_concise:[9:57]\n==part_3_using_models_with_comments:[27:97]\nimport logging\nfrom typing import List\n\nimport agentlib as ag\n\n\n# define the inputs, outputs, states and parameters of your model\nclass HeatedRoomConfig(ag.ModelConfig):\n    inputs: List[ag.ModelInput] = [\n        ag.ModelInput(name=\"heating_power_in_watt\", value=100)\n    ]\n    states: List[ag.ModelState] = [\n        ag.ModelState(name=\"temperature_in_celsius\", value=20)\n    ]\n    parameters: List[ag.ModelParameter] = [\n        ag.ModelParameter(name=\"heat_loss_in_watt\", value=150),\n        ag.ModelParameter(name=\"thermal_capacity_zone\", value=100_000),\n    ]\n    outputs: List[ag.ModelOutput] = []\n\n\nclass HeatedRoom(ag.Model):\n    config: HeatedRoomConfig  # match the config to the model\n\n    def initialize(self, **kwargs):\n        pass\n\n    # define a discrete simulation step\n    def do_step(self, *, t_start, t_sample):\n        t = self.get(\"temperature_in_celsius\").value  # get/set also works in models\n        power = self.get(\"heating_power_in_watt\").value\n        loss = self.get(\"heat_loss_in_watt\").value\n        capacity = self.get(\"thermal_capacity_zone\").value\n        t = t + ((power - loss) / capacity) * t_sample\n        self.set(\"temperature_in_celsius\", t)\n\n\nagent_config = {\n    \"id\": \"my_agent_id\",\n    \"modules\": [\n        {\n            \"module_id\": \"sim\",\n            \"type\": \"simulator\",  # specify the simulator module\n            \"model\": {\n                # under type, we include a custom injection to our defined model\n                # other options for type are:\n                # \"fmu\" (see examples/multi-agent-systems/room_mas/configs/Room1.json)\n                # or \"statespace\"\n                \"type\": {\"file\": __file__, \"class_name\": \"HeatedRoom\"},\n            },\n            # specify the interval, in which outputs are written, and inputs are updated\n            \"t_sample\": 10,\n            # the simulator can save its own results if desired, there is no need for an AgentLogger\n            \"save_results\": True,\n            # results are stored in RAM if not specified\n            \"result_filename\": \"results_part3.csv\",\n            # define, which variable groups we want to store in the results. Note that\n            # here, we wrote locals, which maps to the states. This is a special case,\n            # where we used states instead of locals in some places, to avoid shadowing\n            # the Python builtin locals. By default, we store inputs and outputs. The\n            # locals (i.e. states) are not stored by default, as they are often of\n            # extremely high number in FMU models. Therefore, we have to activate them\n            # manually here.\n            \"result_causalities\": [\"local\"],\n            # the inputs and states fields of the simulator are lists of AgentVariables\n            # There are also the fields outputs and parameters. We do not have to\n            # specify all the variables that are given in the model config. However,\n            # only variables that we specify here, can be have their values changed\n            # from the default in the model, and only outputs defined here can be\n            # sent to other agents.",
             "message-id": "R0801"
         },
         {
@@ -5156,7 +5156,7 @@
             "column": 0,
             "path": "agentlib/modules/controller/pid.py",
             "symbol": "duplicate-code",
-            "message": "Similar lines in 2 files\n==part_2_agentvariables_concise:[46:74]\n==part_2_agentvariables_with_comments:[85:120]\n    ],\n}\n\n\ndef main(with_plots: bool = True):\n    logging.basicConfig(level=logging.INFO)\n\n    environment_config = {\"rt\": False, \"factor\": 1, \"clock\": False}\n    env = ag.Environment(config=environment_config)\n    agent = ag.Agent(config=agent_config, env=env)\n    env.run(10)\n\n    if with_plots:\n        import matplotlib.pyplot as plt\n        import pandas as pd\n\n        results = agent.get_results()\n\n        # key here is the module_id of the agentlogger\n        logger_results: pd.DataFrame = results[\"my_logger\"]\n\n        # key is name of the variable (it's actually the alias, more on this later!)\n        logger_results[\"greg\"].plot()\n        plt.show()\n\n\nif __name__ == \"__main__\":\n    main()\n\n    # play around with this example!\n    # 1. Change the name of the AgentVariable\n    # 2. Change the increment\n\n    # Why do we use an AgentVariable? The Module is a normal Python class after all,\n    # can I not just assign a normal instance variable, like so?",
+            "message": "Similar lines in 2 files\n==part_2_agentvariables_concise:[46:74]\n==part_2_agentvariables_with_comments:[85:120]\n    ],\n}\n\n\ndef main(with_plots: bool = True):\n    logging.basicConfig(level=logging.INFO)\n\n    environment_config = {\"rt\": False, \"factor\": 1, \"clock\": False}\n    env = ag.Environment(config=environment_config)\n    agent = ag.Agent(config=agent_config, env=env)\n    env.run(10)\n\n    if with_plots:\n        import matplotlib.pyplot as plt\n        import pandas as pd\n\n        results = agent.get_results()\n\n        # key here is the module_id of the agentlogger\n        logger_results: pd.DataFrame = results[\"my_logger\"]\n\n        # key is name of the variable (it's actually the alias, more on this later!)\n        logger_results[\"greg\"].plot()\n        plt.show()\n\n\nif __name__ == \"__main__\":\n    main()",
             "message-id": "R0801"
         },
         {
@@ -5255,7 +5255,7 @@
             "column": 0,
             "path": "agentlib/modules/controller/pid.py",
             "symbol": "duplicate-code",
-            "message": "Similar lines in 2 files\n==bangbang_with_simulator:[19:34]\n==part_4_communicators_with_comments:[31:48]\nclass HeatedRoom(ag.Model):\n    config: HeatedRoomConfig\n\n    def initialize(self, **kwargs):\n        pass\n\n    def do_step(self, *, t_start, t_sample):\n        t = self.get(\"temperature_in_celsius\").value  # get/set also works in models\n        power = self.get(\"heating_power_in_watt\").value\n        loss = self.get(\"heat_loss_in_watt\").value\n        capacity = self.get(\"thermal_capacity_zone\").value\n        t = t + ((power - loss) / capacity) * t_sample\n        self.set(\"temperature_in_celsius\", t)\n\n\n# here, we have a similar configuration as last time, however, there are differences in\n# the variable declarations",
+            "message": "Similar lines in 2 files\n==bangbang_with_simulator:[19:34]\n==part_4_communicators_with_comments:[31:48]\nclass HeatedRoom(ag.Model):\n    config: HeatedRoomConfig\n\n    def initialize(self, **kwargs):\n        pass\n\n    def do_step(self, *, t_start, t_sample):\n        t = self.get(\"temperature_in_celsius\").value\n        power = self.get(\"heating_power_in_watt\").value\n        loss = self.get(\"heat_loss_in_watt\").value\n        capacity = self.get(\"thermal_capacity_zone\").value\n        t = t + ((power - loss) / capacity) * t_sample\n        self.set(\"temperature_in_celsius\", t)\n\n",
             "message-id": "R0801"
         },
         {
@@ -5310,7 +5310,7 @@
             "column": 0,
             "path": "agentlib/modules/controller/pid.py",
             "symbol": "duplicate-code",
-            "message": "Similar lines in 2 files\n==bangbang_with_simulator:[56:62]\n==part_4_communicators_with_comments:[48:54]\nprocess_agent_config = {\n    \"id\": \"Process\",\n    \"modules\": [\n        {\n            \"module_id\": \"sim\",\n            \"type\": \"simulator\",",
+            "message": "Similar lines in 2 files\n==bangbang_with_simulator:[56:62]\n==part_4_communicators_with_comments:[48:54]\nprocess_agent_config = {\n    \"id\": \"Process\",  # the ID is now Process\n    \"modules\": [\n        {\n            \"module_id\": \"sim\",\n            \"type\": \"simulator\",",
             "message-id": "R0801"
         },
         {
@@ -5559,1046 +5559,6 @@
                 "statement": 48,
                 "warning": 1
             },
-            "examples.plugin.main": {
-                "convention": 1,
-                "error": 0,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 0,
-                "statement": 7,
-                "warning": 0
-            },
-            "examples.plugin.my_plugin.new_module": {
-                "convention": 3,
-                "error": 1,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 0,
-                "statement": 12,
-                "warning": 0
-            },
-            "examples.plugin.my_plugin.another_new_module": {
-                "convention": 3,
-                "error": 1,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 0,
-                "statement": 12,
-                "warning": 0
-            },
-            "examples.plugin.my_plugin.__init__": {
-                "convention": 0,
-                "error": 0,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 0,
-                "statement": 4,
-                "warning": 0
-            },
-            "bangbang_with_simulator": {
-                "convention": 1,
-                "error": 0,
-                "fatal": 1,
-                "info": 0,
-                "refactor": 0,
-                "statement": 0,
-                "warning": 1
-            },
-            "pid_with_simulator": {
-                "convention": 0,
-                "error": 0,
-                "fatal": 1,
-                "info": 0,
-                "refactor": 0,
-                "statement": 0,
-                "warning": 1
-            },
-            "docs.source.conf": {
-                "convention": 0,
-                "error": 0,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 0,
-                "statement": 0,
-                "warning": 0
-            },
-            "tools": {
-                "convention": 3,
-                "error": 1,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 0,
-                "statement": 14,
-                "warning": 1
-            },
-            "tests.test_n_pingpong": {
-                "convention": 7,
-                "error": 2,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 0,
-                "statement": 110,
-                "warning": 1
-            },
-            "tests.test_agentlogger": {
-                "convention": 3,
-                "error": 2,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 0,
-                "statement": 83,
-                "warning": 12
-            },
-            "tests.test_data_source": {
-                "convention": 13,
-                "error": 2,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 1,
-                "statement": 93,
-                "warning": 2
-            },
-            "tests.test_communicator": {
-                "convention": 5,
-                "error": 1,
-                "fatal": 1,
-                "info": 0,
-                "refactor": 0,
-                "statement": 0,
-                "warning": 0
-            },
-            "tests.test_simulator": {
-                "convention": 26,
-                "error": 3,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 0,
-                "statement": 92,
-                "warning": 3
-            },
-            "tests.test_plugins": {
-                "convention": 4,
-                "error": 0,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 0,
-                "statement": 10,
-                "warning": 0
-            },
-            "tests.test_module": {
-                "convention": 0,
-                "error": 0,
-                "fatal": 1,
-                "info": 0,
-                "refactor": 0,
-                "statement": 0,
-                "warning": 0
-            },
-            "tests.test_data_broker": {
-                "convention": 12,
-                "error": 1,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 0,
-                "statement": 116,
-                "warning": 17
-            },
-            "tests.test_simulator_dashboard": {
-                "convention": 6,
-                "error": 2,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 0,
-                "statement": 47,
-                "warning": 0
-            },
-            "tests.test_mas": {
-                "convention": 3,
-                "error": 0,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 0,
-                "statement": 10,
-                "warning": 0
-            },
-            "tests.test_examples": {
-                "convention": 2,
-                "error": 1,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 0,
-                "statement": 60,
-                "warning": 1
-            },
-            "tests.test_databroker_limits": {
-                "convention": 11,
-                "error": 0,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 0,
-                "statement": 65,
-                "warning": 1
-            },
-            "tests.test_model": {
-                "convention": 1,
-                "error": 2,
-                "fatal": 1,
-                "info": 0,
-                "refactor": 0,
-                "statement": 0,
-                "warning": 0
-            },
-            "tests.__init__": {
-                "convention": 0,
-                "error": 0,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 0,
-                "statement": 0,
-                "warning": 0
-            },
-            "tests.test_utils": {
-                "convention": 3,
-                "error": 0,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 0,
-                "statement": 59,
-                "warning": 1
-            },
-            "tests.test_datamodels": {
-                "convention": 4,
-                "error": 2,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 10,
-                "statement": 151,
-                "warning": 0
-            },
-            "tests.test_agent": {
-                "convention": 14,
-                "error": 1,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 1,
-                "statement": 142,
-                "warning": 7
-            },
-            "tests.test_environment": {
-                "convention": 0,
-                "error": 6,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 0,
-                "statement": 42,
-                "warning": 3
-            },
-            "agentlib.__init__": {
-                "convention": 0,
-                "error": 0,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 0,
-                "statement": 6,
-                "warning": 0
-            },
-            "agentlib.models.scipy_model": {
-                "convention": 0,
-                "error": 0,
-                "fatal": 1,
-                "info": 0,
-                "refactor": 1,
-                "statement": 0,
-                "warning": 0
-            },
-            "agentlib.models.fmu_model": {
-                "convention": 0,
-                "error": 0,
-                "fatal": 1,
-                "info": 0,
-                "refactor": 0,
-                "statement": 0,
-                "warning": 0
-            },
-            "agentlib.models.__init__": {
-                "convention": 1,
-                "error": 0,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 0,
-                "statement": 15,
-                "warning": 0
-            },
-            "agentlib.utils.plugin_import": {
-                "convention": 0,
-                "error": 1,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 0,
-                "statement": 30,
-                "warning": 2
-            },
-            "agentlib.utils.load_config": {
-                "convention": 1,
-                "error": 0,
-                "fatal": 1,
-                "info": 0,
-                "refactor": 0,
-                "statement": 0,
-                "warning": 0
-            },
-            "agentlib.utils.local_broadcast_broker": {
-                "convention": 0,
-                "error": 0,
-                "fatal": 1,
-                "info": 0,
-                "refactor": 0,
-                "statement": 0,
-                "warning": 0
-            },
-            "agentlib.utils.validators": {
-                "convention": 0,
-                "error": 0,
-                "fatal": 1,
-                "info": 0,
-                "refactor": 0,
-                "statement": 0,
-                "warning": 0
-            },
-            "agentlib.utils.local_broker": {
-                "convention": 0,
-                "error": 0,
-                "fatal": 1,
-                "info": 0,
-                "refactor": 0,
-                "statement": 0,
-                "warning": 0
-            },
-            "agentlib.utils.fuzzy_matching": {
-                "convention": 1,
-                "error": 0,
-                "fatal": 1,
-                "info": 0,
-                "refactor": 0,
-                "statement": 0,
-                "warning": 0
-            },
-            "agentlib.utils.multi_processing_broker": {
-                "convention": 0,
-                "error": 0,
-                "fatal": 1,
-                "info": 0,
-                "refactor": 0,
-                "statement": 0,
-                "warning": 0
-            },
-            "agentlib.utils.__init__": {
-                "convention": 2,
-                "error": 0,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 0,
-                "statement": 32,
-                "warning": 1
-            },
-            "agentlib.utils.broker": {
-                "convention": 0,
-                "error": 0,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 0,
-                "statement": 29,
-                "warning": 0
-            },
-            "agentlib.utils.multi_agent_system": {
-                "convention": 1,
-                "error": 0,
-                "fatal": 1,
-                "info": 0,
-                "refactor": 0,
-                "statement": 0,
-                "warning": 0
-            },
-            "agentlib.utils.plotting.simulator_dashboard": {
-                "convention": 1,
-                "error": 0,
-                "fatal": 1,
-                "info": 0,
-                "refactor": 0,
-                "statement": 0,
-                "warning": 0
-            },
-            "agentlib.utils.plotting.__init__": {
-                "convention": 1,
-                "error": 0,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 0,
-                "statement": 0,
-                "warning": 0
-            },
-            "agentlib.core.data_broker": {
-                "convention": 0,
-                "error": 0,
-                "fatal": 1,
-                "info": 0,
-                "refactor": 0,
-                "statement": 0,
-                "warning": 0
-            },
-            "agentlib.core.agent": {
-                "convention": 0,
-                "error": 0,
-                "fatal": 1,
-                "info": 0,
-                "refactor": 0,
-                "statement": 0,
-                "warning": 0
-            },
-            "agentlib.core.module": {
-                "convention": 0,
-                "error": 0,
-                "fatal": 1,
-                "info": 0,
-                "refactor": 0,
-                "statement": 0,
-                "warning": 0
-            },
-            "agentlib.core.logging_": {
-                "convention": 1,
-                "error": 0,
-                "fatal": 1,
-                "info": 0,
-                "refactor": 0,
-                "statement": 0,
-                "warning": 0
-            },
-            "agentlib.core.environment": {
-                "convention": 0,
-                "error": 0,
-                "fatal": 1,
-                "info": 0,
-                "refactor": 0,
-                "statement": 0,
-                "warning": 0
-            },
-            "agentlib.core.datamodels": {
-                "convention": 0,
-                "error": 0,
-                "fatal": 1,
-                "info": 0,
-                "refactor": 0,
-                "statement": 0,
-                "warning": 0
-            },
-            "agentlib.core.model": {
-                "convention": 2,
-                "error": 0,
-                "fatal": 1,
-                "info": 0,
-                "refactor": 0,
-                "statement": 0,
-                "warning": 0
-            },
-            "agentlib.core.__init__": {
-                "convention": 16,
-                "error": 0,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 0,
-                "statement": 6,
-                "warning": 0
-            },
-            "agentlib.core.errors": {
-                "convention": 0,
-                "error": 0,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 0,
-                "statement": 8,
-                "warning": 0
-            },
-            "agentlib.modules.__init__": {
-                "convention": 0,
-                "error": 0,
-                "fatal": 1,
-                "info": 0,
-                "refactor": 0,
-                "statement": 0,
-                "warning": 0
-            },
-            "agentlib.modules.utils.try_sensor": {
-                "convention": 0,
-                "error": 0,
-                "fatal": 1,
-                "info": 0,
-                "refactor": 0,
-                "statement": 0,
-                "warning": 0
-            },
-            "agentlib.modules.utils.__init__": {
-                "convention": 0,
-                "error": 0,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 0,
-                "statement": 2,
-                "warning": 0
-            },
-            "agentlib.modules.utils.agent_logger": {
-                "convention": 2,
-                "error": 0,
-                "fatal": 1,
-                "info": 0,
-                "refactor": 1,
-                "statement": 0,
-                "warning": 0
-            },
-            "agentlib.modules.communicator.communicator": {
-                "convention": 0,
-                "error": 0,
-                "fatal": 1,
-                "info": 0,
-                "refactor": 0,
-                "statement": 0,
-                "warning": 0
-            },
-            "agentlib.modules.communicator.local_broadcast": {
-                "convention": 1,
-                "error": 0,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 0,
-                "statement": 13,
-                "warning": 0
-            },
-            "agentlib.modules.communicator.local": {
-                "convention": 3,
-                "error": 0,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 0,
-                "statement": 17,
-                "warning": 0
-            },
-            "agentlib.modules.communicator.clonemap": {
-                "convention": 0,
-                "error": 0,
-                "fatal": 1,
-                "info": 0,
-                "refactor": 0,
-                "statement": 0,
-                "warning": 0
-            },
-            "agentlib.modules.communicator.local_multiprocessing": {
-                "convention": 3,
-                "error": 3,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 0,
-                "statement": 61,
-                "warning": 1
-            },
-            "agentlib.modules.communicator.mqtt": {
-                "convention": 1,
-                "error": 0,
-                "fatal": 1,
-                "info": 0,
-                "refactor": 0,
-                "statement": 0,
-                "warning": 0
-            },
-            "agentlib.modules.communicator.__init__": {
-                "convention": 0,
-                "error": 0,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 0,
-                "statement": 2,
-                "warning": 0
-            },
-            "agentlib.modules.simulation.simulator": {
-                "convention": 0,
-                "error": 0,
-                "fatal": 1,
-                "info": 0,
-                "refactor": 0,
-                "statement": 0,
-                "warning": 0
-            },
-            "agentlib.modules.simulation.csv_data_source": {
-                "convention": 2,
-                "error": 0,
-                "fatal": 1,
-                "info": 0,
-                "refactor": 0,
-                "statement": 0,
-                "warning": 0
-            },
-            "agentlib.modules.simulation.__init__": {
-                "convention": 1,
-                "error": 0,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 0,
-                "statement": 2,
-                "warning": 0
-            },
-            "agentlib.modules.controller.bangbang": {
-                "convention": 1,
-                "error": 1,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 1,
-                "statement": 33,
-                "warning": 0
-            },
-            "agentlib.modules.controller.controller": {
-                "convention": 0,
-                "error": 0,
-                "fatal": 1,
-                "info": 0,
-                "refactor": 0,
-                "statement": 0,
-                "warning": 0
-            },
-            "agentlib.modules.controller.__init__": {
-                "convention": 1,
-                "error": 0,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 0,
-                "statement": 3,
-                "warning": 0
-            },
-            "agentlib.modules.controller.pid": {
-                "convention": 1,
-                "error": 0,
-                "fatal": 1,
-                "info": 0,
-                "refactor": 28,
-                "statement": 0,
-                "warning": 0
-            }
-        },
-        "by_msg": {
-            "astroid-error": 35,
-            "line-too-long": 15,
-            "missing-module-docstring": 30,
-            "invalid-name": 20,
-            "missing-function-docstring": 60,
-            "import-outside-toplevel": 8,
-            "import-error": 40,
-            "missing-class-docstring": 33,
-            "anomalous-backslash-in-string": 8,
-            "consider-using-from-import": 1,
-            "unspecified-encoding": 7,
-            "wrong-import-order": 9,
-            "too-many-locals": 1,
-            "unused-variable": 6,
-            "logging-fstring-interpolation": 5,
-            "no-member": 15,
-            "missing-final-newline": 1,
-            "protected-access": 30,
-            "too-many-instance-attributes": 2,
-            "unnecessary-dunder-call": 3,
-            "wrong-import-position": 9,
-            "ungrouped-imports": 24,
-            "unused-argument": 3,
-            "attribute-defined-outside-init": 6,
-            "broad-exception-raised": 3,
-            "use-dict-literal": 10,
-            "useless-option-value": 2,
-            "raise-missing-from": 2,
-            "inconsistent-return-statements": 1,
-            "duplicate-code": 28
-        },
-        "code_type_count": {
-            "code": 0,
-            "comment": 0,
-            "docstring": 0,
-            "empty": 0,
-            "total": 0
-        },
-        "dependencies": {
-            "agentlib.models.scipy_model": [
-                "examples.models.scipy.scipy_example",
-                "tests.test_model"
-            ],
-            "pingpong_module": [
-                "pingpong_local_broadcast",
-                "pingpong_mqtt",
-                "pingpong_multiprocessing",
-                "pingpong_local"
-            ],
-            "agentlib.utils.multi_agent_system": [
-                "pingpong_mqtt",
-                "room_mas",
-                "examples.plugin.main",
-                "tests.test_n_pingpong",
-                "pingpong_local",
-                "agentlib"
-            ],
-            "agentlib.core": [
-                "tests.test_environment",
-                "agentlib.modules.controller.bangbang",
-                "pingpong_module",
-                "tests.test_n_pingpong",
-                "tests.test_data_broker",
-                "pingpong_local_broadcast",
-                "pingpong_multiprocessing",
-                "tests.test_simulator",
-                "tests.test_model",
-                "tests.test_agent",
-                "tests.test_agentlogger",
-                "agentlib.modules.communicator.local_multiprocessing",
-                "examples.communicator.mqtt",
-                "agentlib"
-            ],
-            "agentlib.utils": [
-                "tests.test_examples",
-                "agentlib.modules.communicator.local_broadcast",
-                "agentlib.modules.communicator.local",
-                "tests.test_n_pingpong",
-                "tests.test_utils",
-                "pingpong_multiprocessing",
-                "agentlib"
-            ],
-            "agentlib.core.datamodels": [
-                "agentlib.modules.communicator.local_broadcast",
-                "tests.test_datamodels",
-                "agentlib.modules.communicator.local",
-                "pingpong_module",
-                "tests.test_n_pingpong",
-                "tests.test_simulator",
-                "agentlib.core",
-                "tests.test_model",
-                "agentlib.modules.controller.bangbang",
-                "tests.test_agentlogger",
-                "agentlib.modules.communicator.local_multiprocessing",
-                "examples.communicator.mqtt",
-                "agentlib"
-            ],
-            "agentlib.utils.plotting.simulator_dashboard": [
-                "tests.test_simulator_dashboard",
-                "view_simulation_in_dashboard"
-            ],
-            "agentlib": [
-                "part_2_agentvariables_concise",
-                "tests.test_databroker_limits",
-                "examples.plugin.my_plugin.new_module",
-                "part_2_agentvariables_with_comments",
-                "part_1_my_first_agent_with_comments",
-                "tools",
-                "examples.simulation.csv_data_source",
-                "tests.test_data_broker",
-                "tests.test_utils",
-                "examples.plugin.my_plugin.another_new_module",
-                "tests.test_data_source",
-                "tests.test_communicator",
-                "part_1_my_first_agent_concise"
-            ],
-            "agentlib.utils.plugin_import": [
-                "agentlib.modules.simulation",
-                "agentlib.modules.utils",
-                "agentlib.modules.controller",
-                "agentlib.modules.communicator",
-                "agentlib.models",
-                "examples.plugin.my_plugin"
-            ],
-            "examples.plugin.my_plugin.another_new_module": [
-                "examples.plugin.my_plugin"
-            ],
-            "examples.plugin.my_plugin.new_module": [
-                "examples.plugin.my_plugin"
-            ],
-            "agentlib.modules.utils.agent_logger": [
-                "tests.test_agentlogger"
-            ],
-            "agentlib.modules.simulation.csv_data_source": [
-                "tests.test_data_source"
-            ],
-            "agentlib.modules.communicator.local": [
-                "tests.test_communicator"
-            ],
-            "agentlib.modules.simulation.simulator": [
-                "tests.test_simulator"
-            ],
-            "agentlib.core.logging_": [
-                "tests.test_data_broker"
-            ],
-            "agentlib.utils.local_broadcast_broker": [
-                "tests.test_examples",
-                "agentlib.utils"
-            ],
-            "agentlib.models.fmu_model": [
-                "tests.test_model"
-            ],
-            "agentlib.core.agent": [
-                "tests.test_utils",
-                "agentlib.core",
-                "tests.test_agent"
-            ],
-            "agentlib.core.errors": [
-                "tests.test_utils",
-                "tests.test_agent"
-            ],
-            "agentlib.utils.validators": [
-                "tests.test_utils"
-            ],
-            "agentlib.utils.broker": [
-                "tests.test_utils"
-            ],
-            "agentlib.utils.load_config": [
-                "tests.test_utils"
-            ],
-            "agentlib.core.environment": [
-                "agentlib.core",
-                "tests.test_environment"
-            ],
-            "agentlib.models": [
-                "agentlib"
-            ],
-            "agentlib.modules": [
-                "agentlib"
-            ],
-            "agentlib.utils.fuzzy_matching": [
-                "agentlib.models"
-            ],
-            "agentlib.utils.local_broker": [
-                "agentlib.utils"
-            ],
-            "agentlib.utils.multi_processing_broker": [
-                "agentlib.modules.communicator.local_multiprocessing",
-                "agentlib.utils"
-            ],
-            "agentlib.core.data_broker": [
-                "agentlib.core"
-            ],
-            "agentlib.core.module": [
-                "agentlib.core"
-            ],
-            "agentlib.core.model": [
-                "agentlib.core"
-            ],
-            "agentlib.modules.communicator.communicator": [
-                "agentlib.modules.communicator.local_multiprocessing",
-                "agentlib.modules.communicator.local_broadcast",
-                "agentlib.modules.communicator.local"
-            ],
-            "agentlib.modules.controller": [
-                "agentlib.modules.controller.bangbang"
-            ],
-            "agentlib.modules.controller.controller": [
-                "agentlib.modules.controller"
-            ]
-        },
-        "duplicated_lines": {
-            "nb_duplicated_lines": 0,
-            "percent_duplicated_lines": 0.0
-        },
-        "node_count": {
-            "function": 21,
-            "klass": 61,
-            "method": 199,
-            "module": 84
-        },
-        "undocumented": {
-            "function": 16,
-            "klass": 38,
-            "method": 44,
-            "module": 30
-        },
-        "convention": 212,
-        "error": 55,
-        "fatal": 35,
-        "info": 0,
-        "refactor": 45,
-        "statement": 1921,
-        "warning": 70,
-        "global_note": 0,
-        "nb_duplicated_lines": 384,
-        "percent_duplicated_lines": 3.287671232876712
-    },
-    "previous": {
-        "bad_names": {
-            "argument": 1,
-            "attr": 2,
-            "klass": 0,
-            "class_attribute": 0,
-            "class_const": 0,
-            "const": 1,
-            "inlinevar": 0,
-            "function": 0,
-            "method": 0,
-            "module": 0,
-            "variable": 16,
-            "typevar": 0,
-            "typealias": 0
-        },
-        "by_module": {
-            "examples.models.scipy.scipy_example": {
-                "convention": 5,
-                "error": 1,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 0,
-                "statement": 19,
-                "warning": 0
-            },
-            "examples.multi-agent-systems.pingpong.pingpong_mqtt": {
-                "convention": 1,
-                "error": 0,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 0,
-                "statement": 11,
-                "warning": 0
-            },
-            "examples.multi-agent-systems.pingpong.pingpong_multiprocessing": {
-                "convention": 0,
-                "error": 0,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 0,
-                "statement": 15,
-                "warning": 0
-            },
-            "examples.multi-agent-systems.pingpong.pingpong_local_broadcast": {
-                "convention": 0,
-                "error": 0,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 0,
-                "statement": 13,
-                "warning": 0
-            },
-            "examples.multi-agent-systems.pingpong.pingpong_local": {
-                "convention": 1,
-                "error": 0,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 0,
-                "statement": 11,
-                "warning": 0
-            },
-            "examples.multi-agent-systems.pingpong.pingpong_module": {
-                "convention": 3,
-                "error": 1,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 0,
-                "statement": 29,
-                "warning": 0
-            },
-            "examples.multi-agent-systems.pingpong.pingpong_clonemap": {
-                "convention": 3,
-                "error": 2,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 1,
-                "statement": 12,
-                "warning": 5
-            },
-            "view_simulation_in_dashboard": {
-                "convention": 0,
-                "error": 0,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 0,
-                "statement": 6,
-                "warning": 0
-            },
-            "room_mas": {
-                "convention": 4,
-                "error": 2,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 1,
-                "statement": 49,
-                "warning": 3
-            },
-            "examples.getting-started.part_1_my_first_agent_with_comments": {
-                "convention": 3,
-                "error": 1,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 0,
-                "statement": 22,
-                "warning": 2
-            },
-            "examples.getting-started.part_1_my_first_agent_concise": {
-                "convention": 3,
-                "error": 1,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 0,
-                "statement": 22,
-                "warning": 2
-            },
-            "examples.getting-started.part_4_communicators_with_comments": {
-                "convention": 0,
-                "error": 0,
-                "fatal": 1,
-                "info": 0,
-                "refactor": 0,
-                "statement": 0,
-                "warning": 0
-            },
-            "examples.getting-started.part_3_using_models_with_comments": {
-                "convention": 1,
-                "error": 0,
-                "fatal": 1,
-                "info": 0,
-                "refactor": 0,
-                "statement": 0,
-                "warning": 0
-            },
-            "examples.getting-started.part_2_agentvariables_with_comments": {
-                "convention": 7,
-                "error": 3,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 0,
-                "statement": 38,
-                "warning": 1
-            },
-            "examples.getting-started.part_3_using_models_concise": {
-                "convention": 0,
-                "error": 0,
-                "fatal": 1,
-                "info": 0,
-                "refactor": 0,
-                "statement": 0,
-                "warning": 0
-            },
-            "examples.getting-started.part_2_agentvariables_concise": {
-                "convention": 6,
-                "error": 3,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 0,
-                "statement": 33,
-                "warning": 1
-            },
-            "mqtt": {
-                "convention": 3,
-                "error": 4,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 0,
-                "statement": 26,
-                "warning": 0
-            },
-            "csv_data_source": {
-                "convention": 4,
-                "error": 4,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 0,
-                "statement": 48,
-                "warning": 1
-            },
             "main": {
                 "convention": 1,
                 "error": 0,
@@ -6635,7 +5595,7 @@
                 "statement": 4,
                 "warning": 0
             },
-            "examples.controller.bangbang_with_simulator": {
+            "bangbang_with_simulator": {
                 "convention": 1,
                 "error": 0,
                 "fatal": 1,
@@ -6644,7 +5604,7 @@
                 "statement": 0,
                 "warning": 1
             },
-            "examples.controller.pid_with_simulator": {
+            "pid_with_simulator": {
                 "convention": 0,
                 "error": 0,
                 "fatal": 1,
@@ -7266,84 +6226,84 @@
                 "tests.test_model"
             ],
             "pingpong_module": [
-                "examples.multi-agent-systems.pingpong.pingpong_mqtt",
-                "examples.multi-agent-systems.pingpong.pingpong_local_broadcast",
-                "examples.multi-agent-systems.pingpong.pingpong_local",
-                "examples.multi-agent-systems.pingpong.pingpong_multiprocessing"
+                "pingpong_mqtt",
+                "pingpong_local",
+                "pingpong_local_broadcast",
+                "pingpong_multiprocessing"
             ],
             "agentlib.utils.multi_agent_system": [
+                "pingpong_mqtt",
                 "room_mas",
-                "examples.multi-agent-systems.pingpong.pingpong_local",
-                "tests.test_n_pingpong",
-                "examples.multi-agent-systems.pingpong.pingpong_mqtt",
+                "pingpong_local",
                 "main",
+                "tests.test_n_pingpong",
                 "agentlib"
             ],
             "agentlib.core": [
-                "examples.multi-agent-systems.pingpong.pingpong_local_broadcast",
-                "tests.test_environment",
-                "examples.multi-agent-systems.pingpong.pingpong_multiprocessing",
-                "agentlib.modules.controller.bangbang",
-                "mqtt",
-                "tests.test_n_pingpong",
-                "examples.multi-agent-systems.pingpong.pingpong_module",
-                "tests.test_data_broker",
-                "tests.test_simulator",
-                "tests.test_model",
                 "tests.test_agent",
+                "tests.test_environment",
+                "agentlib.modules.controller.bangbang",
+                "tests.test_simulator",
                 "tests.test_agentlogger",
+                "pingpong_local_broadcast",
+                "tests.test_n_pingpong",
+                "tests.test_model",
+                "pingpong_module",
+                "examples.communicator.mqtt",
+                "tests.test_data_broker",
+                "agentlib",
                 "agentlib.modules.communicator.local_multiprocessing",
-                "agentlib"
+                "pingpong_multiprocessing"
             ],
             "agentlib.utils": [
-                "agentlib.modules.communicator.local_broadcast",
                 "tests.test_examples",
-                "agentlib.modules.communicator.local",
-                "examples.multi-agent-systems.pingpong.pingpong_multiprocessing",
                 "tests.test_n_pingpong",
                 "tests.test_utils",
-                "agentlib"
+                "agentlib",
+                "agentlib.modules.communicator.local_broadcast",
+                "agentlib.modules.communicator.local",
+                "pingpong_multiprocessing"
             ],
             "agentlib.core.datamodels": [
-                "agentlib.modules.communicator.local_broadcast",
-                "tests.test_datamodels",
-                "agentlib.modules.communicator.local",
-                "mqtt",
-                "tests.test_n_pingpong",
-                "examples.multi-agent-systems.pingpong.pingpong_module",
-                "tests.test_simulator",
-                "agentlib.core",
-                "tests.test_model",
                 "agentlib.modules.controller.bangbang",
+                "tests.test_simulator",
+                "tests.test_datamodels",
                 "tests.test_agentlogger",
-                "agentlib.modules.communicator.local_multiprocessing",
-                "agentlib"
+                "tests.test_n_pingpong",
+                "tests.test_model",
+                "examples.communicator.mqtt",
+                "pingpong_module",
+                "agentlib.core",
+                "agentlib",
+                "agentlib.modules.communicator.local_broadcast",
+                "agentlib.modules.communicator.local",
+                "agentlib.modules.communicator.local_multiprocessing"
             ],
             "agentlib.utils.plotting.simulator_dashboard": [
                 "tests.test_simulator_dashboard",
                 "view_simulation_in_dashboard"
             ],
             "agentlib": [
-                "tests.test_data_source",
-                "tests.test_databroker_limits",
+                "part_2_agentvariables_concise",
+                "part_1_my_first_agent_with_comments",
                 "my_plugin.another_new_module",
-                "my_plugin.new_module",
-                "csv_data_source",
-                "examples.getting-started.part_1_my_first_agent_concise",
+                "tests.test_data_source",
                 "tests.test_data_broker",
+                "part_1_my_first_agent_concise",
                 "tests.test_utils",
-                "examples.getting-started.part_2_agentvariables_concise",
-                "examples.getting-started.part_2_agentvariables_with_comments",
                 "manual_labor.tools",
                 "tests.test_communicator",
-                "examples.getting-started.part_1_my_first_agent_with_comments"
+                "examples.simulation.csv_data_source",
+                "tests.test_databroker_limits",
+                "my_plugin.new_module",
+                "part_2_agentvariables_with_comments"
             ],
             "agentlib.utils.plugin_import": [
-                "agentlib.modules.simulation",
-                "agentlib.modules.utils",
-                "agentlib.modules.controller",
-                "agentlib.modules.communicator",
                 "my_plugin",
+                "agentlib.modules.controller",
+                "agentlib.modules.utils",
+                "agentlib.modules.simulation",
+                "agentlib.modules.communicator",
                 "agentlib.models"
             ],
             "my_plugin.another_new_module": [
@@ -7376,8 +6336,8 @@
             ],
             "agentlib.core.agent": [
                 "tests.test_utils",
-                "agentlib.core",
-                "tests.test_agent"
+                "tests.test_agent",
+                "agentlib.core"
             ],
             "agentlib.core.errors": [
                 "tests.test_utils",
@@ -7393,8 +6353,1048 @@
                 "tests.test_utils"
             ],
             "agentlib.core.environment": [
+                "tests.test_environment",
+                "agentlib.core"
+            ],
+            "agentlib.models": [
+                "agentlib"
+            ],
+            "agentlib.modules": [
+                "agentlib"
+            ],
+            "agentlib.utils.fuzzy_matching": [
+                "agentlib.models"
+            ],
+            "agentlib.utils.local_broker": [
+                "agentlib.utils"
+            ],
+            "agentlib.utils.multi_processing_broker": [
+                "agentlib.modules.communicator.local_multiprocessing",
+                "agentlib.utils"
+            ],
+            "agentlib.core.data_broker": [
+                "agentlib.core"
+            ],
+            "agentlib.core.module": [
+                "agentlib.core"
+            ],
+            "agentlib.core.model": [
+                "agentlib.core"
+            ],
+            "agentlib.modules.communicator.communicator": [
+                "agentlib.modules.communicator.local_multiprocessing",
+                "agentlib.modules.communicator.local_broadcast",
+                "agentlib.modules.communicator.local"
+            ],
+            "agentlib.modules.controller": [
+                "agentlib.modules.controller.bangbang"
+            ],
+            "agentlib.modules.controller.controller": [
+                "agentlib.modules.controller"
+            ]
+        },
+        "duplicated_lines": {
+            "nb_duplicated_lines": 0,
+            "percent_duplicated_lines": 0.0
+        },
+        "node_count": {
+            "function": 21,
+            "klass": 61,
+            "method": 199,
+            "module": 84
+        },
+        "undocumented": {
+            "function": 16,
+            "klass": 38,
+            "method": 44,
+            "module": 30
+        },
+        "convention": 212,
+        "error": 55,
+        "fatal": 35,
+        "info": 0,
+        "refactor": 45,
+        "statement": 1921,
+        "warning": 70,
+        "global_note": 0,
+        "nb_duplicated_lines": 384,
+        "percent_duplicated_lines": 3.287671232876712
+    },
+    "previous": {
+        "bad_names": {
+            "argument": 1,
+            "attr": 2,
+            "klass": 0,
+            "class_attribute": 0,
+            "class_const": 0,
+            "const": 1,
+            "inlinevar": 0,
+            "function": 0,
+            "method": 0,
+            "module": 0,
+            "variable": 16,
+            "typevar": 0,
+            "typealias": 0
+        },
+        "by_module": {
+            "examples.models.scipy.scipy_example": {
+                "convention": 5,
+                "error": 1,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 19,
+                "warning": 0
+            },
+            "pingpong_mqtt": {
+                "convention": 1,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 11,
+                "warning": 0
+            },
+            "pingpong_multiprocessing": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 15,
+                "warning": 0
+            },
+            "pingpong_local_broadcast": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 13,
+                "warning": 0
+            },
+            "pingpong_local": {
+                "convention": 1,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 11,
+                "warning": 0
+            },
+            "pingpong_module": {
+                "convention": 3,
+                "error": 1,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 29,
+                "warning": 0
+            },
+            "pingpong_clonemap": {
+                "convention": 3,
+                "error": 2,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 1,
+                "statement": 12,
+                "warning": 5
+            },
+            "examples.multi-agent-systems.room_mas.view_simulation_in_dashboard": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 6,
+                "warning": 0
+            },
+            "examples.multi-agent-systems.room_mas.room_mas": {
+                "convention": 4,
+                "error": 2,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 1,
+                "statement": 49,
+                "warning": 3
+            },
+            "examples.getting-started.part_1_my_first_agent_with_comments": {
+                "convention": 3,
+                "error": 1,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 22,
+                "warning": 2
+            },
+            "examples.getting-started.part_1_my_first_agent_concise": {
+                "convention": 3,
+                "error": 1,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 22,
+                "warning": 2
+            },
+            "examples.getting-started.part_4_communicators_with_comments": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "examples.getting-started.part_3_using_models_with_comments": {
+                "convention": 1,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "examples.getting-started.part_2_agentvariables_with_comments": {
+                "convention": 7,
+                "error": 3,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 38,
+                "warning": 1
+            },
+            "examples.getting-started.part_3_using_models_concise": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "examples.getting-started.part_2_agentvariables_concise": {
+                "convention": 6,
+                "error": 3,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 33,
+                "warning": 1
+            },
+            "examples.communicator.mqtt": {
+                "convention": 3,
+                "error": 4,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 26,
+                "warning": 0
+            },
+            "examples.simulation.csv_data_source": {
+                "convention": 4,
+                "error": 4,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 48,
+                "warning": 1
+            },
+            "examples.plugin.main": {
+                "convention": 1,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 7,
+                "warning": 0
+            },
+            "examples.plugin.my_plugin.new_module": {
+                "convention": 3,
+                "error": 1,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 12,
+                "warning": 0
+            },
+            "examples.plugin.my_plugin.another_new_module": {
+                "convention": 3,
+                "error": 1,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 12,
+                "warning": 0
+            },
+            "examples.plugin.my_plugin.__init__": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 4,
+                "warning": 0
+            },
+            "bangbang_with_simulator": {
+                "convention": 1,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 1
+            },
+            "pid_with_simulator": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 1
+            },
+            "conf": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "manual_labor.tools": {
+                "convention": 3,
+                "error": 1,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 14,
+                "warning": 1
+            },
+            "tests.test_n_pingpong": {
+                "convention": 7,
+                "error": 2,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 110,
+                "warning": 1
+            },
+            "tests.test_agentlogger": {
+                "convention": 3,
+                "error": 2,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 83,
+                "warning": 12
+            },
+            "tests.test_data_source": {
+                "convention": 13,
+                "error": 2,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 1,
+                "statement": 93,
+                "warning": 2
+            },
+            "tests.test_communicator": {
+                "convention": 5,
+                "error": 1,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "tests.test_simulator": {
+                "convention": 26,
+                "error": 3,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 92,
+                "warning": 3
+            },
+            "tests.test_plugins": {
+                "convention": 4,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 10,
+                "warning": 0
+            },
+            "tests.test_module": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "tests.test_data_broker": {
+                "convention": 12,
+                "error": 1,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 116,
+                "warning": 17
+            },
+            "tests.test_simulator_dashboard": {
+                "convention": 6,
+                "error": 2,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 47,
+                "warning": 0
+            },
+            "tests.test_mas": {
+                "convention": 3,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 10,
+                "warning": 0
+            },
+            "tests.test_examples": {
+                "convention": 2,
+                "error": 1,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 60,
+                "warning": 1
+            },
+            "tests.test_databroker_limits": {
+                "convention": 11,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 65,
+                "warning": 1
+            },
+            "tests.test_model": {
+                "convention": 1,
+                "error": 2,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "tests.__init__": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "tests.test_utils": {
+                "convention": 3,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 59,
+                "warning": 1
+            },
+            "tests.test_datamodels": {
+                "convention": 4,
+                "error": 2,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 10,
+                "statement": 151,
+                "warning": 0
+            },
+            "tests.test_agent": {
+                "convention": 14,
+                "error": 1,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 1,
+                "statement": 142,
+                "warning": 7
+            },
+            "tests.test_environment": {
+                "convention": 0,
+                "error": 6,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 42,
+                "warning": 3
+            },
+            "agentlib.__init__": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 6,
+                "warning": 0
+            },
+            "agentlib.models.scipy_model": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 1,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.models.fmu_model": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.models.__init__": {
+                "convention": 1,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 15,
+                "warning": 0
+            },
+            "agentlib.utils.plugin_import": {
+                "convention": 0,
+                "error": 1,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 30,
+                "warning": 2
+            },
+            "agentlib.utils.load_config": {
+                "convention": 1,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.utils.local_broadcast_broker": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.utils.validators": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.utils.local_broker": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.utils.fuzzy_matching": {
+                "convention": 1,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.utils.multi_processing_broker": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.utils.__init__": {
+                "convention": 2,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 32,
+                "warning": 1
+            },
+            "agentlib.utils.broker": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 29,
+                "warning": 0
+            },
+            "agentlib.utils.multi_agent_system": {
+                "convention": 1,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.utils.plotting.simulator_dashboard": {
+                "convention": 1,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.utils.plotting.__init__": {
+                "convention": 1,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.core.data_broker": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.core.agent": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.core.module": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.core.logging_": {
+                "convention": 1,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.core.environment": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.core.datamodels": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.core.model": {
+                "convention": 2,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.core.__init__": {
+                "convention": 16,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 6,
+                "warning": 0
+            },
+            "agentlib.core.errors": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 8,
+                "warning": 0
+            },
+            "agentlib.modules.__init__": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.modules.utils.try_sensor": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.modules.utils.__init__": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 2,
+                "warning": 0
+            },
+            "agentlib.modules.utils.agent_logger": {
+                "convention": 2,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 1,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.modules.communicator.communicator": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.modules.communicator.local_broadcast": {
+                "convention": 1,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 13,
+                "warning": 0
+            },
+            "agentlib.modules.communicator.local": {
+                "convention": 3,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 17,
+                "warning": 0
+            },
+            "agentlib.modules.communicator.clonemap": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.modules.communicator.local_multiprocessing": {
+                "convention": 3,
+                "error": 3,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 61,
+                "warning": 1
+            },
+            "agentlib.modules.communicator.mqtt": {
+                "convention": 1,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.modules.communicator.__init__": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 2,
+                "warning": 0
+            },
+            "agentlib.modules.simulation.simulator": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.modules.simulation.csv_data_source": {
+                "convention": 2,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.modules.simulation.__init__": {
+                "convention": 1,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 2,
+                "warning": 0
+            },
+            "agentlib.modules.controller.bangbang": {
+                "convention": 1,
+                "error": 1,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 1,
+                "statement": 33,
+                "warning": 0
+            },
+            "agentlib.modules.controller.controller": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.modules.controller.__init__": {
+                "convention": 1,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 3,
+                "warning": 0
+            },
+            "agentlib.modules.controller.pid": {
+                "convention": 1,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 28,
+                "statement": 0,
+                "warning": 0
+            }
+        },
+        "by_msg": {
+            "astroid-error": 35,
+            "line-too-long": 15,
+            "missing-module-docstring": 30,
+            "invalid-name": 20,
+            "missing-function-docstring": 60,
+            "import-outside-toplevel": 8,
+            "import-error": 40,
+            "missing-class-docstring": 33,
+            "anomalous-backslash-in-string": 8,
+            "consider-using-from-import": 1,
+            "unspecified-encoding": 7,
+            "wrong-import-order": 9,
+            "too-many-locals": 1,
+            "unused-variable": 6,
+            "logging-fstring-interpolation": 5,
+            "no-member": 15,
+            "missing-final-newline": 1,
+            "protected-access": 30,
+            "too-many-instance-attributes": 2,
+            "unnecessary-dunder-call": 3,
+            "wrong-import-position": 9,
+            "ungrouped-imports": 24,
+            "unused-argument": 3,
+            "attribute-defined-outside-init": 6,
+            "broad-exception-raised": 3,
+            "use-dict-literal": 10,
+            "useless-option-value": 2,
+            "raise-missing-from": 2,
+            "inconsistent-return-statements": 1,
+            "duplicate-code": 28
+        },
+        "code_type_count": {
+            "code": 0,
+            "comment": 0,
+            "docstring": 0,
+            "empty": 0,
+            "total": 0
+        },
+        "dependencies": {
+            "agentlib.models.scipy_model": [
+                "examples.models.scipy.scipy_example",
+                "tests.test_model"
+            ],
+            "pingpong_module": [
+                "pingpong_mqtt",
+                "pingpong_local",
+                "pingpong_local_broadcast",
+                "pingpong_multiprocessing"
+            ],
+            "agentlib.utils.multi_agent_system": [
+                "pingpong_mqtt",
+                "pingpong_local",
+                "examples.multi-agent-systems.room_mas.room_mas",
+                "tests.test_n_pingpong",
+                "agentlib",
+                "examples.plugin.main"
+            ],
+            "agentlib.core": [
+                "tests.test_environment",
+                "tests.test_agent",
+                "agentlib.modules.controller.bangbang",
+                "tests.test_simulator",
+                "tests.test_agentlogger",
+                "pingpong_local_broadcast",
+                "tests.test_model",
+                "tests.test_n_pingpong",
+                "examples.communicator.mqtt",
+                "pingpong_module",
+                "tests.test_data_broker",
+                "agentlib",
+                "agentlib.modules.communicator.local_multiprocessing",
+                "pingpong_multiprocessing"
+            ],
+            "agentlib.utils": [
+                "tests.test_examples",
+                "tests.test_n_pingpong",
+                "tests.test_utils",
+                "agentlib",
+                "agentlib.modules.communicator.local_broadcast",
+                "agentlib.modules.communicator.local",
+                "pingpong_multiprocessing"
+            ],
+            "agentlib.core.datamodels": [
+                "agentlib.modules.controller.bangbang",
+                "tests.test_simulator",
+                "tests.test_datamodels",
+                "tests.test_agentlogger",
+                "tests.test_model",
                 "agentlib.core",
-                "tests.test_environment"
+                "examples.communicator.mqtt",
+                "pingpong_module",
+                "tests.test_n_pingpong",
+                "agentlib",
+                "agentlib.modules.communicator.local_broadcast",
+                "agentlib.modules.communicator.local",
+                "agentlib.modules.communicator.local_multiprocessing"
+            ],
+            "agentlib.utils.plotting.simulator_dashboard": [
+                "examples.multi-agent-systems.room_mas.view_simulation_in_dashboard",
+                "tests.test_simulator_dashboard"
+            ],
+            "agentlib": [
+                "examples.plugin.my_plugin.new_module",
+                "examples.getting-started.part_1_my_first_agent_concise",
+                "examples.plugin.my_plugin.another_new_module",
+                "tests.test_data_source",
+                "examples.getting-started.part_2_agentvariables_concise",
+                "tests.test_utils",
+                "tests.test_data_broker",
+                "manual_labor.tools",
+                "tests.test_communicator",
+                "tests.test_databroker_limits",
+                "examples.simulation.csv_data_source",
+                "examples.getting-started.part_1_my_first_agent_with_comments",
+                "examples.getting-started.part_2_agentvariables_with_comments"
+            ],
+            "agentlib.utils.plugin_import": [
+                "agentlib.modules.controller",
+                "agentlib.modules.utils",
+                "examples.plugin.my_plugin",
+                "agentlib.modules.simulation",
+                "agentlib.modules.communicator",
+                "agentlib.models"
+            ],
+            "examples.plugin.my_plugin.another_new_module": [
+                "examples.plugin.my_plugin"
+            ],
+            "examples.plugin.my_plugin.new_module": [
+                "examples.plugin.my_plugin"
+            ],
+            "agentlib.modules.utils.agent_logger": [
+                "tests.test_agentlogger"
+            ],
+            "agentlib.modules.simulation.csv_data_source": [
+                "tests.test_data_source"
+            ],
+            "agentlib.modules.communicator.local": [
+                "tests.test_communicator"
+            ],
+            "agentlib.modules.simulation.simulator": [
+                "tests.test_simulator"
+            ],
+            "agentlib.core.logging_": [
+                "tests.test_data_broker"
+            ],
+            "agentlib.utils.local_broadcast_broker": [
+                "tests.test_examples",
+                "agentlib.utils"
+            ],
+            "agentlib.models.fmu_model": [
+                "tests.test_model"
+            ],
+            "agentlib.core.agent": [
+                "tests.test_agent",
+                "tests.test_utils",
+                "agentlib.core"
+            ],
+            "agentlib.core.errors": [
+                "tests.test_agent",
+                "tests.test_utils"
+            ],
+            "agentlib.utils.validators": [
+                "tests.test_utils"
+            ],
+            "agentlib.utils.broker": [
+                "tests.test_utils"
+            ],
+            "agentlib.utils.load_config": [
+                "tests.test_utils"
+            ],
+            "agentlib.core.environment": [
+                "tests.test_environment",
+                "agentlib.core"
             ],
             "agentlib.models": [
                 "agentlib"
