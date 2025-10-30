@@ -65,6 +65,22 @@ class TestExamples(unittest.TestCase):
             until=8640,
             with_plots=False,
             log_level=logging.DEBUG,
+            use_direct_callback_databroker=False
+        )
+
+    def test_room_mas_direct_callback(self):
+        """Test the room_mas example"""
+        import sys
+
+        if "linux" in sys.platform:
+            self.skipTest("FMU test not yet supported")
+        self._run_example_with_return(
+            file="multi-agent-systems//room_mas//room_mas.py",
+            func_name="run_example",
+            until=8640,
+            with_plots=False,
+            log_level=logging.DEBUG,
+            use_direct_callback_databroker=True
         )
 
     def test_pingpong(self):
@@ -116,7 +132,6 @@ class TestExamples(unittest.TestCase):
             log_level=logging.FATAL,
             extrapolation="backwards"
         )
-
 
     def test_scipy_model(self):
         """Tests the scipy model example"""

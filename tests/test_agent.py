@@ -15,6 +15,9 @@ from agentlib.core import (
     AgentVariables,
     Environment,
     DataBroker,
+    DirectCallbackDataBroker,
+    RTDataBroker,
+    LocalDataBroker,
     BaseModule,
     BaseModuleConfig,
 )
@@ -122,6 +125,25 @@ class TestAgent(unittest.TestCase):
         Agent(config=json.dumps(self.ag_config), env=self.env)
         with self.assertRaises(ConfigurationError):
             Agent(config=json.dumps(self.ag_config) + "SomeFault", env=self.env)
+
+    def test_databroker_choice_(self):
+        """Test choice of data broker instances and possible errors"""
+        ag = Agent(config=self.ag_config, env=self.env)
+        self.assertIsInstance(ag.data_broker, LocalDataBroker)
+
+        ag = Agent(config=self.ag_config, env=Environment(config={"rt": True}))
+        self.assertIsInstance(ag.data_broker, RTDataBroker)
+
+        use_direct_callback_databroker_cfg = {
+            "modules": [],
+            "id": self.ag_id,
+            "use_direct_callback_databroker": True
+        }
+        ag = Agent(config=use_direct_callback_databroker_cfg, env=self.env)
+        self.assertIsInstance(ag.data_broker, DirectCallbackDataBroker)
+
+        with self.assertRaises(ValueError):
+            Agent(config=use_direct_callback_databroker_cfg, env=Environment(config={"rt": True}))
 
     def test_register_modules(self):
         """Test register bugs in modules"""
