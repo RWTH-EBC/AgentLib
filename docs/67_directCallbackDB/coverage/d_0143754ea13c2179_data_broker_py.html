@@ -54,8 +54,8 @@
             </div>
         </aside>
         <h2>
-            <span class="text">175 statements &nbsp;</span>
-            <button type="button" class="run button_toggle_run" value="run" data-shortcut="r" title="Toggle lines run">163<span class="text"> run</span></button>
+            <span class="text">177 statements &nbsp;</span>
+            <button type="button" class="run button_toggle_run" value="run" data-shortcut="r" title="Toggle lines run">165<span class="text"> run</span></button>
             <button type="button" class="mis show_mis button_toggle_mis" value="mis" data-shortcut="m" title="Toggle lines missing">12<span class="text"> missing</span></button>
             <button type="button" class="exc show_exc button_toggle_exc" value="exc" data-shortcut="x" title="Toggle lines excluded">12<span class="text"> excluded</span></button>
         </h2>
@@ -65,7 +65,7 @@
             <a id="nextFileLink" class="nav" href="d_0143754ea13c2179_datamodels_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.4.4">coverage.py v7.4.4</a>,
-            created at 2025-10-30 09:29 +0000
+            created at 2025-10-30 10:59 +0000
         </p>
         <aside class="hidden">
             <button type="button" class="button_next_chunk" data-shortcut="j"/>
@@ -183,8 +183,8 @@
     <p class="mis show_mis"><span class="n"><a id="t101" href="#t101">101</a></span><span class="t">                <span class="nam">missing_func_args</span> <span class="op">=</span> <span class="str">""</span>&nbsp;</span><span class="r"></span></p>
     <p class="mis show_mis"><span class="n"><a id="t102" href="#t102">102</a></span><span class="t">            <span class="key">raise</span> <span class="nam">RuntimeError</span><span class="op">(</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t103" href="#t103">103</a></span><span class="t">                <span class="str">"The registered Callback secondary arguments do not match the given kwargs:\n"</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t104" href="#t104">104</a></span><span class="t">                <span class="str">f"{missing_func_args}\n"</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t105" href="#t105">105</a></span><span class="t">                <span class="str">f"{missing_kwargs}"</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t104" href="#t104">104</a></span><span class="t">                <span class="fst">f"</span><span class="op">{</span><span class="nam">missing_func_args</span><span class="op">}</span><span class="fst">\n</span><span class="fst">"</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t105" href="#t105">105</a></span><span class="t">                <span class="fst">f"</span><span class="op">{</span><span class="nam">missing_kwargs</span><span class="op">}</span><span class="fst">"</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t106" href="#t106">106</a></span><span class="t">            <span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t107" href="#t107">107</a></span><span class="t">        <span class="com"># note from which module this callback came. If it is not a bound method, we</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t108" href="#t108">108</a></span><span class="t">        <span class="com"># assign it to none</span>&nbsp;</span><span class="r"></span></p>
@@ -548,11 +548,11 @@
     <p class="run"><span class="n"><a id="t466" href="#t466">466</a></span><span class="t">    <span class="key">def</span> <span class="nam">_callback_thread</span><span class="op">(</span><span class="nam">self</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t467" href="#t467">467</a></span><span class="t">        <span class="str">"""Thread to check and process the callback queue in Realtime</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t468" href="#t468">468</a></span><span class="t"><span class="str">        applications."""</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t469" href="#t469">469</a></span><span class="t">        <span class="key">while</span> <span class="key">True</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t469" href="#t469">469</a></span><span class="t">        <span class="key">while</span> <span class="key">True</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t470" href="#t470">470</a></span><span class="t">            <span class="key">if</span> <span class="key">not</span> <span class="nam">self</span><span class="op">.</span><span class="nam">_stop_queue</span><span class="op">.</span><span class="nam">empty</span><span class="op">(</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t471" href="#t471">471</a></span><span class="t">                <span class="nam">err</span><span class="op">,</span> <span class="nam">module_id</span> <span class="op">=</span> <span class="nam">self</span><span class="op">.</span><span class="nam">_stop_queue</span><span class="op">.</span><span class="nam">get</span><span class="op">(</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t472" href="#t472">472</a></span><span class="t">                <span class="key">raise</span> <span class="nam">RuntimeError</span><span class="op">(</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t473" href="#t473">473</a></span><span class="t">                    <span class="str">f"A callback failed in the module {module_id}."</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t473" href="#t473">473</a></span><span class="t">                    <span class="fst">f"</span><span class="fst">A callback failed in the module </span><span class="op">{</span><span class="nam">module_id</span><span class="op">}</span><span class="fst">.</span><span class="fst">"</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t474" href="#t474">474</a></span><span class="t">                <span class="op">)</span> <span class="key">from</span> <span class="nam">err</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t475" href="#t475">475</a></span><span class="t">            <span class="nam">self</span><span class="op">.</span><span class="nam">_execute_callbacks</span><span class="op">(</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t476" href="#t476">476</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
@@ -582,7 +582,7 @@
     <p class="run"><span class="n"><a id="t500" href="#t500">500</a></span><span class="t">        <span class="nam">threading</span><span class="op">.</span><span class="nam">Thread</span><span class="op">(</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t501" href="#t501">501</a></span><span class="t">            <span class="nam">target</span><span class="op">=</span><span class="nam">self</span><span class="op">.</span><span class="nam">_execute_callbacks_of_module</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t502" href="#t502">502</a></span><span class="t">            <span class="nam">daemon</span><span class="op">=</span><span class="key">True</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t503" href="#t503">503</a></span><span class="t">            <span class="nam">name</span><span class="op">=</span><span class="str">f"DataBroker/{module_id}"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t503" href="#t503">503</a></span><span class="t">            <span class="nam">name</span><span class="op">=</span><span class="fst">f"</span><span class="fst">DataBroker/</span><span class="op">{</span><span class="nam">module_id</span><span class="op">}</span><span class="fst">"</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t504" href="#t504">504</a></span><span class="t">            <span class="nam">kwargs</span><span class="op">=</span><span class="op">{</span><span class="str">"queue"</span><span class="op">:</span> <span class="nam">module_queue</span><span class="op">,</span> <span class="str">"module_id"</span><span class="op">:</span> <span class="nam">module_id</span><span class="op">}</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t505" href="#t505">505</a></span><span class="t">        <span class="op">)</span><span class="op">.</span><span class="nam">start</span><span class="op">(</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t506" href="#t506">506</a></span><span class="t">        <span class="nam">self</span><span class="op">.</span><span class="nam">_module_queues</span><span class="op">[</span><span class="nam">module_id</span><span class="op">]</span> <span class="op">=</span> <span class="nam">module_queue</span>&nbsp;</span><span class="r"></span></p>
@@ -590,7 +590,7 @@
     <p class="run"><span class="n"><a id="t508" href="#t508">508</a></span><span class="t">    <span class="key">def</span> <span class="nam">_execute_callbacks_of_module</span><span class="op">(</span><span class="nam">self</span><span class="op">,</span> <span class="nam">queue</span><span class="op">:</span> <span class="nam">queue</span><span class="op">.</span><span class="nam">SimpleQueue</span><span class="op">,</span> <span class="nam">module_id</span><span class="op">:</span> <span class="nam">str</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t509" href="#t509">509</a></span><span class="t">        <span class="str">"""Executes the callbacks associated with a specific module."""</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t510" href="#t510">510</a></span><span class="t">        <span class="key">try</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t511" href="#t511">511</a></span><span class="t">            <span class="key">while</span> <span class="key">True</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t511" href="#t511">511</a></span><span class="t">            <span class="key">while</span> <span class="key">True</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t512" href="#t512">512</a></span><span class="t">                <span class="nam">cb</span><span class="op">,</span> <span class="nam">variable</span> <span class="op">=</span> <span class="nam">queue</span><span class="op">.</span><span class="nam">get</span><span class="op">(</span><span class="nam">block</span><span class="op">=</span><span class="key">True</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t513" href="#t513">513</a></span><span class="t">                <span class="nam">cb</span><span class="op">.</span><span class="nam">callback</span><span class="op">(</span><span class="nam">variable</span><span class="op">=</span><span class="nam">variable</span><span class="op">,</span> <span class="op">**</span><span class="nam">cb</span><span class="op">.</span><span class="nam">kwargs</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="exc show_exc"><span class="n"><a id="t514" href="#t514">514</a></span><span class="t">        <span class="key">except</span> <span class="nam">Exception</span> <span class="key">as</span> <span class="nam">e</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
@@ -649,7 +649,7 @@
             <a id="nextFileLink" class="nav" href="d_0143754ea13c2179_datamodels_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.4.4">coverage.py v7.4.4</a>,
-            created at 2025-10-30 09:29 +0000
+            created at 2025-10-30 10:59 +0000
         </p>
     </div>
 </footer>
