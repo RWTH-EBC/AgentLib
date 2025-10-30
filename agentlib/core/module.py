@@ -291,8 +291,11 @@ class BaseModuleConfig(BaseModel):
         try:
             super().__init__(*args, **kwargs)
         except pydantic.ValidationError as e:
-            better_error = self._improve_extra_field_error_messages(e)
+            better_error = self._improve_extra_field_error_messages(
+                e, agent_id=_agent_id, module_id=_user_config.get("module_id")
+            )
             raise better_error
+
         # Enable mutation
         self.model_config["frozen"] = False
         self._variables = self.__class__.merge_variables(
@@ -307,34 +310,37 @@ class BaseModuleConfig(BaseModel):
 
     @classmethod
     def _improve_extra_field_error_messages(
-        cls, e: pydantic.ValidationError
+        cls, e: pydantic.ValidationError, agent_id: str, module_id: str
     ) -> pydantic.ValidationError:
         """Checks the validation errors for invalid fields and adds suggestions for
         correct field names to the error message."""
-        if not RAPIDFUZZ_IS_INSTALLED:
-            return e
 
         error_list = e.errors()
-        for error in error_list:
-            if not error["type"] == "extra_forbidden":
-                continue
+        if module_id is not None:
+            title = f"configuration of agent '{agent_id}' / module '{module_id}':"
+        else:
+            title = f"configuration of agent '{agent_id}':"
+        if RAPIDFUZZ_IS_INSTALLED:
+            for error in error_list:
+                if not error["type"] == "extra_forbidden":
+                    continue
 
-            # change error type to literal because it allows for context
-            error["type"] = "literal_error"
-            # pydantic automatically prints the __dict__ of an error, so it is
-            # sufficient to just assign the suggestions to an arbitrary attribute of
-            # the error
-            suggestions = fuzzy_match(
-                target=error["loc"][0], choices=cls.model_fields.keys()
-            )
-            if suggestions:
-                error["ctx"] = {
-                    "expected": f"a valid Field name. Field '{error['loc'][0]}' does "
-                    f"not exist. Did you mean any of {suggestions}?"
-                }
+                # change error type to literal because it allows for context
+                error["type"] = "literal_error"
+                # pydantic automatically prints the __dict__ of an error, so it is
+                # sufficient to just assign the suggestions to an arbitrary attribute of
+                # the error
+                suggestions = fuzzy_match(
+                    target=error["loc"][0], choices=cls.model_fields.keys()
+                )
+                if suggestions:
+                    error["ctx"] = {
+                        "expected": f"a valid Field name. Field '{error['loc'][0]}' does "
+                        f"not exist. Did you mean any of {suggestions}?"
+                    }
 
         return pydantic.ValidationError.from_exception_data(
-            title=e.title, line_errors=error_list
+            title=title, line_errors=error_list
         )
 
 
@@ -585,30 +591,6 @@ class BaseModule(abc.ABC):
             variable=var.copy(update={"source": self.source}),
             copy=False,
         )
-
-    def update_variables(self, variables: List[AgentVariable], timestamp: float = None):
-        """
-        Updates the given list of variables in the current data_broker.
-        If a given Variable is not in the config of the module, an
-        error is raised.
-        TODO: check if this is needed, we currently don't use it anywhere
-
-        Args:
-            variables: List with agent_variables.
-            timestamp: The timestamp associated with the variable.
-                If None, current environment time is used.
-        """
-        if timestamp is None:
-            timestamp = self.env.time
-
-        for v in variables:
-            if v.name not in self._variables_dict:
-                raise ValueError(
-                    f"'{self.__class__.__name__}' has "
-                    f"no AgentVariable with the name '{v.name}' "
-                    f"in the config."
-                )
-            self.set(name=v.name, value=v.value, timestamp=timestamp)
 
     ############################################################################
     # Private and or static class methods

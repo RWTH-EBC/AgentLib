@@ -34,9 +34,8 @@ class HeatedRoom(ag.Model):
 
 pid_agent_config = {
     "id": "PID",
-    "modules": [
-        {
-            "module_id": "myBangbang",
+    "modules": {
+        "myBangbang": {
             "type": "bangbang",
             "gain": 600,
             "lb": 20,
@@ -49,9 +48,9 @@ pid_agent_config = {
                 "shared": True,
             },
         },
-        {"module_id": "myLogger", "type": "AgentLogger"},
-        {"module_id": "myComm", "type": "local", "subscriptions": ["Process"]},
-    ],
+        "myLogger": {"type": "AgentLogger"},
+        "myComm": {"type": "local", "subscriptions": ["Process"]},
+    },
 }
 
 process_agent_config = {

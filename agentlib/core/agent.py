@@ -4,10 +4,12 @@ Module containing only the Agent class.
 
 import json
 import threading
+from copy import deepcopy
 from pathlib import Path
 from typing import Union, List, Dict, TypeVar, Optional
 
 from pydantic import field_validator, BaseModel, FilePath, Field
+from pydantic_core.core_schema import FieldValidationInfo
 
 import agentlib
 import agentlib.core.logging_ as agentlib_logging
@@ -20,6 +22,7 @@ from agentlib.core import (
     DataBroker,
 )
 from agentlib.core.environment import CustomSimpyEnvironment
+from agentlib.core.errors import ConfigurationError
 from agentlib.utils import custom_injection
 from agentlib.utils.load_config import load_config
 
@@ -38,7 +41,12 @@ class AgentConfig(BaseModel):
         description="The ID of the Agent, should be unique in "
         "the multi-agent-system the agent is living in.",
     )
-    modules: List[Union[Dict, FilePath]] = None
+    modules: Union[List[Union[Dict, FilePath]], Dict[str, Union[Dict, FilePath]]] = (
+        Field(
+            default_factory=list,
+            description="A list or dictionary of modules. If a dictionary is provided, keys are treated as module_ids.",
+        )
+    )
     check_alive_interval: float = Field(
         title="check_alive_interval",
         default=1,
@@ -62,17 +70,40 @@ class AgentConfig(BaseModel):
 
     @field_validator("modules")
     @classmethod
-    def check_modules(cls, modules: List):
-        """Validator to ensure all modules are in dict-format."""
+    def check_modules(cls, modules: Union[List, Dict], info: FieldValidationInfo):
+        """Validator to ensure all modules are in dict-format and include 'module_id'."""
         modules_loaded = []
-        for module in modules:
-            if isinstance(module, (str, Path)):
-                if Path(module).exists():
-                    with open(module, "r") as f:
-                        module = json.load(f)
-                else:
-                    module = json.loads(module)
-            modules_loaded.append(module)
+        if isinstance(modules, dict):
+            for module_id, module in modules.items():
+                if isinstance(module, (str, Path)):
+                    if Path(module).exists():
+                        with open(module, "r") as f:
+                            module = json.load(f)
+                    else:
+                        module = json.loads(module)
+                if isinstance(module, dict):
+                    module = deepcopy(module)
+                    if "module_id" in module and not module["module_id"] == module_id:
+                        agent = info.data["id"]
+                        raise ConfigurationError(
+                            f"Provided agent {agent} has ambiguous module_id. Module "
+                            f"config was declared with dict key {module_id} but "
+                            f"contains different module_id {module['module_id']} "
+                            f"within config."
+                        )
+                    module["module_id"] = module_id
+                modules_loaded.append(module)
+        elif isinstance(modules, list):
+            for module in modules:
+                if isinstance(module, (str, Path)):
+                    if Path(module).exists():
+                        with open(module, "r") as f:
+                            module = json.load(f)
+                    else:
+                        module = json.loads(module)
+                modules_loaded.append(module)
+        else:
+            raise TypeError("Modules must be a list or a dict")
         return modules_loaded
 
 
