@@ -24,6 +24,7 @@ agent_config1 = {
         {
             "module_id": "Ag1Com",
             "type": "multiprocessing_subscription",
+            "port": 50001,
             "subscriptions": ["SecondAgent"],
         },
         {
@@ -40,6 +41,7 @@ agent_config2 = {
         {
             "module_id": "Ag2Com",
             "type": "multiprocessing_subscription",
+            "port": 50001,
             "subscriptions": ["FirstAgent"],
         },
         {

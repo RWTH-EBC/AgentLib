@@ -71,7 +71,7 @@ class TestExamples(unittest.TestCase):
             until=8640,
             with_plots=False,
             log_level=logging.DEBUG,
-            use_direct_callback_databroker=False
+            use_direct_callback_databroker=False,
         )
 
     def test_room_mas_direct_callback(self):
