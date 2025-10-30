@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>agentlib.utils package &mdash; agentlib 0.8.8 documentation</title>
+  <title>agentlib.utils package &mdash; agentlib 0.8.9 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css" />
       <link rel="stylesheet" type="text/css" href="_static/autodoc_pydantic.css" />
@@ -833,6 +833,24 @@ Then returns the union of the default variables and the external config variable
 functions for the agentlib.</p>
 <p>Most notably, the custom injection enabling
 dynamic loading of custom models and modules.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="agentlib.utils.create_time_samples">
+<span class="sig-prename descclassname"><span class="pre">agentlib.utils.</span></span><span class="sig-name descname"><span class="pre">create_time_samples</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_end</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agentlib/utils.html#create_time_samples"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.utils.create_time_samples" title="Permalink to this definition"></a></dt>
+<dd><p>Function to generate an array of time steps
+using the dt object.
+Note that, if dt is not a true divider of t_end,
+the output array is not equally sampled.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dt</strong> (<em>float</em>) – Step-size</p></li>
+<li><p><strong>t_end</strong> (<em>float</em>) – end time</p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns:</p>
+</dd></dl>
+
 <dl class="py function">
 <dt class="sig sig-object py" id="agentlib.utils.custom_injection">
 <span class="sig-prename descclassname"><span class="pre">agentlib.utils.</span></span><span class="sig-name descname"><span class="pre">custom_injection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agentlib/utils.html#custom_injection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.utils.custom_injection" title="Permalink to this definition"></a></dt>
