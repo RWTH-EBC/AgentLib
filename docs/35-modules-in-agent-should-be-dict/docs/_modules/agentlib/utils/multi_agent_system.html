@@ -122,6 +122,10 @@
         <span class="n">title</span><span class="o">=</span><span class="s2">&quot;variable_logging&quot;</span><span class="p">,</span>
         <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Enable variable logging in all agents with sampling rate of environment.&quot;</span><span class="p">,</span>
     <span class="p">)</span>
+    <span class="n">use_direct_callback_databroker</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;If True, the `DirectCallbackDataBroker` will be used in all agents&quot;</span>
+    <span class="p">)</span>
     <span class="n">_agent_configs</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">AgentConfig</span><span class="p">]</span> <span class="o">=</span> <span class="n">PrivateAttr</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="p">{})</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">data</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -157,6 +161,15 @@
                 <span class="n">config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_agent_logger</span><span class="p">(</span>
                     <span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">,</span> <span class="n">sampling</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">t_sample</span>
                 <span class="p">)</span>
+        <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">use_direct_callback_databroker</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_direct_callback_databroker</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                <span class="s2">&quot;Agent </span><span class="si">%s</span><span class="s2"> explicitly sets use_direct_callback_databroker=True, &quot;</span>
+                <span class="s2">&quot;won&#39;t apply the MAS.use_direct_callback_databroker=False setting.&quot;</span><span class="p">,</span>
+                <span class="n">config</span><span class="o">.</span><span class="n">id</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">config</span><span class="o">.</span><span class="n">use_direct_callback_databroker</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_direct_callback_databroker</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">_agent_configs</span><span class="p">[</span><span class="n">config</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">model_copy</span><span class="p">()</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Registered agent </span><span class="si">%s</span><span class="s2"> in agency&quot;</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">id</span><span class="p">)</span></div>
 
@@ -311,12 +324,12 @@
 
 
 <div class="viewcode-block" id="agent_process"><a class="viewcode-back" href="../../../code/agentlib.utils.html#agentlib.agent_process">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">agent_process</span><span class="p">(</span>
-    <span class="n">agent_config</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">dict</span><span class="p">,</span> <span class="n">FilePath</span><span class="p">],</span>
-    <span class="n">until</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-    <span class="n">env</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">dict</span><span class="p">,</span> <span class="n">FilePath</span><span class="p">],</span>
-    <span class="n">results_dict</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
-    <span class="n">cleanup</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">log_level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">ERROR</span><span class="p">,</span>
+        <span class="n">agent_config</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">dict</span><span class="p">,</span> <span class="n">FilePath</span><span class="p">],</span>
+        <span class="n">until</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+        <span class="n">env</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">dict</span><span class="p">,</span> <span class="n">FilePath</span><span class="p">],</span>
+        <span class="n">results_dict</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
+        <span class="n">cleanup</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">log_level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">ERROR</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Function to initialize and start an agent in its own process.</span>

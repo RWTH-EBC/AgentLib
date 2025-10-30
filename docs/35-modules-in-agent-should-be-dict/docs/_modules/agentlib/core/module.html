@@ -368,10 +368,8 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="k">except</span> <span class="n">pydantic</span><span class="o">.</span><span class="n">ValidationError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="n">module_id</span> <span class="o">=</span> <span class="n">_user_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;module_id&quot;</span><span class="p">)</span>
-            <span class="n">module_id_text</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot; / module &#39;</span><span class="si">{</span><span class="n">module_id</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">if</span> <span class="n">module_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
             <span class="n">better_error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_improve_extra_field_error_messages</span><span class="p">(</span>
-                <span class="n">e</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">_agent_id</span><span class="p">,</span> <span class="n">module_id</span><span class="o">=</span><span class="n">module_id_text</span>
+                <span class="n">e</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">_agent_id</span><span class="p">,</span> <span class="n">module_id</span><span class="o">=</span><span class="n">_user_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;module_id&quot;</span><span class="p">)</span>
             <span class="p">)</span>
             <span class="k">raise</span> <span class="n">better_error</span>
 
@@ -395,7 +393,10 @@
 <span class="sd">        correct field names to the error message.&quot;&quot;&quot;</span>
 
         <span class="n">error_list</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">errors</span><span class="p">()</span>
-        <span class="n">title</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;configuration of agent &#39;</span><span class="si">{</span><span class="n">agent_id</span><span class="si">}</span><span class="s2">&#39;</span><span class="si">{</span><span class="n">module_id</span><span class="si">}</span><span class="s2">&#39;:&quot;</span>
+        <span class="k">if</span> <span class="n">module_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">title</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;configuration of agent &#39;</span><span class="si">{</span><span class="n">agent_id</span><span class="si">}</span><span class="s2">&#39; / module &#39;</span><span class="si">{</span><span class="n">module_id</span><span class="si">}</span><span class="s2">&#39;:&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">title</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;configuration of agent &#39;</span><span class="si">{</span><span class="n">agent_id</span><span class="si">}</span><span class="s2">&#39;:&quot;</span>
         <span class="k">if</span> <span class="n">RAPIDFUZZ_IS_INSTALLED</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">error</span> <span class="ow">in</span> <span class="n">error_list</span><span class="p">:</span>
                 <span class="k">if</span> <span class="ow">not</span> <span class="n">error</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;extra_forbidden&quot;</span><span class="p">:</span>

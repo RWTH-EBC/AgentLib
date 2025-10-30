@@ -94,6 +94,7 @@
     <span class="n">Environment</span><span class="p">,</span>
     <span class="n">LocalDataBroker</span><span class="p">,</span>
     <span class="n">RTDataBroker</span><span class="p">,</span>
+    <span class="n">DirectCallbackDataBroker</span><span class="p">,</span>
     <span class="n">BaseModule</span><span class="p">,</span>
     <span class="n">DataBroker</span><span class="p">,</span>
 <span class="p">)</span>
@@ -138,6 +139,10 @@
         <span class="n">ge</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
         <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Maximal number of waiting items in data-broker queues. &quot;</span>
         <span class="s2">&quot;Set to -1 for infinity&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">use_direct_callback_databroker</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;If True, the `DirectCallbackDataBroker` will be used &quot;</span>
     <span class="p">)</span>
 
 <div class="viewcode-block" id="AgentConfig.check_modules"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.AgentConfig.check_modules">[docs]</a>    <span class="nd">@field_validator</span><span class="p">(</span><span class="s2">&quot;modules&quot;</span><span class="p">)</span>
@@ -202,10 +207,16 @@
             <span class="n">env</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">/DataBroker&quot;</span>
         <span class="p">)</span>
         <span class="k">if</span> <span class="n">env</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">rt</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">use_direct_callback_databroker</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Can not use the direct callback databroker in real-time&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_data_broker</span> <span class="o">=</span> <span class="n">RTDataBroker</span><span class="p">(</span>
                 <span class="n">env</span><span class="o">=</span><span class="n">env</span><span class="p">,</span> <span class="n">logger</span><span class="o">=</span><span class="n">data_broker_logger</span><span class="p">,</span> <span class="n">max_queue_size</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">max_queue_size</span>
             <span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">register_thread</span><span class="p">(</span><span class="n">thread</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_data_broker</span><span class="o">.</span><span class="n">thread</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">config</span><span class="o">.</span><span class="n">use_direct_callback_databroker</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_data_broker</span> <span class="o">=</span> <span class="n">DirectCallbackDataBroker</span><span class="p">(</span>
+                <span class="n">logger</span><span class="o">=</span><span class="n">data_broker_logger</span>
+            <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_data_broker</span> <span class="o">=</span> <span class="n">LocalDataBroker</span><span class="p">(</span>
                 <span class="n">env</span><span class="o">=</span><span class="n">env</span><span class="p">,</span> <span class="n">logger</span><span class="o">=</span><span class="n">data_broker_logger</span><span class="p">,</span> <span class="n">max_queue_size</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">max_queue_size</span>
