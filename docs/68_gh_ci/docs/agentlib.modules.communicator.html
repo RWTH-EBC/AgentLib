@@ -100,8 +100,171 @@
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
 </section>
-<section id="agentlib-modules-communicator-clonemap-module">
-<span id="clonemap"></span><h2>agentlib.modules.communicator.clonemap module<a class="headerlink" href="#agentlib-modules-communicator-clonemap-module" title="Permalink to this heading"></a></h2>
+<section id="module-agentlib.modules.communicator.clonemap">
+<span id="agentlib-modules-communicator-clonemap-module"></span><span id="clonemap"></span><h2>agentlib.modules.communicator.clonemap module<a class="headerlink" href="#module-agentlib.modules.communicator.clonemap" title="Permalink to this heading"></a></h2>
+<p>This module implements a clonemap compatible communicator</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.clonemap.CloneMAPAgent">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agentlib.modules.communicator.clonemap.</span></span><span class="sig-name descname"><span class="pre">CloneMAPAgent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">info</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AgentInfo</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mas_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mas_custom</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">msg_in</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Queue</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">msg_out</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Queue</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_out</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Queue</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ts_out</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Queue</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agentlib/modules/communicator/clonemap.html#CloneMAPAgent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.communicator.clonemap.CloneMAPAgent" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Agent</span></code></p>
+<p>cloneMAP Agent</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.clonemap.CloneMAPAgent.task">
+<span class="sig-name descname"><span class="pre">task</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/agentlib/modules/communicator/clonemap.html#CloneMAPAgent.task"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.communicator.clonemap.CloneMAPAgent.task" title="Permalink to this definition"></a></dt>
+<dd><p>Method task is executed by the agency for each agent in a separate process</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.clonemap.CloneMAPClient">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agentlib.modules.communicator.clonemap.</span></span><span class="sig-name descname"><span class="pre">CloneMAPClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="code/agentlib.core.html#agentlib.core.agent.Agent" title="agentlib.core.agent.Agent"><span class="pre">Agent</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agentlib/modules/communicator/clonemap.html#CloneMAPClient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.communicator.clonemap.CloneMAPClient" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="code/agentlib.modules.communicator.html#agentlib.modules.communicator.communicator.Communicator" title="agentlib.modules.communicator.communicator.Communicator"><code class="xref py py-class docutils literal notranslate"><span class="pre">Communicator</span></code></a></p>
+<p>This communicator implements the communication between agents via clonemap.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.clonemap.CloneMAPClient.generate_topic">
+<span class="sig-name descname"><span class="pre">generate_topic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agent_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subscription</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agentlib/modules/communicator/clonemap.html#CloneMAPClient.generate_topic"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.communicator.clonemap.CloneMAPClient.generate_topic" title="Permalink to this definition"></a></dt>
+<dd><p>Generate the topic with the given agent_id and
+configs prefix</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.clonemap.CloneMAPClient.prefix">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">prefix</span></span><a class="headerlink" href="#agentlib.modules.communicator.clonemap.CloneMAPClient.prefix" title="Permalink to this definition"></a></dt>
+<dd><p>Custom prefix for clonemap.
+For MAS with id 0 and default config it’s:
+/mas_0/agentlib</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.clonemap.CloneMAPClient.pubtopic">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">pubtopic</span></span><a class="headerlink" href="#agentlib.modules.communicator.clonemap.CloneMAPClient.pubtopic" title="Permalink to this definition"></a></dt>
+<dd><p>Generate the publication topic</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class pydantic_model">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.clonemap.CloneMAPClientConfig">
+<em class="property"><span class="pre">pydantic</span> <span class="pre">model</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agentlib.modules.communicator.clonemap.</span></span><span class="sig-name descname"><span class="pre">CloneMAPClientConfig</span></span><a class="reference internal" href="_modules/agentlib/modules/communicator/clonemap.html#CloneMAPClientConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.communicator.clonemap.CloneMAPClientConfig" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="code/agentlib.modules.communicator.html#agentlib.modules.communicator.communicator.SubscriptionCommunicatorConfig" title="agentlib.modules.communicator.communicator.SubscriptionCommunicatorConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">SubscriptionCommunicatorConfig</span></code></a></p>
+<p>clonemap communicator settings</p>
+<dl class="field-list simple">
+<dt class="field-odd">Config<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>arbitrary_types_allowed</strong>: <em>bool = True</em></p></li>
+<li><p><strong>validate_assignment</strong>: <em>bool = True</em></p></li>
+<li><p><strong>extra</strong>: <em>str = forbid</em></p></li>
+<li><p><strong>frozen</strong>: <em>bool = True</em></p></li>
+</ul>
+</dd>
+<dt class="field-even">Fields<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="code/agentlib.modules.communicator.html#agentlib.modules.communicator.clonemap.CloneMAPClientConfig.cagent" title="agentlib.modules.communicator.clonemap.CloneMAPClientConfig.cagent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cagent</span> <span class="pre">(clonemapy.agent.Agent)</span></code></a></p></li>
+<li><p><a class="reference internal" href="code/agentlib.modules.communicator.html#agentlib.modules.communicator.clonemap.CloneMAPClientConfig.env_factor" title="agentlib.modules.communicator.clonemap.CloneMAPClientConfig.env_factor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">env_factor</span> <span class="pre">(float)</span></code></a></p></li>
+<li><p><a class="reference internal" href="code/agentlib.modules.communicator.html#agentlib.modules.communicator.clonemap.CloneMAPClientConfig.prefix" title="agentlib.modules.communicator.clonemap.CloneMAPClientConfig.prefix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">prefix</span> <span class="pre">(str)</span></code></a></p></li>
+<li><p><a class="reference internal" href="code/agentlib.modules.communicator.html#agentlib.modules.communicator.clonemap.CloneMAPClientConfig.subtopics" title="agentlib.modules.communicator.clonemap.CloneMAPClientConfig.subtopics"><code class="xref py py-obj docutils literal notranslate"><span class="pre">subtopics</span> <span class="pre">(List[str]</span> <span class="pre">|</span> <span class="pre">str)</span></code></a></p></li>
+</ul>
+</dd>
+<dt class="field-odd">Validators<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="code/agentlib.utils.html#agentlib.utils.validators.convert_to_list" title="agentlib.utils.validators.convert_to_list"><code class="xref py py-obj docutils literal notranslate"><span class="pre">convert_to_list</span></code></a> » <a class="reference internal" href="code/agentlib.modules.communicator.html#agentlib.modules.communicator.clonemap.CloneMAPClientConfig.subtopics" title="agentlib.modules.communicator.clonemap.CloneMAPClientConfig.subtopics"><code class="xref py py-obj docutils literal notranslate"><span class="pre">subtopics</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.clonemap.CloneMAPClientConfig.cagent">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">cagent</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Agent</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agentlib.modules.communicator.clonemap.CloneMAPClientConfig.cagent" title="Permalink to this definition"></a></dt>
+<dd><p>Agent object of CloneMAP</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.clonemap.CloneMAPClientConfig.env_factor">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">env_factor</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#agentlib.modules.communicator.clonemap.CloneMAPClientConfig.env_factor" title="Permalink to this definition"></a></dt>
+<dd><p>Specify Environment Variable Factor</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.clonemap.CloneMAPClientConfig.prefix">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">prefix</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'/agentlib'</span></em><a class="headerlink" href="#agentlib.modules.communicator.clonemap.CloneMAPClientConfig.prefix" title="Permalink to this definition"></a></dt>
+<dd><p>Prefix for MQTT-Topic</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.clonemap.CloneMAPClientConfig.subtopics">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">subtopics</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#agentlib.modules.communicator.clonemap.CloneMAPClientConfig.subtopics" title="Permalink to this definition"></a></dt>
+<dd><p>Topics to that the agent subscribes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Validated by<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="code/agentlib.utils.html#agentlib.utils.validators.convert_to_list" title="agentlib.utils.validators.convert_to_list"><code class="xref py py-obj docutils literal notranslate"><span class="pre">convert_to_list</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.clonemap.CloneMAPClientConfig.model_post_init">
+<span class="sig-name descname"><span class="pre">model_post_init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#agentlib.modules.communicator.clonemap.CloneMAPClientConfig.model_post_init" title="Permalink to this definition"></a></dt>
+<dd><p>This function is meant to behave like a BaseModel method to initialise private attributes.</p>
+<p>It takes context as an argument since that’s what pydantic-core passes when calling it.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>self</strong> – The BaseModel instance.</p></li>
+<li><p><strong>context</strong> – The context.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.clonemap.CustomLogger">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agentlib.modules.communicator.clonemap.</span></span><span class="sig-name descname"><span class="pre">CustomLogger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cagent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Agent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agentlib/modules/communicator/clonemap.html#CustomLogger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.communicator.clonemap.CustomLogger" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Handler</span></code></p>
+<p>custom logger to route all logs to the cloneMAP logger module</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.clonemap.CustomLogger.emit">
+<span class="sig-name descname"><span class="pre">emit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">record</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agentlib/modules/communicator/clonemap.html#CustomLogger.emit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.communicator.clonemap.CustomLogger.emit" title="Permalink to this definition"></a></dt>
+<dd><p>Do whatever it takes to actually log the specified logging record.</p>
+<p>This version is intended to be implemented by subclasses and so
+raises a NotImplementedError.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="agentlib.modules.communicator.clonemap.set_and_get_cmap_config">
+<span class="sig-prename descclassname"><span class="pre">agentlib.modules.communicator.clonemap.</span></span><span class="sig-name descname"><span class="pre">set_and_get_cmap_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agent_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cagent</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Agent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agentlib/modules/communicator/clonemap.html#set_and_get_cmap_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.communicator.clonemap.set_and_get_cmap_config" title="Permalink to this definition"></a></dt>
+<dd><p>Manipulate the given agent_config to pass the cagent into the config.
+Further, get the settings of log level and env_factor to
+start the agent correctly.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dict</strong> (<em>agent_config</em>) – Agent configuation</p></li>
+<li><p><strong>clonemapyagent.Agent</strong> (<em>cagent</em>) – Clonemappy Agent</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>dict</dt><dd><p>Manipulated config</p>
+</dd>
+<dt>env_factor: float</dt><dd><p>Environment factor in config</p>
+</dd>
+<dt>log_level: str</dt><dd><p>Log-level of config</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>agent_config</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 <section id="module-agentlib.modules.communicator.communicator">
 <span id="agentlib-modules-communicator-communicator-module"></span><h2>agentlib.modules.communicator.communicator module<a class="headerlink" href="#module-agentlib.modules.communicator.communicator" title="Permalink to this heading"></a></h2>
@@ -389,84 +552,10 @@ be in the same process!</p>
 </ul>
 </dd>
 <dt class="field-even">Fields<span class="colon">:</span></dt>
-<dd class="field-even"><ul class="simple">
-<li><p><a class="reference internal" href="code/agentlib.modules.communicator.html#agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.log_level" title="agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.log_level"><code class="xref py py-obj docutils literal notranslate"><span class="pre">log_level</span> <span class="pre">(Optional[str])</span></code></a></p></li>
-<li><p><a class="reference internal" href="code/agentlib.modules.communicator.html#agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.module_id" title="agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.module_id"><code class="xref py py-obj docutils literal notranslate"><span class="pre">module_id</span> <span class="pre">(str)</span></code></a></p></li>
-<li><p><a class="reference internal" href="code/agentlib.modules.communicator.html#agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.parse_json" title="agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.parse_json"><code class="xref py py-obj docutils literal notranslate"><span class="pre">parse_json</span> <span class="pre">(bool)</span></code></a></p></li>
-<li><p><a class="reference internal" href="code/agentlib.modules.communicator.html#agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.queue_size" title="agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.queue_size"><code class="xref py py-obj docutils literal notranslate"><span class="pre">queue_size</span> <span class="pre">(int)</span></code></a></p></li>
-<li><p><a class="reference internal" href="code/agentlib.modules.communicator.html#agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.shared_variable_fields" title="agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.shared_variable_fields"><code class="xref py py-obj docutils literal notranslate"><span class="pre">shared_variable_fields</span> <span class="pre">(List[str])</span></code></a></p></li>
-<li><p><a class="reference internal" href="code/agentlib.modules.communicator.html#agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.type" title="agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">type</span> <span class="pre">(Union[str,</span> <span class="pre">Dict[str,</span> <span class="pre">str]])</span></code></a></p></li>
-<li><p><a class="reference internal" href="code/agentlib.modules.communicator.html#agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.use_orjson" title="agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.use_orjson"><code class="xref py py-obj docutils literal notranslate"><span class="pre">use_orjson</span> <span class="pre">(bool)</span></code></a></p></li>
-<li><p><a class="reference internal" href="code/agentlib.modules.communicator.html#agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.validate_incoming_values" title="agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.validate_incoming_values"><code class="xref py py-obj docutils literal notranslate"><span class="pre">validate_incoming_values</span> <span class="pre">(Optional[bool])</span></code></a></p></li>
-</ul>
-</dd>
+<dd class="field-even"><p></p></dd>
 <dt class="field-odd">Validators<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><a class="reference internal" href="code/agentlib.core.html#agentlib.core.module.BaseModuleConfig.check_valid_fields" title="agentlib.core.module.BaseModuleConfig.check_valid_fields"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_valid_fields</span></code></a> » <a class="reference internal" href="code/agentlib.modules.communicator.html#agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.shared_variable_fields" title="agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.shared_variable_fields"><code class="xref py py-obj docutils literal notranslate"><span class="pre">shared_variable_fields</span></code></a></p></li>
-<li><p><a class="reference internal" href="code/agentlib.core.html#agentlib.core.module.BaseModuleConfig.check_valid_level" title="agentlib.core.module.BaseModuleConfig.check_valid_level"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_valid_level</span></code></a> » <a class="reference internal" href="code/agentlib.modules.communicator.html#agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.log_level" title="agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.log_level"><code class="xref py py-obj docutils literal notranslate"><span class="pre">log_level</span></code></a></p></li>
-</ul>
-</dd>
+<dd class="field-odd"><p></p></dd>
 </dl>
-<dl class="py attribute pydantic_field">
-<dt class="sig sig-object py" id="agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.log_level">
-<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">log_level</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.log_level" title="Permalink to this definition"></a></dt>
-<dd><p>The log level for this Module. Default uses the root-loggers level.Options: DEBUG; INFO; WARNING; ERROR; CRITICAL</p>
-<dl class="field-list simple">
-<dt class="field-odd">Validated by<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><a class="reference internal" href="code/agentlib.core.html#agentlib.core.module.BaseModuleConfig.check_valid_level" title="agentlib.core.module.BaseModuleConfig.check_valid_level"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_valid_level</span></code></a></p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute pydantic_field">
-<dt class="sig sig-object py" id="agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.module_id">
-<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">module_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.module_id" title="Permalink to this definition"></a></dt>
-<dd><p>The unqiue id of the module within an agent, used only to communicate withing the agent.</p>
-</dd></dl>
-
-<dl class="py attribute pydantic_field">
-<dt class="sig sig-object py" id="agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.parse_json">
-<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">parse_json</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.parse_json" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute pydantic_field">
-<dt class="sig sig-object py" id="agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.queue_size">
-<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">queue_size</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">10000</span></em><a class="headerlink" href="#agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.queue_size" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute pydantic_field">
-<dt class="sig sig-object py" id="agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.shared_variable_fields">
-<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">shared_variable_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.shared_variable_fields" title="Permalink to this definition"></a></dt>
-<dd><p>A list of strings with each string being a field of the Modules configs. The field must be or contain an AgentVariable. If the field is added to this list, all shared attributes of the AgentVariables will be set to True.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Validated by<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><a class="reference internal" href="code/agentlib.core.html#agentlib.core.module.BaseModuleConfig.check_valid_fields" title="agentlib.core.module.BaseModuleConfig.check_valid_fields"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_valid_fields</span></code></a></p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute pydantic_field">
-<dt class="sig sig-object py" id="agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.type">
-<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">[Required]</span></em><a class="headerlink" href="#agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.type" title="Permalink to this definition"></a></dt>
-<dd><p>The type of the Module. Used to find the Python-Object from all agentlib-core and plugin Module options. If a dict is given,it must contain the keys ‘file’ and ‘class_name’. ‘file’ is the filepath of a python file containing the Module.’class_name’ is the name of the Module class within this file.</p>
-</dd></dl>
-
-<dl class="py attribute pydantic_field">
-<dt class="sig sig-object py" id="agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.use_orjson">
-<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">use_orjson</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.use_orjson" title="Permalink to this definition"></a></dt>
-<dd><p>If true, the faster orjson library will be used for serialization deserialization. Requires the optional dependency.</p>
-</dd></dl>
-
-<dl class="py attribute pydantic_field">
-<dt class="sig sig-object py" id="agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.validate_incoming_values">
-<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">validate_incoming_values</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.validate_incoming_values" title="Permalink to this definition"></a></dt>
-<dd><p>If true, the validator of the AgentVariable value is called when receiving a new value from the DataBroker.</p>
-</dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.model_post_init">
 <span class="sig-name descname"><span class="pre">model_post_init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#agentlib.modules.communicator.local.LocalSubscriptionCommunicatorConfig.model_post_init" title="Permalink to this definition"></a></dt>
