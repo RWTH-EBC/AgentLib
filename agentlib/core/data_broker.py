@@ -170,15 +170,13 @@ class DataBroker(abc.ABC):
     with ``register_callback`` and ``deregister_callback``.
     """
 
-    def __init__(self, logger: CustomLogger, max_queue_size: int = 1000):
+    def __init__(self, logger: CustomLogger):
         """
         Initialize lock, callbacks and entries
         """
         self.logger = logger
-        self._max_queue_size = max_queue_size
         self._mapped_callbacks: Dict[Tuple[str, Source], List[BrokerCallback]] = {}
         self._unmapped_callbacks: List[BrokerCallback] = []
-        self._variable_queue = queue.Queue(maxsize=max_queue_size)
 
     def send_variable(self, variable: AgentVariable, copy: bool = True):
         """
@@ -196,6 +194,7 @@ class DataBroker(abc.ABC):
         else:
             self._send_variable_to_modules(variable=variable)
 
+    @abc.abstractmethod
     def _send_variable_to_modules(self, variable: AgentVariable):
         """
         Enqueue AgentVariable in local queue for executing relevant callbacks.
@@ -203,19 +202,12 @@ class DataBroker(abc.ABC):
         Args:
             variable AgentVariable: The variable to append to the local queue.
         """
-        self._variable_queue.put(variable)
+        raise NotImplementedError
 
-    def _execute_callbacks(self):
+    def _get_variable_callbacks(self, variable: AgentVariable):
         """
-        Run relevant callbacks for AgentVariable's from local queue.
+        Helper function to get all callbacks associated with a given variable
         """
-        variable = self._variable_queue.get(block=True)
-        log_queue_status(
-            logger=self.logger,
-            queue_name="Callback-Distribution",
-            queue_object=self._variable_queue,
-            max_queue_size=self._max_queue_size,
-        )
         _map_tuple = (variable.alias, variable.source)
         # First the unmapped cbs
         callbacks = self._filter_unmapped_callbacks(map_tuple=_map_tuple)
@@ -225,9 +217,7 @@ class DataBroker(abc.ABC):
             callbacks.extend(self._mapped_callbacks[_map_tuple])
         except KeyError:
             pass
-
-        # Then run the callbacks
-        self._run_callbacks(callbacks, variable)
+        return callbacks
 
     def _filter_unmapped_callbacks(self, map_tuple: tuple) -> List[BrokerCallback]:
         """
@@ -346,7 +336,63 @@ class DataBroker(abc.ABC):
         raise NotImplementedError
 
 
-class LocalDataBroker(DataBroker):
+class DirectCallbackDataBroker(DataBroker):
+    """
+    This DataBroker directly executes all callbacks.
+    This may lead to infinite recursion loops, if two callbacks trigger
+    each other when being triggered, for example.
+    However, using this class, you can directly "follow" your variable
+    from module to other modules or agents.
+    """
+
+    def _send_variable_to_modules(self, variable: AgentVariable):
+        """
+        Directly execute all callbacks for the given variable.
+
+        Args:
+            variable AgentVariable: The variable to append to the local queue.
+        """
+        callbacks = self._get_variable_callbacks(variable)
+        for cb in callbacks:
+            cb.callback(variable, **cb.kwargs)
+
+
+class QueuedCallbackDataBroker(DataBroker):
+
+    def __init__(self, logger: CustomLogger, max_queue_size: int = 1000):
+        """
+        Initialize lock, callbacks and entries
+        """
+        super().__init__(logger=logger)
+        self._max_queue_size = max_queue_size
+        self._variable_queue = queue.Queue(maxsize=max_queue_size)
+
+    def _send_variable_to_modules(self, variable: AgentVariable):
+        """
+        Enqueue AgentVariable in local queue for executing relevant callbacks.
+
+        Args:
+            variable AgentVariable: The variable to append to the local queue.
+        """
+        self._variable_queue.put(variable)
+
+    def _execute_callbacks(self):
+        """
+        Run relevant callbacks for AgentVariable's from local queue.
+        """
+        variable = self._variable_queue.get(block=True)
+        log_queue_status(
+            logger=self.logger,
+            queue_name="Callback-Distribution",
+            queue_object=self._variable_queue,
+            max_queue_size=self._max_queue_size,
+        )
+        callbacks = self._get_variable_callbacks(variable)
+        # Then run the callbacks
+        self._run_callbacks(callbacks, variable)
+
+
+class LocalDataBroker(QueuedCallbackDataBroker):
     """Local variation of the DataBroker written for fast-as-possible
     simulation within a single non-realtime Environment."""
 
@@ -386,7 +432,7 @@ class LocalDataBroker(DataBroker):
             cb.callback(variable, **cb.kwargs)
 
 
-class RTDataBroker(DataBroker):
+class RTDataBroker(QueuedCallbackDataBroker):
     """DataBroker written for Realtime operation regardless of Environment."""
 
     def __init__(

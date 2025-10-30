@@ -154,7 +154,13 @@ class AgentLogger(BaseModule):
     def _callback_values(self, variable: AgentVariable):
         """Save variable values to log later."""
         if not isinstance(variable.value, (float, int, str)):
-            return
+            if isinstance(variable.value, pd.Series):
+                return
+            else:
+                try:
+                    variable.value = float(variable.value)
+                except (TypeError, ValueError):
+                    return
         current_time = self._variables_to_log.setdefault(str(self.env.time), {})
         # we merge alias and source tuple into a string so we can .json it
         current_time[str((variable.alias, str(variable.source)))] = variable.value
@@ -188,17 +194,24 @@ class AgentLogger(BaseModule):
                 resulting in a multi-indexed return column index
 
         """
-        chunks = []
-        with open(filename, "r") as file:
-            for data_line in file.readlines():
-                chunks.append(json.loads(data_line))
-        if not any(chunks):
+        data = []
+        with open(filename, "r", encoding="utf-8") as file:
+            for line in file:
+                if not line.strip():
+                    continue
+                chunk = json.loads(line)
+                for timestamp, values in chunk.items():
+                    row = {"time": float(timestamp)}
+                    row.update(values)
+                    data.append(row)
+
+        if not data:
             return pd.DataFrame()
-        full_dict = collections.ChainMap(*chunks)
-        df = pd.DataFrame.from_dict(full_dict, orient="index")
-        df.index = df.index.astype(float)
-        columns = (literal_eval(column) for column in df.columns)
-        df.columns = pd.MultiIndex.from_tuples(columns)
+
+        df = pd.DataFrame(data).set_index("time")
+        df.columns = pd.MultiIndex.from_tuples(
+            literal_eval(c) for c in df.columns
+        )
 
         if not values_only:
 

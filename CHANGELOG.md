@@ -21,6 +21,11 @@
 - Add subcription based multiprocessing.
 - Fixed a bug, where the AgentLogger would load an old run when no filename was specified, but overwrite_log was true
 
+## 0.8.9
+- Improve error message to include agent and module id in validation errors
+- Allow agent configs to specify modules as a dict instead of list, with dict keys corresponding to module_id. Old list still supported as normal.
+- Add DirectCallbackDataBroker option for easier debugging and learning how AgentLib Callbacks work #67
+
 ## 0.8.8
 - Percentage display in logging now only appears in simulation speed, not realtime. Fixed percentage when environment has an offset.
 

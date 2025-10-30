@@ -6,6 +6,7 @@ import os
 import threading
 import time
 import sys
+from copy import deepcopy
 
 from pydantic import ValidationError
 
@@ -15,6 +16,9 @@ from agentlib.core import (
     AgentVariables,
     Environment,
     DataBroker,
+    DirectCallbackDataBroker,
+    RTDataBroker,
+    LocalDataBroker,
     BaseModule,
     BaseModuleConfig,
 )
@@ -80,6 +84,23 @@ class TestAgent(unittest.TestCase):
             json.dump(self._generate_ag_config()["modules"][0], file)
         AgentConfig(id=self.ag_id, modules=[self.filepath])
 
+    def test_modules_as_dict_or_list(self):
+        """Tests that agent configs support both list of modules and dict of modules."""
+        agent_config = self._generate_ag_config()
+        module_id = "test_id"
+        agent_config_with_dict = deepcopy(agent_config)
+        agent_config_with_dict["modules"] = {
+            module_id: agent_config_with_dict["modules"][0]
+        }
+        agent_config["modules"][0]["module_id"] = module_id
+        agent_list = AgentConfig(**agent_config)
+        agent_dict = AgentConfig(**agent_config_with_dict)
+        self.assertEqual(agent_list, agent_dict)
+
+        agent_config_with_dict["modules"]["test_id"]["module_id"] = "wrong_id"
+        with self.assertRaises(ConfigurationError):
+            _ = AgentConfig(**agent_config_with_dict)
+
     def test_getters(self):
         ag = Agent(config=self.ag_config, env=self.env)
         self.assertEqual(self.ag_id, ag.id)
@@ -122,6 +143,25 @@ class TestAgent(unittest.TestCase):
         Agent(config=json.dumps(self.ag_config), env=self.env)
         with self.assertRaises(ConfigurationError):
             Agent(config=json.dumps(self.ag_config) + "SomeFault", env=self.env)
+
+    def test_databroker_choice_(self):
+        """Test choice of data broker instances and possible errors"""
+        ag = Agent(config=self.ag_config, env=self.env)
+        self.assertIsInstance(ag.data_broker, LocalDataBroker)
+
+        ag = Agent(config=self.ag_config, env=Environment(config={"rt": True}))
+        self.assertIsInstance(ag.data_broker, RTDataBroker)
+
+        use_direct_callback_databroker_cfg = {
+            "modules": [],
+            "id": self.ag_id,
+            "use_direct_callback_databroker": True
+        }
+        ag = Agent(config=use_direct_callback_databroker_cfg, env=self.env)
+        self.assertIsInstance(ag.data_broker, DirectCallbackDataBroker)
+
+        with self.assertRaises(ValueError):
+            Agent(config=use_direct_callback_databroker_cfg, env=Environment(config={"rt": True}))
 
     def test_register_modules(self):
         """Test register bugs in modules"""
