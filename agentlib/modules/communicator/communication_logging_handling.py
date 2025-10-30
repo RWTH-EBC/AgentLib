@@ -155,19 +155,14 @@ class CommunicationLogger:
         ):
             return
 
-        try:
-            with open(self._communication_log_filename, "a", encoding="utf-8") as f:
-                for entry in self._communication_log_batch:
-                    json.dump(entry, f)
-                    f.write("\n")
-            self.logger.debug(
-                f"Flushed {len(self._communication_log_batch)} entries to {self._communication_log_filename}"
-            )
-            self._communication_log_batch = []  # Clear batch
-        except IOError as e:
-            self.logger.error(
-                f"Error writing communication detail log to {self._communication_log_filename}: {e}"
-            )
+        with open(self._communication_log_filename, "a", encoding="utf-8") as f:
+            for entry in self._communication_log_batch:
+                json.dump(entry, f)
+                f.write("\n")
+        self.logger.debug(
+            f"Flushed {len(self._communication_log_batch)} entries to {self._communication_log_filename}"
+        )
+        self._communication_log_batch = []  # Clear batch
 
     def terminate(self):
         """Handle termination cleanup"""
@@ -192,27 +187,14 @@ class CommunicationLogger:
             }
         elif log_level == "detail":
             self._flush_detail_log()  # Ensure all data is written before reading
-            if (
-                self._communication_log_filename
-                and Path(self._communication_log_filename).exists()
-            ):
-                try:
-                    log_entries = []
-                    with open(
-                        self._communication_log_filename, "r", encoding="utf-8"
-                    ) as f:
-                        for line in f:
-                            log_entries.append(json.loads(line))
-                    if not log_entries:  # Handle empty log file
-                        return pd.DataFrame()
-                    df = pd.DataFrame(log_entries)
-                    return df
-                except Exception as e:
-                    self.logger.error(
-                        f"Error loading communication detail log from {self._communication_log_filename}: {e}"
-                    )
-                    return pd.DataFrame()  # Return empty DataFrame on error
-            return pd.DataFrame()  # Return empty DataFrame if file doesn't exist
+            log_entries = []
+            with open(self._communication_log_filename, "r", encoding="utf-8") as f:
+                for line in f:
+                    log_entries.append(json.loads(line))
+            if not log_entries:  # Handle empty log file
+                return pd.DataFrame()
+            df = pd.DataFrame(log_entries)
+            return df
         return None
 
     def get_results_incremental(
@@ -236,12 +218,6 @@ class CommunicationLogger:
             return None, update_token
         elif log_level == "detail":
             self._flush_detail_log()
-
-            if (
-                not self._communication_log_filename
-                or not Path(self._communication_log_filename).exists()
-            ):
-                return None, 0
 
             if update_token is None:  # Initial call
                 df = self.get_results()
@@ -267,15 +243,12 @@ class CommunicationLogger:
         log_entries = []
         lines_read_count = 0
 
-        try:
-            with open(filename, "r", encoding="utf-8") as f:
-                for i, line in enumerate(f):
-                    if i < start_line_index:
-                        continue
-                    log_entries.append(json.loads(line))
-                    lines_read_count += 1
-        except FileNotFoundError:
-            return None, 0
+        with open(filename, "r", encoding="utf-8") as f:
+            for i, line in enumerate(f):
+                if i < start_line_index:
+                    continue
+                log_entries.append(json.loads(line))
+                lines_read_count += 1
 
         if not log_entries:
             return None, 0
