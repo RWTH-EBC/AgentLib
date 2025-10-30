@@ -4,9 +4,10 @@ Module contains basics communicator modules
 
 import abc
 import json
+import logging
 import queue
 import threading
-from typing import Union, List, TypedDict, Any
+from typing import Union, List, TypedDict, Any, Optional, Literal, Tuple
 
 import pandas as pd
 from pydantic import Field, field_validator
@@ -16,6 +17,11 @@ from agentlib.core.datamodels import AgentVariable
 from agentlib.core.errors import OptionalDependencyError
 from agentlib.utils.broker import Broker
 from agentlib.utils.validators import convert_to_list
+from agentlib.modules.communicator.communication_logging_handling import (
+    CommunicationLogger,
+)
+
+logger = logging.getLogger(__name__)  # Added logger initialization
 
 
 class CommunicationDict(TypedDict):
@@ -32,6 +38,27 @@ class CommunicatorConfig(BaseModuleConfig):
         default=False,
         description="If true, the faster orjson library will be used for serialization "
         "deserialization. Requires the optional dependency.",
+    )
+    communication_log_level: Literal["none", "basic", "detail"] = Field(
+        default="none",
+        title="Communication Log Level",
+        description="Level of communication logging: 'none', 'basic', 'detail'.",
+    )
+    communication_log_file: Optional[str] = Field(
+        default=None,
+        title="Communication Log File",
+        description="Filename for 'detail' logging. Defaults to 'communicator_logs/{agent_id}_{module_id}.jsonl'.",
+    )
+    communication_log_overwrite: bool = Field(
+        default=True,
+        title="Overwrite Communication Log",
+        description="If true, existing log file will be overwritten at the start.",
+    )
+    communication_log_t_sample: Union[float, int] = Field(
+        default=300,
+        title="Communication Log Sampling Time",
+        description="Interval in seconds for batch writing 'detail' logs to file. Only for non-realtime.",
+        ge=0,
     )
 
 
@@ -50,9 +77,18 @@ class Communicator(BaseModule):
     """
 
     config: CommunicatorConfig
+    parse_json = True
 
     def __init__(self, *, config: dict, agent: Agent):
         super().__init__(config=config, agent=agent)
+
+        # Initialize communication logger
+        self._communication_logger = CommunicationLogger(
+            config=self.config,
+            agent_id=self.agent.id,
+            module_id=self.id,
+            env=self.env,
+        )
 
         if self.config.use_orjson:
             try:
@@ -91,6 +127,10 @@ class Communicator(BaseModule):
 
         payload = self.short_dict(variable)
         self.logger.debug("Sending variable %s=%s", variable.alias, variable.value)
+
+        # Delegate logging to communication logger
+        self._communication_logger.log_sent_message(payload["alias"])
+
         self._send(payload=payload)
 
     def _variable_can_be_send(self, variable):
@@ -105,13 +145,13 @@ class Communicator(BaseModule):
             "This method needs to be implemented " "individually for each communicator"
         )
 
-    def short_dict(self, variable: AgentVariable, parse_json: bool = True) -> CommunicationDict:
+    def short_dict(self, variable: AgentVariable) -> CommunicationDict:
         """Creates a short dict serialization of the Variable.
 
         Only contains attributes of the AgentVariable, that are relevant for other
         modules or agents. For performance and privacy reasons, this function should
         be called for communicators."""
-        if isinstance(variable.value, pd.Series) and parse_json:
+        if isinstance(variable.value, pd.Series) and self.parse_json:
             value = variable.value.to_json()
         else:
             value = variable.value
@@ -121,6 +161,27 @@ class Communicator(BaseModule):
             timestamp=variable.timestamp,
             type=variable.type,
             source=self.agent.id,
+        )
+
+    def _handle_received_variable(
+        self, variable: AgentVariable, remote_agent_id: Optional[str] = None
+    ):
+        """
+        Centralized handler for received variables that manages logging and forwarding.
+        """
+        source_agent_id = remote_agent_id or variable.source.agent_id
+
+        # Delegate logging to communication logger
+        self._communication_logger.log_received_message(variable.alias, source_agent_id)
+
+        # Forward to data broker
+        self.agent.data_broker.send_variable(variable)
+
+        self.logger.debug(
+            "Received and processed variable %s=%s from source %s",
+            variable.alias,
+            variable.value,
+            source_agent_id,
         )
 
     def to_json(self, payload: CommunicationDict) -> Union[bytes, str]:
@@ -133,6 +194,33 @@ class Communicator(BaseModule):
         # implemented on init
         pass
 
+    def terminate(self):
+        self._communication_logger.terminate()
+        super().terminate()
+
+    def get_results(self) -> Optional[Union[dict, pd.DataFrame]]:
+        """Returns logged communication data based on the log level."""
+        return self._communication_logger.get_results()
+
+    def get_results_incremental(
+        self, update_token: Optional[Any] = None
+    ) -> Tuple[Optional[Union[dict, pd.DataFrame]], Optional[Any]]:
+        """Returns logged communication data incrementally."""
+        return self._communication_logger.get_results_incremental(update_token)
+
+    def cleanup_results(self):
+        """Deletes the communication log file if 'detail' logging was active."""
+        self._communication_logger.cleanup_results()
+
+    @classmethod
+    def visualize_results(
+        cls,
+        results_data: Optional[Union[dict, pd.DataFrame]],
+        module_id: str,
+        agent_id: str,
+    ) -> "Optional[html.Div]":
+        return CommunicationLogger.visualize_results(results_data, module_id, agent_id)
+
 
 class LocalCommunicatorConfig(CommunicatorConfig):
     parse_json: bool = Field(
@@ -141,10 +229,7 @@ class LocalCommunicatorConfig(CommunicatorConfig):
         "which use MQTT or similar.",
         default=False,
     )
-    queue_size: int = Field(
-        title="Size of the queue",
-        default=10000
-    )
+    queue_size: int = Field(title="Size of the queue", default=10000)
 
 
 class LocalCommunicator(Communicator):
@@ -169,6 +254,7 @@ class LocalCommunicator(Communicator):
 
         super().__init__(config=config, agent=agent)
         self.broker = self.setup_broker()
+        self.parse_json = self.config.parse_json
         self._msg_q_in = queue.Queue(self.config.queue_size)
         self.broker.register_client(client=self)
 
@@ -188,17 +274,8 @@ class LocalCommunicator(Communicator):
         """Function to set up the broker object.
         Needs to return a valid broker option."""
         raise NotImplementedError(
-            "This method needs to be implemented " "individually for each communicator"
+            "This method needs to be implemented individually for each communicator"
         )
-
-    def _send_only_shared_variables(self, variable: AgentVariable):
-        """Send only variables with field ``shared=True``"""
-        if not self._variable_can_be_send(variable):
-            return
-
-        payload = self.short_dict(variable, parse_json=self.config.parse_json)
-        self.logger.debug("Sending variable %s=%s", variable.alias, variable.value)
-        self._send(payload=payload)
 
     def _process(self):
         """Waits for new messages, sends them to the broker."""
@@ -218,38 +295,33 @@ class LocalCommunicator(Communicator):
         """Sends new messages to the broker when receiving them, adhering to the
         simpy event queue. To be appended to a simpy event callback."""
         variable = self._msg_q_in.get_nowait()
-        self.agent.data_broker.send_variable(variable)
+        self._handle_received_variable(variable)
 
-    def _receive(self, msg_obj):
+    def _receive(self, msg_obj):  # msg_obj is raw from broker
         """Receive a given message and put it in the queue and set the
         corresponding simpy event."""
-        if self.config.parse_json:
-            variable = AgentVariable.from_json(msg_obj)
-        else:
-            variable = msg_obj
-        self._msg_q_in.put(variable, block=False)
+        variable_to_queue = (
+            AgentVariable.from_json(msg_obj) if self.config.parse_json else msg_obj
+        )
+        self._msg_q_in.put(variable_to_queue, block=False)
         self._received_variable.callbacks.append(self._send_simpy)
         self._received_variable.succeed()
         self._received_variable = self.env.event()
 
-    def _receive_realtime(self, msg_obj):
+    def _receive_realtime(self, msg_obj):  # msg_obj is raw from broker
         """Receive a given message and put it in the queue. No event setting
         is required for realtime."""
-        if self.config.parse_json:
-            variable = AgentVariable.from_json(msg_obj)
-        else:
-            variable = msg_obj
-        self._msg_q_in.put(variable)
+        variable_to_queue = (
+            AgentVariable.from_json(msg_obj) if self.config.parse_json else msg_obj
+        )
+        self._msg_q_in.put(variable_to_queue)
 
-    def _message_handler(self):
+    def _message_handler(self):  # Realtime message handler
         """Reads messages that were put in the message queue."""
         while True:
             variable = self._msg_q_in.get()
-            self.agent.data_broker.send_variable(variable)
+            self._handle_received_variable(variable)
 
     def terminate(self):
-        # Terminating is important when running multiple
-        # simulations/environments, otherwise the broker will keep spamming all
-        # agents from the previous simulation, potentially filling their queues.
         self.broker.delete_client(self)
         super().terminate()

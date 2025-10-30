@@ -16,6 +16,7 @@ from typing import (
     Optional,
     get_type_hints,
     Type,
+    Tuple,
 )
 
 import pydantic
@@ -32,7 +33,7 @@ from agentlib.core.datamodels import (
     AttrsToPydanticAdaptor,
 )
 from agentlib.core.environment import CustomSimpyEnvironment
-from agentlib.core.errors import ConfigurationError
+from agentlib.core.errors import ConfigurationError, OptionalDependencyError
 from agentlib.utils.fuzzy_matching import fuzzy_match, RAPIDFUZZ_IS_INSTALLED
 from agentlib.utils.validators import (
     include_defaults_in_root,
@@ -44,6 +45,7 @@ from agentlib.utils.validators import (
 if TYPE_CHECKING:
     # this avoids circular import
     from agentlib.core import Agent
+    from dash import html  # For type hinting
 
 
 logger = logging.getLogger(__name__)
@@ -218,7 +220,7 @@ class BaseModuleConfig(BaseModel):
         for field_name, field in cls.model_fields.items():
             # If field is missing in values, validation of field was not
             # successful. Continue and pydantic will later raise the ValidationError
-            if field_name not in pre_validated_instance.model_fields:
+            if field_name not in cls.model_fields:
                 continue
 
             pre_merged_attr = pre_validated_instance.__getattribute__(field_name)
@@ -639,6 +641,45 @@ class BaseModule(abc.ABC):
         # pylint: disable=invalid-name
         return {var.name: var for var in ls.copy()}
 
+    @classmethod
+    def visualize_results(
+        cls, results_data: Any, module_id: str, agent_id: str
+    ) -> Optional["html.Div"]:
+        """
+        Generate a visualization for the module's results.
+        This method should be overridden by subclasses to provide
+        custom visualizations.
+
+        Args:
+            results_data: The data returned by the module's get_results() method.
+            module_id: The ID of the module instance.
+            agent_id: The ID of the agent this module belongs to.
+
+        Returns:
+            A Dash HTML component (e.g., dash.html.Div) containing the visualization,
+            or None if not implemented or Dash is unavailable.
+        """
+        try:
+            # Import here to avoid circular dependency issues at module load time
+            # and to only require Dash when this method is actually called.
+            from dash import html as dash_html
+        except ImportError:
+            raise OptionalDependencyError(
+                used_object=f"{cls.__name__}.visualize_results",
+                dependency_install="agentlib[interactive]",
+                dependency_name="interactive",
+            )
+        # Base implementation returns None, indicating no visualization is provided.
+        # Subclasses should override this method.
+        logger.debug(
+            "Visualization not implemented for module type %s (module_id: '%s', agent_id: '%s'). "
+            "Returning None.",
+            cls.__name__,
+            module_id,
+            agent_id,
+        )
+        return None
+
     def get_results(self):
         """
         Returns results of this modules run.
@@ -649,6 +690,45 @@ class BaseModule(abc.ABC):
         Returns:
             Some form of results data, often in the form of a pandas DataFrame.
         """
+
+    def get_results_incremental(
+        self, update_token: Optional[Any] = None
+    ) -> Tuple[Any, Optional[Any]]:
+        """
+        Fetches results suitable for incremental updates in a live dashboard.
+
+        This method is intended to be overridden by subclasses that support
+        incremental data fetching for live visualization. The `update_token`
+        allows the module to return only new or changed data since the last
+        call.
+
+        Args:
+            update_token: An optional token from the previous call. If None,
+                          the module should typically return its full current data.
+                          The nature of the token is module-specific.
+
+        Returns:
+            A tuple (results_chunk, next_update_token):
+            - results_chunk: The data to be sent to the dashboard (e.g.,
+                             a pandas DataFrame, a list of new entries).
+            - next_update_token: A token for the dashboard to use in the
+                                 next call to this method. Can be None if no
+                                 further incremental updates are supported by
+                                 this specific call or if the module doesn't
+                                 support incremental updates beyond the initial fetch.
+        """
+        if update_token is None:
+            # Default behavior for the first call or for modules not fully
+            # implementing incremental logic: return all results from the
+            # existing get_results() method. The None token indicates that
+            # this is the complete data for now, or that no further
+            # *incremental* steps are defined by this default implementation.
+            return self.get_results(), None
+        # If an update_token is provided but this base method is called
+        # (i.e., not overridden with more specific incremental logic),
+        # it implies no further *new* data based on this token according
+        # to the default implementation.
+        return None, None
 
     def cleanup_results(self):
         """

@@ -6,7 +6,7 @@ import os
 from dataclasses import dataclass
 from math import inf
 from pathlib import Path
-from typing import Union, Dict, List, Optional
+from typing import Union, Dict, List, Optional, Tuple
 
 import numpy as np
 import pandas as pd
@@ -187,7 +187,7 @@ class SimulatorConfig(BaseModuleConfig):
         if not result_filename.endswith(".csv"):
             raise TypeError(
                 f"Given result_filename ends with "
-                f'{result_filename.split(".")[-1]} '
+                f"{result_filename.split('.')[-1]} "
                 f"but should be a .csv file"
             )
         if os.path.isfile(result_filename):
@@ -251,7 +251,7 @@ class SimulatorConfig(BaseModuleConfig):
         states = info.data.get("states")
         if "type" not in model:
             raise KeyError(
-                "Given model config does not " "contain key 'type' (type of the model)."
+                "Given model config does not contain key 'type' (type of the model)."
             )
         _type = model.pop("type")
         if isinstance(_type, dict):
@@ -340,7 +340,7 @@ class Simulator(BaseModule):
             t_start=self.config.t_start + self.env.config.offset,
             t_stop=self.config.t_stop,
         )
-        self.logger.info("Model successfully loaded model: %s", self.model.name)
+        self.logger.debug("Model successfully loaded model: %s", self.model.name)
 
     def run(self, until=None):
         """
@@ -369,7 +369,7 @@ class Simulator(BaseModule):
         ):
             for var in ag_vars:
                 if var.name in model_var_names:
-                    self.logger.info(
+                    self.logger.debug(
                         "Registered callback for model %s %s ", _type, var.name
                     )
                     self.agent.data_broker.register_callback(
@@ -497,8 +497,141 @@ class Simulator(BaseModule):
     def cleanup_results(self):
         if not self.config.save_results or not self.config.result_filename:
             return
-        os.remove(self.config.result_filename)
+        if self.config.result_filename and Path(self.config.result_filename).exists():
+            os.remove(self.config.result_filename)
 
+    def get_results_incremental(
+        self, update_token: Optional[int] = None
+    ) -> Tuple[Optional[pd.DataFrame], Optional[int]]:
+        """Fetches simulation results incrementally."""
+        if not self.config.save_results:
+            return None, None
+
+        if self.config.result_filename:
+            # Results are in CSV file
+            file_path = Path(self.config.result_filename)
+
+            if not file_path.exists():
+                return None, 0
+
+            if update_token is None:  # Initial call
+                df = read_simulator_results(str(file_path))
+                # Apply same processing as get_results()
+                df = df.droplevel(level=2, axis=1).droplevel(level=0, axis=1)
+                return df, len(df)
+            else:  # Incremental call
+                try:
+                    # Skip header (3 lines) + previous data rows
+                    df_chunk = pd.read_csv(
+                        file_path,
+                        header=[0, 1, 2],
+                        index_col=0,
+                        skiprows=range(1, update_token + 1),
+                    )
+                    if df_chunk.empty:
+                        return None, update_token
+                    # Apply same processing as get_results()
+                    df_chunk = df_chunk.droplevel(level=2, axis=1).droplevel(
+                        level=0, axis=1
+                    )
+                    return df_chunk, update_token + len(df_chunk)
+                except pd.errors.EmptyDataError:
+                    return None, update_token
+        else:
+            # Results are in memory
+            current_total_rows = (
+                len(self._result.index) - 1
+            )  # Exclude incomplete last row
+            if current_total_rows <= 0:
+                return None, 0
+
+            if update_token is None:  # Initial call
+                df = self._result.df()
+                df = df.droplevel(level=2, axis=1).droplevel(level=0, axis=1)
+                return df, len(df)
+            else:  # Incremental call
+                if update_token >= current_total_rows:
+                    return None, update_token
+
+                new_data_slice = self._result.data[update_token:current_total_rows]
+                new_index_slice = self._result.index[update_token:current_total_rows]
+
+                if not new_data_slice:
+                    return None, update_token
+
+                df_chunk = pd.DataFrame(
+                    new_data_slice, index=new_index_slice, columns=self._result.columns
+                )
+                df_chunk = df_chunk.droplevel(level=2, axis=1).droplevel(
+                    level=0, axis=1
+                )
+                return df_chunk, current_total_rows
+
+    @classmethod
+    def visualize_results(
+        cls, results_data: pd.DataFrame, module_id: str, agent_id: str
+    ) -> "Optional[html.Div]":
+        try:
+            from dash import dcc, html
+            import plotly.graph_objs as go
+            import dash_bootstrap_components as dbc
+        except ImportError:
+            raise OptionalDependencyError(
+                used_object=f"{cls.__name__}.visualize_results",
+                dependency_install="agentlib[interactive]",
+                dependency_name="interactive",
+            )
+
+        if results_data is None or results_data.empty:
+            return None
+
+        if not isinstance(results_data, pd.DataFrame):
+            raise ValueError(
+                f"Expected pandas DataFrame for Simulator results for '{module_id}', got {type(results_data)}."
+            )
+
+        rows = []
+        current_row_children = []
+        for i, column in enumerate(results_data.columns):
+            fig = go.Figure()
+            fig.add_trace(
+                go.Scatter(
+                    x=results_data.index,
+                    y=results_data[column],
+                    mode="lines",
+                    name=str(column),
+                )
+            )
+            fig.update_layout(
+                title=str(column),
+                xaxis_title="Time",
+                yaxis_title="Value",
+                margin=dict(l=40, r=20, t=40, b=30),  # Compact margins
+                height=250,  # Reduced height for compactness
+            )
+            # Add plot to a column, aim for 2 plots per row on medium screens
+            current_row_children.append(dbc.Col(dcc.Graph(figure=fig), md=6))
+
+            # If two plots are in the current row, or it's the last plot
+            if len(current_row_children) == 2 or i == len(results_data.columns) - 1:
+                rows.append(dbc.Row(current_row_children, className="mb-3"))
+                current_row_children = []
+
+        if not rows:
+            raise ValueError(
+                f"No plottable data generated for Simulator '{module_id}'."
+            )
+
+        return html.Div(
+            children=[
+                html.H4(
+                    f"Simulator Results: {module_id} (Agent: {agent_id})",
+                    className="mb-3",  # Add some margin below the title
+                )
+            ]
+            + rows,  # Add the list of dbc.Row components
+            style={"padding": "10px"},
+        )
 
     def _update_results(self):
         """

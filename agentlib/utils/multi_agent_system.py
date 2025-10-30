@@ -104,13 +104,11 @@ class MAS(BaseModel):
             sampling=
         """
         # Add Logger config
-        filename = f"variable_logs//Agent_{config.id}_Logger.log"
         cfg = {
             "module_id": "AgentLogger",
             "type": "AgentLogger",
             "t_sample": sampling,
             "values_only": True,
-            "filename": filename,
             "overwrite_log": True,
             "clean_up": False,
         }
@@ -178,6 +176,42 @@ class LocalMASAgency(MAS):
         logger.info("Terminating all agent modules")
         for agent in self._agents.values():
             agent.terminate()
+
+    def show_results_dashboard(
+        self, cleanup_results: bool = False, block_main=True, live=False
+    ):
+        """
+        Launches an interactive dashboard to visualize the results of the MAS.
+
+        Args:
+            cleanup_results (bool): If True, result files might be cleaned up
+                                    by modules after being read for the dashboard.
+                                    Defaults to False to preserve results.
+        """
+        logger.info("Launching MAS Results Dashboard...")
+        try:
+            from agentlib.utils.plotting.mas_dashboard import launch_mas_dashboard
+        except ImportError:
+            logger.error(
+                "Failed to import launch_mas_dashboard. Ensure Dash and its dependencies are installed: "
+                "pip install agentlib[interactive]"
+            )
+            return
+
+        results = self.get_results(cleanup=cleanup_results)
+        if not results:
+            logger.warning("No results found to display in the dashboard.")
+            return None  # Return None if no dashboard is launched
+
+        try:
+            # launch_mas_dashboard now returns the process
+            dashboard_process = launch_mas_dashboard(
+                mas=self, mas_results=results, block_main=block_main, live_update=live
+            )
+            return dashboard_process
+        except Exception as e:
+            logger.error(f"Error launching MAS dashboard: {e}", exc_info=True)
+            return None  # Return None on error
 
     def setup_agent(self, id: str) -> Agent:
         """Setup the agent matching the given id"""

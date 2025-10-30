@@ -8,7 +8,13 @@ from agentlib.utils.multi_agent_system import LocalMASAgency
 logger = logging.getLogger(__name__)
 
 
-def run_example(until, with_plots=True, log_level=logging.INFO, use_direct_callback_databroker: bool = False):
+def run_example(
+        until,
+        with_plots=True,
+        log_level=logging.INFO,
+        use_direct_callback_databroker: bool = False,
+        with_dashboard: Union[bool, Literal["live", "after"]] = "after",
+):
     """
     Runs a multi-agent system (MAS) simulation with heating control agents.
 
@@ -26,7 +32,7 @@ def run_example(until, with_plots=True, log_level=logging.INFO, use_direct_callb
         Logging verbosity level.
     use_direct_callback_databroker : bool, default=False
         Whether to use direct callback execution in the databroker instead of queue-based callbacks.
-
+    with_dashboard: bool, whether to use dashboard or not
     """
     # Start by setting the log-level
     logging.basicConfig(level=log_level)
@@ -49,9 +55,12 @@ def run_example(until, with_plots=True, log_level=logging.INFO, use_direct_callb
         use_direct_callback_databroker=use_direct_callback_databroker
     )
     # Simulate
+    if with_dashboard == "live":
+        mas.show_results_dashboard(live=True)
     mas.run(until=until)
-    # Load results:
-    results = mas.get_results(cleanup=True)
+    if with_dashboard:
+        mas.show_results_dashboard(cleanup_results=False, block_main=False, live=False)
+    results = mas.get_results(cleanup=False)
 
     if not with_plots:
         return results
@@ -88,7 +97,7 @@ def run_example(until, with_plots=True, log_level=logging.INFO, use_direct_callb
     axes[2, 1].plot(df_se["T_oda"], color="green", linestyle="-.", label="SensorAgent")
     # Legend, titles etc:
     axes[0, 0].set_ylabel("$T_{Room}$ / K")
-    axes[1, 0].set_ylabel("$\dot{Q}_{Room\,,in}$ / W")
+    axes[1, 0].set_ylabel(r"$\dot{Q}_{Room\,,in}$ / W")
     axes[2, 0].set_ylabel("$T_{oda}$ / K")
     axes[2, 0].set_xlabel("Time / s")
     axes[2, 1].set_xlabel("Time / s")
@@ -116,8 +125,9 @@ def run_example(until, with_plots=True, log_level=logging.INFO, use_direct_callb
         )
 
     plt.show()
+
     return results
 
 
 if __name__ == "__main__":
-    run_example(until=86400 / 10, with_plots=True)
+    run_example(until=86400 / 10, with_plots=True, with_dashboard=True)

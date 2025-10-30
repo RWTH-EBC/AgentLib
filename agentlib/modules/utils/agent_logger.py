@@ -5,17 +5,20 @@ import collections
 import json
 import logging
 import os
-import time
 from ast import literal_eval
 from pathlib import Path
-from typing import Union, Optional
+from typing import Union, Optional, Tuple, TYPE_CHECKING
 
 import pandas as pd
-from pydantic import field_validator, Field
-from pydantic_core.core_schema import FieldValidationInfo
+from pydantic import Field
 
 from agentlib import AgentVariable
 from agentlib.core import BaseModule, Agent, BaseModuleConfig
+from agentlib.core.errors import OptionalDependencyError
+
+if TYPE_CHECKING:
+    from dash import html
+
 
 logger = logging.getLogger(__name__)
 
@@ -47,34 +50,13 @@ class AgentLoggerConfig(BaseModuleConfig):
     filename: Optional[str] = Field(
         title="filename",
         default=None,
-        description="The filename where the log is stored. If None, will use 'agent_logs/{agent_id}_log.json'",
+        description="The filename where the log is stored. If None, will use 'agent_logs/{agent_id}_log.jsonl'",
     )
-
-    @field_validator("filename")
-    @classmethod
-    def check_existence_of_file(cls, filename, info: FieldValidationInfo):
-        """Checks whether the file already exists."""
-        # pylint: disable=no-self-argument,no-self-use
-
-        # Skip check for None, as it will be replaced in __init__
-        if filename is None:
-            return filename
-
-        file_path = Path(filename)
-        if file_path.exists():
-            # remove result file, so a new one can be created
-            if info.data["overwrite_log"]:
-                file_path.unlink()
-                return filename
-            raise FileExistsError(
-                f"Given filename at {filename} "
-                f"already exists. We won't overwrite it automatically. "
-                f"You can use the key word 'overwrite_log' to "
-                f"activate automatic overwrite."
-            )
-        # Create path in case it does not exist
-        file_path.parent.mkdir(parents=True, exist_ok=True)
-        return filename
+    merge_sources: bool = Field(
+        title="Merge Sources",
+        default=True,
+        description="When loading the results file, automatically merges variables by sources, leaving only alias in the columns.",
+    )
 
 
 class AgentLogger(BaseModule):
@@ -89,19 +71,7 @@ class AgentLogger(BaseModule):
         super().__init__(config=config, agent=agent)
 
         # If filename is None, create a custom one using the agent ID
-        if self.config.filename is None:
-            # Use agent ID to create a default filename
-            logs_dir = Path("agent_logs")
-            logs_dir.mkdir(exist_ok=True)
-            self._filename = str(logs_dir / f"{self.agent.id}.jsonl")
-
-            # Handle file exists case based on overwrite_log setting
-            if Path(self._filename).exists() and not self.config.overwrite_log:
-                # Generate a unique filename by appending a timestamp
-                timestamp = int(time.time())
-                self._filename = str(logs_dir / f"{self.agent.id}_{timestamp}.jsonl")
-        else:
-            self._filename = self.config.filename
+        self._filename = self._setup_log_file()
 
         self._variables_to_log = {}
         if not self.env.config.rt and self.config.t_sample < 60:
@@ -111,6 +81,54 @@ class AgentLogger(BaseModule):
                 self.id,
                 self.config.t_sample,
             )
+
+    def _setup_log_file(self) -> str:
+        """Centralized file setup logic"""
+        # Determine the target filename
+        if self.config.filename is None:
+            logs_dir = Path("agent_logs")
+            target_file = logs_dir / f"{self.agent.id}.jsonl"
+        else:
+            target_file = Path(self.config.filename)
+
+        # Handle file existence and overwrite logic
+        return self._handle_file_existence(target_file)
+
+    def _handle_file_existence(self, file_path: Path) -> str:
+        """Consistent file existence and overwrite handling"""
+        # Create parent directories if they don't exist
+        file_path.parent.mkdir(parents=True, exist_ok=True)
+
+        # Handle existing file
+        if file_path.exists():
+            if self.config.overwrite_log:
+                file_path.unlink()
+                self.logger.info(f"Overwrote existing log file: {file_path}")
+            elif self.config.filename is None:
+                # Auto-increment for default filenames to support quick iteration
+                file_path = self._get_incremented_filename(file_path)
+                self.logger.info(f"Using auto-incremented filename: {file_path}")
+            else:
+                # Custom filename with overwrite disabled - maintain strict behavior
+                raise FileExistsError(
+                    f"Log file '{file_path}' already exists. "
+                    f"Set 'overwrite_log=True' to enable automatic overwrite."
+                )
+
+        return str(file_path)
+
+    def _get_incremented_filename(self, base_path: Path) -> Path:
+        """Generate an auto-incremented filename"""
+        counter = 1
+        stem = base_path.stem
+        suffix = base_path.suffix
+        parent = base_path.parent
+
+        while True:
+            new_path = parent / f"{stem}_{counter}{suffix}"
+            if not new_path.exists():
+                return new_path
+            counter += 1
 
     @property
     def filename(self):
@@ -212,8 +230,12 @@ class AgentLogger(BaseModule):
 
     def get_results(self) -> pd.DataFrame:
         """Load the own filename"""
+        # Ensure current in-memory logs are flushed before reading for static results
+        self._log()
         return self.load_from_file(
-            filename=self.filename, values_only=self.config.values_only
+            filename=self.filename,
+            values_only=self.config.values_only,
+            merge_sources=self.config.merge_sources,
         )
 
     def cleanup_results(self):
@@ -231,3 +253,180 @@ class AgentLogger(BaseModule):
         # when terminating, we log one last time, since otherwise the data since the
         # last log interval is lost
         self._log()
+
+    def get_results_incremental(
+        self, update_token: Optional[int] = None
+    ) -> Tuple[Optional[pd.DataFrame], Optional[int]]:
+        """Fetches results incrementally for live dashboard."""
+        self._log()  # Ensure current logs are written
+
+        if update_token is None:  # Initial call
+            df = self.load_from_file(
+                filename=self.filename,
+                values_only=self.config.values_only,
+                merge_sources=self.config.merge_sources,
+            )
+            try:
+                with open(self.filename, "r") as f:
+                    lines_in_file = sum(1 for _ in f)
+            except FileNotFoundError:
+                lines_in_file = 0
+            return df, lines_in_file
+        else:  # Incremental call
+            df_chunk, lines_read = self.load_from_file_incremental(
+                filename=self.filename,
+                start_line_index=update_token,
+                values_only=self.config.values_only,
+                merge_sources=self.config.merge_sources,
+            )
+            if df_chunk is None or df_chunk.empty:
+                return None, update_token
+            return df_chunk, update_token + lines_read
+
+    @classmethod
+    def load_from_file_incremental(
+        cls,
+        filename: str,
+        start_line_index: int,
+        values_only: bool = True,
+        merge_sources: bool = True,
+    ) -> Tuple[Optional[pd.DataFrame], int]:
+        """Loads log file from a specific line index."""
+        chunks = []
+        lines_read_count = 0
+
+        try:
+            with open(filename, "r") as file:
+                for i, data_line in enumerate(file):
+                    if i < start_line_index:
+                        continue
+                    chunks.append(json.loads(data_line))
+                    lines_read_count += 1
+        except FileNotFoundError:
+            return None, 0
+
+        if not any(chunks):
+            return None, 0
+
+        full_dict = collections.ChainMap(*chunks)
+        df = pd.DataFrame.from_dict(full_dict, orient="index")
+        df.index = df.index.astype(float)
+        columns = (literal_eval(column) for column in df.columns)
+        df.columns = pd.MultiIndex.from_tuples(columns)
+
+        if not values_only:
+
+            def _load_agent_variable(var):
+                try:
+                    return AgentVariable.validate_data(var)
+                except TypeError:
+                    pass
+
+            df = df.applymap(_load_agent_variable)
+
+        if merge_sources:
+            df = df.droplevel(1, axis=1)
+            df = df.loc[:, ~df.columns.duplicated(keep="first")]
+
+        return df.sort_index(), lines_read_count
+
+    @classmethod
+    def visualize_results(
+        cls, results_data: pd.DataFrame, module_id: str, agent_id: str
+    ) -> "Optional[html.Div]":
+        try:
+            from dash import dcc, html
+            import plotly.graph_objs as go
+            import dash_bootstrap_components as dbc  # Added for responsive layout
+        except ImportError:
+            raise OptionalDependencyError(
+                used_object=f"{cls.__name__}.visualize_results",
+                dependency_install="agentlib[interactive]",
+                dependency_name="interactive",
+            )
+
+        if results_data is None or results_data.empty:
+            raise ValueError(
+                f"No results data for AgentLogger '{module_id}' in agent '{agent_id}'."
+            )
+            return None
+
+        rows = []
+        current_row_children = []
+        for i, col_name in enumerate(results_data.columns):
+            series = results_data[col_name].dropna()
+            if series.empty:
+                continue
+
+            try:
+                numeric_series = pd.to_numeric(series, errors="coerce")
+                if numeric_series.isnull().all() and not series.isnull().all():
+                    is_numeric = False
+                else:
+                    is_numeric = True
+                    series_to_plot = numeric_series
+            except (ValueError, TypeError):
+                is_numeric = False
+
+            if not is_numeric:
+                series_to_plot = series
+
+            fig = go.Figure()
+            y_axis_title = "Value"
+
+            if is_numeric:
+                fig.add_trace(
+                    go.Scatter(
+                        x=series_to_plot.index,
+                        y=series_to_plot,
+                        mode="lines+markers",
+                        name=str(col_name),
+                    )
+                )
+            else:
+                fig.add_trace(
+                    go.Scatter(
+                        x=series_to_plot.index,
+                        y=[1] * len(series_to_plot),
+                        mode="markers",
+                        name=str(col_name),
+                        hovertext=[str(v) for v in series_to_plot.values],
+                        hoverinfo="x+text",
+                    )
+                )
+                y_axis_title = "Occurrence"
+
+            title_str = str(col_name)
+            if isinstance(col_name, tuple) and len(col_name) > 0:
+                title_str = f"{col_name[0]}"
+                if len(col_name) > 1 and col_name[1]:
+                    title_str += f" (Source: {col_name[1]})"
+
+            fig.update_layout(
+                title=title_str,
+                xaxis_title="Time",
+                yaxis_title=y_axis_title,
+                margin=dict(l=40, r=20, t=40, b=30),
+                height=250,
+            )
+            current_row_children.append(dbc.Col(dcc.Graph(figure=fig), md=6))
+
+            if len(current_row_children) == 2 or i == len(results_data.columns) - 1:
+                rows.append(dbc.Row(current_row_children, className="mb-3"))
+                current_row_children = []
+
+        if not rows:
+            raise ValueError(
+                f"No plottable data generated for AgentLogger '{module_id}'."
+            )
+
+        return html.Div(
+            children=[
+                html.H4(
+                    f"AgentLogger Results: {module_id} (Agent: {agent_id})",
+                    className="mb-3",
+                )
+            ]
+            + rows,
+            style={"padding": "10px"},
+        )

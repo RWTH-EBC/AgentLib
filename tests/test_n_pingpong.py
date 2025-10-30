@@ -3,17 +3,21 @@ This test file checks if MAS correctly execute.
 """
 
 import itertools
-import unittest
 import time
-from pydantic import Field
+import unittest
+
 import numpy as np
+from pydantic import Field
+
 from agentlib.core import BaseModule, Agent, BaseModuleConfig
 from agentlib.core.datamodels import AgentVariable
 from agentlib.utils import MultiProcessingBroker, LocalBroadcastBroker, LocalBroker
 from agentlib.utils.multi_agent_system import LocalMASAgency
+from agentlib.utils.multi_processing_broker import MultiProcessingSubscriptionBroker
 
 # pylint: disable=missing-module-docstring,missing-class-docstring
 PORT = 39920
+SUBSCRIPTION_PORT = 39921  # Different port for subscription broker
 
 
 class NPingPongConfig(BaseModuleConfig):
@@ -64,7 +68,7 @@ class NPingPong(BaseModule):
         if self.id == f"Pong_{self.n}":
             alias = f"Ping_{self.n}"
         elif self.id == f"Ping_{self.n}":
-            alias = f"Pong_{self.n-1}"
+            alias = f"Pong_{self.n - 1}"
         self.agent.data_broker.register_callback(
             alias=alias, source=None, callback=self._callback
         )
@@ -120,6 +124,14 @@ class TestNPingPong(unittest.TestCase):
         ) as mas:
             mas.run(until=1)
 
+    def test_multiprocessing_subscription(self):
+        """Test the NPingPong system using multiprocessing subscription as communicator"""
+        broker = MultiProcessingSubscriptionBroker(config={"port": SUBSCRIPTION_PORT})
+        with self._create_2n_pingpong_agents(
+            com_type="multiprocessing_subscription"
+        ) as mas:
+            mas.run(until=1)
+
     @unittest.skip("MQTT refuses connection in ci")
     def test_mqtt(self):
         """Test the NPingPong system using local_broadcast as communicator"""
@@ -142,24 +154,28 @@ class TestNPingPong(unittest.TestCase):
                 "type": com_type,
             }
 
+            # Add subscriptions for subscription-based communicators
             if com_type not in ["local_broadcast", "multiprocessing_broadcast"]:
                 _com_ping["subscriptions"] = [f"AgPong_{_n - 1 if _n > 1 else self.n}"]
                 _com_pong["subscriptions"] = [f"AgPing_{_n}"]
 
             pong_module = {"module_id": f"Pong_{_n}", "type": _pingpong_module, "n": _n}
             ping_module = {"module_id": f"Ping_{_n}", "type": _pingpong_module, "n": _n}
+
             if com_type == "mqtt":
                 _com_ping.update({"url": "mqtt://test.mosquitto.org"})
                 _com_pong.update({"url": "mqtt://test.mosquitto.org"})
-            if com_type == "multiprocessing_broadcast":
+            elif com_type == "multiprocessing_broadcast":
                 _com_ping.update({"port": PORT})
                 _com_pong.update({"port": PORT})
+                ping_module["initial_wait"] = 3
+            elif com_type == "multiprocessing_subscription":
+                _com_ping.update({"port": SUBSCRIPTION_PORT})
+                _com_pong.update({"port": SUBSCRIPTION_PORT})
                 ping_module["initial_wait"] = 3
             elif com_type in ["local_broadcast", "local"]:
                 _com_ping.update({"parse_json": parse_json})
                 _com_pong.update({"parse_json": parse_json})
-            elif com_type in ["multiprocessing_broadcast"]:
-                pass  # No subs needed
             else:
                 raise TypeError(f"Com_type '{com_type}' not supported")
 
