@@ -117,7 +117,6 @@ class TestExamples(unittest.TestCase):
             extrapolation="backwards"
         )
 
-
     def test_scipy_model(self):
         """Tests the scipy model example"""
         self._run_example(example="models//scipy//scipy_example.py")
