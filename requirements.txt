@@ -64,7 +64,7 @@ paho-mqtt==2.0.0
     # via
     #   agentlib (setup.py)
     #   clonemapy
-pandas==2.1.2
+pandas==2.0.3
     # via agentlib (setup.py)
 pillow==10.1.0
     # via matplotlib
