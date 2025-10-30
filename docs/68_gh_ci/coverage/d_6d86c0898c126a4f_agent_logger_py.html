@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Coverage for agentlib/modules/utils/agent_logger.py: 87%</title>
+    <title>Coverage for agentlib/modules/utils/agent_logger.py: 97%</title>
     <link rel="icon" sizes="32x32" href="favicon_32.png">
     <link rel="stylesheet" href="style.css" type="text/css">
     <script type="text/javascript" src="coverage_html.js" defer></script>
@@ -12,7 +12,7 @@
     <div class="content">
         <h1>
             <span class="text">Coverage for </span><b>agentlib/modules/utils/agent_logger.py</b>:
-            <span class="pc_cov">87%</span>
+            <span class="pc_cov">97%</span>
         </h1>
         <aside id="help_panel_wrapper">
             <input id="help_panel_state" type="checkbox">
@@ -55,8 +55,8 @@
         </aside>
         <h2>
             <span class="text">100 statements &nbsp;</span>
-            <button type="button" class="run button_toggle_run" value="run" data-shortcut="r" title="Toggle lines run">87<span class="text"> run</span></button>
-            <button type="button" class="mis show_mis button_toggle_mis" value="mis" data-shortcut="m" title="Toggle lines missing">13<span class="text"> missing</span></button>
+            <button type="button" class="run button_toggle_run" value="run" data-shortcut="r" title="Toggle lines run">97<span class="text"> run</span></button>
+            <button type="button" class="mis show_mis button_toggle_mis" value="mis" data-shortcut="m" title="Toggle lines missing">3<span class="text"> missing</span></button>
             <button type="button" class="exc show_exc button_toggle_exc" value="exc" data-shortcut="x" title="Toggle lines excluded">4<span class="text"> excluded</span></button>
         </h2>
         <p class="text">
@@ -65,7 +65,7 @@
             <a id="nextFileLink" class="nav" href="d_6d86c0898c126a4f_try_sensor_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.4.4">coverage.py v7.4.4</a>,
-            created at 2025-10-30 09:26 +0000
+            created at 2025-10-30 09:31 +0000
         </p>
         <aside class="hidden">
             <button type="button" class="button_next_chunk" data-shortcut="j"/>
@@ -173,21 +173,21 @@
     <p class="pln"><span class="n"><a id="t91" href="#t91">91</a></span><span class="t">        <span class="com"># If filename is None, create a custom one using the agent ID</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t92" href="#t92">92</a></span><span class="t">        <span class="key">if</span> <span class="nam">self</span><span class="op">.</span><span class="nam">config</span><span class="op">.</span><span class="nam">filename</span> <span class="key">is</span> <span class="key">None</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t93" href="#t93">93</a></span><span class="t">            <span class="com"># Use agent ID to create a default filename</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t94" href="#t94">94</a></span><span class="t">            <span class="nam">logs_dir</span> <span class="op">=</span> <span class="nam">Path</span><span class="op">(</span><span class="str">"agent_logs"</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t95" href="#t95">95</a></span><span class="t">            <span class="nam">logs_dir</span><span class="op">.</span><span class="nam">mkdir</span><span class="op">(</span><span class="nam">exist_ok</span><span class="op">=</span><span class="key">True</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t96" href="#t96">96</a></span><span class="t">            <span class="nam">self</span><span class="op">.</span><span class="nam">_filename</span> <span class="op">=</span> <span class="nam">str</span><span class="op">(</span><span class="nam">logs_dir</span> <span class="op">/</span> <span class="fst">f"</span><span class="op">{</span><span class="nam">self</span><span class="op">.</span><span class="nam">agent</span><span class="op">.</span><span class="nam">id</span><span class="op">}</span><span class="fst">.jsonl</span><span class="fst">"</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t94" href="#t94">94</a></span><span class="t">            <span class="nam">logs_dir</span> <span class="op">=</span> <span class="nam">Path</span><span class="op">(</span><span class="str">"agent_logs"</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t95" href="#t95">95</a></span><span class="t">            <span class="nam">logs_dir</span><span class="op">.</span><span class="nam">mkdir</span><span class="op">(</span><span class="nam">exist_ok</span><span class="op">=</span><span class="key">True</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t96" href="#t96">96</a></span><span class="t">            <span class="nam">self</span><span class="op">.</span><span class="nam">_filename</span> <span class="op">=</span> <span class="nam">str</span><span class="op">(</span><span class="nam">logs_dir</span> <span class="op">/</span> <span class="fst">f"</span><span class="op">{</span><span class="nam">self</span><span class="op">.</span><span class="nam">agent</span><span class="op">.</span><span class="nam">id</span><span class="op">}</span><span class="fst">.jsonl</span><span class="fst">"</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t97" href="#t97">97</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t98" href="#t98">98</a></span><span class="t">            <span class="com"># Handle file exists case based on overwrite_log setting</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t99" href="#t99">99</a></span><span class="t">            <span class="key">if</span> <span class="nam">Path</span><span class="op">(</span><span class="nam">self</span><span class="op">.</span><span class="nam">_filename</span><span class="op">)</span><span class="op">.</span><span class="nam">exists</span><span class="op">(</span><span class="op">)</span> <span class="key">and</span> <span class="key">not</span> <span class="nam">self</span><span class="op">.</span><span class="nam">config</span><span class="op">.</span><span class="nam">overwrite_log</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t99" href="#t99">99</a></span><span class="t">            <span class="key">if</span> <span class="nam">Path</span><span class="op">(</span><span class="nam">self</span><span class="op">.</span><span class="nam">_filename</span><span class="op">)</span><span class="op">.</span><span class="nam">exists</span><span class="op">(</span><span class="op">)</span> <span class="key">and</span> <span class="key">not</span> <span class="nam">self</span><span class="op">.</span><span class="nam">config</span><span class="op">.</span><span class="nam">overwrite_log</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t100" href="#t100">100</a></span><span class="t">                <span class="com"># Generate a unique filename by appending a timestamp</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t101" href="#t101">101</a></span><span class="t">                <span class="nam">timestamp</span> <span class="op">=</span> <span class="nam">int</span><span class="op">(</span><span class="nam">time</span><span class="op">.</span><span class="nam">time</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t102" href="#t102">102</a></span><span class="t">                <span class="nam">self</span><span class="op">.</span><span class="nam">_filename</span> <span class="op">=</span> <span class="nam">str</span><span class="op">(</span><span class="nam">logs_dir</span> <span class="op">/</span> <span class="fst">f"</span><span class="op">{</span><span class="nam">self</span><span class="op">.</span><span class="nam">agent</span><span class="op">.</span><span class="nam">id</span><span class="op">}</span><span class="fst">_</span><span class="op">{</span><span class="nam">timestamp</span><span class="op">}</span><span class="fst">.jsonl</span><span class="fst">"</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t101" href="#t101">101</a></span><span class="t">                <span class="nam">timestamp</span> <span class="op">=</span> <span class="nam">int</span><span class="op">(</span><span class="nam">time</span><span class="op">.</span><span class="nam">time</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t102" href="#t102">102</a></span><span class="t">                <span class="nam">self</span><span class="op">.</span><span class="nam">_filename</span> <span class="op">=</span> <span class="nam">str</span><span class="op">(</span><span class="nam">logs_dir</span> <span class="op">/</span> <span class="fst">f"</span><span class="op">{</span><span class="nam">self</span><span class="op">.</span><span class="nam">agent</span><span class="op">.</span><span class="nam">id</span><span class="op">}</span><span class="fst">_</span><span class="op">{</span><span class="nam">timestamp</span><span class="op">}</span><span class="fst">.jsonl</span><span class="fst">"</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t103" href="#t103">103</a></span><span class="t">        <span class="key">else</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t104" href="#t104">104</a></span><span class="t">            <span class="nam">self</span><span class="op">.</span><span class="nam">_filename</span> <span class="op">=</span> <span class="nam">self</span><span class="op">.</span><span class="nam">config</span><span class="op">.</span><span class="nam">filename</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t105" href="#t105">105</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t106" href="#t106">106</a></span><span class="t">        <span class="nam">self</span><span class="op">.</span><span class="nam">_variables_to_log</span> <span class="op">=</span> <span class="op">{</span><span class="op">}</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t107" href="#t107">107</a></span><span class="t">        <span class="key">if</span> <span class="key">not</span> <span class="nam">self</span><span class="op">.</span><span class="nam">env</span><span class="op">.</span><span class="nam">config</span><span class="op">.</span><span class="nam">rt</span> <span class="key">and</span> <span class="nam">self</span><span class="op">.</span><span class="nam">config</span><span class="op">.</span><span class="nam">t_sample</span> <span class="op">&lt;</span> <span class="num">60</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t108" href="#t108">108</a></span><span class="t">            <span class="nam">self</span><span class="op">.</span><span class="nam">logger</span><span class="op">.</span><span class="nam">warning</span><span class="op">(</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t108" href="#t108">108</a></span><span class="t">            <span class="nam">self</span><span class="op">.</span><span class="nam">logger</span><span class="op">.</span><span class="nam">warning</span><span class="op">(</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t109" href="#t109">109</a></span><span class="t">                <span class="str">"Sampling time of agent_logger %s is very low %s. This can hinder "</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t110" href="#t110">110</a></span><span class="t">                <span class="str">"performance."</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t111" href="#t111">111</a></span><span class="t">                <span class="nam">self</span><span class="op">.</span><span class="nam">id</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
@@ -202,9 +202,9 @@
     <p class="run"><span class="n"><a id="t120" href="#t120">120</a></span><span class="t">    <span class="key">def</span> <span class="nam">process</span><span class="op">(</span><span class="nam">self</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t121" href="#t121">121</a></span><span class="t">        <span class="str">"""Calls the logger every other t_sample</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t122" href="#t122">122</a></span><span class="t"><span class="str">        is used."""</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t123" href="#t123">123</a></span><span class="t">        <span class="key">while</span> <span class="key">True</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t124" href="#t124">124</a></span><span class="t">            <span class="nam">self</span><span class="op">.</span><span class="nam">_log</span><span class="op">(</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t125" href="#t125">125</a></span><span class="t">            <span class="key">yield</span> <span class="nam">self</span><span class="op">.</span><span class="nam">env</span><span class="op">.</span><span class="nam">timeout</span><span class="op">(</span><span class="nam">self</span><span class="op">.</span><span class="nam">config</span><span class="op">.</span><span class="nam">t_sample</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t123" href="#t123">123</a></span><span class="t">        <span class="key">while</span> <span class="key">True</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t124" href="#t124">124</a></span><span class="t">            <span class="nam">self</span><span class="op">.</span><span class="nam">_log</span><span class="op">(</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t125" href="#t125">125</a></span><span class="t">            <span class="key">yield</span> <span class="nam">self</span><span class="op">.</span><span class="nam">env</span><span class="op">.</span><span class="nam">timeout</span><span class="op">(</span><span class="nam">self</span><span class="op">.</span><span class="nam">config</span><span class="op">.</span><span class="nam">t_sample</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t126" href="#t126">126</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t127" href="#t127">127</a></span><span class="t">    <span class="key">def</span> <span class="nam">register_callbacks</span><span class="op">(</span><span class="nam">self</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t128" href="#t128">128</a></span><span class="t">        <span class="str">"""Callbacks trigger the log_cache function"""</span>&nbsp;</span><span class="r"></span></p>
@@ -307,7 +307,7 @@
             <a id="nextFileLink" class="nav" href="d_6d86c0898c126a4f_try_sensor_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.4.4">coverage.py v7.4.4</a>,
-            created at 2025-10-30 09:26 +0000
+            created at 2025-10-30 09:31 +0000
         </p>
     </div>
 </footer>

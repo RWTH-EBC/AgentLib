@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Coverage for agentlib/core/agent.py: 89%</title>
+    <title>Coverage for agentlib/core/agent.py: 95%</title>
     <link rel="icon" sizes="32x32" href="favicon_32.png">
     <link rel="stylesheet" href="style.css" type="text/css">
     <script type="text/javascript" src="coverage_html.js" defer></script>
@@ -12,7 +12,7 @@
     <div class="content">
         <h1>
             <span class="text">Coverage for </span><b>agentlib/core/agent.py</b>:
-            <span class="pc_cov">89%</span>
+            <span class="pc_cov">95%</span>
         </h1>
         <aside id="help_panel_wrapper">
             <input id="help_panel_state" type="checkbox">
@@ -55,8 +55,8 @@
         </aside>
         <h2>
             <span class="text">124 statements &nbsp;</span>
-            <button type="button" class="run button_toggle_run" value="run" data-shortcut="r" title="Toggle lines run">110<span class="text"> run</span></button>
-            <button type="button" class="mis show_mis button_toggle_mis" value="mis" data-shortcut="m" title="Toggle lines missing">14<span class="text"> missing</span></button>
+            <button type="button" class="run button_toggle_run" value="run" data-shortcut="r" title="Toggle lines run">118<span class="text"> run</span></button>
+            <button type="button" class="mis show_mis button_toggle_mis" value="mis" data-shortcut="m" title="Toggle lines missing">6<span class="text"> missing</span></button>
             <button type="button" class="exc show_exc button_toggle_exc" value="exc" data-shortcut="x" title="Toggle lines excluded">5<span class="text"> excluded</span></button>
         </h2>
         <p class="text">
@@ -65,7 +65,7 @@
             <a id="nextFileLink" class="nav" href="d_0143754ea13c2179_data_broker_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.4.4">coverage.py v7.4.4</a>,
-            created at 2025-10-30 09:26 +0000
+            created at 2025-10-30 09:31 +0000
         </p>
         <aside class="hidden">
             <button type="button" class="button_next_chunk" data-shortcut="j"/>
@@ -362,18 +362,18 @@
     <p class="pln"><span class="n"><a id="t280" href="#t280">280</a></span><span class="t"><span class="str">        Args:</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t281" href="#t281">281</a></span><span class="t"><span class="str">            cleanup: If true, created files are deleted.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t282" href="#t282">282</a></span><span class="t"><span class="str">        """</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t283" href="#t283">283</a></span><span class="t">        <span class="nam">results</span> <span class="op">=</span> <span class="op">{</span><span class="op">}</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t284" href="#t284">284</a></span><span class="t">        <span class="key">for</span> <span class="nam">module</span> <span class="key">in</span> <span class="nam">self</span><span class="op">.</span><span class="nam">modules</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t285" href="#t285">285</a></span><span class="t">            <span class="key">try</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t286" href="#t286">286</a></span><span class="t">                <span class="nam">result</span> <span class="op">=</span> <span class="nam">module</span><span class="op">.</span><span class="nam">get_results</span><span class="op">(</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t283" href="#t283">283</a></span><span class="t">        <span class="nam">results</span> <span class="op">=</span> <span class="op">{</span><span class="op">}</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t284" href="#t284">284</a></span><span class="t">        <span class="key">for</span> <span class="nam">module</span> <span class="key">in</span> <span class="nam">self</span><span class="op">.</span><span class="nam">modules</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t285" href="#t285">285</a></span><span class="t">            <span class="key">try</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t286" href="#t286">286</a></span><span class="t">                <span class="nam">result</span> <span class="op">=</span> <span class="nam">module</span><span class="op">.</span><span class="nam">get_results</span><span class="op">(</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="exc show_exc"><span class="n"><a id="t287" href="#t287">287</a></span><span class="t">            <span class="key">except</span> <span class="nam">BaseException</span> <span class="key">as</span> <span class="nam">e</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="exc show_exc"><span class="n"><a id="t288" href="#t288">288</a></span><span class="t">                <span class="nam">self</span><span class="op">.</span><span class="nam">logger</span><span class="op">.</span><span class="nam">error</span><span class="op">(</span><span class="fst">f"</span><span class="fst">Error reading results of module </span><span class="op">{</span><span class="nam">module</span><span class="op">.</span><span class="nam">id</span><span class="op">}</span><span class="fst">: </span><span class="op">{</span><span class="nam">e</span><span class="op">}</span><span class="fst">"</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="exc show_exc"><span class="n"><a id="t289" href="#t289">289</a></span><span class="t">                <span class="nam">result</span> <span class="op">=</span> <span class="key">None</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t290" href="#t290">290</a></span><span class="t">            <span class="key">if</span> <span class="nam">result</span> <span class="key">is</span> <span class="key">not</span> <span class="key">None</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t291" href="#t291">291</a></span><span class="t">                <span class="nam">results</span><span class="op">[</span><span class="nam">module</span><span class="op">.</span><span class="nam">id</span><span class="op">]</span> <span class="op">=</span> <span class="nam">result</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t292" href="#t292">292</a></span><span class="t">        <span class="key">if</span> <span class="nam">cleanup</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t290" href="#t290">290</a></span><span class="t">            <span class="key">if</span> <span class="nam">result</span> <span class="key">is</span> <span class="key">not</span> <span class="key">None</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t291" href="#t291">291</a></span><span class="t">                <span class="nam">results</span><span class="op">[</span><span class="nam">module</span><span class="op">.</span><span class="nam">id</span><span class="op">]</span> <span class="op">=</span> <span class="nam">result</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t292" href="#t292">292</a></span><span class="t">        <span class="key">if</span> <span class="nam">cleanup</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="mis show_mis"><span class="n"><a id="t293" href="#t293">293</a></span><span class="t">            <span class="nam">self</span><span class="op">.</span><span class="nam">clean_results</span><span class="op">(</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t294" href="#t294">294</a></span><span class="t">        <span class="key">return</span> <span class="nam">results</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t294" href="#t294">294</a></span><span class="t">        <span class="key">return</span> <span class="nam">results</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t295" href="#t295">295</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t296" href="#t296">296</a></span><span class="t">    <span class="key">def</span> <span class="nam">clean_results</span><span class="op">(</span><span class="nam">self</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t297" href="#t297">297</a></span><span class="t">        <span class="str">"""</span>&nbsp;</span><span class="r"></span></p>
@@ -428,7 +428,7 @@
             <a id="nextFileLink" class="nav" href="d_0143754ea13c2179_data_broker_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.4.4">coverage.py v7.4.4</a>,
-            created at 2025-10-30 09:26 +0000
+            created at 2025-10-30 09:31 +0000
         </p>
     </div>
 </footer>

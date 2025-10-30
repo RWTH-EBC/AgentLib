@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Coverage for agentlib/core/environment.py: 73%</title>
+    <title>Coverage for agentlib/core/environment.py: 76%</title>
     <link rel="icon" sizes="32x32" href="favicon_32.png">
     <link rel="stylesheet" href="style.css" type="text/css">
     <script type="text/javascript" src="coverage_html.js" defer></script>
@@ -12,7 +12,7 @@
     <div class="content">
         <h1>
             <span class="text">Coverage for </span><b>agentlib/core/environment.py</b>:
-            <span class="pc_cov">73%</span>
+            <span class="pc_cov">76%</span>
         </h1>
         <aside id="help_panel_wrapper">
             <input id="help_panel_state" type="checkbox">
@@ -55,8 +55,8 @@
         </aside>
         <h2>
             <span class="text">148 statements &nbsp;</span>
-            <button type="button" class="run button_toggle_run" value="run" data-shortcut="r" title="Toggle lines run">108<span class="text"> run</span></button>
-            <button type="button" class="mis show_mis button_toggle_mis" value="mis" data-shortcut="m" title="Toggle lines missing">40<span class="text"> missing</span></button>
+            <button type="button" class="run button_toggle_run" value="run" data-shortcut="r" title="Toggle lines run">112<span class="text"> run</span></button>
+            <button type="button" class="mis show_mis button_toggle_mis" value="mis" data-shortcut="m" title="Toggle lines missing">36<span class="text"> missing</span></button>
             <button type="button" class="exc show_exc button_toggle_exc" value="exc" data-shortcut="x" title="Toggle lines excluded">15<span class="text"> excluded</span></button>
         </h2>
         <p class="text">
@@ -65,7 +65,7 @@
             <a id="nextFileLink" class="nav" href="d_0143754ea13c2179_errors_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.4.4">coverage.py v7.4.4</a>,
-            created at 2025-10-30 09:26 +0000
+            created at 2025-10-30 09:31 +0000
         </p>
         <aside class="hidden">
             <button type="button" class="button_next_chunk" data-shortcut="j"/>
@@ -206,9 +206,9 @@
     <p class="run"><span class="n"><a id="t124" href="#t124">124</a></span><span class="t">    <span class="key">def</span> <span class="nam">clock</span><span class="op">(</span><span class="nam">self</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t125" href="#t125">125</a></span><span class="t">        <span class="str">"""Define a clock loop to increase the now-timer every other second</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t126" href="#t126">126</a></span><span class="t"><span class="str">        (Or whatever t_sample is)"""</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t127" href="#t127">127</a></span><span class="t">        <span class="key">while</span> <span class="key">True</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t128" href="#t128">128</a></span><span class="t">            <span class="nam">self</span><span class="op">.</span><span class="nam">logger</span><span class="op">.</span><span class="nam">info</span><span class="op">(</span><span class="str">"Current simulation time: %s"</span><span class="op">,</span> <span class="nam">self</span><span class="op">.</span><span class="nam">pretty_time</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t129" href="#t129">129</a></span><span class="t">            <span class="key">yield</span> <span class="nam">self</span><span class="op">.</span><span class="nam">timeout</span><span class="op">(</span><span class="nam">self</span><span class="op">.</span><span class="nam">config</span><span class="op">.</span><span class="nam">t_sample</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t127" href="#t127">127</a></span><span class="t">        <span class="key">while</span> <span class="key">True</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t128" href="#t128">128</a></span><span class="t">            <span class="nam">self</span><span class="op">.</span><span class="nam">logger</span><span class="op">.</span><span class="nam">info</span><span class="op">(</span><span class="str">"Current simulation time: %s"</span><span class="op">,</span> <span class="nam">self</span><span class="op">.</span><span class="nam">pretty_time</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t129" href="#t129">129</a></span><span class="t">            <span class="key">yield</span> <span class="nam">self</span><span class="op">.</span><span class="nam">timeout</span><span class="op">(</span><span class="nam">self</span><span class="op">.</span><span class="nam">config</span><span class="op">.</span><span class="nam">t_sample</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t130" href="#t130">130</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t131" href="#t131">131</a></span><span class="t">    <span class="key">def</span> <span class="nam">pretty_time</span><span class="op">(</span><span class="nam">self</span><span class="op">)</span><span class="op">:</span> <span class="op">...</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t132" href="#t132">132</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
@@ -237,7 +237,7 @@
     <p class="pln"><span class="n"><a id="t155" href="#t155">155</a></span><span class="t">        <span class="com"># Create an environment-specific logger using CustomLogger</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t156" href="#t156">156</a></span><span class="t">        <span class="nam">self</span><span class="op">.</span><span class="nam">logger</span> <span class="op">=</span> <span class="nam">agentlib_logging</span><span class="op">.</span><span class="nam">create_logger</span><span class="op">(</span><span class="nam">env</span><span class="op">=</span><span class="nam">self</span><span class="op">,</span> <span class="nam">name</span><span class="op">=</span><span class="str">"environment"</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t157" href="#t157">157</a></span><span class="t">        <span class="key">if</span> <span class="nam">self</span><span class="op">.</span><span class="nam">config</span><span class="op">.</span><span class="nam">clock</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t158" href="#t158">158</a></span><span class="t">            <span class="nam">self</span><span class="op">.</span><span class="nam">process</span><span class="op">(</span><span class="nam">self</span><span class="op">.</span><span class="nam">clock</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t158" href="#t158">158</a></span><span class="t">            <span class="nam">self</span><span class="op">.</span><span class="nam">process</span><span class="op">(</span><span class="nam">self</span><span class="op">.</span><span class="nam">clock</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t159" href="#t159">159</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t160" href="#t160">160</a></span><span class="t">    <span class="key">def</span> <span class="nam">pretty_time</span><span class="op">(</span><span class="nam">self</span><span class="op">)</span> <span class="op">-></span> <span class="nam">str</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t161" href="#t161">161</a></span><span class="t">        <span class="str">"""Returns the time in seconds."""</span>&nbsp;</span><span class="r"></span></p>
@@ -413,7 +413,7 @@
             <a id="nextFileLink" class="nav" href="d_0143754ea13c2179_errors_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.4.4">coverage.py v7.4.4</a>,
-            created at 2025-10-30 09:26 +0000
+            created at 2025-10-30 09:31 +0000
         </p>
     </div>
 </footer>
