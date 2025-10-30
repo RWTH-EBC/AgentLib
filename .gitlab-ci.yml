@@ -15,7 +15,7 @@ run_example:
     - test -e requirements.txt && pip install -r requirements.txt || echo no requirements to install
     - test -e setup.py && pip install -e . || echo no setup.py found
   script:
-    - python ci/run_examples.py
+    - python ci/test_examples.py
   rules:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
       when: never
