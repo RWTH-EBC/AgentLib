@@ -1,7 +1,8 @@
 # Changelog
 
-## todo
+## 0.8.9
 - Improve error message to include agent and module id in validation errors
+- Allow agent configs to specify modules as a dict instead of list, with dict keys corresponding to module_id. Old list still supported as normal.
 
 ## 0.8.8
 - Percentage display in logging now only appears in simulation speed, not realtime. Fixed percentage when environment has an offset.

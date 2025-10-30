@@ -591,30 +591,6 @@ class BaseModule(abc.ABC):
             copy=False,
         )
 
-    def update_variables(self, variables: List[AgentVariable], timestamp: float = None):
-        """
-        Updates the given list of variables in the current data_broker.
-        If a given Variable is not in the config of the module, an
-        error is raised.
-        TODO: check if this is needed, we currently don't use it anywhere
-
-        Args:
-            variables: List with agent_variables.
-            timestamp: The timestamp associated with the variable.
-                If None, current environment time is used.
-        """
-        if timestamp is None:
-            timestamp = self.env.time
-
-        for v in variables:
-            if v.name not in self._variables_dict:
-                raise ValueError(
-                    f"'{self.__class__.__name__}' has "
-                    f"no AgentVariable with the name '{v.name}' "
-                    f"in the config."
-                )
-            self.set(name=v.name, value=v.value, timestamp=timestamp)
-
     ############################################################################
     # Private and or static class methods
     ############################################################################

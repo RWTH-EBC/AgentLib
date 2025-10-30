@@ -9,6 +9,7 @@ from pathlib import Path
 from typing import Union, List, Dict, TypeVar, Optional
 
 from pydantic import field_validator, BaseModel, FilePath, Field
+from pydantic_core.core_schema import FieldValidationInfo
 
 import agentlib
 import agentlib.core.logging_ as agentlib_logging
@@ -20,6 +21,7 @@ from agentlib.core import (
     DataBroker,
 )
 from agentlib.core.environment import CustomSimpyEnvironment
+from agentlib.core.errors import ConfigurationError
 from agentlib.utils import custom_injection
 from agentlib.utils.load_config import load_config
 
@@ -63,7 +65,7 @@ class AgentConfig(BaseModel):
 
     @field_validator("modules")
     @classmethod
-    def check_modules(cls, modules: Union[List, Dict]):
+    def check_modules(cls, modules: Union[List, Dict], info: FieldValidationInfo):
         """Validator to ensure all modules are in dict-format and include 'module_id'."""
         modules_loaded = []
         if isinstance(modules, dict):
@@ -76,6 +78,14 @@ class AgentConfig(BaseModel):
                         module = json.loads(module)
                 if isinstance(module, dict):
                     module = deepcopy(module)
+                    if "module_id" in module and not module["module_id"] == module_id:
+                        agent = info.data["id"]
+                        raise ConfigurationError(
+                            f"Provided agent {agent} has ambiguous module_id. Module "
+                            f"config was declared with dict key {module_id} but "
+                            f"contains different module_id {module["module_id"]} "
+                            f"within config."
+                        )
                     module["module_id"] = module_id
                 modules_loaded.append(module)
         elif isinstance(modules, list):
@@ -88,7 +98,7 @@ class AgentConfig(BaseModel):
                         module = json.loads(module)
                 modules_loaded.append(module)
         else:
-            raise TypeError("modules must be a list or a dict")
+            raise TypeError("Modules must be a list or a dict")
         return modules_loaded
 
 
