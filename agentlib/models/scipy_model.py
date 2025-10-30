@@ -2,9 +2,9 @@
 
 import logging
 from typing import Union
-from pydantic import ValidationError, model_validator
 
 import numpy as np
+from pydantic import ValidationError, model_validator
 
 from agentlib.core.errors import OptionalDependencyError
 
@@ -26,7 +26,7 @@ logger = logging.getLogger(__name__)
 class ScipyStateSpaceModelConfig(ModelConfig):
     """Customize config of Model."""
 
-    system: Union[dict, list, tuple, signal.ltisys.StateSpaceContinuous]
+    system: Union[dict, list, tuple, signal.StateSpace]
 
     @model_validator(mode="before")
     @classmethod
@@ -99,7 +99,7 @@ class ScipyStateSpaceModel(Model):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         # Check if system was correctly set up
-        assert isinstance(self.config.system, signal.ltisys.StateSpaceContinuous)
+        assert isinstance(self.config.system, signal.StateSpace)
 
     def do_step(self, *, t_start, t_sample=None):
         if t_sample is None:

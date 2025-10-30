@@ -5,12 +5,13 @@ without the need of cloneMAP.
 
 import abc
 import json
-import multiprocessing
 import logging
+import multiprocessing
 import threading
 from pathlib import Path
 from typing import List, Dict, Union, Any
 
+import pandas as pd
 from pydantic import (
     field_validator,
     ConfigDict,
@@ -19,7 +20,6 @@ from pydantic import (
     Field,
     FilePath,
 )
-import pandas as pd
 
 from agentlib.core import Agent, Environment
 from agentlib.core.agent import AgentConfig
@@ -91,11 +91,15 @@ class MAS(BaseModel):
             sampling=
         """
         # Add Logger config
+        filename = f"variable_logs//Agent_{config.id}_Logger.log"
         cfg = {
             "module_id": "AgentLogger",
             "type": "AgentLogger",
             "t_sample": sampling,
             "values_only": True,
+            "filename": filename,
+            "overwrite_log": True,
+            "clean_up": False,
         }
         config.modules.append(cfg)
         return config
@@ -177,7 +181,7 @@ class LocalMASAgency(MAS):
         except KeyError:
             KeyError(f"Given id '{id}' is not in the set of agents.")
 
-    def get_results(self, cleanup: bool = True) -> Dict[str, pd.DataFrame]:
+    def get_results(self, cleanup: bool = False) -> Dict[str, pd.DataFrame]:
         """
         Get all results of the agentLogger
         Args:

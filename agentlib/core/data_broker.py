@@ -121,11 +121,18 @@ class NoCopyBrokerCallback(BaseModel):
         Check equality to another callback using equality of all fields
         and the name of the callback function
         """
-        return (self.alias, self.source, self.kwargs, self.callback.__name__) == (
+        return (
+            self.alias,
+            self.source,
+            self.kwargs,
+            self.callback.__name__,
+            self.module_id,
+        ) == (
             other.alias,
             other.source,
             other.kwargs,
             other.callback.__name__,
+            other.module_id,
         )
 
 

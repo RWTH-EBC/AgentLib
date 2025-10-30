@@ -26,7 +26,6 @@ Simpy is distributed under the MIT License
 """
 
 import json
-import logging
 import time
 from datetime import datetime
 from pathlib import Path
@@ -41,7 +40,9 @@ from pydantic import (
 )
 from simpy.core import SimTime, Event
 
-logger = logging.getLogger(name=__name__)
+from agentlib.core import logging_ as agentlib_logging
+
+UNTIL_UNSET = object()  # sentinel value to check if an until value has been set
 
 
 class EnvironmentConfig(BaseModel):
@@ -124,10 +125,23 @@ class CustomSimpyEnvironment(simpy.Environment):
         """Define a clock loop to increase the now-timer every other second
         (Or whatever t_sample is)"""
         while True:
-            logger.info("Current simulation time: %s", self.pretty_time())
+            self.logger.info("Current simulation time: %s", self.pretty_time())
             yield self.timeout(self.config.t_sample)
 
     def pretty_time(self): ...
+
+    def pretty_until(self) -> Optional[float]:
+        return None
+
+    def calculate_percentage_for_pretty_until(self) -> float:
+        """Calculate the percentage of completion, accounting for offset."""
+        # Account for offset in percentage calculation
+        simulation_elapsed = self.time - self.config.offset
+        simulation_total = self._until - self.config.offset
+        # Avoid division by zero
+        if simulation_total <= 0:
+            return 0.0
+        return round(simulation_elapsed / simulation_total * 100, 1)
 
 
 class InstantEnvironment(CustomSimpyEnvironment):
@@ -137,12 +151,26 @@ class InstantEnvironment(CustomSimpyEnvironment):
     def __init__(self, *, config: EnvironmentConfig):
         super().__init__(initial_time=config.offset)
         self._config = config
+        self._until = UNTIL_UNSET
+        # Create an environment-specific logger using CustomLogger
+        self.logger = agentlib_logging.create_logger(env=self, name="environment")
         if self.config.clock:
             self.process(self.clock())
 
     def pretty_time(self) -> str:
         """Returns the time in seconds."""
         return f"{self.time:.2f}s"
+
+    def run(self, until: Optional[Union[SimTime, Event]] = None) -> Optional[Any]:
+        self._until = until
+        return super().run(until=until)
+
+    def pretty_until(self) -> Union[str, None]:
+        """Returns the time in seconds."""
+        if self._until is None or self._until is UNTIL_UNSET:
+            return self._until
+        percent_finished = self.calculate_percentage_for_pretty_until()
+        return f"{self._until:.2f}s ({percent_finished} %)"
 
 
 class RealtimeEnvironment(simpy.RealtimeEnvironment, CustomSimpyEnvironment):
@@ -153,7 +181,9 @@ class RealtimeEnvironment(simpy.RealtimeEnvironment, CustomSimpyEnvironment):
         super().__init__(
             initial_time=config.offset, factor=config.factor, strict=config.strict
         )
+        self._until = UNTIL_UNSET
         self._config = config
+        self.logger = agentlib_logging.create_logger(env=self, name="environment")
         if self.config.clock:
             self.process(self.clock())
         else:
@@ -161,6 +191,7 @@ class RealtimeEnvironment(simpy.RealtimeEnvironment, CustomSimpyEnvironment):
 
     def run(self, until: Optional[Union[SimTime, Event]] = None) -> Optional[Any]:
         self.sync()
+        self._until = until
         return super().run(until=until)
 
     @property
@@ -188,6 +219,8 @@ class ScaledRealtimeEnvironment(simpy.RealtimeEnvironment, CustomSimpyEnvironmen
             initial_time=config.offset, factor=config.factor, strict=config.strict
         )
         self._config = config
+        self._until = UNTIL_UNSET
+        self.logger = agentlib_logging.create_logger(env=self, name="environment")
         if self.config.clock:
             self.process(self.clock())
         else:
@@ -195,6 +228,7 @@ class ScaledRealtimeEnvironment(simpy.RealtimeEnvironment, CustomSimpyEnvironmen
 
     def run(self, until: Optional[Union[SimTime, Event]] = None) -> Optional[Any]:
         self.sync()
+        self._until = until
         return super().run(until=until)
 
     @property

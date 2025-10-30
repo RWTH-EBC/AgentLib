@@ -373,6 +373,15 @@ class BaseModule(abc.ABC):
 
     @classmethod
     def get_config_type(cls) -> Type[BaseModuleConfigClass]:
+        if hasattr(cls, "config_type"):
+            raise AttributeError(
+                "The 'config_type' attribute is deprecated and has been removed. "
+                "Please use the following syntax to assign the config of your custom "
+                f"module '{cls.__name__}': \n"
+                "class MyModule(agentlib.BaseModule):\n"
+                "    config: MyConfigClass\n"
+            )
+
         return get_type_hints(cls).get("config")
 
     @abc.abstractmethod

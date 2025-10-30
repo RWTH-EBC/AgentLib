@@ -8,6 +8,7 @@ import queue
 import threading
 from typing import Union, List, TypedDict, Any
 
+import pandas as pd
 from pydantic import Field, field_validator
 
 from agentlib.core import Agent, BaseModule, BaseModuleConfig
@@ -104,15 +105,19 @@ class Communicator(BaseModule):
             "This method needs to be implemented " "individually for each communicator"
         )
 
-    def short_dict(self, variable: AgentVariable) -> CommunicationDict:
+    def short_dict(self, variable: AgentVariable, parse_json: bool = True) -> CommunicationDict:
         """Creates a short dict serialization of the Variable.
 
         Only contains attributes of the AgentVariable, that are relevant for other
         modules or agents. For performance and privacy reasons, this function should
         be called for communicators."""
+        if isinstance(variable.value, pd.Series) and parse_json:
+            value = variable.value.to_json()
+        else:
+            value = variable.value
         return CommunicationDict(
             alias=variable.alias,
-            value=variable.value,
+            value=value,
             timestamp=variable.timestamp,
             type=variable.type,
             source=self.agent.id,
@@ -135,6 +140,10 @@ class LocalCommunicatorConfig(CommunicatorConfig):
         "Increasing computing time but makes MAS more close to later stages"
         "which use MQTT or similar.",
         default=False,
+    )
+    queue_size: int = Field(
+        title="Size of the queue",
+        default=10000
     )
 
 
@@ -160,7 +169,7 @@ class LocalCommunicator(Communicator):
 
         super().__init__(config=config, agent=agent)
         self.broker = self.setup_broker()
-        self._msg_q_in = queue.Queue(100)
+        self._msg_q_in = queue.Queue(self.config.queue_size)
         self.broker.register_client(client=self)
 
     @property
@@ -181,6 +190,15 @@ class LocalCommunicator(Communicator):
         raise NotImplementedError(
             "This method needs to be implemented " "individually for each communicator"
         )
+
+    def _send_only_shared_variables(self, variable: AgentVariable):
+        """Send only variables with field ``shared=True``"""
+        if not self._variable_can_be_send(variable):
+            return
+
+        payload = self.short_dict(variable, parse_json=self.config.parse_json)
+        self.logger.debug("Sending variable %s=%s", variable.alias, variable.value)
+        self._send(payload=payload)
 
     def _process(self):
         """Waits for new messages, sends them to the broker."""

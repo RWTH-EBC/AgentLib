@@ -3,17 +3,19 @@ all variables inside an agent's data_broker."""
 
 import collections
 import json
-import os
 import logging
+import os
+import time
 from ast import literal_eval
-from typing import Union
+from pathlib import Path
+from typing import Union, Optional
 
-from pydantic import field_validator, Field
 import pandas as pd
+from pydantic import field_validator, Field
+from pydantic_core.core_schema import FieldValidationInfo
 
 from agentlib import AgentVariable
 from agentlib.core import BaseModule, Agent, BaseModuleConfig
-
 
 logger = logging.getLogger(__name__)
 
@@ -21,11 +23,6 @@ logger = logging.getLogger(__name__)
 class AgentLoggerConfig(BaseModuleConfig):
     """Define parameters for the AgentLogger"""
 
-    filename: str = Field(
-        title="filename",
-        default=None,  # Set later when agent_id is available
-        description="The filename where the log is stored.",
-    )
     t_sample: Union[float, int] = Field(
         title="t_sample",
         default=300,
@@ -42,17 +39,41 @@ class AgentLoggerConfig(BaseModuleConfig):
         default=True,
         description="If True, file is deleted once load_log is called.",
     )
+    overwrite_log: bool = Field(
+        title="Overwrite file",
+        default=False,
+        description="If true, old logs are auto deleted when a new log should be written with that name.",
+    )
+    filename: Optional[str] = Field(
+        title="filename",
+        default=None,
+        description="The filename where the log is stored. If None, will use 'agent_logs/{agent_id}_log.json'",
+    )
 
     @field_validator("filename")
     @classmethod
-    def check_existence_of_file(cls, filename):
+    def check_existence_of_file(cls, filename, info: FieldValidationInfo):
         """Checks whether the file already exists."""
         # pylint: disable=no-self-argument,no-self-use
-        if os.path.exists(filename):
-            logger.error(
-                "Specified filename already exists. "
-                "The AgentLogger will append to the file."
+
+        # Skip check for None, as it will be replaced in __init__
+        if filename is None:
+            return filename
+
+        file_path = Path(filename)
+        if file_path.exists():
+            # remove result file, so a new one can be created
+            if info.data["overwrite_log"]:
+                file_path.unlink()
+                return filename
+            raise FileExistsError(
+                f"Given filename at {filename} "
+                f"already exists. We won't overwrite it automatically. "
+                f"You can use the key word 'overwrite_log' to "
+                f"activate automatic overwrite."
             )
+        # Create path in case it does not exist
+        file_path.parent.mkdir(parents=True, exist_ok=True)
         return filename
 
 
@@ -65,14 +86,23 @@ class AgentLogger(BaseModule):
     config: AgentLoggerConfig
 
     def __init__(self, *, config: dict, agent: Agent):
-        """Overwrite init to enable a custom default filename
-        which uses the agent_id."""
         super().__init__(config=config, agent=agent)
-        self._filename = self.config.filename
-        if self._filename is None:
-            self._filename = os.path.join(
-                os.getcwd(), f"Agent_{self.agent.id}_Logger.log"
-            )
+
+        # If filename is None, create a custom one using the agent ID
+        if self.config.filename is None:
+            # Use agent ID to create a default filename
+            logs_dir = Path("agent_logs")
+            logs_dir.mkdir(exist_ok=True)
+            self._filename = str(logs_dir / f"{self.agent.id}.jsonl")
+
+            # Handle file exists case based on overwrite_log setting
+            if Path(self._filename).exists() and not self.config.overwrite_log:
+                # Generate a unique filename by appending a timestamp
+                timestamp = int(time.time())
+                self._filename = str(logs_dir / f"{self.agent.id}_{timestamp}.jsonl")
+        else:
+            self._filename = self.config.filename
+
         self._variables_to_log = {}
         if not self.env.config.rt and self.config.t_sample < 60:
             self.logger.warning(

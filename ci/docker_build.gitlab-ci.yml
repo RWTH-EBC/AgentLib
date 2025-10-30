@@ -3,16 +3,20 @@ stages:
 
 variables:
     DEVELOPMENT_IMAGE: registry.git.rwth-aachen.de/ebc/ebc_all/github_ci/agentlib:latest
-    DOCKER_DRIVER: overlay
-
 
 build_agentlib:
-    image: docker:latest
+    image: docker:24.0.5
     stage: docker_build
+    services:
+      - name: docker:24.0.5-dind
+        variables:
+          HEALTHCHECK_TCP_PORT: "2376"
     before_script:
       - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+      - apk update && apk add git
     script:
-        - docker build --pull -f ci/Dockerfile -t $DEVELOPMENT_IMAGE .
+        # --network=host is required for DiD on kubernetes
+        - docker build --pull --network=host -f ci/Dockerfile -t $DEVELOPMENT_IMAGE .
         - docker push $DEVELOPMENT_IMAGE
     only:
        - main

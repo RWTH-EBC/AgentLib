@@ -3,9 +3,7 @@
 import time
 import unittest
 
-import time
 
-import numpy as np
 
 from agentlib import LocalMASAgency
 from agentlib import AgentVariable, BaseModule, BaseModuleConfig
