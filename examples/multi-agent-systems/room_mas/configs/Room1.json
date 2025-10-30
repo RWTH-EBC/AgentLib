@@ -11,7 +11,6 @@
       "measurement_uncertainty": 0.0001,
       "t_sample_communication": 50,
       "t_sample_simulation": 10,
-      "update_inputs_on_callback": false,
       "save_results": true,
       "overwrite_result_file": true,
       "result_filename": "res_room1.csv",

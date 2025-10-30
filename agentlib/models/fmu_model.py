@@ -11,8 +11,9 @@ from typing import Union, List
 
 import attrs
 import pydantic
-
 from pydantic import field_validator, FilePath
+
+from agentlib.utils import create_time_samples
 from agentlib.core import Model, ModelConfig
 from agentlib.core.errors import OptionalDependencyError
 from agentlib.core.datamodels import ModelVariable, Causality
@@ -99,13 +100,12 @@ class FmuModel(Model):
     def do_step(self, *, t_start, t_sample=None):
         if t_sample is None:
             t_sample = self.dt
-        t_samples = self._create_time_samples(t_sample=t_sample) + t_start
+        # Write current values to system
+        while not self._variables_to_write.empty():
+            self.__write_value(self._variables_to_write.get_nowait())
+        t_samples = create_time_samples(t_end=t_sample, dt=self.dt) + t_start
         try:
             for _idx, _t_sample in enumerate(t_samples[:-1]):
-                # Write current values to system
-                while not self._variables_to_write.empty():
-                    self.__write_value(self._variables_to_write.get_nowait())
-
                 # do step
                 self.system.doStep(
                     currentCommunicationPoint=_t_sample,

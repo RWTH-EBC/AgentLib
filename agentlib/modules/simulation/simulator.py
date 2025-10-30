@@ -26,7 +26,7 @@ from agentlib.core import (
 )
 from agentlib.core.errors import OptionalDependencyError
 from agentlib.models import get_model_type, UNINSTALLED_MODEL_TYPES
-from agentlib.utils import custom_injection
+from agentlib.utils import custom_injection, create_time_samples
 
 
 @dataclass
@@ -123,9 +123,8 @@ class SimulatorConfig(BaseModuleConfig):
         validate_default=True,
         ge=0,
         description="Sample time of a full simulation step relevant for communication, including:"
-                    "1. if update_inputs_on_callback=False update model inputs,"
-                    "2. Perform simulation with t_sample_simulation"
-                    "3. Update model results and send output values to other Agents or Modules."
+                    "- Perform simulation with t_sample_simulation"
+                    "- Update model results and send output values to other Agents or Modules."
     )
     t_sample_simulation: Union[float, int] = Field(
         title="t_sample_simulation",
@@ -133,9 +132,8 @@ class SimulatorConfig(BaseModuleConfig):
         validate_default=True,
         ge=0,
         description="Sample time of the simulation itself. "
-                    "If update_inputs_on_callback=True, the inputs of the models "
-                    "may be updated every other t_sample_simulation, as long as the "
-                    "model supports this. Used to override dt of the model."
+                    "The inputs of the models may be updated every other t_sample_simulation, "
+                    "as long as the model supports this. Used to override dt of the model."
     )
     model: Dict
 
@@ -174,12 +172,6 @@ class SimulatorConfig(BaseModuleConfig):
         description="Sampling interval for which the results are written to disc in seconds.",
         validate_default=True,
         gt=0,
-    )
-    update_inputs_on_callback: bool = Field(
-        title="update_inputs_on_callback",
-        default=True,
-        description="If True, model inputs are updated if they are updated in data_broker."
-                    "Else, the model inputs are updated before each simulation.",
     )
     measurement_uncertainty: Union[Dict[str, float], float] = Field(
         title="measurement_uncertainty",
@@ -340,8 +332,8 @@ class Simulator(BaseModule):
             variables=self._get_result_model_variables()
         )
         self._save_count: int = 1  # tracks, how often results have been saved
-        if self.config.update_inputs_on_callback:
-            self._register_input_callbacks()
+        self._inputs_changed_since_last_save = False
+        self._register_input_callbacks()
         self.logger.info("%s initialized!", self.__class__.__name__)
 
     def terminate(self):
@@ -435,11 +427,13 @@ class Simulator(BaseModule):
         """Set given model input value to the model"""
         self.logger.debug("Updating model input %s=%s", name, inp.value)
         self.model.set_input_value(name=name, value=inp.value)
+        self._inputs_changed_since_last_save = True
 
     def _callback_update_model_parameter(self, par: AgentVariable, name: str):
         """Set given model parameter value to the model"""
         self.logger.debug("Updating model parameter %s=%s", name, par.value)
         self.model.set_parameter_value(name=name, value=par.value)
+        self._inputs_changed_since_last_save = True
 
     def process(self):
         """
@@ -447,44 +441,38 @@ class Simulator(BaseModule):
         updating inputs, simulating, model results and then outputs.
 
         In a simulation step following happens:
-        1. Update inputs (only necessary if self.update_inputs_on_callback = False)
-        2. Specify the end time of the simulation from the agents perspective.
+        1. Specify the end time of the simulation from the agents perspective.
         **Important note**: The agents use unix-time as a timestamp and start
         the simulation with the current datetime (represented by self.env.time),
         the model starts at 0 seconds (represented by self.env.now).
-        3. Directly after the simulation we store the results with
+        2. Directly after the simulation we store the results with
         the output time and then call the timeout in the environment,
         hence actually increase the environment time.
-        4. Once the environment time reached the simulation time,
+        3. Once the environment time reached the simulation time,
         we send the updated output values to other modules and agents by setting
         them the data_broker.
         """
         self._update_result_outputs(self.env.time)
         while True:
-            if not self.config.update_inputs_on_callback:
-                # Update inputs manually
-                self.update_model_inputs()
             # Simulate
-            self.model.do_step(
-                t_start=(self.env.now + self.config.t_start), t_sample=self.config.t_sample_communication
+            t_samples = create_time_samples(
+                t_end=self.config.t_sample_communication,
+                dt=self.config.t_sample_simulation
             )
-            # Update the results and outputs
-            self._update_results()
-            yield self.env.timeout(self.config.t_sample_communication)
+            self.logger.debug("Doing simulation steps %s ...", t_samples)
+            for _idx, _t_sample in enumerate(t_samples[:-1]):
+                _t_start = self.env.now + self.config.t_start
+                dt_sim = t_samples[_idx + 1] - _t_sample
+                self.model.do_step(t_start=_t_start, t_sample=dt_sim)
+                if _idx == len(t_samples) - 2 or self._inputs_changed_since_last_save:
+                    # Update the results
+                    self._update_results(
+                        timestamp_outputs=self.env.time + dt_sim,
+                        timestamp_inputs=self.env.time
+                    )
+                yield self.env.timeout(dt_sim)
+            # Communicate
             self.update_module_vars()
-
-    def update_model_inputs(self):
-        """
-        Internal method to write current data_broker to simulation model.
-        Only update values, not other module_types.
-        """
-        model_input_names = (
-                self.model.get_input_names() + self.model.get_parameter_names()
-        )
-        for inp in self.variables:
-            if inp.name in model_input_names:
-                self.logger.debug("Updating model variable %s=%s", inp.name, inp.value)
-                self.model.set(name=inp.name, value=inp.value)
 
     def update_module_vars(self):
         """
@@ -536,25 +524,31 @@ class Simulator(BaseModule):
             return
         os.remove(self.config.result_filename)
 
-    def _update_results(self):
+    def _update_results(self, timestamp_outputs, timestamp_inputs):
         """
         Adds model variables to the SimulationResult object
         at the given timestamp.
         """
         if not self.config.save_results:
             return
-        timestamp = self.env.time + self.config.t_sample_communication
-        inp_values = [var.value for var in self._get_result_input_variables()]
 
-        # add inputs in the time stamp before adding outputs, as they are active from
-        # the start of this interval
-        self._result.data[-1].extend(inp_values)
+        inp_values = [var.value for var in self._get_result_input_variables()]
+        self._inputs_changed_since_last_save = False
+
+        if timestamp_inputs == self._result.index[-1]:
+            # add inputs in the time stamp before adding outputs, as they are active from
+            # the start of this interval
+            self._result.data[-1].extend(inp_values)
+        else:
+            self._result.index.append(timestamp_inputs)
+            self._result.data.append([None] * len(self._result.data[0]) + inp_values)
+
         # adding output results afterwards. If the order here is switched, the [-1]
         # above will point to the wrong entry
-        self._update_result_outputs(timestamp)
+        self._update_result_outputs(timestamp_outputs)
         if (
                 self.config.result_filename is not None
-                and timestamp // (self.config.write_results_delay * self._save_count) > 0
+                and timestamp_outputs // (self.config.write_results_delay * self._save_count) > 0
         ):
             self._save_count += 1
             self._result.write_results(self.config.result_filename)
