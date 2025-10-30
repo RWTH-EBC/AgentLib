@@ -1,0 +1,477 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>agentlib.core.agent &mdash; agentlib 0.8.9 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/autodoc_pydantic.css" />
+
+  
+      <script src="../../../_static/jquery.js"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+      <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+      <script src="../../../_static/doctools.js"></script>
+      <script src="../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            agentlib
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Tutorials/tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ModulesList.html">List of standard modules and models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../AgentVariable.html">AgentVariables and ModelVariables</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../agentlib.html">agentlib package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">agentlib</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">agentlib.core.agent</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for agentlib.core.agent</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Module containing only the Agent class.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">threading</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">copy</span><span class="w"> </span><span class="kn">import</span> <span class="n">deepcopy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Union</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">TypeVar</span><span class="p">,</span> <span class="n">Optional</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">field_validator</span><span class="p">,</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">FilePath</span><span class="p">,</span> <span class="n">Field</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pydantic_core.core_schema</span><span class="w"> </span><span class="kn">import</span> <span class="n">FieldValidationInfo</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">agentlib</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">agentlib.core.logging_</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">agentlib_logging</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agentlib.core</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">Environment</span><span class="p">,</span>
+    <span class="n">LocalDataBroker</span><span class="p">,</span>
+    <span class="n">RTDataBroker</span><span class="p">,</span>
+    <span class="n">BaseModule</span><span class="p">,</span>
+    <span class="n">DataBroker</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agentlib.core.environment</span><span class="w"> </span><span class="kn">import</span> <span class="n">CustomSimpyEnvironment</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agentlib.core.errors</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConfigurationError</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agentlib.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">custom_injection</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agentlib.utils.load_config</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_config</span>
+
+<span class="n">BaseModuleClass</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;BaseModuleClass&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="n">BaseModule</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="AgentConfig"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.AgentConfig">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">AgentConfig</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Class containing settings / config for an Agent.</span>
+
+<span class="sd">    Contains just two fields, id and modules.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nb">id</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">title</span><span class="o">=</span><span class="s2">&quot;id&quot;</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;The ID of the Agent, should be unique in &quot;</span>
+        <span class="s2">&quot;the multi-agent-system the agent is living in.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">modules</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">Dict</span><span class="p">,</span> <span class="n">FilePath</span><span class="p">]],</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="n">Dict</span><span class="p">,</span> <span class="n">FilePath</span><span class="p">]]]</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">Field</span><span class="p">(</span>
+            <span class="n">default_factory</span><span class="o">=</span><span class="nb">list</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="s2">&quot;A list or dictionary of modules. If a dictionary is provided, keys are treated as module_ids.&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">check_alive_interval</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">title</span><span class="o">=</span><span class="s2">&quot;check_alive_interval&quot;</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">ge</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Check every other check_alive_interval second &quot;</span>
+        <span class="s2">&quot;if the threads of the agent are still alive.&quot;</span>
+        <span class="s2">&quot;If that&#39;s not the case, exit the main thread of the &quot;</span>
+        <span class="s2">&quot;agent. Updating this value at runtime will &quot;</span>
+        <span class="s2">&quot;not work as all processes have already been started.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">max_queue_size</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">default</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+        <span class="n">ge</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Maximal number of waiting items in data-broker queues. &quot;</span>
+        <span class="s2">&quot;Set to -1 for infinity&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+<div class="viewcode-block" id="AgentConfig.check_modules"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.AgentConfig.check_modules">[docs]</a>    <span class="nd">@field_validator</span><span class="p">(</span><span class="s2">&quot;modules&quot;</span><span class="p">)</span>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">check_modules</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">modules</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">,</span> <span class="n">Dict</span><span class="p">],</span> <span class="n">info</span><span class="p">:</span> <span class="n">FieldValidationInfo</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Validator to ensure all modules are in dict-format and include &#39;module_id&#39;.&quot;&quot;&quot;</span>
+        <span class="n">modules_loaded</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">modules</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">module_id</span><span class="p">,</span> <span class="n">module</span> <span class="ow">in</span> <span class="n">modules</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">)):</span>
+                    <span class="k">if</span> <span class="n">Path</span><span class="p">(</span><span class="n">module</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+                        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                            <span class="n">module</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">module</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">module</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                    <span class="n">module</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">module</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="s2">&quot;module_id&quot;</span> <span class="ow">in</span> <span class="n">module</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">module</span><span class="p">[</span><span class="s2">&quot;module_id&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">module_id</span><span class="p">:</span>
+                        <span class="n">agent</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span>
+                        <span class="k">raise</span> <span class="n">ConfigurationError</span><span class="p">(</span>
+                            <span class="sa">f</span><span class="s2">&quot;Provided agent </span><span class="si">{</span><span class="n">agent</span><span class="si">}</span><span class="s2"> has ambiguous module_id. Module &quot;</span>
+                            <span class="sa">f</span><span class="s2">&quot;config was declared with dict key </span><span class="si">{</span><span class="n">module_id</span><span class="si">}</span><span class="s2"> but &quot;</span>
+                            <span class="sa">f</span><span class="s2">&quot;contains different module_id </span><span class="si">{</span><span class="n">module</span><span class="p">[</span><span class="s1">&#39;module_id&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> &quot;</span>
+                            <span class="sa">f</span><span class="s2">&quot;within config.&quot;</span>
+                        <span class="p">)</span>
+                    <span class="n">module</span><span class="p">[</span><span class="s2">&quot;module_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">module_id</span>
+                <span class="n">modules_loaded</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">module</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">modules</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">module</span> <span class="ow">in</span> <span class="n">modules</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">)):</span>
+                    <span class="k">if</span> <span class="n">Path</span><span class="p">(</span><span class="n">module</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+                        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                            <span class="n">module</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">module</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">module</span><span class="p">)</span>
+                <span class="n">modules_loaded</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">module</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Modules must be a list or a dict&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">modules_loaded</span></div></div>
+
+
+<div class="viewcode-block" id="Agent"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.Agent">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">Agent</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The base class for all reactive agent implementations.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        config (Union[AgentConfig, FilePath, str, dict]):</span>
+<span class="sd">            A config object to initialize the agents config</span>
+<span class="sd">        env (Environment): The environment the agent is running in</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">env</span><span class="p">:</span> <span class="n">Environment</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create instance of Agent</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_modules</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_threads</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">env</span> <span class="o">=</span> <span class="n">env</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">is_alive</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">config</span><span class="p">:</span> <span class="n">AgentConfig</span> <span class="o">=</span> <span class="n">load_config</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">config_type</span><span class="o">=</span><span class="n">AgentConfig</span><span class="p">)</span>
+        <span class="n">data_broker_logger</span> <span class="o">=</span> <span class="n">agentlib_logging</span><span class="o">.</span><span class="n">create_logger</span><span class="p">(</span>
+            <span class="n">env</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">/DataBroker&quot;</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">env</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">rt</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_data_broker</span> <span class="o">=</span> <span class="n">RTDataBroker</span><span class="p">(</span>
+                <span class="n">env</span><span class="o">=</span><span class="n">env</span><span class="p">,</span> <span class="n">logger</span><span class="o">=</span><span class="n">data_broker_logger</span><span class="p">,</span> <span class="n">max_queue_size</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">max_queue_size</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">register_thread</span><span class="p">(</span><span class="n">thread</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_data_broker</span><span class="o">.</span><span class="n">thread</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_data_broker</span> <span class="o">=</span> <span class="n">LocalDataBroker</span><span class="p">(</span>
+                <span class="n">env</span><span class="o">=</span><span class="n">env</span><span class="p">,</span> <span class="n">logger</span><span class="o">=</span><span class="n">data_broker_logger</span><span class="p">,</span> <span class="n">max_queue_size</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">max_queue_size</span>
+            <span class="p">)</span>
+        <span class="c1"># Update modules</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">config</span>
+        <span class="c1"># Setup logger</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">agentlib_logging</span><span class="o">.</span><span class="n">create_logger</span><span class="p">(</span><span class="n">env</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+
+        <span class="c1"># Register the thread monitoring if configured</span>
+        <span class="k">if</span> <span class="n">env</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">rt</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_monitor_threads</span><span class="p">())</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">id</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Getter for current agent&#39;s id</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: current id of agent</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">id</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Agent </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">&quot;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">config</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AgentConfig</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the config (AgentConfig) of the agent</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            AgentConfig: An instance of AgentConfig</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config</span>
+
+    <span class="nd">@config</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">config</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">AgentConfig</span><span class="p">,</span> <span class="n">FilePath</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">]):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the config of the agent.</span>
+<span class="sd">        As relevant info may be updated, all modules</span>
+<span class="sd">        are re-registered.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            config (Union[AgentConfig, FilePath, str, dict]):</span>
+<span class="sd">                Essentially any object which can be parsed by pydantic</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Set the config</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_config</span> <span class="o">=</span> <span class="n">load_config</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">config_type</span><span class="o">=</span><span class="n">AgentConfig</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_register_modules</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">data_broker</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DataBroker</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the data_broker of the agent</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            DataBroker: An instance of the DataBroker class</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_broker</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">env</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CustomSimpyEnvironment</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the environment the agent is in</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Environment: The environment instance</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_env</span>
+
+    <span class="nd">@env</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">env</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">env</span><span class="p">:</span> <span class="n">Environment</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the environment of the agent</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            env (Environment): The environment instance</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_env</span> <span class="o">=</span> <span class="n">env</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">modules</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">BaseModuleClass</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get all modules of agent</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            List[BaseModule]: List of all modules</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_modules</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+
+<div class="viewcode-block" id="Agent.get_module"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.Agent.get_module">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">get_module</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">BaseModuleClass</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the module by given module_id.</span>
+<span class="sd">        If no such module exists, None is returned</span>
+<span class="sd">        Args:</span>
+<span class="sd">            module_id (str): Id of the module to return</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            BaseModule: Module with the given name</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_modules</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">module_id</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Agent.register_thread"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.Agent.register_thread">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">register_thread</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">thread</span><span class="p">:</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Registers the given thread to the dictionary of threads</span>
+<span class="sd">        which need to run in order for the agent</span>
+<span class="sd">        to work.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            thread threading.Thread:</span>
+<span class="sd">                The thread object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">thread</span><span class="o">.</span><span class="n">name</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_threads</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Given thread with name &#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39; is already a registered thread&quot;</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">thread</span><span class="o">.</span><span class="n">daemon</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                <span class="s2">&quot;&#39;</span><span class="si">%s</span><span class="s2">&#39; is not a daemon thread. &quot;</span>
+                <span class="s2">&quot;If the agent raises an error, the thread will keep running.&quot;</span><span class="p">,</span>
+                <span class="n">name</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_threads</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">thread</span></div>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_monitor_threads</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Process loop to monitor the threads of the agent.&quot;&quot;&quot;</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">thread</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_threads</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">thread</span><span class="o">.</span><span class="n">is_alive</span><span class="p">():</span>
+                    <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;The thread </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> is not alive anymore. Exiting agent. &quot;</span>
+                        <span class="sa">f</span><span class="s2">&quot;Check errors above for possible reasons&quot;</span>
+                    <span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">critical</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">is_alive</span> <span class="o">=</span> <span class="kc">False</span>
+                    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+            <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">timeout</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">check_alive_interval</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_register_modules</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Function to register all modules from the</span>
+<span class="sd">        current config.</span>
+<span class="sd">        The module_ids need to be unique inside the</span>
+<span class="sd">        agents config.</span>
+<span class="sd">        The agent object (self) is passed to the modules.</span>
+<span class="sd">        This is the reason the function is not inside the</span>
+<span class="sd">        validator.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">updated_modules</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">module_config</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
+            <span class="n">module_cls</span> <span class="o">=</span> <span class="n">get_module_class</span><span class="p">(</span><span class="n">module_config</span><span class="o">=</span><span class="n">module_config</span><span class="p">)</span>
+            <span class="n">_module_id</span> <span class="o">=</span> <span class="n">module_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;module_id&quot;</span><span class="p">,</span> <span class="n">module_cls</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+
+            <span class="c1"># Insert default module id if it did not exist:</span>
+            <span class="n">module_config</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;module_id&quot;</span><span class="p">:</span> <span class="n">_module_id</span><span class="p">})</span>
+
+            <span class="k">if</span> <span class="n">_module_id</span> <span class="ow">in</span> <span class="n">updated_modules</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Module with module_id &#39;</span><span class="si">{</span><span class="n">_module_id</span><span class="si">}</span><span class="s2">&#39; &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;exists multiple times inside agent &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">. Use unique names only.&quot;</span>
+                <span class="p">)</span>
+
+            <span class="n">updated_modules</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_module_id</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">_module_id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_modules</span><span class="p">:</span>
+                <span class="c1"># Update the config:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">get_module</span><span class="p">(</span><span class="n">_module_id</span><span class="p">)</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">module_config</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># Add the modules to the list of modules</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_modules</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+                    <span class="p">{</span><span class="n">_module_id</span><span class="p">:</span> <span class="n">module_cls</span><span class="p">(</span><span class="n">agent</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="n">module_config</span><span class="p">)}</span>
+                <span class="p">)</span>
+
+<div class="viewcode-block" id="Agent.get_results"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.Agent.get_results">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">get_results</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cleanup</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the results of this agent.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            cleanup: If true, created files are deleted.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">module</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="n">module</span><span class="o">.</span><span class="n">get_results</span><span class="p">()</span>
+            <span class="k">except</span> <span class="ne">BaseException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error reading results of module </span><span class="si">{</span><span class="n">module</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">if</span> <span class="n">result</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">results</span><span class="p">[</span><span class="n">module</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span>
+        <span class="k">if</span> <span class="n">cleanup</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">clean_results</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">results</span></div>
+
+<div class="viewcode-block" id="Agent.clean_results"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.Agent.clean_results">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">clean_results</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calls the cleanup_results function of all modules, removing files that</span>
+<span class="sd">        were created by them.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">module</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">module</span><span class="o">.</span><span class="n">cleanup_results</span><span class="p">()</span>
+            <span class="k">except</span> <span class="ne">BaseException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Could not cleanup results for the following module: </span><span class="si">{</span><span class="n">module</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">. &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;The reason is the following exception: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span></div>
+
+<div class="viewcode-block" id="Agent.terminate"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.Agent.terminate">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">terminate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calls the terminate function of all modules.&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">module</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
+            <span class="n">module</span><span class="o">.</span><span class="n">terminate</span><span class="p">()</span></div></div>
+
+
+<div class="viewcode-block" id="get_module_class"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.get_module_class">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">get_module_class</span><span class="p">(</span><span class="n">module_config</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return the Module-Class object for the given config.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        module_config (dict): Config of the module to return</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        BaseModule: Module-Class object</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_type</span> <span class="o">=</span> <span class="n">module_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;type&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_type</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="c1"># Get the module-class from the agentlib</span>
+        <span class="n">module_cls</span> <span class="o">=</span> <span class="n">agentlib</span><span class="o">.</span><span class="n">modules</span><span class="o">.</span><span class="n">get_module_type</span><span class="p">(</span><span class="n">module_type</span><span class="o">=</span><span class="n">_type</span><span class="o">.</span><span class="n">casefold</span><span class="p">())</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">_type</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="c1"># Load module class</span>
+        <span class="n">module_cls</span> <span class="o">=</span> <span class="n">custom_injection</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">_type</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Given module type is of type &#39;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">_type</span><span class="p">)</span><span class="si">}</span><span class="s2">&#39; &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;but should be str or dict.&quot;</span>
+        <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">module_cls</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, AGENT-Project Associates.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
