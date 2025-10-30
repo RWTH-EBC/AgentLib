@@ -264,8 +264,7 @@ class SimulatorConfig(BaseModuleConfig):
                     dependency_install=UNINSTALLED_MODEL_TYPES[_type],
                     used_object=f"model {_type}",
                 )
-            m_type = get_model_type(_type)
-            model = m_type(
+            model = get_model_type(_type)(
                 **model,
                 parameters=convert_agent_vars_to_list_of_dicts(parameters),
                 inputs=convert_agent_vars_to_list_of_dicts(inputs),
