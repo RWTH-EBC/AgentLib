@@ -12,8 +12,10 @@ import multiprocessing
 import queue  # For queue.Empty
 import socket
 import threading
+import time
 import webbrowser
 from typing import Dict, Optional, Tuple
+from agentlib.core.errors import OptionalDependencyError
 
 try:
     import dash
@@ -21,12 +23,12 @@ try:
     from dash.dependencies import Input, Output, State
     import dash_bootstrap_components as dbc
 except ImportError:
-    raise ImportError(
-        "Dash is not installed. Please install it to use the MAS dashboard: "
-        "pip install agentlib[interactive]"
+    raise OptionalDependencyError(
+        used_object=f"MAS Dashboard",
+        dependency_install="agentlib[interactive]",
+        dependency_name="interactive",
     )
 
-from agentlib.core.errors import OptionalDependencyError
 from agentlib.utils.multi_agent_system import LocalMASAgency
 
 logger = logging.getLogger(__name__)
@@ -55,44 +57,20 @@ def _ipc_listener_loop(
                 f"IPC listener: Request for {agent_id}/{module_id}, token: {update_token}"
             )
             data_chunk, next_token = None, None
-            try:
-                agent = mas_instance.get_agent(agent_id)
-                if agent:
-                    module = agent.get_module(module_id)
-                    if module:
-                        if hasattr(module, "get_results_incremental"):
-                            data_chunk, next_token = module.get_results_incremental(
-                                update_token=update_token
-                            )
-                        else:
-                            logger.warning(
-                                f"Module {module_id} in agent {agent_id} does not have "
-                                f"'get_results_incremental' method. Falling back to 'get_results'."
-                            )
-                            if (
-                                update_token is None
-                            ):  # Only call get_results for initial load
-                                data_chunk = module.get_results()
-                            # next_token remains None, implying no further incremental updates from this fallback
-                    else:
-                        logger.error(
-                            f"IPC listener: Module {module_id} not found in agent {agent_id}"
-                        )
-                else:
-                    logger.error(f"IPC listener: Agent {agent_id} not found in MAS")
-            except Exception as e:
-                logger.error(
-                    f"IPC listener: Error calling get_results_incremental for {agent_id}/{module_id}: {e}",
-                    exc_info=True,
+            agent = mas_instance.get_agent(agent_id)
+            module = agent.get_module(module_id)
+            if hasattr(module, "get_results_incremental"):
+                data_chunk, next_token = module.get_results_incremental(
+                    update_token=update_token
                 )
+            else:
+                if update_token is None:  # Only call get_results for initial load
+                    data_chunk = module.get_results()
+                # next_token remains None, implying no further incremental updates from this fallback
             response_q.put((data_chunk, next_token))
         except queue.Empty:
             continue  # Timeout, check stop_event again
-        except Exception as e:
-            logger.error(f"IPC listener: Unexpected error in loop: {e}", exc_info=True)
-            import time
-
-            time.sleep(0.1)  # Avoid busy-looping
+        time.sleep(0.1)  # Avoid busy-looping
     logger.info("IPC listener thread stopped for MAS dashboard.")
 
 
@@ -245,61 +223,44 @@ def create_dash_app(
             logger.debug(
                 f"Dash app: Requesting data for {module_key} with token: {update_token_to_send}"
             )
-            try:
-                request_q.put(
-                    (selected_agent_id, selected_module_id, update_token_to_send)
-                )
-                data_chunk, next_token = response_q.get(
-                    timeout=(update_interval_sec * 0.9) if update_interval_sec else 4.5
-                )
-                logger.debug(
-                    f"Dash app: Received data for {module_key}. Next token: {next_token}"
-                )
+            request_q.put((selected_agent_id, selected_module_id, update_token_to_send))
+            data_chunk, next_token = response_q.get(
+                timeout=(update_interval_sec * 0.9) if update_interval_sec else 4.5
+            )
+            logger.debug(
+                f"Dash app: Received data for {module_key}. Next token: {next_token}"
+            )
 
-                # Accumulate data in memory
-                if data_chunk is not None:
-                    if (
-                        app_data_cache.get(module_key) is None
-                        or update_token_to_send is None
-                    ):
-                        # First load or fresh start
-                        app_data_cache[module_key] = data_chunk
+            # Accumulate data in memory
+            if data_chunk is not None:
+                if (
+                    app_data_cache.get(module_key) is None
+                    or update_token_to_send is None
+                ):
+                    # First load or fresh start
+                    app_data_cache[module_key] = data_chunk
+                else:
+                    # Append new data to existing dataframe
+                    existing_df = app_data_cache[module_key]
+                    if hasattr(data_chunk, "index") and hasattr(existing_df, "index"):
+                        # Both are DataFrames - concatenate
+                        import pandas as pd
+
+                        app_data_cache[module_key] = pd.concat(
+                            [existing_df, data_chunk]
+                        )
                     else:
-                        # Append new data to existing dataframe
-                        existing_df = app_data_cache[module_key]
-                        if hasattr(data_chunk, "index") and hasattr(
-                            existing_df, "index"
-                        ):
-                            # Both are DataFrames - concatenate
-                            import pandas as pd
+                        # Handle other data types as needed
+                        app_data_cache[module_key] = data_chunk
 
-                            app_data_cache[module_key] = pd.concat(
-                                [existing_df, data_chunk]
-                            )
-                        else:
-                            # Handle other data types as needed
-                            app_data_cache[module_key] = data_chunk
+            new_token_cache = current_token_cache.copy()
+            new_token_cache[module_key] = next_token
 
-                new_token_cache = current_token_cache.copy()
-                new_token_cache[module_key] = next_token
-
-                # Increment trigger to signal data update for visualization callback
-                new_trigger_val = (
-                    (current_trigger_val + 1) if current_trigger_val is not None else 0
-                )
-                return new_token_cache, new_trigger_val
-
-            except queue.Empty:
-                logger.warning(
-                    f"Dash app: Timeout waiting for data from IPC for {module_key}"
-                )
-                return current_token_cache, dash.no_update
-            except Exception as e:
-                logger.error(
-                    f"Dash app: Error in fetch_live_data for {module_key}: {e}",
-                    exc_info=True,
-                )
-                return current_token_cache, dash.no_update
+            # Increment trigger to signal data update for visualization callback
+            new_trigger_val = (
+                (current_trigger_val + 1) if current_trigger_val is not None else 0
+            )
+            return new_token_cache, new_trigger_val
 
     # Callback for displaying module visualization
     @app.callback(
@@ -340,69 +301,31 @@ def create_dash_app(
                 return html.P(
                     f"No live data currently available for module '{selected_module_id}'."
                 )
-        else:  # Static mode
-            if not static_results:
-                return html.P("Static results not available.")
+        else:
             current_results_data = static_results.get(selected_agent_id, {}).get(
                 selected_module_id, "__no_key__"
             )
-            if (
-                isinstance(current_results_data, str)
-                and current_results_data == "__no_key__"
-            ):
-                return html.P(
-                    f"No results data key found for module '{selected_module_id}' in agent '{selected_agent_id}' (static mode)."
-                )
 
         agent_modules_meta = agent_module_info.get(selected_agent_id, [])
         module_info_dict = next(
             (m for m in agent_modules_meta if m["id"] == selected_module_id), None
         )
+        class_path = module_info_dict["class_path"]
+        module_path_str, class_name_str = class_path.rsplit(".", 1)
+        imported_module_obj = importlib.import_module(module_path_str)
+        ModuleType = getattr(imported_module_obj, class_name_str)
 
-        if not module_info_dict:
+        visualization_layout = ModuleType.visualize_results(
+            results_data=current_results_data,
+            module_id=selected_module_id,
+            agent_id=selected_agent_id,
+        )
+        if visualization_layout is None:
             return html.P(
-                f"Module metadata for '{selected_module_id}' not found in agent '{selected_agent_id}'."
+                f"Visualization not implemented or not available for module "
+                f"'{selected_module_id}' (type: {ModuleType.__name__}) in agent '{selected_agent_id}'."
             )
-
-        try:
-            class_path = module_info_dict["class_path"]
-            module_path_str, class_name_str = class_path.rsplit(".", 1)
-            imported_module_obj = importlib.import_module(module_path_str)
-            ModuleType = getattr(imported_module_obj, class_name_str)
-
-            visualization_layout = ModuleType.visualize_results(
-                results_data=current_results_data,
-                module_id=selected_module_id,
-                agent_id=selected_agent_id,
-            )
-            if visualization_layout is None:
-                return html.P(
-                    f"Visualization not implemented or not available for module "
-                    f"'{selected_module_id}' (type: {ModuleType.__name__}) in agent '{selected_agent_id}'."
-                )
-            return visualization_layout
-        except OptionalDependencyError as e:
-            logging.getLogger(__name__).error(
-                f"Optional dependency error for {class_path}: {e}"
-            )
-            return html.Div(
-                [
-                    html.H4("Visualization Error"),
-                    html.P(f"Could not render visualization for {class_path}."),
-                    html.P(str(e)),
-                    html.P("Please ensure all necessary libraries are installed."),
-                ]
-            )
-        except Exception as e:
-            logging.getLogger(__name__).error(
-                f"Error generating visualization for module '{selected_module_id}' "
-                f"(path: {class_path}) in agent '{selected_agent_id}': {e}",
-                exc_info=True,
-            )
-            return html.P(
-                f"An error occurred while generating the visualization for "
-                f"module '{selected_module_id}': {str(e)}"
-            )
+        return visualization_layout
 
     return app
 
@@ -430,11 +353,7 @@ def _run_dash_server(
         update_interval_sec=update_interval_sec_arg,
     )
     logger.info(f"Dash app server starting on http://{host}:{port}")
-    try:
-        # Set use_reloader=False to prevent issues with multiprocessing and threads
-        app.run(debug=False, port=port, host=host, use_reloader=False)
-    except Exception as e:
-        logger.error(f"Error running Dash server: {e}", exc_info=True)
+    app.run(debug=False, port=port, host=host, use_reloader=False)
 
 
 def get_free_port():
@@ -477,12 +396,8 @@ def launch_mas_dashboard(
         multiprocessing.Process: The process running the Dash dashboard (if not block_main).
                                  None otherwise or if an error occurs.
     """
-    if mas is None:
-        logger.error("LocalMASAgency instance ('mas') must be provided.")
-        return None
     if not live_update and mas_results is None:
-        logger.error("mas_results must be provided if not in live_update mode.")
-        return None
+        raise ValueError("mas_results must be provided if not in live_update mode.")
     if live_update:
         block_main = False
 
@@ -577,31 +492,3 @@ def launch_mas_dashboard(
             if ipc_listener_thread_obj.is_alive():
                 logger.warning("IPC listener thread did not stop in time.")
         return None
-
-
-if __name__ == "__main__":
-    # This example won't run directly as it needs a LocalMASAgency instance and results.
-    # It's intended to be called from another script.
-    print(
-        "To run this dashboard, import and call launch_mas_dashboard "
-        "from your script with a LocalMASAgency instance and its results. \n"
-        "Example: \n"
-        "import multiprocessing \n"
-        "if __name__ == '__main__': \n"
-        "    multiprocessing.freeze_support() # For Windows executable freezing \n"
-        "    # ... your MAS setup ... \n"
-        "    # For static dashboard: \n"
-        "    # results = my_mas.get_results() \n"
-        "    # dashboard_proc = launch_mas_dashboard(my_mas, mas_results=results) \n"
-        "    # For live dashboard: \n"
-        "    # dashboard_proc = launch_mas_dashboard(my_mas, live_update=True) \n"
-        "    # ... your main script continues ... \n"
-        "    print('Dashboard process started. Press Ctrl+C in the console running the script, or implement other logic to stop it.') \n"
-        "    try: \n"
-        "        if dashboard_proc: dashboard_proc.join() \n"
-        "    except KeyboardInterrupt: \n"
-        "        print('Terminating dashboard process...') \n"
-        "        if dashboard_proc: dashboard_proc.terminate(); dashboard_proc.join() \n"
-        "    print('Dashboard process finished.')"
-    )
-    pass

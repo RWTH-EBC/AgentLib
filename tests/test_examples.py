@@ -86,7 +86,7 @@ class TestExamples(unittest.TestCase):
             until=8640,
             with_plots=False,
             log_level=logging.DEBUG,
-            use_direct_callback_databroker=True
+            use_direct_callback_databroker=True,
         )
 
     def test_pingpong(self):
