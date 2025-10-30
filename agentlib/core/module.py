@@ -291,10 +291,8 @@ class BaseModuleConfig(BaseModel):
         try:
             super().__init__(*args, **kwargs)
         except pydantic.ValidationError as e:
-            module_id = _user_config.get("module_id")
-            module_id_text = f" / module '{module_id}" if module_id is not None else ""
             better_error = self._improve_extra_field_error_messages(
-                e, agent_id=_agent_id, module_id=module_id_text
+                e, agent_id=_agent_id, module_id=_user_config.get("module_id")
             )
             raise better_error
 
@@ -318,7 +316,10 @@ class BaseModuleConfig(BaseModel):
         correct field names to the error message."""
 
         error_list = e.errors()
-        title = f"configuration of agent '{agent_id}'{module_id}':"
+        if module_id is not None:
+            title = f"configuration of agent '{agent_id}' / module '{module_id}':"
+        else:
+            title = f"configuration of agent '{agent_id}':"
         if RAPIDFUZZ_IS_INSTALLED:
             for error in error_list:
                 if not error["type"] == "extra_forbidden":
