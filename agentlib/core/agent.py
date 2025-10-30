@@ -83,7 +83,7 @@ class AgentConfig(BaseModel):
                         raise ConfigurationError(
                             f"Provided agent {agent} has ambiguous module_id. Module "
                             f"config was declared with dict key {module_id} but "
-                            f"contains different module_id {module["module_id"]} "
+                            f"contains different module_id {module['module_id']} "
                             f"within config."
                         )
                     module["module_id"] = module_id
