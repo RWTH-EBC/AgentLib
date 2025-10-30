@@ -7,10 +7,10 @@
 ### Key Information
 - **Language**: Python (3.9-3.12)
 - **License**: BSD-3-Clause
-- **Testing**: unittest framework
-- **Code Quality**: pylint (target score =10.0)
+- **Testing**: unittest framework (unit tests live in `tests/`)
+- **Code Quality**: (project contains `pylintrc`; aim: high score)
 - **Dependencies**: Core (numpy, pandas, simpy, pydantic>=2.0, attrs), Optional (FMU, scipy, MQTT, matplotlib)
-- **CI/CD**: Automated testing (pytest, coverage, pylint), sphinx documentation
+- **CI/CD**: GitHub Actions (runs pytest, coverage, pylint) and Sphinx documentation under `docs/`
 - **Plugin Ecosystem**: Extensible via plugins (AgentLib-MPC, AgentLib-FIWARE)
 
 ## Project Structure
@@ -77,9 +77,7 @@ All components use Pydantic v2 models (e.g., `AgentConfig`, `BaseModuleConfig`, 
 - **Coverage concerns**: Highlight complex logic added without test coverage
 
 #### 4. Documentation & Examples
-- **Core API changes**: Should update `docs/source/` RST files
-- **New modules/models**: Should have entry in `docs/source/ModulesList.md`
-- **Configuration changes**: May require updates to `docs/source/Tutorials/` examples
+- **Examples**: Add examples for new features and functionality
 - **CHANGELOG.md**: All notable changes should be documented
 
 #### 5. CI/CD Considerations
@@ -111,7 +109,7 @@ Provide structured, concise feedback (max 10 bullet points total):
 **Brevity is essential. Skip sections with nothing critical to report.**
 
 ### What NOT to Flag
-- Minor style issues (handled by pylint)
+- Minor style issues
 - Personal preference on implementation approach
 - Overly detailed nitpicking on internal/private methods
 - Changes to examples or test code (unless broken)
