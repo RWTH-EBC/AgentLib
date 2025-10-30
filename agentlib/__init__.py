@@ -12,7 +12,7 @@ from .utils.multi_agent_system import (
     LocalCloneMAPAgency,
 )
 
-__version__ = "0.8.8"
+__version__ = "0.8.9"
 
 __all__ = [
     "core",
