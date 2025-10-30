@@ -9,7 +9,7 @@ works.
 
 from .datamodels import *
 from .environment import Environment
-from .data_broker import DataBroker, RTDataBroker, LocalDataBroker
+from .data_broker import DataBroker, RTDataBroker, LocalDataBroker, DirectCallbackDataBroker
 from .module import BaseModule, BaseModuleConfig
 from .agent import Agent
 from .model import Model, ModelConfig
