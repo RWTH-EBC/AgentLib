@@ -5,7 +5,7 @@
 **AgentLib** is a Python framework for developing and executing distributed agents for control and simulation of energy systems. It provides base classes and modules for implementing multi-agent systems with support for distributed simulations, real-time control, and various communication protocols.
 
 ### Key Information
-- **Language**: Python (3.8-3.11)
+- **Language**: Python (3.9-3.12)
 - **License**: BSD-3-Clause
 - **Testing**: unittest framework
 - **Code Quality**: pylint (target score ≥10.0)
