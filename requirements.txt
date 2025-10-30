@@ -48,7 +48,7 @@ matplotlib >= 3.7 # relax to 3.7 for python 38 ==3.8.1
     # via agentlib (setup.py)
 msgpack==1.0.7
     # via fmpy
-numpy>= 1.25  # ==1.26.1
+numpy>= 1.24  # ==1.26.1
     # via
     #   agentlib (setup.py)
     #   contourpy
