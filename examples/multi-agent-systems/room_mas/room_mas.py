@@ -27,6 +27,7 @@ def run_example(until, with_plots=True, log_level=logging.INFO):
             "configs/BangBangAgent.json",
         ],
         variable_logging=True,
+        use_direct_callback_databroker=True
     )
     # Simulate
     mas.run(until=until)

@@ -15,6 +15,7 @@ from agentlib.core import (
     Environment,
     LocalDataBroker,
     RTDataBroker,
+    DirectCallbackDataBroker,
     BaseModule,
     DataBroker,
 )
@@ -98,10 +99,16 @@ class Agent:
             env=self.env, name=f"{config.id}/DataBroker"
         )
         if env.config.rt:
+            if config.use_direct_callback_databroker:
+                raise ValueError("Can not use the direct callback databroker in real-time")
             self._data_broker = RTDataBroker(
                 env=env, logger=data_broker_logger, max_queue_size=config.max_queue_size
             )
             self.register_thread(thread=self._data_broker.thread)
+        elif config.use_direct_callback_databroker:
+            self._data_broker = DirectCallbackDataBroker(
+                logger=data_broker_logger
+            )
         else:
             self._data_broker = LocalDataBroker(
                 env=env, logger=data_broker_logger, max_queue_size=config.max_queue_size
