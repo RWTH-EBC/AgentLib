@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>agentlib.core package &mdash; agentlib 0.8.8 documentation</title>
+  <title>agentlib.core package &mdash; agentlib 0.8.9 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css" />
       <link rel="stylesheet" type="text/css" href="_static/autodoc_pydantic.css" />
@@ -255,6 +255,7 @@ to work.</p>
 <li><p><a class="reference internal" href="code/agentlib.core.html#agentlib.core.agent.AgentConfig.id" title="agentlib.core.agent.AgentConfig.id"><code class="xref py py-obj docutils literal notranslate"><span class="pre">id</span> <span class="pre">(str</span> <span class="pre">|</span> <span class="pre">int)</span></code></a></p></li>
 <li><p><a class="reference internal" href="code/agentlib.core.html#agentlib.core.agent.AgentConfig.max_queue_size" title="agentlib.core.agent.AgentConfig.max_queue_size"><code class="xref py py-obj docutils literal notranslate"><span class="pre">max_queue_size</span> <span class="pre">(int</span> <span class="pre">|</span> <span class="pre">None)</span></code></a></p></li>
 <li><p><a class="reference internal" href="code/agentlib.core.html#agentlib.core.agent.AgentConfig.modules" title="agentlib.core.agent.AgentConfig.modules"><code class="xref py py-obj docutils literal notranslate"><span class="pre">modules</span> <span class="pre">(List[Dict</span> <span class="pre">|</span> <span class="pre">pathlib.Path])</span></code></a></p></li>
+<li><p><a class="reference internal" href="code/agentlib.core.html#agentlib.core.agent.AgentConfig.use_direct_callback_databroker" title="agentlib.core.agent.AgentConfig.use_direct_callback_databroker"><code class="xref py py-obj docutils literal notranslate"><span class="pre">use_direct_callback_databroker</span> <span class="pre">(bool)</span></code></a></p></li>
 </ul>
 </dd>
 <dt class="field-even">Validators<span class="colon">:</span></dt>
@@ -305,6 +306,12 @@ to work.</p>
 </ul>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.core.agent.AgentConfig.use_direct_callback_databroker">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">use_direct_callback_databroker</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#agentlib.core.agent.AgentConfig.use_direct_callback_databroker" title="Permalink to this definition"></a></dt>
+<dd><p>If True, the <cite>DirectCallbackDataBroker</cite> will be used</p>
 </dd></dl>
 
 <dl class="py method pydantic_validator">
@@ -374,7 +381,7 @@ the AgentVariable for other modules.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="agentlib.core.data_broker.DataBroker">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agentlib.core.data_broker.</span></span><span class="sig-name descname"><span class="pre">DataBroker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logger</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="code/agentlib.core.html#agentlib.core.logging_.CustomLogger" title="agentlib.core.logging_.CustomLogger"><span class="pre">CustomLogger</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_queue_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1000</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agentlib/core/data_broker.html#DataBroker"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.core.data_broker.DataBroker" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agentlib.core.data_broker.</span></span><span class="sig-name descname"><span class="pre">DataBroker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logger</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="code/agentlib.core.html#agentlib.core.logging_.CustomLogger" title="agentlib.core.logging_.CustomLogger"><span class="pre">CustomLogger</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agentlib/core/data_broker.html#DataBroker"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.core.data_broker.DataBroker" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
 <p>Handles communication and Callback triggers within an agent.
 Write variables to the broker with <code class="docutils literal notranslate"><span class="pre">send_variable()</span></code>.
@@ -453,9 +460,20 @@ Default is True.</p></li>
 </dd></dl>
 
 <dl class="py class">
+<dt class="sig sig-object py" id="agentlib.core.data_broker.DirectCallbackDataBroker">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agentlib.core.data_broker.</span></span><span class="sig-name descname"><span class="pre">DirectCallbackDataBroker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logger</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="code/agentlib.core.html#agentlib.core.logging_.CustomLogger" title="agentlib.core.logging_.CustomLogger"><span class="pre">CustomLogger</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agentlib/core/data_broker.html#DirectCallbackDataBroker"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.core.data_broker.DirectCallbackDataBroker" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="code/agentlib.core.html#agentlib.core.data_broker.DataBroker" title="agentlib.core.data_broker.DataBroker"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataBroker</span></code></a></p>
+<p>This DataBroker directly executes all callbacks.
+This may lead to infinite recursion loops, if two callbacks trigger
+each other when being triggered, for example.
+However, using this class, you can directly “follow” your variable
+from module to other modules or agents.</p>
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="agentlib.core.data_broker.LocalDataBroker">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agentlib.core.data_broker.</span></span><span class="sig-name descname"><span class="pre">LocalDataBroker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="code/agentlib.core.html#agentlib.core.environment.Environment" title="agentlib.core.environment.Environment"><span class="pre">Environment</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">logger</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="code/agentlib.core.html#agentlib.core.logging_.CustomLogger" title="agentlib.core.logging_.CustomLogger"><span class="pre">CustomLogger</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_queue_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1000</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agentlib/core/data_broker.html#LocalDataBroker"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.core.data_broker.LocalDataBroker" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="code/agentlib.core.html#agentlib.core.data_broker.DataBroker" title="agentlib.core.data_broker.DataBroker"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataBroker</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="code/agentlib.core.html#agentlib.core.data_broker.QueuedCallbackDataBroker" title="agentlib.core.data_broker.QueuedCallbackDataBroker"><code class="xref py py-class docutils literal notranslate"><span class="pre">QueuedCallbackDataBroker</span></code></a></p>
 <p>Local variation of the DataBroker written for fast-as-possible
 simulation within a single non-realtime Environment.</p>
 </dd></dl>
@@ -571,9 +589,15 @@ pass to this class.</p>
 </dd></dl>
 
 <dl class="py class">
+<dt class="sig sig-object py" id="agentlib.core.data_broker.QueuedCallbackDataBroker">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agentlib.core.data_broker.</span></span><span class="sig-name descname"><span class="pre">QueuedCallbackDataBroker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logger</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="code/agentlib.core.html#agentlib.core.logging_.CustomLogger" title="agentlib.core.logging_.CustomLogger"><span class="pre">CustomLogger</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_queue_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1000</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agentlib/core/data_broker.html#QueuedCallbackDataBroker"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.core.data_broker.QueuedCallbackDataBroker" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="code/agentlib.core.html#agentlib.core.data_broker.DataBroker" title="agentlib.core.data_broker.DataBroker"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataBroker</span></code></a></p>
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="agentlib.core.data_broker.RTDataBroker">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agentlib.core.data_broker.</span></span><span class="sig-name descname"><span class="pre">RTDataBroker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="code/agentlib.core.html#agentlib.core.environment.Environment" title="agentlib.core.environment.Environment"><span class="pre">Environment</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">logger</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="code/agentlib.core.html#agentlib.core.logging_.CustomLogger" title="agentlib.core.logging_.CustomLogger"><span class="pre">CustomLogger</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_queue_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1000</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/agentlib/core/data_broker.html#RTDataBroker"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.core.data_broker.RTDataBroker" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference internal" href="code/agentlib.core.html#agentlib.core.data_broker.DataBroker" title="agentlib.core.data_broker.DataBroker"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataBroker</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="code/agentlib.core.html#agentlib.core.data_broker.QueuedCallbackDataBroker" title="agentlib.core.data_broker.QueuedCallbackDataBroker"><code class="xref py py-class docutils literal notranslate"><span class="pre">QueuedCallbackDataBroker</span></code></a></p>
 <p>DataBroker written for Realtime operation regardless of Environment.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="agentlib.core.data_broker.RTDataBroker.register_callback">

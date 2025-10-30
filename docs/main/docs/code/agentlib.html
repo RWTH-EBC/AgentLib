@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>agentlib package &mdash; agentlib 0.8.8 documentation</title>
+  <title>agentlib package &mdash; agentlib 0.8.9 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
       <link rel="stylesheet" type="text/css" href="../_static/autodoc_pydantic.css" />
@@ -1224,6 +1224,7 @@ when the config provides new variables</p>
 <li><p><a class="reference internal" href="agentlib.utils.html#agentlib.utils.multi_agent_system.MultiProcessingMAS.cleanup" title="agentlib.utils.multi_agent_system.MultiProcessingMAS.cleanup"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cleanup</span> <span class="pre">(bool)</span></code></a></p></li>
 <li><p><a class="reference internal" href="agentlib.utils.html#agentlib.utils.multi_agent_system.MultiProcessingMAS.env" title="agentlib.utils.multi_agent_system.MultiProcessingMAS.env"><code class="xref py py-obj docutils literal notranslate"><span class="pre">env</span> <span class="pre">(dict</span> <span class="pre">|</span> <span class="pre">pathlib.Path)</span></code></a></p></li>
 <li><p><a class="reference internal" href="agentlib.utils.html#agentlib.utils.multi_agent_system.MultiProcessingMAS.log_level" title="agentlib.utils.multi_agent_system.MultiProcessingMAS.log_level"><code class="xref py py-obj docutils literal notranslate"><span class="pre">log_level</span> <span class="pre">(int)</span></code></a></p></li>
+<li><p><a class="reference internal" href="agentlib.utils.html#agentlib.utils.multi_agent_system.MultiProcessingMAS.use_direct_callback_databroker" title="agentlib.utils.multi_agent_system.MultiProcessingMAS.use_direct_callback_databroker"><code class="xref py py-obj docutils literal notranslate"><span class="pre">use_direct_callback_databroker</span> <span class="pre">(bool)</span></code></a></p></li>
 <li><p><a class="reference internal" href="agentlib.utils.html#agentlib.utils.multi_agent_system.MultiProcessingMAS.variable_logging" title="agentlib.utils.multi_agent_system.MultiProcessingMAS.variable_logging"><code class="xref py py-obj docutils literal notranslate"><span class="pre">variable_logging</span> <span class="pre">(bool)</span></code></a></p></li>
 </ul>
 </dd>
@@ -1269,6 +1270,12 @@ when the config provides new variables</p>
 <dt class="sig sig-object py" id="agentlib.MultiProcessingMAS.log_level">
 <em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">log_level</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">40</span></em><a class="headerlink" href="#agentlib.MultiProcessingMAS.log_level" title="Permalink to this definition"></a></dt>
 <dd><p>Loglevel to set for the processes.</p>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.MultiProcessingMAS.use_direct_callback_databroker">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">use_direct_callback_databroker</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#agentlib.MultiProcessingMAS.use_direct_callback_databroker" title="Permalink to this definition"></a></dt>
+<dd><p>If True, the <cite>DirectCallbackDataBroker</cite> will be used in all agents</p>
 </dd></dl>
 
 <dl class="py attribute pydantic_field">
@@ -1340,6 +1347,7 @@ run is finished</p>
 <li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#agentlib.core.agent.AgentConfig.id"><code class="docutils literal notranslate"><span class="pre">AgentConfig.id</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#agentlib.core.agent.AgentConfig.max_queue_size"><code class="docutils literal notranslate"><span class="pre">AgentConfig.max_queue_size</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#agentlib.core.agent.AgentConfig.modules"><code class="docutils literal notranslate"><span class="pre">AgentConfig.modules</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#agentlib.core.agent.AgentConfig.use_direct_callback_databroker"><code class="docutils literal notranslate"><span class="pre">AgentConfig.use_direct_callback_databroker</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#agentlib.core.agent.AgentConfig.check_modules"><code class="docutils literal notranslate"><span class="pre">AgentConfig.check_modules</span></code></a></li>
 </ul>
 </li>
@@ -1358,6 +1366,7 @@ run is finished</p>
 <li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#agentlib.core.data_broker.DataBroker.send_variable"><code class="docutils literal notranslate"><span class="pre">DataBroker.send_variable()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.core.html#agentlib.core.data_broker.DirectCallbackDataBroker"><code class="docutils literal notranslate"><span class="pre">DirectCallbackDataBroker</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="agentlib.core.html#agentlib.core.data_broker.LocalDataBroker"><code class="docutils literal notranslate"><span class="pre">LocalDataBroker</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="agentlib.core.html#agentlib.core.data_broker.NoCopyBrokerCallback"><code class="docutils literal notranslate"><span class="pre">NoCopyBrokerCallback</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#agentlib.core.data_broker.NoCopyBrokerCallback.alias"><code class="docutils literal notranslate"><span class="pre">NoCopyBrokerCallback.alias</span></code></a></li>
@@ -1368,6 +1377,7 @@ run is finished</p>
 <li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#agentlib.core.data_broker.NoCopyBrokerCallback.check_valid_callback_function"><code class="docutils literal notranslate"><span class="pre">NoCopyBrokerCallback.check_valid_callback_function</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="agentlib.core.html#agentlib.core.data_broker.QueuedCallbackDataBroker"><code class="docutils literal notranslate"><span class="pre">QueuedCallbackDataBroker</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="agentlib.core.html#agentlib.core.data_broker.RTDataBroker"><code class="docutils literal notranslate"><span class="pre">RTDataBroker</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#agentlib.core.data_broker.RTDataBroker.register_callback"><code class="docutils literal notranslate"><span class="pre">RTDataBroker.register_callback()</span></code></a></li>
 </ul>
@@ -1762,6 +1772,7 @@ run is finished</p>
 <li class="toctree-l3"><a class="reference internal" href="agentlib.utils.html#agentlib.utils.multi_agent_system.MAS"><code class="docutils literal notranslate"><span class="pre">MAS</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="agentlib.utils.html#agentlib.utils.multi_agent_system.MAS.agent_configs"><code class="docutils literal notranslate"><span class="pre">MAS.agent_configs</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="agentlib.utils.html#agentlib.utils.multi_agent_system.MAS.env"><code class="docutils literal notranslate"><span class="pre">MAS.env</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.utils.html#agentlib.utils.multi_agent_system.MAS.use_direct_callback_databroker"><code class="docutils literal notranslate"><span class="pre">MAS.use_direct_callback_databroker</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="agentlib.utils.html#agentlib.utils.multi_agent_system.MAS.variable_logging"><code class="docutils literal notranslate"><span class="pre">MAS.variable_logging</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="agentlib.utils.html#agentlib.utils.multi_agent_system.MAS.add_agent"><code class="docutils literal notranslate"><span class="pre">MAS.add_agent()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="agentlib.utils.html#agentlib.utils.multi_agent_system.MAS.add_agent_logger"><code class="docutils literal notranslate"><span class="pre">MAS.add_agent_logger()</span></code></a></li>
@@ -1775,6 +1786,7 @@ run is finished</p>
 <li class="toctree-l4"><a class="reference internal" href="agentlib.utils.html#agentlib.utils.multi_agent_system.MultiProcessingMAS.cleanup"><code class="docutils literal notranslate"><span class="pre">MultiProcessingMAS.cleanup</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="agentlib.utils.html#agentlib.utils.multi_agent_system.MultiProcessingMAS.env"><code class="docutils literal notranslate"><span class="pre">MultiProcessingMAS.env</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="agentlib.utils.html#agentlib.utils.multi_agent_system.MultiProcessingMAS.log_level"><code class="docutils literal notranslate"><span class="pre">MultiProcessingMAS.log_level</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="agentlib.utils.html#agentlib.utils.multi_agent_system.MultiProcessingMAS.use_direct_callback_databroker"><code class="docutils literal notranslate"><span class="pre">MultiProcessingMAS.use_direct_callback_databroker</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="agentlib.utils.html#agentlib.utils.multi_agent_system.MultiProcessingMAS.variable_logging"><code class="docutils literal notranslate"><span class="pre">MultiProcessingMAS.variable_logging</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="agentlib.utils.html#agentlib.utils.multi_agent_system.MultiProcessingMAS.get_results"><code class="docutils literal notranslate"><span class="pre">MultiProcessingMAS.get_results()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="agentlib.utils.html#agentlib.utils.multi_agent_system.MultiProcessingMAS.model_post_init"><code class="docutils literal notranslate"><span class="pre">MultiProcessingMAS.model_post_init()</span></code></a></li>
