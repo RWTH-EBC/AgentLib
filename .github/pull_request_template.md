@@ -42,7 +42,7 @@
 
 ### GitHub Copilot Review
 <!-- Request a review from GitHub Copilot to get AI-powered feedback on your changes -->
-- [ ] Request review from @github/copilot
+- [ ] Request Copilot review via GitHub UI (add 'copilot' as a reviewer)
 
 ---
 **Note**: PRs will not be merged without completed required checklist items and passing CI/CD pipeline.

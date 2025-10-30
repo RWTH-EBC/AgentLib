@@ -85,7 +85,7 @@ All components use Pydantic v2 models (e.g., `AgentConfig`, `BaseModuleConfig`, 
 
 #### 5. CI/CD Considerations
 - **Import errors**: New dependencies must be in `setup.cfg`/`pyproject.toml` optional-dependencies
-- **Python version compatibility**: Code must work on Python 3.8-3.11
+- **Python version compatibility**: Code must work on Python 3.9-3.12
 - **Test execution**: Changes to `tests/` structure or execution patterns
 - **Example scripts**: `examples/` should remain functional (tested by CI)
 
