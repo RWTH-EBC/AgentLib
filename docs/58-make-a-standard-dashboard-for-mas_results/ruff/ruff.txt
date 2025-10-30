@@ -16,7 +16,7 @@ agentlib/core/datamodels.py:736:17: F402 Import `field` from line 21 shadowed by
 agentlib/core/module.py:665:38: F401 `dash.html` imported but unused; consider using `importlib.util.find_spec` to test for availability
 agentlib/modules/communicator/clonemap.py:226:9: F841 Local variable `agent` is assigned to but never used
 agentlib/modules/communicator/communication_logging_handling.py:10:55: F401 [*] `typing.Callable` imported but unused
-agentlib/modules/communicator/communication_logging_handling.py:309:20: F821 Undefined name `html`
+agentlib/modules/communicator/communication_logging_handling.py:282:20: F821 Undefined name `html`
 agentlib/modules/communicator/communicator.py:221:20: F821 Undefined name `html`
 agentlib/modules/controller/__init__.py:2:25: F401 [*] `.controller.Controller` imported but unused
 agentlib/modules/controller/__init__.py:2:37: F401 [*] `.controller.SISOController` imported but unused
@@ -25,7 +25,8 @@ agentlib/modules/simulation/simulator.py:573:20: F821 Undefined name `html`
 agentlib/utils/__init__.py:14:37: F401 [*] `.local_broadcast_broker.LocalBroadcastBroker` imported but unused
 agentlib/utils/__init__.py:15:27: F401 [*] `.local_broker.LocalBroker` imported but unused
 agentlib/utils/__init__.py:16:38: F401 [*] `.multi_processing_broker.MultiProcessingBroker` imported but unused
-agentlib/utils/plotting/mas_dashboard.py:221:13: F841 Local variable `triggered_prop_id` is assigned to but never used
+agentlib/utils/plotting/mas_dashboard.py:27:21: F541 [*] f-string without any placeholders
+agentlib/utils/plotting/mas_dashboard.py:199:13: F841 Local variable `triggered_prop_id` is assigned to but never used
 examples/controller/bangbang_with_simulator.py:88:5: F841 Local variable `pid_agent` is assigned to but never used
 examples/controller/pid_with_simulator.py:102:5: F841 Local variable `pid_agent` is assigned to but never used
 examples/getting-started/part_1_my_first_agent_concise.py:49:5: F841 Local variable `agent` is assigned to but never used
@@ -36,5 +37,5 @@ examples/multi-agent-systems/room_mas/room_mas.py:16:46: F821 Undefined name `li
 examples/multi-agent-systems/room_mas/room_mas.py:16:54: F821 Undefined name `after`
 tests/test_n_pingpong.py:121:9: F841 Local variable `broker` is assigned to but never used
 tests/test_n_pingpong.py:129:9: F841 Local variable `broker` is assigned to but never used
-Found 38 errors.
-[*] 17 fixable with the `--fix` option (8 hidden fixes can be enabled with the `--unsafe-fixes` option).
+Found 39 errors.
+[*] 18 fixable with the `--fix` option (8 hidden fixes can be enabled with the `--unsafe-fixes` option).

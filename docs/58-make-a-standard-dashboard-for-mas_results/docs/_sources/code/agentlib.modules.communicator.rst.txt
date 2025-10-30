@@ -57,14 +57,6 @@ agentlib.modules.communicator.local\_multiprocessing module
    :undoc-members:
    :show-inheritance:
 
-agentlib.modules.communicator.local\_multiprocessing\_subscription module
--------------------------------------------------------------------------
-
-.. automodule:: agentlib.modules.communicator.local_multiprocessing_subscription
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 agentlib.modules.communicator.mqtt module
 -----------------------------------------
 

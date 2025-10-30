@@ -90,8 +90,10 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">queue</span>  <span class="c1"># For queue.Empty</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">socket</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">threading</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">webbrowser</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agentlib.core.errors</span><span class="w"> </span><span class="kn">import</span> <span class="n">OptionalDependencyError</span>
 
 <span class="k">try</span><span class="p">:</span>
     <span class="kn">import</span><span class="w"> </span><span class="nn">dash</span>
@@ -99,12 +101,12 @@
     <span class="kn">from</span><span class="w"> </span><span class="nn">dash.dependencies</span><span class="w"> </span><span class="kn">import</span> <span class="n">Input</span><span class="p">,</span> <span class="n">Output</span><span class="p">,</span> <span class="n">State</span>
     <span class="kn">import</span><span class="w"> </span><span class="nn">dash_bootstrap_components</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">dbc</span>
 <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-    <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span>
-        <span class="s2">&quot;Dash is not installed. Please install it to use the MAS dashboard: &quot;</span>
-        <span class="s2">&quot;pip install agentlib[interactive]&quot;</span>
+    <span class="k">raise</span> <span class="n">OptionalDependencyError</span><span class="p">(</span>
+        <span class="n">used_object</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;MAS Dashboard&quot;</span><span class="p">,</span>
+        <span class="n">dependency_install</span><span class="o">=</span><span class="s2">&quot;agentlib[interactive]&quot;</span><span class="p">,</span>
+        <span class="n">dependency_name</span><span class="o">=</span><span class="s2">&quot;interactive&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">agentlib.core.errors</span><span class="w"> </span><span class="kn">import</span> <span class="n">OptionalDependencyError</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">agentlib.utils.multi_agent_system</span><span class="w"> </span><span class="kn">import</span> <span class="n">LocalMASAgency</span>
 
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
@@ -133,44 +135,20 @@
                 <span class="sa">f</span><span class="s2">&quot;IPC listener: Request for </span><span class="si">{</span><span class="n">agent_id</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">module_id</span><span class="si">}</span><span class="s2">, token: </span><span class="si">{</span><span class="n">update_token</span><span class="si">}</span><span class="s2">&quot;</span>
             <span class="p">)</span>
             <span class="n">data_chunk</span><span class="p">,</span> <span class="n">next_token</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="n">agent</span> <span class="o">=</span> <span class="n">mas_instance</span><span class="o">.</span><span class="n">get_agent</span><span class="p">(</span><span class="n">agent_id</span><span class="p">)</span>
-                <span class="k">if</span> <span class="n">agent</span><span class="p">:</span>
-                    <span class="n">module</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">get_module</span><span class="p">(</span><span class="n">module_id</span><span class="p">)</span>
-                    <span class="k">if</span> <span class="n">module</span><span class="p">:</span>
-                        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="s2">&quot;get_results_incremental&quot;</span><span class="p">):</span>
-                            <span class="n">data_chunk</span><span class="p">,</span> <span class="n">next_token</span> <span class="o">=</span> <span class="n">module</span><span class="o">.</span><span class="n">get_results_incremental</span><span class="p">(</span>
-                                <span class="n">update_token</span><span class="o">=</span><span class="n">update_token</span>
-                            <span class="p">)</span>
-                        <span class="k">else</span><span class="p">:</span>
-                            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
-                                <span class="sa">f</span><span class="s2">&quot;Module </span><span class="si">{</span><span class="n">module_id</span><span class="si">}</span><span class="s2"> in agent </span><span class="si">{</span><span class="n">agent_id</span><span class="si">}</span><span class="s2"> does not have &quot;</span>
-                                <span class="sa">f</span><span class="s2">&quot;&#39;get_results_incremental&#39; method. Falling back to &#39;get_results&#39;.&quot;</span>
-                            <span class="p">)</span>
-                            <span class="k">if</span> <span class="p">(</span>
-                                <span class="n">update_token</span> <span class="ow">is</span> <span class="kc">None</span>
-                            <span class="p">):</span>  <span class="c1"># Only call get_results for initial load</span>
-                                <span class="n">data_chunk</span> <span class="o">=</span> <span class="n">module</span><span class="o">.</span><span class="n">get_results</span><span class="p">()</span>
-                            <span class="c1"># next_token remains None, implying no further incremental updates from this fallback</span>
-                    <span class="k">else</span><span class="p">:</span>
-                        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
-                            <span class="sa">f</span><span class="s2">&quot;IPC listener: Module </span><span class="si">{</span><span class="n">module_id</span><span class="si">}</span><span class="s2"> not found in agent </span><span class="si">{</span><span class="n">agent_id</span><span class="si">}</span><span class="s2">&quot;</span>
-                        <span class="p">)</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;IPC listener: Agent </span><span class="si">{</span><span class="n">agent_id</span><span class="si">}</span><span class="s2"> not found in MAS&quot;</span><span class="p">)</span>
-            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-                <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
-                    <span class="sa">f</span><span class="s2">&quot;IPC listener: Error calling get_results_incremental for </span><span class="si">{</span><span class="n">agent_id</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">module_id</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
-                    <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">agent</span> <span class="o">=</span> <span class="n">mas_instance</span><span class="o">.</span><span class="n">get_agent</span><span class="p">(</span><span class="n">agent_id</span><span class="p">)</span>
+            <span class="n">module</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">get_module</span><span class="p">(</span><span class="n">module_id</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="s2">&quot;get_results_incremental&quot;</span><span class="p">):</span>
+                <span class="n">data_chunk</span><span class="p">,</span> <span class="n">next_token</span> <span class="o">=</span> <span class="n">module</span><span class="o">.</span><span class="n">get_results_incremental</span><span class="p">(</span>
+                    <span class="n">update_token</span><span class="o">=</span><span class="n">update_token</span>
                 <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">update_token</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># Only call get_results for initial load</span>
+                    <span class="n">data_chunk</span> <span class="o">=</span> <span class="n">module</span><span class="o">.</span><span class="n">get_results</span><span class="p">()</span>
+                <span class="c1"># next_token remains None, implying no further incremental updates from this fallback</span>
             <span class="n">response_q</span><span class="o">.</span><span class="n">put</span><span class="p">((</span><span class="n">data_chunk</span><span class="p">,</span> <span class="n">next_token</span><span class="p">))</span>
         <span class="k">except</span> <span class="n">queue</span><span class="o">.</span><span class="n">Empty</span><span class="p">:</span>
             <span class="k">continue</span>  <span class="c1"># Timeout, check stop_event again</span>
-        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;IPC listener: Unexpected error in loop: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-            <span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
-
-            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>  <span class="c1"># Avoid busy-looping</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>  <span class="c1"># Avoid busy-looping</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;IPC listener thread stopped for MAS dashboard.&quot;</span><span class="p">)</span>
 
 
@@ -323,61 +301,44 @@
             <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;Dash app: Requesting data for </span><span class="si">{</span><span class="n">module_key</span><span class="si">}</span><span class="s2"> with token: </span><span class="si">{</span><span class="n">update_token_to_send</span><span class="si">}</span><span class="s2">&quot;</span>
             <span class="p">)</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="n">request_q</span><span class="o">.</span><span class="n">put</span><span class="p">(</span>
-                    <span class="p">(</span><span class="n">selected_agent_id</span><span class="p">,</span> <span class="n">selected_module_id</span><span class="p">,</span> <span class="n">update_token_to_send</span><span class="p">)</span>
-                <span class="p">)</span>
-                <span class="n">data_chunk</span><span class="p">,</span> <span class="n">next_token</span> <span class="o">=</span> <span class="n">response_q</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
-                    <span class="n">timeout</span><span class="o">=</span><span class="p">(</span><span class="n">update_interval_sec</span> <span class="o">*</span> <span class="mf">0.9</span><span class="p">)</span> <span class="k">if</span> <span class="n">update_interval_sec</span> <span class="k">else</span> <span class="mf">4.5</span>
-                <span class="p">)</span>
-                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
-                    <span class="sa">f</span><span class="s2">&quot;Dash app: Received data for </span><span class="si">{</span><span class="n">module_key</span><span class="si">}</span><span class="s2">. Next token: </span><span class="si">{</span><span class="n">next_token</span><span class="si">}</span><span class="s2">&quot;</span>
-                <span class="p">)</span>
+            <span class="n">request_q</span><span class="o">.</span><span class="n">put</span><span class="p">((</span><span class="n">selected_agent_id</span><span class="p">,</span> <span class="n">selected_module_id</span><span class="p">,</span> <span class="n">update_token_to_send</span><span class="p">))</span>
+            <span class="n">data_chunk</span><span class="p">,</span> <span class="n">next_token</span> <span class="o">=</span> <span class="n">response_q</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                <span class="n">timeout</span><span class="o">=</span><span class="p">(</span><span class="n">update_interval_sec</span> <span class="o">*</span> <span class="mf">0.9</span><span class="p">)</span> <span class="k">if</span> <span class="n">update_interval_sec</span> <span class="k">else</span> <span class="mf">4.5</span>
+            <span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Dash app: Received data for </span><span class="si">{</span><span class="n">module_key</span><span class="si">}</span><span class="s2">. Next token: </span><span class="si">{</span><span class="n">next_token</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
 
-                <span class="c1"># Accumulate data in memory</span>
-                <span class="k">if</span> <span class="n">data_chunk</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                    <span class="k">if</span> <span class="p">(</span>
-                        <span class="n">app_data_cache</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">module_key</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span>
-                        <span class="ow">or</span> <span class="n">update_token_to_send</span> <span class="ow">is</span> <span class="kc">None</span>
-                    <span class="p">):</span>
-                        <span class="c1"># First load or fresh start</span>
-                        <span class="n">app_data_cache</span><span class="p">[</span><span class="n">module_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">data_chunk</span>
+            <span class="c1"># Accumulate data in memory</span>
+            <span class="k">if</span> <span class="n">data_chunk</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">if</span> <span class="p">(</span>
+                    <span class="n">app_data_cache</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">module_key</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span>
+                    <span class="ow">or</span> <span class="n">update_token_to_send</span> <span class="ow">is</span> <span class="kc">None</span>
+                <span class="p">):</span>
+                    <span class="c1"># First load or fresh start</span>
+                    <span class="n">app_data_cache</span><span class="p">[</span><span class="n">module_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">data_chunk</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c1"># Append new data to existing dataframe</span>
+                    <span class="n">existing_df</span> <span class="o">=</span> <span class="n">app_data_cache</span><span class="p">[</span><span class="n">module_key</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">data_chunk</span><span class="p">,</span> <span class="s2">&quot;index&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">existing_df</span><span class="p">,</span> <span class="s2">&quot;index&quot;</span><span class="p">):</span>
+                        <span class="c1"># Both are DataFrames - concatenate</span>
+                        <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+                        <span class="n">app_data_cache</span><span class="p">[</span><span class="n">module_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span>
+                            <span class="p">[</span><span class="n">existing_df</span><span class="p">,</span> <span class="n">data_chunk</span><span class="p">]</span>
+                        <span class="p">)</span>
                     <span class="k">else</span><span class="p">:</span>
-                        <span class="c1"># Append new data to existing dataframe</span>
-                        <span class="n">existing_df</span> <span class="o">=</span> <span class="n">app_data_cache</span><span class="p">[</span><span class="n">module_key</span><span class="p">]</span>
-                        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">data_chunk</span><span class="p">,</span> <span class="s2">&quot;index&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span>
-                            <span class="n">existing_df</span><span class="p">,</span> <span class="s2">&quot;index&quot;</span>
-                        <span class="p">):</span>
-                            <span class="c1"># Both are DataFrames - concatenate</span>
-                            <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+                        <span class="c1"># Handle other data types as needed</span>
+                        <span class="n">app_data_cache</span><span class="p">[</span><span class="n">module_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">data_chunk</span>
 
-                            <span class="n">app_data_cache</span><span class="p">[</span><span class="n">module_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span>
-                                <span class="p">[</span><span class="n">existing_df</span><span class="p">,</span> <span class="n">data_chunk</span><span class="p">]</span>
-                            <span class="p">)</span>
-                        <span class="k">else</span><span class="p">:</span>
-                            <span class="c1"># Handle other data types as needed</span>
-                            <span class="n">app_data_cache</span><span class="p">[</span><span class="n">module_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">data_chunk</span>
+            <span class="n">new_token_cache</span> <span class="o">=</span> <span class="n">current_token_cache</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="n">new_token_cache</span><span class="p">[</span><span class="n">module_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">next_token</span>
 
-                <span class="n">new_token_cache</span> <span class="o">=</span> <span class="n">current_token_cache</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-                <span class="n">new_token_cache</span><span class="p">[</span><span class="n">module_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">next_token</span>
-
-                <span class="c1"># Increment trigger to signal data update for visualization callback</span>
-                <span class="n">new_trigger_val</span> <span class="o">=</span> <span class="p">(</span>
-                    <span class="p">(</span><span class="n">current_trigger_val</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">if</span> <span class="n">current_trigger_val</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="mi">0</span>
-                <span class="p">)</span>
-                <span class="k">return</span> <span class="n">new_token_cache</span><span class="p">,</span> <span class="n">new_trigger_val</span>
-
-            <span class="k">except</span> <span class="n">queue</span><span class="o">.</span><span class="n">Empty</span><span class="p">:</span>
-                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
-                    <span class="sa">f</span><span class="s2">&quot;Dash app: Timeout waiting for data from IPC for </span><span class="si">{</span><span class="n">module_key</span><span class="si">}</span><span class="s2">&quot;</span>
-                <span class="p">)</span>
-                <span class="k">return</span> <span class="n">current_token_cache</span><span class="p">,</span> <span class="n">dash</span><span class="o">.</span><span class="n">no_update</span>
-            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-                <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
-                    <span class="sa">f</span><span class="s2">&quot;Dash app: Error in fetch_live_data for </span><span class="si">{</span><span class="n">module_key</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
-                    <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                <span class="p">)</span>
-                <span class="k">return</span> <span class="n">current_token_cache</span><span class="p">,</span> <span class="n">dash</span><span class="o">.</span><span class="n">no_update</span>
+            <span class="c1"># Increment trigger to signal data update for visualization callback</span>
+            <span class="n">new_trigger_val</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="p">(</span><span class="n">current_trigger_val</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">if</span> <span class="n">current_trigger_val</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="mi">0</span>
+            <span class="p">)</span>
+            <span class="k">return</span> <span class="n">new_token_cache</span><span class="p">,</span> <span class="n">new_trigger_val</span>
 
     <span class="c1"># Callback for displaying module visualization</span>
     <span class="nd">@app</span><span class="o">.</span><span class="n">callback</span><span class="p">(</span>
@@ -418,69 +379,31 @@
                 <span class="k">return</span> <span class="n">html</span><span class="o">.</span><span class="n">P</span><span class="p">(</span>
                     <span class="sa">f</span><span class="s2">&quot;No live data currently available for module &#39;</span><span class="si">{</span><span class="n">selected_module_id</span><span class="si">}</span><span class="s2">&#39;.&quot;</span>
                 <span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>  <span class="c1"># Static mode</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">static_results</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">html</span><span class="o">.</span><span class="n">P</span><span class="p">(</span><span class="s2">&quot;Static results not available.&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
             <span class="n">current_results_data</span> <span class="o">=</span> <span class="n">static_results</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">selected_agent_id</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
                 <span class="n">selected_module_id</span><span class="p">,</span> <span class="s2">&quot;__no_key__&quot;</span>
             <span class="p">)</span>
-            <span class="k">if</span> <span class="p">(</span>
-                <span class="nb">isinstance</span><span class="p">(</span><span class="n">current_results_data</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
-                <span class="ow">and</span> <span class="n">current_results_data</span> <span class="o">==</span> <span class="s2">&quot;__no_key__&quot;</span>
-            <span class="p">):</span>
-                <span class="k">return</span> <span class="n">html</span><span class="o">.</span><span class="n">P</span><span class="p">(</span>
-                    <span class="sa">f</span><span class="s2">&quot;No results data key found for module &#39;</span><span class="si">{</span><span class="n">selected_module_id</span><span class="si">}</span><span class="s2">&#39; in agent &#39;</span><span class="si">{</span><span class="n">selected_agent_id</span><span class="si">}</span><span class="s2">&#39; (static mode).&quot;</span>
-                <span class="p">)</span>
 
         <span class="n">agent_modules_meta</span> <span class="o">=</span> <span class="n">agent_module_info</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">selected_agent_id</span><span class="p">,</span> <span class="p">[])</span>
         <span class="n">module_info_dict</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span>
             <span class="p">(</span><span class="n">m</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">agent_modules_meta</span> <span class="k">if</span> <span class="n">m</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">selected_module_id</span><span class="p">),</span> <span class="kc">None</span>
         <span class="p">)</span>
+        <span class="n">class_path</span> <span class="o">=</span> <span class="n">module_info_dict</span><span class="p">[</span><span class="s2">&quot;class_path&quot;</span><span class="p">]</span>
+        <span class="n">module_path_str</span><span class="p">,</span> <span class="n">class_name_str</span> <span class="o">=</span> <span class="n">class_path</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">imported_module_obj</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="n">module_path_str</span><span class="p">)</span>
+        <span class="n">ModuleType</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">imported_module_obj</span><span class="p">,</span> <span class="n">class_name_str</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">module_info_dict</span><span class="p">:</span>
+        <span class="n">visualization_layout</span> <span class="o">=</span> <span class="n">ModuleType</span><span class="o">.</span><span class="n">visualize_results</span><span class="p">(</span>
+            <span class="n">results_data</span><span class="o">=</span><span class="n">current_results_data</span><span class="p">,</span>
+            <span class="n">module_id</span><span class="o">=</span><span class="n">selected_module_id</span><span class="p">,</span>
+            <span class="n">agent_id</span><span class="o">=</span><span class="n">selected_agent_id</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">visualization_layout</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">html</span><span class="o">.</span><span class="n">P</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Module metadata for &#39;</span><span class="si">{</span><span class="n">selected_module_id</span><span class="si">}</span><span class="s2">&#39; not found in agent &#39;</span><span class="si">{</span><span class="n">selected_agent_id</span><span class="si">}</span><span class="s2">&#39;.&quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;Visualization not implemented or not available for module &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">selected_module_id</span><span class="si">}</span><span class="s2">&#39; (type: </span><span class="si">{</span><span class="n">ModuleType</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">) in agent &#39;</span><span class="si">{</span><span class="n">selected_agent_id</span><span class="si">}</span><span class="s2">&#39;.&quot;</span>
             <span class="p">)</span>
-
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">class_path</span> <span class="o">=</span> <span class="n">module_info_dict</span><span class="p">[</span><span class="s2">&quot;class_path&quot;</span><span class="p">]</span>
-            <span class="n">module_path_str</span><span class="p">,</span> <span class="n">class_name_str</span> <span class="o">=</span> <span class="n">class_path</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-            <span class="n">imported_module_obj</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="n">module_path_str</span><span class="p">)</span>
-            <span class="n">ModuleType</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">imported_module_obj</span><span class="p">,</span> <span class="n">class_name_str</span><span class="p">)</span>
-
-            <span class="n">visualization_layout</span> <span class="o">=</span> <span class="n">ModuleType</span><span class="o">.</span><span class="n">visualize_results</span><span class="p">(</span>
-                <span class="n">results_data</span><span class="o">=</span><span class="n">current_results_data</span><span class="p">,</span>
-                <span class="n">module_id</span><span class="o">=</span><span class="n">selected_module_id</span><span class="p">,</span>
-                <span class="n">agent_id</span><span class="o">=</span><span class="n">selected_agent_id</span><span class="p">,</span>
-            <span class="p">)</span>
-            <span class="k">if</span> <span class="n">visualization_layout</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">html</span><span class="o">.</span><span class="n">P</span><span class="p">(</span>
-                    <span class="sa">f</span><span class="s2">&quot;Visualization not implemented or not available for module &quot;</span>
-                    <span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">selected_module_id</span><span class="si">}</span><span class="s2">&#39; (type: </span><span class="si">{</span><span class="n">ModuleType</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">) in agent &#39;</span><span class="si">{</span><span class="n">selected_agent_id</span><span class="si">}</span><span class="s2">&#39;.&quot;</span>
-                <span class="p">)</span>
-            <span class="k">return</span> <span class="n">visualization_layout</span>
-        <span class="k">except</span> <span class="n">OptionalDependencyError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Optional dependency error for </span><span class="si">{</span><span class="n">class_path</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span>
-            <span class="p">)</span>
-            <span class="k">return</span> <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span>
-                <span class="p">[</span>
-                    <span class="n">html</span><span class="o">.</span><span class="n">H4</span><span class="p">(</span><span class="s2">&quot;Visualization Error&quot;</span><span class="p">),</span>
-                    <span class="n">html</span><span class="o">.</span><span class="n">P</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Could not render visualization for </span><span class="si">{</span><span class="n">class_path</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">),</span>
-                    <span class="n">html</span><span class="o">.</span><span class="n">P</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)),</span>
-                    <span class="n">html</span><span class="o">.</span><span class="n">P</span><span class="p">(</span><span class="s2">&quot;Please ensure all necessary libraries are installed.&quot;</span><span class="p">),</span>
-                <span class="p">]</span>
-            <span class="p">)</span>
-        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Error generating visualization for module &#39;</span><span class="si">{</span><span class="n">selected_module_id</span><span class="si">}</span><span class="s2">&#39; &quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;(path: </span><span class="si">{</span><span class="n">class_path</span><span class="si">}</span><span class="s2">) in agent &#39;</span><span class="si">{</span><span class="n">selected_agent_id</span><span class="si">}</span><span class="s2">&#39;: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
-                <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-            <span class="p">)</span>
-            <span class="k">return</span> <span class="n">html</span><span class="o">.</span><span class="n">P</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;An error occurred while generating the visualization for &quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;module &#39;</span><span class="si">{</span><span class="n">selected_module_id</span><span class="si">}</span><span class="s2">&#39;: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
-            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">visualization_layout</span>
 
     <span class="k">return</span> <span class="n">app</span></div>
 
@@ -508,11 +431,7 @@
         <span class="n">update_interval_sec</span><span class="o">=</span><span class="n">update_interval_sec_arg</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dash app server starting on http://</span><span class="si">{</span><span class="n">host</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">port</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="c1"># Set use_reloader=False to prevent issues with multiprocessing and threads</span>
-        <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="n">port</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="n">host</span><span class="p">,</span> <span class="n">use_reloader</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error running Dash server: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="n">port</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="n">host</span><span class="p">,</span> <span class="n">use_reloader</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="get_free_port"><a class="viewcode-back" href="../../../../code/agentlib.utils.plotting.html#agentlib.utils.plotting.mas_dashboard.get_free_port">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">get_free_port</span><span class="p">():</span>
@@ -555,12 +474,8 @@
 <span class="sd">        multiprocessing.Process: The process running the Dash dashboard (if not block_main).</span>
 <span class="sd">                                 None otherwise or if an error occurs.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">mas</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;LocalMASAgency instance (&#39;mas&#39;) must be provided.&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="kc">None</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">live_update</span> <span class="ow">and</span> <span class="n">mas_results</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;mas_results must be provided if not in live_update mode.&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;mas_results must be provided if not in live_update mode.&quot;</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">live_update</span><span class="p">:</span>
         <span class="n">block_main</span> <span class="o">=</span> <span class="kc">False</span>
 
@@ -655,34 +570,6 @@
             <span class="k">if</span> <span class="n">ipc_listener_thread_obj</span><span class="o">.</span><span class="n">is_alive</span><span class="p">():</span>
                 <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;IPC listener thread did not stop in time.&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">None</span></div>
-
-
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="c1"># This example won&#39;t run directly as it needs a LocalMASAgency instance and results.</span>
-    <span class="c1"># It&#39;s intended to be called from another script.</span>
-    <span class="nb">print</span><span class="p">(</span>
-        <span class="s2">&quot;To run this dashboard, import and call launch_mas_dashboard &quot;</span>
-        <span class="s2">&quot;from your script with a LocalMASAgency instance and its results. </span><span class="se">\n</span><span class="s2">&quot;</span>
-        <span class="s2">&quot;Example: </span><span class="se">\n</span><span class="s2">&quot;</span>
-        <span class="s2">&quot;import multiprocessing </span><span class="se">\n</span><span class="s2">&quot;</span>
-        <span class="s2">&quot;if __name__ == &#39;__main__&#39;: </span><span class="se">\n</span><span class="s2">&quot;</span>
-        <span class="s2">&quot;    multiprocessing.freeze_support() # For Windows executable freezing </span><span class="se">\n</span><span class="s2">&quot;</span>
-        <span class="s2">&quot;    # ... your MAS setup ... </span><span class="se">\n</span><span class="s2">&quot;</span>
-        <span class="s2">&quot;    # For static dashboard: </span><span class="se">\n</span><span class="s2">&quot;</span>
-        <span class="s2">&quot;    # results = my_mas.get_results() </span><span class="se">\n</span><span class="s2">&quot;</span>
-        <span class="s2">&quot;    # dashboard_proc = launch_mas_dashboard(my_mas, mas_results=results) </span><span class="se">\n</span><span class="s2">&quot;</span>
-        <span class="s2">&quot;    # For live dashboard: </span><span class="se">\n</span><span class="s2">&quot;</span>
-        <span class="s2">&quot;    # dashboard_proc = launch_mas_dashboard(my_mas, live_update=True) </span><span class="se">\n</span><span class="s2">&quot;</span>
-        <span class="s2">&quot;    # ... your main script continues ... </span><span class="se">\n</span><span class="s2">&quot;</span>
-        <span class="s2">&quot;    print(&#39;Dashboard process started. Press Ctrl+C in the console running the script, or implement other logic to stop it.&#39;) </span><span class="se">\n</span><span class="s2">&quot;</span>
-        <span class="s2">&quot;    try: </span><span class="se">\n</span><span class="s2">&quot;</span>
-        <span class="s2">&quot;        if dashboard_proc: dashboard_proc.join() </span><span class="se">\n</span><span class="s2">&quot;</span>
-        <span class="s2">&quot;    except KeyboardInterrupt: </span><span class="se">\n</span><span class="s2">&quot;</span>
-        <span class="s2">&quot;        print(&#39;Terminating dashboard process...&#39;) </span><span class="se">\n</span><span class="s2">&quot;</span>
-        <span class="s2">&quot;        if dashboard_proc: dashboard_proc.terminate(); dashboard_proc.join() </span><span class="se">\n</span><span class="s2">&quot;</span>
-        <span class="s2">&quot;    print(&#39;Dashboard process finished.&#39;)&quot;</span>
-    <span class="p">)</span>
-    <span class="k">pass</span>
 </pre></div>
 
            </div>
