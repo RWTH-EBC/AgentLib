@@ -368,8 +368,11 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="k">except</span> <span class="n">pydantic</span><span class="o">.</span><span class="n">ValidationError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="n">better_error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_improve_extra_field_error_messages</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+            <span class="n">better_error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_improve_extra_field_error_messages</span><span class="p">(</span>
+                <span class="n">e</span><span class="p">,</span> <span class="n">agent_id</span><span class="o">=</span><span class="n">_agent_id</span><span class="p">,</span> <span class="n">module_id</span><span class="o">=</span><span class="n">_user_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;module_id&quot;</span><span class="p">)</span>
+            <span class="p">)</span>
             <span class="k">raise</span> <span class="n">better_error</span>
+
         <span class="c1"># Enable mutation</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">model_config</span><span class="p">[</span><span class="s2">&quot;frozen&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_variables</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="n">merge_variables</span><span class="p">(</span>
@@ -384,34 +387,37 @@
 
     <span class="nd">@classmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">_improve_extra_field_error_messages</span><span class="p">(</span>
-        <span class="bp">cls</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span> <span class="n">pydantic</span><span class="o">.</span><span class="n">ValidationError</span>
+        <span class="bp">cls</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span> <span class="n">pydantic</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">,</span> <span class="n">agent_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">module_id</span><span class="p">:</span> <span class="nb">str</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pydantic</span><span class="o">.</span><span class="n">ValidationError</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Checks the validation errors for invalid fields and adds suggestions for</span>
 <span class="sd">        correct field names to the error message.&quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">RAPIDFUZZ_IS_INSTALLED</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">e</span>
 
         <span class="n">error_list</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">errors</span><span class="p">()</span>
-        <span class="k">for</span> <span class="n">error</span> <span class="ow">in</span> <span class="n">error_list</span><span class="p">:</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">error</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;extra_forbidden&quot;</span><span class="p">:</span>
-                <span class="k">continue</span>
+        <span class="k">if</span> <span class="n">module_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">title</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;configuration of agent &#39;</span><span class="si">{</span><span class="n">agent_id</span><span class="si">}</span><span class="s2">&#39; / module &#39;</span><span class="si">{</span><span class="n">module_id</span><span class="si">}</span><span class="s2">&#39;:&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">title</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;configuration of agent &#39;</span><span class="si">{</span><span class="n">agent_id</span><span class="si">}</span><span class="s2">&#39;:&quot;</span>
+        <span class="k">if</span> <span class="n">RAPIDFUZZ_IS_INSTALLED</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">error</span> <span class="ow">in</span> <span class="n">error_list</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">error</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;extra_forbidden&quot;</span><span class="p">:</span>
+                    <span class="k">continue</span>
 
-            <span class="c1"># change error type to literal because it allows for context</span>
-            <span class="n">error</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;literal_error&quot;</span>
-            <span class="c1"># pydantic automatically prints the __dict__ of an error, so it is</span>
-            <span class="c1"># sufficient to just assign the suggestions to an arbitrary attribute of</span>
-            <span class="c1"># the error</span>
-            <span class="n">suggestions</span> <span class="o">=</span> <span class="n">fuzzy_match</span><span class="p">(</span>
-                <span class="n">target</span><span class="o">=</span><span class="n">error</span><span class="p">[</span><span class="s2">&quot;loc&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">choices</span><span class="o">=</span><span class="bp">cls</span><span class="o">.</span><span class="n">model_fields</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
-            <span class="p">)</span>
-            <span class="k">if</span> <span class="n">suggestions</span><span class="p">:</span>
-                <span class="n">error</span><span class="p">[</span><span class="s2">&quot;ctx&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
-                    <span class="s2">&quot;expected&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;a valid Field name. Field &#39;</span><span class="si">{</span><span class="n">error</span><span class="p">[</span><span class="s1">&#39;loc&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">&#39; does &quot;</span>
-                    <span class="sa">f</span><span class="s2">&quot;not exist. Did you mean any of </span><span class="si">{</span><span class="n">suggestions</span><span class="si">}</span><span class="s2">?&quot;</span>
-                <span class="p">}</span>
+                <span class="c1"># change error type to literal because it allows for context</span>
+                <span class="n">error</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;literal_error&quot;</span>
+                <span class="c1"># pydantic automatically prints the __dict__ of an error, so it is</span>
+                <span class="c1"># sufficient to just assign the suggestions to an arbitrary attribute of</span>
+                <span class="c1"># the error</span>
+                <span class="n">suggestions</span> <span class="o">=</span> <span class="n">fuzzy_match</span><span class="p">(</span>
+                    <span class="n">target</span><span class="o">=</span><span class="n">error</span><span class="p">[</span><span class="s2">&quot;loc&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">choices</span><span class="o">=</span><span class="bp">cls</span><span class="o">.</span><span class="n">model_fields</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+                <span class="p">)</span>
+                <span class="k">if</span> <span class="n">suggestions</span><span class="p">:</span>
+                    <span class="n">error</span><span class="p">[</span><span class="s2">&quot;ctx&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                        <span class="s2">&quot;expected&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;a valid Field name. Field &#39;</span><span class="si">{</span><span class="n">error</span><span class="p">[</span><span class="s1">&#39;loc&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">&#39; does &quot;</span>
+                        <span class="sa">f</span><span class="s2">&quot;not exist. Did you mean any of </span><span class="si">{</span><span class="n">suggestions</span><span class="si">}</span><span class="s2">?&quot;</span>
+                    <span class="p">}</span>
 
         <span class="k">return</span> <span class="n">pydantic</span><span class="o">.</span><span class="n">ValidationError</span><span class="o">.</span><span class="n">from_exception_data</span><span class="p">(</span>
-            <span class="n">title</span><span class="o">=</span><span class="n">e</span><span class="o">.</span><span class="n">title</span><span class="p">,</span> <span class="n">line_errors</span><span class="o">=</span><span class="n">error_list</span>
+            <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span> <span class="n">line_errors</span><span class="o">=</span><span class="n">error_list</span>
         <span class="p">)</span></div>
 
 
@@ -662,30 +668,6 @@
             <span class="n">variable</span><span class="o">=</span><span class="n">var</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">update</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="p">}),</span>
             <span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
         <span class="p">)</span></div>
-
-<div class="viewcode-block" id="BaseModule.update_variables"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.BaseModule.update_variables">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">update_variables</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">variables</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">AgentVariable</span><span class="p">],</span> <span class="n">timestamp</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Updates the given list of variables in the current data_broker.</span>
-<span class="sd">        If a given Variable is not in the config of the module, an</span>
-<span class="sd">        error is raised.</span>
-<span class="sd">        TODO: check if this is needed, we currently don&#39;t use it anywhere</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            variables: List with agent_variables.</span>
-<span class="sd">            timestamp: The timestamp associated with the variable.</span>
-<span class="sd">                If None, current environment time is used.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">timestamp</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">timestamp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">time</span>
-
-        <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">variables</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">v</span><span class="o">.</span><span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_variables_dict</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                    <span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&#39; has &quot;</span>
-                    <span class="sa">f</span><span class="s2">&quot;no AgentVariable with the name &#39;</span><span class="si">{</span><span class="n">v</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39; &quot;</span>
-                    <span class="sa">f</span><span class="s2">&quot;in the config.&quot;</span>
-                <span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">v</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">v</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">timestamp</span><span class="o">=</span><span class="n">timestamp</span><span class="p">)</span></div>
 
     <span class="c1">############################################################################</span>
     <span class="c1"># Private and or static class methods</span>

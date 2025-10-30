@@ -438,24 +438,6 @@ at runtime. Not all modules may need this, hence it is
 not an abstract method.</p>
 </dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="agentlib.BaseModule.update_variables">
-<span class="sig-name descname"><span class="pre">update_variables</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">variables</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="agentlib.core.html#agentlib.core.datamodels.AgentVariable" title="agentlib.core.datamodels.AgentVariable"><span class="pre">AgentVariable</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timestamp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/core/module.html#BaseModule.update_variables"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.BaseModule.update_variables" title="Permalink to this definition"></a></dt>
-<dd><p>Updates the given list of variables in the current data_broker.
-If a given Variable is not in the config of the module, an
-error is raised.
-TODO: check if this is needed, we currently don’t use it anywhere</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>variables</strong> – List with agent_variables.</p></li>
-<li><p><strong>timestamp</strong> – The timestamp associated with the variable.
-If None, current environment time is used.</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
 <dl class="py property">
 <dt class="sig sig-object py" id="agentlib.BaseModule.variables">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">variables</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="agentlib.core.html#agentlib.core.datamodels.AgentVariable" title="agentlib.core.datamodels.AgentVariable"><span class="pre">AgentVariable</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#agentlib.BaseModule.variables" title="Permalink to this definition"></a></dt>
@@ -1182,7 +1164,7 @@ name of the model class.</p>
 
 <dl class="py method pydantic_validator">
 <dt class="sig sig-object py" id="agentlib.ModelConfig.include_default_model_variables">
-<em class="property"><span class="pre">validator</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">include_default_model_variables</span></span><em class="autodoc_pydantic_validator_arrow property">&#160; <span class="pre">»</span>&#160; </em><a class="reference internal" href="agentlib.core.html#agentlib.core.model.ModelConfig.inputs" title="agentlib.core.model.ModelConfig.inputs"><em class="xref py py-obj"><span class="pre">inputs</span></em></a><em class="property"><span class="pre">,</span> </em><a class="reference internal" href="agentlib.core.html#agentlib.core.model.ModelConfig.outputs" title="agentlib.core.model.ModelConfig.outputs"><em class="xref py py-obj"><span class="pre">outputs</span></em></a><em class="property"><span class="pre">,</span> </em><a class="reference internal" href="agentlib.core.html#agentlib.core.model.ModelConfig.parameters" title="agentlib.core.model.ModelConfig.parameters"><em class="xref py py-obj"><span class="pre">parameters</span></em></a><em class="property"><span class="pre">,</span> </em><a class="reference internal" href="agentlib.core.html#agentlib.core.model.ModelConfig.states" title="agentlib.core.model.ModelConfig.states"><em class="xref py py-obj"><span class="pre">states</span></em></a><a class="reference internal" href="../_modules/agentlib/core/model.html#ModelConfig.include_default_model_variables"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.ModelConfig.include_default_model_variables" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">validator</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">include_default_model_variables</span></span><em class="autodoc_pydantic_validator_arrow property">&#160; <span class="pre">»</span>&#160; </em><a class="reference internal" href="agentlib.core.html#agentlib.core.model.ModelConfig.outputs" title="agentlib.core.model.ModelConfig.outputs"><em class="xref py py-obj"><span class="pre">outputs</span></em></a><em class="property"><span class="pre">,</span> </em><a class="reference internal" href="agentlib.core.html#agentlib.core.model.ModelConfig.parameters" title="agentlib.core.model.ModelConfig.parameters"><em class="xref py py-obj"><span class="pre">parameters</span></em></a><em class="property"><span class="pre">,</span> </em><a class="reference internal" href="agentlib.core.html#agentlib.core.model.ModelConfig.inputs" title="agentlib.core.model.ModelConfig.inputs"><em class="xref py py-obj"><span class="pre">inputs</span></em></a><em class="property"><span class="pre">,</span> </em><a class="reference internal" href="agentlib.core.html#agentlib.core.model.ModelConfig.states" title="agentlib.core.model.ModelConfig.states"><em class="xref py py-obj"><span class="pre">states</span></em></a><a class="reference internal" href="../_modules/agentlib/core/model.html#ModelConfig.include_default_model_variables"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.ModelConfig.include_default_model_variables" title="Permalink to this definition"></a></dt>
 <dd><p>Validator building block to merge default variables with config variables in a standard validator.
 Updates default variables when a variable with the same name is present in the config.
 Then returns the union of the default variables and the external config variables.</p>
@@ -1583,7 +1565,6 @@ run is finished</p>
 <li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#agentlib.core.module.BaseModule.set"><code class="docutils literal notranslate"><span class="pre">BaseModule.set()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#agentlib.core.module.BaseModule.source"><code class="docutils literal notranslate"><span class="pre">BaseModule.source</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#agentlib.core.module.BaseModule.terminate"><code class="docutils literal notranslate"><span class="pre">BaseModule.terminate()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#agentlib.core.module.BaseModule.update_variables"><code class="docutils literal notranslate"><span class="pre">BaseModule.update_variables()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="agentlib.core.html#agentlib.core.module.BaseModule.variables"><code class="docutils literal notranslate"><span class="pre">BaseModule.variables</span></code></a></li>
 </ul>
 </li>
