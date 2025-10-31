@@ -317,7 +317,10 @@
         <span class="n">t_stop</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;t_stop&quot;</span><span class="p">)</span>
         <span class="n">t_sample_old</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;t_sample&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">t_sample_old</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># A change in the default shows t_sample is still in the config of the user</span>
-            <span class="n">t_sample</span> <span class="o">=</span> <span class="n">t_sample_old</span>
+            <span class="k">if</span> <span class="n">info</span><span class="o">.</span><span class="n">field_name</span> <span class="o">==</span> <span class="s2">&quot;t_sample_simulation&quot;</span><span class="p">:</span>
+                <span class="n">t_sample</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">t_sample</span> <span class="o">=</span> <span class="n">t_sample_old</span>
         <span class="k">assert</span> <span class="p">(</span>
                 <span class="n">t_start</span> <span class="o">+</span> <span class="n">t_sample</span> <span class="o">&lt;=</span> <span class="n">t_stop</span>
         <span class="p">),</span> <span class="s2">&quot;t_stop-t_start must be greater than t_sample&quot;</span>
@@ -329,8 +332,9 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Check if t_sample is smaller than stop-start time&quot;&quot;&quot;</span>
         <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
             <span class="s2">&quot;t_sample is deprecated, use t_sample_communication, &quot;</span>
-            <span class="s2">&quot;t_sample_simulation for a concise separation of the two.&quot;</span>
-            <span class="s2">&quot;Will use the given t_sample for both t_sample_communication and t_sample_simulation.&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;t_sample_simulation for a concise separation of the two. &quot;</span>
+            <span class="s2">&quot;Will use the given t_sample for t_sample_communication and t_sample_simulation=1 s, &quot;</span>
+            <span class="s2">&quot;the `model.dt` default.&quot;</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="k">return</span> <span class="n">t_sample</span></div>
 
