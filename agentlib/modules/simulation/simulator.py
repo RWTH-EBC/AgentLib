@@ -271,7 +271,7 @@ class SimulatorConfig(BaseModuleConfig):
     @field_validator("t_sample")
     @classmethod
     def deprecate_t_sample(cls, t_sample, info: FieldValidationInfo):
-        """Check if t_sample is smaller than stop-start time"""
+        """Deprecates the t_sample field in favor of t_sample_communication and t_sample_simulation."""
         warnings.warn(
             "t_sample is deprecated, use t_sample_communication, "
             "t_sample_simulation for a concise separation of the two. "
