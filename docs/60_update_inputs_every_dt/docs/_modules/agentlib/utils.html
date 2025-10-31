@@ -179,7 +179,7 @@
 <span class="sd">        t_end (float): end time</span>
 
 <span class="sd">    Returns:</span>
-
+<span class="sd">        np.ndarray: Array of time samples from 0 to t_end with step size dt, ensuring t_end is always included.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">t_end</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">samples</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">t_end</span><span class="p">:</span>
