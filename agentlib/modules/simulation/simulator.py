@@ -239,7 +239,10 @@ class SimulatorConfig(BaseModuleConfig):
         t_stop = info.data.get("t_stop")
         t_sample_old = info.data.get("t_sample")
         if t_sample_old != 1:  # A change in the default shows t_sample is still in the config of the user
-            t_sample = t_sample_old
+            if info.field_name == "t_sample_simulation":
+                t_sample = 1
+            else:
+                t_sample = t_sample_old
         assert (
                 t_start + t_sample <= t_stop
         ), "t_stop-t_start must be greater than t_sample"
@@ -251,8 +254,9 @@ class SimulatorConfig(BaseModuleConfig):
         """Check if t_sample is smaller than stop-start time"""
         warnings.warn(
             "t_sample is deprecated, use t_sample_communication, "
-            "t_sample_simulation for a concise separation of the two."
-            "Will use the given t_sample for both t_sample_communication and t_sample_simulation.",
+            "t_sample_simulation for a concise separation of the two. "
+            "Will use the given t_sample for t_sample_communication and t_sample_simulation=1 s, "
+            "the `model.dt` default.",
         )
         return t_sample
 
