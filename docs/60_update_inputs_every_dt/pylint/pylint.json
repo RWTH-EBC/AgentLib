@@ -800,7 +800,7 @@
             "column": 0,
             "path": "agentlib/modules/communicator/communicator.py",
             "symbol": "astroid-error",
-            "message": "agentlib/modules/communicator/communicator.py: Fatal error while checking 'agentlib/modules/communicator/communicator.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-31-11-35-34.txt'.",
+            "message": "agentlib/modules/communicator/communicator.py: Fatal error while checking 'agentlib/modules/communicator/communicator.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-31-11-36-26.txt'.",
             "message-id": "F0002"
         },
         {
@@ -811,7 +811,7 @@
             "column": 0,
             "path": "agentlib/modules/simulation/simulator.py",
             "symbol": "astroid-error",
-            "message": "agentlib/modules/simulation/simulator.py: Fatal error while checking 'agentlib/modules/simulation/simulator.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-31-11-35-34.txt'.",
+            "message": "agentlib/modules/simulation/simulator.py: Fatal error while checking 'agentlib/modules/simulation/simulator.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-31-11-36-27.txt'.",
             "message-id": "F0002"
         },
         {
@@ -1438,7 +1438,7 @@
             "column": 0,
             "path": "examples/getting-started/part_4_communicators_with_comments.py",
             "symbol": "astroid-error",
-            "message": "examples/getting-started/part_4_communicators_with_comments.py: Fatal error while checking 'examples/getting-started/part_4_communicators_with_comments.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-31-11-35-35.txt'.",
+            "message": "examples/getting-started/part_4_communicators_with_comments.py: Fatal error while checking 'examples/getting-started/part_4_communicators_with_comments.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-31-11-36-27.txt'.",
             "message-id": "F0002"
         },
         {
@@ -1460,7 +1460,7 @@
             "column": 0,
             "path": "examples/getting-started/part_3_using_models_with_comments.py",
             "symbol": "astroid-error",
-            "message": "examples/getting-started/part_3_using_models_with_comments.py: Fatal error while checking 'examples/getting-started/part_3_using_models_with_comments.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-31-11-35-35.txt'.",
+            "message": "examples/getting-started/part_3_using_models_with_comments.py: Fatal error while checking 'examples/getting-started/part_3_using_models_with_comments.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-31-11-36-27.txt'.",
             "message-id": "F0002"
         },
         {
@@ -1592,7 +1592,7 @@
             "column": 0,
             "path": "examples/getting-started/part_3_using_models_concise.py",
             "symbol": "astroid-error",
-            "message": "examples/getting-started/part_3_using_models_concise.py: Fatal error while checking 'examples/getting-started/part_3_using_models_concise.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-31-11-35-35.txt'.",
+            "message": "examples/getting-started/part_3_using_models_concise.py: Fatal error while checking 'examples/getting-started/part_3_using_models_concise.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-31-11-36-28.txt'.",
             "message-id": "F0002"
         },
         {
@@ -2010,7 +2010,7 @@
             "column": 0,
             "path": "examples/controller/bangbang_with_simulator.py",
             "symbol": "astroid-error",
-            "message": "examples/controller/bangbang_with_simulator.py: Fatal error while checking 'examples/controller/bangbang_with_simulator.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-31-11-35-36.txt'.",
+            "message": "examples/controller/bangbang_with_simulator.py: Fatal error while checking 'examples/controller/bangbang_with_simulator.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-31-11-36-28.txt'.",
             "message-id": "F0002"
         },
         {
@@ -2032,12 +2032,12 @@
             "column": 0,
             "path": "examples/controller/pid_with_simulator.py",
             "symbol": "astroid-error",
-            "message": "examples/controller/pid_with_simulator.py: Fatal error while checking 'examples/controller/pid_with_simulator.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-31-11-35-36.txt'.",
+            "message": "examples/controller/pid_with_simulator.py: Fatal error while checking 'examples/controller/pid_with_simulator.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-31-11-36-28.txt'.",
             "message-id": "F0002"
         },
         {
             "type": "convention",
-            "module": "manual_labor.tools",
+            "module": "tools",
             "obj": "",
             "line": 1,
             "column": 0,
@@ -2048,7 +2048,7 @@
         },
         {
             "type": "error",
-            "module": "manual_labor.tools",
+            "module": "tools",
             "obj": "",
             "line": 1,
             "column": 0,
@@ -2059,7 +2059,7 @@
         },
         {
             "type": "convention",
-            "module": "manual_labor.tools",
+            "module": "tools",
             "obj": "make_table_for_agent_variable",
             "line": 5,
             "column": 0,
@@ -2070,7 +2070,7 @@
         },
         {
             "type": "warning",
-            "module": "manual_labor.tools",
+            "module": "tools",
             "obj": "make_table_for_agent_variable",
             "line": 12,
             "column": 9,
@@ -2081,7 +2081,7 @@
         },
         {
             "type": "convention",
-            "module": "manual_labor.tools",
+            "module": "tools",
             "obj": "make_table_for_agent_variable",
             "line": 12,
             "column": 43,
@@ -2659,7 +2659,7 @@
             "column": 0,
             "path": "tests/test_communicator.py",
             "symbol": "astroid-error",
-            "message": "tests/test_communicator.py: Fatal error while checking 'tests/test_communicator.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-31-11-35-37.txt'.",
+            "message": "tests/test_communicator.py: Fatal error while checking 'tests/test_communicator.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-31-11-36-29.txt'.",
             "message-id": "F0002"
         },
         {
@@ -3066,7 +3066,7 @@
             "column": 0,
             "path": "tests/test_module.py",
             "symbol": "astroid-error",
-            "message": "tests/test_module.py: Fatal error while checking 'tests/test_module.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-31-11-35-37.txt'.",
+            "message": "tests/test_module.py: Fatal error while checking 'tests/test_module.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-31-11-36-29.txt'.",
             "message-id": "F0002"
         },
         {
@@ -3737,7 +3737,7 @@
             "column": 0,
             "path": "tests/test_model.py",
             "symbol": "astroid-error",
-            "message": "tests/test_model.py: Fatal error while checking 'tests/test_model.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-31-11-35-37.txt'.",
+            "message": "tests/test_model.py: Fatal error while checking 'tests/test_model.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-31-11-36-30.txt'.",
             "message-id": "F0002"
         },
         {
@@ -4331,7 +4331,7 @@
             "column": 0,
             "path": "agentlib/models/scipy_model.py",
             "symbol": "astroid-error",
-            "message": "agentlib/models/scipy_model.py: Fatal error while checking 'agentlib/models/scipy_model.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-31-11-35-38.txt'.",
+            "message": "agentlib/models/scipy_model.py: Fatal error while checking 'agentlib/models/scipy_model.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-31-11-36-30.txt'.",
             "message-id": "F0002"
         },
         {
@@ -4342,7 +4342,7 @@
             "column": 0,
             "path": "agentlib/models/fmu_model.py",
             "symbol": "astroid-error",
-            "message": "agentlib/models/fmu_model.py: Fatal error while checking 'agentlib/models/fmu_model.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-31-11-35-38.txt'.",
+            "message": "agentlib/models/fmu_model.py: Fatal error while checking 'agentlib/models/fmu_model.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-31-11-36-31.txt'.",
             "message-id": "F0002"
         },
         {
@@ -4408,7 +4408,7 @@
             "column": 0,
             "path": "agentlib/utils/load_config.py",
             "symbol": "astroid-error",
-            "message": "agentlib/utils/load_config.py: Fatal error while checking 'agentlib/utils/load_config.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-31-11-35-39.txt'.",
+            "message": "agentlib/utils/load_config.py: Fatal error while checking 'agentlib/utils/load_config.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-31-11-36-31.txt'.",
             "message-id": "F0002"
         },
         {
@@ -4419,7 +4419,7 @@
             "column": 0,
             "path": "agentlib/utils/local_broadcast_broker.py",
             "symbol": "astroid-error",
-            "message": "agentlib/utils/local_broadcast_broker.py: Fatal error while checking 'agentlib/utils/local_broadcast_broker.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-31-11-35-39.txt'.",
+            "message": "agentlib/utils/local_broadcast_broker.py: Fatal error while checking 'agentlib/utils/local_broadcast_broker.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-31-11-36-31.txt'.",
             "message-id": "F0002"
         },
         {
@@ -4430,7 +4430,7 @@
             "column": 0,
             "path": "agentlib/utils/validators.py",
             "symbol": "astroid-error",
-            "message": "agentlib/utils/validators.py: Fatal error while checking 'agentlib/utils/validators.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-31-11-35-39.txt'.",
+            "message": "agentlib/utils/validators.py: Fatal error while checking 'agentlib/utils/validators.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-31-11-36-31.txt'.",
             "message-id": "F0002"
         },
         {
@@ -4441,7 +4441,7 @@
             "column": 0,
             "path": "agentlib/utils/local_broker.py",
             "symbol": "astroid-error",
-            "message": "agentlib/utils/local_broker.py: Fatal error while checking 'agentlib/utils/local_broker.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-31-11-35-39.txt'.",
+            "message": "agentlib/utils/local_broker.py: Fatal error while checking 'agentlib/utils/local_broker.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-31-11-36-31.txt'.",
             "message-id": "F0002"
         },
         {
@@ -4463,7 +4463,7 @@
             "column": 0,
             "path": "agentlib/utils/fuzzy_matching.py",
             "symbol": "astroid-error",
-            "message": "agentlib/utils/fuzzy_matching.py: Fatal error while checking 'agentlib/utils/fuzzy_matching.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-31-11-35-39.txt'.",
+            "message": "agentlib/utils/fuzzy_matching.py: Fatal error while checking 'agentlib/utils/fuzzy_matching.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-31-11-36-31.txt'.",
             "message-id": "F0002"
         },
         {
@@ -4474,7 +4474,7 @@
             "column": 0,
             "path": "agentlib/utils/multi_processing_broker.py",
             "symbol": "astroid-error",
-            "message": "agentlib/utils/multi_processing_broker.py: Fatal error while checking 'agentlib/utils/multi_processing_broker.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-31-11-35-39.txt'.",
+            "message": "agentlib/utils/multi_processing_broker.py: Fatal error while checking 'agentlib/utils/multi_processing_broker.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-31-11-36-31.txt'.",
             "message-id": "F0002"
         },
         {
@@ -4551,7 +4551,7 @@
             "column": 0,
             "path": "agentlib/utils/multi_agent_system.py",
             "symbol": "astroid-error",
-            "message": "agentlib/utils/multi_agent_system.py: Fatal error while checking 'agentlib/utils/multi_agent_system.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-31-11-35-40.txt'.",
+            "message": "agentlib/utils/multi_agent_system.py: Fatal error while checking 'agentlib/utils/multi_agent_system.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-31-11-36-32.txt'.",
             "message-id": "F0002"
         },
         {
@@ -4573,7 +4573,7 @@
             "column": 0,
             "path": "agentlib/utils/plotting/simulator_dashboard.py",
             "symbol": "astroid-error",
-            "message": "agentlib/utils/plotting/simulator_dashboard.py: Fatal error while checking 'agentlib/utils/plotting/simulator_dashboard.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-31-11-35-40.txt'.",
+            "message": "agentlib/utils/plotting/simulator_dashboard.py: Fatal error while checking 'agentlib/utils/plotting/simulator_dashboard.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-31-11-36-32.txt'.",
             "message-id": "F0002"
         },
         {
@@ -4595,7 +4595,7 @@
             "column": 0,
             "path": "agentlib/core/data_broker.py",
             "symbol": "astroid-error",
-            "message": "agentlib/core/data_broker.py: Fatal error while checking 'agentlib/core/data_broker.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-31-11-35-40.txt'.",
+            "message": "agentlib/core/data_broker.py: Fatal error while checking 'agentlib/core/data_broker.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-31-11-36-32.txt'.",
             "message-id": "F0002"
         },
         {
@@ -4617,7 +4617,7 @@
             "column": 0,
             "path": "agentlib/core/agent.py",
             "symbol": "astroid-error",
-            "message": "agentlib/core/agent.py: Fatal error while checking 'agentlib/core/agent.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-31-11-35-40.txt'.",
+            "message": "agentlib/core/agent.py: Fatal error while checking 'agentlib/core/agent.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-31-11-36-33.txt'.",
             "message-id": "F0002"
         },
         {
@@ -4628,7 +4628,7 @@
             "column": 0,
             "path": "agentlib/core/module.py",
             "symbol": "astroid-error",
-            "message": "agentlib/core/module.py: Fatal error while checking 'agentlib/core/module.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-31-11-35-41.txt'.",
+            "message": "agentlib/core/module.py: Fatal error while checking 'agentlib/core/module.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-31-11-36-33.txt'.",
             "message-id": "F0002"
         },
         {
@@ -4650,7 +4650,7 @@
             "column": 0,
             "path": "agentlib/core/logging_.py",
             "symbol": "astroid-error",
-            "message": "agentlib/core/logging_.py: Fatal error while checking 'agentlib/core/logging_.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-31-11-35-41.txt'.",
+            "message": "agentlib/core/logging_.py: Fatal error while checking 'agentlib/core/logging_.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-31-11-36-33.txt'.",
             "message-id": "F0002"
         },
         {
@@ -4661,7 +4661,7 @@
             "column": 0,
             "path": "agentlib/core/environment.py",
             "symbol": "astroid-error",
-            "message": "agentlib/core/environment.py: Fatal error while checking 'agentlib/core/environment.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-31-11-35-41.txt'.",
+            "message": "agentlib/core/environment.py: Fatal error while checking 'agentlib/core/environment.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-31-11-36-33.txt'.",
             "message-id": "F0002"
         },
         {
@@ -4672,7 +4672,7 @@
             "column": 0,
             "path": "agentlib/core/datamodels.py",
             "symbol": "astroid-error",
-            "message": "agentlib/core/datamodels.py: Fatal error while checking 'agentlib/core/datamodels.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-31-11-35-41.txt'.",
+            "message": "agentlib/core/datamodels.py: Fatal error while checking 'agentlib/core/datamodels.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-31-11-36-33.txt'.",
             "message-id": "F0002"
         },
         {
@@ -4705,7 +4705,7 @@
             "column": 0,
             "path": "agentlib/core/model.py",
             "symbol": "astroid-error",
-            "message": "agentlib/core/model.py: Fatal error while checking 'agentlib/core/model.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-31-11-35-42.txt'.",
+            "message": "agentlib/core/model.py: Fatal error while checking 'agentlib/core/model.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-31-11-36-34.txt'.",
             "message-id": "F0002"
         },
         {
@@ -4903,7 +4903,7 @@
             "column": 0,
             "path": "agentlib/modules/__init__.py",
             "symbol": "astroid-error",
-            "message": "agentlib/modules/__init__.py: Fatal error while checking 'agentlib/modules/__init__.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-31-11-35-42.txt'.",
+            "message": "agentlib/modules/__init__.py: Fatal error while checking 'agentlib/modules/__init__.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-31-11-36-34.txt'.",
             "message-id": "F0002"
         },
         {
@@ -4914,7 +4914,7 @@
             "column": 0,
             "path": "agentlib/modules/utils/try_sensor.py",
             "symbol": "astroid-error",
-            "message": "agentlib/modules/utils/try_sensor.py: Fatal error while checking 'agentlib/modules/utils/try_sensor.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-31-11-35-42.txt'.",
+            "message": "agentlib/modules/utils/try_sensor.py: Fatal error while checking 'agentlib/modules/utils/try_sensor.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-31-11-36-34.txt'.",
             "message-id": "F0002"
         },
         {
@@ -4958,7 +4958,7 @@
             "column": 0,
             "path": "agentlib/modules/utils/agent_logger.py",
             "symbol": "astroid-error",
-            "message": "agentlib/modules/utils/agent_logger.py: Fatal error while checking 'agentlib/modules/utils/agent_logger.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-31-11-35-42.txt'.",
+            "message": "agentlib/modules/utils/agent_logger.py: Fatal error while checking 'agentlib/modules/utils/agent_logger.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-31-11-36-34.txt'.",
             "message-id": "F0002"
         },
         {
@@ -5013,7 +5013,7 @@
             "column": 0,
             "path": "agentlib/modules/communicator/clonemap.py",
             "symbol": "astroid-error",
-            "message": "agentlib/modules/communicator/clonemap.py: Fatal error while checking 'agentlib/modules/communicator/clonemap.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-31-11-35-42.txt'.",
+            "message": "agentlib/modules/communicator/clonemap.py: Fatal error while checking 'agentlib/modules/communicator/clonemap.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-31-11-36-35.txt'.",
             "message-id": "F0002"
         },
         {
@@ -5112,7 +5112,7 @@
             "column": 0,
             "path": "agentlib/modules/communicator/mqtt.py",
             "symbol": "astroid-error",
-            "message": "agentlib/modules/communicator/mqtt.py: Fatal error while checking 'agentlib/modules/communicator/mqtt.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-31-11-35-43.txt'.",
+            "message": "agentlib/modules/communicator/mqtt.py: Fatal error while checking 'agentlib/modules/communicator/mqtt.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-31-11-36-35.txt'.",
             "message-id": "F0002"
         },
         {
@@ -5145,7 +5145,7 @@
             "column": 0,
             "path": "agentlib/modules/simulation/csv_data_source.py",
             "symbol": "astroid-error",
-            "message": "agentlib/modules/simulation/csv_data_source.py: Fatal error while checking 'agentlib/modules/simulation/csv_data_source.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-31-11-35-43.txt'.",
+            "message": "agentlib/modules/simulation/csv_data_source.py: Fatal error while checking 'agentlib/modules/simulation/csv_data_source.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-31-11-36-35.txt'.",
             "message-id": "F0002"
         },
         {
@@ -5200,7 +5200,7 @@
             "column": 0,
             "path": "agentlib/modules/controller/controller.py",
             "symbol": "astroid-error",
-            "message": "agentlib/modules/controller/controller.py: Fatal error while checking 'agentlib/modules/controller/controller.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-31-11-35-43.txt'.",
+            "message": "agentlib/modules/controller/controller.py: Fatal error while checking 'agentlib/modules/controller/controller.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-31-11-36-35.txt'.",
             "message-id": "F0002"
         },
         {
@@ -5233,7 +5233,7 @@
             "column": 0,
             "path": "agentlib/modules/controller/pid.py",
             "symbol": "astroid-error",
-            "message": "agentlib/modules/controller/pid.py: Fatal error while checking 'agentlib/modules/controller/pid.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-31-11-35-43.txt'.",
+            "message": "agentlib/modules/controller/pid.py: Fatal error while checking 'agentlib/modules/controller/pid.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2025-10-31-11-36-35.txt'.",
             "message-id": "F0002"
         },
         {
@@ -5288,7 +5288,7 @@
             "column": 0,
             "path": "agentlib/modules/controller/pid.py",
             "symbol": "duplicate-code",
-            "message": "Similar lines in 2 files\n==part_3_using_models_with_comments:[27:64]\n==part_4_communicators_with_comments:[10:48]\nimport logging\nfrom typing import List\n\nimport agentlib as ag\n\n\n# the model is the same as in example three\nclass HeatedRoomConfig(ag.ModelConfig):\n    inputs: List[ag.ModelInput] = [\n        ag.ModelInput(name=\"heating_power_in_watt\", value=100)\n    ]\n    states: List[ag.ModelState] = [\n        ag.ModelState(name=\"temperature_in_celsius\", value=20)\n    ]\n    parameters: List[ag.ModelParameter] = [\n        ag.ModelParameter(name=\"heat_loss_in_watt\", value=150),\n        ag.ModelParameter(name=\"thermal_capacity_zone\", value=100_000),\n    ]\n    outputs: List[ag.ModelOutput] = []\n\n\nclass HeatedRoom(ag.Model):\n    config: HeatedRoomConfig\n\n    def initialize(self, **kwargs):\n        pass\n\n    def do_step(self, *, t_start, t_sample):\n        t = self.get(\"temperature_in_celsius\").value  # get/set also works in models\n        power = self.get(\"heating_power_in_watt\").value\n        loss = self.get(\"heat_loss_in_watt\").value\n        capacity = self.get(\"thermal_capacity_zone\").value\n        t = t + ((power - loss) / capacity) * t_sample\n        self.set(\"temperature_in_celsius\", t)\n\n\n# here, we have a similar configuration as last time, however, there are differences in\n# the variable declarations",
+            "message": "Similar lines in 2 files\n==part_3_using_models_with_comments:[27:64]\n==part_4_communicators_with_comments:[10:48]\nimport logging\nfrom typing import List\n\nimport agentlib as ag\n\n\n# define the inputs, outputs, states and parameters of your model\nclass HeatedRoomConfig(ag.ModelConfig):\n    inputs: List[ag.ModelInput] = [\n        ag.ModelInput(name=\"heating_power_in_watt\", value=100)\n    ]\n    states: List[ag.ModelState] = [\n        ag.ModelState(name=\"temperature_in_celsius\", value=20)\n    ]\n    parameters: List[ag.ModelParameter] = [\n        ag.ModelParameter(name=\"heat_loss_in_watt\", value=150),\n        ag.ModelParameter(name=\"thermal_capacity_zone\", value=100_000),\n    ]\n    outputs: List[ag.ModelOutput] = []\n\n\nclass HeatedRoom(ag.Model):\n    config: HeatedRoomConfig  # match the config to the model\n\n    def initialize(self, **kwargs):\n        pass\n\n    # define a discrete simulation step\n    def do_step(self, *, t_start, t_sample):\n        t = self.get(\"temperature_in_celsius\").value  # get/set also works in models\n        power = self.get(\"heating_power_in_watt\").value\n        loss = self.get(\"heat_loss_in_watt\").value\n        capacity = self.get(\"thermal_capacity_zone\").value\n        t = t + ((power - loss) / capacity) * t_sample\n        self.set(\"temperature_in_celsius\", t)\n\n",
             "message-id": "R0801"
         },
         {
@@ -5299,7 +5299,7 @@
             "column": 0,
             "path": "agentlib/modules/controller/pid.py",
             "symbol": "duplicate-code",
-            "message": "Similar lines in 2 files\n==part_1_my_first_agent_concise:[25:54]\n==part_1_my_first_agent_with_comments:[29:91]\n        while True:\n            # we can access the attributes from the config we defined above like this\n            self.logger.info(f\"I am {self.config.name} with age {self.config.age}.\")\n            yield self.env.timeout(1)  # timeout is in seconds\n\n    def register_callbacks(self):\n        # we will learn about callbacks later\n        pass\n\n\n# the config of an agent can be a python dict or a JSON-file\n# the config has two keys: id and modules\nagent_config = {\n    # the id is the public name of the agent. It will become later, when using\n    # communicators. It is also displayed in log messages.\n    \"id\": \"my_agent_id\",\n    # second comes a list of modules, which define the function of the agent. Usually,\n    # an agent has a communicator and a functional module, but in fact, any\n    # combination of modules is possible.\n    # In this example, there is no communication with other agents, so we only have one\n    # module\n    \"modules\": [\n        {\n            # the type key defines the class of a module and is always required\n            # There are two ways to specify the type\n            #   1. Use a module from the core, or a plugin. You only need to write down\n            #   the string-key which maps to it.\n            #   2. Use a custom module. Under type, write down a dict, pointing to the\n            #   exact python class you want to execute.\n            # In our example, we use option two, to load the module defined above.\n            \"type\": {\"file\": __file__, \"class_name\": \"MyFirstModule\"},\n            # on the same level as type, the remaining configuration of the module has\n            # to be done. For our module defined above, we defined a 'name' field which\n            # we now have to specify\n            \"name\": \"first_agent\",\n        }\n    ],\n}\n\n\ndef main():\n    # We have to make sure, our log level is set to INFO, otherwise, our process\n    # defined above will not print anything\n    logging.basicConfig(level=logging.INFO)\n\n    # every agent runs in an environment. The environment has four keys:\n    # 1. 'rt': If True, the code will run in realtime\n    # 2. 'factor': Speed up realtime if <1, slow down if >1. Ignored if 'rt' is False\n    # 3. 'clock': If True, periodically print the current simulation time\n    # 4. 't_sample': Intervall for the clock. 3 and 4 only affect logs, not results\n    environment_config = {\"rt\": False, \"factor\": 1, \"clock\": False, \"t_sample\": 60}\n    env = ag.Environment(config=environment_config)\n\n    # create the agent. Multiple agents can be created with the same environment.\n    agent = ag.Agent(config=agent_config, env=env)\n\n    # runs the environment for 10 seconds, starting the agent\n    env.run(10)\n\n\nif __name__ == \"__main__\":\n    main()",
+            "message": "Similar lines in 2 files\n==part_1_my_first_agent_concise:[25:54]\n==part_1_my_first_agent_with_comments:[29:91]\n        while True:\n            self.logger.info(f\"I am {self.config.name} with age {self.config.age}.\")\n            yield self.env.timeout(1)\n\n    def register_callbacks(self):\n        pass\n\n\nagent_config = {\n    \"id\": \"my_agent_id\",\n    \"modules\": [\n        {\n            \"type\": {\"file\": __file__, \"class_name\": \"MyFirstModule\"},\n            \"name\": \"first_agent\",\n        }\n    ],\n}\n\n\ndef main():\n    logging.basicConfig(level=logging.INFO)\n    environment_config = {\"rt\": False, \"factor\": 1, \"clock\": False, \"t_sample\": 60}\n    env = ag.Environment(config=environment_config)\n    agent = ag.Agent(config=agent_config, env=env)\n    env.run(10)\n\n\nif __name__ == \"__main__\":\n    main()",
             "message-id": "R0801"
         },
         {
@@ -5343,7 +5343,7 @@
             "column": 0,
             "path": "agentlib/modules/controller/pid.py",
             "symbol": "duplicate-code",
-            "message": "Similar lines in 2 files\n==bangbang_with_simulator:[0:19]\n==part_4_communicators_with_comments:[10:28]\nimport logging\nfrom typing import List\n\nimport agentlib as ag\n\n\nclass HeatedRoomConfig(ag.ModelConfig):\n    inputs: List[ag.ModelInput] = [\n        ag.ModelInput(name=\"heating_power_in_watt\", value=100)\n    ]\n    states: List[ag.ModelState] = [\n        ag.ModelState(name=\"temperature_in_celsius\", value=20)\n    ]\n    parameters: List[ag.ModelParameter] = [\n        ag.ModelParameter(name=\"heat_loss_in_watt\", value=150),\n        ag.ModelParameter(name=\"thermal_capacity_zone\", value=100_000),\n    ]\n\n",
+            "message": "Similar lines in 2 files\n==bangbang_with_simulator:[0:19]\n==part_4_communicators_with_comments:[10:28]\nimport logging\nfrom typing import List\n\nimport agentlib as ag\n\n\n# the model is the same as in example three\nclass HeatedRoomConfig(ag.ModelConfig):\n    inputs: List[ag.ModelInput] = [\n        ag.ModelInput(name=\"heating_power_in_watt\", value=100)\n    ]\n    states: List[ag.ModelState] = [\n        ag.ModelState(name=\"temperature_in_celsius\", value=20)\n    ]\n    parameters: List[ag.ModelParameter] = [\n        ag.ModelParameter(name=\"heat_loss_in_watt\", value=150),\n        ag.ModelParameter(name=\"thermal_capacity_zone\", value=100_000),\n    ]",
             "message-id": "R0801"
         },
         {
@@ -5365,7 +5365,7 @@
             "column": 0,
             "path": "agentlib/modules/controller/pid.py",
             "symbol": "duplicate-code",
-            "message": "Similar lines in 2 files\n==part_3_using_models_with_comments:[66:98]\n==part_4_communicators_with_comments:[50:72]\n    \"modules\": [\n        {\n            \"module_id\": \"sim\",\n            \"type\": \"simulator\",\n            \"model\": {\n                \"type\": {\"file\": __file__, \"class_name\": \"HeatedRoom\"},\n            },\n            \"t_sample\": 10,\n            \"save_results\": True,\n            \"result_filename\": \"results_part3.csv\",\n            \"result_causalities\": [\"local\"],\n            \"inputs\": [\n                # notice that we now included an alias in the declaration of the\n                # heating power. The alias is the public name of a variable, which is\n                # used for communication. The name is important for the\n                # internal workings of a module. In this case, the alias has to match\n                # with the other agent for communication, while the name has to match\n                # with our model implementation.\n                # If you do not declare an alias, it will be set to the name. You will\n                # see many examples, where this is the case. However it is often useful\n                # to be explicit about the alias, to better understand the\n                # communication structure of a an agent system",
+            "message": "Similar lines in 2 files\n==part_3_using_models_with_comments:[66:98]\n==part_4_communicators_with_comments:[50:72]\n    \"modules\": [\n        {\n            \"module_id\": \"sim\",\n            \"type\": \"simulator\",  # specify the simulator module\n            \"model\": {\n                # under type, we include a custom injection to our defined model\n                # other options for type are:\n                # \"fmu\" (see examples/multi-agent-systems/room_mas/configs/Room1.json)\n                # or \"statespace\"\n                \"type\": {\"file\": __file__, \"class_name\": \"HeatedRoom\"},\n            },\n            # specify the interval, in which outputs are written, and inputs are updated\n            \"t_sample\": 10,\n            # the simulator can save its own results if desired, there is no need for an AgentLogger\n            \"save_results\": True,\n            # results are stored in RAM if not specified\n            \"result_filename\": \"results_part3.csv\",\n            # define, which variable groups we want to store in the results. Note that\n            # here, we wrote locals, which maps to the states. This is a special case,\n            # where we used states instead of locals in some places, to avoid shadowing\n            # the Python builtin locals. By default, we store inputs and outputs. The\n            # locals (i.e. states) are not stored by default, as they are often of\n            # extremely high number in FMU models. Therefore, we have to activate them\n            # manually here.\n            \"result_causalities\": [\"local\"],\n            # the inputs and states fields of the simulator are lists of AgentVariables\n            # There are also the fields outputs and parameters. We do not have to\n            # specify all the variables that are given in the model config. However,\n            # only variables that we specify here, can be have their values changed\n            # from the default in the model, and only outputs defined here can be\n            # sent to other agents.\n            \"inputs\": [",
             "message-id": "R0801"
         },
         {
@@ -5376,7 +5376,7 @@
             "column": 0,
             "path": "agentlib/modules/controller/pid.py",
             "symbol": "duplicate-code",
-            "message": "Similar lines in 2 files\n==part_4_communicators_with_comments:[95:114]\n==pid_with_simulator:[45:56]\npid_agent_config = {\n    \"id\": \"PID\",  # the ID here matches, what we subscribed to in the process agent\n    \"modules\": [\n        {\n            \"module_id\": \"myPid\",\n            \"type\": \"pid\",  # pid is the key, to configure the standard PID module\n            \"setpoint\": 21,\n            \"Kp\": 1000,\n            \"Ti\": 10,\n            \"lb\": 0,\n            \"ub\": 500,\n            # the PID takes one input and one output, which in control terms are usually\n            # u and y. We define the aliases to match the alias in the process agent,\n            # while leaving the local names as u and y. Note that we also included the\n            # source key here, which is an additional filter. The input will only be\n            # updated, if it is sent from an agent with matching source. If the source\n            # is not specified, the agent will update the input with any variable that\n            # has a matching alias, from any agent. You will not see the source in many\n            # examples, however it can be a helpful filter in large mas.",
+            "message": "Similar lines in 2 files\n==part_4_communicators_with_comments:[95:114]\n==pid_with_simulator:[45:56]\npid_agent_config = {\n    \"id\": \"PID\",\n    \"modules\": [\n        {\n            \"module_id\": \"myPid\",\n            \"type\": \"pid\",\n            \"setpoint\": 21,\n            \"Kp\": 1000,\n            \"Ti\": 10,\n            \"lb\": 0,\n            \"ub\": 500,",
             "message-id": "R0801"
         },
         {
@@ -5420,7 +5420,7 @@
             "column": 0,
             "path": "agentlib/modules/controller/pid.py",
             "symbol": "duplicate-code",
-            "message": "Similar lines in 2 files\n==bangbang_with_simulator:[19:34]\n==part_4_communicators_with_comments:[31:48]\nclass HeatedRoom(ag.Model):\n    config: HeatedRoomConfig\n\n    def initialize(self, **kwargs):\n        pass\n\n    def do_step(self, *, t_start, t_sample):\n        t = self.get(\"temperature_in_celsius\").value  # get/set also works in models\n        power = self.get(\"heating_power_in_watt\").value\n        loss = self.get(\"heat_loss_in_watt\").value\n        capacity = self.get(\"thermal_capacity_zone\").value\n        t = t + ((power - loss) / capacity) * t_sample\n        self.set(\"temperature_in_celsius\", t)\n\n\n# here, we have a similar configuration as last time, however, there are differences in\n# the variable declarations",
+            "message": "Similar lines in 2 files\n==bangbang_with_simulator:[19:34]\n==part_4_communicators_with_comments:[31:48]\nclass HeatedRoom(ag.Model):\n    config: HeatedRoomConfig\n\n    def initialize(self, **kwargs):\n        pass\n\n    def do_step(self, *, t_start, t_sample):\n        t = self.get(\"temperature_in_celsius\").value\n        power = self.get(\"heating_power_in_watt\").value\n        loss = self.get(\"heat_loss_in_watt\").value\n        capacity = self.get(\"thermal_capacity_zone\").value\n        t = t + ((power - loss) / capacity) * t_sample\n        self.set(\"temperature_in_celsius\", t)\n\n",
             "message-id": "R0801"
         },
         {
@@ -5807,7 +5807,7 @@
                 "statement": 0,
                 "warning": 0
             },
-            "manual_labor.tools": {
+            "tools": {
                 "convention": 3,
                 "error": 1,
                 "fatal": 0,
@@ -6411,86 +6411,86 @@
                 "tests.test_model"
             ],
             "pingpong_module": [
-                "pingpong_local_broadcast",
                 "pingpong_mqtt",
-                "pingpong_multiprocessing",
-                "pingpong_local"
+                "pingpong_local_broadcast",
+                "pingpong_local",
+                "pingpong_multiprocessing"
             ],
             "agentlib.utils.multi_agent_system": [
-                "room_mas",
-                "t_sample_simulation_demonstration",
-                "main",
-                "tests.test_n_pingpong",
-                "agentlib",
+                "pingpong_mqtt",
                 "pingpong_local",
-                "pingpong_mqtt"
+                "tests.test_n_pingpong",
+                "room_mas",
+                "main",
+                "t_sample_simulation_demonstration",
+                "agentlib"
             ],
             "agentlib.core": [
-                "tests.test_data_broker",
-                "tests.test_simulator",
-                "pingpong_module",
+                "tests.test_agent",
+                "tests.test_model",
+                "tests.test_n_pingpong",
                 "tests.test_environment",
+                "agentlib",
                 "agentlib.modules.controller.bangbang",
+                "tests.test_simulator",
+                "agentlib.modules.communicator.local_multiprocessing",
+                "pingpong_multiprocessing",
                 "mqtt",
                 "pingpong_local_broadcast",
-                "tests.test_agentlogger",
-                "tests.test_model",
-                "tests.test_n_pingpong",
-                "tests.test_agent",
-                "agentlib.modules.communicator.local_multiprocessing",
-                "agentlib",
-                "pingpong_multiprocessing"
+                "tests.test_data_broker",
+                "pingpong_module",
+                "tests.test_agentlogger"
             ],
             "agentlib.utils": [
-                "agentlib.modules.communicator.local",
                 "tests.test_examples",
-                "tests.test_utils",
-                "agentlib.modules.communicator.local_broadcast",
                 "tests.test_n_pingpong",
-                "agentlib",
-                "pingpong_multiprocessing"
+                "tests.test_utils",
+                "agentlib.modules.communicator.local",
+                "pingpong_multiprocessing",
+                "agentlib.modules.communicator.local_broadcast",
+                "agentlib"
             ],
             "agentlib.core.datamodels": [
-                "agentlib.modules.communicator.local",
-                "agentlib.core",
-                "tests.test_simulator",
-                "pingpong_module",
-                "agentlib.modules.controller.bangbang",
-                "mqtt",
-                "tests.test_agentlogger",
+                "agentlib",
                 "tests.test_model",
-                "agentlib.modules.communicator.local_broadcast",
                 "tests.test_n_pingpong",
+                "tests.test_simulator",
                 "tests.test_datamodels",
                 "agentlib.modules.communicator.local_multiprocessing",
-                "agentlib"
+                "agentlib.modules.communicator.local",
+                "agentlib.core",
+                "agentlib.modules.controller.bangbang",
+                "mqtt",
+                "agentlib.modules.communicator.local_broadcast",
+                "pingpong_module",
+                "tests.test_agentlogger"
             ],
             "agentlib.utils.plotting.simulator_dashboard": [
                 "view_simulation_in_dashboard",
                 "tests.test_simulator_dashboard"
             ],
             "agentlib": [
-                "part_1_my_first_agent_with_comments",
-                "my_plugin.another_new_module",
-                "tests.test_data_source",
-                "tests.test_data_broker",
-                "tests.test_databroker_limits",
-                "csv_data_source",
-                "tests.test_communicator",
-                "part_2_agentvariables_concise",
-                "tests.test_utils",
-                "manual_labor.tools",
                 "part_2_agentvariables_with_comments",
+                "tools",
                 "my_plugin.new_module",
-                "part_1_my_first_agent_concise"
+                "part_1_my_first_agent_with_comments",
+                "tests.test_communicator",
+                "tests.test_data_source",
+                "csv_data_source",
+                "tests.test_databroker_limits",
+                "tests.test_utils",
+                "my_plugin.another_new_module",
+                "part_1_my_first_agent_concise",
+                "tests.test_data_broker",
+                "part_2_agentvariables_concise"
             ],
             "agentlib.utils.plugin_import": [
-                "agentlib.modules.utils",
                 "agentlib.models",
-                "agentlib.modules.simulation",
                 "my_plugin",
-                "agentlib.modules.controller",
-                "agentlib.modules.communicator"
+                "agentlib.modules.utils",
+                "agentlib.modules.communicator",
+                "agentlib.modules.simulation",
+                "agentlib.modules.controller"
             ],
             "my_plugin.another_new_module": [
                 "my_plugin"
@@ -6539,8 +6539,8 @@
                 "tests.test_utils"
             ],
             "agentlib.core.environment": [
-                "agentlib.core",
-                "tests.test_environment"
+                "tests.test_environment",
+                "agentlib.core"
             ],
             "agentlib.models": [
                 "agentlib"
@@ -6555,8 +6555,8 @@
                 "agentlib.utils"
             ],
             "agentlib.utils.multi_processing_broker": [
-                "agentlib.utils",
-                "agentlib.modules.communicator.local_multiprocessing"
+                "agentlib.modules.communicator.local_multiprocessing",
+                "agentlib.utils"
             ],
             "agentlib.core.data_broker": [
                 "agentlib.core"
@@ -6568,9 +6568,9 @@
                 "agentlib.core"
             ],
             "agentlib.modules.communicator.communicator": [
-                "agentlib.modules.communicator.local",
+                "agentlib.modules.communicator.local_broadcast",
                 "agentlib.modules.communicator.local_multiprocessing",
-                "agentlib.modules.communicator.local_broadcast"
+                "agentlib.modules.communicator.local"
             ],
             "agentlib.modules.controller": [
                 "agentlib.modules.controller.bangbang"
@@ -6623,7 +6623,7 @@
             "typealias": 0
         },
         "by_module": {
-            "examples.models.scipy.scipy_example": {
+            "scipy_example": {
                 "convention": 5,
                 "error": 1,
                 "fatal": 0,
@@ -6713,7 +6713,7 @@
                 "statement": 49,
                 "warning": 3
             },
-            "part_1_my_first_agent_with_comments": {
+            "examples.getting-started.part_1_my_first_agent_with_comments": {
                 "convention": 3,
                 "error": 1,
                 "fatal": 0,
@@ -6722,7 +6722,7 @@
                 "statement": 22,
                 "warning": 2
             },
-            "part_1_my_first_agent_concise": {
+            "examples.getting-started.part_1_my_first_agent_concise": {
                 "convention": 3,
                 "error": 1,
                 "fatal": 0,
@@ -6731,7 +6731,7 @@
                 "statement": 22,
                 "warning": 2
             },
-            "part_4_communicators_with_comments": {
+            "examples.getting-started.part_4_communicators_with_comments": {
                 "convention": 0,
                 "error": 0,
                 "fatal": 1,
@@ -6740,7 +6740,7 @@
                 "statement": 0,
                 "warning": 0
             },
-            "part_3_using_models_with_comments": {
+            "examples.getting-started.part_3_using_models_with_comments": {
                 "convention": 1,
                 "error": 0,
                 "fatal": 1,
@@ -6749,7 +6749,7 @@
                 "statement": 0,
                 "warning": 0
             },
-            "part_2_agentvariables_with_comments": {
+            "examples.getting-started.part_2_agentvariables_with_comments": {
                 "convention": 7,
                 "error": 3,
                 "fatal": 0,
@@ -6758,7 +6758,7 @@
                 "statement": 38,
                 "warning": 1
             },
-            "part_3_using_models_concise": {
+            "examples.getting-started.part_3_using_models_concise": {
                 "convention": 0,
                 "error": 0,
                 "fatal": 1,
@@ -6767,7 +6767,7 @@
                 "statement": 0,
                 "warning": 0
             },
-            "part_2_agentvariables_concise": {
+            "examples.getting-started.part_2_agentvariables_concise": {
                 "convention": 6,
                 "error": 3,
                 "fatal": 0,
@@ -6785,7 +6785,7 @@
                 "statement": 26,
                 "warning": 0
             },
-            "examples.simulation.csv_data_source": {
+            "csv_data_source": {
                 "convention": 4,
                 "error": 4,
                 "fatal": 0,
@@ -7457,90 +7457,90 @@
         },
         "dependencies": {
             "agentlib.models.scipy_model": [
-                "tests.test_model",
-                "examples.models.scipy.scipy_example"
+                "scipy_example",
+                "tests.test_model"
             ],
             "pingpong_module": [
-                "examples.multi-agent-systems.pingpong.pingpong_multiprocessing",
                 "examples.multi-agent-systems.pingpong.pingpong_local_broadcast",
-                "examples.multi-agent-systems.pingpong.pingpong_local",
-                "examples.multi-agent-systems.pingpong.pingpong_mqtt"
+                "examples.multi-agent-systems.pingpong.pingpong_mqtt",
+                "examples.multi-agent-systems.pingpong.pingpong_multiprocessing",
+                "examples.multi-agent-systems.pingpong.pingpong_local"
             ],
             "agentlib.utils.multi_agent_system": [
-                "examples.multi-agent-systems.room_mas.t_sample_simulation_demonstration",
-                "examples.plugin.main",
-                "tests.test_n_pingpong",
-                "examples.multi-agent-systems.pingpong.pingpong_local",
-                "examples.multi-agent-systems.room_mas.room_mas",
+                "agentlib",
                 "examples.multi-agent-systems.pingpong.pingpong_mqtt",
-                "agentlib"
+                "tests.test_n_pingpong",
+                "examples.multi-agent-systems.room_mas.room_mas",
+                "examples.multi-agent-systems.room_mas.t_sample_simulation_demonstration",
+                "examples.multi-agent-systems.pingpong.pingpong_local",
+                "examples.plugin.main"
             ],
             "agentlib.core": [
-                "tests.test_data_broker",
+                "examples.multi-agent-systems.pingpong.pingpong_local_broadcast",
+                "tests.test_environment",
+                "tests.test_model",
+                "tests.test_n_pingpong",
+                "examples.multi-agent-systems.pingpong.pingpong_module",
+                "examples.multi-agent-systems.pingpong.pingpong_multiprocessing",
                 "examples.communicator.mqtt",
                 "tests.test_simulator",
-                "agentlib.modules.controller.bangbang",
-                "examples.multi-agent-systems.pingpong.pingpong_module",
-                "tests.test_environment",
-                "examples.multi-agent-systems.pingpong.pingpong_local_broadcast",
-                "tests.test_agentlogger",
-                "tests.test_model",
-                "tests.test_n_pingpong",
-                "tests.test_agent",
                 "agentlib.modules.communicator.local_multiprocessing",
+                "agentlib.modules.controller.bangbang",
+                "tests.test_agent",
+                "tests.test_data_broker",
                 "agentlib",
-                "examples.multi-agent-systems.pingpong.pingpong_multiprocessing"
+                "tests.test_agentlogger"
             ],
             "agentlib.utils": [
-                "agentlib.modules.communicator.local",
                 "tests.test_examples",
-                "agentlib.modules.communicator.local_broadcast",
-                "tests.test_utils",
                 "tests.test_n_pingpong",
-                "agentlib",
-                "examples.multi-agent-systems.pingpong.pingpong_multiprocessing"
+                "examples.multi-agent-systems.pingpong.pingpong_multiprocessing",
+                "tests.test_utils",
+                "agentlib.modules.communicator.local",
+                "agentlib.modules.communicator.local_broadcast",
+                "agentlib"
             ],
             "agentlib.core.datamodels": [
-                "agentlib.modules.communicator.local",
-                "agentlib.core",
-                "tests.test_simulator",
-                "examples.multi-agent-systems.pingpong.pingpong_module",
-                "agentlib.modules.controller.bangbang",
                 "tests.test_model",
-                "tests.test_agentlogger",
-                "agentlib.modules.communicator.local_broadcast",
                 "tests.test_n_pingpong",
+                "examples.multi-agent-systems.pingpong.pingpong_module",
+                "examples.communicator.mqtt",
+                "tests.test_simulator",
                 "tests.test_datamodels",
                 "agentlib.modules.communicator.local_multiprocessing",
+                "agentlib.modules.communicator.local",
+                "agentlib.core",
+                "agentlib.modules.controller.bangbang",
+                "agentlib.modules.communicator.local_broadcast",
                 "agentlib",
-                "examples.communicator.mqtt"
+                "tests.test_agentlogger"
             ],
             "agentlib.utils.plotting.simulator_dashboard": [
                 "examples.multi-agent-systems.room_mas.view_simulation_in_dashboard",
                 "tests.test_simulator_dashboard"
             ],
             "agentlib": [
-                "part_1_my_first_agent_with_comments",
+                "docs.source.manual_labor.tools",
+                "examples.plugin.my_plugin.another_new_module",
+                "tests.test_communicator",
+                "tests.test_databroker_limits",
+                "examples.getting-started.part_2_agentvariables_with_comments",
+                "tests.test_utils",
+                "csv_data_source",
                 "examples.plugin.my_plugin.new_module",
                 "tests.test_data_source",
-                "examples.plugin.my_plugin.another_new_module",
-                "docs.source.manual_labor.tools",
-                "tests.test_data_broker",
-                "tests.test_databroker_limits",
-                "tests.test_communicator",
-                "part_2_agentvariables_concise",
-                "tests.test_utils",
-                "examples.simulation.csv_data_source",
-                "part_2_agentvariables_with_comments",
-                "part_1_my_first_agent_concise"
+                "examples.getting-started.part_2_agentvariables_concise",
+                "examples.getting-started.part_1_my_first_agent_concise",
+                "examples.getting-started.part_1_my_first_agent_with_comments",
+                "tests.test_data_broker"
             ],
             "agentlib.utils.plugin_import": [
-                "agentlib.modules.utils",
                 "agentlib.models",
-                "agentlib.modules.simulation",
-                "agentlib.modules.controller",
+                "agentlib.modules.utils",
+                "examples.plugin.my_plugin",
                 "agentlib.modules.communicator",
-                "examples.plugin.my_plugin"
+                "agentlib.modules.simulation",
+                "agentlib.modules.controller"
             ],
             "examples.plugin.my_plugin.another_new_module": [
                 "examples.plugin.my_plugin"
@@ -7589,8 +7589,8 @@
                 "tests.test_utils"
             ],
             "agentlib.core.environment": [
-                "agentlib.core",
-                "tests.test_environment"
+                "tests.test_environment",
+                "agentlib.core"
             ],
             "agentlib.models": [
                 "agentlib"
@@ -7605,8 +7605,8 @@
                 "agentlib.utils"
             ],
             "agentlib.utils.multi_processing_broker": [
-                "agentlib.utils",
-                "agentlib.modules.communicator.local_multiprocessing"
+                "agentlib.modules.communicator.local_multiprocessing",
+                "agentlib.utils"
             ],
             "agentlib.core.data_broker": [
                 "agentlib.core"
@@ -7618,9 +7618,9 @@
                 "agentlib.core"
             ],
             "agentlib.modules.communicator.communicator": [
-                "agentlib.modules.communicator.local",
+                "agentlib.modules.communicator.local_broadcast",
                 "agentlib.modules.communicator.local_multiprocessing",
-                "agentlib.modules.communicator.local_broadcast"
+                "agentlib.modules.communicator.local"
             ],
             "agentlib.modules.controller": [
                 "agentlib.modules.controller.bangbang"

@@ -349,7 +349,7 @@
 <div class="viewcode-block" id="SimulatorConfig.deprecate_t_sample"><a class="viewcode-back" href="../../../../code/agentlib.modules.simulation.html#agentlib.modules.simulation.simulator.SimulatorConfig.deprecate_t_sample">[docs]</a>    <span class="nd">@field_validator</span><span class="p">(</span><span class="s2">&quot;t_sample&quot;</span><span class="p">)</span>
     <span class="nd">@classmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">deprecate_t_sample</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">t_sample</span><span class="p">,</span> <span class="n">info</span><span class="p">:</span> <span class="n">FieldValidationInfo</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Check if t_sample is smaller than stop-start time&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Deprecates the t_sample field in favor of t_sample_communication and t_sample_simulation.&quot;&quot;&quot;</span>
         <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
             <span class="s2">&quot;t_sample is deprecated, use t_sample_communication, &quot;</span>
             <span class="s2">&quot;t_sample_simulation for a concise separation of the two. &quot;</span>
