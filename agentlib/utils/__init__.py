@@ -11,6 +11,8 @@ import os
 import sys
 from pathlib import Path
 
+import numpy as np
+
 from .local_broadcast_broker import LocalBroadcastBroker
 from .local_broker import LocalBroker
 from .multi_processing_broker import MultiProcessingBroker
@@ -86,3 +88,23 @@ def custom_injection(config: dict, module_name: str = None):
             f"Given module '{custom_module}' does not "
             f"contain the specified class {class_name}"
         )
+
+
+def create_time_samples(dt, t_end):
+    """
+    Function to generate an array of time steps
+    using the dt object.
+    Note that, if dt is not a true divider of t_end,
+    the output array is not equally sampled.
+
+    Args:
+        dt (float): Step-size
+        t_end (float): end time
+
+    Returns:
+        np.ndarray: Array of time samples from 0 to t_end with step size dt, ensuring t_end is always included.
+    """
+    samples = np.arange(0, t_end, dt, dtype=float)
+    if samples[-1] == t_end:
+        return samples
+    return np.append(samples, t_end)

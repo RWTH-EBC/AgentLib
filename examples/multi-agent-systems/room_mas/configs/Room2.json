@@ -8,7 +8,8 @@
         "type": "fmu",
         "path": "models/SimpleRoom.fmu"
       },
-      "t_sample": 50,
+      "t_sample_communication": 50,
+      "t_sample_simulation": 15,
       "save_results": true,
       "measurement_uncertainty": {
         "T_air": 0.0001

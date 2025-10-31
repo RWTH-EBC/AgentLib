@@ -131,6 +131,7 @@ class TRYSensor(BaseModule):
         """Write the current TRY values into data_broker every other t_sample"""
         while True:
             data = self.get_data_now()
+            self.logger.debug("Sending %s TRY measurements into databroker", len(data))
             for key, val in data.items():
                 self.set(name=key, value=val)
             yield self.env.timeout(self.t_sample)
