@@ -71,7 +71,7 @@ class TestSimulator(unittest.TestCase):
             "model": kwargs.get("model_config", self.model_config),
             "t_start": kwargs.get("t_start", self.t_start),
             "t_stop": kwargs.get("t_stop", self.t_stop),
-            "t_sample": kwargs.get("t_sample", self.t_sample),
+            "t_sample_communication": kwargs.get("t_sample", self.t_sample),
             "save_results": kwargs.get("save_results", True),
             "result_filename": kwargs.get(
                 "result_filename", os.path.join(self.workdir, "temp_test_file.csv")

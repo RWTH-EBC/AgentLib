@@ -76,7 +76,7 @@ class SimulatorResults:
         # We do not return the last row, as it is always only half complete (since
         # inputs at time step k influence results of time step k+1. Writing in
         # incomplete dataframe would break the csv-file we append to.
-        return pd.DataFrame(self.data[:-1], index=self.index[:-1], columns=self.columns)
+        return pd.DataFrame(self.data, index=self.index, columns=self.columns)
 
     def write_results(self, file: str):
         """
