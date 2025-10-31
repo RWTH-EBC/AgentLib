@@ -257,7 +257,7 @@ class SimulatorConfig(BaseModuleConfig):
 
     @field_validator("update_inputs_on_callback")
     @classmethod
-    def deprecate_t_sample(cls, update_inputs_on_callback, info: FieldValidationInfo):
+    def deprecate_update_inputs_on_callback(cls, update_inputs_on_callback, info: FieldValidationInfo):
         """Check if t_sample is smaller than stop-start time"""
         if update_inputs_on_callback:
             warnings.warn("update_inputs_on_callback is deprecated, remove it from your config. ")
