@@ -189,6 +189,13 @@ class SimulatorConfig(BaseModuleConfig):
                     "is False by default, as we expect to receive a lot of measurements"
                     " and want to be efficient.",
     )
+    update_inputs_on_callback: bool = Field(
+        title="update_inputs_on_callback",
+        default=True,
+        description="Deprecated! Will be removed in future versions."
+                    "If True, model inputs are updated if they are updated in data_broker."
+                    "Else, the model inputs are updated before each simulation.",
+    )
 
     @field_validator("result_filename")
     @classmethod
@@ -247,6 +254,19 @@ class SimulatorConfig(BaseModuleConfig):
                 t_start + t_sample <= t_stop
         ), "t_stop-t_start must be greater than t_sample"
         return t_sample
+
+    @field_validator("update_inputs_on_callback")
+    @classmethod
+    def deprecate_t_sample(cls, update_inputs_on_callback, info: FieldValidationInfo):
+        """Check if t_sample is smaller than stop-start time"""
+        if update_inputs_on_callback:
+            warnings.warn("update_inputs_on_callback is deprecated, remove it from your config. ")
+        else:
+            warnings.warn(
+                "update_inputs_on_callback is deprecated, remove it from your config. "
+                "Will use update_inputs_on_callback=True"
+            )
+        return True
 
     @field_validator("t_sample")
     @classmethod
