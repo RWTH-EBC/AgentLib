@@ -102,7 +102,7 @@ def create_time_samples(dt, t_end):
         t_end (float): end time
 
     Returns:
-
+        np.ndarray: Array of time samples from 0 to t_end with step size dt, ensuring t_end is always included.
     """
     samples = np.arange(0, t_end, dt, dtype=float)
     if samples[-1] == t_end:
