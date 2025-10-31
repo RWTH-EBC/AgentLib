@@ -267,6 +267,13 @@
                     <span class="s2">&quot;is False by default, as we expect to receive a lot of measurements&quot;</span>
                     <span class="s2">&quot; and want to be efficient.&quot;</span><span class="p">,</span>
     <span class="p">)</span>
+    <span class="n">update_inputs_on_callback</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">title</span><span class="o">=</span><span class="s2">&quot;update_inputs_on_callback&quot;</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Deprecated! Will be removed in future versions.&quot;</span>
+                    <span class="s2">&quot;If True, model inputs are updated if they are updated in data_broker.&quot;</span>
+                    <span class="s2">&quot;Else, the model inputs are updated before each simulation.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
 
 <div class="viewcode-block" id="SimulatorConfig.check_nonexisting_csv"><a class="viewcode-back" href="../../../../code/agentlib.modules.simulation.html#agentlib.modules.simulation.simulator.SimulatorConfig.check_nonexisting_csv">[docs]</a>    <span class="nd">@field_validator</span><span class="p">(</span><span class="s2">&quot;result_filename&quot;</span><span class="p">)</span>
     <span class="nd">@classmethod</span>
@@ -325,6 +332,19 @@
                 <span class="n">t_start</span> <span class="o">+</span> <span class="n">t_sample</span> <span class="o">&lt;=</span> <span class="n">t_stop</span>
         <span class="p">),</span> <span class="s2">&quot;t_stop-t_start must be greater than t_sample&quot;</span>
         <span class="k">return</span> <span class="n">t_sample</span></div>
+
+<div class="viewcode-block" id="SimulatorConfig.deprecate_update_inputs_on_callback"><a class="viewcode-back" href="../../../../code/agentlib.modules.simulation.html#agentlib.modules.simulation.simulator.SimulatorConfig.deprecate_update_inputs_on_callback">[docs]</a>    <span class="nd">@field_validator</span><span class="p">(</span><span class="s2">&quot;update_inputs_on_callback&quot;</span><span class="p">)</span>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">deprecate_update_inputs_on_callback</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">update_inputs_on_callback</span><span class="p">,</span> <span class="n">info</span><span class="p">:</span> <span class="n">FieldValidationInfo</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Check if t_sample is smaller than stop-start time&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">update_inputs_on_callback</span><span class="p">:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;update_inputs_on_callback is deprecated, remove it from your config. &quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                <span class="s2">&quot;update_inputs_on_callback is deprecated, remove it from your config. &quot;</span>
+                <span class="s2">&quot;Will use update_inputs_on_callback=True&quot;</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
 
 <div class="viewcode-block" id="SimulatorConfig.deprecate_t_sample"><a class="viewcode-back" href="../../../../code/agentlib.modules.simulation.html#agentlib.modules.simulation.simulator.SimulatorConfig.deprecate_t_sample">[docs]</a>    <span class="nd">@field_validator</span><span class="p">(</span><span class="s2">&quot;t_sample&quot;</span><span class="p">)</span>
     <span class="nd">@classmethod</span>
