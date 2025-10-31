@@ -50,7 +50,8 @@ class TestSimulator(unittest.TestCase):
     def setUp(self) -> None:
         self.t_start = np.random.randint(2)
         self.t_stop = np.random.randint(self.t_start + 10, high=self.t_start + 10000)
-        self.t_sample = np.random.randint(1, high=self.t_stop - self.t_start)
+        self.t_sample_communication = np.random.randint(1, high=self.t_stop - self.t_start)
+        self.t_sample_simulation = np.random.randint(1, high=self.t_sample_communication)
 
         # Test model injection:
         self.workdir = os.path.join(os.getcwd(), "_temp_simulator_test")
@@ -71,7 +72,8 @@ class TestSimulator(unittest.TestCase):
             "model": kwargs.get("model_config", self.model_config),
             "t_start": kwargs.get("t_start", self.t_start),
             "t_stop": kwargs.get("t_stop", self.t_stop),
-            "t_sample_communication": kwargs.get("t_sample", self.t_sample),
+            "t_sample_communication": kwargs.get("t_sample", self.t_sample_communication),
+            "t_sample_simulation": kwargs.get("t_sample_simulation", self.t_sample_simulation),
             "save_results": kwargs.get("save_results", True),
             "result_filename": kwargs.get(
                 "result_filename", os.path.join(self.workdir, "temp_test_file.csv")
@@ -88,7 +90,8 @@ class TestSimulator(unittest.TestCase):
         """Test if the parameters are correctly set and accessible."""
         simulator = Simulator(config=self._get_module_cfg(), agent=self.get_agent())
         self.assertEqual(simulator.config.t_start, self.t_start)
-        self.assertEqual(simulator.config.t_sample, self.t_sample)
+        self.assertEqual(simulator.config.t_sample_communication, self.t_sample_communication)
+        self.assertEqual(simulator.config.t_sample_simulation, self.t_sample_simulation)
         self.assertEqual(simulator.config.t_stop, self.t_stop)
 
     def test_simulation(self):
@@ -108,8 +111,8 @@ class TestSimulator(unittest.TestCase):
         )
         simulator.run()
         res = simulator.get_results()
-        self.assertEqual(res.iloc[-1]["input"], 100)
-        self.assertEqual(res.iloc[-1]["par"], 100)
+        self.assertEqual(res.loc[:, "input"].dropna().iloc[-1], 100)
+        self.assertEqual(res.loc[:, "par"].dropna().iloc[-1], 100)
 
     def test_save_results(self):
         simulator = Simulator(config=self._get_module_cfg(), agent=self.get_agent())
