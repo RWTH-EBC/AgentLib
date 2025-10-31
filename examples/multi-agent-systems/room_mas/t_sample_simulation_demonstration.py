@@ -3,6 +3,8 @@ import logging
 import os
 from copy import deepcopy
 
+import numpy as np
+
 from agentlib.utils.multi_agent_system import LocalMASAgency
 
 logger = logging.getLogger(__name__)
@@ -12,8 +14,9 @@ TRY_CONFIG = {
     "modules": {
         "sensor": {
             "type": "TRYSensor",
-            "t_sample": 60,
-            "filename": "data/TRY2015_Aachen_Jahr.dat"
+            "t_sample": 223,  # Some random value to show differences in communication time-points
+            "filename": "data/TRY2015_Aachen_Jahr.dat",
+            "log_level": "DEBUG"
         },
         "ComLocal": {
             "type": "local",
@@ -53,7 +56,7 @@ ROOM_CONFIG = {
         },
         "ComLocal": {
             "type": "local",
-            "subscriptions": ["BangBangAgent", "TRYSensorAgent"],
+            "subscriptions": ["TRYSensorAgent"],
             "parse_json": True
         }
     }
@@ -90,7 +93,7 @@ def run_example(until, with_plots=True, log_level=logging.INFO):
     # create multiple agents with different configurations
     agent_configs = [TRY_CONFIG]
 
-    combinations = [[900, 1800], [60, 900]]
+    combinations = [[900], [60, 900]]
 
     for t_sample_com, t_sample_sim in itertools.product(*combinations):
         room_cfg = deepcopy(ROOM_CONFIG)
@@ -124,20 +127,33 @@ def run_example(until, with_plots=True, log_level=logging.INFO):
     idx = 0
     for t_sample_com, t_sample_sim in itertools.product(*combinations):
         df_ro = results[f"{t_sample_com}_{t_sample_sim}"]["room"]
+
+        times_input_changed = df_ro.index[~np.isnan(df_ro["T_oda"])]
+        for _i, _time in enumerate(times_input_changed):
+            axes[0, idx].axvline(_time, color="gray", label="Input change applied" if _i == 0 else None)
+            axes[1, idx].axvline(_time, color="gray", label="Input change applied" if _i == 0 else None)
         # Plot Room agent data for PID controlled zone
-        axes[0, idx].plot(df_ro["T_air"], color="red", label="RoomAgent", marker="^")
-        axes[1, idx].plot(df_se["T_oda"], color="green", linestyle="-.", label="SensorAgent")
-        axes[1, idx].plot(df_ro["T_oda"], color="blue", label="RoomAgent", marker="^")
+        axes[0, idx].scatter(
+            df_ro.index, df_ro["T_air"],
+            color="red", label="Simulated output stored", marker="^", s=100
+        )
+        axes[1, idx].scatter(
+            df_ro.index, df_ro["T_oda"],
+            color="blue", label="Input stored", marker="^", s=100
+        )
+        axes[1, idx].plot(
+            df_se.index, df_se["T_oda"], color="green",
+            linestyle="-.", marker="s", label="Sensor sends data")
         # Legend, titles etc:
         axes[0, idx].set_title(
             "$\Delta t_\mathrm{Com}=%s$\n$\Delta t_\mathrm{Sim}=%s$" % (t_sample_com, t_sample_sim)
         )
         axes[-1, idx].set_xlabel("Time / s")
+        axes[1, idx].legend()
+        axes[0, idx].legend()
         idx += 1
     axes[0, 0].set_ylabel("$T_{Room}$ / K")
     axes[1, 0].set_ylabel("$T_{oda}$ / K")
-    axes[1, 0].legend()
-    axes[0, 0].legend()
     fig.tight_layout()
 
     plt.show()

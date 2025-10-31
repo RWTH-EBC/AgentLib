@@ -332,7 +332,7 @@ class Simulator(BaseModule):
             variables=self._get_result_model_variables()
         )
         self._save_count: int = 1  # tracks, how often results have been saved
-        self._inputs_changed_since_last_save = False
+        self._inputs_changed_since_last_results_saving = False
         self._register_input_callbacks()
         self.logger.info("%s initialized!", self.__class__.__name__)
 
@@ -422,18 +422,19 @@ class Simulator(BaseModule):
                         "Updating model %s %s=%s", _type, var.name, var.value
                     )
                     self.model.set(name=var.name, value=var.value)
+                    self._inputs_changed_since_last_results_saving = True
 
     def _callback_update_model_input(self, inp: AgentVariable, name: str):
         """Set given model input value to the model"""
         self.logger.debug("Updating model input %s=%s", name, inp.value)
         self.model.set_input_value(name=name, value=inp.value)
-        self._inputs_changed_since_last_save = True
+        self._inputs_changed_since_last_results_saving = True
 
     def _callback_update_model_parameter(self, par: AgentVariable, name: str):
         """Set given model parameter value to the model"""
         self.logger.debug("Updating model parameter %s=%s", name, par.value)
         self.model.set_parameter_value(name=name, value=par.value)
-        self._inputs_changed_since_last_save = True
+        self._inputs_changed_since_last_results_saving = True
 
     def process(self):
         """
@@ -452,23 +453,30 @@ class Simulator(BaseModule):
         we send the updated output values to other modules and agents by setting
         them the data_broker.
         """
-        self._update_result_outputs(self.env.time)
+        self._update_results(timestamp_inputs=self.env.time, timestamp_outputs=self.env.time)
         while True:
             # Simulate
             t_samples = create_time_samples(
                 t_end=self.config.t_sample_communication,
                 dt=self.config.t_sample_simulation
             )
+            _t_start_simulation_loop = self.env.time
             self.logger.debug("Doing simulation steps %s ...", t_samples)
             for _idx, _t_sample in enumerate(t_samples[:-1]):
                 _t_start = self.env.now + self.config.t_start
                 dt_sim = t_samples[_idx + 1] - _t_sample
                 self.model.do_step(t_start=_t_start, t_sample=dt_sim)
-                if _idx == len(t_samples) - 2 or self._inputs_changed_since_last_save:
+                if _idx == len(t_samples) - 2 or self._inputs_changed_since_last_results_saving:
+                    if not self._inputs_changed_since_last_results_saving:
+                        # Did not change during simulation step
+                        timestamp_inputs = _t_start_simulation_loop
+                    else:
+                        # The inputs are only applied at self.env.time, not when they are received by the communicator
+                        timestamp_inputs = self.env.time
                     # Update the results
                     self._update_results(
                         timestamp_outputs=self.env.time + dt_sim,
-                        timestamp_inputs=self.env.time
+                        timestamp_inputs=timestamp_inputs
                     )
                 yield self.env.timeout(dt_sim)
             # Communicate
@@ -533,31 +541,49 @@ class Simulator(BaseModule):
             return
 
         inp_values = [var.value for var in self._get_result_input_variables()]
-        self._inputs_changed_since_last_save = False
+        self._inputs_changed_since_last_results_saving = False
 
-        if timestamp_inputs == self._result.index[-1]:
+        out_values = [var.value for var in self._get_result_output_variables()]
+        _len_outputs = len(out_values)
+
+        # Two cases:
+        # - Either both timestamps are the same and new, add them both
+        # - or the inputs are for an earlier timestamp -> first add the inputs and then append the new outputs index.
+        if timestamp_inputs == timestamp_outputs:
+            # self.logger.debug("Storing data at the same time stamp %s s", timestamp_outputs)
+            self._result.index.append(timestamp_outputs)
+            self._result.data.append(out_values + inp_values)
+        elif timestamp_inputs < timestamp_outputs:
             # add inputs in the time stamp before adding outputs, as they are active from
             # the start of this interval
-            self._result.data[-1].extend(inp_values)
-        else:
-            self._result.index.append(timestamp_inputs)
-            self._result.data.append([None] * len(self._result.data[0]) + inp_values)
+            if timestamp_inputs in self._result.index:
+                if timestamp_inputs == self._result.index[-1]:
+                    # self.logger.debug("Adding inputs to last time stamp %s s", timestamp_inputs)
+                    self._result.data[-1] = self._result.data[-1][:_len_outputs] + inp_values
+                # else: pass, as inputs are outdated (have been changed during simulation step)
+            else:
+                # This case may occur if inputs changed during simulation.
+                # In this case, the inputs hold for current time - t_sample_simulation, but the outputs
+                # hold for the current time. In this case, just add Nones as outputs.
+                self._result.index.append(timestamp_inputs)
+                self._result.data.append([None] * _len_outputs + inp_values)
+                # self.logger.debug(
+                #     "Storing inputs only due to changes during simulation at time stamp %s s",
+                #     timestamp_inputs
+                # )
 
-        # adding output results afterwards. If the order here is switched, the [-1]
-        # above will point to the wrong entry
-        self._update_result_outputs(timestamp_outputs)
+            # self.logger.debug("Storing outputs at time stamp %s s", timestamp_outputs)
+            self._result.index.append(timestamp_outputs)
+            self._result.data.append(out_values + [None] * len(inp_values))
+        else:
+            raise ValueError("Storing inputs ahead of outputs is not supported.")
+
         if (
                 self.config.result_filename is not None
                 and timestamp_outputs // (self.config.write_results_delay * self._save_count) > 0
         ):
             self._save_count += 1
             self._result.write_results(self.config.result_filename)
-
-    def _update_result_outputs(self, timestamp: float):
-        """Updates results with current values for states and outputs."""
-        self._result.index.append(timestamp)
-        out_values = [var.value for var in self._get_result_output_variables()]
-        self._result.data.append(out_values)
 
     def _get_result_model_variables(self) -> AgentVariables:
         """
