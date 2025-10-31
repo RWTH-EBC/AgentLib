@@ -79,9 +79,6 @@ def run_example(until, with_plots=True, log_level=logging.INFO):
         If True, generates and displays plots of simulation results.
     log_level : int, default=logging.INFO
         Logging verbosity level.
-    use_direct_callback_databroker : bool, default=False
-        Whether to use direct callback execution in the databroker instead of queue-based callbacks.
-
     """
     # Start by setting the log-level
     logging.basicConfig(level=log_level)
