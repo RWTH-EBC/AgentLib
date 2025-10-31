@@ -65,11 +65,10 @@ ROOM_CONFIG = {
 
 def run_example(until, with_plots=True, log_level=logging.INFO):
     """
-    Runs a multi-agent system (MAS) simulation with heating control agents.
+    Runs a multi-agent system (MAS) simulation with a room that cools against an air temperature.
 
-    This function configures and runs a MAS simulation with different control strategies
-    (PID and Bang-Bang controllers) for room temperature regulation. It creates multiple
-    agents including sensors, room models, and controllers, then simulates their interaction.
+    This example can be used to understand how the simulator receives and stores data.
+    Change the `combinations` in the code if you want to test out different settings.
 
     Parameters
     ----------
