@@ -162,6 +162,9 @@ class LocalCommunicator(Communicator):
             self.process = self._process_realtime
             self.receive = self._receive_realtime
             self._loop = None
+        elif agent.config.use_direct_callback_databroker:
+            self.process = self._process
+            self.receive = self._receive_direct_callback
         else:
             self._received_variable = agent.env.event()
             self.process = self._process
@@ -240,6 +243,14 @@ class LocalCommunicator(Communicator):
         else:
             variable = msg_obj
         self._msg_q_in.put(variable)
+
+    def _receive_direct_callback(self, msg_obj):
+        """Receive a given message and directly execute it."""
+        if self.config.parse_json:
+            variable = AgentVariable.from_json(msg_obj)
+        else:
+            variable = msg_obj
+        self.agent.data_broker.send_variable(variable)
 
     def _message_handler(self):
         """Reads messages that were put in the message queue."""
