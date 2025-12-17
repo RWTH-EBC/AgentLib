@@ -73,9 +73,6 @@ class SimulatorResults:
 
     def df(self) -> pd.DataFrame:
         """Returns the current results as a dataframe."""
-        # We do not return the last row, as it is always only half complete (since
-        # inputs at time step k influence results of time step k+1. Writing in
-        # incomplete dataframe would break the csv-file we append to.
         return pd.DataFrame(self.data, index=self.index, columns=self.columns)
 
     def write_results(self, file: str):
@@ -85,7 +82,7 @@ class SimulatorResults:
         """
         header = not Path(file).exists()
         self.df().to_csv(file, mode="a", header=header)
-        # keep the last row of the results, as it is not finished (inputs missing)
+        # keep the last row of the results
         self.index = [self.index[-1]]
         self.data = [self.data[-1]]
 
@@ -255,19 +252,28 @@ class SimulatorConfig(BaseModuleConfig):
         ), "t_stop-t_start must be greater than t_sample"
         return t_sample
 
+    @field_validator("t_sample_communication")
+    @classmethod
+    def check_t_comm_against_sim(cls, t_sample_communication, info: FieldValidationInfo):
+        """Check if t_sample is smaller than stop-start time"""
+        t_sample_simulation = info.data.get("t_sample_simulation")
+        if t_sample_simulation is not None:
+            if t_sample_simulation > t_sample_communication:
+                warnings.warn(
+                    f"{t_sample_communication=} is smaller than {t_sample_simulation=}",
+                    category=UserWarning
+                )
+        return t_sample_communication
+
     @field_validator("update_inputs_on_callback")
     @classmethod
     def deprecate_update_inputs_on_callback(cls, update_inputs_on_callback, info: FieldValidationInfo):
         """Check if t_sample is smaller than stop-start time"""
-        if update_inputs_on_callback:
-            warnings.warn("update_inputs_on_callback is deprecated, remove it from your config.",
-                          category=DeprecationWarning)
-        else:
-            warnings.warn(
-                "update_inputs_on_callback is deprecated, remove it from your config. "
-                "Will use update_inputs_on_callback=True",
-                category=DeprecationWarning
-            )
+        warnings.warn(
+            "update_inputs_on_callback is deprecated, remove it from your config. "
+            "Will use update_inputs_on_callback=True",
+            category=DeprecationWarning
+        )
         return True
 
     @field_validator("t_sample")
@@ -487,7 +493,7 @@ class Simulator(BaseModule):
                 dt=self.config.t_sample_simulation
             )
             _t_start_simulation_loop = self.env.time
-            self.logger.debug("Doing simulation steps %s ...", t_samples)
+            self.logger.debug("Doing simulation steps %s", t_samples)
             for _idx, _t_sample in enumerate(t_samples[:-1]):
                 _t_start = self.env.now + self.config.t_start
                 dt_sim = t_samples[_idx + 1] - _t_sample
