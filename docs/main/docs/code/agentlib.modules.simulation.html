@@ -281,27 +281,6 @@ interacting with the standard model class.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.Simulator.do_step">
-<span class="sig-name descname"><span class="pre">do_step</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/modules/simulation/simulator.html#Simulator.do_step"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.simulation.simulator.Simulator.do_step" title="Permalink to this definition"></a></dt>
-<dd><p>Generator function to perform a simulation step,
-update inputs, outputs and model results.</p>
-<p>In a simulation step following happens:
-1. Update inputs (only necessary if self.update_inputs_on_callback = False)
-2. Specify the end time of the simulation from the agents perspective.
-<strong>Important note</strong>: The agents use unix-time as a timestamp and start
-the simulation with the current datetime (represented by self.env.time),
-the model starts at 0 seconds (represented by self.env.now).
-3. Directly after the simulation we send the updated output values
-to other modules and agents by setting them the data_broker.
-Even though the environment time is not already at the end time specified above,
-we explicitly add the timestamp to the variables.
-This way other agents and communication has the maximum time possible to
-process the outputs and send input signals to the simulation.
-4. Call the timeout in the environment,
-hence actually increase the environment time.</p>
-</dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.Simulator.get_results">
 <span class="sig-name descname"><span class="pre">get_results</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/agentlib/modules/simulation/simulator.html#Simulator.get_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.simulation.simulator.Simulator.get_results" title="Permalink to this definition"></a></dt>
 <dd><p>Return the current results.</p>
@@ -332,8 +311,19 @@ hence actually increase the environment time.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.Simulator.process">
 <span class="sig-name descname"><span class="pre">process</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/modules/simulation/simulator.html#Simulator.process"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.simulation.simulator.Simulator.process" title="Permalink to this definition"></a></dt>
-<dd><p>This function creates a endless loop for the single simulation step event.
-The do_step() function needs to return a generator.</p>
+<dd><p>This function creates a endless loop for the single simulation step event,
+updating inputs, simulating, model results and then outputs.</p>
+<p>In a simulation step following happens:
+1. Specify the end time of the simulation from the agents perspective.
+<strong>Important note</strong>: The agents use unix-time as a timestamp and start
+the simulation with the current datetime (represented by self.env.time),
+the model starts at 0 seconds (represented by self.env.now).
+2. Directly after the simulation we store the results with
+the output time and then call the timeout in the environment,
+hence actually increase the environment time.
+3. Once the environment time reached the simulation time,
+we send the updated output values to other modules and agents by setting
+them the data_broker.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -353,13 +343,6 @@ all scheduled process will be started in this environment.</p>
 <dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.Simulator.terminate">
 <span class="sig-name descname"><span class="pre">terminate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/modules/simulation/simulator.html#Simulator.terminate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.simulation.simulator.Simulator.terminate" title="Permalink to this definition"></a></dt>
 <dd><p>Terminate the model</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.Simulator.update_model_inputs">
-<span class="sig-name descname"><span class="pre">update_model_inputs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/modules/simulation/simulator.html#Simulator.update_model_inputs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.simulation.simulator.Simulator.update_model_inputs" title="Permalink to this definition"></a></dt>
-<dd><p>Internal method to write current data_broker to simulation model.
-Only update values, not other module_types.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -400,6 +383,8 @@ values to the module outputs and states.</p>
 <li><p><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.shared_variable_fields" title="agentlib.modules.simulation.simulator.SimulatorConfig.shared_variable_fields"><code class="xref py py-obj docutils literal notranslate"><span class="pre">shared_variable_fields</span> <span class="pre">(List[str])</span></code></a></p></li>
 <li><p><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.states" title="agentlib.modules.simulation.simulator.SimulatorConfig.states"><code class="xref py py-obj docutils literal notranslate"><span class="pre">states</span> <span class="pre">(List[agentlib.core.datamodels.AgentVariable])</span></code></a></p></li>
 <li><p><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.t_sample" title="agentlib.modules.simulation.simulator.SimulatorConfig.t_sample"><code class="xref py py-obj docutils literal notranslate"><span class="pre">t_sample</span> <span class="pre">(float</span> <span class="pre">|</span> <span class="pre">int)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.t_sample_communication" title="agentlib.modules.simulation.simulator.SimulatorConfig.t_sample_communication"><code class="xref py py-obj docutils literal notranslate"><span class="pre">t_sample_communication</span> <span class="pre">(float</span> <span class="pre">|</span> <span class="pre">int)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.t_sample_simulation" title="agentlib.modules.simulation.simulator.SimulatorConfig.t_sample_simulation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">t_sample_simulation</span> <span class="pre">(float</span> <span class="pre">|</span> <span class="pre">int)</span></code></a></p></li>
 <li><p><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.t_start" title="agentlib.modules.simulation.simulator.SimulatorConfig.t_start"><code class="xref py py-obj docutils literal notranslate"><span class="pre">t_start</span> <span class="pre">(float</span> <span class="pre">|</span> <span class="pre">int)</span></code></a></p></li>
 <li><p><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.t_stop" title="agentlib.modules.simulation.simulator.SimulatorConfig.t_stop"><code class="xref py py-obj docutils literal notranslate"><span class="pre">t_stop</span> <span class="pre">(float</span> <span class="pre">|</span> <span class="pre">int)</span></code></a></p></li>
 <li><p><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.update_inputs_on_callback" title="agentlib.modules.simulation.simulator.SimulatorConfig.update_inputs_on_callback"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_inputs_on_callback</span> <span class="pre">(bool)</span></code></a></p></li>
@@ -411,9 +396,13 @@ values to the module outputs and states.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.check_model" title="agentlib.modules.simulation.simulator.SimulatorConfig.check_model"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_model</span></code></a> » <a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.model" title="agentlib.modules.simulation.simulator.SimulatorConfig.model"><code class="xref py py-obj docutils literal notranslate"><span class="pre">model</span></code></a></p></li>
 <li><p><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.check_nonexisting_csv" title="agentlib.modules.simulation.simulator.SimulatorConfig.check_nonexisting_csv"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_nonexisting_csv</span></code></a> » <a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.result_filename" title="agentlib.modules.simulation.simulator.SimulatorConfig.result_filename"><code class="xref py py-obj docutils literal notranslate"><span class="pre">result_filename</span></code></a></p></li>
-<li><p><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.check_t_sample" title="agentlib.modules.simulation.simulator.SimulatorConfig.check_t_sample"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_t_sample</span></code></a> » <a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.t_sample" title="agentlib.modules.simulation.simulator.SimulatorConfig.t_sample"><code class="xref py py-obj docutils literal notranslate"><span class="pre">t_sample</span></code></a></p></li>
+<li><p><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.check_t_comm_against_sim" title="agentlib.modules.simulation.simulator.SimulatorConfig.check_t_comm_against_sim"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_t_comm_against_sim</span></code></a> » <a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.t_sample_communication" title="agentlib.modules.simulation.simulator.SimulatorConfig.t_sample_communication"><code class="xref py py-obj docutils literal notranslate"><span class="pre">t_sample_communication</span></code></a></p></li>
+<li><p><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.check_t_sample" title="agentlib.modules.simulation.simulator.SimulatorConfig.check_t_sample"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_t_sample</span></code></a> » <a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.t_sample_communication" title="agentlib.modules.simulation.simulator.SimulatorConfig.t_sample_communication"><code class="xref py py-obj docutils literal notranslate"><span class="pre">t_sample_communication</span></code></a></p></li>
+<li><p><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.check_t_sample" title="agentlib.modules.simulation.simulator.SimulatorConfig.check_t_sample"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_t_sample</span></code></a> » <a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.t_sample_simulation" title="agentlib.modules.simulation.simulator.SimulatorConfig.t_sample_simulation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">t_sample_simulation</span></code></a></p></li>
 <li><p><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.check_t_stop" title="agentlib.modules.simulation.simulator.SimulatorConfig.check_t_stop"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_t_stop</span></code></a> » <a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.t_stop" title="agentlib.modules.simulation.simulator.SimulatorConfig.t_stop"><code class="xref py py-obj docutils literal notranslate"><span class="pre">t_stop</span></code></a></p></li>
 <li><p><a class="reference internal" href="agentlib.core.html#agentlib.core.module.BaseModuleConfig.check_valid_fields" title="agentlib.core.module.BaseModuleConfig.check_valid_fields"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_valid_fields</span></code></a> » <a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.shared_variable_fields" title="agentlib.modules.simulation.simulator.SimulatorConfig.shared_variable_fields"><code class="xref py py-obj docutils literal notranslate"><span class="pre">shared_variable_fields</span></code></a></p></li>
+<li><p><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.deprecate_t_sample" title="agentlib.modules.simulation.simulator.SimulatorConfig.deprecate_t_sample"><code class="xref py py-obj docutils literal notranslate"><span class="pre">deprecate_t_sample</span></code></a> » <a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.t_sample" title="agentlib.modules.simulation.simulator.SimulatorConfig.t_sample"><code class="xref py py-obj docutils literal notranslate"><span class="pre">t_sample</span></code></a></p></li>
+<li><p><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.deprecate_update_inputs_on_callback" title="agentlib.modules.simulation.simulator.SimulatorConfig.deprecate_update_inputs_on_callback"><code class="xref py py-obj docutils literal notranslate"><span class="pre">deprecate_update_inputs_on_callback</span></code></a> » <a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.update_inputs_on_callback" title="agentlib.modules.simulation.simulator.SimulatorConfig.update_inputs_on_callback"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_inputs_on_callback</span></code></a></p></li>
 <li><p><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.set_default_t_sample" title="agentlib.modules.simulation.simulator.SimulatorConfig.set_default_t_sample"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_default_t_sample</span></code></a> » <a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.write_results_delay" title="agentlib.modules.simulation.simulator.SimulatorConfig.write_results_delay"><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_results_delay</span></code></a></p></li>
 </ul>
 </dd>
@@ -508,7 +497,44 @@ values to the module outputs and states.</p>
 <dl class="py attribute pydantic_field">
 <dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.SimulatorConfig.t_sample">
 <em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">t_sample</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#agentlib.modules.simulation.simulator.SimulatorConfig.t_sample" title="Permalink to this definition"></a></dt>
-<dd><p>Simulation sample time</p>
+<dd><p>Deprecated option.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Constraints<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ge</strong> = 0</p></li>
+</ul>
+</dd>
+<dt class="field-even">Validated by<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.deprecate_t_sample" title="agentlib.modules.simulation.simulator.SimulatorConfig.deprecate_t_sample"><code class="xref py py-obj docutils literal notranslate"><span class="pre">deprecate_t_sample</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.SimulatorConfig.t_sample_communication">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">t_sample_communication</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#agentlib.modules.simulation.simulator.SimulatorConfig.t_sample_communication" title="Permalink to this definition"></a></dt>
+<dd><p>Sample time of a full simulation step relevant for communication, including:- Perform simulation with t_sample_simulation- Update model results and send output values to other Agents or Modules.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Constraints<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ge</strong> = 0</p></li>
+</ul>
+</dd>
+<dt class="field-even">Validated by<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.check_t_comm_against_sim" title="agentlib.modules.simulation.simulator.SimulatorConfig.check_t_comm_against_sim"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_t_comm_against_sim</span></code></a></p></li>
+<li><p><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.check_t_sample" title="agentlib.modules.simulation.simulator.SimulatorConfig.check_t_sample"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_t_sample</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.SimulatorConfig.t_sample_simulation">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">t_sample_simulation</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#agentlib.modules.simulation.simulator.SimulatorConfig.t_sample_simulation" title="Permalink to this definition"></a></dt>
+<dd><p>Sample time of the simulation itself. The inputs of the models may be updated every other t_sample_simulation, as long as the model supports this. Used to override dt of the model.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Constraints<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -557,7 +583,14 @@ values to the module outputs and states.</p>
 <dl class="py attribute pydantic_field">
 <dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.SimulatorConfig.update_inputs_on_callback">
 <em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">update_inputs_on_callback</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#agentlib.modules.simulation.simulator.SimulatorConfig.update_inputs_on_callback" title="Permalink to this definition"></a></dt>
-<dd><p>If True, model inputs are updated if they are updated in data_broker.Else, the model inputs are updated before each simulation.</p>
+<dd><p>Deprecated! Will be removed in future versions.If True, model inputs are updated if they are updated in data_broker.Else, the model inputs are updated before each simulation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Validated by<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.deprecate_update_inputs_on_callback" title="agentlib.modules.simulation.simulator.SimulatorConfig.deprecate_update_inputs_on_callback"><code class="xref py py-obj docutils literal notranslate"><span class="pre">deprecate_update_inputs_on_callback</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py attribute pydantic_field">
@@ -598,8 +631,14 @@ and assert that it does not exist.</p>
 </dd></dl>
 
 <dl class="py method pydantic_validator">
+<dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.SimulatorConfig.check_t_comm_against_sim">
+<em class="property"><span class="pre">validator</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">check_t_comm_against_sim</span></span><em class="autodoc_pydantic_validator_arrow property">&#160; <span class="pre">»</span>&#160; </em><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.t_sample_communication" title="agentlib.modules.simulation.simulator.SimulatorConfig.t_sample_communication"><em class="xref py py-obj"><span class="pre">t_sample_communication</span></em></a><a class="reference internal" href="../_modules/agentlib/modules/simulation/simulator.html#SimulatorConfig.check_t_comm_against_sim"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.simulation.simulator.SimulatorConfig.check_t_comm_against_sim" title="Permalink to this definition"></a></dt>
+<dd><p>Check if t_sample is smaller than stop-start time</p>
+</dd></dl>
+
+<dl class="py method pydantic_validator">
 <dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.SimulatorConfig.check_t_sample">
-<em class="property"><span class="pre">validator</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">check_t_sample</span></span><em class="autodoc_pydantic_validator_arrow property">&#160; <span class="pre">»</span>&#160; </em><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.t_sample" title="agentlib.modules.simulation.simulator.SimulatorConfig.t_sample"><em class="xref py py-obj"><span class="pre">t_sample</span></em></a><a class="reference internal" href="../_modules/agentlib/modules/simulation/simulator.html#SimulatorConfig.check_t_sample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.simulation.simulator.SimulatorConfig.check_t_sample" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">validator</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">check_t_sample</span></span><em class="autodoc_pydantic_validator_arrow property">&#160; <span class="pre">»</span>&#160; </em><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.t_sample_communication" title="agentlib.modules.simulation.simulator.SimulatorConfig.t_sample_communication"><em class="xref py py-obj"><span class="pre">t_sample_communication</span></em></a><em class="property"><span class="pre">,</span> </em><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.t_sample_simulation" title="agentlib.modules.simulation.simulator.SimulatorConfig.t_sample_simulation"><em class="xref py py-obj"><span class="pre">t_sample_simulation</span></em></a><a class="reference internal" href="../_modules/agentlib/modules/simulation/simulator.html#SimulatorConfig.check_t_sample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.simulation.simulator.SimulatorConfig.check_t_sample" title="Permalink to this definition"></a></dt>
 <dd><p>Check if t_sample is smaller than stop-start time</p>
 </dd></dl>
 
@@ -607,6 +646,18 @@ and assert that it does not exist.</p>
 <dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.SimulatorConfig.check_t_stop">
 <em class="property"><span class="pre">validator</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">check_t_stop</span></span><em class="autodoc_pydantic_validator_arrow property">&#160; <span class="pre">»</span>&#160; </em><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.t_stop" title="agentlib.modules.simulation.simulator.SimulatorConfig.t_stop"><em class="xref py py-obj"><span class="pre">t_stop</span></em></a><a class="reference internal" href="../_modules/agentlib/modules/simulation/simulator.html#SimulatorConfig.check_t_stop"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.simulation.simulator.SimulatorConfig.check_t_stop" title="Permalink to this definition"></a></dt>
 <dd><p>Check if stop is greater than start time</p>
+</dd></dl>
+
+<dl class="py method pydantic_validator">
+<dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.SimulatorConfig.deprecate_t_sample">
+<em class="property"><span class="pre">validator</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">deprecate_t_sample</span></span><em class="autodoc_pydantic_validator_arrow property">&#160; <span class="pre">»</span>&#160; </em><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.t_sample" title="agentlib.modules.simulation.simulator.SimulatorConfig.t_sample"><em class="xref py py-obj"><span class="pre">t_sample</span></em></a><a class="reference internal" href="../_modules/agentlib/modules/simulation/simulator.html#SimulatorConfig.deprecate_t_sample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.simulation.simulator.SimulatorConfig.deprecate_t_sample" title="Permalink to this definition"></a></dt>
+<dd><p>Deprecates the t_sample field in favor of t_sample_communication and t_sample_simulation.</p>
+</dd></dl>
+
+<dl class="py method pydantic_validator">
+<dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.SimulatorConfig.deprecate_update_inputs_on_callback">
+<em class="property"><span class="pre">validator</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">deprecate_update_inputs_on_callback</span></span><em class="autodoc_pydantic_validator_arrow property">&#160; <span class="pre">»</span>&#160; </em><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.update_inputs_on_callback" title="agentlib.modules.simulation.simulator.SimulatorConfig.update_inputs_on_callback"><em class="xref py py-obj"><span class="pre">update_inputs_on_callback</span></em></a><a class="reference internal" href="../_modules/agentlib/modules/simulation/simulator.html#SimulatorConfig.deprecate_update_inputs_on_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.simulation.simulator.SimulatorConfig.deprecate_update_inputs_on_callback" title="Permalink to this definition"></a></dt>
+<dd><p>Check if t_sample is smaller than stop-start time</p>
 </dd></dl>
 
 <dl class="py method">
