@@ -22,4 +22,5 @@ jobs:
       TEST_ENGINE: "unittest"
       EXECUTE_COVERAGE_TEST: true
       USE_DYMOLA: false
+      PYPI_RELEASE: true
       EXTRA_REQUIREMENTS: "[full]"
