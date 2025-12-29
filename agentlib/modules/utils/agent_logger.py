@@ -191,6 +191,11 @@ class AgentLogger(BaseModule):
             return pd.DataFrame()
 
         df = pd.DataFrame(data).set_index("time")
+        
+        # Handle duplicate timestamps by combining rows with the same index
+        if df.index.duplicated().any():
+            df = df.groupby(level=0).first()
+        
         df.columns = pd.MultiIndex.from_tuples(
             literal_eval(c) for c in df.columns
         )
