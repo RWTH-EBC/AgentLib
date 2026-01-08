@@ -161,8 +161,10 @@
         <span class="n">header</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">Path</span><span class="p">(</span><span class="n">file</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">()</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="n">header</span><span class="p">)</span>
         <span class="c1"># keep the last row of the results</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span></div></div>
+        <span class="c1"># self.index = [self.index[-1]]</span>
+        <span class="c1"># self.data = [self.data[-1]]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="p">[]</span></div></div>
 
 
 <div class="viewcode-block" id="read_simulator_results"><a class="viewcode-back" href="../../../../code/agentlib.modules.simulation.html#agentlib.modules.simulation.simulator.read_simulator_results">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">read_simulator_results</span><span class="p">(</span><span class="n">file</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
@@ -443,6 +445,7 @@
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_save_count</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># tracks, how often results have been saved</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_inputs_changed_since_last_results_saving</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">temp_store_value</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_register_input_callbacks</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> initialized!&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
 
@@ -575,17 +578,39 @@
             <span class="k">for</span> <span class="n">_idx</span><span class="p">,</span> <span class="n">_t_sample</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">t_samples</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
                 <span class="n">_t_start</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">now</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">t_start</span>
                 <span class="n">dt_sim</span> <span class="o">=</span> <span class="n">t_samples</span><span class="p">[</span><span class="n">_idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">_t_sample</span>
+                <span class="c1"># Three cases to cover for input change:</span>
+                <span class="c1"># 1. No change at all</span>
+                <span class="c1"># 2. Change before do_step</span>
+                <span class="c1"># 3. change after do_step</span>
+
+                <span class="c1"># Check if inputs changed BEFORE do_step (they&#39;re already active at env.time)</span>
+                <span class="n">inputs_changed_before_dostep</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_inputs_changed_since_last_results_saving</span>
+
                 <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">do_step</span><span class="p">(</span><span class="n">t_start</span><span class="o">=</span><span class="n">_t_start</span><span class="p">,</span> <span class="n">t_sample</span><span class="o">=</span><span class="n">dt_sim</span><span class="p">)</span>
-                <span class="k">if</span> <span class="n">_idx</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">t_samples</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_inputs_changed_since_last_results_saving</span><span class="p">:</span>
-                    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_inputs_changed_since_last_results_saving</span><span class="p">:</span>
-                        <span class="c1"># Did not change during simulation step</span>
-                        <span class="n">timestamp_inputs</span> <span class="o">=</span> <span class="n">_t_start_simulation_loop</span>
+
+                <span class="c1"># Check if inputs changed AFTER do_step (they&#39;ll be active at next env.time)</span>
+                <span class="c1"># TODO: theoretically could change on both occasions</span>
+                <span class="n">inputs_changed_after_dostep</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_inputs_changed_since_last_results_saving</span>
+                <span class="k">if</span> <span class="n">_idx</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">t_samples</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span> <span class="ow">or</span> <span class="n">inputs_changed_before_dostep</span> <span class="ow">or</span> <span class="n">inputs_changed_after_dostep</span><span class="p">:</span>
+                    <span class="c1"># Determine when inputs became active</span>
+                    <span class="k">if</span> <span class="n">inputs_changed_before_dostep</span> <span class="ow">or</span> <span class="n">inputs_changed_after_dostep</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">inputs_changed_before_dostep</span><span class="p">:</span>
+                            <span class="c1"># Inputs changed before do_step, so they were used in this simulation</span>
+                            <span class="c1"># They&#39;re active from the start of this simulation loop</span>
+                            <span class="n">timestamp_inputs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">time</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="c1"># Inputs changed after do_step, so they weren&#39;t used yet</span>
+                            <span class="c1"># They&#39;re active from the next time step (env.time + dt_sim)</span>
+                            <span class="n">timestamp_inputs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">time</span> <span class="o">+</span> <span class="n">dt_sim</span>
                     <span class="k">else</span><span class="p">:</span>
-                        <span class="c1"># The inputs are only applied at self.env.time, not when they are received by the communicator</span>
-                        <span class="n">timestamp_inputs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">time</span>
+                        <span class="c1"># No change during step, inputs were active from the start</span>
+                        <span class="n">timestamp_inputs</span> <span class="o">=</span> <span class="n">_t_start_simulation_loop</span>
+
+                    <span class="c1"># Outputs are always active at the end of the simulation step</span>
+                    <span class="n">timestamp_outputs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">time</span> <span class="o">+</span> <span class="n">dt_sim</span>
                     <span class="c1"># Update the results</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">_update_results</span><span class="p">(</span>
-                        <span class="n">timestamp_outputs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">time</span> <span class="o">+</span> <span class="n">dt_sim</span><span class="p">,</span>
+                        <span class="n">timestamp_outputs</span><span class="o">=</span><span class="n">timestamp_outputs</span><span class="p">,</span>
                         <span class="n">timestamp_inputs</span><span class="o">=</span><span class="n">timestamp_inputs</span>
                     <span class="p">)</span>
                 <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">timeout</span><span class="p">(</span><span class="n">dt_sim</span><span class="p">)</span>
@@ -646,51 +671,76 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Adds model variables to the SimulationResult object</span>
 <span class="sd">        at the given timestamp.</span>
+
+<span class="sd">        timestamp_outputs describes the timestamp for which the outputs are active</span>
+<span class="sd">        timestamp_inputs describes the timestamp for which the inputs are active</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">save_results</span><span class="p">:</span>
             <span class="k">return</span>
 
         <span class="n">inp_values</span> <span class="o">=</span> <span class="p">[</span><span class="n">var</span><span class="o">.</span><span class="n">value</span> <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_result_input_variables</span><span class="p">()]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_inputs_changed_since_last_results_saving</span> <span class="o">=</span> <span class="kc">False</span>
-
         <span class="n">out_values</span> <span class="o">=</span> <span class="p">[</span><span class="n">var</span><span class="o">.</span><span class="n">value</span> <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_result_output_variables</span><span class="p">()]</span>
         <span class="n">_len_outputs</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">out_values</span><span class="p">)</span>
+        <span class="n">_len_inputs</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">inp_values</span><span class="p">)</span>
 
-        <span class="c1"># Two cases:</span>
-        <span class="c1"># - Either both timestamps are the same and new, add them both</span>
-        <span class="c1"># - or the inputs are for an earlier timestamp -&gt; first add the inputs and then append the new outputs index.</span>
+        <span class="c1"># Four cases to handle:</span>
+        <span class="c1"># 1. Both timestamps are the same - store both in one row</span>
+        <span class="c1"># 2. Inputs changed before do_step (timestamp_inputs == timestamp_outputs) - same as case 1</span>
+        <span class="c1"># 3. Inputs changed after do_step (timestamp_inputs == timestamp_outputs but both equal to end time)</span>
+        <span class="c1"># 4. Invalid case (timestamp_inputs &gt; timestamp_outputs)</span>
+
         <span class="k">if</span> <span class="n">timestamp_inputs</span> <span class="o">==</span> <span class="n">timestamp_outputs</span><span class="p">:</span>
-            <span class="c1"># self.logger.debug(&quot;Storing data at the same time stamp %s s&quot;, timestamp_outputs)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_result</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">timestamp_outputs</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_result</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">out_values</span> <span class="o">+</span> <span class="n">inp_values</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">timestamp_inputs</span> <span class="o">&lt;</span> <span class="n">timestamp_outputs</span><span class="p">:</span>
-            <span class="c1"># add inputs in the time stamp before adding outputs, as they are active from</span>
-            <span class="c1"># the start of this interval</span>
-            <span class="k">if</span> <span class="n">timestamp_inputs</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_result</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">timestamp_inputs</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_result</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
-                    <span class="c1"># self.logger.debug(&quot;Adding inputs to last time stamp %s s&quot;, timestamp_inputs)</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">_result</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_result</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][:</span><span class="n">_len_outputs</span><span class="p">]</span> <span class="o">+</span> <span class="n">inp_values</span>
-                <span class="c1"># else: pass, as inputs are outdated (have been changed during simulation step)</span>
+            <span class="c1"># Inputs and outputs are active at the same timestamp</span>
+            <span class="c1"># Check if this timestamp already exists (e.g., from storing outputs earlier)</span>
+            <span class="k">if</span> <span class="n">timestamp_outputs</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_result</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
+                <span class="c1"># Update the existing row with input values</span>
+                <span class="n">idx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_result</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">timestamp_outputs</span><span class="p">)</span>
+                <span class="c1"># Keep existing outputs, update inputs</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_result</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_result</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">idx</span><span class="p">][</span>
+                                         <span class="p">:</span><span class="n">_len_outputs</span><span class="p">]</span> <span class="o">+</span> <span class="n">inp_values</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="c1"># This case may occur if inputs changed during simulation.</span>
-                <span class="c1"># In this case, the inputs hold for current time - t_sample_simulation, but the outputs</span>
-                <span class="c1"># hold for the current time. In this case, just add Nones as outputs.</span>
+                <span class="c1"># New timestamp, store both</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_result</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">timestamp_outputs</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_result</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">out_values</span> <span class="o">+</span> <span class="n">inp_values</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_inputs_changed_since_last_results_saving</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="k">elif</span> <span class="n">timestamp_inputs</span> <span class="o">&lt;</span> <span class="n">timestamp_outputs</span><span class="p">:</span>
+            <span class="c1"># Inputs became active at an earlier time than outputs</span>
+            <span class="c1"># This happens when inputs changed during a simulation step</span>
+
+            <span class="c1"># First, store the inputs at their activation timestamp</span>
+            <span class="k">if</span> <span class="n">timestamp_inputs</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_result</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
+                <span class="c1"># Timestamp already exists, update input values</span>
+                <span class="n">idx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_result</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">timestamp_inputs</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_result</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_result</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">idx</span><span class="p">][</span>
+                                         <span class="p">:</span><span class="n">_len_outputs</span><span class="p">]</span> <span class="o">+</span> <span class="n">inp_values</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># New timestamp for inputs only</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_result</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">timestamp_inputs</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_result</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">_len_outputs</span> <span class="o">+</span> <span class="n">inp_values</span><span class="p">)</span>
-                <span class="c1"># self.logger.debug(</span>
-                <span class="c1">#     &quot;Storing inputs only due to changes during simulation at time stamp %s s&quot;,</span>
-                <span class="c1">#     timestamp_inputs</span>
-                <span class="c1"># )</span>
 
-            <span class="c1"># self.logger.debug(&quot;Storing outputs at time stamp %s s&quot;, timestamp_outputs)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_result</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">timestamp_outputs</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_result</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">out_values</span> <span class="o">+</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">inp_values</span><span class="p">))</span>
+            <span class="c1"># Now store the outputs at their timestamp</span>
+            <span class="k">if</span> <span class="n">timestamp_outputs</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_result</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
+                <span class="c1"># Timestamp already exists (shouldn&#39;t normally happen, but handle it)</span>
+                <span class="n">idx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_result</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">timestamp_outputs</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_result</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">idx</span><span class="p">][:</span><span class="n">_len_outputs</span><span class="p">]</span> <span class="o">=</span> <span class="n">out_values</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_result</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">timestamp_outputs</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_result</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">out_values</span> <span class="o">+</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">_len_inputs</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_inputs_changed_since_last_results_saving</span> <span class="o">=</span> <span class="kc">False</span>
+
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Storing inputs ahead of outputs is not supported.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Storing inputs ahead of outputs is not supported. &quot;</span>
+                             <span class="sa">f</span><span class="s2">&quot;timestamp_inputs=</span><span class="si">{</span><span class="n">timestamp_inputs</span><span class="si">}</span><span class="s2">, timestamp_outputs=</span><span class="si">{</span><span class="n">timestamp_outputs</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
+            <span class="c1"># Write results to file periodically</span>
         <span class="k">if</span> <span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">result_filename</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
-                <span class="ow">and</span> <span class="n">timestamp_outputs</span> <span class="o">//</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">write_results_delay</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_save_count</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
+                <span class="ow">and</span> <span class="n">timestamp_outputs</span> <span class="o">//</span> <span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">write_results_delay</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_save_count</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
         <span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_save_count</span> <span class="o">+=</span> <span class="mi">1</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_result</span><span class="o">.</span><span class="n">write_results</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">result_filename</span><span class="p">)</span>
