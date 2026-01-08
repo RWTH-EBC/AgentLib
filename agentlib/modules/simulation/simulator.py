@@ -83,8 +83,10 @@ class SimulatorResults:
         header = not Path(file).exists()
         self.df().to_csv(file, mode="a", header=header)
         # keep the last row of the results
-        self.index = [self.index[-1]]
-        self.data = [self.data[-1]]
+        # self.index = [self.index[-1]]
+        # self.data = [self.data[-1]]
+        self.index = []
+        self.data = []
 
 
 def read_simulator_results(file: str):
@@ -365,6 +367,7 @@ class Simulator(BaseModule):
         )
         self._save_count: int = 1  # tracks, how often results have been saved
         self._inputs_changed_since_last_results_saving = False
+        self.temp_store_value = False
         self._register_input_callbacks()
         self.logger.info("%s initialized!", self.__class__.__name__)
 
@@ -497,17 +500,39 @@ class Simulator(BaseModule):
             for _idx, _t_sample in enumerate(t_samples[:-1]):
                 _t_start = self.env.now + self.config.t_start
                 dt_sim = t_samples[_idx + 1] - _t_sample
+                # Three cases to cover for input change:
+                # 1. No change at all
+                # 2. Change before do_step
+                # 3. change after do_step
+
+                # Check if inputs changed BEFORE do_step (they're already active at env.time)
+                inputs_changed_before_dostep = self._inputs_changed_since_last_results_saving
+
                 self.model.do_step(t_start=_t_start, t_sample=dt_sim)
-                if _idx == len(t_samples) - 2 or self._inputs_changed_since_last_results_saving:
-                    if not self._inputs_changed_since_last_results_saving:
-                        # Did not change during simulation step
-                        timestamp_inputs = _t_start_simulation_loop
+
+                # Check if inputs changed AFTER do_step (they'll be active at next env.time)
+                # TODO: theoretically could change on both occasions
+                inputs_changed_after_dostep = self._inputs_changed_since_last_results_saving
+                if _idx == len(t_samples) - 2 or inputs_changed_before_dostep or inputs_changed_after_dostep:
+                    # Determine when inputs became active
+                    if inputs_changed_before_dostep or inputs_changed_after_dostep:
+                        if inputs_changed_before_dostep:
+                            # Inputs changed before do_step, so they were used in this simulation
+                            # They're active from the start of this simulation loop
+                            timestamp_inputs = self.env.time
+                        else:
+                            # Inputs changed after do_step, so they weren't used yet
+                            # They're active from the next time step (env.time + dt_sim)
+                            timestamp_inputs = self.env.time + dt_sim
                     else:
-                        # The inputs are only applied at self.env.time, not when they are received by the communicator
-                        timestamp_inputs = self.env.time
+                        # No change during step, inputs were active from the start
+                        timestamp_inputs = _t_start_simulation_loop
+
+                    # Outputs are always active at the end of the simulation step
+                    timestamp_outputs = self.env.time + dt_sim
                     # Update the results
                     self._update_results(
-                        timestamp_outputs=self.env.time + dt_sim,
+                        timestamp_outputs=timestamp_outputs,
                         timestamp_inputs=timestamp_inputs
                     )
                 yield self.env.timeout(dt_sim)
@@ -568,51 +593,76 @@ class Simulator(BaseModule):
         """
         Adds model variables to the SimulationResult object
         at the given timestamp.
+
+        timestamp_outputs describes the timestamp for which the outputs are active
+        timestamp_inputs describes the timestamp for which the inputs are active
         """
+
         if not self.config.save_results:
             return
 
         inp_values = [var.value for var in self._get_result_input_variables()]
-        self._inputs_changed_since_last_results_saving = False
-
         out_values = [var.value for var in self._get_result_output_variables()]
         _len_outputs = len(out_values)
+        _len_inputs = len(inp_values)
 
-        # Two cases:
-        # - Either both timestamps are the same and new, add them both
-        # - or the inputs are for an earlier timestamp -> first add the inputs and then append the new outputs index.
+        # Four cases to handle:
+        # 1. Both timestamps are the same - store both in one row
+        # 2. Inputs changed before do_step (timestamp_inputs == timestamp_outputs) - same as case 1
+        # 3. Inputs changed after do_step (timestamp_inputs == timestamp_outputs but both equal to end time)
+        # 4. Invalid case (timestamp_inputs > timestamp_outputs)
+
         if timestamp_inputs == timestamp_outputs:
-            # self.logger.debug("Storing data at the same time stamp %s s", timestamp_outputs)
-            self._result.index.append(timestamp_outputs)
-            self._result.data.append(out_values + inp_values)
-        elif timestamp_inputs < timestamp_outputs:
-            # add inputs in the time stamp before adding outputs, as they are active from
-            # the start of this interval
-            if timestamp_inputs in self._result.index:
-                if timestamp_inputs == self._result.index[-1]:
-                    # self.logger.debug("Adding inputs to last time stamp %s s", timestamp_inputs)
-                    self._result.data[-1] = self._result.data[-1][:_len_outputs] + inp_values
-                # else: pass, as inputs are outdated (have been changed during simulation step)
+            # Inputs and outputs are active at the same timestamp
+            # Check if this timestamp already exists (e.g., from storing outputs earlier)
+            if timestamp_outputs in self._result.index:
+                # Update the existing row with input values
+                idx = self._result.index.index(timestamp_outputs)
+                # Keep existing outputs, update inputs
+                self._result.data[idx] = self._result.data[idx][
+                                         :_len_outputs] + inp_values
             else:
-                # This case may occur if inputs changed during simulation.
-                # In this case, the inputs hold for current time - t_sample_simulation, but the outputs
-                # hold for the current time. In this case, just add Nones as outputs.
+                # New timestamp, store both
+                self._result.index.append(timestamp_outputs)
+                self._result.data.append(out_values + inp_values)
+
+            self._inputs_changed_since_last_results_saving = False
+
+        elif timestamp_inputs < timestamp_outputs:
+            # Inputs became active at an earlier time than outputs
+            # This happens when inputs changed during a simulation step
+
+            # First, store the inputs at their activation timestamp
+            if timestamp_inputs in self._result.index:
+                # Timestamp already exists, update input values
+                idx = self._result.index.index(timestamp_inputs)
+                self._result.data[idx] = self._result.data[idx][
+                                         :_len_outputs] + inp_values
+            else:
+                # New timestamp for inputs only
                 self._result.index.append(timestamp_inputs)
                 self._result.data.append([None] * _len_outputs + inp_values)
-                # self.logger.debug(
-                #     "Storing inputs only due to changes during simulation at time stamp %s s",
-                #     timestamp_inputs
-                # )
 
-            # self.logger.debug("Storing outputs at time stamp %s s", timestamp_outputs)
-            self._result.index.append(timestamp_outputs)
-            self._result.data.append(out_values + [None] * len(inp_values))
+            # Now store the outputs at their timestamp
+            if timestamp_outputs in self._result.index:
+                # Timestamp already exists (shouldn't normally happen, but handle it)
+                idx = self._result.index.index(timestamp_outputs)
+                self._result.data[idx][:_len_outputs] = out_values
+            else:
+                self._result.index.append(timestamp_outputs)
+                self._result.data.append(out_values + [None] * _len_inputs)
+
+            self._inputs_changed_since_last_results_saving = False
+
         else:
-            raise ValueError("Storing inputs ahead of outputs is not supported.")
+            raise ValueError(f"Storing inputs ahead of outputs is not supported. "
+                             f"timestamp_inputs={timestamp_inputs}, timestamp_outputs={timestamp_outputs}")
 
+            # Write results to file periodically
         if (
                 self.config.result_filename is not None
-                and timestamp_outputs // (self.config.write_results_delay * self._save_count) > 0
+                and timestamp_outputs // (
+                self.config.write_results_delay * self._save_count) > 0
         ):
             self._save_count += 1
             self._result.write_results(self.config.result_filename)
