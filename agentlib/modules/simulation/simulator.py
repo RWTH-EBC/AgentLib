@@ -82,11 +82,9 @@ class SimulatorResults:
         """
         header = not Path(file).exists()
         self.df().to_csv(file, mode="a", header=header)
-        # keep the last row of the results
-        # self.index = [self.index[-1]]
-        # self.data = [self.data[-1]]
-        self.index = []
-        self.data = []
+        # keep the last row of the results, as it is not finished (inputs missing)
+        self.index = [self.index[-1]]
+        self.data = [self.data[-1]]
 
 
 def read_simulator_results(file: str):
@@ -104,6 +102,7 @@ class SimulatorConfig(BaseModuleConfig):
     outputs: AgentVariables = []
     states: AgentVariables = []
     shared_variable_fields: List[str] = ["outputs"]
+
     t_start: Union[float, int] = Field(
         title="t_start", default=0.0, ge=0, description="Simulation start time"
     )
@@ -111,10 +110,7 @@ class SimulatorConfig(BaseModuleConfig):
         title="t_stop", default=inf, ge=0, description="Simulation stop time"
     )
     t_sample: Union[float, int] = Field(
-        title="t_sample",
-        default=1,
-        ge=0,
-        description="Deprecated option."
+        title="t_sample", default=1, ge=0, description="Deprecated option."
     )
     t_sample_communication: Union[float, int] = Field(
         title="t_sample",
@@ -135,7 +131,6 @@ class SimulatorConfig(BaseModuleConfig):
                     "as long as the model supports this. Used to override dt of the model."
     )
     model: Dict
-
     # Model results
     save_results: bool = Field(
         title="save_results",
@@ -165,12 +160,25 @@ class SimulatorConfig(BaseModuleConfig):
         description="List of causalities to store. Default stores "
                     "only inputs and outputs",
     )
+    fine_results: bool = Field(
+        title="fine_results",
+        default=True,
+        description="If True, results are stored more finely, "
+                    "including inputs during asimulation step.",
+    )
     write_results_delay: Optional[float] = Field(
         title="Write Results Delay",
         default=None,
         description="Sampling interval for which the results are written to disc in seconds.",
         validate_default=True,
         gt=0,
+    )
+    update_inputs_on_callback: bool = Field(
+        title="update_inputs_on_callback",
+        default=True,
+        description="Deprecated! Will be removed in future versions."
+                    "If True, model inputs are updated if they are updated in data_broker."
+                    "Else, the model inputs are updated before each simulation.",
     )
     measurement_uncertainty: Union[Dict[str, float], float] = Field(
         title="measurement_uncertainty",
@@ -187,13 +195,6 @@ class SimulatorConfig(BaseModuleConfig):
                     "receiving a new value from the DataBroker. In the simulator, this "
                     "is False by default, as we expect to receive a lot of measurements"
                     " and want to be efficient.",
-    )
-    update_inputs_on_callback: bool = Field(
-        title="update_inputs_on_callback",
-        default=True,
-        description="Deprecated! Will be removed in future versions."
-                    "If True, model inputs are updated if they are updated in data_broker."
-                    "Else, the model inputs are updated before each simulation.",
     )
 
     @field_validator("result_filename")
@@ -256,7 +257,8 @@ class SimulatorConfig(BaseModuleConfig):
 
     @field_validator("t_sample_communication")
     @classmethod
-    def check_t_comm_against_sim(cls, t_sample_communication, info: FieldValidationInfo):
+    def check_t_comm_against_sim(cls, t_sample_communication,
+                                 info: FieldValidationInfo):
         """Check if t_sample is smaller than stop-start time"""
         t_sample_simulation = info.data.get("t_sample_simulation")
         if t_sample_simulation is not None:
@@ -269,7 +271,8 @@ class SimulatorConfig(BaseModuleConfig):
 
     @field_validator("update_inputs_on_callback")
     @classmethod
-    def deprecate_update_inputs_on_callback(cls, update_inputs_on_callback, info: FieldValidationInfo):
+    def deprecate_update_inputs_on_callback(cls, update_inputs_on_callback,
+                                            info: FieldValidationInfo):
         """Check if t_sample is smaller than stop-start time"""
         warnings.warn(
             "update_inputs_on_callback is deprecated, remove it from your config. "
@@ -293,15 +296,23 @@ class SimulatorConfig(BaseModuleConfig):
     @field_validator("write_results_delay")
     @classmethod
     def set_default_t_sample(cls, write_results_delay, info: FieldValidationInfo):
-        t_sample = info.data["t_sample"]
-        if write_results_delay is None:
+        if info.data["fine_results"]:
+            t_sample = info.data["t_sample_communication"]
+            factor = 1
+            error = ("With fine_results set to True, write_results_delay needs to be above "
+                     "t_sample_communication.")
+        else:
+            t_sample = info.data["t_sample_simulation"]
+            factor = 5
+            error = "Saving results more frequently than you simulate makes no sense."
             # 5 is an arbitrary default which should balance writing new results as
             # soon as possible to disk with saving file I/O overhead
-            return 5 * t_sample
+        if write_results_delay is None:
+            return factor * t_sample
         if write_results_delay < t_sample:
             raise ValueError(
-                "Saving results more frequently than you simulate makes no sense. "
-                "Increase write_results_delay above t_sample."
+                f"{error} "
+                "Increase write_results_delay above the sample time."
             )
         return write_results_delay
 
@@ -367,7 +378,6 @@ class Simulator(BaseModule):
         )
         self._save_count: int = 1  # tracks, how often results have been saved
         self._inputs_changed_since_last_results_saving = False
-        self.temp_store_value = False
         self._register_input_callbacks()
         self.logger.info("%s initialized!", self.__class__.__name__)
 
@@ -473,73 +483,62 @@ class Simulator(BaseModule):
 
     def process(self):
         """
-        This function creates a endless loop for the single simulation step event,
-        updating inputs, simulating, model results and then outputs.
-
-        In a simulation step following happens:
-        1. Specify the end time of the simulation from the agents perspective.
-        **Important note**: The agents use unix-time as a timestamp and start
-        the simulation with the current datetime (represented by self.env.time),
-        the model starts at 0 seconds (represented by self.env.now).
-        2. Directly after the simulation we store the results with
-        the output time and then call the timeout in the environment,
-        hence actually increase the environment time.
-        3. Once the environment time reached the simulation time,
-        we send the updated output values to other modules and agents by setting
-        them the data_broker.
+        This function creates a endless loop for the single simulation step event.
+        The do_step() function needs to return a generator.
         """
-        self._update_results(timestamp_inputs=self.env.time, timestamp_outputs=self.env.time)
+        no_sub_sim = self.config.t_sample_communication % self.config.t_sample_simulation == 0
+        if no_sub_sim:
+            self._update_result_inputs(self.env.time, init=True)
         while True:
             # Simulate
             t_samples = create_time_samples(
                 t_end=self.config.t_sample_communication,
                 dt=self.config.t_sample_simulation
             )
-
             self.logger.debug("Doing simulation steps %s", t_samples)
-            for _idx, _t_sample in enumerate(t_samples[:-1]):
-                _t_start_substep = self.env.time
 
+            _t_start_simulation_loop = self.env.time
+            for _idx, _t_sample in enumerate(t_samples[:-1]):
                 _t_start = self.env.now + self.config.t_start
                 dt_sim = t_samples[_idx + 1] - _t_sample
-                # Three cases to cover for input change:
-                # 1. No change at all
-                # 2. Change before do_step
-                # 3. change after do_step
-
-                # Check if inputs changed BEFORE do_step (they're already active at env.time)
-                inputs_changed_before_dostep = self._inputs_changed_since_last_results_saving
-
                 self.model.do_step(t_start=_t_start, t_sample=dt_sim)
-
-                # Check if inputs changed AFTER do_step (they'll be active at next env.time)
-                # TODO: theoretically could change on both occasions
-                inputs_changed_after_dostep = self._inputs_changed_since_last_results_saving
-                if _idx == len(t_samples) - 2 or inputs_changed_before_dostep or inputs_changed_after_dostep:
-                    # Determine when inputs became active
-                    if inputs_changed_before_dostep or inputs_changed_after_dostep:
-                        if inputs_changed_before_dostep:
-                            # Inputs changed before do_step, so they were used in this simulation
-                            # They're active from the start of this simulation loop
-                            timestamp_inputs = _t_start_substep
-                        else:
-                            # Inputs changed after do_step, so they weren't used yet
-                            # They're active from the next time step (env.time + dt_sim)
-                            timestamp_inputs = self.env.time + dt_sim
+                if not self.config.fine_results:
+                    self._inputs_changed_since_last_results_saving = False
+                # At t_sample_communication store the inputs used for the simulation step
+                # Outputs are written at t_sample_communication - t_sample_simulation for
+                # t_sample_communication. If an input is set at t_sample_communication,
+                # these need to be merged
+                if self.env.time % self.config.t_sample_communication == 0:
+                    if no_sub_sim:
+                        self._update_result_inputs(self.env.time)
+                        self._update_results(False, _t_start_simulation_loop, no_sub_sim=no_sub_sim)
                     else:
-                        # No change during step, inputs were active from the start
-                        timestamp_inputs = _t_start_substep
-
-                    # Outputs are always active at the end of the simulation step
-                    timestamp_outputs = self.env.time + dt_sim
+                        if self.env.time == self.env.offset:
+                            self._update_result_inputs(self.env.time, init=True)
+                        else:
+                            self._update_result_inputs(self.env.time)
+                elif _idx == len(t_samples) - 2 or self._inputs_changed_since_last_results_saving:
                     # Update the results
-                    self._update_results(
-                        timestamp_outputs=timestamp_outputs,
-                        timestamp_inputs=timestamp_inputs
-                    )
+                    if _idx == len(t_samples) - 2 and self._inputs_changed_since_last_results_saving:
+                        self._update_results(False, _t_start_simulation_loop, both=True)
+                    else:
+                        self._update_results(self._inputs_changed_since_last_results_saving,
+                                             _t_start_simulation_loop)
                 yield self.env.timeout(dt_sim)
-            # Communicate
             self.update_module_vars()
+
+    def update_model_inputs(self):
+        """
+        Internal method to write current data_broker to simulation model.
+        Only update values, not other module_types.
+        """
+        model_input_names = (
+            self.model.get_input_names() + self.model.get_parameter_names()
+        )
+        for inp in self.variables:
+            if inp.name in model_input_names:
+                self.logger.debug("Updating model variable %s=%s", inp.name, inp.value)
+                self.model.set(name=inp.name, value=inp.value)
 
     def update_module_vars(self):
         """
@@ -591,83 +590,74 @@ class Simulator(BaseModule):
             return
         os.remove(self.config.result_filename)
 
-    def _update_results(self, timestamp_outputs, timestamp_inputs):
+    def _update_results(self, input_callback, t_start_simulation_loop, both=False, no_sub_sim=False):
         """
         Adds model variables to the SimulationResult object
         at the given timestamp.
-
-        timestamp_outputs describes the timestamp for which the outputs are active
-        timestamp_inputs describes the timestamp for which the inputs are active
         """
-
         if not self.config.save_results:
             return
 
+        if input_callback:
+            timestamp = self.env.time
+        else:
+            timestamp = t_start_simulation_loop + self.config.t_sample_communication
+            if both:
+                time_stamp_both = self.env.time
+
+        self._inputs_changed_since_last_results_saving = False
+
         inp_values = [var.value for var in self._get_result_input_variables()]
         out_values = [var.value for var in self._get_result_output_variables()]
-        _len_outputs = len(out_values)
-        _len_inputs = len(inp_values)
 
-        # Four cases to handle:
-        # 1. Both timestamps are the same - store both in one row
-        # 2. Inputs changed before do_step (timestamp_inputs == timestamp_outputs) - same as case 1
-        # 3. Inputs changed after do_step (timestamp_inputs == timestamp_outputs but both equal to end time)
-        # 4. Invalid case (timestamp_inputs > timestamp_outputs)
-
-        if timestamp_inputs == timestamp_outputs:
-            # Inputs and outputs are active at the same timestamp
-            # Check if this timestamp already exists (e.g., from storing outputs earlier)
-            if timestamp_outputs in self._result.index:
-                # Update the existing row with input values
-                idx = self._result.index.index(timestamp_outputs)
-                # Keep existing outputs, update inputs
-                self._result.data[idx] = self._result.data[idx][
-                                         :_len_outputs] + inp_values
-            else:
-                # New timestamp, store both
-                self._result.index.append(timestamp_outputs)
-                self._result.data.append(out_values + inp_values)
-
-            self._inputs_changed_since_last_results_saving = False
-
-        elif timestamp_inputs < timestamp_outputs:
-            # Inputs became active at an earlier time than outputs
-            # This happens when inputs changed during a simulation step
-
-            # First, store the inputs at their activation timestamp
-            if timestamp_inputs in self._result.index:
-                # Timestamp already exists, update input values
-                idx = self._result.index.index(timestamp_inputs)
-                self._result.data[idx] = self._result.data[idx][
-                                         :_len_outputs] + inp_values
-            else:
-                # New timestamp for inputs only
-                self._result.index.append(timestamp_inputs)
-                self._result.data.append([None] * _len_outputs + inp_values)
-
-            # Now store the outputs at their timestamp
-            if timestamp_outputs in self._result.index:
-                # Timestamp already exists (shouldn't normally happen, but handle it)
-                idx = self._result.index.index(timestamp_outputs)
-                self._result.data[idx][:_len_outputs] = out_values
-            else:
-                self._result.index.append(timestamp_outputs)
-                self._result.data.append(out_values + [None] * _len_inputs)
-
-            self._inputs_changed_since_last_results_saving = False
-
+        if input_callback:
+            # create new timestamp entry in results for upcoming timestamp
+            self._result.index.append(timestamp)
+            # append inputs, outputs stay None
+            self._result.data.append([None]*len(out_values) + inp_values)
         else:
-            raise ValueError(f"Storing inputs ahead of outputs is not supported. "
-                             f"timestamp_inputs={timestamp_inputs}, timestamp_outputs={timestamp_outputs}")
+            # If input comes in at the same time add these first for the current time step
+            if both:
+                # create new timestamp entry in results for upcoming timestamp
+                self._result.index.append(time_stamp_both)
+                # append inputs, outputs stay None
+                self._result.data.append([None] * len(out_values) + inp_values)
+            # Add outputs for the time the simulation ended (inputs are already stored).
+            self._result.index.append(timestamp)
+            out_values = [var.value for var in self._get_result_output_variables()]
+            self._result.data.append(out_values + self._result.data[-1][len(out_values):])
 
-            # Write results to file periodically
         if (
-                self.config.result_filename is not None
-                and timestamp_outputs // (
-                self.config.write_results_delay * self._save_count) > 0
+            self.config.result_filename is not None
+            and self.env.time // (self.config.write_results_delay * self._save_count) > 0
         ):
             self._save_count += 1
+            if no_sub_sim:
+                index_store = self._result.index[-1]
+                data_store = self._result.data[-1]
+                self._result.index = self._result.index[:-1]
+                self._result.data = self._result.data[:-1]
             self._result.write_results(self.config.result_filename)
+            if no_sub_sim:
+                self._result.index = [index_store]
+                self._result.data = [data_store]
+
+    def _update_result_outputs(self, timestamp: float):
+        """Updates results with current values for states and outputs."""
+        self._result.index.append(timestamp)
+        out_values = [var.value for var in self._get_result_output_variables()]
+        self._result.data.append(out_values)
+
+    def _update_result_inputs(self, timestamp: float, init: bool = False):
+        """Updates results with current values for states and outputs."""
+        in_values = [var.value for var in self._get_result_input_variables()]
+        if init:
+            self._result.index.append(timestamp)
+            out_values = [var.value for var in self._get_result_output_variables()]
+            self._result.data.append([None] * len(out_values) + in_values)
+        else:
+            # At full time steps, overwrite the last results row with output and new input
+            self._result.data[-1] = self._result.data[-1][:-len(in_values)] + in_values
 
     def _get_result_model_variables(self) -> AgentVariables:
         """
