@@ -800,7 +800,7 @@
             "column": 0,
             "path": "agentlib/modules/communicator/communicator.py",
             "symbol": "astroid-error",
-            "message": "agentlib/modules/communicator/communicator.py: Fatal error while checking 'agentlib/modules/communicator/communicator.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-01-08-14-12-21.txt'.",
+            "message": "agentlib/modules/communicator/communicator.py: Fatal error while checking 'agentlib/modules/communicator/communicator.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-01-08-22-28-57.txt'.",
             "message-id": "F0002"
         },
         {
@@ -811,7 +811,7 @@
             "column": 0,
             "path": "agentlib/modules/simulation/simulator.py",
             "symbol": "astroid-error",
-            "message": "agentlib/modules/simulation/simulator.py: Fatal error while checking 'agentlib/modules/simulation/simulator.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-01-08-14-12-21.txt'.",
+            "message": "agentlib/modules/simulation/simulator.py: Fatal error while checking 'agentlib/modules/simulation/simulator.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-01-08-22-28-57.txt'.",
             "message-id": "F0002"
         },
         {
@@ -833,7 +833,7 @@
             "column": 0,
             "path": "agentlib/models/scipy_model.py",
             "symbol": "astroid-error",
-            "message": "agentlib/models/scipy_model.py: Fatal error while checking 'agentlib/models/scipy_model.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-01-08-14-12-21.txt'.",
+            "message": "agentlib/models/scipy_model.py: Fatal error while checking 'agentlib/models/scipy_model.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-01-08-22-28-57.txt'.",
             "message-id": "F0002"
         },
         {
@@ -844,7 +844,7 @@
             "column": 0,
             "path": "agentlib/models/fmu_model.py",
             "symbol": "astroid-error",
-            "message": "agentlib/models/fmu_model.py: Fatal error while checking 'agentlib/models/fmu_model.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-01-08-14-12-22.txt'.",
+            "message": "agentlib/models/fmu_model.py: Fatal error while checking 'agentlib/models/fmu_model.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-01-08-22-28-58.txt'.",
             "message-id": "F0002"
         },
         {
@@ -910,7 +910,7 @@
             "column": 0,
             "path": "agentlib/utils/load_config.py",
             "symbol": "astroid-error",
-            "message": "agentlib/utils/load_config.py: Fatal error while checking 'agentlib/utils/load_config.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-01-08-14-12-22.txt'.",
+            "message": "agentlib/utils/load_config.py: Fatal error while checking 'agentlib/utils/load_config.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-01-08-22-28-58.txt'.",
             "message-id": "F0002"
         },
         {
@@ -921,7 +921,7 @@
             "column": 0,
             "path": "agentlib/utils/local_broadcast_broker.py",
             "symbol": "astroid-error",
-            "message": "agentlib/utils/local_broadcast_broker.py: Fatal error while checking 'agentlib/utils/local_broadcast_broker.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-01-08-14-12-22.txt'.",
+            "message": "agentlib/utils/local_broadcast_broker.py: Fatal error while checking 'agentlib/utils/local_broadcast_broker.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-01-08-22-28-58.txt'.",
             "message-id": "F0002"
         },
         {
@@ -932,7 +932,7 @@
             "column": 0,
             "path": "agentlib/utils/validators.py",
             "symbol": "astroid-error",
-            "message": "agentlib/utils/validators.py: Fatal error while checking 'agentlib/utils/validators.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-01-08-14-12-22.txt'.",
+            "message": "agentlib/utils/validators.py: Fatal error while checking 'agentlib/utils/validators.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-01-08-22-28-58.txt'.",
             "message-id": "F0002"
         },
         {
@@ -943,7 +943,7 @@
             "column": 0,
             "path": "agentlib/utils/local_broker.py",
             "symbol": "astroid-error",
-            "message": "agentlib/utils/local_broker.py: Fatal error while checking 'agentlib/utils/local_broker.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-01-08-14-12-22.txt'.",
+            "message": "agentlib/utils/local_broker.py: Fatal error while checking 'agentlib/utils/local_broker.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-01-08-22-28-58.txt'.",
             "message-id": "F0002"
         },
         {
@@ -965,7 +965,7 @@
             "column": 0,
             "path": "agentlib/utils/fuzzy_matching.py",
             "symbol": "astroid-error",
-            "message": "agentlib/utils/fuzzy_matching.py: Fatal error while checking 'agentlib/utils/fuzzy_matching.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-01-08-14-12-22.txt'.",
+            "message": "agentlib/utils/fuzzy_matching.py: Fatal error while checking 'agentlib/utils/fuzzy_matching.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-01-08-22-28-58.txt'.",
             "message-id": "F0002"
         },
         {
@@ -976,7 +976,7 @@
             "column": 0,
             "path": "agentlib/utils/multi_processing_broker.py",
             "symbol": "astroid-error",
-            "message": "agentlib/utils/multi_processing_broker.py: Fatal error while checking 'agentlib/utils/multi_processing_broker.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-01-08-14-12-23.txt'.",
+            "message": "agentlib/utils/multi_processing_broker.py: Fatal error while checking 'agentlib/utils/multi_processing_broker.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-01-08-22-28-59.txt'.",
             "message-id": "F0002"
         },
         {
@@ -1053,7 +1053,7 @@
             "column": 0,
             "path": "agentlib/utils/multi_agent_system.py",
             "symbol": "astroid-error",
-            "message": "agentlib/utils/multi_agent_system.py: Fatal error while checking 'agentlib/utils/multi_agent_system.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-01-08-14-12-23.txt'.",
+            "message": "agentlib/utils/multi_agent_system.py: Fatal error while checking 'agentlib/utils/multi_agent_system.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-01-08-22-28-59.txt'.",
             "message-id": "F0002"
         },
         {
@@ -1075,7 +1075,7 @@
             "column": 0,
             "path": "agentlib/utils/plotting/simulator_dashboard.py",
             "symbol": "astroid-error",
-            "message": "agentlib/utils/plotting/simulator_dashboard.py: Fatal error while checking 'agentlib/utils/plotting/simulator_dashboard.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-01-08-14-12-23.txt'.",
+            "message": "agentlib/utils/plotting/simulator_dashboard.py: Fatal error while checking 'agentlib/utils/plotting/simulator_dashboard.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-01-08-22-28-59.txt'.",
             "message-id": "F0002"
         },
         {
@@ -1097,7 +1097,7 @@
             "column": 0,
             "path": "agentlib/core/data_broker.py",
             "symbol": "astroid-error",
-            "message": "agentlib/core/data_broker.py: Fatal error while checking 'agentlib/core/data_broker.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-01-08-14-12-24.txt'.",
+            "message": "agentlib/core/data_broker.py: Fatal error while checking 'agentlib/core/data_broker.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-01-08-22-29-00.txt'.",
             "message-id": "F0002"
         },
         {
@@ -1119,7 +1119,7 @@
             "column": 0,
             "path": "agentlib/core/agent.py",
             "symbol": "astroid-error",
-            "message": "agentlib/core/agent.py: Fatal error while checking 'agentlib/core/agent.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-01-08-14-12-24.txt'.",
+            "message": "agentlib/core/agent.py: Fatal error while checking 'agentlib/core/agent.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-01-08-22-29-00.txt'.",
             "message-id": "F0002"
         },
         {
@@ -1130,7 +1130,7 @@
             "column": 0,
             "path": "agentlib/core/module.py",
             "symbol": "astroid-error",
-            "message": "agentlib/core/module.py: Fatal error while checking 'agentlib/core/module.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-01-08-14-12-24.txt'.",
+            "message": "agentlib/core/module.py: Fatal error while checking 'agentlib/core/module.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-01-08-22-29-00.txt'.",
             "message-id": "F0002"
         },
         {
@@ -1152,7 +1152,7 @@
             "column": 0,
             "path": "agentlib/core/logging_.py",
             "symbol": "astroid-error",
-            "message": "agentlib/core/logging_.py: Fatal error while checking 'agentlib/core/logging_.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-01-08-14-12-24.txt'.",
+            "message": "agentlib/core/logging_.py: Fatal error while checking 'agentlib/core/logging_.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-01-08-22-29-00.txt'.",
             "message-id": "F0002"
         },
         {
@@ -1163,7 +1163,7 @@
             "column": 0,
             "path": "agentlib/core/environment.py",
             "symbol": "astroid-error",
-            "message": "agentlib/core/environment.py: Fatal error while checking 'agentlib/core/environment.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-01-08-14-12-24.txt'.",
+            "message": "agentlib/core/environment.py: Fatal error while checking 'agentlib/core/environment.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-01-08-22-29-00.txt'.",
             "message-id": "F0002"
         },
         {
@@ -1174,7 +1174,7 @@
             "column": 0,
             "path": "agentlib/core/datamodels.py",
             "symbol": "astroid-error",
-            "message": "agentlib/core/datamodels.py: Fatal error while checking 'agentlib/core/datamodels.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-01-08-14-12-25.txt'.",
+            "message": "agentlib/core/datamodels.py: Fatal error while checking 'agentlib/core/datamodels.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-01-08-22-29-01.txt'.",
             "message-id": "F0002"
         },
         {
@@ -1207,7 +1207,7 @@
             "column": 0,
             "path": "agentlib/core/model.py",
             "symbol": "astroid-error",
-            "message": "agentlib/core/model.py: Fatal error while checking 'agentlib/core/model.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-01-08-14-12-25.txt'.",
+            "message": "agentlib/core/model.py: Fatal error while checking 'agentlib/core/model.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-01-08-22-29-01.txt'.",
             "message-id": "F0002"
         },
         {
@@ -1405,7 +1405,7 @@
             "column": 0,
             "path": "agentlib/modules/__init__.py",
             "symbol": "astroid-error",
-            "message": "agentlib/modules/__init__.py: Fatal error while checking 'agentlib/modules/__init__.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-01-08-14-12-25.txt'.",
+            "message": "agentlib/modules/__init__.py: Fatal error while checking 'agentlib/modules/__init__.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-01-08-22-29-01.txt'.",
             "message-id": "F0002"
         },
         {
@@ -1416,7 +1416,7 @@
             "column": 0,
             "path": "agentlib/modules/utils/try_sensor.py",
             "symbol": "astroid-error",
-            "message": "agentlib/modules/utils/try_sensor.py: Fatal error while checking 'agentlib/modules/utils/try_sensor.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-01-08-14-12-26.txt'.",
+            "message": "agentlib/modules/utils/try_sensor.py: Fatal error while checking 'agentlib/modules/utils/try_sensor.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-01-08-22-29-01.txt'.",
             "message-id": "F0002"
         },
         {
@@ -1460,7 +1460,7 @@
             "column": 0,
             "path": "agentlib/modules/utils/agent_logger.py",
             "symbol": "astroid-error",
-            "message": "agentlib/modules/utils/agent_logger.py: Fatal error while checking 'agentlib/modules/utils/agent_logger.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-01-08-14-12-26.txt'.",
+            "message": "agentlib/modules/utils/agent_logger.py: Fatal error while checking 'agentlib/modules/utils/agent_logger.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-01-08-22-29-02.txt'.",
             "message-id": "F0002"
         },
         {
@@ -1515,7 +1515,7 @@
             "column": 0,
             "path": "agentlib/modules/communicator/clonemap.py",
             "symbol": "astroid-error",
-            "message": "agentlib/modules/communicator/clonemap.py: Fatal error while checking 'agentlib/modules/communicator/clonemap.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-01-08-14-12-26.txt'.",
+            "message": "agentlib/modules/communicator/clonemap.py: Fatal error while checking 'agentlib/modules/communicator/clonemap.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-01-08-22-29-02.txt'.",
             "message-id": "F0002"
         },
         {
@@ -1614,7 +1614,7 @@
             "column": 0,
             "path": "agentlib/modules/communicator/mqtt.py",
             "symbol": "astroid-error",
-            "message": "agentlib/modules/communicator/mqtt.py: Fatal error while checking 'agentlib/modules/communicator/mqtt.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-01-08-14-12-26.txt'.",
+            "message": "agentlib/modules/communicator/mqtt.py: Fatal error while checking 'agentlib/modules/communicator/mqtt.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-01-08-22-29-02.txt'.",
             "message-id": "F0002"
         },
         {
@@ -1647,7 +1647,7 @@
             "column": 0,
             "path": "agentlib/modules/simulation/csv_data_source.py",
             "symbol": "astroid-error",
-            "message": "agentlib/modules/simulation/csv_data_source.py: Fatal error while checking 'agentlib/modules/simulation/csv_data_source.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-01-08-14-12-26.txt'.",
+            "message": "agentlib/modules/simulation/csv_data_source.py: Fatal error while checking 'agentlib/modules/simulation/csv_data_source.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-01-08-22-29-02.txt'.",
             "message-id": "F0002"
         },
         {
@@ -1702,7 +1702,7 @@
             "column": 0,
             "path": "agentlib/modules/controller/controller.py",
             "symbol": "astroid-error",
-            "message": "agentlib/modules/controller/controller.py: Fatal error while checking 'agentlib/modules/controller/controller.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-01-08-14-12-27.txt'.",
+            "message": "agentlib/modules/controller/controller.py: Fatal error while checking 'agentlib/modules/controller/controller.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-01-08-22-29-02.txt'.",
             "message-id": "F0002"
         },
         {
@@ -1735,7 +1735,7 @@
             "column": 0,
             "path": "agentlib/modules/controller/pid.py",
             "symbol": "astroid-error",
-            "message": "agentlib/modules/controller/pid.py: Fatal error while checking 'agentlib/modules/controller/pid.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-01-08-14-12-27.txt'.",
+            "message": "agentlib/modules/controller/pid.py: Fatal error while checking 'agentlib/modules/controller/pid.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-01-08-22-29-02.txt'.",
             "message-id": "F0002"
         }
     ],
@@ -2170,8 +2170,8 @@
         "dependencies": {
             "agentlib.core": [
                 "agentlib.modules.controller.bangbang",
-                "agentlib.modules.communicator.local_multiprocessing",
-                "agentlib"
+                "agentlib",
+                "agentlib.modules.communicator.local_multiprocessing"
             ],
             "agentlib.models": [
                 "agentlib"
@@ -2180,27 +2180,27 @@
                 "agentlib"
             ],
             "agentlib.utils": [
-                "agentlib.modules.communicator.local_broadcast",
                 "agentlib.modules.communicator.local",
-                "agentlib"
+                "agentlib",
+                "agentlib.modules.communicator.local_broadcast"
             ],
             "agentlib.core.datamodels": [
                 "agentlib.modules.controller.bangbang",
-                "agentlib",
                 "agentlib.core",
                 "agentlib.modules.communicator.local_multiprocessing",
-                "agentlib.modules.communicator.local_broadcast",
-                "agentlib.modules.communicator.local"
+                "agentlib.modules.communicator.local",
+                "agentlib",
+                "agentlib.modules.communicator.local_broadcast"
             ],
             "agentlib.utils.multi_agent_system": [
                 "agentlib"
             ],
             "agentlib.utils.plugin_import": [
                 "agentlib.modules.communicator",
-                "agentlib.modules.utils",
-                "agentlib.modules.simulation",
                 "agentlib.models",
-                "agentlib.modules.controller"
+                "agentlib.modules.utils",
+                "agentlib.modules.controller",
+                "agentlib.modules.simulation"
             ],
             "agentlib.utils.fuzzy_matching": [
                 "agentlib.models"
@@ -2212,8 +2212,8 @@
                 "agentlib.utils"
             ],
             "agentlib.utils.multi_processing_broker": [
-                "agentlib.modules.communicator.local_multiprocessing",
-                "agentlib.utils"
+                "agentlib.utils",
+                "agentlib.modules.communicator.local_multiprocessing"
             ],
             "agentlib.core.environment": [
                 "agentlib.core"
@@ -2231,8 +2231,8 @@
                 "agentlib.core"
             ],
             "agentlib.modules.communicator.communicator": [
-                "agentlib.modules.communicator.local_broadcast",
                 "agentlib.modules.communicator.local",
+                "agentlib.modules.communicator.local_broadcast",
                 "agentlib.modules.communicator.local_multiprocessing"
             ],
             "agentlib.modules.controller": [
@@ -2710,27 +2710,27 @@
                 "agentlib"
             ],
             "agentlib.utils": [
-                "agentlib.modules.communicator.local_broadcast",
                 "agentlib.modules.communicator.local",
-                "agentlib"
+                "agentlib",
+                "agentlib.modules.communicator.local_broadcast"
             ],
             "agentlib.core.datamodels": [
                 "agentlib.modules.controller.bangbang",
-                "agentlib",
                 "agentlib.core",
                 "agentlib.modules.communicator.local_multiprocessing",
-                "agentlib.modules.communicator.local_broadcast",
-                "agentlib.modules.communicator.local"
+                "agentlib.modules.communicator.local",
+                "agentlib",
+                "agentlib.modules.communicator.local_broadcast"
             ],
             "agentlib.utils.multi_agent_system": [
                 "agentlib"
             ],
             "agentlib.utils.plugin_import": [
                 "agentlib.modules.communicator",
-                "agentlib.modules.utils",
-                "agentlib.modules.simulation",
                 "agentlib.models",
-                "agentlib.modules.controller"
+                "agentlib.modules.utils",
+                "agentlib.modules.controller",
+                "agentlib.modules.simulation"
             ],
             "agentlib.utils.fuzzy_matching": [
                 "agentlib.models"
@@ -2742,8 +2742,8 @@
                 "agentlib.utils"
             ],
             "agentlib.utils.multi_processing_broker": [
-                "agentlib.modules.communicator.local_multiprocessing",
-                "agentlib.utils"
+                "agentlib.utils",
+                "agentlib.modules.communicator.local_multiprocessing"
             ],
             "agentlib.core.environment": [
                 "agentlib.core"
@@ -2761,8 +2761,8 @@
                 "agentlib.core"
             ],
             "agentlib.modules.communicator.communicator": [
-                "agentlib.modules.communicator.local_broadcast",
                 "agentlib.modules.communicator.local",
+                "agentlib.modules.communicator.local_broadcast",
                 "agentlib.modules.communicator.local_multiprocessing"
             ],
             "agentlib.modules.controller": [

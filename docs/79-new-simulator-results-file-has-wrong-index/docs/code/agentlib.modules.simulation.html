@@ -311,19 +311,8 @@ interacting with the standard model class.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.Simulator.process">
 <span class="sig-name descname"><span class="pre">process</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/modules/simulation/simulator.html#Simulator.process"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.simulation.simulator.Simulator.process" title="Permalink to this definition"></a></dt>
-<dd><p>This function creates a endless loop for the single simulation step event,
-updating inputs, simulating, model results and then outputs.</p>
-<p>In a simulation step following happens:
-1. Specify the end time of the simulation from the agents perspective.
-<strong>Important note</strong>: The agents use unix-time as a timestamp and start
-the simulation with the current datetime (represented by self.env.time),
-the model starts at 0 seconds (represented by self.env.now).
-2. Directly after the simulation we store the results with
-the output time and then call the timeout in the environment,
-hence actually increase the environment time.
-3. Once the environment time reached the simulation time,
-we send the updated output values to other modules and agents by setting
-them the data_broker.</p>
+<dd><p>This function creates a endless loop for the single simulation step event.
+The do_step() function needs to return a generator.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -343,6 +332,13 @@ all scheduled process will be started in this environment.</p>
 <dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.Simulator.terminate">
 <span class="sig-name descname"><span class="pre">terminate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/modules/simulation/simulator.html#Simulator.terminate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.simulation.simulator.Simulator.terminate" title="Permalink to this definition"></a></dt>
 <dd><p>Terminate the model</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.Simulator.update_model_inputs">
+<span class="sig-name descname"><span class="pre">update_model_inputs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/modules/simulation/simulator.html#Simulator.update_model_inputs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.simulation.simulator.Simulator.update_model_inputs" title="Permalink to this definition"></a></dt>
+<dd><p>Internal method to write current data_broker to simulation model.
+Only update values, not other module_types.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -370,6 +366,7 @@ values to the module outputs and states.</p>
 </dd>
 <dt class="field-even">Fields<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.fine_results" title="agentlib.modules.simulation.simulator.SimulatorConfig.fine_results"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fine_results</span> <span class="pre">(bool)</span></code></a></p></li>
 <li><p><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.inputs" title="agentlib.modules.simulation.simulator.SimulatorConfig.inputs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inputs</span> <span class="pre">(List[agentlib.core.datamodels.AgentVariable])</span></code></a></p></li>
 <li><p><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.measurement_uncertainty" title="agentlib.modules.simulation.simulator.SimulatorConfig.measurement_uncertainty"><code class="xref py py-obj docutils literal notranslate"><span class="pre">measurement_uncertainty</span> <span class="pre">(Dict[str,</span> <span class="pre">float]</span> <span class="pre">|</span> <span class="pre">float)</span></code></a></p></li>
 <li><p><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.model" title="agentlib.modules.simulation.simulator.SimulatorConfig.model"><code class="xref py py-obj docutils literal notranslate"><span class="pre">model</span> <span class="pre">(Dict)</span></code></a></p></li>
@@ -407,6 +404,12 @@ values to the module outputs and states.</p>
 </ul>
 </dd>
 </dl>
+<dl class="py attribute pydantic_field">
+<dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.SimulatorConfig.fine_results">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">fine_results</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#agentlib.modules.simulation.simulator.SimulatorConfig.fine_results" title="Permalink to this definition"></a></dt>
+<dd><p>If True, results are stored more finely, including inputs during asimulation step.</p>
+</dd></dl>
+
 <dl class="py attribute pydantic_field">
 <dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.SimulatorConfig.inputs">
 <em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">inputs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="agentlib.core.html#agentlib.core.datamodels.AgentVariable" title="agentlib.core.datamodels.AgentVariable"><span class="pre">AgentVariable</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#agentlib.modules.simulation.simulator.SimulatorConfig.inputs" title="Permalink to this definition"></a></dt>
