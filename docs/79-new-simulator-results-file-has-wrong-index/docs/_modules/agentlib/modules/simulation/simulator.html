@@ -573,9 +573,11 @@
                 <span class="n">t_end</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">t_sample_communication</span><span class="p">,</span>
                 <span class="n">dt</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">t_sample_simulation</span>
             <span class="p">)</span>
-            <span class="n">_t_start_simulation_loop</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">time</span>
+
             <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Doing simulation steps </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">t_samples</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">_idx</span><span class="p">,</span> <span class="n">_t_sample</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">t_samples</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
+                <span class="n">_t_start_substep</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">time</span>
+
                 <span class="n">_t_start</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">now</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">t_start</span>
                 <span class="n">dt_sim</span> <span class="o">=</span> <span class="n">t_samples</span><span class="p">[</span><span class="n">_idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">_t_sample</span>
                 <span class="c1"># Three cases to cover for input change:</span>
@@ -597,14 +599,14 @@
                         <span class="k">if</span> <span class="n">inputs_changed_before_dostep</span><span class="p">:</span>
                             <span class="c1"># Inputs changed before do_step, so they were used in this simulation</span>
                             <span class="c1"># They&#39;re active from the start of this simulation loop</span>
-                            <span class="n">timestamp_inputs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">time</span>
+                            <span class="n">timestamp_inputs</span> <span class="o">=</span> <span class="n">_t_start_substep</span>
                         <span class="k">else</span><span class="p">:</span>
                             <span class="c1"># Inputs changed after do_step, so they weren&#39;t used yet</span>
                             <span class="c1"># They&#39;re active from the next time step (env.time + dt_sim)</span>
                             <span class="n">timestamp_inputs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">time</span> <span class="o">+</span> <span class="n">dt_sim</span>
                     <span class="k">else</span><span class="p">:</span>
                         <span class="c1"># No change during step, inputs were active from the start</span>
-                        <span class="n">timestamp_inputs</span> <span class="o">=</span> <span class="n">_t_start_simulation_loop</span>
+                        <span class="n">timestamp_inputs</span> <span class="o">=</span> <span class="n">_t_start_substep</span>
 
                     <span class="c1"># Outputs are always active at the end of the simulation step</span>
                     <span class="n">timestamp_outputs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">time</span> <span class="o">+</span> <span class="n">dt_sim</span>
