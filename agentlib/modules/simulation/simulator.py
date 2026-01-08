@@ -495,9 +495,11 @@ class Simulator(BaseModule):
                 t_end=self.config.t_sample_communication,
                 dt=self.config.t_sample_simulation
             )
-            _t_start_simulation_loop = self.env.time
+
             self.logger.debug("Doing simulation steps %s", t_samples)
             for _idx, _t_sample in enumerate(t_samples[:-1]):
+                _t_start_substep = self.env.time
+
                 _t_start = self.env.now + self.config.t_start
                 dt_sim = t_samples[_idx + 1] - _t_sample
                 # Three cases to cover for input change:
@@ -519,14 +521,14 @@ class Simulator(BaseModule):
                         if inputs_changed_before_dostep:
                             # Inputs changed before do_step, so they were used in this simulation
                             # They're active from the start of this simulation loop
-                            timestamp_inputs = self.env.time
+                            timestamp_inputs = _t_start_substep
                         else:
                             # Inputs changed after do_step, so they weren't used yet
                             # They're active from the next time step (env.time + dt_sim)
                             timestamp_inputs = self.env.time + dt_sim
                     else:
                         # No change during step, inputs were active from the start
-                        timestamp_inputs = _t_start_simulation_loop
+                        timestamp_inputs = _t_start_substep
 
                     # Outputs are always active at the end of the simulation step
                     timestamp_outputs = self.env.time + dt_sim
