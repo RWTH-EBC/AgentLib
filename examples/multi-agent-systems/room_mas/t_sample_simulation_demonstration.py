@@ -14,7 +14,7 @@ TRY_CONFIG = {
     "modules": {
         "sensor": {
             "type": "TRYSensor",
-            "t_sample": 60,  # Some random value to show differences in communication time-points
+            "t_sample": 223,  # Some random value to show differences in communication time-points
             "filename": "data/TRY2015_Aachen_Jahr.dat",
             "log_level": "DEBUG"
         },
@@ -38,7 +38,7 @@ ROOM_CONFIG = {
             "t_sample_simulation": 15,
             "save_results": True,
             "result_filename": "results.csv",
-            "fine_results": True,
+            "capture_all_inputs": True,
             "overwrite_result_file": True,
             "log_level": "DEBUG",
             "inputs": [
@@ -72,6 +72,7 @@ def run_example(until, with_plots=True, log_level=logging.INFO):
 
     This example can be used to understand how the simulator receives and stores data.
     Change the `combinations` in the code if you want to test out different settings.
+    With the `capture_all_inputs` option, the simulator also stores all inputs during a simulation step.
 
     Parameters
     ----------
@@ -90,11 +91,9 @@ def run_example(until, with_plots=True, log_level=logging.INFO):
     # Change the working directly so that relative paths work
     os.chdir(os.path.abspath(os.path.dirname(__file__)))
     # create multiple agents with different configurations
-    agent_configs = []
-    # TODO: why has changing order no effect?
-    # agent_configs = [TRY_CONFIG]
+    agent_configs = [TRY_CONFIG]
 
-    combinations = [[900], [900]]
+    combinations = [[900], [60, 900]]
 
     for t_sample_com, t_sample_sim in itertools.product(*combinations):
         room_cfg = deepcopy(ROOM_CONFIG)
@@ -102,8 +101,8 @@ def run_example(until, with_plots=True, log_level=logging.INFO):
         room_cfg["modules"]["room"]["t_sample_communication"] = t_sample_com
         room_cfg["modules"]["room"]["t_sample_simulation"] = t_sample_sim
         room_cfg["modules"]["room"]["result_filename"] = f"results_{t_sample_com}_{t_sample_sim}.csv"
+        room_cfg["modules"]["room"]["capture_all_inputs"] = False
         agent_configs.append(room_cfg)
-    agent_configs.append(TRY_CONFIG)
 
     mas = LocalMASAgency(
         env=env_config,

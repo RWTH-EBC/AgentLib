@@ -90,7 +90,7 @@ def custom_injection(config: dict, module_name: str = None):
         )
 
 
-def create_time_samples(dt, t_end):
+def create_time_samples(dt: float, t_end: float) -> np.ndarray:
     """
     Function to generate an array of time steps
     using the dt object.

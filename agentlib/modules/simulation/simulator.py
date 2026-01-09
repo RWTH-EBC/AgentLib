@@ -4,7 +4,7 @@ Module contains the Simulator, used to simulate any model.
 
 import os
 import warnings
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from math import inf
 from pathlib import Path
 from typing import Union, Dict, List, Optional
@@ -33,11 +33,22 @@ from agentlib.utils import custom_injection, create_time_samples
 class SimulatorResults:
     """Class to organize in-memory simulator results."""
 
-    index: List[float]
-    columns: pd.MultiIndex
-    data: List[List[float]]
+    # Configuration
+    filename: Optional[str] = None
+    header_written: bool = False
 
-    def __init__(self, variables: List[ModelVariable]):
+    # Data Buffers
+    index: List[float] = field(default_factory=list)
+    data: List[List[float]] = field(default_factory=list)
+
+    # State tracking
+    _current_inputs: List[float] = field(default_factory=list)
+    _current_outputs: List[float] = field(default_factory=list)
+    _columns: pd.MultiIndex = None
+    _input_count: int = 0
+    _output_count: int = 0
+
+    def setup(self, input_vars: List[ModelVariable], output_vars: List[ModelVariable]):
         """
         Initializes results object input variables
         "u", outputs "x" and internal state variables "x".
@@ -50,8 +61,16 @@ class SimulatorResults:
         | 2 |  ...  |  ...  |  ...  |  ...  |  ...  |  ...  |
         |...|  ...  |  ...  |  ...  |  ...  |  ...  |  ...  |
         |...
+        Also initializes the internal buffers.
         """
-        self.columns = pd.MultiIndex.from_arrays(
+        variables = output_vars + input_vars
+        self._input_count = len(input_vars)
+        self._output_count = len(output_vars)
+
+        # Initialize current inputs with current values
+        self._current_inputs = [var.value for var in input_vars]
+
+        self._columns = pd.MultiIndex.from_arrays(
             arrays=np.array(
                 [
                     [_var.causality.name for _var in variables],
@@ -62,29 +81,83 @@ class SimulatorResults:
             sortorder=0,
             names=["causality", "name", "type"],
         )
-        self.index = []
-        self.data = []
 
-    def initialize(
-            self,
-            time: float,
-    ):
-        """Adds the first row to the data"""
+    def update_inputs(self, values: List[float], time: float, capture_all_inputs: bool):
+        """
+        Updates the internal input buffer.
+        If capture_all_inputs is True, creates a row with NaN outputs.
+        """
+        self._current_inputs = values
+        # Results can already hold the input (at t_sample_communication created by
+        # the output writing) or the input time is new (created by an input callback)
+        if time not in self.index:
+            # For capture_all_inputs, append the inputs created by an input callback
+            if capture_all_inputs:
+                self.index.append(time)
+                # index is not in data, if results have been written to disk
+                # Create row: [NaN, NaN, ..., In1, In2, ...]
+                row = [None] * self._output_count + self._current_inputs
+                # If timestamp is new, this needs to be appended
+                self.data.append(row)#
+        else:
+            # Create row: [Out1, Out2, ..., In1, In2, ...]
+            row = self.data[-1][:self._output_count] + self._current_inputs
+            # Update timestamp with new inputs
+            self.data[-1] = row
+
+    def update_outputs(self, values: List[float], time: float):
+        """
+        Stores a full result row at the end of a simulation step.
+        Combines provided output values with the last known input values.
+        """
+        # Create row: [Out1, Out2, ..., None, None, ...]
+        row = values + [None] * self._input_count
+        self.index.append(time)
+        self.data.append(row)
+
+    def update_current_outputs(self, values: List[float]):
+        """
+        Stores the current output values of intermediate simulation steps.
+        """
+        self._current_outputs = values
+
+    def initialize_outputs(self, time):
+        """
+        Initializes output data with Nones.
+        """
+        self.index.append(time)
+        # Create row: [None, None, ..., In1, In2, ...]
+        self.data.append([None] * self._output_count + self._current_inputs)
+
+    def initialize_inputs(self, values: List[float]):
+        """
+        Initializes input data with Nones.
+        """
+        self._current_inputs = values
+
+    def write_results(self):
+        """
+        Dumps results which are currently in memory to the file.
+        Clears memory after writing to keep footprint low.
+        """
+        if not self.filename or not self.data:
+            return
+
+        df = pd.DataFrame(self.data, index=self.index, columns=self._columns)
+
+        # Write header only once
+        header = not self.header_written and not Path(self.filename).exists()
+        df.to_csv(self.filename, mode="a", header=header)
+
+        self.header_written = True
+
+        # Clear buffers
+        self.index.clear()
+        self.data.clear()
 
     def df(self) -> pd.DataFrame:
         """Returns the current results as a dataframe."""
-        return pd.DataFrame(self.data, index=self.index, columns=self.columns)
-
-    def write_results(self, file: str):
-        """
-        Dumps results which are currently in memory to a file.
-        On creation of the file, the header columns are dumped, as well.
-        """
-        header = not Path(file).exists()
-        self.df().to_csv(file, mode="a", header=header)
-        # keep the last row of the results, as it is not finished (inputs missing)
-        self.index = [self.index[-1]]
-        self.data = [self.data[-1]]
+        return pd.DataFrame(self.data, index=self.index, columns=self._columns)
 
 
 def read_simulator_results(file: str):
@@ -160,11 +233,11 @@ class SimulatorConfig(BaseModuleConfig):
         description="List of causalities to store. Default stores "
                     "only inputs and outputs",
     )
-    fine_results: bool = Field(
-        title="fine_results",
+    capture_all_inputs: bool = Field(
+        title="capture_all_inputs",
         default=True,
-        description="If True, results are stored more finely, "
-                    "including inputs during asimulation step.",
+        description="If True, results are stored immediately when "
+                    "inputs change, even during simulation steps.",
     )
     write_results_delay: Optional[float] = Field(
         title="Write Results Delay",
@@ -245,7 +318,9 @@ class SimulatorConfig(BaseModuleConfig):
         t_start = info.data.get("t_start")
         t_stop = info.data.get("t_stop")
         t_sample_old = info.data.get("t_sample")
-        if t_sample_old != 1:  # A change in the default shows t_sample is still in the config of the user
+
+        # Handle legacy t_sample logic
+        if t_sample_old != 1:
             if info.field_name == "t_sample_simulation":
                 t_sample = 1
             else:
@@ -284,36 +359,27 @@ class SimulatorConfig(BaseModuleConfig):
     @field_validator("t_sample")
     @classmethod
     def deprecate_t_sample(cls, t_sample, info: FieldValidationInfo):
-        """Deprecates the t_sample field in favor of t_sample_communication and t_sample_simulation."""
+        """Deprecates the t_sample field in favor of t_sample_communication
+        and t_sample_simulation."""
         warnings.warn(
-            "t_sample is deprecated, use t_sample_communication, "
-            "t_sample_simulation for a concise separation of the two. "
-            "Will use the given t_sample for t_sample_communication and t_sample_simulation=1 s, "
-            "the `model.dt` default.",
+            "t_sample is deprecated, use t_sample_communication for storing outputs "
+            "and t_sample_simulation for the actual simulation step. "
+            "Will use the given t_sample for t_sample_communication and "
+            "t_sample_simulation=1 s, the `model.dt` default.",
         )
         return t_sample
 
     @field_validator("write_results_delay")
     @classmethod
     def set_default_t_sample(cls, write_results_delay, info: FieldValidationInfo):
-        if info.data["fine_results"]:
-            t_sample = info.data["t_sample_communication"]
-            factor = 1
-            error = ("With fine_results set to True, write_results_delay needs to be above "
-                     "t_sample_communication.")
-        else:
-            t_sample = info.data["t_sample_simulation"]
-            factor = 5
-            error = "Saving results more frequently than you simulate makes no sense."
-            # 5 is an arbitrary default which should balance writing new results as
-            # soon as possible to disk with saving file I/O overhead
+        t_comm = info.data.get("t_sample_communication", 1)
+
         if write_results_delay is None:
-            return factor * t_sample
-        if write_results_delay < t_sample:
-            raise ValueError(
-                f"{error} "
-                "Increase write_results_delay above the sample time."
-            )
+            # Default to writing every 5 communication steps to balance I/O
+            return t_comm * 5
+
+        if write_results_delay < t_comm:
+            raise ValueError("write_results_delay should be >= t_sample_communication")
         return write_results_delay
 
     @field_validator("model")
@@ -370,14 +436,23 @@ class Simulator(BaseModule):
 
     def __init__(self, *, config: dict, agent: Agent):
         super().__init__(config=config, agent=agent)
-        # Initialize instance attributes
+
         self._model = None
         self.model = self.config.model
-        self._result: SimulatorResults = SimulatorResults(
-            variables=self._get_result_model_variables()
-        )
-        self._save_count: int = 1  # tracks, how often results have been saved
         self._inputs_changed_since_last_results_saving = False
+
+        # Caching variables for performance (avoid list comprehensions in loop)
+        self._input_vars = self._get_result_input_variables()
+        self._output_vars = self._get_result_output_variables()
+
+        # Initialize Result Handler
+        self._result = SimulatorResults(filename=self.config.result_filename)
+        if self.config.save_results:
+            self._result.setup(input_vars=self._input_vars,
+                               output_vars=self._output_vars)
+
+        self._last_write_time = 0.0
+
         self._register_input_callbacks()
         self.logger.info("%s initialized!", self.__class__.__name__)
 
@@ -483,62 +558,94 @@ class Simulator(BaseModule):
 
     def process(self):
         """
-        This function creates a endless loop for the single simulation step event.
-        The do_step() function needs to return a generator.
+        Main simulation loop.
+        Handles simulation stepping, result logging, and synchronization.
         """
-        no_sub_sim = self.config.t_sample_communication % self.config.t_sample_simulation == 0
-        if no_sub_sim:
-            self._update_result_inputs(self.env.time, init=True)
+        # 1. Log Initial State (t=0)
+        if self.config.save_results:
+            # Ensure the result buffer has the correct initial inputs
+            in_values = [var.value for var in self._input_vars]
+            self._result.initialize_inputs(in_values)
+            self._result.initialize_outputs(self.env.time)
+            # Prevent false positive "input change" log at t=0 due to initialization callbacks
+            self._inputs_changed_since_last_results_saving = False
         while True:
-            # Simulate
+            # Determine the time points for the next communication step
             t_samples = create_time_samples(
                 t_end=self.config.t_sample_communication,
                 dt=self.config.t_sample_simulation
             )
-            self.logger.debug("Doing simulation steps %s", t_samples)
 
-            _t_start_simulation_loop = self.env.time
-            for _idx, _t_sample in enumerate(t_samples[:-1]):
-                _t_start = self.env.now + self.config.t_start
-                dt_sim = t_samples[_idx + 1] - _t_sample
-                self.model.do_step(t_start=_t_start, t_sample=dt_sim)
-                if not self.config.fine_results:
+            # Iterate through simulation sub-steps
+            for i in range(len(t_samples) - 1):
+                dt_sim = float(t_samples[i + 1] - t_samples[i])
+
+                # 2. Check for Input Changes (Pre-Step)
+                # If inputs changed since the last step (or during the yield), we log them now.
+                # This ensures the new inputs are recorded at the current timestamp,
+                # separate from the outputs of the *previous* step (which were logged at
+                # the end of the last loop).
+                if self._inputs_changed_since_last_results_saving:
+                    if self.config.save_results:
+                        # Create row: [t=Current, Out=NaN, In=New]
+                        self._log_inputs(self.env.time,
+                                         capture_all_inputs=self.config.capture_all_inputs)
                     self._inputs_changed_since_last_results_saving = False
-                # At t_sample_communication store the inputs used for the simulation step
-                # Outputs are written at t_sample_communication - t_sample_simulation for
-                # t_sample_communication. If an input is set at t_sample_communication,
-                # these need to be merged
-                if self.env.time % self.config.t_sample_communication == 0:
-                    if no_sub_sim:
-                        self._update_result_inputs(self.env.time)
-                        self._update_results(False, _t_start_simulation_loop, no_sub_sim=no_sub_sim)
-                    else:
-                        if self.env.time == self.env.offset:
-                            self._update_result_inputs(self.env.time, init=True)
-                        else:
-                            self._update_result_inputs(self.env.time)
-                elif _idx == len(t_samples) - 2 or self._inputs_changed_since_last_results_saving:
-                    # Update the results
-                    if _idx == len(t_samples) - 2 and self._inputs_changed_since_last_results_saving:
-                        self._update_results(False, _t_start_simulation_loop, both=True)
-                    else:
-                        self._update_results(self._inputs_changed_since_last_results_saving,
-                                             _t_start_simulation_loop)
+
+                # 3. Perform Simulation Step
+                self.model.do_step(
+                    t_start=self.config.t_start + self.env.now,
+                    t_sample=dt_sim
+                )
+
+                # 4. Store intermediate outputs
+                out_values = [var.value for var in self._output_vars]
+                self._result.update_current_outputs(out_values)
+
+                # 5. Write results
+                if self.config.save_results:
+                    if (self.env.time + self.config.t_sample_simulation) % self.config.t_sample_communication == 0:
+                        # Check if we need to write to disk, do this before storing outputs,
+                        # to initialize the new row after dumping the results
+                        self._check_and_write_to_disk(self.env.time + self.config.t_sample_simulation)
+
+                        # Log the outputs resulting from the step we just finished.
+                        # These will be paired with the inputs active for the next simulation step.
+                        self._log_outputs(self.env.time + self.config.t_sample_simulation)
+
+                # 6. Wait for the environment
                 yield self.env.timeout(dt_sim)
+
+            # 7. End of Communication Step (Post-Step)
+            # Communicate
             self.update_module_vars()
 
-    def update_model_inputs(self):
+    def _log_inputs(self, time: float, capture_all_inputs: bool):
         """
-        Internal method to write current data_broker to simulation model.
-        Only update values, not other module_types.
+        Update the result object with current inputs.
+        If capture_all_inputs is True, a row is added immediately.
         """
-        model_input_names = (
-            self.model.get_input_names() + self.model.get_parameter_names()
-        )
-        for inp in self.variables:
-            if inp.name in model_input_names:
-                self.logger.debug("Updating model variable %s=%s", inp.name, inp.value)
-                self.model.set(name=inp.name, value=inp.value)
+        values = [var.value for var in self._input_vars]
+        self._result.update_inputs(values, time, capture_all_inputs=capture_all_inputs)
+
+    def _log_outputs(self, time: float):
+        """
+        Add a full result row (Outputs + Last Inputs).
+        """
+        values = [var.value for var in self._output_vars]
+        self._result.update_outputs(values, time)
+
+    def _check_and_write_to_disk(self, time):
+        """Check if write delay has passed and dump to disk."""
+        if not self.config.result_filename:
+            return
+
+        # Inputs are written in the next time step, therefore results
+        # are behind actual env time
+        current_result_time = time - self.config.t_sample_communication
+        if (current_result_time - self._last_write_time) >= self.config.write_results_delay:
+            self._result.write_results()
+            self._last_write_time = time
 
     def update_module_vars(self):
         """
@@ -578,7 +685,7 @@ class Simulator(BaseModule):
             return
         file = self.config.result_filename
         if file:
-            self._result.write_results(self.config.result_filename)
+            self._result.write_results()
             df = read_simulator_results(file)
         else:
             df = self._result.df()
@@ -590,86 +697,7 @@ class Simulator(BaseModule):
             return
         os.remove(self.config.result_filename)
 
-    def _update_results(self, input_callback, t_start_simulation_loop, both=False, no_sub_sim=False):
-        """
-        Adds model variables to the SimulationResult object
-        at the given timestamp.
-        """
-        if not self.config.save_results:
-            return
-
-        if input_callback:
-            timestamp = self.env.time
-        else:
-            timestamp = t_start_simulation_loop + self.config.t_sample_communication
-            if both:
-                time_stamp_both = self.env.time
-
-        self._inputs_changed_since_last_results_saving = False
-
-        inp_values = [var.value for var in self._get_result_input_variables()]
-        out_values = [var.value for var in self._get_result_output_variables()]
-
-        if input_callback:
-            # create new timestamp entry in results for upcoming timestamp
-            self._result.index.append(timestamp)
-            # append inputs, outputs stay None
-            self._result.data.append([None]*len(out_values) + inp_values)
-        else:
-            # If input comes in at the same time add these first for the current time step
-            if both:
-                # create new timestamp entry in results for upcoming timestamp
-                self._result.index.append(time_stamp_both)
-                # append inputs, outputs stay None
-                self._result.data.append([None] * len(out_values) + inp_values)
-            # Add outputs for the time the simulation ended (inputs are already stored).
-            self._result.index.append(timestamp)
-            out_values = [var.value for var in self._get_result_output_variables()]
-            self._result.data.append(out_values + self._result.data[-1][len(out_values):])
-
-        if (
-            self.config.result_filename is not None
-            and self.env.time // (self.config.write_results_delay * self._save_count) > 0
-        ):
-            self._save_count += 1
-            if no_sub_sim:
-                index_store = self._result.index[-1]
-                data_store = self._result.data[-1]
-                self._result.index = self._result.index[:-1]
-                self._result.data = self._result.data[:-1]
-            self._result.write_results(self.config.result_filename)
-            if no_sub_sim:
-                self._result.index = [index_store]
-                self._result.data = [data_store]
-
-    def _update_result_outputs(self, timestamp: float):
-        """Updates results with current values for states and outputs."""
-        self._result.index.append(timestamp)
-        out_values = [var.value for var in self._get_result_output_variables()]
-        self._result.data.append(out_values)
-
-    def _update_result_inputs(self, timestamp: float, init: bool = False):
-        """Updates results with current values for states and outputs."""
-        in_values = [var.value for var in self._get_result_input_variables()]
-        if init:
-            self._result.index.append(timestamp)
-            out_values = [var.value for var in self._get_result_output_variables()]
-            self._result.data.append([None] * len(out_values) + in_values)
-        else:
-            # At full time steps, overwrite the last results row with output and new input
-            self._result.data[-1] = self._result.data[-1][:-len(in_values)] + in_values
-
-    def _get_result_model_variables(self) -> AgentVariables:
-        """
-        Gets all variables to be saved in the result based
-        on self.result_causalities.
-        """
-
-        # THE ORDER OF THIS CONCAT IS IMPORTANT. The _update_results function will
-        # extend the outputs with the inputs
-        return self._get_result_output_variables() + self._get_result_input_variables()
-
-    def _get_result_input_variables(self) -> AgentVariables:
+    def _get_result_input_variables(self) -> List[ModelVariable]:
         """Gets all input variables to be saved in the results based on
         self.result_causalities. Input variables are added to the results at the time
         index before an interval, i.e. parameters and inputs."""
@@ -681,7 +709,7 @@ class Simulator(BaseModule):
                 _variables.extend(self.model.parameters)
         return _variables
 
-    def _get_result_output_variables(self) -> AgentVariables:
+    def _get_result_output_variables(self) -> List[ModelVariable]:
         """Gets all output variables to be saved in the results based on
         self.result_causalities. Input variables are added to the results at the time
         index after an interval, i.e. locals and outputs."""
