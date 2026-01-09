@@ -311,8 +311,8 @@ interacting with the standard model class.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.Simulator.process">
 <span class="sig-name descname"><span class="pre">process</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/modules/simulation/simulator.html#Simulator.process"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.simulation.simulator.Simulator.process" title="Permalink to this definition"></a></dt>
-<dd><p>This function creates a endless loop for the single simulation step event.
-The do_step() function needs to return a generator.</p>
+<dd><p>Main simulation loop.
+Handles simulation stepping, result logging, and synchronization.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -332,13 +332,6 @@ all scheduled process will be started in this environment.</p>
 <dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.Simulator.terminate">
 <span class="sig-name descname"><span class="pre">terminate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/modules/simulation/simulator.html#Simulator.terminate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.simulation.simulator.Simulator.terminate" title="Permalink to this definition"></a></dt>
 <dd><p>Terminate the model</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.Simulator.update_model_inputs">
-<span class="sig-name descname"><span class="pre">update_model_inputs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/modules/simulation/simulator.html#Simulator.update_model_inputs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.simulation.simulator.Simulator.update_model_inputs" title="Permalink to this definition"></a></dt>
-<dd><p>Internal method to write current data_broker to simulation model.
-Only update values, not other module_types.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -366,7 +359,7 @@ values to the module outputs and states.</p>
 </dd>
 <dt class="field-even">Fields<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.fine_results" title="agentlib.modules.simulation.simulator.SimulatorConfig.fine_results"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fine_results</span> <span class="pre">(bool)</span></code></a></p></li>
+<li><p><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.capture_all_inputs" title="agentlib.modules.simulation.simulator.SimulatorConfig.capture_all_inputs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">capture_all_inputs</span> <span class="pre">(bool)</span></code></a></p></li>
 <li><p><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.inputs" title="agentlib.modules.simulation.simulator.SimulatorConfig.inputs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inputs</span> <span class="pre">(List[agentlib.core.datamodels.AgentVariable])</span></code></a></p></li>
 <li><p><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.measurement_uncertainty" title="agentlib.modules.simulation.simulator.SimulatorConfig.measurement_uncertainty"><code class="xref py py-obj docutils literal notranslate"><span class="pre">measurement_uncertainty</span> <span class="pre">(Dict[str,</span> <span class="pre">float]</span> <span class="pre">|</span> <span class="pre">float)</span></code></a></p></li>
 <li><p><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.model" title="agentlib.modules.simulation.simulator.SimulatorConfig.model"><code class="xref py py-obj docutils literal notranslate"><span class="pre">model</span> <span class="pre">(Dict)</span></code></a></p></li>
@@ -405,9 +398,9 @@ values to the module outputs and states.</p>
 </dd>
 </dl>
 <dl class="py attribute pydantic_field">
-<dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.SimulatorConfig.fine_results">
-<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">fine_results</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#agentlib.modules.simulation.simulator.SimulatorConfig.fine_results" title="Permalink to this definition"></a></dt>
-<dd><p>If True, results are stored more finely, including inputs during asimulation step.</p>
+<dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.SimulatorConfig.capture_all_inputs">
+<em class="property"><span class="pre">field</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">capture_all_inputs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#agentlib.modules.simulation.simulator.SimulatorConfig.capture_all_inputs" title="Permalink to this definition"></a></dt>
+<dd><p>If True, results are stored immediately when inputs change, even during simulation steps.</p>
 </dd></dl>
 
 <dl class="py attribute pydantic_field">
@@ -641,7 +634,7 @@ and assert that it does not exist.</p>
 
 <dl class="py method pydantic_validator">
 <dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.SimulatorConfig.check_t_sample">
-<em class="property"><span class="pre">validator</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">check_t_sample</span></span><em class="autodoc_pydantic_validator_arrow property">&#160; <span class="pre">»</span>&#160; </em><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.t_sample_simulation" title="agentlib.modules.simulation.simulator.SimulatorConfig.t_sample_simulation"><em class="xref py py-obj"><span class="pre">t_sample_simulation</span></em></a><em class="property"><span class="pre">,</span> </em><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.t_sample_communication" title="agentlib.modules.simulation.simulator.SimulatorConfig.t_sample_communication"><em class="xref py py-obj"><span class="pre">t_sample_communication</span></em></a><a class="reference internal" href="../_modules/agentlib/modules/simulation/simulator.html#SimulatorConfig.check_t_sample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.simulation.simulator.SimulatorConfig.check_t_sample" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">validator</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">check_t_sample</span></span><em class="autodoc_pydantic_validator_arrow property">&#160; <span class="pre">»</span>&#160; </em><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.t_sample_communication" title="agentlib.modules.simulation.simulator.SimulatorConfig.t_sample_communication"><em class="xref py py-obj"><span class="pre">t_sample_communication</span></em></a><em class="property"><span class="pre">,</span> </em><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.t_sample_simulation" title="agentlib.modules.simulation.simulator.SimulatorConfig.t_sample_simulation"><em class="xref py py-obj"><span class="pre">t_sample_simulation</span></em></a><a class="reference internal" href="../_modules/agentlib/modules/simulation/simulator.html#SimulatorConfig.check_t_sample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.simulation.simulator.SimulatorConfig.check_t_sample" title="Permalink to this definition"></a></dt>
 <dd><p>Check if t_sample is smaller than stop-start time</p>
 </dd></dl>
 
@@ -654,7 +647,8 @@ and assert that it does not exist.</p>
 <dl class="py method pydantic_validator">
 <dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.SimulatorConfig.deprecate_t_sample">
 <em class="property"><span class="pre">validator</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">deprecate_t_sample</span></span><em class="autodoc_pydantic_validator_arrow property">&#160; <span class="pre">»</span>&#160; </em><a class="reference internal" href="#agentlib.modules.simulation.simulator.SimulatorConfig.t_sample" title="agentlib.modules.simulation.simulator.SimulatorConfig.t_sample"><em class="xref py py-obj"><span class="pre">t_sample</span></em></a><a class="reference internal" href="../_modules/agentlib/modules/simulation/simulator.html#SimulatorConfig.deprecate_t_sample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.simulation.simulator.SimulatorConfig.deprecate_t_sample" title="Permalink to this definition"></a></dt>
-<dd><p>Deprecates the t_sample field in favor of t_sample_communication and t_sample_simulation.</p>
+<dd><p>Deprecates the t_sample field in favor of t_sample_communication
+and t_sample_simulation.</p>
 </dd></dl>
 
 <dl class="py method pydantic_validator">
@@ -687,14 +681,9 @@ and assert that it does not exist.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.SimulatorResults">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agentlib.modules.simulation.simulator.</span></span><span class="sig-name descname"><span class="pre">SimulatorResults</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">variables</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="agentlib.core.html#agentlib.core.datamodels.ModelVariable" title="agentlib.core.datamodels.ModelVariable"><span class="pre">ModelVariable</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/modules/simulation/simulator.html#SimulatorResults"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.simulation.simulator.SimulatorResults" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">agentlib.modules.simulation.simulator.</span></span><span class="sig-name descname"><span class="pre">SimulatorResults</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename:</span> <span class="pre">str</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">header_written:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index:</span> <span class="pre">~typing.List[float]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data:</span> <span class="pre">~typing.List[~typing.List[float]]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_current_inputs:</span> <span class="pre">~typing.List[float]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_current_outputs:</span> <span class="pre">~typing.List[float]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_columns:</span> <span class="pre">~pandas.core.indexes.multi.MultiIndex</span> <span class="pre">=</span> <span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_input_count:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_output_count:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/modules/simulation/simulator.html#SimulatorResults"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.simulation.simulator.SimulatorResults" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Class to organize in-memory simulator results.</p>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.SimulatorResults.columns">
-<span class="sig-name descname"><span class="pre">columns</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">MultiIndex</span></em><a class="headerlink" href="#agentlib.modules.simulation.simulator.SimulatorResults.columns" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
 <dl class="py attribute">
 <dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.SimulatorResults.data">
 <span class="sig-name descname"><span class="pre">data</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#agentlib.modules.simulation.simulator.SimulatorResults.data" title="Permalink to this definition"></a></dt>
@@ -707,21 +696,74 @@ and assert that it does not exist.</p>
 </dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.SimulatorResults.filename">
+<span class="sig-name descname"><span class="pre">filename</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#agentlib.modules.simulation.simulator.SimulatorResults.filename" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.SimulatorResults.header_written">
+<span class="sig-name descname"><span class="pre">header_written</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#agentlib.modules.simulation.simulator.SimulatorResults.header_written" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.SimulatorResults.index">
 <span class="sig-name descname"><span class="pre">index</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#agentlib.modules.simulation.simulator.SimulatorResults.index" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.SimulatorResults.initialize">
-<span class="sig-name descname"><span class="pre">initialize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/modules/simulation/simulator.html#SimulatorResults.initialize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.simulation.simulator.SimulatorResults.initialize" title="Permalink to this definition"></a></dt>
-<dd><p>Adds the first row to the data</p>
+<dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.SimulatorResults.initialize_inputs">
+<span class="sig-name descname"><span class="pre">initialize_inputs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/modules/simulation/simulator.html#SimulatorResults.initialize_inputs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.simulation.simulator.SimulatorResults.initialize_inputs" title="Permalink to this definition"></a></dt>
+<dd><p>Initializes input data with Nones.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.SimulatorResults.initialize_outputs">
+<span class="sig-name descname"><span class="pre">initialize_outputs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/modules/simulation/simulator.html#SimulatorResults.initialize_outputs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.simulation.simulator.SimulatorResults.initialize_outputs" title="Permalink to this definition"></a></dt>
+<dd><p>Initializes output data with Nones.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.SimulatorResults.setup">
+<span class="sig-name descname"><span class="pre">setup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_vars</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="agentlib.core.html#agentlib.core.datamodels.ModelVariable" title="agentlib.core.datamodels.ModelVariable"><span class="pre">ModelVariable</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_vars</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="agentlib.core.html#agentlib.core.datamodels.ModelVariable" title="agentlib.core.datamodels.ModelVariable"><span class="pre">ModelVariable</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/modules/simulation/simulator.html#SimulatorResults.setup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.simulation.simulator.SimulatorResults.setup" title="Permalink to this definition"></a></dt>
+<dd><p>Initializes results object input variables
+“u”, outputs “x” and internal state variables “x”.
+It uses a nested dict provided from model class.
++—————————————————+
+|   |   inputs u    |  outputs y    |  states x     |
+| t |   u1  |   u2  |   y1  |   y2  |   x1  |   x2  |
++—————————————————+
+| 1 |  …  |  …  |  …  |  …  |  …  |  …  |
+| 2 |  …  |  …  |  …  |  …  |  …  |  …  |
+<a href="#id3"><span class="problematic" id="id4">|...|</span></a>  …  |  …  |  …  |  …  |  …  |  …  |
+<a href="#id1"><span class="problematic" id="id2">|</span></a>…
+Also initializes the internal buffers.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.SimulatorResults.update_current_outputs">
+<span class="sig-name descname"><span class="pre">update_current_outputs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/modules/simulation/simulator.html#SimulatorResults.update_current_outputs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.simulation.simulator.SimulatorResults.update_current_outputs" title="Permalink to this definition"></a></dt>
+<dd><p>Stores the current output values of intermediate simulation steps.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.SimulatorResults.update_inputs">
+<span class="sig-name descname"><span class="pre">update_inputs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">capture_all_inputs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/modules/simulation/simulator.html#SimulatorResults.update_inputs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.simulation.simulator.SimulatorResults.update_inputs" title="Permalink to this definition"></a></dt>
+<dd><p>Updates the internal input buffer.
+If capture_all_inputs is True, creates a row with NaN outputs.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.SimulatorResults.update_outputs">
+<span class="sig-name descname"><span class="pre">update_outputs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">time</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/modules/simulation/simulator.html#SimulatorResults.update_outputs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.simulation.simulator.SimulatorResults.update_outputs" title="Permalink to this definition"></a></dt>
+<dd><p>Stores a full result row at the end of a simulation step.
+Combines provided output values with the last known input values.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="agentlib.modules.simulation.simulator.SimulatorResults.write_results">
-<span class="sig-name descname"><span class="pre">write_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/modules/simulation/simulator.html#SimulatorResults.write_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.simulation.simulator.SimulatorResults.write_results" title="Permalink to this definition"></a></dt>
-<dd><p>Dumps results which are currently in memory to a file.
-On creation of the file, the header columns are dumped, as well.</p>
+<span class="sig-name descname"><span class="pre">write_results</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/modules/simulation/simulator.html#SimulatorResults.write_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.modules.simulation.simulator.SimulatorResults.write_results" title="Permalink to this definition"></a></dt>
+<dd><p>Dumps results which are currently in memory to the file.
+Clears memory after writing to keep footprint low.</p>
 </dd></dl>
 
 </dd></dl>
