@@ -22,8 +22,8 @@ sys.setrecursionlimit(1500)
 # -- Project information -----------------------------------------------------
 
 project = "agentlib"
-copyright = "2021, AGENT-Project Associates"
-author = "AGENT-Project Associates"
+copyright = "2023, RWTH Aachen University - E.ON Energy Research Center - Institute for Energy Efficient Buildings and Indoor Climate"
+author = "Institute for Energy Efficient Buildings and Indoor Climate, RWTH Aachen University"
 
 # The full version, including alpha/beta/rc tags
 with open(Path(__file__).parents[2].joinpath(project, "__init__.py"), "r") as file:
