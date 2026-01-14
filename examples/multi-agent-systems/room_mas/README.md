@@ -31,7 +31,7 @@ This script runs the simulation with an emphasis on real-time or post-processing
 `AgentLib` utilizes the FMI (Functional Mock-up Interface) standard to couple agent-based control logic with physical system models.
 
 ### Tested FMUs and Tools
-This example and the underlying `AgentLib` library have been tested with FMUs generated from Dymola (Dassault Systèmes). The FMI co-simulation interface is implemented using the [FMPy](https://github.com/CATIA-Systems/FMPy) library, ensuring full compliance with the FMI 2.0 standard.
+This example and the underlying `AgentLib` library have been tested with FMUs generated from Dymola and OpenModelica. The FMI co-simulation interface is implemented using the [FMPy](https://github.com/CATIA-Systems/FMPy) library, ensuring full compliance with the FMI 2.0 standard.
 
 ### FMI Standards
 *   **FMI Version**: 2.0
