@@ -129,8 +129,6 @@ def run_example(until, with_plots=True, log_level=logging.INFO):
     idx = 0
     for t_sample_com, t_sample_sim in itertools.product(*combinations):
         df_ro = results[f"{t_sample_com}_{t_sample_sim}"]["room"]
-        # mask = df_ro.index % t_sample_com == 0
-        # df_ro = df_ro[mask]
 
         times_input_changed = df_ro.index[~np.isnan(df_ro["T_oda"])]
         for _i, _time in enumerate(times_input_changed):

@@ -84,13 +84,13 @@ class SimulatorResults:
 
     def update_inputs(self, values: List[float], time: float, capture_all_inputs: bool):
         """
-        Updates the internal input buffer.
+        Updates the result with the inputs creating a full result row (output + input).
         If capture_all_inputs is True, creates a row with NaN outputs.
         """
         self._current_inputs = values
         # Results can already hold the input (at t_sample_communication created by
         # the output writing) or the input time is new (created by an input callback)
-        if time not in self.index:
+        if not self.index or time != self.index[-1]:
             # For capture_all_inputs, append the inputs created by an input callback
             if capture_all_inputs:
                 self.index.append(time)
@@ -98,7 +98,7 @@ class SimulatorResults:
                 # Create row: [NaN, NaN, ..., In1, In2, ...]
                 row = [None] * self._output_count + self._current_inputs
                 # If timestamp is new, this needs to be appended
-                self.data.append(row)#
+                self.data.append(row)
         else:
             # Create row: [Out1, Out2, ..., In1, In2, ...]
             row = self.data[-1][:self._output_count] + self._current_inputs
@@ -107,8 +107,9 @@ class SimulatorResults:
 
     def update_outputs(self, values: List[float], time: float):
         """
-        Stores a full result row at the end of a simulation step.
-        Combines provided output values with the last known input values.
+        Stores a result row at the end of a simulation step.
+        Combines provided output values with None for input values, as these are
+        updated in the next time step.
         """
         # Create row: [Out1, Out2, ..., None, None, ...]
         row = values + [None] * self._input_count
@@ -235,7 +236,7 @@ class SimulatorConfig(BaseModuleConfig):
     )
     capture_all_inputs: bool = Field(
         title="capture_all_inputs",
-        default=True,
+        default=False,
         description="If True, results are stored immediately when "
                     "inputs change, even during simulation steps.",
     )
@@ -451,7 +452,9 @@ class Simulator(BaseModule):
             self._result.setup(input_vars=self._input_vars,
                                output_vars=self._output_vars)
 
+        # Initialize local time trackers
         self._last_write_time = 0.0
+        self._last_communication_time = self.env.time
 
         self._register_input_callbacks()
         self.logger.info("%s initialized!", self.__class__.__name__)
@@ -599,19 +602,29 @@ class Simulator(BaseModule):
                 )
 
                 # 4. Store intermediate outputs
-                out_values = [var.value for var in self._output_vars]
-                self._result.update_current_outputs(out_values)
+                if self.config.save_results:
+                    out_values = [var.value for var in self._output_vars]
+                    self._result.update_current_outputs(out_values)
 
                 # 5. Write results
                 if self.config.save_results:
-                    if (self.env.time + self.config.t_sample_simulation) % self.config.t_sample_communication == 0:
-                        # Check if we need to write to disk, do this before storing outputs,
-                        # to initialize the new row after dumping the results
-                        self._check_and_write_to_disk(self.env.time + self.config.t_sample_simulation)
+                    # Since simulation has been performed, the model and its results are
+                    # already a time step ahead
+                    current_time = self.env.time + self.config.t_sample_simulation
+                    if ((current_time - self._last_communication_time) >=
+                            self.config.t_sample_communication):
+                        # Update time tracker for communication
+                        self._last_communication_time = ((current_time //
+                                                         self.config.t_sample_communication) *
+                                                         self.config.t_sample_communication)
+                        # Check if we need to write to disk, do this before storing
+                        # outputs, to initialize the new row after dumping the results
+                        self._check_and_write_to_disk(self.env.time +
+                                                      self.config.t_sample_simulation)
 
                         # Log the outputs resulting from the step we just finished.
                         # These will be paired with the inputs active for the next simulation step.
-                        self._log_outputs(self.env.time + self.config.t_sample_simulation)
+                        self._log_outputs(self._last_communication_time)
 
                 # 6. Wait for the environment
                 yield self.env.timeout(dt_sim)
