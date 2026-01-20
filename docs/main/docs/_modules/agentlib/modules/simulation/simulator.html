@@ -82,7 +82,7 @@
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">math</span><span class="w"> </span><span class="kn">import</span> <span class="n">inf</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
@@ -111,11 +111,22 @@
 <span class="k">class</span><span class="w"> </span><span class="nc">SimulatorResults</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Class to organize in-memory simulator results.&quot;&quot;&quot;</span>
 
-    <span class="n">index</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span>
-    <span class="n">columns</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">MultiIndex</span>
-    <span class="n">data</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]]</span>
+    <span class="c1"># Configuration</span>
+    <span class="n">filename</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">header_written</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">variables</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">ModelVariable</span><span class="p">]):</span>
+    <span class="c1"># Data Buffers</span>
+    <span class="n">index</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">list</span><span class="p">)</span>
+    <span class="n">data</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">list</span><span class="p">)</span>
+
+    <span class="c1"># State tracking</span>
+    <span class="n">_current_inputs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">list</span><span class="p">)</span>
+    <span class="n">_current_outputs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">list</span><span class="p">)</span>
+    <span class="n">_columns</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">MultiIndex</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">_input_count</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">_output_count</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+
+<div class="viewcode-block" id="SimulatorResults.setup"><a class="viewcode-back" href="../../../../code/agentlib.modules.simulation.html#agentlib.modules.simulation.simulator.SimulatorResults.setup">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_vars</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">ModelVariable</span><span class="p">],</span> <span class="n">output_vars</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">ModelVariable</span><span class="p">]):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initializes results object input variables</span>
 <span class="sd">        &quot;u&quot;, outputs &quot;x&quot; and internal state variables &quot;x&quot;.</span>
@@ -128,8 +139,16 @@
 <span class="sd">        | 2 |  ...  |  ...  |  ...  |  ...  |  ...  |  ...  |</span>
 <span class="sd">        |...|  ...  |  ...  |  ...  |  ...  |  ...  |  ...  |</span>
 <span class="sd">        |...</span>
+<span class="sd">        Also initializes the internal buffers.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">MultiIndex</span><span class="o">.</span><span class="n">from_arrays</span><span class="p">(</span>
+        <span class="n">variables</span> <span class="o">=</span> <span class="n">output_vars</span> <span class="o">+</span> <span class="n">input_vars</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_input_count</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">input_vars</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_output_count</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">output_vars</span><span class="p">)</span>
+
+        <span class="c1"># Initialize current inputs with current values</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_current_inputs</span> <span class="o">=</span> <span class="p">[</span><span class="n">var</span><span class="o">.</span><span class="n">value</span> <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">input_vars</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_columns</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">MultiIndex</span><span class="o">.</span><span class="n">from_arrays</span><span class="p">(</span>
             <span class="n">arrays</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
                 <span class="p">[</span>
                     <span class="p">[</span><span class="n">_var</span><span class="o">.</span><span class="n">causality</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">_var</span> <span class="ow">in</span> <span class="n">variables</span><span class="p">],</span>
@@ -139,30 +158,85 @@
             <span class="p">),</span>
             <span class="n">sortorder</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
             <span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;causality&quot;</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;type&quot;</span><span class="p">],</span>
-        <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="p">)</span></div>
 
-<div class="viewcode-block" id="SimulatorResults.initialize"><a class="viewcode-back" href="../../../../code/agentlib.modules.simulation.html#agentlib.modules.simulation.simulator.SimulatorResults.initialize">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">initialize</span><span class="p">(</span>
-            <span class="bp">self</span><span class="p">,</span>
-            <span class="n">time</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
-    <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Adds the first row to the data&quot;&quot;&quot;</span></div>
+<div class="viewcode-block" id="SimulatorResults.update_inputs"><a class="viewcode-back" href="../../../../code/agentlib.modules.simulation.html#agentlib.modules.simulation.simulator.SimulatorResults.update_inputs">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">update_inputs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">values</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span> <span class="n">time</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">capture_all_inputs</span><span class="p">:</span> <span class="nb">bool</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Updates the result with the inputs creating a full result row (output + input).</span>
+<span class="sd">        If capture_all_inputs is True, creates a row with NaN outputs.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_current_inputs</span> <span class="o">=</span> <span class="n">values</span>
+        <span class="c1"># Results can already hold the input (at t_sample_communication created by</span>
+        <span class="c1"># the output writing) or the input time is new (created by an input callback)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="ow">or</span> <span class="n">time</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="c1"># For capture_all_inputs, append the inputs created by an input callback</span>
+            <span class="k">if</span> <span class="n">capture_all_inputs</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">time</span><span class="p">)</span>
+                <span class="c1"># index is not in data, if results have been written to disk</span>
+                <span class="c1"># Create row: [NaN, NaN, ..., In1, In2, ...]</span>
+                <span class="n">row</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_output_count</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_inputs</span>
+                <span class="c1"># If timestamp is new, this needs to be appended</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Create row: [Out1, Out2, ..., In1, In2, ...]</span>
+            <span class="n">row</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][:</span><span class="bp">self</span><span class="o">.</span><span class="n">_output_count</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_inputs</span>
+            <span class="c1"># Update timestamp with new inputs</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">row</span></div>
+
+<div class="viewcode-block" id="SimulatorResults.update_outputs"><a class="viewcode-back" href="../../../../code/agentlib.modules.simulation.html#agentlib.modules.simulation.simulator.SimulatorResults.update_outputs">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">update_outputs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">values</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span> <span class="n">time</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Stores a result row at the end of a simulation step.</span>
+<span class="sd">        Combines provided output values with None for input values, as these are</span>
+<span class="sd">        updated in the next time step.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Create row: [Out1, Out2, ..., None, None, ...]</span>
+        <span class="n">row</span> <span class="o">=</span> <span class="n">values</span> <span class="o">+</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_input_count</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">time</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SimulatorResults.update_current_outputs"><a class="viewcode-back" href="../../../../code/agentlib.modules.simulation.html#agentlib.modules.simulation.simulator.SimulatorResults.update_current_outputs">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">update_current_outputs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">values</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Stores the current output values of intermediate simulation steps.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_current_outputs</span> <span class="o">=</span> <span class="n">values</span></div>
+
+<div class="viewcode-block" id="SimulatorResults.initialize_outputs"><a class="viewcode-back" href="../../../../code/agentlib.modules.simulation.html#agentlib.modules.simulation.simulator.SimulatorResults.initialize_outputs">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">initialize_outputs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes output data with Nones.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">time</span><span class="p">)</span>
+        <span class="c1"># Create row: [None, None, ..., In1, In2, ...]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_output_count</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_inputs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SimulatorResults.initialize_inputs"><a class="viewcode-back" href="../../../../code/agentlib.modules.simulation.html#agentlib.modules.simulation.simulator.SimulatorResults.initialize_inputs">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">initialize_inputs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">values</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes input data with Nones.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_current_inputs</span> <span class="o">=</span> <span class="n">values</span></div>
+
+<div class="viewcode-block" id="SimulatorResults.write_results"><a class="viewcode-back" href="../../../../code/agentlib.modules.simulation.html#agentlib.modules.simulation.simulator.SimulatorResults.write_results">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">write_results</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Dumps results which are currently in memory to the file.</span>
+<span class="sd">        Clears memory after writing to keep footprint low.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_columns</span><span class="p">)</span>
+
+        <span class="c1"># Write header only once</span>
+        <span class="n">header</span> <span class="o">=</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">header_written</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">Path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span>
+        <span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="n">header</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">header_written</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="c1"># Clear buffers</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="SimulatorResults.df"><a class="viewcode-back" href="../../../../code/agentlib.modules.simulation.html#agentlib.modules.simulation.simulator.SimulatorResults.df">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">df</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the current results as a dataframe.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="SimulatorResults.write_results"><a class="viewcode-back" href="../../../../code/agentlib.modules.simulation.html#agentlib.modules.simulation.simulator.SimulatorResults.write_results">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">write_results</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Dumps results which are currently in memory to a file.</span>
-<span class="sd">        On creation of the file, the header columns are dumped, as well.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">header</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">Path</span><span class="p">(</span><span class="n">file</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">()</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="n">header</span><span class="p">)</span>
-        <span class="c1"># keep the last row of the results</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span></div></div>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_columns</span><span class="p">)</span></div></div>
 
 
 <div class="viewcode-block" id="read_simulator_results"><a class="viewcode-back" href="../../../../code/agentlib.modules.simulation.html#agentlib.modules.simulation.simulator.read_simulator_results">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">read_simulator_results</span><span class="p">(</span><span class="n">file</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
@@ -180,6 +254,7 @@
     <span class="n">outputs</span><span class="p">:</span> <span class="n">AgentVariables</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">states</span><span class="p">:</span> <span class="n">AgentVariables</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">shared_variable_fields</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;outputs&quot;</span><span class="p">]</span>
+
     <span class="n">t_start</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
         <span class="n">title</span><span class="o">=</span><span class="s2">&quot;t_start&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">ge</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Simulation start time&quot;</span>
     <span class="p">)</span>
@@ -187,10 +262,7 @@
         <span class="n">title</span><span class="o">=</span><span class="s2">&quot;t_stop&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">inf</span><span class="p">,</span> <span class="n">ge</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Simulation stop time&quot;</span>
     <span class="p">)</span>
     <span class="n">t_sample</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
-        <span class="n">title</span><span class="o">=</span><span class="s2">&quot;t_sample&quot;</span><span class="p">,</span>
-        <span class="n">default</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-        <span class="n">ge</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Deprecated option.&quot;</span>
+        <span class="n">title</span><span class="o">=</span><span class="s2">&quot;t_sample&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ge</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Deprecated option.&quot;</span>
     <span class="p">)</span>
     <span class="n">t_sample_communication</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
         <span class="n">title</span><span class="o">=</span><span class="s2">&quot;t_sample&quot;</span><span class="p">,</span>
@@ -211,7 +283,6 @@
                     <span class="s2">&quot;as long as the model supports this. Used to override dt of the model.&quot;</span>
     <span class="p">)</span>
     <span class="n">model</span><span class="p">:</span> <span class="n">Dict</span>
-
     <span class="c1"># Model results</span>
     <span class="n">save_results</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
         <span class="n">title</span><span class="o">=</span><span class="s2">&quot;save_results&quot;</span><span class="p">,</span>
@@ -241,12 +312,25 @@
         <span class="n">description</span><span class="o">=</span><span class="s2">&quot;List of causalities to store. Default stores &quot;</span>
                     <span class="s2">&quot;only inputs and outputs&quot;</span><span class="p">,</span>
     <span class="p">)</span>
+    <span class="n">capture_all_inputs</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">title</span><span class="o">=</span><span class="s2">&quot;capture_all_inputs&quot;</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;If True, results are stored immediately when &quot;</span>
+                    <span class="s2">&quot;inputs change, even during simulation steps.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
     <span class="n">write_results_delay</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
         <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Write Results Delay&quot;</span><span class="p">,</span>
         <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Sampling interval for which the results are written to disc in seconds.&quot;</span><span class="p">,</span>
         <span class="n">validate_default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
         <span class="n">gt</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">update_inputs_on_callback</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+        <span class="n">title</span><span class="o">=</span><span class="s2">&quot;update_inputs_on_callback&quot;</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Deprecated! Will be removed in future versions.&quot;</span>
+                    <span class="s2">&quot;If True, model inputs are updated if they are updated in data_broker.&quot;</span>
+                    <span class="s2">&quot;Else, the model inputs are updated before each simulation.&quot;</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">measurement_uncertainty</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
         <span class="n">title</span><span class="o">=</span><span class="s2">&quot;measurement_uncertainty&quot;</span><span class="p">,</span>
@@ -263,13 +347,6 @@
                     <span class="s2">&quot;receiving a new value from the DataBroker. In the simulator, this &quot;</span>
                     <span class="s2">&quot;is False by default, as we expect to receive a lot of measurements&quot;</span>
                     <span class="s2">&quot; and want to be efficient.&quot;</span><span class="p">,</span>
-    <span class="p">)</span>
-    <span class="n">update_inputs_on_callback</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
-        <span class="n">title</span><span class="o">=</span><span class="s2">&quot;update_inputs_on_callback&quot;</span><span class="p">,</span>
-        <span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Deprecated! Will be removed in future versions.&quot;</span>
-                    <span class="s2">&quot;If True, model inputs are updated if they are updated in data_broker.&quot;</span>
-                    <span class="s2">&quot;Else, the model inputs are updated before each simulation.&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
 <div class="viewcode-block" id="SimulatorConfig.check_nonexisting_csv"><a class="viewcode-back" href="../../../../code/agentlib.modules.simulation.html#agentlib.modules.simulation.simulator.SimulatorConfig.check_nonexisting_csv">[docs]</a>    <span class="nd">@field_validator</span><span class="p">(</span><span class="s2">&quot;result_filename&quot;</span><span class="p">)</span>
@@ -320,7 +397,9 @@
         <span class="n">t_start</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;t_start&quot;</span><span class="p">)</span>
         <span class="n">t_stop</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;t_stop&quot;</span><span class="p">)</span>
         <span class="n">t_sample_old</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;t_sample&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">t_sample_old</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># A change in the default shows t_sample is still in the config of the user</span>
+
+        <span class="c1"># Handle legacy t_sample logic</span>
+        <span class="k">if</span> <span class="n">t_sample_old</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">info</span><span class="o">.</span><span class="n">field_name</span> <span class="o">==</span> <span class="s2">&quot;t_sample_simulation&quot;</span><span class="p">:</span>
                 <span class="n">t_sample</span> <span class="o">=</span> <span class="mi">1</span>
             <span class="k">else</span><span class="p">:</span>
@@ -332,7 +411,8 @@
 
 <div class="viewcode-block" id="SimulatorConfig.check_t_comm_against_sim"><a class="viewcode-back" href="../../../../code/agentlib.modules.simulation.html#agentlib.modules.simulation.simulator.SimulatorConfig.check_t_comm_against_sim">[docs]</a>    <span class="nd">@field_validator</span><span class="p">(</span><span class="s2">&quot;t_sample_communication&quot;</span><span class="p">)</span>
     <span class="nd">@classmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">check_t_comm_against_sim</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">t_sample_communication</span><span class="p">,</span> <span class="n">info</span><span class="p">:</span> <span class="n">FieldValidationInfo</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">check_t_comm_against_sim</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">t_sample_communication</span><span class="p">,</span>
+                                 <span class="n">info</span><span class="p">:</span> <span class="n">FieldValidationInfo</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Check if t_sample is smaller than stop-start time&quot;&quot;&quot;</span>
         <span class="n">t_sample_simulation</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;t_sample_simulation&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">t_sample_simulation</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -345,7 +425,8 @@
 
 <div class="viewcode-block" id="SimulatorConfig.deprecate_update_inputs_on_callback"><a class="viewcode-back" href="../../../../code/agentlib.modules.simulation.html#agentlib.modules.simulation.simulator.SimulatorConfig.deprecate_update_inputs_on_callback">[docs]</a>    <span class="nd">@field_validator</span><span class="p">(</span><span class="s2">&quot;update_inputs_on_callback&quot;</span><span class="p">)</span>
     <span class="nd">@classmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">deprecate_update_inputs_on_callback</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">update_inputs_on_callback</span><span class="p">,</span> <span class="n">info</span><span class="p">:</span> <span class="n">FieldValidationInfo</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">deprecate_update_inputs_on_callback</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">update_inputs_on_callback</span><span class="p">,</span>
+                                            <span class="n">info</span><span class="p">:</span> <span class="n">FieldValidationInfo</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Check if t_sample is smaller than stop-start time&quot;&quot;&quot;</span>
         <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
             <span class="s2">&quot;update_inputs_on_callback is deprecated, remove it from your config. &quot;</span>
@@ -357,28 +438,27 @@
 <div class="viewcode-block" id="SimulatorConfig.deprecate_t_sample"><a class="viewcode-back" href="../../../../code/agentlib.modules.simulation.html#agentlib.modules.simulation.simulator.SimulatorConfig.deprecate_t_sample">[docs]</a>    <span class="nd">@field_validator</span><span class="p">(</span><span class="s2">&quot;t_sample&quot;</span><span class="p">)</span>
     <span class="nd">@classmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">deprecate_t_sample</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">t_sample</span><span class="p">,</span> <span class="n">info</span><span class="p">:</span> <span class="n">FieldValidationInfo</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Deprecates the t_sample field in favor of t_sample_communication and t_sample_simulation.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Deprecates the t_sample field in favor of t_sample_communication</span>
+<span class="sd">        and t_sample_simulation.&quot;&quot;&quot;</span>
         <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
-            <span class="s2">&quot;t_sample is deprecated, use t_sample_communication, &quot;</span>
-            <span class="s2">&quot;t_sample_simulation for a concise separation of the two. &quot;</span>
-            <span class="s2">&quot;Will use the given t_sample for t_sample_communication and t_sample_simulation=1 s, &quot;</span>
-            <span class="s2">&quot;the `model.dt` default.&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;t_sample is deprecated, use t_sample_communication for storing outputs &quot;</span>
+            <span class="s2">&quot;and t_sample_simulation for the actual simulation step. &quot;</span>
+            <span class="s2">&quot;Will use the given t_sample for t_sample_communication and &quot;</span>
+            <span class="s2">&quot;t_sample_simulation=1 s, the `model.dt` default.&quot;</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="k">return</span> <span class="n">t_sample</span></div>
 
 <div class="viewcode-block" id="SimulatorConfig.set_default_t_sample"><a class="viewcode-back" href="../../../../code/agentlib.modules.simulation.html#agentlib.modules.simulation.simulator.SimulatorConfig.set_default_t_sample">[docs]</a>    <span class="nd">@field_validator</span><span class="p">(</span><span class="s2">&quot;write_results_delay&quot;</span><span class="p">)</span>
     <span class="nd">@classmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">set_default_t_sample</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">write_results_delay</span><span class="p">,</span> <span class="n">info</span><span class="p">:</span> <span class="n">FieldValidationInfo</span><span class="p">):</span>
-        <span class="n">t_sample</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;t_sample&quot;</span><span class="p">]</span>
+        <span class="n">t_comm</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;t_sample_communication&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
         <span class="k">if</span> <span class="n">write_results_delay</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="c1"># 5 is an arbitrary default which should balance writing new results as</span>
-            <span class="c1"># soon as possible to disk with saving file I/O overhead</span>
-            <span class="k">return</span> <span class="mi">5</span> <span class="o">*</span> <span class="n">t_sample</span>
-        <span class="k">if</span> <span class="n">write_results_delay</span> <span class="o">&lt;</span> <span class="n">t_sample</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="s2">&quot;Saving results more frequently than you simulate makes no sense. &quot;</span>
-                <span class="s2">&quot;Increase write_results_delay above t_sample.&quot;</span>
-            <span class="p">)</span>
+            <span class="c1"># Default to writing every 5 communication steps to balance I/O</span>
+            <span class="k">return</span> <span class="n">t_comm</span> <span class="o">*</span> <span class="mi">5</span>
+
+        <span class="k">if</span> <span class="n">write_results_delay</span> <span class="o">&lt;</span> <span class="n">t_comm</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;write_results_delay should be &gt;= t_sample_communication&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">write_results_delay</span></div>
 
 <div class="viewcode-block" id="SimulatorConfig.check_model"><a class="viewcode-back" href="../../../../code/agentlib.modules.simulation.html#agentlib.modules.simulation.simulator.SimulatorConfig.check_model">[docs]</a>    <span class="nd">@field_validator</span><span class="p">(</span><span class="s2">&quot;model&quot;</span><span class="p">)</span>
@@ -435,14 +515,25 @@
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">agent</span><span class="p">:</span> <span class="n">Agent</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">,</span> <span class="n">agent</span><span class="o">=</span><span class="n">agent</span><span class="p">)</span>
-        <span class="c1"># Initialize instance attributes</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">_model</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">model</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_result</span><span class="p">:</span> <span class="n">SimulatorResults</span> <span class="o">=</span> <span class="n">SimulatorResults</span><span class="p">(</span>
-            <span class="n">variables</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_result_model_variables</span><span class="p">()</span>
-        <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_save_count</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># tracks, how often results have been saved</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_inputs_changed_since_last_results_saving</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="c1"># Caching variables for performance (avoid list comprehensions in loop)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_input_vars</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_result_input_variables</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_output_vars</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_result_output_variables</span><span class="p">()</span>
+
+        <span class="c1"># Initialize Result Handler</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_result</span> <span class="o">=</span> <span class="n">SimulatorResults</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">result_filename</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">save_results</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_result</span><span class="o">.</span><span class="n">setup</span><span class="p">(</span><span class="n">input_vars</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_input_vars</span><span class="p">,</span>
+                               <span class="n">output_vars</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_output_vars</span><span class="p">)</span>
+
+        <span class="c1"># Initialize local time trackers</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_last_write_time</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_last_communication_time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">time</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">_register_input_callbacks</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> initialized!&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
 
@@ -548,49 +639,104 @@
 
 <div class="viewcode-block" id="Simulator.process"><a class="viewcode-back" href="../../../../code/agentlib.modules.simulation.html#agentlib.modules.simulation.simulator.Simulator.process">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        This function creates a endless loop for the single simulation step event,</span>
-<span class="sd">        updating inputs, simulating, model results and then outputs.</span>
-
-<span class="sd">        In a simulation step following happens:</span>
-<span class="sd">        1. Specify the end time of the simulation from the agents perspective.</span>
-<span class="sd">        **Important note**: The agents use unix-time as a timestamp and start</span>
-<span class="sd">        the simulation with the current datetime (represented by self.env.time),</span>
-<span class="sd">        the model starts at 0 seconds (represented by self.env.now).</span>
-<span class="sd">        2. Directly after the simulation we store the results with</span>
-<span class="sd">        the output time and then call the timeout in the environment,</span>
-<span class="sd">        hence actually increase the environment time.</span>
-<span class="sd">        3. Once the environment time reached the simulation time,</span>
-<span class="sd">        we send the updated output values to other modules and agents by setting</span>
-<span class="sd">        them the data_broker.</span>
+<span class="sd">        Main simulation loop.</span>
+<span class="sd">        Handles simulation stepping, result logging, and synchronization.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_update_results</span><span class="p">(</span><span class="n">timestamp_inputs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">time</span><span class="p">,</span> <span class="n">timestamp_outputs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">time</span><span class="p">)</span>
+        <span class="c1"># 1. Log Initial State (t=0)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">save_results</span><span class="p">:</span>
+            <span class="c1"># Ensure the result buffer has the correct initial inputs</span>
+            <span class="n">in_values</span> <span class="o">=</span> <span class="p">[</span><span class="n">var</span><span class="o">.</span><span class="n">value</span> <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_input_vars</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_result</span><span class="o">.</span><span class="n">initialize_inputs</span><span class="p">(</span><span class="n">in_values</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_result</span><span class="o">.</span><span class="n">initialize_outputs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">time</span><span class="p">)</span>
+            <span class="c1"># Prevent false positive &quot;input change&quot; log at t=0 due to initialization callbacks</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_inputs_changed_since_last_results_saving</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-            <span class="c1"># Simulate</span>
+            <span class="c1"># Determine the time points for the next communication step</span>
             <span class="n">t_samples</span> <span class="o">=</span> <span class="n">create_time_samples</span><span class="p">(</span>
                 <span class="n">t_end</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">t_sample_communication</span><span class="p">,</span>
                 <span class="n">dt</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">t_sample_simulation</span>
             <span class="p">)</span>
-            <span class="n">_t_start_simulation_loop</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">time</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Doing simulation steps </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">t_samples</span><span class="p">)</span>
-            <span class="k">for</span> <span class="n">_idx</span><span class="p">,</span> <span class="n">_t_sample</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">t_samples</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
-                <span class="n">_t_start</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">now</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">t_start</span>
-                <span class="n">dt_sim</span> <span class="o">=</span> <span class="n">t_samples</span><span class="p">[</span><span class="n">_idx</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">_t_sample</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">do_step</span><span class="p">(</span><span class="n">t_start</span><span class="o">=</span><span class="n">_t_start</span><span class="p">,</span> <span class="n">t_sample</span><span class="o">=</span><span class="n">dt_sim</span><span class="p">)</span>
-                <span class="k">if</span> <span class="n">_idx</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">t_samples</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_inputs_changed_since_last_results_saving</span><span class="p">:</span>
-                    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_inputs_changed_since_last_results_saving</span><span class="p">:</span>
-                        <span class="c1"># Did not change during simulation step</span>
-                        <span class="n">timestamp_inputs</span> <span class="o">=</span> <span class="n">_t_start_simulation_loop</span>
-                    <span class="k">else</span><span class="p">:</span>
-                        <span class="c1"># The inputs are only applied at self.env.time, not when they are received by the communicator</span>
-                        <span class="n">timestamp_inputs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">time</span>
-                    <span class="c1"># Update the results</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">_update_results</span><span class="p">(</span>
-                        <span class="n">timestamp_outputs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">time</span> <span class="o">+</span> <span class="n">dt_sim</span><span class="p">,</span>
-                        <span class="n">timestamp_inputs</span><span class="o">=</span><span class="n">timestamp_inputs</span>
-                    <span class="p">)</span>
+
+            <span class="c1"># Iterate through simulation sub-steps</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">t_samples</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="n">dt_sim</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">t_samples</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">t_samples</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+
+                <span class="c1"># 2. Check for Input Changes (Pre-Step)</span>
+                <span class="c1"># If inputs changed since the last step (or during the yield), we log them now.</span>
+                <span class="c1"># This ensures the new inputs are recorded at the current timestamp,</span>
+                <span class="c1"># separate from the outputs of the *previous* step (which were logged at</span>
+                <span class="c1"># the end of the last loop).</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_inputs_changed_since_last_results_saving</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">save_results</span><span class="p">:</span>
+                        <span class="c1"># Create row: [t=Current, Out=NaN, In=New]</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_log_inputs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">time</span><span class="p">,</span>
+                                         <span class="n">capture_all_inputs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">capture_all_inputs</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_inputs_changed_since_last_results_saving</span> <span class="o">=</span> <span class="kc">False</span>
+
+                <span class="c1"># 3. Perform Simulation Step</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">do_step</span><span class="p">(</span>
+                    <span class="n">t_start</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">t_start</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">now</span><span class="p">,</span>
+                    <span class="n">t_sample</span><span class="o">=</span><span class="n">dt_sim</span>
+                <span class="p">)</span>
+
+                <span class="c1"># 4. Store intermediate outputs</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">save_results</span><span class="p">:</span>
+                    <span class="n">out_values</span> <span class="o">=</span> <span class="p">[</span><span class="n">var</span><span class="o">.</span><span class="n">value</span> <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_output_vars</span><span class="p">]</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_result</span><span class="o">.</span><span class="n">update_current_outputs</span><span class="p">(</span><span class="n">out_values</span><span class="p">)</span>
+
+                <span class="c1"># 5. Write results</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">save_results</span><span class="p">:</span>
+                    <span class="c1"># Since simulation has been performed, the model and its results are</span>
+                    <span class="c1"># already a time step ahead</span>
+                    <span class="n">current_time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">time</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">t_sample_simulation</span>
+                    <span class="k">if</span> <span class="p">((</span><span class="n">current_time</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_communication_time</span><span class="p">)</span> <span class="o">&gt;=</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">t_sample_communication</span><span class="p">):</span>
+                        <span class="c1"># Update time tracker for communication</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_last_communication_time</span> <span class="o">=</span> <span class="p">((</span><span class="n">current_time</span> <span class="o">//</span>
+                                                         <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">t_sample_communication</span><span class="p">)</span> <span class="o">*</span>
+                                                         <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">t_sample_communication</span><span class="p">)</span>
+                        <span class="c1"># Check if we need to write to disk, do this before storing</span>
+                        <span class="c1"># outputs, to initialize the new row after dumping the results</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_check_and_write_to_disk</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">time</span> <span class="o">+</span>
+                                                      <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">t_sample_simulation</span><span class="p">)</span>
+
+                        <span class="c1"># Log the outputs resulting from the step we just finished.</span>
+                        <span class="c1"># These will be paired with the inputs active for the next simulation step.</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_log_outputs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_last_communication_time</span><span class="p">)</span>
+
+                <span class="c1"># 6. Wait for the environment</span>
                 <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">timeout</span><span class="p">(</span><span class="n">dt_sim</span><span class="p">)</span>
+
+            <span class="c1"># 7. End of Communication Step (Post-Step)</span>
             <span class="c1"># Communicate</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">update_module_vars</span><span class="p">()</span></div>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_log_inputs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">capture_all_inputs</span><span class="p">:</span> <span class="nb">bool</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Update the result object with current inputs.</span>
+<span class="sd">        If capture_all_inputs is True, a row is added immediately.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="n">var</span><span class="o">.</span><span class="n">value</span> <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_input_vars</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_result</span><span class="o">.</span><span class="n">update_inputs</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">capture_all_inputs</span><span class="o">=</span><span class="n">capture_all_inputs</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_log_outputs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add a full result row (Outputs + Last Inputs).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="n">var</span><span class="o">.</span><span class="n">value</span> <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_output_vars</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_result</span><span class="o">.</span><span class="n">update_outputs</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">time</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_check_and_write_to_disk</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Check if write delay has passed and dump to disk.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">result_filename</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="c1"># Inputs are written in the next time step, therefore results</span>
+        <span class="c1"># are behind actual env time</span>
+        <span class="n">current_result_time</span> <span class="o">=</span> <span class="n">time</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">t_sample_communication</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">current_result_time</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_write_time</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">write_results_delay</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_result</span><span class="o">.</span><span class="n">write_results</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_last_write_time</span> <span class="o">=</span> <span class="n">time</span>
 
 <div class="viewcode-block" id="Simulator.update_module_vars"><a class="viewcode-back" href="../../../../code/agentlib.modules.simulation.html#agentlib.modules.simulation.simulator.Simulator.update_module_vars">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">update_module_vars</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -630,7 +776,7 @@
             <span class="k">return</span>
         <span class="n">file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">result_filename</span>
         <span class="k">if</span> <span class="n">file</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_result</span><span class="o">.</span><span class="n">write_results</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">result_filename</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_result</span><span class="o">.</span><span class="n">write_results</span><span class="p">()</span>
             <span class="n">df</span> <span class="o">=</span> <span class="n">read_simulator_results</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_result</span><span class="o">.</span><span class="n">df</span><span class="p">()</span>
@@ -642,70 +788,7 @@
             <span class="k">return</span>
         <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">result_filename</span><span class="p">)</span></div>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">_update_results</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timestamp_outputs</span><span class="p">,</span> <span class="n">timestamp_inputs</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Adds model variables to the SimulationResult object</span>
-<span class="sd">        at the given timestamp.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">save_results</span><span class="p">:</span>
-            <span class="k">return</span>
-
-        <span class="n">inp_values</span> <span class="o">=</span> <span class="p">[</span><span class="n">var</span><span class="o">.</span><span class="n">value</span> <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_result_input_variables</span><span class="p">()]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_inputs_changed_since_last_results_saving</span> <span class="o">=</span> <span class="kc">False</span>
-
-        <span class="n">out_values</span> <span class="o">=</span> <span class="p">[</span><span class="n">var</span><span class="o">.</span><span class="n">value</span> <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_result_output_variables</span><span class="p">()]</span>
-        <span class="n">_len_outputs</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">out_values</span><span class="p">)</span>
-
-        <span class="c1"># Two cases:</span>
-        <span class="c1"># - Either both timestamps are the same and new, add them both</span>
-        <span class="c1"># - or the inputs are for an earlier timestamp -&gt; first add the inputs and then append the new outputs index.</span>
-        <span class="k">if</span> <span class="n">timestamp_inputs</span> <span class="o">==</span> <span class="n">timestamp_outputs</span><span class="p">:</span>
-            <span class="c1"># self.logger.debug(&quot;Storing data at the same time stamp %s s&quot;, timestamp_outputs)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_result</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">timestamp_outputs</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_result</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">out_values</span> <span class="o">+</span> <span class="n">inp_values</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">timestamp_inputs</span> <span class="o">&lt;</span> <span class="n">timestamp_outputs</span><span class="p">:</span>
-            <span class="c1"># add inputs in the time stamp before adding outputs, as they are active from</span>
-            <span class="c1"># the start of this interval</span>
-            <span class="k">if</span> <span class="n">timestamp_inputs</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_result</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">timestamp_inputs</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_result</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
-                    <span class="c1"># self.logger.debug(&quot;Adding inputs to last time stamp %s s&quot;, timestamp_inputs)</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">_result</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_result</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][:</span><span class="n">_len_outputs</span><span class="p">]</span> <span class="o">+</span> <span class="n">inp_values</span>
-                <span class="c1"># else: pass, as inputs are outdated (have been changed during simulation step)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="c1"># This case may occur if inputs changed during simulation.</span>
-                <span class="c1"># In this case, the inputs hold for current time - t_sample_simulation, but the outputs</span>
-                <span class="c1"># hold for the current time. In this case, just add Nones as outputs.</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_result</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">timestamp_inputs</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_result</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">_len_outputs</span> <span class="o">+</span> <span class="n">inp_values</span><span class="p">)</span>
-                <span class="c1"># self.logger.debug(</span>
-                <span class="c1">#     &quot;Storing inputs only due to changes during simulation at time stamp %s s&quot;,</span>
-                <span class="c1">#     timestamp_inputs</span>
-                <span class="c1"># )</span>
-
-            <span class="c1"># self.logger.debug(&quot;Storing outputs at time stamp %s s&quot;, timestamp_outputs)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_result</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">timestamp_outputs</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_result</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">out_values</span> <span class="o">+</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">inp_values</span><span class="p">))</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Storing inputs ahead of outputs is not supported.&quot;</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">result_filename</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
-                <span class="ow">and</span> <span class="n">timestamp_outputs</span> <span class="o">//</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">write_results_delay</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_save_count</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
-        <span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_save_count</span> <span class="o">+=</span> <span class="mi">1</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_result</span><span class="o">.</span><span class="n">write_results</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">result_filename</span><span class="p">)</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">_get_result_model_variables</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AgentVariables</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Gets all variables to be saved in the result based</span>
-<span class="sd">        on self.result_causalities.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="c1"># THE ORDER OF THIS CONCAT IS IMPORTANT. The _update_results function will</span>
-        <span class="c1"># extend the outputs with the inputs</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_result_output_variables</span><span class="p">()</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_result_input_variables</span><span class="p">()</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">_get_result_input_variables</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AgentVariables</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_result_input_variables</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">ModelVariable</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Gets all input variables to be saved in the results based on</span>
 <span class="sd">        self.result_causalities. Input variables are added to the results at the time</span>
 <span class="sd">        index before an interval, i.e. parameters and inputs.&quot;&quot;&quot;</span>
@@ -717,7 +800,7 @@
                 <span class="n">_variables</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">_variables</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">_get_result_output_variables</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AgentVariables</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_result_output_variables</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">ModelVariable</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Gets all output variables to be saved in the results based on</span>
 <span class="sd">        self.result_causalities. Input variables are added to the results at the time</span>
 <span class="sd">        index after an interval, i.e. locals and outputs.&quot;&quot;&quot;</span>
