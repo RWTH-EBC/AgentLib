@@ -37,6 +37,9 @@ ROOM_CONFIG = {
             "t_sample_communication": 50,
             "t_sample_simulation": 15,
             "save_results": True,
+            "result_filename": "results.csv",
+            "capture_all_inputs": True,
+            "overwrite_result_file": True,
             "log_level": "DEBUG",
             "inputs": [
                 {
@@ -69,6 +72,7 @@ def run_example(until, with_plots=True, log_level=logging.INFO):
 
     This example can be used to understand how the simulator receives and stores data.
     Change the `combinations` in the code if you want to test out different settings.
+    With the `capture_all_inputs` option, the simulator also stores all inputs during a simulation step.
 
     Parameters
     ----------
@@ -96,6 +100,8 @@ def run_example(until, with_plots=True, log_level=logging.INFO):
         room_cfg["id"] = f"{t_sample_com}_{t_sample_sim}"
         room_cfg["modules"]["room"]["t_sample_communication"] = t_sample_com
         room_cfg["modules"]["room"]["t_sample_simulation"] = t_sample_sim
+        room_cfg["modules"]["room"]["result_filename"] = f"results_{t_sample_com}_{t_sample_sim}.csv"
+        room_cfg["modules"]["room"]["capture_all_inputs"] = False
         agent_configs.append(room_cfg)
 
     mas = LocalMASAgency(
@@ -107,7 +113,7 @@ def run_example(until, with_plots=True, log_level=logging.INFO):
     # Simulate
     mas.run(until=until)
     # Load results:
-    results = mas.get_results(cleanup=True)
+    results = mas.get_results(cleanup=False)
 
     if not with_plots:
         return results
