@@ -518,7 +518,7 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_model</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">model</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_pending_input_change_time</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_inputs_changed_since_last_results_saving</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="c1"># Caching variables for performance (avoid list comprehensions in loop)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_input_vars</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_result_input_variables</span><span class="p">()</span>
@@ -623,19 +623,19 @@
                         <span class="s2">&quot;Updating model </span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2">=</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">_type</span><span class="p">,</span> <span class="n">var</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">var</span><span class="o">.</span><span class="n">value</span>
                     <span class="p">)</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">var</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">var</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">_pending_input_change_time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">time</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_inputs_changed_since_last_results_saving</span> <span class="o">=</span> <span class="kc">True</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_callback_update_model_input</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inp</span><span class="p">:</span> <span class="n">AgentVariable</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Set given model input value to the model&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Updating model input </span><span class="si">%s</span><span class="s2">=</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">inp</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">set_input_value</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">inp</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_pending_input_change_time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">time</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_inputs_changed_since_last_results_saving</span> <span class="o">=</span> <span class="kc">True</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_callback_update_model_parameter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">par</span><span class="p">:</span> <span class="n">AgentVariable</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Set given model parameter value to the model&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Updating model parameter </span><span class="si">%s</span><span class="s2">=</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">par</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">set_parameter_value</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">par</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_pending_input_change_time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">time</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_inputs_changed_since_last_results_saving</span> <span class="o">=</span> <span class="kc">True</span>
 
 <div class="viewcode-block" id="Simulator.process"><a class="viewcode-back" href="../../../../code/agentlib.modules.simulation.html#agentlib.modules.simulation.simulator.Simulator.process">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -649,7 +649,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_result</span><span class="o">.</span><span class="n">initialize_inputs</span><span class="p">(</span><span class="n">in_values</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_result</span><span class="o">.</span><span class="n">initialize_outputs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">time</span><span class="p">)</span>
             <span class="c1"># Prevent false positive &quot;input change&quot; log at t=0 due to initialization callbacks</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_pending_input_change_time</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_inputs_changed_since_last_results_saving</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
             <span class="c1"># Determine the time points for the next communication step</span>
             <span class="n">t_samples</span> <span class="o">=</span> <span class="n">create_time_samples</span><span class="p">(</span>
@@ -662,16 +662,21 @@
                 <span class="n">dt_sim</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">t_samples</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">t_samples</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
 
                 <span class="c1"># 2. Check for Input Changes (Pre-Step)</span>
-                <span class="c1"># If inputs changed since the last step (or during the yield), we log them now.</span>
+                <span class="c1"># If inputs changed since the last step (or during the yield),</span>
+                <span class="c1"># we log them now.</span>
                 <span class="c1"># This ensures the new inputs are recorded at the current timestamp,</span>
                 <span class="c1"># separate from the outputs of the *previous* step (which were logged at</span>
                 <span class="c1"># the end of the last loop).</span>
-                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pending_input_change_time</span><span class="p">:</span>
+                <span class="n">current_time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">time</span>
+                <span class="c1"># Track if a communication step is reached.</span>
+                <span class="c1"># At communication times, the inputs are always saved</span>
+                <span class="n">full_comm_step</span> <span class="o">=</span> <span class="p">((</span><span class="n">current_time</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_communication_time</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_inputs_changed_since_last_results_saving</span> <span class="ow">or</span> <span class="n">full_comm_step</span><span class="p">:</span>
                     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">save_results</span><span class="p">:</span>
                         <span class="c1"># Create row: [t=Current, Out=NaN, In=New]</span>
-                        <span class="bp">self</span><span class="o">.</span><span class="n">_log_inputs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_pending_input_change_time</span><span class="p">,</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_log_inputs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">time</span><span class="p">,</span>
                                          <span class="n">capture_all_inputs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">capture_all_inputs</span><span class="p">)</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">_pending_input_change_time</span> <span class="o">=</span> <span class="kc">None</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_inputs_changed_since_last_results_saving</span> <span class="o">=</span> <span class="kc">False</span>
 
                 <span class="c1"># 3. Perform Simulation Step</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">do_step</span><span class="p">(</span>
