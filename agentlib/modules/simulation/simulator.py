@@ -440,7 +440,7 @@ class Simulator(BaseModule):
 
         self._model = None
         self.model = self.config.model
-        self._pending_input_change_time = None
+        self._inputs_changed_since_last_results_saving = False
 
         # Caching variables for performance (avoid list comprehensions in loop)
         self._input_vars = self._get_result_input_variables()
@@ -545,19 +545,19 @@ class Simulator(BaseModule):
                         "Updating model %s %s=%s", _type, var.name, var.value
                     )
                     self.model.set(name=var.name, value=var.value)
-                    self._pending_input_change_time = self.env.time
+                    self._inputs_changed_since_last_results_saving = True
 
     def _callback_update_model_input(self, inp: AgentVariable, name: str):
         """Set given model input value to the model"""
         self.logger.debug("Updating model input %s=%s", name, inp.value)
         self.model.set_input_value(name=name, value=inp.value)
-        self._pending_input_change_time = self.env.time
+        self._inputs_changed_since_last_results_saving = True
 
     def _callback_update_model_parameter(self, par: AgentVariable, name: str):
         """Set given model parameter value to the model"""
         self.logger.debug("Updating model parameter %s=%s", name, par.value)
         self.model.set_parameter_value(name=name, value=par.value)
-        self._pending_input_change_time = self.env.time
+        self._inputs_changed_since_last_results_saving = True
 
     def process(self):
         """
@@ -571,7 +571,7 @@ class Simulator(BaseModule):
             self._result.initialize_inputs(in_values)
             self._result.initialize_outputs(self.env.time)
             # Prevent false positive "input change" log at t=0 due to initialization callbacks
-            self._pending_input_change_time = None
+            self._inputs_changed_since_last_results_saving = False
         while True:
             # Determine the time points for the next communication step
             t_samples = create_time_samples(
@@ -584,16 +584,21 @@ class Simulator(BaseModule):
                 dt_sim = float(t_samples[i + 1] - t_samples[i])
 
                 # 2. Check for Input Changes (Pre-Step)
-                # If inputs changed since the last step (or during the yield), we log them now.
+                # If inputs changed since the last step (or during the yield),
+                # we log them now.
                 # This ensures the new inputs are recorded at the current timestamp,
                 # separate from the outputs of the *previous* step (which were logged at
                 # the end of the last loop).
-                if self._pending_input_change_time:
+                current_time = self.env.time
+                # Track if a communication step is reached.
+                # At communication times, the inputs are always saved
+                full_comm_step = ((current_time - self._last_communication_time) == 0)
+                if self._inputs_changed_since_last_results_saving or full_comm_step:
                     if self.config.save_results:
                         # Create row: [t=Current, Out=NaN, In=New]
-                        self._log_inputs(self._pending_input_change_time,
+                        self._log_inputs(self.env.time,
                                          capture_all_inputs=self.config.capture_all_inputs)
-                    self._pending_input_change_time = None
+                    self._inputs_changed_since_last_results_saving = False
 
                 # 3. Perform Simulation Step
                 self.model.do_step(
