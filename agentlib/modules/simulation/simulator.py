@@ -440,7 +440,7 @@ class Simulator(BaseModule):
 
         self._model = None
         self.model = self.config.model
-        self._inputs_changed_since_last_results_saving = False
+        self._pending_input_change_time = None
 
         # Caching variables for performance (avoid list comprehensions in loop)
         self._input_vars = self._get_result_input_variables()
@@ -545,19 +545,19 @@ class Simulator(BaseModule):
                         "Updating model %s %s=%s", _type, var.name, var.value
                     )
                     self.model.set(name=var.name, value=var.value)
-                    self._inputs_changed_since_last_results_saving = True
+                    self._pending_input_change_time = self.env.time
 
     def _callback_update_model_input(self, inp: AgentVariable, name: str):
         """Set given model input value to the model"""
         self.logger.debug("Updating model input %s=%s", name, inp.value)
         self.model.set_input_value(name=name, value=inp.value)
-        self._inputs_changed_since_last_results_saving = True
+        self._pending_input_change_time = self.env.time
 
     def _callback_update_model_parameter(self, par: AgentVariable, name: str):
         """Set given model parameter value to the model"""
         self.logger.debug("Updating model parameter %s=%s", name, par.value)
         self.model.set_parameter_value(name=name, value=par.value)
-        self._inputs_changed_since_last_results_saving = True
+        self._pending_input_change_time = self.env.time
 
     def process(self):
         """
@@ -571,7 +571,7 @@ class Simulator(BaseModule):
             self._result.initialize_inputs(in_values)
             self._result.initialize_outputs(self.env.time)
             # Prevent false positive "input change" log at t=0 due to initialization callbacks
-            self._inputs_changed_since_last_results_saving = False
+            self._pending_input_change_time = None
         while True:
             # Determine the time points for the next communication step
             t_samples = create_time_samples(
@@ -588,12 +588,12 @@ class Simulator(BaseModule):
                 # This ensures the new inputs are recorded at the current timestamp,
                 # separate from the outputs of the *previous* step (which were logged at
                 # the end of the last loop).
-                if self._inputs_changed_since_last_results_saving:
+                if self._pending_input_change_time:
                     if self.config.save_results:
                         # Create row: [t=Current, Out=NaN, In=New]
-                        self._log_inputs(self.env.time,
+                        self._log_inputs(self._pending_input_change_time,
                                          capture_all_inputs=self.config.capture_all_inputs)
-                    self._inputs_changed_since_last_results_saving = False
+                    self._pending_input_change_time = None
 
                 # 3. Perform Simulation Step
                 self.model.do_step(
