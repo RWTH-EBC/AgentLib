@@ -5,6 +5,9 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "agentlib"
 authors = [
+    { name = "Associates of the AGENT project"}
+]
+maintainers = [
     { name = "Institute for Energy Efficient Buildings and Indoor Climate, RWTH Aachen University", email = "ebc-tools@eonerc.rwth-aachen.de" }
 ]
 description = "Framework for development and execution of agents for control and simulation of energy systems."

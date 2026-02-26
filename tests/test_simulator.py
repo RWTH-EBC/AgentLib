@@ -84,6 +84,8 @@ class TestSimulator(unittest.TestCase):
             "measurement_uncertainty": 0.01,
             "inputs": [{"name": "input", "value": 10}],
             "outputs": [{"name": "output"}, {"name": "output_2"}],
+            "capture_all_inputs": kwargs.get("capture_all_inputs", False),
+            "write_results_delay": None
         }
 
     def test_simulator_parameters(self):
@@ -140,6 +142,106 @@ class TestSimulator(unittest.TestCase):
         step = simulator.process()
         next(step)
         self.assertIsInstance(simulator.get_results(), pd.DataFrame)
+
+    def test_capture_all_inputs_true(self):
+        """Test that inputs are captured immediately when capture_all_inputs=True."""
+        agent = self.get_agent()
+        simulator = Simulator(
+            config=self._get_module_cfg(
+                capture_all_inputs=True,
+                result_filename=None,
+                write_results_delay=self.t_sample_communication
+            ),
+            agent=agent,
+        )
+        agent.env.process(simulator.process())
+
+        # Simulate an input change mid-simulation
+        simulator.set("input", value=50)
+
+        # Simulate long enough to trigger results writing
+        agent.env.run(until=self.t_sample_communication + self.t_sample_simulation)
+
+        res = simulator.get_results()
+
+        # With capture_all_inputs=True, we should see rows where outputs are NaN
+        # but inputs are captured (these are the immediate input captures)
+        input_only_rows = res[res["output"].isna() & res["input"].notna()]
+        self.assertGreater(len(input_only_rows), 0,
+                           "Expected rows with captured inputs and NaN "
+                           "outputs when capture_all_inputs=True")
+
+        # Verify the new input value was captured
+        self.assertIn(50, res["input"].dropna().values)
+
+    def test_capture_all_inputs_false(self):
+        """Test that inputs are only captured at communication steps when
+        capture_all_inputs=False."""
+        agent = self.get_agent()
+        simulator = Simulator(
+            config=self._get_module_cfg(
+                capture_all_inputs=False,
+                result_filename=None,
+            ),
+            agent=agent,
+        )
+        agent.env.process(simulator.process())
+
+        # Simulate an input change mid-simulation
+        simulator.set("input", value=50)
+
+        # Simulate long enough to trigger results writing
+        agent.env.run(until=self.t_sample_communication + self.t_sample_simulation)
+
+        res = simulator.get_results()
+
+        # Check that we don't have rows at non-communication times with only inputs
+        for idx in res.index:
+            if idx > 0 and idx % self.t_sample_communication != 0:
+                self.fail(
+                    f"Found input-only row at non-communication time {idx} "
+                    f"when capture_all_inputs=False"
+                )
+
+    def test_capture_all_inputs_dataframe_structure(self):
+        """Test that the resulting dataframe structure is correct in
+        both capture modes."""
+        for capture_mode in [True, False]:
+            with self.subTest(capture_all_inputs=capture_mode):
+                agent = self.get_agent()
+                simulator = Simulator(
+                    config=self._get_module_cfg(
+                        capture_all_inputs=capture_mode,
+                        result_filename=None,
+                    ),
+                    agent=agent,
+                )
+
+                # Run the full simulation
+                simulator.run()
+                res = simulator.get_results()
+
+                # Verify basic dataframe structure
+                self.assertIsInstance(res, pd.DataFrame)
+                self.assertIn("input", res.columns)
+                self.assertIn("output", res.columns)
+                self.assertIn("output_2", res.columns)
+
+                # Verify index is numeric (time-based)
+                self.assertTrue(all(isinstance(idx, (int, float)) for idx in res.index))
+
+                # Verify we have data
+                self.assertGreater(len(res), 0)
+
+                # Verify outputs are present at communication times
+                t_comm = 2
+                comm_times = [t for t in res.index if t > 0 and t % t_comm == 0]
+                for t in comm_times:
+                    if t in res.index:
+                        self.assertTrue(
+                            pd.notna(res.loc[t, "output"]),
+                            f"Expected output at communication time {t}"
+                        )
 
     def test_wrong_causality(self):
         with self.assertRaises(ValidationError):
