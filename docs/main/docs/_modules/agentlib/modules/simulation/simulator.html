@@ -662,11 +662,17 @@
                 <span class="n">dt_sim</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">t_samples</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">t_samples</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
 
                 <span class="c1"># 2. Check for Input Changes (Pre-Step)</span>
-                <span class="c1"># If inputs changed since the last step (or during the yield), we log them now.</span>
+                <span class="c1"># If inputs changed since the last step (or during the yield),</span>
+                <span class="c1"># we log them now.</span>
                 <span class="c1"># This ensures the new inputs are recorded at the current timestamp,</span>
                 <span class="c1"># separate from the outputs of the *previous* step (which were logged at</span>
                 <span class="c1"># the end of the last loop).</span>
-                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_inputs_changed_since_last_results_saving</span><span class="p">:</span>
+
+                <span class="c1"># Track if this is the first simulation sub-step within the current</span>
+                <span class="c1"># communication interval. At communication boundaries, the inputs are</span>
+                <span class="c1"># always saved to ensure they are associated with the correct outputs.</span>
+                <span class="n">full_comm_step</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_inputs_changed_since_last_results_saving</span> <span class="ow">or</span> <span class="n">full_comm_step</span><span class="p">:</span>
                     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">save_results</span><span class="p">:</span>
                         <span class="c1"># Create row: [t=Current, Out=NaN, In=New]</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">_log_inputs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">time</span><span class="p">,</span>
