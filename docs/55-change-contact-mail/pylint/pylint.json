@@ -1,0 +1,2820 @@
+{
+    "messages": [
+        {
+            "type": "refactor",
+            "module": "/home/runner/work/AgentLib/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'print-statement' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/home/runner/work/AgentLib/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'parameter-unpacking' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/home/runner/work/AgentLib/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'unpacking-in-except' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/home/runner/work/AgentLib/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'old-raise-syntax' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/home/runner/work/AgentLib/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'backtick' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/home/runner/work/AgentLib/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'import-star-module-level' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/home/runner/work/AgentLib/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'apply-builtin' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/home/runner/work/AgentLib/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'basestring-builtin' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/home/runner/work/AgentLib/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'buffer-builtin' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/home/runner/work/AgentLib/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'cmp-builtin' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/home/runner/work/AgentLib/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'coerce-builtin' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/home/runner/work/AgentLib/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'execfile-builtin' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/home/runner/work/AgentLib/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'file-builtin' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/home/runner/work/AgentLib/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'long-builtin' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/home/runner/work/AgentLib/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'raw_input-builtin' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/home/runner/work/AgentLib/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'reduce-builtin' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/home/runner/work/AgentLib/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'standarderror-builtin' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/home/runner/work/AgentLib/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'unicode-builtin' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/home/runner/work/AgentLib/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'xrange-builtin' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/home/runner/work/AgentLib/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'coerce-method' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/home/runner/work/AgentLib/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'delslice-method' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/home/runner/work/AgentLib/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'getslice-method' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/home/runner/work/AgentLib/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'setslice-method' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/home/runner/work/AgentLib/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'no-absolute-import' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/home/runner/work/AgentLib/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'old-division' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/home/runner/work/AgentLib/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'dict-iter-method' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/home/runner/work/AgentLib/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'dict-view-method' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/home/runner/work/AgentLib/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'next-method-called' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/home/runner/work/AgentLib/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'metaclass-assignment' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/home/runner/work/AgentLib/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'indexing-exception' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/home/runner/work/AgentLib/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'raising-string' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/home/runner/work/AgentLib/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'reload-builtin' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/home/runner/work/AgentLib/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'oct-method' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/home/runner/work/AgentLib/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'hex-method' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/home/runner/work/AgentLib/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'nonzero-method' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/home/runner/work/AgentLib/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'cmp-method' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/home/runner/work/AgentLib/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'input-builtin' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/home/runner/work/AgentLib/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'round-builtin' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/home/runner/work/AgentLib/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'intern-builtin' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/home/runner/work/AgentLib/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'unichr-builtin' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/home/runner/work/AgentLib/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'map-builtin-not-iterating' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/home/runner/work/AgentLib/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'zip-builtin-not-iterating' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/home/runner/work/AgentLib/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'range-builtin-not-iterating' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/home/runner/work/AgentLib/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'filter-builtin-not-iterating' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/home/runner/work/AgentLib/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'using-cmp-argument' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/home/runner/work/AgentLib/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'div-method' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/home/runner/work/AgentLib/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'idiv-method' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/home/runner/work/AgentLib/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'rdiv-method' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/home/runner/work/AgentLib/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'exception-message-attribute' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/home/runner/work/AgentLib/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'invalid-str-codec' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/home/runner/work/AgentLib/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'sys-max-int' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/home/runner/work/AgentLib/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'bad-python3-import' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/home/runner/work/AgentLib/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'deprecated-string-function' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/home/runner/work/AgentLib/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'deprecated-str-translate-call' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/home/runner/work/AgentLib/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'deprecated-itertools-function' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/home/runner/work/AgentLib/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'deprecated-types-field' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/home/runner/work/AgentLib/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'next-method-defined' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/home/runner/work/AgentLib/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'dict-items-not-iterating' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/home/runner/work/AgentLib/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'dict-keys-not-iterating' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/home/runner/work/AgentLib/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'dict-values-not-iterating' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/home/runner/work/AgentLib/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'deprecated-operator-function' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/home/runner/work/AgentLib/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'deprecated-urllib-function' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/home/runner/work/AgentLib/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'xreadlines-attribute' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/home/runner/work/AgentLib/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'deprecated-sys-function' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/home/runner/work/AgentLib/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'exception-escape' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/home/runner/work/AgentLib/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'comprehension-escape' was removed from pylint, see https://github.com/pylint-dev/pylint/pull/4942.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "refactor",
+            "module": "/home/runner/work/AgentLib/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for '--disable', 'no-self-use' was moved to an optional extension, see https://pylint.readthedocs.io/en/latest/whatsnew/2/2.14/summary.html#removed-checkers.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "warning",
+            "module": "/home/runner/work/AgentLib/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "unknown-option-value",
+            "message": "Unknown option value for '--disable', expected a valid pylint message and got 'long-suffix'",
+            "message-id": "W0012"
+        },
+        {
+            "type": "warning",
+            "module": "/home/runner/work/AgentLib/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "unknown-option-value",
+            "message": "Unknown option value for '--disable', expected a valid pylint message and got 'old-ne-operator'",
+            "message-id": "W0012"
+        },
+        {
+            "type": "warning",
+            "module": "/home/runner/work/AgentLib/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "unknown-option-value",
+            "message": "Unknown option value for '--disable', expected a valid pylint message and got 'old-octal-literal'",
+            "message-id": "W0012"
+        },
+        {
+            "type": "warning",
+            "module": "/home/runner/work/AgentLib/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "unknown-option-value",
+            "message": "Unknown option value for '--disable', expected a valid pylint message and got 'non-ascii-bytes-literal'",
+            "message-id": "W0012"
+        },
+        {
+            "type": "warning",
+            "module": "/home/runner/work/AgentLib/AgentLib/pylintrc",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "pylintrc",
+            "symbol": "unknown-option-value",
+            "message": "Unknown option value for '--disable', expected a valid pylint message and got 'eq-without-hash'",
+            "message-id": "W0012"
+        },
+        {
+            "type": "fatal",
+            "module": "agentlib.modules.simulation.simulator",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "agentlib/modules/simulation/simulator.py",
+            "symbol": "astroid-error",
+            "message": "agentlib/modules/simulation/simulator.py: Fatal error while checking 'agentlib/modules/simulation/simulator.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-02-26-17-42-29.txt'.",
+            "message-id": "F0002"
+        },
+        {
+            "type": "fatal",
+            "module": "agentlib.modules.communicator.local_broadcast",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "agentlib/modules/communicator/local_broadcast.py",
+            "symbol": "astroid-error",
+            "message": "agentlib/modules/communicator/local_broadcast.py: Fatal error while checking 'agentlib/modules/communicator/local_broadcast.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-02-26-17-42-29.txt'.",
+            "message-id": "F0002"
+        },
+        {
+            "type": "convention",
+            "module": "agentlib.utils.multi_agent_system",
+            "obj": "",
+            "line": 219,
+            "column": 0,
+            "path": "agentlib/utils/multi_agent_system.py",
+            "symbol": "line-too-long",
+            "message": "Line too long (107/100)",
+            "message-id": "C0301"
+        },
+        {
+            "type": "fatal",
+            "module": "agentlib.utils.multi_agent_system",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "agentlib/utils/multi_agent_system.py",
+            "symbol": "astroid-error",
+            "message": "agentlib/utils/multi_agent_system.py: Fatal error while checking 'agentlib/utils/multi_agent_system.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-02-26-17-42-29.txt'.",
+            "message-id": "F0002"
+        },
+        {
+            "type": "fatal",
+            "module": "agentlib.utils.multi_processing_broker",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "agentlib/utils/multi_processing_broker.py",
+            "symbol": "astroid-error",
+            "message": "agentlib/utils/multi_processing_broker.py: Fatal error while checking 'agentlib/utils/multi_processing_broker.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-02-26-17-42-29.txt'.",
+            "message-id": "F0002"
+        },
+        {
+            "type": "convention",
+            "module": "agentlib.utils.multi_processing_broker",
+            "obj": "",
+            "line": 6,
+            "column": 0,
+            "path": "agentlib/utils/multi_processing_broker.py",
+            "symbol": "ungrouped-imports",
+            "message": "Imports from package json are not grouped",
+            "message-id": "C0412"
+        },
+        {
+            "type": "convention",
+            "module": "agentlib.utils.multi_processing_broker",
+            "obj": "",
+            "line": 7,
+            "column": 0,
+            "path": "agentlib/utils/multi_processing_broker.py",
+            "symbol": "ungrouped-imports",
+            "message": "Imports from package multiprocessing are not grouped",
+            "message-id": "C0412"
+        },
+        {
+            "type": "convention",
+            "module": "agentlib.utils.multi_processing_broker",
+            "obj": "",
+            "line": 10,
+            "column": 0,
+            "path": "agentlib/utils/multi_processing_broker.py",
+            "symbol": "ungrouped-imports",
+            "message": "Imports from package threading are not grouped",
+            "message-id": "C0412"
+        },
+        {
+            "type": "convention",
+            "module": "agentlib.utils.broker",
+            "obj": "",
+            "line": 6,
+            "column": 0,
+            "path": "agentlib/utils/broker.py",
+            "symbol": "ungrouped-imports",
+            "message": "Imports from package threading are not grouped",
+            "message-id": "C0412"
+        },
+        {
+            "type": "error",
+            "module": "agentlib.utils.plugin_import",
+            "obj": "",
+            "line": 6,
+            "column": 0,
+            "path": "agentlib/utils/plugin_import.py",
+            "symbol": "import-error",
+            "message": "Unable to import 'pydantic'",
+            "message-id": "E0401"
+        },
+        {
+            "type": "warning",
+            "module": "agentlib.utils.plugin_import",
+            "obj": "SaveUpdateDict.update",
+            "line": 31,
+            "column": 0,
+            "path": "agentlib/utils/plugin_import.py",
+            "symbol": "unused-argument",
+            "message": "Unused argument 'kwargs'",
+            "message-id": "W0613"
+        },
+        {
+            "type": "warning",
+            "module": "agentlib.utils.plugin_import",
+            "obj": "load_plugin",
+            "line": 72,
+            "column": 8,
+            "path": "agentlib/utils/plugin_import.py",
+            "symbol": "raise-missing-from",
+            "message": "Consider explicitly re-raising using 'except AttributeError as exc' and 'raise ImportError(f\"Plugin '{name}' has no dictionary called '{plugin_types_name}' to import plugin types.\") from exc'",
+            "message-id": "W0707"
+        },
+        {
+            "type": "convention",
+            "module": "agentlib.utils.fuzzy_matching",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "agentlib/utils/fuzzy_matching.py",
+            "symbol": "missing-module-docstring",
+            "message": "Missing module docstring",
+            "message-id": "C0114"
+        },
+        {
+            "type": "fatal",
+            "module": "agentlib.utils.fuzzy_matching",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "agentlib/utils/fuzzy_matching.py",
+            "symbol": "astroid-error",
+            "message": "agentlib/utils/fuzzy_matching.py: Fatal error while checking 'agentlib/utils/fuzzy_matching.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-02-26-17-42-30.txt'.",
+            "message-id": "F0002"
+        },
+        {
+            "type": "convention",
+            "module": "agentlib.utils.__init__",
+            "obj": "",
+            "line": 105,
+            "column": 0,
+            "path": "agentlib/utils/__init__.py",
+            "symbol": "line-too-long",
+            "message": "Line too long (111/100)",
+            "message-id": "C0301"
+        },
+        {
+            "type": "error",
+            "module": "agentlib.utils",
+            "obj": "",
+            "line": 14,
+            "column": 0,
+            "path": "agentlib/utils/__init__.py",
+            "symbol": "import-error",
+            "message": "Unable to import 'numpy'",
+            "message-id": "E0401"
+        },
+        {
+            "type": "warning",
+            "module": "agentlib.utils",
+            "obj": "custom_injection",
+            "line": 87,
+            "column": 8,
+            "path": "agentlib/utils/__init__.py",
+            "symbol": "raise-missing-from",
+            "message": "Consider explicitly re-raising using 'except KeyError as exc' and 'raise ImportError(f\"Given module '{custom_module}' does not contain the specified class {class_name}\") from exc'",
+            "message-id": "W0707"
+        },
+        {
+            "type": "convention",
+            "module": "agentlib.utils.load_config",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "agentlib/utils/load_config.py",
+            "symbol": "missing-module-docstring",
+            "message": "Missing module docstring",
+            "message-id": "C0114"
+        },
+        {
+            "type": "fatal",
+            "module": "agentlib.utils.load_config",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "agentlib/utils/load_config.py",
+            "symbol": "astroid-error",
+            "message": "agentlib/utils/load_config.py: Fatal error while checking 'agentlib/utils/load_config.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-02-26-17-42-30.txt'.",
+            "message-id": "F0002"
+        },
+        {
+            "type": "fatal",
+            "module": "agentlib.utils.local_broadcast_broker",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "agentlib/utils/local_broadcast_broker.py",
+            "symbol": "astroid-error",
+            "message": "agentlib/utils/local_broadcast_broker.py: Fatal error while checking 'agentlib/utils/local_broadcast_broker.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-02-26-17-42-30.txt'.",
+            "message-id": "F0002"
+        },
+        {
+            "type": "fatal",
+            "module": "agentlib.utils.local_broker",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "agentlib/utils/local_broker.py",
+            "symbol": "astroid-error",
+            "message": "agentlib/utils/local_broker.py: Fatal error while checking 'agentlib/utils/local_broker.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-02-26-17-42-30.txt'.",
+            "message-id": "F0002"
+        },
+        {
+            "type": "fatal",
+            "module": "agentlib.utils.validators",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "agentlib/utils/validators.py",
+            "symbol": "astroid-error",
+            "message": "agentlib/utils/validators.py: Fatal error while checking 'agentlib/utils/validators.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-02-26-17-42-30.txt'.",
+            "message-id": "F0002"
+        },
+        {
+            "type": "convention",
+            "module": "agentlib.utils.plotting.simulator_dashboard",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "agentlib/utils/plotting/simulator_dashboard.py",
+            "symbol": "missing-module-docstring",
+            "message": "Missing module docstring",
+            "message-id": "C0114"
+        },
+        {
+            "type": "fatal",
+            "module": "agentlib.utils.plotting.simulator_dashboard",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "agentlib/utils/plotting/simulator_dashboard.py",
+            "symbol": "astroid-error",
+            "message": "agentlib/utils/plotting/simulator_dashboard.py: Fatal error while checking 'agentlib/utils/plotting/simulator_dashboard.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-02-26-17-42-30.txt'.",
+            "message-id": "F0002"
+        },
+        {
+            "type": "convention",
+            "module": "agentlib.utils.plotting.simulator_dashboard",
+            "obj": "",
+            "line": 5,
+            "column": 0,
+            "path": "agentlib/utils/plotting/simulator_dashboard.py",
+            "symbol": "ungrouped-imports",
+            "message": "Imports from package pathlib are not grouped",
+            "message-id": "C0412"
+        },
+        {
+            "type": "refactor",
+            "module": "agentlib.models.scipy_model",
+            "obj": "",
+            "line": 35,
+            "column": 0,
+            "path": "agentlib/models/scipy_model.py",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for 'disable', 'no-self-use' was moved to an optional extension, see https://pylint.readthedocs.io/en/latest/whatsnew/2/2.14/summary.html#removed-checkers.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "fatal",
+            "module": "agentlib.models.scipy_model",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "agentlib/models/scipy_model.py",
+            "symbol": "astroid-error",
+            "message": "agentlib/models/scipy_model.py: Fatal error while checking 'agentlib/models/scipy_model.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-02-26-17-42-30.txt'.",
+            "message-id": "F0002"
+        },
+        {
+            "type": "fatal",
+            "module": "agentlib.models.fmu_model",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "agentlib/models/fmu_model.py",
+            "symbol": "astroid-error",
+            "message": "agentlib/models/fmu_model.py: Fatal error while checking 'agentlib/models/fmu_model.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-02-26-17-42-31.txt'.",
+            "message-id": "F0002"
+        },
+        {
+            "type": "fatal",
+            "module": "agentlib.core.datamodels",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "agentlib/core/datamodels.py",
+            "symbol": "astroid-error",
+            "message": "agentlib/core/datamodels.py: Fatal error while checking 'agentlib/core/datamodels.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-02-26-17-42-31.txt'.",
+            "message-id": "F0002"
+        },
+        {
+            "type": "fatal",
+            "module": "agentlib.core.data_broker",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "agentlib/core/data_broker.py",
+            "symbol": "astroid-error",
+            "message": "agentlib/core/data_broker.py: Fatal error while checking 'agentlib/core/data_broker.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-02-26-17-42-31.txt'.",
+            "message-id": "F0002"
+        },
+        {
+            "type": "fatal",
+            "module": "agentlib.core.module",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "agentlib/core/module.py",
+            "symbol": "astroid-error",
+            "message": "agentlib/core/module.py: Fatal error while checking 'agentlib/core/module.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-02-26-17-42-32.txt'.",
+            "message-id": "F0002"
+        },
+        {
+            "type": "convention",
+            "module": "agentlib.core.data_broker",
+            "obj": "",
+            "line": 14,
+            "column": 0,
+            "path": "agentlib/core/data_broker.py",
+            "symbol": "ungrouped-imports",
+            "message": "Imports from package abc are not grouped",
+            "message-id": "C0412"
+        },
+        {
+            "type": "convention",
+            "module": "agentlib.core.data_broker",
+            "obj": "",
+            "line": 16,
+            "column": 0,
+            "path": "agentlib/core/data_broker.py",
+            "symbol": "ungrouped-imports",
+            "message": "Imports from package logging are not grouped",
+            "message-id": "C0412"
+        },
+        {
+            "type": "convention",
+            "module": "agentlib.core.module",
+            "obj": "",
+            "line": 5,
+            "column": 0,
+            "path": "agentlib/core/module.py",
+            "symbol": "ungrouped-imports",
+            "message": "Imports from package abc are not grouped",
+            "message-id": "C0412"
+        },
+        {
+            "type": "convention",
+            "module": "agentlib.core.module",
+            "obj": "",
+            "line": 6,
+            "column": 0,
+            "path": "agentlib/core/module.py",
+            "symbol": "ungrouped-imports",
+            "message": "Imports from package json are not grouped",
+            "message-id": "C0412"
+        },
+        {
+            "type": "convention",
+            "module": "agentlib.core.module",
+            "obj": "",
+            "line": 7,
+            "column": 0,
+            "path": "agentlib/core/module.py",
+            "symbol": "ungrouped-imports",
+            "message": "Imports from package logging are not grouped",
+            "message-id": "C0412"
+        },
+        {
+            "type": "convention",
+            "module": "agentlib.core.module",
+            "obj": "",
+            "line": 8,
+            "column": 0,
+            "path": "agentlib/core/module.py",
+            "symbol": "ungrouped-imports",
+            "message": "Imports from package copy are not grouped",
+            "message-id": "C0412"
+        },
+        {
+            "type": "convention",
+            "module": "agentlib.core.model",
+            "obj": "",
+            "line": 87,
+            "column": 0,
+            "path": "agentlib/core/model.py",
+            "symbol": "line-too-long",
+            "message": "Line too long (106/100)",
+            "message-id": "C0301"
+        },
+        {
+            "type": "convention",
+            "module": "agentlib.core.model",
+            "obj": "",
+            "line": 254,
+            "column": 0,
+            "path": "agentlib/core/model.py",
+            "symbol": "line-too-long",
+            "message": "Line too long (118/100)",
+            "message-id": "C0301"
+        },
+        {
+            "type": "fatal",
+            "module": "agentlib.core.model",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "agentlib/core/model.py",
+            "symbol": "astroid-error",
+            "message": "agentlib/core/model.py: Fatal error while checking 'agentlib/core/model.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-02-26-17-42-32.txt'.",
+            "message-id": "F0002"
+        },
+        {
+            "type": "convention",
+            "module": "agentlib.core.logging_",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "agentlib/core/logging_.py",
+            "symbol": "missing-module-docstring",
+            "message": "Missing module docstring",
+            "message-id": "C0114"
+        },
+        {
+            "type": "fatal",
+            "module": "agentlib.core.logging_",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "agentlib/core/logging_.py",
+            "symbol": "astroid-error",
+            "message": "agentlib/core/logging_.py: Fatal error while checking 'agentlib/core/logging_.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-02-26-17-42-32.txt'.",
+            "message-id": "F0002"
+        },
+        {
+            "type": "fatal",
+            "module": "agentlib.core.environment",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "agentlib/core/environment.py",
+            "symbol": "astroid-error",
+            "message": "agentlib/core/environment.py: Fatal error while checking 'agentlib/core/environment.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-02-26-17-42-33.txt'.",
+            "message-id": "F0002"
+        },
+        {
+            "type": "convention",
+            "module": "agentlib.core.agent",
+            "obj": "",
+            "line": 47,
+            "column": 0,
+            "path": "agentlib/core/agent.py",
+            "symbol": "line-too-long",
+            "message": "Line too long (120/100)",
+            "message-id": "C0301"
+        },
+        {
+            "type": "fatal",
+            "module": "agentlib.core.agent",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "agentlib/core/agent.py",
+            "symbol": "astroid-error",
+            "message": "agentlib/core/agent.py: Fatal error while checking 'agentlib/core/agent.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-02-26-17-42-33.txt'.",
+            "message-id": "F0002"
+        },
+        {
+            "type": "fatal",
+            "module": "agentlib.modules.__init__",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "agentlib/modules/__init__.py",
+            "symbol": "astroid-error",
+            "message": "agentlib/modules/__init__.py: Fatal error while checking 'agentlib/modules/__init__.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-02-26-17-42-33.txt'.",
+            "message-id": "F0002"
+        },
+        {
+            "type": "fatal",
+            "module": "agentlib.modules.utils.try_sensor",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "agentlib/modules/utils/try_sensor.py",
+            "symbol": "astroid-error",
+            "message": "agentlib/modules/utils/try_sensor.py: Fatal error while checking 'agentlib/modules/utils/try_sensor.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-02-26-17-42-33.txt'.",
+            "message-id": "F0002"
+        },
+        {
+            "type": "refactor",
+            "module": "agentlib.modules.utils.agent_logger",
+            "obj": "",
+            "line": 57,
+            "column": 0,
+            "path": "agentlib/modules/utils/agent_logger.py",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for 'disable', 'no-self-use' was moved to an optional extension, see https://pylint.readthedocs.io/en/latest/whatsnew/2/2.14/summary.html#removed-checkers.",
+            "message-id": "R0022"
+        },
+        {
+            "type": "convention",
+            "module": "agentlib.modules.utils.agent_logger",
+            "obj": "",
+            "line": 45,
+            "column": 0,
+            "path": "agentlib/modules/utils/agent_logger.py",
+            "symbol": "line-too-long",
+            "message": "Line too long (106/100)",
+            "message-id": "C0301"
+        },
+        {
+            "type": "convention",
+            "module": "agentlib.modules.utils.agent_logger",
+            "obj": "",
+            "line": 50,
+            "column": 0,
+            "path": "agentlib/modules/utils/agent_logger.py",
+            "symbol": "line-too-long",
+            "message": "Line too long (111/100)",
+            "message-id": "C0301"
+        },
+        {
+            "type": "convention",
+            "module": "agentlib.modules.utils.agent_logger",
+            "obj": "",
+            "line": 194,
+            "column": 0,
+            "path": "agentlib/modules/utils/agent_logger.py",
+            "symbol": "trailing-whitespace",
+            "message": "Trailing whitespace",
+            "message-id": "C0303"
+        },
+        {
+            "type": "convention",
+            "module": "agentlib.modules.utils.agent_logger",
+            "obj": "",
+            "line": 198,
+            "column": 0,
+            "path": "agentlib/modules/utils/agent_logger.py",
+            "symbol": "trailing-whitespace",
+            "message": "Trailing whitespace",
+            "message-id": "C0303"
+        },
+        {
+            "type": "fatal",
+            "module": "agentlib.modules.utils.agent_logger",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "agentlib/modules/utils/agent_logger.py",
+            "symbol": "astroid-error",
+            "message": "agentlib/modules/utils/agent_logger.py: Fatal error while checking 'agentlib/modules/utils/agent_logger.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-02-26-17-42-33.txt'.",
+            "message-id": "F0002"
+        },
+        {
+            "type": "convention",
+            "module": "agentlib.core.logging_",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "agentlib/core/logging_.py",
+            "symbol": "ungrouped-imports",
+            "message": "Imports from package logging are not grouped",
+            "message-id": "C0412"
+        },
+        {
+            "type": "convention",
+            "module": "agentlib.core.environment",
+            "obj": "",
+            "line": 28,
+            "column": 0,
+            "path": "agentlib/core/environment.py",
+            "symbol": "ungrouped-imports",
+            "message": "Imports from package json are not grouped",
+            "message-id": "C0412"
+        },
+        {
+            "type": "convention",
+            "module": "agentlib.core.agent",
+            "obj": "",
+            "line": 5,
+            "column": 0,
+            "path": "agentlib/core/agent.py",
+            "symbol": "ungrouped-imports",
+            "message": "Imports from package json are not grouped",
+            "message-id": "C0412"
+        },
+        {
+            "type": "convention",
+            "module": "agentlib.core.agent",
+            "obj": "",
+            "line": 7,
+            "column": 0,
+            "path": "agentlib/core/agent.py",
+            "symbol": "ungrouped-imports",
+            "message": "Imports from package copy are not grouped",
+            "message-id": "C0412"
+        },
+        {
+            "type": "convention",
+            "module": "agentlib.core.agent",
+            "obj": "",
+            "line": 8,
+            "column": 0,
+            "path": "agentlib/core/agent.py",
+            "symbol": "ungrouped-imports",
+            "message": "Imports from package pathlib are not grouped",
+            "message-id": "C0412"
+        },
+        {
+            "type": "convention",
+            "module": "agentlib.modules.utils.agent_logger",
+            "obj": "",
+            "line": 5,
+            "column": 0,
+            "path": "agentlib/modules/utils/agent_logger.py",
+            "symbol": "ungrouped-imports",
+            "message": "Imports from package json are not grouped",
+            "message-id": "C0412"
+        },
+        {
+            "type": "convention",
+            "module": "agentlib.modules.utils.agent_logger",
+            "obj": "",
+            "line": 6,
+            "column": 0,
+            "path": "agentlib/modules/utils/agent_logger.py",
+            "symbol": "ungrouped-imports",
+            "message": "Imports from package logging are not grouped",
+            "message-id": "C0412"
+        },
+        {
+            "type": "convention",
+            "module": "agentlib.modules.utils.agent_logger",
+            "obj": "",
+            "line": 7,
+            "column": 0,
+            "path": "agentlib/modules/utils/agent_logger.py",
+            "symbol": "ungrouped-imports",
+            "message": "Imports from package os are not grouped",
+            "message-id": "C0412"
+        },
+        {
+            "type": "convention",
+            "module": "agentlib.modules.utils.agent_logger",
+            "obj": "",
+            "line": 8,
+            "column": 0,
+            "path": "agentlib/modules/utils/agent_logger.py",
+            "symbol": "ungrouped-imports",
+            "message": "Imports from package time are not grouped",
+            "message-id": "C0412"
+        },
+        {
+            "type": "convention",
+            "module": "agentlib.modules.utils.agent_logger",
+            "obj": "",
+            "line": 10,
+            "column": 0,
+            "path": "agentlib/modules/utils/agent_logger.py",
+            "symbol": "ungrouped-imports",
+            "message": "Imports from package pathlib are not grouped",
+            "message-id": "C0412"
+        },
+        {
+            "type": "fatal",
+            "module": "agentlib.modules.controller.controller",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "agentlib/modules/controller/controller.py",
+            "symbol": "astroid-error",
+            "message": "agentlib/modules/controller/controller.py: Fatal error while checking 'agentlib/modules/controller/controller.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-02-26-17-42-33.txt'.",
+            "message-id": "F0002"
+        },
+        {
+            "type": "convention",
+            "module": "agentlib.modules.controller.pid",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "agentlib/modules/controller/pid.py",
+            "symbol": "missing-module-docstring",
+            "message": "Missing module docstring",
+            "message-id": "C0114"
+        },
+        {
+            "type": "fatal",
+            "module": "agentlib.modules.controller.pid",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "agentlib/modules/controller/pid.py",
+            "symbol": "astroid-error",
+            "message": "agentlib/modules/controller/pid.py: Fatal error while checking 'agentlib/modules/controller/pid.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-02-26-17-42-33.txt'.",
+            "message-id": "F0002"
+        },
+        {
+            "type": "convention",
+            "module": "agentlib.modules.controller",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "agentlib/modules/controller/__init__.py",
+            "symbol": "missing-module-docstring",
+            "message": "Missing module docstring",
+            "message-id": "C0114"
+        },
+        {
+            "type": "convention",
+            "module": "agentlib.modules.controller.bangbang",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "agentlib/modules/controller/bangbang.py",
+            "symbol": "missing-module-docstring",
+            "message": "Missing module docstring",
+            "message-id": "C0114"
+        },
+        {
+            "type": "error",
+            "module": "agentlib.modules.controller.bangbang",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "agentlib/modules/controller/bangbang.py",
+            "symbol": "import-error",
+            "message": "Unable to import 'pydantic'",
+            "message-id": "E0401"
+        },
+        {
+            "type": "refactor",
+            "module": "agentlib.modules.controller.bangbang",
+            "obj": "BangBang.do_step",
+            "line": 48,
+            "column": 4,
+            "path": "agentlib/modules/controller/bangbang.py",
+            "symbol": "inconsistent-return-statements",
+            "message": "Either all return statements in a function should return an expression, or none of them should.",
+            "message-id": "R1710"
+        },
+        {
+            "type": "convention",
+            "module": "agentlib.modules.simulation.csv_data_source",
+            "obj": "",
+            "line": 182,
+            "column": 0,
+            "path": "agentlib/modules/simulation/csv_data_source.py",
+            "symbol": "line-too-long",
+            "message": "Line too long (108/100)",
+            "message-id": "C0301"
+        },
+        {
+            "type": "convention",
+            "module": "agentlib.modules.simulation.csv_data_source",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "agentlib/modules/simulation/csv_data_source.py",
+            "symbol": "missing-module-docstring",
+            "message": "Missing module docstring",
+            "message-id": "C0114"
+        },
+        {
+            "type": "fatal",
+            "module": "agentlib.modules.simulation.csv_data_source",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "agentlib/modules/simulation/csv_data_source.py",
+            "symbol": "astroid-error",
+            "message": "agentlib/modules/simulation/csv_data_source.py: Fatal error while checking 'agentlib/modules/simulation/csv_data_source.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-02-26-17-42-33.txt'.",
+            "message-id": "F0002"
+        },
+        {
+            "type": "convention",
+            "module": "agentlib.modules.simulation",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "agentlib/modules/simulation/__init__.py",
+            "symbol": "missing-module-docstring",
+            "message": "Missing module docstring",
+            "message-id": "C0114"
+        },
+        {
+            "type": "fatal",
+            "module": "agentlib.modules.communicator.communicator",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "agentlib/modules/communicator/communicator.py",
+            "symbol": "astroid-error",
+            "message": "agentlib/modules/communicator/communicator.py: Fatal error while checking 'agentlib/modules/communicator/communicator.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-02-26-17-42-34.txt'.",
+            "message-id": "F0002"
+        },
+        {
+            "type": "convention",
+            "module": "agentlib.modules.communicator.local",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "agentlib/modules/communicator/local.py",
+            "symbol": "missing-module-docstring",
+            "message": "Missing module docstring",
+            "message-id": "C0114"
+        },
+        {
+            "type": "convention",
+            "module": "agentlib.modules.communicator.local",
+            "obj": "LocalSubscriptionCommunicatorConfig",
+            "line": 11,
+            "column": 0,
+            "path": "agentlib/modules/communicator/local.py",
+            "symbol": "missing-class-docstring",
+            "message": "Missing class docstring",
+            "message-id": "C0115"
+        },
+        {
+            "type": "convention",
+            "module": "agentlib.modules.communicator.local",
+            "obj": "LocalClient.subscriptions",
+            "line": 33,
+            "column": 4,
+            "path": "agentlib/modules/communicator/local.py",
+            "symbol": "missing-function-docstring",
+            "message": "Missing function or method docstring",
+            "message-id": "C0116"
+        },
+        {
+            "type": "fatal",
+            "module": "agentlib.modules.communicator.clonemap",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "agentlib/modules/communicator/clonemap.py",
+            "symbol": "astroid-error",
+            "message": "agentlib/modules/communicator/clonemap.py: Fatal error while checking 'agentlib/modules/communicator/clonemap.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-02-26-17-42-34.txt'.",
+            "message-id": "F0002"
+        },
+        {
+            "type": "convention",
+            "module": "agentlib.modules.communicator.local_multiprocessing",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "agentlib/modules/communicator/local_multiprocessing.py",
+            "symbol": "missing-module-docstring",
+            "message": "Missing module docstring",
+            "message-id": "C0114"
+        },
+        {
+            "type": "error",
+            "module": "agentlib.modules.communicator.local_multiprocessing",
+            "obj": "",
+            "line": 5,
+            "column": 0,
+            "path": "agentlib/modules/communicator/local_multiprocessing.py",
+            "symbol": "import-error",
+            "message": "Unable to import 'pydantic'",
+            "message-id": "E0401"
+        },
+        {
+            "type": "convention",
+            "module": "agentlib.modules.communicator.local_multiprocessing",
+            "obj": "MultiProcessingBroadcastClientConfig",
+            "line": 18,
+            "column": 0,
+            "path": "agentlib/modules/communicator/local_multiprocessing.py",
+            "symbol": "missing-class-docstring",
+            "message": "Missing class docstring",
+            "message-id": "C0115"
+        },
+        {
+            "type": "error",
+            "module": "agentlib.modules.communicator.local_multiprocessing",
+            "obj": "MultiProcessingBroadcastClient.__init__",
+            "line": 50,
+            "column": 16,
+            "path": "agentlib/modules/communicator/local_multiprocessing.py",
+            "symbol": "no-member",
+            "message": "Instance of 'BrokerManager' has no 'connect' member",
+            "message-id": "E1101"
+        },
+        {
+            "type": "error",
+            "module": "agentlib.modules.communicator.local_multiprocessing",
+            "obj": "MultiProcessingBroadcastClient.__init__",
+            "line": 57,
+            "column": 23,
+            "path": "agentlib/modules/communicator/local_multiprocessing.py",
+            "symbol": "no-member",
+            "message": "Instance of 'BrokerManager' has no 'get_queue' member",
+            "message-id": "E1101"
+        },
+        {
+            "type": "warning",
+            "module": "agentlib.modules.communicator.local_multiprocessing",
+            "obj": "MultiProcessingBroadcastClient._message_handler",
+            "line": 91,
+            "column": 12,
+            "path": "agentlib/modules/communicator/local_multiprocessing.py",
+            "symbol": "logging-fstring-interpolation",
+            "message": "Use lazy % formatting in logging functions",
+            "message-id": "W1203"
+        },
+        {
+            "type": "convention",
+            "module": "agentlib.modules.communicator.local_multiprocessing",
+            "obj": "",
+            "line": 6,
+            "column": 0,
+            "path": "agentlib/modules/communicator/local_multiprocessing.py",
+            "symbol": "wrong-import-order",
+            "message": "standard import \"from ipaddress import IPv4Address\" should be placed before \"from pydantic import Field\"",
+            "message-id": "C0411"
+        },
+        {
+            "type": "convention",
+            "module": "agentlib.modules.communicator.mqtt",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "agentlib/modules/communicator/mqtt.py",
+            "symbol": "missing-module-docstring",
+            "message": "Missing module docstring",
+            "message-id": "C0114"
+        },
+        {
+            "type": "fatal",
+            "module": "agentlib.modules.communicator.mqtt",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "agentlib/modules/communicator/mqtt.py",
+            "symbol": "astroid-error",
+            "message": "agentlib/modules/communicator/mqtt.py: Fatal error while checking 'agentlib/modules/communicator/mqtt.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-02-26-17-42-34.txt'.",
+            "message-id": "F0002"
+        }
+    ],
+    "stats": {
+        "bad_names": {
+            "argument": 0,
+            "attr": 0,
+            "klass": 0,
+            "class_attribute": 0,
+            "class_const": 0,
+            "const": 0,
+            "inlinevar": 0,
+            "function": 0,
+            "method": 0,
+            "module": 0,
+            "variable": 0,
+            "typevar": 0,
+            "typealias": 0
+        },
+        "by_module": {
+            "agentlib": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 6,
+                "warning": 0
+            },
+            "agentlib.utils.multi_agent_system": {
+                "convention": 1,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.utils.multi_processing_broker": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.utils.broker": {
+                "convention": 4,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 29,
+                "warning": 0
+            },
+            "agentlib.utils.plugin_import": {
+                "convention": 0,
+                "error": 1,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 30,
+                "warning": 2
+            },
+            "agentlib.utils.fuzzy_matching": {
+                "convention": 1,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.utils.__init__": {
+                "convention": 1,
+                "error": 1,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 38,
+                "warning": 1
+            },
+            "agentlib.utils.load_config": {
+                "convention": 1,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.utils.local_broadcast_broker": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.utils.local_broker": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.utils.validators": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.utils.plotting.simulator_dashboard": {
+                "convention": 1,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.utils.plotting.__init__": {
+                "convention": 1,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.models.scipy_model": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 1,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.models.__init__": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 15,
+                "warning": 0
+            },
+            "agentlib.models.fmu_model": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.core.errors": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 8,
+                "warning": 0
+            },
+            "agentlib.core.datamodels": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.core.data_broker": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.core.module": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.core.__init__": {
+                "convention": 6,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 6,
+                "warning": 0
+            },
+            "agentlib.core.model": {
+                "convention": 2,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.core.logging_": {
+                "convention": 1,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.core.environment": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.core.agent": {
+                "convention": 1,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.modules.__init__": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.modules.utils.try_sensor": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.modules.utils.agent_logger": {
+                "convention": 4,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 1,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.modules.utils.__init__": {
+                "convention": 10,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 2,
+                "warning": 0
+            },
+            "agentlib.modules.controller.controller": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.modules.controller.pid": {
+                "convention": 1,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.modules.controller.__init__": {
+                "convention": 1,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 3,
+                "warning": 0
+            },
+            "agentlib.modules.controller.bangbang": {
+                "convention": 1,
+                "error": 1,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 1,
+                "statement": 33,
+                "warning": 0
+            },
+            "agentlib.modules.simulation.csv_data_source": {
+                "convention": 2,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.modules.simulation.simulator": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.modules.simulation.__init__": {
+                "convention": 1,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 2,
+                "warning": 0
+            },
+            "agentlib.modules.communicator.local_broadcast": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.modules.communicator.communicator": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.modules.communicator.local": {
+                "convention": 3,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 17,
+                "warning": 0
+            },
+            "agentlib.modules.communicator.clonemap": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.modules.communicator.local_multiprocessing": {
+                "convention": 3,
+                "error": 3,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 61,
+                "warning": 1
+            },
+            "agentlib.modules.communicator.__init__": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 2,
+                "warning": 0
+            },
+            "agentlib.modules.communicator.mqtt": {
+                "convention": 1,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            }
+        },
+        "by_msg": {
+            "astroid-error": 28,
+            "line-too-long": 8,
+            "ungrouped-imports": 21,
+            "import-error": 4,
+            "unused-argument": 1,
+            "raise-missing-from": 2,
+            "missing-module-docstring": 12,
+            "useless-option-value": 2,
+            "trailing-whitespace": 2,
+            "inconsistent-return-statements": 1,
+            "missing-class-docstring": 2,
+            "missing-function-docstring": 1,
+            "no-member": 2,
+            "logging-fstring-interpolation": 1,
+            "wrong-import-order": 1
+        },
+        "code_type_count": {
+            "code": 0,
+            "comment": 0,
+            "docstring": 0,
+            "empty": 0,
+            "total": 0
+        },
+        "dependencies": {
+            "agentlib.core": [
+                "agentlib",
+                "agentlib.modules.communicator.local_multiprocessing",
+                "agentlib.modules.controller.bangbang"
+            ],
+            "agentlib.models": [
+                "agentlib"
+            ],
+            "agentlib.modules": [
+                "agentlib"
+            ],
+            "agentlib.utils": [
+                "agentlib",
+                "agentlib.modules.communicator.local"
+            ],
+            "agentlib.core.datamodels": [
+                "agentlib.modules.communicator.local_multiprocessing",
+                "agentlib.core",
+                "agentlib",
+                "agentlib.modules.communicator.local",
+                "agentlib.modules.controller.bangbang"
+            ],
+            "agentlib.utils.multi_agent_system": [
+                "agentlib"
+            ],
+            "agentlib.utils.local_broadcast_broker": [
+                "agentlib.utils"
+            ],
+            "agentlib.utils.local_broker": [
+                "agentlib.utils"
+            ],
+            "agentlib.utils.multi_processing_broker": [
+                "agentlib.modules.communicator.local_multiprocessing",
+                "agentlib.utils"
+            ],
+            "agentlib.utils.plugin_import": [
+                "agentlib.models",
+                "agentlib.modules.communicator",
+                "agentlib.modules.utils",
+                "agentlib.modules.controller",
+                "agentlib.modules.simulation"
+            ],
+            "agentlib.utils.fuzzy_matching": [
+                "agentlib.models"
+            ],
+            "agentlib.core.environment": [
+                "agentlib.core"
+            ],
+            "agentlib.core.data_broker": [
+                "agentlib.core"
+            ],
+            "agentlib.core.module": [
+                "agentlib.core"
+            ],
+            "agentlib.core.agent": [
+                "agentlib.core"
+            ],
+            "agentlib.core.model": [
+                "agentlib.core"
+            ],
+            "agentlib.modules.controller.controller": [
+                "agentlib.modules.controller"
+            ],
+            "agentlib.modules.controller": [
+                "agentlib.modules.controller.bangbang"
+            ],
+            "agentlib.modules.communicator.communicator": [
+                "agentlib.modules.communicator.local_multiprocessing",
+                "agentlib.modules.communicator.local"
+            ]
+        },
+        "duplicated_lines": {
+            "nb_duplicated_lines": 0,
+            "percent_duplicated_lines": 0.0
+        },
+        "node_count": {
+            "function": 4,
+            "klass": 13,
+            "method": 23,
+            "module": 40
+        },
+        "undocumented": {
+            "function": 0,
+            "klass": 2,
+            "method": 1,
+            "module": 12
+        },
+        "convention": 47,
+        "error": 6,
+        "fatal": 28,
+        "info": 0,
+        "refactor": 3,
+        "statement": 361,
+        "warning": 4,
+        "global_note": 0,
+        "nb_duplicated_lines": 0,
+        "percent_duplicated_lines": 0.0
+    },
+    "previous": {
+        "bad_names": {
+            "argument": 0,
+            "attr": 0,
+            "klass": 0,
+            "class_attribute": 0,
+            "class_const": 0,
+            "const": 0,
+            "inlinevar": 0,
+            "function": 0,
+            "method": 0,
+            "module": 0,
+            "variable": 0,
+            "typevar": 0,
+            "typealias": 0
+        },
+        "by_module": {
+            "agentlib": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 6,
+                "warning": 0
+            },
+            "agentlib.utils.multi_agent_system": {
+                "convention": 1,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.utils.multi_processing_broker": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.utils.broker": {
+                "convention": 4,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 29,
+                "warning": 0
+            },
+            "agentlib.utils.plugin_import": {
+                "convention": 0,
+                "error": 1,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 30,
+                "warning": 2
+            },
+            "agentlib.utils.fuzzy_matching": {
+                "convention": 1,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.utils.__init__": {
+                "convention": 1,
+                "error": 1,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 38,
+                "warning": 1
+            },
+            "agentlib.utils.load_config": {
+                "convention": 1,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.utils.local_broadcast_broker": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.utils.local_broker": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.utils.validators": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.utils.plotting.simulator_dashboard": {
+                "convention": 1,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.utils.plotting.__init__": {
+                "convention": 1,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.models.scipy_model": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 1,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.models.__init__": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 15,
+                "warning": 0
+            },
+            "agentlib.models.fmu_model": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.core.errors": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 8,
+                "warning": 0
+            },
+            "agentlib.core.datamodels": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.core.data_broker": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.core.module": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.core.__init__": {
+                "convention": 6,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 6,
+                "warning": 0
+            },
+            "agentlib.core.model": {
+                "convention": 2,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.core.logging_": {
+                "convention": 1,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.core.environment": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.core.agent": {
+                "convention": 1,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.modules.__init__": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.modules.utils.try_sensor": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.modules.utils.agent_logger": {
+                "convention": 4,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 1,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.modules.utils.__init__": {
+                "convention": 10,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 2,
+                "warning": 0
+            },
+            "agentlib.modules.controller.controller": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.modules.controller.pid": {
+                "convention": 1,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.modules.controller.__init__": {
+                "convention": 1,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 3,
+                "warning": 0
+            },
+            "agentlib.modules.controller.bangbang": {
+                "convention": 1,
+                "error": 1,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 1,
+                "statement": 33,
+                "warning": 0
+            },
+            "agentlib.modules.simulation.csv_data_source": {
+                "convention": 2,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.modules.simulation.simulator": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.modules.simulation.__init__": {
+                "convention": 1,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 2,
+                "warning": 0
+            },
+            "agentlib.modules.communicator.local_broadcast": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.modules.communicator.communicator": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.modules.communicator.local": {
+                "convention": 3,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 17,
+                "warning": 0
+            },
+            "agentlib.modules.communicator.clonemap": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.modules.communicator.local_multiprocessing": {
+                "convention": 3,
+                "error": 3,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 61,
+                "warning": 1
+            },
+            "agentlib.modules.communicator.__init__": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 2,
+                "warning": 0
+            },
+            "agentlib.modules.communicator.mqtt": {
+                "convention": 1,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            }
+        },
+        "by_msg": {
+            "astroid-error": 28,
+            "line-too-long": 8,
+            "ungrouped-imports": 21,
+            "import-error": 4,
+            "unused-argument": 1,
+            "raise-missing-from": 2,
+            "missing-module-docstring": 12,
+            "useless-option-value": 2,
+            "trailing-whitespace": 2,
+            "inconsistent-return-statements": 1,
+            "missing-class-docstring": 2,
+            "missing-function-docstring": 1,
+            "no-member": 2,
+            "logging-fstring-interpolation": 1,
+            "wrong-import-order": 1
+        },
+        "code_type_count": {
+            "code": 0,
+            "comment": 0,
+            "docstring": 0,
+            "empty": 0,
+            "total": 0
+        },
+        "dependencies": {
+            "agentlib.core": [
+                "agentlib",
+                "agentlib.modules.controller.bangbang",
+                "agentlib.modules.communicator.local_multiprocessing"
+            ],
+            "agentlib.models": [
+                "agentlib"
+            ],
+            "agentlib.modules": [
+                "agentlib"
+            ],
+            "agentlib.utils": [
+                "agentlib",
+                "agentlib.modules.communicator.local"
+            ],
+            "agentlib.core.datamodels": [
+                "agentlib",
+                "agentlib.core",
+                "agentlib.modules.communicator.local_multiprocessing",
+                "agentlib.modules.communicator.local",
+                "agentlib.modules.controller.bangbang"
+            ],
+            "agentlib.utils.multi_agent_system": [
+                "agentlib"
+            ],
+            "agentlib.utils.local_broadcast_broker": [
+                "agentlib.utils"
+            ],
+            "agentlib.utils.local_broker": [
+                "agentlib.utils"
+            ],
+            "agentlib.utils.multi_processing_broker": [
+                "agentlib.modules.communicator.local_multiprocessing",
+                "agentlib.utils"
+            ],
+            "agentlib.utils.plugin_import": [
+                "agentlib.models",
+                "agentlib.modules.communicator",
+                "agentlib.modules.utils",
+                "agentlib.modules.controller",
+                "agentlib.modules.simulation"
+            ],
+            "agentlib.utils.fuzzy_matching": [
+                "agentlib.models"
+            ],
+            "agentlib.core.environment": [
+                "agentlib.core"
+            ],
+            "agentlib.core.data_broker": [
+                "agentlib.core"
+            ],
+            "agentlib.core.module": [
+                "agentlib.core"
+            ],
+            "agentlib.core.agent": [
+                "agentlib.core"
+            ],
+            "agentlib.core.model": [
+                "agentlib.core"
+            ],
+            "agentlib.modules.controller.controller": [
+                "agentlib.modules.controller"
+            ],
+            "agentlib.modules.controller": [
+                "agentlib.modules.controller.bangbang"
+            ],
+            "agentlib.modules.communicator.communicator": [
+                "agentlib.modules.communicator.local_multiprocessing",
+                "agentlib.modules.communicator.local"
+            ]
+        },
+        "duplicated_lines": {
+            "nb_duplicated_lines": 0,
+            "percent_duplicated_lines": 0.0
+        },
+        "node_count": {
+            "function": 4,
+            "klass": 13,
+            "method": 23,
+            "module": 40
+        },
+        "undocumented": {
+            "function": 0,
+            "klass": 2,
+            "method": 1,
+            "module": 12
+        },
+        "convention": 47,
+        "error": 6,
+        "fatal": 28,
+        "info": 0,
+        "refactor": 3,
+        "statement": 361,
+        "warning": 4,
+        "global_note": 7.673130193905817,
+        "nb_duplicated_lines": 0,
+        "percent_duplicated_lines": 0.0
+    }
+}
