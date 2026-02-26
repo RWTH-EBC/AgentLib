@@ -1,0 +1,10 @@
+{% extends "!footer.html" %}
+
+{% block extrafooter %}
+  {{ super() }}
+  {% if maintainer %}
+    <p class="maintainer">
+      <strong>Maintained by:</strong> {{ maintainer }}
+    </p>
+  {% endif %}
+{% endblock %}
