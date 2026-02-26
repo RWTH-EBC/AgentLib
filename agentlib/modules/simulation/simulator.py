@@ -589,10 +589,11 @@ class Simulator(BaseModule):
                 # This ensures the new inputs are recorded at the current timestamp,
                 # separate from the outputs of the *previous* step (which were logged at
                 # the end of the last loop).
-                current_time = self.env.time
-                # Track if a communication step is reached.
-                # At communication times, the inputs are always saved
-                full_comm_step = ((current_time - self._last_communication_time) == 0)
+
+                # Track if this is the first simulation sub-step within the current
+                # communication interval. At communication boundaries, the inputs are
+                # always saved to ensure they are associated with the correct outputs.
+                full_comm_step = (i == 0)
                 if self._inputs_changed_since_last_results_saving or full_comm_step:
                     if self.config.save_results:
                         # Create row: [t=Current, Out=NaN, In=New]
