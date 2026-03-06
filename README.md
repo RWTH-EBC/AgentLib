@@ -48,8 +48,8 @@ AgentLib has a number of optional dependencies, ranging from additional features
 AgentLib supports extension, especially in the form of additional modules through plugins.
 Official Plugins available are:
   - **[AgentLib_MPC](https://github.com/RWTH-EBC/AgentLib-MPC)**: Provides modules for model predictive control.
+  - **[AgentLib_FlexQuant](https://github.com/RWTH-EBC/AgentLib-FlexQuant)**: Provides a flexibility quantification framework for energy systems based on AgentLib_MPC.  
   - **[AgentLib_FIWARE](https://github.com/RWTH-EBC/AgentLib-FIWARE)**: Provides communicators for the IoT Platform FIWARE.
-
 ## Referencing the AgentLib
 
 To cite the AgentLib, please use the following paper:
