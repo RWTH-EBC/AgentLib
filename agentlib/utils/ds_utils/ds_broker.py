@@ -1,12 +1,9 @@
 """
-Module containing a LocalBroadcastBroker that
-enables local broadcast communication.
+Module containing a DataSpaceBroker that
+enables broadcast communication via Data Space.
 """
 
-from typing import Union
-
 from agentlib.utils.broker import Broker
-from agentlib.core import AgentVariable
 
 
 class DataSpaceBroker(Broker):

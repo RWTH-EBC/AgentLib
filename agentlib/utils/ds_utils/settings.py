@@ -1,12 +1,10 @@
-from pydantic import BaseModel, HttpUrl, SecretStr
-from pydantic import ConfigDict
+from pydantic import HttpUrl, SecretStr
 from pydantic_settings import BaseSettings, SettingsConfigDict
-from dotenv import load_dotenv 
 import os
 
 """
     Defining global settings for the Data Space connectors. Agents on MPC and Simulation side need different settings from separate files.
-    A OnenetClient will set up a ConnectorSettings instance for itself depending on which Agent it's attached to
+    A OnenetClient will set up a ConnectorSettings instance for itself depending on the config of the Agent it's attached to
 """
 class ConnectorConfigError(RuntimeError):
     pass
@@ -36,5 +34,4 @@ def GetConnectorSettings(kind: str):
         settings = MPCConnectorSettings()
     else:
         return ConnectorConfigError()
-    print(f"Login for Connector with kind {kind}: {settings.username}")
     return settings

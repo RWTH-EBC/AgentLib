@@ -27,8 +27,14 @@ class DataSpaceClientConfig(LocalCommunicatorConfig):
 
 class DataSpaceClient(LocalCommunicator):
     """
-    This communicator implements the communication between agents via a
-    broadcast broker central process.
+    This communicator implements broadcast communication between agents via a TwinEU/OneNet dataspace.
+    Prerequisites:
+        - This only works with a maximum of two agents for now.
+        - Two different connectors set up and running on the same machine, see https://github.com/TwinEU-Digital-Twin-for-Europe/twineu-dsp-connector
+        - Credentials of those connectors entered in ../utils/ds_utils/.env_mpc and .env_sim respectively
+        - Using http://localhost:8081, each connector should be subscribed to a Data Service offered by the other.
+        - The respective service IDs are specified in the agent module setup, see example simple_mpc_with_ds.py
+    
     Note: The broker is implemented as singleton. This means that all agents must
     be in the same process!
     """

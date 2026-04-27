@@ -1,13 +1,11 @@
 import base64
-import sys
-from datetime import datetime
 from pathlib import Path
 
 import dotenv
 import httpx
 import typer
 from agentlib.utils.ds_utils.common import BaseModel
-from pydantic import ConfigDict, HttpUrl, SecretStr
+from pydantic import ConfigDict, SecretStr
 from pydantic_settings import BaseSettings
 from agentlib.utils.ds_utils.settings import GetConnectorSettings
 
@@ -51,20 +49,11 @@ class OnenetClient(BaseModel):
         """
         Authenticate a user and obtain an access token.
 
-        Parameters
-        ----------
-        user : str
-            The username for authentication.
-
-        password : str
-            The password for authentication.
-
         Raises
         ------
         UnauthorizedError
             If the authentication fails.
         """
-        # TODO convert connector url to httpx url
         res = httpx.post(url=self.extended_url("user/auth"), json={"username": self.connector_settings.username, "password": self.connector_settings.password.get_secret_value()})
         if res.status_code == 200:
             self.auth_token = res.json()["accessToken"]
@@ -253,9 +242,6 @@ class OnenetClient(BaseModel):
             return True
         print(res.json())
         return False
-
-
-
 
 
 
