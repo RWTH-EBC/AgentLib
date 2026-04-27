@@ -64,7 +64,6 @@ class OnenetClient(BaseModel):
         UnauthorizedError
             If the authentication fails.
         """
-        print(f"authenticating using {self.connector_settings}")
         # TODO convert connector url to httpx url
         res = httpx.post(url=self.extended_url("user/auth"), json={"username": self.connector_settings.username, "password": self.connector_settings.password.get_secret_value()})
         if res.status_code == 200:
@@ -81,6 +80,8 @@ class OnenetClient(BaseModel):
         NoTokenError
             If no token has been set for authentication.
         """
+        if self.auth_token is None:
+            self.authenticate()
         if self.auth_token is None:
             raise NoTokenError(
                 "No token has been set for authentication. Use `authenticate()` to generate one using username and password"

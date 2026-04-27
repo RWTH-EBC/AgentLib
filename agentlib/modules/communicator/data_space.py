@@ -56,7 +56,7 @@ class DataSpaceClient(LocalCommunicator):
         category_code: str
             String identifying the type of document uploaded (defined by the connector standard)
         """
-        self.client.authenticate()
+        #self.client.authenticate()
         file_size = sys.getsizeof(data)
         return self.client.post_data(
             title=title,
@@ -76,7 +76,7 @@ class DataSpaceClient(LocalCommunicator):
             ID of the file to be downloaded
         """
         
-        self.client.authenticate()
+        #self.client.authenticate()
         data = self.client.get_data(id)
         return self.to_json(data)
 
