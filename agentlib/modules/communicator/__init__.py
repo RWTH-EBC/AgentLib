@@ -17,6 +17,10 @@ MODULE_TYPES = {
         import_path="agentlib.modules.communicator.local_broadcast",
         class_name="LocalBroadcastClient",
     ),
+    "data_space": ModuleImport(
+        import_path="agentlib.modules.communicator.data_space",
+        class_name="DataSpaceClient",
+    ),
     "mqtt": ModuleImport(
         import_path="agentlib.modules.communicator.mqtt", class_name="MqttClient"
     ),
