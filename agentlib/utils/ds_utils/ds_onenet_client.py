@@ -82,10 +82,6 @@ class OnenetClient(BaseModel):
         """
         if self.auth_token is None:
             self.authenticate()
-        if self.auth_token is None:
-            raise NoTokenError(
-                "No token has been set for authentication. Use `authenticate()` to generate one using username and password"
-            )
 
     def list_available_data(self):
         """
