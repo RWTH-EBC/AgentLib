@@ -1,0 +1,47 @@
+<html><body><pre>
+agentlib/__init__.py:8:1: F403 `from .core.datamodels import *` used; unable to detect undefined names
+agentlib/__init__.py:17:1: F405 `AgentVariable` may be undefined, or defined from star imports
+agentlib/__init__.py:17:1: F405 `AgentVariables` may be undefined, or defined from star imports
+agentlib/core/__init__.py:10:1: F403 `from .datamodels import *` used; unable to detect undefined names
+agentlib/core/__init__.py:11:26: F401 [*] `.environment.Environment` imported but unused
+agentlib/core/__init__.py:12:26: F401 [*] `.data_broker.DataBroker` imported but unused
+agentlib/core/__init__.py:12:38: F401 [*] `.data_broker.RTDataBroker` imported but unused
+agentlib/core/__init__.py:12:52: F401 [*] `.data_broker.LocalDataBroker` imported but unused
+agentlib/core/__init__.py:12:69: F401 [*] `.data_broker.DirectCallbackDataBroker` imported but unused
+agentlib/core/__init__.py:13:21: F401 [*] `.module.BaseModule` imported but unused
+agentlib/core/__init__.py:13:33: F401 [*] `.module.BaseModuleConfig` imported but unused
+agentlib/core/__init__.py:14:20: F401 [*] `.agent.Agent` imported but unused
+agentlib/core/__init__.py:15:20: F401 [*] `.model.Model` imported but unused
+agentlib/core/__init__.py:15:27: F401 [*] `.model.ModelConfig` imported but unused
+agentlib/core/datamodels.py:736:17: F402 Import `field` from line 21 shadowed by loop variable
+agentlib/core/logging_.py:38:31: F541 [*] f-string without any placeholders
+agentlib/modules/communicator/clonemap.py:226:9: F841 Local variable `agent` is assigned to but never used
+agentlib/modules/communicator/data_space.py:1:8: F401 [*] `json` imported but unused
+agentlib/modules/communicator/data_space.py:6:38: F401 [*] `agentlib.core.datamodels.AgentVariable` imported but unused
+agentlib/modules/controller/__init__.py:2:25: F401 [*] `.controller.Controller` imported but unused
+agentlib/modules/controller/__init__.py:2:37: F401 [*] `.controller.SISOController` imported but unused
+agentlib/modules/controller/__init__.py:2:53: F401 [*] `.controller.SISOControllerConfig` imported but unused
+agentlib/modules/utils/agent_logger.py:4:8: F401 [*] `collections` imported but unused
+agentlib/utils/__init__.py:16:37: F401 [*] `.local_broadcast_broker.LocalBroadcastBroker` imported but unused
+agentlib/utils/__init__.py:17:27: F401 [*] `.local_broker.LocalBroker` imported but unused
+agentlib/utils/__init__.py:18:38: F401 [*] `.multi_processing_broker.MultiProcessingBroker` imported but unused
+agentlib/utils/ds_utils/ds_broker.py:6:20: F401 [*] `typing.Union` imported but unused
+agentlib/utils/ds_utils/ds_broker.py:9:27: F401 [*] `agentlib.core.AgentVariable` imported but unused
+agentlib/utils/ds_utils/ds_onenet_client.py:2:8: F401 [*] `sys` imported but unused
+agentlib/utils/ds_utils/ds_onenet_client.py:3:22: F401 [*] `datetime.datetime` imported but unused
+agentlib/utils/ds_utils/ds_onenet_client.py:10:34: F401 [*] `pydantic.HttpUrl` imported but unused
+agentlib/utils/ds_utils/ds_onenet_client.py:99:22: F541 [*] f-string without any placeholders
+agentlib/utils/ds_utils/ds_onenet_client.py:125:22: F541 [*] f-string without any placeholders
+agentlib/utils/ds_utils/ds_onenet_client.py:146:31: F541 [*] f-string without any placeholders
+agentlib/utils/ds_utils/ds_onenet_client.py:147:22: F541 [*] f-string without any placeholders
+agentlib/utils/ds_utils/ds_onenet_client.py:163:22: F541 [*] f-string without any placeholders
+agentlib/utils/ds_utils/ds_onenet_client.py:224:31: F541 [*] f-string without any placeholders
+agentlib/utils/ds_utils/ds_onenet_client.py:226:22: F541 [*] f-string without any placeholders
+agentlib/utils/ds_utils/ds_onenet_client.py:249:22: F541 [*] f-string without any placeholders
+agentlib/utils/ds_utils/ds_onenet_client.py:283:5: F841 Local variable `res` is assigned to but never used
+agentlib/utils/ds_utils/settings.py:1:22: F401 [*] `pydantic.BaseModel` imported but unused
+agentlib/utils/ds_utils/settings.py:2:22: F401 [*] `pydantic.ConfigDict` imported but unused
+agentlib/utils/ds_utils/settings.py:4:20: F401 [*] `dotenv.load_dotenv` imported but unused
+Found 43 errors.
+[*] 36 fixable with the `--fix` option (2 hidden fixes can be enabled with the `--unsafe-fixes` option).
+</pre></body></html>
