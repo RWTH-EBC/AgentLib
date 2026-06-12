@@ -160,6 +160,14 @@ class LocalMASAgency(MAS):
         logger.info("Stopping agency")
         self.terminate_agents()
 
+    def show_gui(self):
+        """
+        Interactively visualizes the dependencies between the agents, 
+        their modules and variables using Dash Cytoscape.
+        """
+        from agentlib.utils.plotting.dependency_graph import show_dependency_graph
+        show_dependency_graph(self)
+
     def run(self, until):
         """Execute the LocalMASAgency and terminate it after run is finished"""
         self.env.run(until=until)
@@ -208,6 +216,8 @@ class LocalMASAgency(MAS):
             new_res = agent.get_results(cleanup=cleanup)
             results[agent.id] = new_res
         return results
+    
+        
 
 
 class LocalCloneMAPAgency(LocalMASAgency):
