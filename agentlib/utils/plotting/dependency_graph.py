@@ -132,6 +132,7 @@ def run_dashboard(deps: List[Tuple[str, str, str, str]], agent_ids: List[str]):
             'selector': '.dependency',
             'style': {
                 'curve-style': 'bezier',
+                'control-point-distance': 35,
                 'target-arrow-shape': 'triangle',
                 'font-size': '12px',
                 'text-rotation': 'autorotate',
@@ -223,19 +224,22 @@ def run_dashboard(deps: List[Tuple[str, str, str, str]], agent_ids: List[str]):
 
         html.Div([
 
-            html.Span("Legend:", style={'fontWeight': 'bold', 'marginRight': '10px'}),
+            html.Div("Legend:", style={'fontWeight': 'bold', 'marginBottom': '4px'}),
 
-            html.Span("[shared+sub]", style={'marginRight': '5px', 'fontFamily': 'monospace'}),
+            html.Div([
+                html.Span("[shared+sub]", style={'marginRight': '5px', 'fontFamily': 'monospace'}),
+                html.Span("variable marked shared: true, received via subscription"),
+            ], style={'marginBottom': '4px'}),
 
-            html.Span("variable marked shared: true, received via subscription", style={'marginRight': '20px'}),
+            html.Div([
+                html.Span("[svf+sub]", style={'marginRight': '5px', 'fontFamily': 'monospace'}),
+                html.Span("field in shared_variable_fields, received via subscription"),
+            ], style={'marginBottom': '4px'}),
 
-            html.Span("[svf+sub]", style={'marginRight': '5px', 'fontFamily': 'monospace'}),
-
-            html.Span("field in shared_variable_fields, received via subscription", style={'marginRight': '20px'}),
-
-            html.Span("[source]", style={'marginRight': '5px', 'fontFamily': 'monospace'}),
-
-            html.Span("variable source.agent_id points to another agent", style={'marginRight': '20px'}),
+            html.Div([
+                html.Span("[source]", style={'marginRight': '5px', 'fontFamily': 'monospace'}),
+                html.Span("variable source.agent_id points to another agent"),
+            ]),
 
         ], style={
 
@@ -282,7 +286,7 @@ def run_dashboard(deps: List[Tuple[str, str, str, str]], agent_ids: List[str]):
                             "source": str(src),
                             "target": str(tgt),
                             "label": f"{l} [{t}]",
-                            "hover_details": l
+                            "hover_details": f"{l} [{t}]"
                         },
                         "classes": "dependency highlighted-dependency"
                     })
@@ -297,7 +301,7 @@ def run_dashboard(deps: List[Tuple[str, str, str, str]], agent_ids: List[str]):
                         "source": str(src),
                         "target": str(tgt),
                         "label": summary_text,
-                        "hover_details": ", ".join(l for l, _ in remaining)
+                        "hover_details": ", ".join(f"{l} [{t}]" for l, t in remaining)
                     },
                     "classes": f"dependency summary-dependency{dim_class}"
                 })
@@ -310,7 +314,7 @@ def run_dashboard(deps: List[Tuple[str, str, str, str]], agent_ids: List[str]):
                             "source": str(src),
                             "target": str(tgt),
                             "label": f"{lbl} [{tag}]",
-                            "hover_details": lbl
+                            "hover_details": f"{lbl} [{tag}]"
                         },
                         "classes": f"dependency standard-dependency{dim_class}"
                     })
