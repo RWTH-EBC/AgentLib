@@ -1,6 +1,6 @@
 import logging
+import os
 import socket
-import threading
 import webbrowser
 from collections import defaultdict
 from typing import Dict, List, Tuple, TYPE_CHECKING
@@ -101,12 +101,14 @@ def _extract_dependencies(
     return deps
 
 
-def run_dashboard(mas: "LocalMASAgency"):
+def run_dashboard(deps: List[Tuple[str, str, str, str]], agent_ids: List[str]):
+
+    log = logging.getLogger("werkzeug")
+    log.setLevel(logging.ERROR)
+
     """Bootstraps the Dash application."""
     app = dash.Dash(__name__)
 
-    # Extract dependencies and unique variables once
-    deps = _extract_dependencies(mas)
     unique_vars = sorted(list(set(label for _, _, label, _ in deps)))
     dropdown_options = [{"label": v, "value": v} for v in unique_vars]
 
@@ -254,7 +256,7 @@ def run_dashboard(mas: "LocalMASAgency"):
     def update_elements(selected_variable):
         elements = []
 
-        for agent_id in mas._agents.keys():
+        for agent_id in agent_ids:
             elements.append({
                 "data": {"id": str(agent_id), "label": str(agent_id)},
                 "classes": "agent"
@@ -364,10 +366,23 @@ def run_dashboard(mas: "LocalMASAgency"):
 
     port = get_port()
     webbrowser.open_new_tab(f"http://localhost:{port}")
-    app.run(debug=False, port=port)
+    app.run(debug=False, port=port, use_reloader=False)
 
 
-def show_dependency_graph(mas: "LocalMASAgency"):
-    """Starts the visualizer in a background thread."""
-    thread = threading.Thread(target=run_dashboard, args=(mas,), daemon=False)
-    thread.start()
+import multiprocessing
+
+def show_dependency_graph(mas: "LocalMASAgency") -> multiprocessing.Process:
+    """Starts the visualizer in a background process and returns the process."""
+    # 1. Extract data BEFORE creating the process to avoid Pickling errors
+    deps = _extract_dependencies(mas)
+    agent_ids = list(mas._agents.keys())
+    
+    # 2. Spawn the process with simple, picklable data
+    process = multiprocessing.Process(
+        target=run_dashboard, 
+        args=(deps, agent_ids)
+    )
+    
+    # 3. Start and return the process
+    process.start()
+    return process

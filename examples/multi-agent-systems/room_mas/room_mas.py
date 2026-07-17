@@ -49,6 +49,7 @@ def run_example(until, with_plots=True, log_level=logging.INFO, use_direct_callb
         use_direct_callback_databroker=use_direct_callback_databroker
     )
     mas.show_gui()
+    mas.stop_gui()
     # Simulate
     mas.run(until=until)
     # Load results:
