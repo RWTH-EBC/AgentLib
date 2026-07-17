@@ -22,8 +22,10 @@ agentlib/modules/utils/agent_logger.py:4:8: F401 [*] `collections` imported but 
 agentlib/utils/__init__.py:16:37: F401 [*] `.local_broadcast_broker.LocalBroadcastBroker` imported but unused
 agentlib/utils/__init__.py:17:27: F401 [*] `.local_broker.LocalBroker` imported but unused
 agentlib/utils/__init__.py:18:38: F401 [*] `.multi_processing_broker.MultiProcessingBroker` imported but unused
-agentlib/utils/plotting/dependency_graph.py:274:40: E741 Ambiguous variable name: `l`
-agentlib/utils/plotting/dependency_graph.py:276:21: E741 Ambiguous variable name: `l`
-agentlib/utils/plotting/dependency_graph.py:298:58: E741 Ambiguous variable name: `l`
-Found 27 errors.
-[*] 18 fixable with the `--fix` option (1 hidden fix can be enabled with the `--unsafe-fixes` option).
+agentlib/utils/plotting/dependency_graph.py:2:8: F401 [*] `os` imported but unused
+agentlib/utils/plotting/dependency_graph.py:280:40: E741 Ambiguous variable name: `l`
+agentlib/utils/plotting/dependency_graph.py:282:21: E741 Ambiguous variable name: `l`
+agentlib/utils/plotting/dependency_graph.py:304:69: E741 Ambiguous variable name: `l`
+agentlib/utils/plotting/dependency_graph.py:376:1: E402 Module level import not at top of file
+Found 29 errors.
+[*] 19 fixable with the `--fix` option (1 hidden fix can be enabled with the `--unsafe-fixes` option).
