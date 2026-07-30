@@ -1,5 +1,26 @@
 # Changelog
 
+## 0.9.0
+- Add an optional dashboard function to the mas utility, giving a live overview over all MAS module results. Modules optionally implement the visualization themselves.
+  - The Dashboard can be launched after a run, blocking main, not blocking main, or experimentally also live during the run.
+  - Usage: 
+    ```python
+      mas = LocalMASAgency(...)
+      mas.show_results_dashboard(live=True) # show live
+      mas.run(until=None)
+      # mas.show_results_dashboard(block_main=False)  # or show after the run
+      # ... other plotting or analysis code
+      ```
+- Add optional results logging for communicators, with available granularity: none, basic, detail. Communication results are also available in mas-dashboard.
+  ```json
+  {
+    "type": "local",
+    "communication_log_level": "detail"
+  }
+  ```
+- Add subcription based multiprocessing.
+- Fixed a bug, where the AgentLogger would load an old run when no filename was specified, but overwrite_log was true
+
 ## 0.8.9
 - Improve error message to include agent and module id in validation errors
 - Allow agent configs to specify modules as a dict instead of list, with dict keys corresponding to module_id. Old list still supported as normal.

@@ -5,15 +5,14 @@ from typing import Union, List, Optional
 
 from pydantic import AnyUrl, Field, ValidationError, field_validator
 
+from agentlib.core import Agent
+from agentlib.core.datamodels import AgentVariable
+from agentlib.core.errors import InitializationError, OptionalDependencyError
 from agentlib.modules.communicator.communicator import (
     Communicator,
     SubscriptionCommunicatorConfig,
 )
-from agentlib.core import Agent
-from agentlib.core.datamodels import AgentVariable
-from agentlib.core.errors import InitializationError
 from agentlib.utils.validators import convert_to_list
-from agentlib.core.errors import OptionalDependencyError
 
 try:
     from paho.mqtt.client import (
@@ -189,7 +188,9 @@ class BaseMqttClient(Communicator):
         """Trigger the disconnect"""
         self._mqttc.disconnect(reasoncode=reasoncode, properties=properties)
 
-    def _disconnect_callback(self, client, userdata, disconnect_flags, reasonCode, properties):
+    def _disconnect_callback(
+        self, client, userdata, disconnect_flag, reasonCode, properties
+    ):
         """Stop the loop as a result of the disconnect"""
         self.logger.warning(
             "Disconnected with result code: %s | userdata: %s | properties: %s",
@@ -206,12 +207,11 @@ class BaseMqttClient(Communicator):
         """
         agent_inp = AgentVariable.from_json(msg.payload)
         self.logger.debug(
-            "Received variable %s = %s from source %s",
+            "Received MQTT message for variable %s from source %s",
             agent_inp.alias,
-            agent_inp.value,
             agent_inp.source,
         )
-        self.agent.data_broker.send_variable(agent_inp)
+        self._handle_received_variable(agent_inp)
 
     def _subscribe_callback(self, client, userdata, mid, reasonCodes, properties):
         """Log if the subscription was successful"""

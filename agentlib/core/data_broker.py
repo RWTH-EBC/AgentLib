@@ -450,7 +450,7 @@ class RTDataBroker(QueuedCallbackDataBroker):
         self.thread = threading.Thread(
             target=self._callback_thread, daemon=True, name="DataBroker"
         )
-        self._module_queues: dict[Union[str, None], queue.Queue] = {}
+        self._module_queues: Dict[Union[str, None], queue.Queue] = {}
 
         env.process(self._start_executing_callbacks(env))
 

@@ -10,7 +10,7 @@ import agentlib as ag
 
 def create_sample_data():
     date_today = datetime.now()
-    time = pd.date_range(date_today, date_today + timedelta(minutes=10), freq="30S")
+    time = pd.date_range(date_today, date_today + timedelta(minutes=10), freq="30s")
     data1 = np.sin(np.linspace(0, 2 * np.pi, len(time))) * 10 + 20
     data2 = np.cos(np.linspace(0, 2 * np.pi, len(time))) * 5 + 15
     df = pd.DataFrame({"timestamp": time, "temperature": data1, "humidity": data2})
@@ -19,7 +19,9 @@ def create_sample_data():
     return df
 
 
-def run_example(log_level=logging.INFO, with_plots: bool = True, extrapolation: str = "constant"):
+def run_example(
+    log_level=logging.INFO, with_plots: bool = True, extrapolation: str = "constant"
+):
     # Set the log-level
     logging.basicConfig(level=log_level)
 
