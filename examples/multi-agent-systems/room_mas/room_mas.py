@@ -1,5 +1,6 @@
 import logging
 import os
+from typing import Literal, Union
 
 from matplotlib.ticker import AutoMinorLocator
 
@@ -130,4 +131,9 @@ def run_example(
 
 
 if __name__ == "__main__":
-    run_example(until=86400 / 10, with_plots=True, with_dashboard=True)
+    run_example(
+        until=86400 / 10,
+        with_plots=True,
+        with_dashboard=True,
+        use_direct_callback_databroker=True,
+    )
