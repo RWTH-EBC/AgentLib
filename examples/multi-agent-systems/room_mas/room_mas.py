@@ -134,6 +134,6 @@ if __name__ == "__main__":
     run_example(
         until=86400 / 10,
         with_plots=True,
-        with_dashboard=True,
+        with_dashboard="live",
         use_direct_callback_databroker=True,
     )
