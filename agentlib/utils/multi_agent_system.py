@@ -10,6 +10,7 @@ import multiprocessing
 import threading
 from pathlib import Path
 from typing import List, Dict, Union, Any
+import time
 
 import pandas as pd
 from pydantic import (
@@ -160,6 +161,35 @@ class LocalMASAgency(MAS):
         logger.info("Stopping agency")
         self.terminate_agents()
 
+    _gui_process: multiprocessing.Process = PrivateAttr(default=None)
+
+    def show_gui(self):
+        """
+        Interactively visualizes the dependencies between the agents,
+        their modules and variables using Dash Cytoscape.
+        """
+        from agentlib.utils.plotting.dependency_graph import show_dependency_graph
+        self._gui_process = show_dependency_graph(self)
+
+    def stop_gui(self, prompt="--- Press Enter to stop the GUI and finish the script ---"):
+        """
+        Blocks the script until the user presses Enter, then safely 
+        terminates the Dash GUI process.
+        """
+
+        if hasattr(self, '_gui_process') and self._gui_process is not None:
+            try:
+                if prompt:
+                    time.sleep(3)
+                    input(f"\n{prompt}\n")
+            except KeyboardInterrupt:
+                pass
+            finally:
+                self._gui_process.terminate()
+                self._gui_process.join()
+                self._gui_process = None
+                print("Terminated GUI.")
+
     def run(self, until):
         """Execute the LocalMASAgency and terminate it after run is finished"""
         self.env.run(until=until)
@@ -208,6 +238,8 @@ class LocalMASAgency(MAS):
             new_res = agent.get_results(cleanup=cleanup)
             results[agent.id] = new_res
         return results
+    
+        
 
 
 class LocalCloneMAPAgency(LocalMASAgency):
@@ -215,8 +247,6 @@ class LocalCloneMAPAgency(LocalMASAgency):
     Local LocalMASAgency agency class which tries to mimic cloneMAP
     behaviour for the local execution.
     """
-
-    # todo-fwu delete or add to clonemap example. But I dont think we need the threads, since we have simpy
 
     def run(self, until=None):
         pass  # Already running
