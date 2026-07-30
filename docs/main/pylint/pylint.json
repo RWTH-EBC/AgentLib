@@ -800,7 +800,7 @@
             "column": 0,
             "path": "agentlib/modules/simulation/simulator.py",
             "symbol": "astroid-error",
-            "message": "agentlib/modules/simulation/simulator.py: Fatal error while checking 'agentlib/modules/simulation/simulator.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-02-26-17-33-35.txt'.",
+            "message": "agentlib/modules/simulation/simulator.py: Fatal error while checking 'agentlib/modules/simulation/simulator.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-07-30-07-08-59.txt'.",
             "message-id": "F0002"
         },
         {
@@ -811,29 +811,40 @@
             "column": 0,
             "path": "agentlib/modules/communicator/local_broadcast.py",
             "symbol": "astroid-error",
-            "message": "agentlib/modules/communicator/local_broadcast.py: Fatal error while checking 'agentlib/modules/communicator/local_broadcast.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-02-26-17-33-35.txt'.",
+            "message": "agentlib/modules/communicator/local_broadcast.py: Fatal error while checking 'agentlib/modules/communicator/local_broadcast.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-07-30-07-08-59.txt'.",
             "message-id": "F0002"
         },
         {
-            "type": "convention",
-            "module": "agentlib.utils.multi_agent_system",
+            "type": "refactor",
+            "module": "agentlib.models.scipy_model",
             "obj": "",
-            "line": 219,
+            "line": 35,
             "column": 0,
-            "path": "agentlib/utils/multi_agent_system.py",
-            "symbol": "line-too-long",
-            "message": "Line too long (107/100)",
-            "message-id": "C0301"
+            "path": "agentlib/models/scipy_model.py",
+            "symbol": "useless-option-value",
+            "message": "Useless option value for 'disable', 'no-self-use' was moved to an optional extension, see https://pylint.readthedocs.io/en/latest/whatsnew/2/2.14/summary.html#removed-checkers.",
+            "message-id": "R0022"
         },
         {
             "type": "fatal",
-            "module": "agentlib.utils.multi_agent_system",
+            "module": "agentlib.models.scipy_model",
             "obj": "",
             "line": 1,
             "column": 0,
-            "path": "agentlib/utils/multi_agent_system.py",
+            "path": "agentlib/models/scipy_model.py",
             "symbol": "astroid-error",
-            "message": "agentlib/utils/multi_agent_system.py: Fatal error while checking 'agentlib/utils/multi_agent_system.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-02-26-17-33-35.txt'.",
+            "message": "agentlib/models/scipy_model.py: Fatal error while checking 'agentlib/models/scipy_model.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-07-30-07-08-59.txt'.",
+            "message-id": "F0002"
+        },
+        {
+            "type": "fatal",
+            "module": "agentlib.models.fmu_model",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "agentlib/models/fmu_model.py",
+            "symbol": "astroid-error",
+            "message": "agentlib/models/fmu_model.py: Fatal error while checking 'agentlib/models/fmu_model.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-07-30-07-09-00.txt'.",
             "message-id": "F0002"
         },
         {
@@ -844,52 +855,8 @@
             "column": 0,
             "path": "agentlib/utils/multi_processing_broker.py",
             "symbol": "astroid-error",
-            "message": "agentlib/utils/multi_processing_broker.py: Fatal error while checking 'agentlib/utils/multi_processing_broker.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-02-26-17-33-36.txt'.",
+            "message": "agentlib/utils/multi_processing_broker.py: Fatal error while checking 'agentlib/utils/multi_processing_broker.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-07-30-07-09-00.txt'.",
             "message-id": "F0002"
-        },
-        {
-            "type": "convention",
-            "module": "agentlib.utils.multi_processing_broker",
-            "obj": "",
-            "line": 6,
-            "column": 0,
-            "path": "agentlib/utils/multi_processing_broker.py",
-            "symbol": "ungrouped-imports",
-            "message": "Imports from package json are not grouped",
-            "message-id": "C0412"
-        },
-        {
-            "type": "convention",
-            "module": "agentlib.utils.multi_processing_broker",
-            "obj": "",
-            "line": 7,
-            "column": 0,
-            "path": "agentlib/utils/multi_processing_broker.py",
-            "symbol": "ungrouped-imports",
-            "message": "Imports from package multiprocessing are not grouped",
-            "message-id": "C0412"
-        },
-        {
-            "type": "convention",
-            "module": "agentlib.utils.multi_processing_broker",
-            "obj": "",
-            "line": 10,
-            "column": 0,
-            "path": "agentlib/utils/multi_processing_broker.py",
-            "symbol": "ungrouped-imports",
-            "message": "Imports from package threading are not grouped",
-            "message-id": "C0412"
-        },
-        {
-            "type": "convention",
-            "module": "agentlib.utils.broker",
-            "obj": "",
-            "line": 6,
-            "column": 0,
-            "path": "agentlib/utils/broker.py",
-            "symbol": "ungrouped-imports",
-            "message": "Imports from package threading are not grouped",
-            "message-id": "C0412"
         },
         {
             "type": "error",
@@ -926,24 +893,24 @@
         },
         {
             "type": "convention",
-            "module": "agentlib.utils.fuzzy_matching",
+            "module": "agentlib.models.fmu_model",
             "obj": "",
-            "line": 1,
+            "line": 6,
             "column": 0,
-            "path": "agentlib/utils/fuzzy_matching.py",
-            "symbol": "missing-module-docstring",
-            "message": "Missing module docstring",
-            "message-id": "C0114"
+            "path": "agentlib/models/fmu_model.py",
+            "symbol": "ungrouped-imports",
+            "message": "Imports from package logging are not grouped",
+            "message-id": "C0412"
         },
         {
             "type": "fatal",
-            "module": "agentlib.utils.fuzzy_matching",
+            "module": "agentlib.utils.local_broadcast_broker",
             "obj": "",
             "line": 1,
             "column": 0,
-            "path": "agentlib/utils/fuzzy_matching.py",
+            "path": "agentlib/utils/local_broadcast_broker.py",
             "symbol": "astroid-error",
-            "message": "agentlib/utils/fuzzy_matching.py: Fatal error while checking 'agentlib/utils/fuzzy_matching.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-02-26-17-33-36.txt'.",
+            "message": "agentlib/utils/local_broadcast_broker.py: Fatal error while checking 'agentlib/utils/local_broadcast_broker.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-07-30-07-09-00.txt'.",
             "message-id": "F0002"
         },
         {
@@ -998,29 +965,29 @@
             "column": 0,
             "path": "agentlib/utils/load_config.py",
             "symbol": "astroid-error",
-            "message": "agentlib/utils/load_config.py: Fatal error while checking 'agentlib/utils/load_config.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-02-26-17-33-36.txt'.",
+            "message": "agentlib/utils/load_config.py: Fatal error while checking 'agentlib/utils/load_config.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-07-30-07-09-01.txt'.",
             "message-id": "F0002"
         },
         {
-            "type": "fatal",
-            "module": "agentlib.utils.local_broadcast_broker",
+            "type": "convention",
+            "module": "agentlib.utils.multi_agent_system",
             "obj": "",
-            "line": 1,
+            "line": 219,
             "column": 0,
-            "path": "agentlib/utils/local_broadcast_broker.py",
-            "symbol": "astroid-error",
-            "message": "agentlib/utils/local_broadcast_broker.py: Fatal error while checking 'agentlib/utils/local_broadcast_broker.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-02-26-17-33-36.txt'.",
-            "message-id": "F0002"
+            "path": "agentlib/utils/multi_agent_system.py",
+            "symbol": "line-too-long",
+            "message": "Line too long (107/100)",
+            "message-id": "C0301"
         },
         {
             "type": "fatal",
-            "module": "agentlib.utils.local_broker",
+            "module": "agentlib.utils.multi_agent_system",
             "obj": "",
             "line": 1,
             "column": 0,
-            "path": "agentlib/utils/local_broker.py",
+            "path": "agentlib/utils/multi_agent_system.py",
             "symbol": "astroid-error",
-            "message": "agentlib/utils/local_broker.py: Fatal error while checking 'agentlib/utils/local_broker.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-02-26-17-33-36.txt'.",
+            "message": "agentlib/utils/multi_agent_system.py: Fatal error while checking 'agentlib/utils/multi_agent_system.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-07-30-07-09-01.txt'.",
             "message-id": "F0002"
         },
         {
@@ -1031,260 +998,95 @@
             "column": 0,
             "path": "agentlib/utils/validators.py",
             "symbol": "astroid-error",
-            "message": "agentlib/utils/validators.py: Fatal error while checking 'agentlib/utils/validators.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-02-26-17-33-37.txt'.",
+            "message": "agentlib/utils/validators.py: Fatal error while checking 'agentlib/utils/validators.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-07-30-07-09-01.txt'.",
             "message-id": "F0002"
         },
         {
             "type": "convention",
-            "module": "agentlib.utils.plotting.simulator_dashboard",
+            "module": "agentlib.utils.fuzzy_matching",
             "obj": "",
             "line": 1,
             "column": 0,
-            "path": "agentlib/utils/plotting/simulator_dashboard.py",
+            "path": "agentlib/utils/fuzzy_matching.py",
             "symbol": "missing-module-docstring",
             "message": "Missing module docstring",
             "message-id": "C0114"
         },
         {
             "type": "fatal",
-            "module": "agentlib.utils.plotting.simulator_dashboard",
+            "module": "agentlib.utils.fuzzy_matching",
             "obj": "",
             "line": 1,
             "column": 0,
-            "path": "agentlib/utils/plotting/simulator_dashboard.py",
+            "path": "agentlib/utils/fuzzy_matching.py",
             "symbol": "astroid-error",
-            "message": "agentlib/utils/plotting/simulator_dashboard.py: Fatal error while checking 'agentlib/utils/plotting/simulator_dashboard.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-02-26-17-33-37.txt'.",
-            "message-id": "F0002"
-        },
-        {
-            "type": "convention",
-            "module": "agentlib.utils.plotting.simulator_dashboard",
-            "obj": "",
-            "line": 5,
-            "column": 0,
-            "path": "agentlib/utils/plotting/simulator_dashboard.py",
-            "symbol": "ungrouped-imports",
-            "message": "Imports from package pathlib are not grouped",
-            "message-id": "C0412"
-        },
-        {
-            "type": "refactor",
-            "module": "agentlib.models.scipy_model",
-            "obj": "",
-            "line": 35,
-            "column": 0,
-            "path": "agentlib/models/scipy_model.py",
-            "symbol": "useless-option-value",
-            "message": "Useless option value for 'disable', 'no-self-use' was moved to an optional extension, see https://pylint.readthedocs.io/en/latest/whatsnew/2/2.14/summary.html#removed-checkers.",
-            "message-id": "R0022"
-        },
-        {
-            "type": "fatal",
-            "module": "agentlib.models.scipy_model",
-            "obj": "",
-            "line": 1,
-            "column": 0,
-            "path": "agentlib/models/scipy_model.py",
-            "symbol": "astroid-error",
-            "message": "agentlib/models/scipy_model.py: Fatal error while checking 'agentlib/models/scipy_model.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-02-26-17-33-37.txt'.",
+            "message": "agentlib/utils/fuzzy_matching.py: Fatal error while checking 'agentlib/utils/fuzzy_matching.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-07-30-07-09-01.txt'.",
             "message-id": "F0002"
         },
         {
             "type": "fatal",
-            "module": "agentlib.models.fmu_model",
+            "module": "agentlib.utils.local_broker",
             "obj": "",
             "line": 1,
             "column": 0,
-            "path": "agentlib/models/fmu_model.py",
+            "path": "agentlib/utils/local_broker.py",
             "symbol": "astroid-error",
-            "message": "agentlib/models/fmu_model.py: Fatal error while checking 'agentlib/models/fmu_model.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-02-26-17-33-37.txt'.",
-            "message-id": "F0002"
-        },
-        {
-            "type": "fatal",
-            "module": "agentlib.core.datamodels",
-            "obj": "",
-            "line": 1,
-            "column": 0,
-            "path": "agentlib/core/datamodels.py",
-            "symbol": "astroid-error",
-            "message": "agentlib/core/datamodels.py: Fatal error while checking 'agentlib/core/datamodels.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-02-26-17-33-38.txt'.",
-            "message-id": "F0002"
-        },
-        {
-            "type": "fatal",
-            "module": "agentlib.core.data_broker",
-            "obj": "",
-            "line": 1,
-            "column": 0,
-            "path": "agentlib/core/data_broker.py",
-            "symbol": "astroid-error",
-            "message": "agentlib/core/data_broker.py: Fatal error while checking 'agentlib/core/data_broker.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-02-26-17-33-38.txt'.",
-            "message-id": "F0002"
-        },
-        {
-            "type": "fatal",
-            "module": "agentlib.core.module",
-            "obj": "",
-            "line": 1,
-            "column": 0,
-            "path": "agentlib/core/module.py",
-            "symbol": "astroid-error",
-            "message": "agentlib/core/module.py: Fatal error while checking 'agentlib/core/module.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-02-26-17-33-38.txt'.",
+            "message": "agentlib/utils/local_broker.py: Fatal error while checking 'agentlib/utils/local_broker.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-07-30-07-09-01.txt'.",
             "message-id": "F0002"
         },
         {
             "type": "convention",
-            "module": "agentlib.core.data_broker",
+            "module": "agentlib.utils.multi_agent_system",
             "obj": "",
-            "line": 14,
+            "line": 7,
             "column": 0,
-            "path": "agentlib/core/data_broker.py",
-            "symbol": "ungrouped-imports",
-            "message": "Imports from package abc are not grouped",
-            "message-id": "C0412"
-        },
-        {
-            "type": "convention",
-            "module": "agentlib.core.data_broker",
-            "obj": "",
-            "line": 16,
-            "column": 0,
-            "path": "agentlib/core/data_broker.py",
-            "symbol": "ungrouped-imports",
-            "message": "Imports from package logging are not grouped",
-            "message-id": "C0412"
-        },
-        {
-            "type": "convention",
-            "module": "agentlib.core.module",
-            "obj": "",
-            "line": 5,
-            "column": 0,
-            "path": "agentlib/core/module.py",
-            "symbol": "ungrouped-imports",
-            "message": "Imports from package abc are not grouped",
-            "message-id": "C0412"
-        },
-        {
-            "type": "convention",
-            "module": "agentlib.core.module",
-            "obj": "",
-            "line": 6,
-            "column": 0,
-            "path": "agentlib/core/module.py",
+            "path": "agentlib/utils/multi_agent_system.py",
             "symbol": "ungrouped-imports",
             "message": "Imports from package json are not grouped",
             "message-id": "C0412"
         },
         {
             "type": "convention",
-            "module": "agentlib.core.module",
+            "module": "agentlib.utils.multi_agent_system",
             "obj": "",
-            "line": 7,
+            "line": 11,
             "column": 0,
-            "path": "agentlib/core/module.py",
+            "path": "agentlib/utils/multi_agent_system.py",
             "symbol": "ungrouped-imports",
-            "message": "Imports from package logging are not grouped",
+            "message": "Imports from package pathlib are not grouped",
             "message-id": "C0412"
         },
         {
             "type": "convention",
-            "module": "agentlib.core.module",
+            "module": "agentlib.utils.broker",
             "obj": "",
-            "line": 8,
+            "line": 6,
             "column": 0,
-            "path": "agentlib/core/module.py",
+            "path": "agentlib/utils/broker.py",
             "symbol": "ungrouped-imports",
-            "message": "Imports from package copy are not grouped",
+            "message": "Imports from package threading are not grouped",
             "message-id": "C0412"
         },
         {
             "type": "convention",
-            "module": "agentlib.core.model",
-            "obj": "",
-            "line": 87,
-            "column": 0,
-            "path": "agentlib/core/model.py",
-            "symbol": "line-too-long",
-            "message": "Line too long (106/100)",
-            "message-id": "C0301"
-        },
-        {
-            "type": "convention",
-            "module": "agentlib.core.model",
-            "obj": "",
-            "line": 254,
-            "column": 0,
-            "path": "agentlib/core/model.py",
-            "symbol": "line-too-long",
-            "message": "Line too long (118/100)",
-            "message-id": "C0301"
-        },
-        {
-            "type": "fatal",
-            "module": "agentlib.core.model",
+            "module": "agentlib.utils.plotting.simulator_dashboard",
             "obj": "",
             "line": 1,
             "column": 0,
-            "path": "agentlib/core/model.py",
-            "symbol": "astroid-error",
-            "message": "agentlib/core/model.py: Fatal error while checking 'agentlib/core/model.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-02-26-17-33-39.txt'.",
-            "message-id": "F0002"
-        },
-        {
-            "type": "convention",
-            "module": "agentlib.core.logging_",
-            "obj": "",
-            "line": 1,
-            "column": 0,
-            "path": "agentlib/core/logging_.py",
+            "path": "agentlib/utils/plotting/simulator_dashboard.py",
             "symbol": "missing-module-docstring",
             "message": "Missing module docstring",
             "message-id": "C0114"
         },
         {
             "type": "fatal",
-            "module": "agentlib.core.logging_",
+            "module": "agentlib.utils.plotting.simulator_dashboard",
             "obj": "",
             "line": 1,
             "column": 0,
-            "path": "agentlib/core/logging_.py",
+            "path": "agentlib/utils/plotting/simulator_dashboard.py",
             "symbol": "astroid-error",
-            "message": "agentlib/core/logging_.py: Fatal error while checking 'agentlib/core/logging_.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-02-26-17-33-39.txt'.",
-            "message-id": "F0002"
-        },
-        {
-            "type": "fatal",
-            "module": "agentlib.core.environment",
-            "obj": "",
-            "line": 1,
-            "column": 0,
-            "path": "agentlib/core/environment.py",
-            "symbol": "astroid-error",
-            "message": "agentlib/core/environment.py: Fatal error while checking 'agentlib/core/environment.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-02-26-17-33-40.txt'.",
-            "message-id": "F0002"
-        },
-        {
-            "type": "convention",
-            "module": "agentlib.core.agent",
-            "obj": "",
-            "line": 47,
-            "column": 0,
-            "path": "agentlib/core/agent.py",
-            "symbol": "line-too-long",
-            "message": "Line too long (120/100)",
-            "message-id": "C0301"
-        },
-        {
-            "type": "fatal",
-            "module": "agentlib.core.agent",
-            "obj": "",
-            "line": 1,
-            "column": 0,
-            "path": "agentlib/core/agent.py",
-            "symbol": "astroid-error",
-            "message": "agentlib/core/agent.py: Fatal error while checking 'agentlib/core/agent.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-02-26-17-33-40.txt'.",
+            "message": "agentlib/utils/plotting/simulator_dashboard.py: Fatal error while checking 'agentlib/utils/plotting/simulator_dashboard.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-07-30-07-09-01.txt'.",
             "message-id": "F0002"
         },
         {
@@ -1295,7 +1097,7 @@
             "column": 0,
             "path": "agentlib/modules/__init__.py",
             "symbol": "astroid-error",
-            "message": "agentlib/modules/__init__.py: Fatal error while checking 'agentlib/modules/__init__.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-02-26-17-33-40.txt'.",
+            "message": "agentlib/modules/__init__.py: Fatal error while checking 'agentlib/modules/__init__.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-07-30-07-09-01.txt'.",
             "message-id": "F0002"
         },
         {
@@ -1306,7 +1108,7 @@
             "column": 0,
             "path": "agentlib/modules/utils/try_sensor.py",
             "symbol": "astroid-error",
-            "message": "agentlib/modules/utils/try_sensor.py: Fatal error while checking 'agentlib/modules/utils/try_sensor.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-02-26-17-33-40.txt'.",
+            "message": "agentlib/modules/utils/try_sensor.py: Fatal error while checking 'agentlib/modules/utils/try_sensor.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-07-30-07-09-01.txt'.",
             "message-id": "F0002"
         },
         {
@@ -1372,128 +1174,7 @@
             "column": 0,
             "path": "agentlib/modules/utils/agent_logger.py",
             "symbol": "astroid-error",
-            "message": "agentlib/modules/utils/agent_logger.py: Fatal error while checking 'agentlib/modules/utils/agent_logger.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-02-26-17-33-40.txt'.",
-            "message-id": "F0002"
-        },
-        {
-            "type": "convention",
-            "module": "agentlib.core.logging_",
-            "obj": "",
-            "line": 1,
-            "column": 0,
-            "path": "agentlib/core/logging_.py",
-            "symbol": "ungrouped-imports",
-            "message": "Imports from package logging are not grouped",
-            "message-id": "C0412"
-        },
-        {
-            "type": "convention",
-            "module": "agentlib.core.environment",
-            "obj": "",
-            "line": 28,
-            "column": 0,
-            "path": "agentlib/core/environment.py",
-            "symbol": "ungrouped-imports",
-            "message": "Imports from package json are not grouped",
-            "message-id": "C0412"
-        },
-        {
-            "type": "convention",
-            "module": "agentlib.core.agent",
-            "obj": "",
-            "line": 5,
-            "column": 0,
-            "path": "agentlib/core/agent.py",
-            "symbol": "ungrouped-imports",
-            "message": "Imports from package json are not grouped",
-            "message-id": "C0412"
-        },
-        {
-            "type": "convention",
-            "module": "agentlib.core.agent",
-            "obj": "",
-            "line": 7,
-            "column": 0,
-            "path": "agentlib/core/agent.py",
-            "symbol": "ungrouped-imports",
-            "message": "Imports from package copy are not grouped",
-            "message-id": "C0412"
-        },
-        {
-            "type": "convention",
-            "module": "agentlib.core.agent",
-            "obj": "",
-            "line": 8,
-            "column": 0,
-            "path": "agentlib/core/agent.py",
-            "symbol": "ungrouped-imports",
-            "message": "Imports from package pathlib are not grouped",
-            "message-id": "C0412"
-        },
-        {
-            "type": "convention",
-            "module": "agentlib.modules.utils.agent_logger",
-            "obj": "",
-            "line": 5,
-            "column": 0,
-            "path": "agentlib/modules/utils/agent_logger.py",
-            "symbol": "ungrouped-imports",
-            "message": "Imports from package json are not grouped",
-            "message-id": "C0412"
-        },
-        {
-            "type": "convention",
-            "module": "agentlib.modules.utils.agent_logger",
-            "obj": "",
-            "line": 6,
-            "column": 0,
-            "path": "agentlib/modules/utils/agent_logger.py",
-            "symbol": "ungrouped-imports",
-            "message": "Imports from package logging are not grouped",
-            "message-id": "C0412"
-        },
-        {
-            "type": "convention",
-            "module": "agentlib.modules.utils.agent_logger",
-            "obj": "",
-            "line": 7,
-            "column": 0,
-            "path": "agentlib/modules/utils/agent_logger.py",
-            "symbol": "ungrouped-imports",
-            "message": "Imports from package os are not grouped",
-            "message-id": "C0412"
-        },
-        {
-            "type": "convention",
-            "module": "agentlib.modules.utils.agent_logger",
-            "obj": "",
-            "line": 8,
-            "column": 0,
-            "path": "agentlib/modules/utils/agent_logger.py",
-            "symbol": "ungrouped-imports",
-            "message": "Imports from package time are not grouped",
-            "message-id": "C0412"
-        },
-        {
-            "type": "convention",
-            "module": "agentlib.modules.utils.agent_logger",
-            "obj": "",
-            "line": 10,
-            "column": 0,
-            "path": "agentlib/modules/utils/agent_logger.py",
-            "symbol": "ungrouped-imports",
-            "message": "Imports from package pathlib are not grouped",
-            "message-id": "C0412"
-        },
-        {
-            "type": "fatal",
-            "module": "agentlib.modules.controller.controller",
-            "obj": "",
-            "line": 1,
-            "column": 0,
-            "path": "agentlib/modules/controller/controller.py",
-            "symbol": "astroid-error",
-            "message": "agentlib/modules/controller/controller.py: Fatal error while checking 'agentlib/modules/controller/controller.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-02-26-17-33-40.txt'.",
+            "message": "agentlib/modules/utils/agent_logger.py: Fatal error while checking 'agentlib/modules/utils/agent_logger.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-07-30-07-09-02.txt'.",
             "message-id": "F0002"
         },
         {
@@ -1515,7 +1196,7 @@
             "column": 0,
             "path": "agentlib/modules/controller/pid.py",
             "symbol": "astroid-error",
-            "message": "agentlib/modules/controller/pid.py: Fatal error while checking 'agentlib/modules/controller/pid.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-02-26-17-33-40.txt'.",
+            "message": "agentlib/modules/controller/pid.py: Fatal error while checking 'agentlib/modules/controller/pid.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-07-30-07-09-02.txt'.",
             "message-id": "F0002"
         },
         {
@@ -1563,6 +1244,17 @@
             "message-id": "R1710"
         },
         {
+            "type": "fatal",
+            "module": "agentlib.modules.controller.controller",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "agentlib/modules/controller/controller.py",
+            "symbol": "astroid-error",
+            "message": "agentlib/modules/controller/controller.py: Fatal error while checking 'agentlib/modules/controller/controller.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-07-30-07-09-02.txt'.",
+            "message-id": "F0002"
+        },
+        {
             "type": "convention",
             "module": "agentlib.modules.simulation.csv_data_source",
             "obj": "",
@@ -1592,7 +1284,7 @@
             "column": 0,
             "path": "agentlib/modules/simulation/csv_data_source.py",
             "symbol": "astroid-error",
-            "message": "agentlib/modules/simulation/csv_data_source.py: Fatal error while checking 'agentlib/modules/simulation/csv_data_source.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-02-26-17-33-40.txt'.",
+            "message": "agentlib/modules/simulation/csv_data_source.py: Fatal error while checking 'agentlib/modules/simulation/csv_data_source.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-07-30-07-09-02.txt'.",
             "message-id": "F0002"
         },
         {
@@ -1605,17 +1297,6 @@
             "symbol": "missing-module-docstring",
             "message": "Missing module docstring",
             "message-id": "C0114"
-        },
-        {
-            "type": "fatal",
-            "module": "agentlib.modules.communicator.communicator",
-            "obj": "",
-            "line": 1,
-            "column": 0,
-            "path": "agentlib/modules/communicator/communicator.py",
-            "symbol": "astroid-error",
-            "message": "agentlib/modules/communicator/communicator.py: Fatal error while checking 'agentlib/modules/communicator/communicator.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-02-26-17-33-41.txt'.",
-            "message-id": "F0002"
         },
         {
             "type": "convention",
@@ -1652,13 +1333,24 @@
         },
         {
             "type": "fatal",
+            "module": "agentlib.modules.communicator.communicator",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "agentlib/modules/communicator/communicator.py",
+            "symbol": "astroid-error",
+            "message": "agentlib/modules/communicator/communicator.py: Fatal error while checking 'agentlib/modules/communicator/communicator.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-07-30-07-09-02.txt'.",
+            "message-id": "F0002"
+        },
+        {
+            "type": "fatal",
             "module": "agentlib.modules.communicator.clonemap",
             "obj": "",
             "line": 1,
             "column": 0,
             "path": "agentlib/modules/communicator/clonemap.py",
             "symbol": "astroid-error",
-            "message": "agentlib/modules/communicator/clonemap.py: Fatal error while checking 'agentlib/modules/communicator/clonemap.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-02-26-17-33-41.txt'.",
+            "message": "agentlib/modules/communicator/clonemap.py: Fatal error while checking 'agentlib/modules/communicator/clonemap.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-07-30-07-09-02.txt'.",
             "message-id": "F0002"
         },
         {
@@ -1757,7 +1449,194 @@
             "column": 0,
             "path": "agentlib/modules/communicator/mqtt.py",
             "symbol": "astroid-error",
-            "message": "agentlib/modules/communicator/mqtt.py: Fatal error while checking 'agentlib/modules/communicator/mqtt.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-02-26-17-33-41.txt'.",
+            "message": "agentlib/modules/communicator/mqtt.py: Fatal error while checking 'agentlib/modules/communicator/mqtt.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-07-30-07-09-03.txt'.",
+            "message-id": "F0002"
+        },
+        {
+            "type": "convention",
+            "module": "agentlib.core.agent",
+            "obj": "",
+            "line": 47,
+            "column": 0,
+            "path": "agentlib/core/agent.py",
+            "symbol": "line-too-long",
+            "message": "Line too long (120/100)",
+            "message-id": "C0301"
+        },
+        {
+            "type": "fatal",
+            "module": "agentlib.core.agent",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "agentlib/core/agent.py",
+            "symbol": "astroid-error",
+            "message": "agentlib/core/agent.py: Fatal error while checking 'agentlib/core/agent.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-07-30-07-09-03.txt'.",
+            "message-id": "F0002"
+        },
+        {
+            "type": "fatal",
+            "module": "agentlib.core.datamodels",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "agentlib/core/datamodels.py",
+            "symbol": "astroid-error",
+            "message": "agentlib/core/datamodels.py: Fatal error while checking 'agentlib/core/datamodels.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-07-30-07-09-03.txt'.",
+            "message-id": "F0002"
+        },
+        {
+            "type": "fatal",
+            "module": "agentlib.core.data_broker",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "agentlib/core/data_broker.py",
+            "symbol": "astroid-error",
+            "message": "agentlib/core/data_broker.py: Fatal error while checking 'agentlib/core/data_broker.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-07-30-07-09-04.txt'.",
+            "message-id": "F0002"
+        },
+        {
+            "type": "convention",
+            "module": "agentlib.core.datamodels",
+            "obj": "",
+            "line": 6,
+            "column": 0,
+            "path": "agentlib/core/datamodels.py",
+            "symbol": "ungrouped-imports",
+            "message": "Imports from package abc are not grouped",
+            "message-id": "C0412"
+        },
+        {
+            "type": "convention",
+            "module": "agentlib.core.datamodels",
+            "obj": "",
+            "line": 8,
+            "column": 0,
+            "path": "agentlib/core/datamodels.py",
+            "symbol": "ungrouped-imports",
+            "message": "Imports from package json are not grouped",
+            "message-id": "C0412"
+        },
+        {
+            "type": "convention",
+            "module": "agentlib.core.datamodels",
+            "obj": "",
+            "line": 12,
+            "column": 0,
+            "path": "agentlib/core/datamodels.py",
+            "symbol": "ungrouped-imports",
+            "message": "Imports from package copy are not grouped",
+            "message-id": "C0412"
+        },
+        {
+            "type": "convention",
+            "module": "agentlib.core.data_broker",
+            "obj": "",
+            "line": 14,
+            "column": 0,
+            "path": "agentlib/core/data_broker.py",
+            "symbol": "ungrouped-imports",
+            "message": "Imports from package abc are not grouped",
+            "message-id": "C0412"
+        },
+        {
+            "type": "convention",
+            "module": "agentlib.core.data_broker",
+            "obj": "",
+            "line": 16,
+            "column": 0,
+            "path": "agentlib/core/data_broker.py",
+            "symbol": "ungrouped-imports",
+            "message": "Imports from package logging are not grouped",
+            "message-id": "C0412"
+        },
+        {
+            "type": "convention",
+            "module": "agentlib.core.data_broker",
+            "obj": "",
+            "line": 18,
+            "column": 0,
+            "path": "agentlib/core/data_broker.py",
+            "symbol": "ungrouped-imports",
+            "message": "Imports from package threading are not grouped",
+            "message-id": "C0412"
+        },
+        {
+            "type": "fatal",
+            "module": "agentlib.core.module",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "agentlib/core/module.py",
+            "symbol": "astroid-error",
+            "message": "agentlib/core/module.py: Fatal error while checking 'agentlib/core/module.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-07-30-07-09-04.txt'.",
+            "message-id": "F0002"
+        },
+        {
+            "type": "fatal",
+            "module": "agentlib.core.environment",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "agentlib/core/environment.py",
+            "symbol": "astroid-error",
+            "message": "agentlib/core/environment.py: Fatal error while checking 'agentlib/core/environment.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-07-30-07-09-04.txt'.",
+            "message-id": "F0002"
+        },
+        {
+            "type": "convention",
+            "module": "agentlib.core.model",
+            "obj": "",
+            "line": 87,
+            "column": 0,
+            "path": "agentlib/core/model.py",
+            "symbol": "line-too-long",
+            "message": "Line too long (106/100)",
+            "message-id": "C0301"
+        },
+        {
+            "type": "convention",
+            "module": "agentlib.core.model",
+            "obj": "",
+            "line": 254,
+            "column": 0,
+            "path": "agentlib/core/model.py",
+            "symbol": "line-too-long",
+            "message": "Line too long (118/100)",
+            "message-id": "C0301"
+        },
+        {
+            "type": "fatal",
+            "module": "agentlib.core.model",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "agentlib/core/model.py",
+            "symbol": "astroid-error",
+            "message": "agentlib/core/model.py: Fatal error while checking 'agentlib/core/model.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-07-30-07-09-05.txt'.",
+            "message-id": "F0002"
+        },
+        {
+            "type": "convention",
+            "module": "agentlib.core.logging_",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "agentlib/core/logging_.py",
+            "symbol": "missing-module-docstring",
+            "message": "Missing module docstring",
+            "message-id": "C0114"
+        },
+        {
+            "type": "fatal",
+            "module": "agentlib.core.logging_",
+            "obj": "",
+            "line": 1,
+            "column": 0,
+            "path": "agentlib/core/logging_.py",
+            "symbol": "astroid-error",
+            "message": "agentlib/core/logging_.py: Fatal error while checking 'agentlib/core/logging_.py'. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in '/home/runner/.cache/pylint/pylint-crash-2026-07-30-07-09-05.txt'.",
             "message-id": "F0002"
         }
     ],
@@ -1787,8 +1666,26 @@
                 "statement": 6,
                 "warning": 0
             },
-            "agentlib.utils.multi_agent_system": {
-                "convention": 1,
+            "agentlib.models.__init__": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 15,
+                "warning": 0
+            },
+            "agentlib.models.scipy_model": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 1,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.models.fmu_model": {
+                "convention": 0,
                 "error": 0,
                 "fatal": 1,
                 "info": 0,
@@ -1805,17 +1702,8 @@
                 "statement": 0,
                 "warning": 0
             },
-            "agentlib.utils.broker": {
-                "convention": 4,
-                "error": 0,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 0,
-                "statement": 29,
-                "warning": 0
-            },
             "agentlib.utils.plugin_import": {
-                "convention": 0,
+                "convention": 1,
                 "error": 1,
                 "fatal": 0,
                 "info": 0,
@@ -1823,8 +1711,8 @@
                 "statement": 30,
                 "warning": 2
             },
-            "agentlib.utils.fuzzy_matching": {
-                "convention": 1,
+            "agentlib.utils.local_broadcast_broker": {
+                "convention": 0,
                 "error": 0,
                 "fatal": 1,
                 "info": 0,
@@ -1850,17 +1738,8 @@
                 "statement": 0,
                 "warning": 0
             },
-            "agentlib.utils.local_broadcast_broker": {
-                "convention": 0,
-                "error": 0,
-                "fatal": 1,
-                "info": 0,
-                "refactor": 0,
-                "statement": 0,
-                "warning": 0
-            },
-            "agentlib.utils.local_broker": {
-                "convention": 0,
+            "agentlib.utils.multi_agent_system": {
+                "convention": 1,
                 "error": 0,
                 "fatal": 1,
                 "info": 0,
@@ -1877,124 +1756,43 @@
                 "statement": 0,
                 "warning": 0
             },
-            "agentlib.utils.plotting.simulator_dashboard": {
+            "agentlib.utils.fuzzy_matching": {
                 "convention": 1,
                 "error": 0,
                 "fatal": 1,
                 "info": 0,
                 "refactor": 0,
                 "statement": 0,
+                "warning": 0
+            },
+            "agentlib.utils.local_broker": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.utils.broker": {
+                "convention": 3,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 29,
                 "warning": 0
             },
             "agentlib.utils.plotting.__init__": {
-                "convention": 1,
-                "error": 0,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 0,
-                "statement": 0,
-                "warning": 0
-            },
-            "agentlib.models.scipy_model": {
-                "convention": 0,
-                "error": 0,
-                "fatal": 1,
-                "info": 0,
-                "refactor": 1,
-                "statement": 0,
-                "warning": 0
-            },
-            "agentlib.models.__init__": {
                 "convention": 0,
                 "error": 0,
                 "fatal": 0,
                 "info": 0,
                 "refactor": 0,
-                "statement": 15,
-                "warning": 0
-            },
-            "agentlib.models.fmu_model": {
-                "convention": 0,
-                "error": 0,
-                "fatal": 1,
-                "info": 0,
-                "refactor": 0,
                 "statement": 0,
                 "warning": 0
             },
-            "agentlib.core.errors": {
-                "convention": 0,
-                "error": 0,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 0,
-                "statement": 8,
-                "warning": 0
-            },
-            "agentlib.core.datamodels": {
-                "convention": 0,
-                "error": 0,
-                "fatal": 1,
-                "info": 0,
-                "refactor": 0,
-                "statement": 0,
-                "warning": 0
-            },
-            "agentlib.core.data_broker": {
-                "convention": 0,
-                "error": 0,
-                "fatal": 1,
-                "info": 0,
-                "refactor": 0,
-                "statement": 0,
-                "warning": 0
-            },
-            "agentlib.core.module": {
-                "convention": 0,
-                "error": 0,
-                "fatal": 1,
-                "info": 0,
-                "refactor": 0,
-                "statement": 0,
-                "warning": 0
-            },
-            "agentlib.core.__init__": {
-                "convention": 6,
-                "error": 0,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 0,
-                "statement": 6,
-                "warning": 0
-            },
-            "agentlib.core.model": {
-                "convention": 2,
-                "error": 0,
-                "fatal": 1,
-                "info": 0,
-                "refactor": 0,
-                "statement": 0,
-                "warning": 0
-            },
-            "agentlib.core.logging_": {
-                "convention": 1,
-                "error": 0,
-                "fatal": 1,
-                "info": 0,
-                "refactor": 0,
-                "statement": 0,
-                "warning": 0
-            },
-            "agentlib.core.environment": {
-                "convention": 0,
-                "error": 0,
-                "fatal": 1,
-                "info": 0,
-                "refactor": 0,
-                "statement": 0,
-                "warning": 0
-            },
-            "agentlib.core.agent": {
+            "agentlib.utils.plotting.simulator_dashboard": {
                 "convention": 1,
                 "error": 0,
                 "fatal": 1,
@@ -2012,6 +1810,15 @@
                 "statement": 0,
                 "warning": 0
             },
+            "agentlib.modules.utils.__init__": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 2,
+                "warning": 0
+            },
             "agentlib.modules.utils.try_sensor": {
                 "convention": 0,
                 "error": 0,
@@ -2027,24 +1834,6 @@
                 "fatal": 1,
                 "info": 0,
                 "refactor": 1,
-                "statement": 0,
-                "warning": 0
-            },
-            "agentlib.modules.utils.__init__": {
-                "convention": 10,
-                "error": 0,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 0,
-                "statement": 2,
-                "warning": 0
-            },
-            "agentlib.modules.controller.controller": {
-                "convention": 0,
-                "error": 0,
-                "fatal": 1,
-                "info": 0,
-                "refactor": 0,
                 "statement": 0,
                 "warning": 0
             },
@@ -2075,8 +1864,8 @@
                 "statement": 33,
                 "warning": 0
             },
-            "agentlib.modules.simulation.csv_data_source": {
-                "convention": 2,
+            "agentlib.modules.controller.controller": {
+                "convention": 0,
                 "error": 0,
                 "fatal": 1,
                 "info": 0,
@@ -2086,6 +1875,15 @@
             },
             "agentlib.modules.simulation.simulator": {
                 "convention": 0,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.modules.simulation.csv_data_source": {
+                "convention": 2,
                 "error": 0,
                 "fatal": 1,
                 "info": 0,
@@ -2111,15 +1909,6 @@
                 "statement": 0,
                 "warning": 0
             },
-            "agentlib.modules.communicator.communicator": {
-                "convention": 0,
-                "error": 0,
-                "fatal": 1,
-                "info": 0,
-                "refactor": 0,
-                "statement": 0,
-                "warning": 0
-            },
             "agentlib.modules.communicator.local": {
                 "convention": 3,
                 "error": 0,
@@ -2127,6 +1916,15 @@
                 "info": 0,
                 "refactor": 0,
                 "statement": 17,
+                "warning": 0
+            },
+            "agentlib.modules.communicator.communicator": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
                 "warning": 0
             },
             "agentlib.modules.communicator.clonemap": {
@@ -2138,15 +1936,6 @@
                 "statement": 0,
                 "warning": 0
             },
-            "agentlib.modules.communicator.local_multiprocessing": {
-                "convention": 3,
-                "error": 3,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 0,
-                "statement": 61,
-                "warning": 1
-            },
             "agentlib.modules.communicator.__init__": {
                 "convention": 0,
                 "error": 0,
@@ -2156,7 +1945,97 @@
                 "statement": 2,
                 "warning": 0
             },
+            "agentlib.modules.communicator.local_multiprocessing": {
+                "convention": 3,
+                "error": 3,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 61,
+                "warning": 1
+            },
             "agentlib.modules.communicator.mqtt": {
+                "convention": 1,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.core.agent": {
+                "convention": 1,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.core.datamodels": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.core.data_broker": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.core.errors": {
+                "convention": 6,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 8,
+                "warning": 0
+            },
+            "agentlib.core.__init__": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 6,
+                "warning": 0
+            },
+            "agentlib.core.module": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.core.environment": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.core.model": {
+                "convention": 2,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.core.logging_": {
                 "convention": 1,
                 "error": 0,
                 "fatal": 1,
@@ -2168,13 +2047,13 @@
         },
         "by_msg": {
             "astroid-error": 28,
-            "line-too-long": 8,
-            "ungrouped-imports": 21,
+            "useless-option-value": 2,
             "import-error": 4,
             "unused-argument": 1,
             "raise-missing-from": 2,
+            "ungrouped-imports": 10,
+            "line-too-long": 8,
             "missing-module-docstring": 12,
-            "useless-option-value": 2,
             "trailing-whitespace": 2,
             "inconsistent-return-statements": 1,
             "missing-class-docstring": 2,
@@ -2192,9 +2071,9 @@
         },
         "dependencies": {
             "agentlib.core": [
+                "agentlib.modules.communicator.local_multiprocessing",
                 "agentlib",
-                "agentlib.modules.controller.bangbang",
-                "agentlib.modules.communicator.local_multiprocessing"
+                "agentlib.modules.controller.bangbang"
             ],
             "agentlib.models": [
                 "agentlib"
@@ -2207,14 +2086,24 @@
                 "agentlib.modules.communicator.local"
             ],
             "agentlib.core.datamodels": [
-                "agentlib.modules.communicator.local_multiprocessing",
                 "agentlib",
+                "agentlib.modules.communicator.local_multiprocessing",
                 "agentlib.modules.communicator.local",
-                "agentlib.modules.controller.bangbang",
-                "agentlib.core"
+                "agentlib.core",
+                "agentlib.modules.controller.bangbang"
             ],
             "agentlib.utils.multi_agent_system": [
                 "agentlib"
+            ],
+            "agentlib.utils.plugin_import": [
+                "agentlib.models",
+                "agentlib.modules.simulation",
+                "agentlib.modules.controller",
+                "agentlib.modules.utils",
+                "agentlib.modules.communicator"
+            ],
+            "agentlib.utils.fuzzy_matching": [
+                "agentlib.models"
             ],
             "agentlib.utils.local_broadcast_broker": [
                 "agentlib.utils"
@@ -2223,18 +2112,18 @@
                 "agentlib.utils"
             ],
             "agentlib.utils.multi_processing_broker": [
-                "agentlib.utils",
-                "agentlib.modules.communicator.local_multiprocessing"
+                "agentlib.modules.communicator.local_multiprocessing",
+                "agentlib.utils"
             ],
-            "agentlib.utils.plugin_import": [
-                "agentlib.modules.utils",
-                "agentlib.models",
-                "agentlib.modules.controller",
-                "agentlib.modules.simulation",
-                "agentlib.modules.communicator"
+            "agentlib.modules.controller.controller": [
+                "agentlib.modules.controller"
             ],
-            "agentlib.utils.fuzzy_matching": [
-                "agentlib.models"
+            "agentlib.modules.controller": [
+                "agentlib.modules.controller.bangbang"
+            ],
+            "agentlib.modules.communicator.communicator": [
+                "agentlib.modules.communicator.local_multiprocessing",
+                "agentlib.modules.communicator.local"
             ],
             "agentlib.core.environment": [
                 "agentlib.core"
@@ -2250,16 +2139,6 @@
             ],
             "agentlib.core.model": [
                 "agentlib.core"
-            ],
-            "agentlib.modules.controller.controller": [
-                "agentlib.modules.controller"
-            ],
-            "agentlib.modules.controller": [
-                "agentlib.modules.controller.bangbang"
-            ],
-            "agentlib.modules.communicator.communicator": [
-                "agentlib.modules.communicator.local",
-                "agentlib.modules.communicator.local_multiprocessing"
             ]
         },
         "duplicated_lines": {
@@ -2278,7 +2157,7 @@
             "method": 1,
             "module": 12
         },
-        "convention": 47,
+        "convention": 36,
         "error": 6,
         "fatal": 28,
         "info": 0,
@@ -2315,8 +2194,26 @@
                 "statement": 6,
                 "warning": 0
             },
-            "agentlib.utils.multi_agent_system": {
-                "convention": 1,
+            "agentlib.models.__init__": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 15,
+                "warning": 0
+            },
+            "agentlib.models.scipy_model": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 1,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.models.fmu_model": {
+                "convention": 0,
                 "error": 0,
                 "fatal": 1,
                 "info": 0,
@@ -2333,17 +2230,8 @@
                 "statement": 0,
                 "warning": 0
             },
-            "agentlib.utils.broker": {
-                "convention": 4,
-                "error": 0,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 0,
-                "statement": 29,
-                "warning": 0
-            },
             "agentlib.utils.plugin_import": {
-                "convention": 0,
+                "convention": 1,
                 "error": 1,
                 "fatal": 0,
                 "info": 0,
@@ -2351,8 +2239,8 @@
                 "statement": 30,
                 "warning": 2
             },
-            "agentlib.utils.fuzzy_matching": {
-                "convention": 1,
+            "agentlib.utils.local_broadcast_broker": {
+                "convention": 0,
                 "error": 0,
                 "fatal": 1,
                 "info": 0,
@@ -2378,17 +2266,8 @@
                 "statement": 0,
                 "warning": 0
             },
-            "agentlib.utils.local_broadcast_broker": {
-                "convention": 0,
-                "error": 0,
-                "fatal": 1,
-                "info": 0,
-                "refactor": 0,
-                "statement": 0,
-                "warning": 0
-            },
-            "agentlib.utils.local_broker": {
-                "convention": 0,
+            "agentlib.utils.multi_agent_system": {
+                "convention": 1,
                 "error": 0,
                 "fatal": 1,
                 "info": 0,
@@ -2405,124 +2284,43 @@
                 "statement": 0,
                 "warning": 0
             },
-            "agentlib.utils.plotting.simulator_dashboard": {
+            "agentlib.utils.fuzzy_matching": {
                 "convention": 1,
                 "error": 0,
                 "fatal": 1,
                 "info": 0,
                 "refactor": 0,
                 "statement": 0,
+                "warning": 0
+            },
+            "agentlib.utils.local_broker": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.utils.broker": {
+                "convention": 3,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 29,
                 "warning": 0
             },
             "agentlib.utils.plotting.__init__": {
-                "convention": 1,
-                "error": 0,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 0,
-                "statement": 0,
-                "warning": 0
-            },
-            "agentlib.models.scipy_model": {
-                "convention": 0,
-                "error": 0,
-                "fatal": 1,
-                "info": 0,
-                "refactor": 1,
-                "statement": 0,
-                "warning": 0
-            },
-            "agentlib.models.__init__": {
                 "convention": 0,
                 "error": 0,
                 "fatal": 0,
                 "info": 0,
                 "refactor": 0,
-                "statement": 15,
-                "warning": 0
-            },
-            "agentlib.models.fmu_model": {
-                "convention": 0,
-                "error": 0,
-                "fatal": 1,
-                "info": 0,
-                "refactor": 0,
                 "statement": 0,
                 "warning": 0
             },
-            "agentlib.core.errors": {
-                "convention": 0,
-                "error": 0,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 0,
-                "statement": 8,
-                "warning": 0
-            },
-            "agentlib.core.datamodels": {
-                "convention": 0,
-                "error": 0,
-                "fatal": 1,
-                "info": 0,
-                "refactor": 0,
-                "statement": 0,
-                "warning": 0
-            },
-            "agentlib.core.data_broker": {
-                "convention": 0,
-                "error": 0,
-                "fatal": 1,
-                "info": 0,
-                "refactor": 0,
-                "statement": 0,
-                "warning": 0
-            },
-            "agentlib.core.module": {
-                "convention": 0,
-                "error": 0,
-                "fatal": 1,
-                "info": 0,
-                "refactor": 0,
-                "statement": 0,
-                "warning": 0
-            },
-            "agentlib.core.__init__": {
-                "convention": 6,
-                "error": 0,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 0,
-                "statement": 6,
-                "warning": 0
-            },
-            "agentlib.core.model": {
-                "convention": 2,
-                "error": 0,
-                "fatal": 1,
-                "info": 0,
-                "refactor": 0,
-                "statement": 0,
-                "warning": 0
-            },
-            "agentlib.core.logging_": {
-                "convention": 1,
-                "error": 0,
-                "fatal": 1,
-                "info": 0,
-                "refactor": 0,
-                "statement": 0,
-                "warning": 0
-            },
-            "agentlib.core.environment": {
-                "convention": 0,
-                "error": 0,
-                "fatal": 1,
-                "info": 0,
-                "refactor": 0,
-                "statement": 0,
-                "warning": 0
-            },
-            "agentlib.core.agent": {
+            "agentlib.utils.plotting.simulator_dashboard": {
                 "convention": 1,
                 "error": 0,
                 "fatal": 1,
@@ -2540,6 +2338,15 @@
                 "statement": 0,
                 "warning": 0
             },
+            "agentlib.modules.utils.__init__": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 2,
+                "warning": 0
+            },
             "agentlib.modules.utils.try_sensor": {
                 "convention": 0,
                 "error": 0,
@@ -2555,24 +2362,6 @@
                 "fatal": 1,
                 "info": 0,
                 "refactor": 1,
-                "statement": 0,
-                "warning": 0
-            },
-            "agentlib.modules.utils.__init__": {
-                "convention": 10,
-                "error": 0,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 0,
-                "statement": 2,
-                "warning": 0
-            },
-            "agentlib.modules.controller.controller": {
-                "convention": 0,
-                "error": 0,
-                "fatal": 1,
-                "info": 0,
-                "refactor": 0,
                 "statement": 0,
                 "warning": 0
             },
@@ -2603,8 +2392,8 @@
                 "statement": 33,
                 "warning": 0
             },
-            "agentlib.modules.simulation.csv_data_source": {
-                "convention": 2,
+            "agentlib.modules.controller.controller": {
+                "convention": 0,
                 "error": 0,
                 "fatal": 1,
                 "info": 0,
@@ -2614,6 +2403,15 @@
             },
             "agentlib.modules.simulation.simulator": {
                 "convention": 0,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.modules.simulation.csv_data_source": {
+                "convention": 2,
                 "error": 0,
                 "fatal": 1,
                 "info": 0,
@@ -2639,15 +2437,6 @@
                 "statement": 0,
                 "warning": 0
             },
-            "agentlib.modules.communicator.communicator": {
-                "convention": 0,
-                "error": 0,
-                "fatal": 1,
-                "info": 0,
-                "refactor": 0,
-                "statement": 0,
-                "warning": 0
-            },
             "agentlib.modules.communicator.local": {
                 "convention": 3,
                 "error": 0,
@@ -2655,6 +2444,15 @@
                 "info": 0,
                 "refactor": 0,
                 "statement": 17,
+                "warning": 0
+            },
+            "agentlib.modules.communicator.communicator": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
                 "warning": 0
             },
             "agentlib.modules.communicator.clonemap": {
@@ -2666,15 +2464,6 @@
                 "statement": 0,
                 "warning": 0
             },
-            "agentlib.modules.communicator.local_multiprocessing": {
-                "convention": 3,
-                "error": 3,
-                "fatal": 0,
-                "info": 0,
-                "refactor": 0,
-                "statement": 61,
-                "warning": 1
-            },
             "agentlib.modules.communicator.__init__": {
                 "convention": 0,
                 "error": 0,
@@ -2684,7 +2473,97 @@
                 "statement": 2,
                 "warning": 0
             },
+            "agentlib.modules.communicator.local_multiprocessing": {
+                "convention": 3,
+                "error": 3,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 61,
+                "warning": 1
+            },
             "agentlib.modules.communicator.mqtt": {
+                "convention": 1,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.core.agent": {
+                "convention": 1,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.core.datamodels": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.core.data_broker": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.core.errors": {
+                "convention": 6,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 8,
+                "warning": 0
+            },
+            "agentlib.core.__init__": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 0,
+                "info": 0,
+                "refactor": 0,
+                "statement": 6,
+                "warning": 0
+            },
+            "agentlib.core.module": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.core.environment": {
+                "convention": 0,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.core.model": {
+                "convention": 2,
+                "error": 0,
+                "fatal": 1,
+                "info": 0,
+                "refactor": 0,
+                "statement": 0,
+                "warning": 0
+            },
+            "agentlib.core.logging_": {
                 "convention": 1,
                 "error": 0,
                 "fatal": 1,
@@ -2696,13 +2575,13 @@
         },
         "by_msg": {
             "astroid-error": 28,
-            "line-too-long": 8,
-            "ungrouped-imports": 21,
+            "useless-option-value": 2,
             "import-error": 4,
             "unused-argument": 1,
             "raise-missing-from": 2,
+            "ungrouped-imports": 10,
+            "line-too-long": 8,
             "missing-module-docstring": 12,
-            "useless-option-value": 2,
             "trailing-whitespace": 2,
             "inconsistent-return-statements": 1,
             "missing-class-docstring": 2,
@@ -2720,9 +2599,9 @@
         },
         "dependencies": {
             "agentlib.core": [
+                "agentlib.modules.communicator.local_multiprocessing",
                 "agentlib",
-                "agentlib.modules.controller.bangbang",
-                "agentlib.modules.communicator.local_multiprocessing"
+                "agentlib.modules.controller.bangbang"
             ],
             "agentlib.models": [
                 "agentlib"
@@ -2735,14 +2614,24 @@
                 "agentlib.modules.communicator.local"
             ],
             "agentlib.core.datamodels": [
-                "agentlib.modules.communicator.local_multiprocessing",
                 "agentlib",
+                "agentlib.modules.communicator.local_multiprocessing",
                 "agentlib.modules.communicator.local",
-                "agentlib.modules.controller.bangbang",
-                "agentlib.core"
+                "agentlib.core",
+                "agentlib.modules.controller.bangbang"
             ],
             "agentlib.utils.multi_agent_system": [
                 "agentlib"
+            ],
+            "agentlib.utils.plugin_import": [
+                "agentlib.models",
+                "agentlib.modules.simulation",
+                "agentlib.modules.controller",
+                "agentlib.modules.utils",
+                "agentlib.modules.communicator"
+            ],
+            "agentlib.utils.fuzzy_matching": [
+                "agentlib.models"
             ],
             "agentlib.utils.local_broadcast_broker": [
                 "agentlib.utils"
@@ -2751,18 +2640,18 @@
                 "agentlib.utils"
             ],
             "agentlib.utils.multi_processing_broker": [
-                "agentlib.utils",
-                "agentlib.modules.communicator.local_multiprocessing"
+                "agentlib.modules.communicator.local_multiprocessing",
+                "agentlib.utils"
             ],
-            "agentlib.utils.plugin_import": [
-                "agentlib.modules.utils",
-                "agentlib.models",
-                "agentlib.modules.controller",
-                "agentlib.modules.simulation",
-                "agentlib.modules.communicator"
+            "agentlib.modules.controller.controller": [
+                "agentlib.modules.controller"
             ],
-            "agentlib.utils.fuzzy_matching": [
-                "agentlib.models"
+            "agentlib.modules.controller": [
+                "agentlib.modules.controller.bangbang"
+            ],
+            "agentlib.modules.communicator.communicator": [
+                "agentlib.modules.communicator.local_multiprocessing",
+                "agentlib.modules.communicator.local"
             ],
             "agentlib.core.environment": [
                 "agentlib.core"
@@ -2778,16 +2667,6 @@
             ],
             "agentlib.core.model": [
                 "agentlib.core"
-            ],
-            "agentlib.modules.controller.controller": [
-                "agentlib.modules.controller"
-            ],
-            "agentlib.modules.controller": [
-                "agentlib.modules.controller.bangbang"
-            ],
-            "agentlib.modules.communicator.communicator": [
-                "agentlib.modules.communicator.local",
-                "agentlib.modules.communicator.local_multiprocessing"
             ]
         },
         "duplicated_lines": {
@@ -2806,14 +2685,14 @@
             "method": 1,
             "module": 12
         },
-        "convention": 47,
+        "convention": 36,
         "error": 6,
         "fatal": 28,
         "info": 0,
         "refactor": 3,
         "statement": 361,
         "warning": 4,
-        "global_note": 7.673130193905817,
+        "global_note": 7.977839335180056,
         "nb_duplicated_lines": 0,
         "percent_duplicated_lines": 0.0
     }
