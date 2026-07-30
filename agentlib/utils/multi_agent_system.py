@@ -246,8 +246,6 @@ class LocalCloneMAPAgency(LocalMASAgency):
     behaviour for the local execution.
     """
 
-    # todo-fwu delete or add to clonemap example. But I dont think we need the threads, since we have simpy
-
     def run(self, until=None):
         pass  # Already running
 
