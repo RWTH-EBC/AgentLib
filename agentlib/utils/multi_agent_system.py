@@ -161,9 +161,11 @@ class LocalMASAgency(MAS):
         logger.info("Stopping agency")
         self.terminate_agents()
 
+    _gui_process: multiprocessing.Process = PrivateAttr(default=None)
+
     def show_gui(self):
         """
-        Interactively visualizes the dependencies between the agents, 
+        Interactively visualizes the dependencies between the agents,
         their modules and variables using Dash Cytoscape.
         """
         from agentlib.utils.plotting.dependency_graph import show_dependency_graph
