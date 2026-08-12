@@ -1,5 +1,4 @@
 import logging
-import os
 import socket
 import webbrowser
 from collections import defaultdict
@@ -13,7 +12,7 @@ try:
     from dash import html, dcc, Input, Output
     import dash_cytoscape as cyto
 except ImportError:
-    raise OptionalDependencyError("mas_dependency_graph", "interactive (needs dash-cytoscape)")
+    raise OptionalDependencyError("mas_dependency_graph", "dash dash-cytoscape", "interactive")
 
 if TYPE_CHECKING:
     from agentlib.utils.multi_agent_system import LocalMASAgency
@@ -51,13 +50,58 @@ def _get_var_mechanism(var: AgentVariable, cfg) -> str:
     return "shared"
 
 
+def _extract_consumers(
+    mas: "LocalMASAgency",
+    shared_vars: Dict[str, Dict[str, str]],
+) -> Tuple[Dict[str, Dict[str, set]], set]:
+    """Determine which agents consume the shared variables of each producer.
+
+    Consumers are derived from each agent's DataBroker callbacks matched against the
+    producers' shared variables by alias, which also captures consumers that were not
+    declared via ``subscriptions`` or a ``source``.
+
+    Returns ``(producer_agent -> {alias -> {consumer_agent, ...}}, ambiguous_aliases)``
+    where ``ambiguous_aliases`` are published by more than one producer, so an implicit
+    consumer cannot be attributed to a single one.
+    """
+
+    alias_producer_scope: Dict[str, List[str]] = defaultdict(list)
+    for producer, prod_vars in shared_vars.items():
+        for alias in prod_vars:
+            alias_producer_scope[alias].append(producer)
+
+    consumers: Dict[str, Dict[str, set]] = defaultdict(dict)
+    for agent_id, agent in mas._agents.items():
+        data_broker = agent.data_broker
+        callbacks = list(getattr(data_broker, "_unmapped_callbacks", []))
+        for callback_list in getattr(data_broker, "_mapped_callbacks", {}).values():
+            callbacks.extend(callback_list)
+        for cb in callbacks:
+            alias = cb.alias
+            if alias is None or alias not in alias_producer_scope:
+                continue
+            # Link the consumer to every producer of this alias. The edge is flagged
+            # ambiguous if more than one producer publishes the alias.
+            for producer in alias_producer_scope[alias]:
+                if producer != agent_id:
+                    consumers[producer].setdefault(alias, set()).add(agent_id)
+
+    ambiguous_aliases = {
+        alias for alias, producers in alias_producer_scope.items() if len(producers) > 1
+    }
+    return consumers, ambiguous_aliases
+
+
 def _extract_dependencies(
     mas: "LocalMASAgency",
-) -> List[Tuple[str, str, str, str]]:
+) -> List[Tuple[str, str, str, str, bool]]:
     """Extract individual variable dependencies between agents.
 
-    Returns a list of (producer_agent, subscriber_agent, variable_label, mechanism_tag)
-    where mechanism_tag is one of "shared+sub", "svf+sub", or "source".
+    Returns a list of tuples
+    ``(producer_agent, subscriber_agent, variable_label, mechanism_tag, is_ambiguous)``
+    where mechanism_tag is one of "shared+sub", "svf+sub", "source", "shared+consumer" or
+    "svf+consumer", and is_ambiguous marks edges whose source could not be pinned to a
+    single producer (multiple agents publish the same alias).
     """
     shared_vars: Dict[str, Dict[str, str]] = defaultdict(dict)
     for agent_id, agent in mas._agents.items():
@@ -68,6 +112,7 @@ def _extract_dependencies(
                     if label not in shared_vars[agent_id]:
                         shared_vars[agent_id][label] = _get_var_mechanism(var, module.config)
 
+    # 1) Explicit subscription configuration.
     subs: Dict[str, List[str]] = defaultdict(list)
     for agent_id, agent in mas._agents.items():
         for module in agent.modules:
@@ -77,7 +122,7 @@ def _extract_dependencies(
                     if sub_agent_id != agent_id and sub_agent_id not in subs[agent_id]:
                         subs[agent_id].append(sub_agent_id)
 
-    deps: List[Tuple[str, str, str, str]] = []
+    deps: List[Tuple[str, str, str, str, bool]] = []
     seen: set = set()
     for subscriber, producers in subs.items():
         for producer in producers:
@@ -85,8 +130,26 @@ def _extract_dependencies(
                 key = (producer, subscriber, var_label)
                 if key not in seen:
                     seen.add(key)
-                    deps.append((producer, subscriber, var_label, f"{mech}+sub"))
+                    deps.append((producer, subscriber, var_label, f"{mech}+sub", False))
 
+    # 2) Variables consumed via the DataBroker. This covers subscription/transport-free
+    #    dependencies and is the mechanism that makes shared variables show up even when
+    #    no "subscriptions" block is declared.
+    consumers, ambiguous_aliases = _extract_consumers(mas, shared_vars)
+    for producer, vars_consumed in consumers.items():
+        for alias, consumer_set in vars_consumed.items():
+            for consumer_agent in consumer_set:
+                key = (producer, consumer_agent, alias)
+                if key in seen:
+                    continue
+                seen.add(key)
+                mech = shared_vars.get(producer, {}).get(alias, "shared")
+                is_ambiguous = alias in ambiguous_aliases
+                deps.append(
+                    (producer, consumer_agent, alias, f"{mech}+consumer", is_ambiguous)
+                )
+
+    # 3) Variables with a source pointing to a producer.
     for agent_id, agent in mas._agents.items():
         for module in agent.modules:
             for var in module.config.get_variables():
@@ -96,12 +159,12 @@ def _extract_dependencies(
                     key = (src_agent, agent_id, label)
                     if key not in seen:
                         seen.add(key)
-                        deps.append((src_agent, agent_id, label, "source"))
+                        deps.append((src_agent, agent_id, label, "source", False))
 
     return deps
 
 
-def run_dashboard(deps: List[Tuple[str, str, str, str]], agent_ids: List[str]):
+def run_dashboard(deps: List[Tuple[str, str, str, str, bool]], agent_ids: List[str]):
 
     log = logging.getLogger("werkzeug")
     log.setLevel(logging.ERROR)
@@ -109,7 +172,7 @@ def run_dashboard(deps: List[Tuple[str, str, str, str]], agent_ids: List[str]):
     """Bootstraps the Dash application."""
     app = dash.Dash(__name__)
 
-    unique_vars = sorted(list(set(label for _, _, label, _ in deps)))
+    unique_vars = sorted(list(set(label for _, _, label, _, _ in deps)))
     dropdown_options = [{"label": v, "value": v} for v in unique_vars]
 
     # Define base stylesheet
@@ -162,6 +225,17 @@ def run_dashboard(deps: List[Tuple[str, str, str, str]], agent_ids: List[str]):
                 'line-color': "#0F4877",
                 'target-arrow-color': "#0F4877",
                 'line-style': 'dashed',
+            }
+        },
+        {
+            'selector': '.ambiguous-dependency',
+            'style': {
+                'content': 'data(label)',
+                'width': 2,
+                'line-color': "#B0B0B0",
+                'target-arrow-color': "#B0B0B0",
+                'line-style': 'dotted',
+                'opacity': 0.45,
             }
         },
         {
@@ -241,6 +315,21 @@ def run_dashboard(deps: List[Tuple[str, str, str, str]], agent_ids: List[str]):
                 html.Span("variable source.agent_id points to another agent"),
             ]),
 
+            html.Div([
+                html.Span("[shared+consumer]", style={'marginRight': '5px', 'fontFamily': 'monospace'}),
+                html.Span("shared variable consumed via DataBroker callbacks"),
+            ]),
+
+            html.Div([
+                html.Span("[ambiguous]", style={
+                    'marginRight': '5px', 'fontFamily': 'monospace',
+                    'color': '#B0B0B0', 'textDecoration': 'underline',
+                    'textDecorationStyle': 'dotted'
+                }),
+                html.Span("same alias published by multiple agents; "
+                          "consumer may receive from any of them (last-write-wins)"),
+            ], style={'marginBottom': '4px'}),
+
         ], style={
 
             'fontFamily': 'sans-serif', 'fontSize': '13px',
@@ -267,8 +356,8 @@ def run_dashboard(deps: List[Tuple[str, str, str, str]], agent_ids: List[str]):
             })
 
         edges_by_pair = defaultdict(list)
-        for src, tgt, label, tag in deps:
-            edges_by_pair[(src, tgt)].append((label, tag))
+        for src, tgt, label, tag, is_ambiguous in deps:
+            edges_by_pair[(src, tgt)].append((label, tag, is_ambiguous))
 
         edge_id_counter = 0
 
@@ -277,9 +366,9 @@ def run_dashboard(deps: List[Tuple[str, str, str, str]], agent_ids: List[str]):
             dim_class = " dimmed" if selected_variable else ""
 
             if selected_variable:
-                matching = [(l, t) for l, t in remaining if l == selected_variable]
+                matching = [(l, t, a) for l, t, a in remaining if l == selected_variable]
                 if matching:
-                    l, t = matching[0]
+                    l, t, a = matching[0]
                     elements.append({
                         "data": {
                             "id": f"e{edge_id_counter}",
@@ -291,7 +380,7 @@ def run_dashboard(deps: List[Tuple[str, str, str, str]], agent_ids: List[str]):
                         "classes": "dependency highlighted-dependency"
                     })
                     edge_id_counter += 1
-                    remaining.remove((l, t))
+                    remaining.remove((l, t, a))
 
             if len(remaining) > 3:
                 summary_text = f"{len(remaining)} variables...(click for details)"
@@ -301,13 +390,17 @@ def run_dashboard(deps: List[Tuple[str, str, str, str]], agent_ids: List[str]):
                         "source": str(src),
                         "target": str(tgt),
                         "label": summary_text,
-                        "hover_details": ", ".join(f"{l} [{t}]" for l, t in remaining)
+                        "hover_details": ", ".join(f"{l} [{t}]" for l, t, _ in remaining)
                     },
                     "classes": f"dependency summary-dependency{dim_class}"
                 })
                 edge_id_counter += 1
             else:
-                for lbl, tag in remaining:
+                for lbl, tag, is_ambiguous in remaining:
+                    if is_ambiguous:
+                        edge_class = "ambiguous-dependency"
+                    else:
+                        edge_class = "standard-dependency"
                     elements.append({
                         "data": {
                             "id": f"e{edge_id_counter}",
@@ -316,7 +409,7 @@ def run_dashboard(deps: List[Tuple[str, str, str, str]], agent_ids: List[str]):
                             "label": f"{lbl} [{tag}]",
                             "hover_details": f"{lbl} [{tag}]"
                         },
-                        "classes": f"dependency standard-dependency{dim_class}"
+                        "classes": f"dependency {edge_class}{dim_class}"
                     })
                     edge_id_counter += 1
 
