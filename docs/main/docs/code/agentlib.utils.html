@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>agentlib.utils package &mdash; agentlib 0.8.9 documentation</title>
+  <title>agentlib.utils package &mdash; agentlib 0.9.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
       <link rel="stylesheet" type="text/css" href="../_static/autodoc_pydantic.css" />
@@ -139,6 +139,7 @@ In that case, the path is converted to a matching string.</p></li>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="agentlib.utils.plotting.html">agentlib.utils.plotting package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="agentlib.utils.plotting.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="agentlib.utils.plotting.html#agentlib-utils-plotting-dependency-graph-module">agentlib.utils.plotting.dependency_graph module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="agentlib.utils.plotting.html#module-agentlib.utils.plotting.simulator_dashboard">agentlib.utils.plotting.simulator_dashboard module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="agentlib.utils.plotting.html#agentlib.utils.plotting.simulator_dashboard.create_layout"><code class="docutils literal notranslate"><span class="pre">create_layout()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="agentlib.utils.plotting.html#agentlib.utils.plotting.simulator_dashboard.create_plot"><code class="docutils literal notranslate"><span class="pre">create_plot()</span></code></a></li>
@@ -390,9 +391,23 @@ executes and terminates them.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="agentlib.utils.multi_agent_system.LocalMASAgency.show_gui">
+<span class="sig-name descname"><span class="pre">show_gui</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/utils/multi_agent_system.html#LocalMASAgency.show_gui"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.utils.multi_agent_system.LocalMASAgency.show_gui" title="Permalink to this definition"></a></dt>
+<dd><p>Interactively visualizes the dependencies between the agents,
+their modules and variables using Dash Cytoscape.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="agentlib.utils.multi_agent_system.LocalMASAgency.stop_agency">
 <span class="sig-name descname"><span class="pre">stop_agency</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/utils/multi_agent_system.html#LocalMASAgency.stop_agency"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.utils.multi_agent_system.LocalMASAgency.stop_agency" title="Permalink to this definition"></a></dt>
 <dd><p>Stop all threads</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="agentlib.utils.multi_agent_system.LocalMASAgency.stop_gui">
+<span class="sig-name descname"><span class="pre">stop_gui</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prompt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'---</span> <span class="pre">Press</span> <span class="pre">Enter</span> <span class="pre">to</span> <span class="pre">stop</span> <span class="pre">the</span> <span class="pre">GUI</span> <span class="pre">and</span> <span class="pre">finish</span> <span class="pre">the</span> <span class="pre">script</span> <span class="pre">---'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/agentlib/utils/multi_agent_system.html#LocalMASAgency.stop_gui"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#agentlib.utils.multi_agent_system.LocalMASAgency.stop_gui" title="Permalink to this definition"></a></dt>
+<dd><p>Blocks the script until the user presses Enter, then safely
+terminates the Dash GUI process.</p>
 </dd></dl>
 
 <dl class="py method">

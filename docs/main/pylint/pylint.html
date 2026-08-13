@@ -28,9 +28,9 @@
 
         
         <h2>Score</h2>
-        7.98 / 10
+        7.70 / 10
             
-            (previous score: 7.98 / 10)
+            (previous score: 7.70 / 10)
             
         
 
@@ -55,7 +55,7 @@
                 <td><code>astroid-error</code></td>
                 <td>F0002</td>
                 <td></td>
-                <td><pre>agentlib/core/agent.py: Fatal error while checking &#39;agentlib/core/agent.py&#39;. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in &#39;/home/runner/.cache/pylint/pylint-crash-2026-07-30-07-09-03.txt&#39;.</pre></td>
+                <td><pre>agentlib/core/agent.py: Fatal error while checking &#39;agentlib/core/agent.py&#39;. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in &#39;/home/runner/.cache/pylint/pylint-crash-2026-08-13-10-22-51.txt&#39;.</pre></td>
             </tr>
             
             <tr>
@@ -89,7 +89,7 @@
                 <td><code>astroid-error</code></td>
                 <td>F0002</td>
                 <td></td>
-                <td><pre>agentlib/core/data_broker.py: Fatal error while checking &#39;agentlib/core/data_broker.py&#39;. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in &#39;/home/runner/.cache/pylint/pylint-crash-2026-07-30-07-09-04.txt&#39;.</pre></td>
+                <td><pre>agentlib/core/data_broker.py: Fatal error while checking &#39;agentlib/core/data_broker.py&#39;. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in &#39;/home/runner/.cache/pylint/pylint-crash-2026-08-13-10-22-52.txt&#39;.</pre></td>
             </tr>
             
             <tr>
@@ -143,7 +143,7 @@
                 <td><code>astroid-error</code></td>
                 <td>F0002</td>
                 <td></td>
-                <td><pre>agentlib/core/datamodels.py: Fatal error while checking &#39;agentlib/core/datamodels.py&#39;. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in &#39;/home/runner/.cache/pylint/pylint-crash-2026-07-30-07-09-03.txt&#39;.</pre></td>
+                <td><pre>agentlib/core/datamodels.py: Fatal error while checking &#39;agentlib/core/datamodels.py&#39;. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in &#39;/home/runner/.cache/pylint/pylint-crash-2026-08-13-10-22-52.txt&#39;.</pre></td>
             </tr>
             
             <tr>
@@ -197,7 +197,7 @@
                 <td><code>astroid-error</code></td>
                 <td>F0002</td>
                 <td></td>
-                <td><pre>agentlib/core/environment.py: Fatal error while checking &#39;agentlib/core/environment.py&#39;. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in &#39;/home/runner/.cache/pylint/pylint-crash-2026-07-30-07-09-04.txt&#39;.</pre></td>
+                <td><pre>agentlib/core/environment.py: Fatal error while checking &#39;agentlib/core/environment.py&#39;. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in &#39;/home/runner/.cache/pylint/pylint-crash-2026-08-13-10-22-52.txt&#39;.</pre></td>
             </tr>
             
         </table>
@@ -231,7 +231,25 @@
                 <td><code>astroid-error</code></td>
                 <td>F0002</td>
                 <td></td>
-                <td><pre>agentlib/core/logging_.py: Fatal error while checking &#39;agentlib/core/logging_.py&#39;. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in &#39;/home/runner/.cache/pylint/pylint-crash-2026-07-30-07-09-05.txt&#39;.</pre></td>
+                <td><pre>agentlib/core/logging_.py: Fatal error while checking &#39;agentlib/core/logging_.py&#39;. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in &#39;/home/runner/.cache/pylint/pylint-crash-2026-08-13-10-22-53.txt&#39;.</pre></td>
+            </tr>
+            
+            <tr>
+                <td>1</td>
+                <td>0</td>
+                <td>refactor</td>
+                <td><code>duplicate-code</code></td>
+                <td>R0801</td>
+                <td></td>
+                <td><pre>Similar lines in 2 files
+==agentlib.utils.plotting.dependency_graph:[25:31]
+==agentlib.utils.plotting.simulator_dashboard:[27:33]
+    port = 8050
+    while True:
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+            is_free = s.connect_ex((&#34;localhost&#34;, port)) != 0
+        if is_free:
+            return port</pre></td>
             </tr>
             
         </table>
@@ -255,7 +273,7 @@
                 <td><code>astroid-error</code></td>
                 <td>F0002</td>
                 <td></td>
-                <td><pre>agentlib/core/model.py: Fatal error while checking &#39;agentlib/core/model.py&#39;. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in &#39;/home/runner/.cache/pylint/pylint-crash-2026-07-30-07-09-05.txt&#39;.</pre></td>
+                <td><pre>agentlib/core/model.py: Fatal error while checking &#39;agentlib/core/model.py&#39;. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in &#39;/home/runner/.cache/pylint/pylint-crash-2026-08-13-10-22-53.txt&#39;.</pre></td>
             </tr>
             
             <tr>
@@ -299,7 +317,7 @@
                 <td><code>astroid-error</code></td>
                 <td>F0002</td>
                 <td></td>
-                <td><pre>agentlib/core/module.py: Fatal error while checking &#39;agentlib/core/module.py&#39;. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in &#39;/home/runner/.cache/pylint/pylint-crash-2026-07-30-07-09-04.txt&#39;.</pre></td>
+                <td><pre>agentlib/core/module.py: Fatal error while checking &#39;agentlib/core/module.py&#39;. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in &#39;/home/runner/.cache/pylint/pylint-crash-2026-08-13-10-22-52.txt&#39;.</pre></td>
             </tr>
             
         </table>
@@ -323,7 +341,7 @@
                 <td><code>astroid-error</code></td>
                 <td>F0002</td>
                 <td></td>
-                <td><pre>agentlib/models/fmu_model.py: Fatal error while checking &#39;agentlib/models/fmu_model.py&#39;. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in &#39;/home/runner/.cache/pylint/pylint-crash-2026-07-30-07-09-00.txt&#39;.</pre></td>
+                <td><pre>agentlib/models/fmu_model.py: Fatal error while checking &#39;agentlib/models/fmu_model.py&#39;. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in &#39;/home/runner/.cache/pylint/pylint-crash-2026-08-13-10-22-49.txt&#39;.</pre></td>
             </tr>
             
             <tr>
@@ -357,7 +375,7 @@
                 <td><code>astroid-error</code></td>
                 <td>F0002</td>
                 <td></td>
-                <td><pre>agentlib/models/scipy_model.py: Fatal error while checking &#39;agentlib/models/scipy_model.py&#39;. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in &#39;/home/runner/.cache/pylint/pylint-crash-2026-07-30-07-08-59.txt&#39;.</pre></td>
+                <td><pre>agentlib/models/scipy_model.py: Fatal error while checking &#39;agentlib/models/scipy_model.py&#39;. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in &#39;/home/runner/.cache/pylint/pylint-crash-2026-08-13-10-22-48.txt&#39;.</pre></td>
             </tr>
             
             <tr>
@@ -391,7 +409,7 @@
                 <td><code>astroid-error</code></td>
                 <td>F0002</td>
                 <td></td>
-                <td><pre>agentlib/modules/__init__.py: Fatal error while checking &#39;agentlib/modules/__init__.py&#39;. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in &#39;/home/runner/.cache/pylint/pylint-crash-2026-07-30-07-09-01.txt&#39;.</pre></td>
+                <td><pre>agentlib/modules/__init__.py: Fatal error while checking &#39;agentlib/modules/__init__.py&#39;. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in &#39;/home/runner/.cache/pylint/pylint-crash-2026-08-13-10-22-50.txt&#39;.</pre></td>
             </tr>
             
         </table>
@@ -415,7 +433,7 @@
                 <td><code>astroid-error</code></td>
                 <td>F0002</td>
                 <td></td>
-                <td><pre>agentlib/modules/communicator/clonemap.py: Fatal error while checking &#39;agentlib/modules/communicator/clonemap.py&#39;. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in &#39;/home/runner/.cache/pylint/pylint-crash-2026-07-30-07-09-02.txt&#39;.</pre></td>
+                <td><pre>agentlib/modules/communicator/clonemap.py: Fatal error while checking &#39;agentlib/modules/communicator/clonemap.py&#39;. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in &#39;/home/runner/.cache/pylint/pylint-crash-2026-08-13-10-22-51.txt&#39;.</pre></td>
             </tr>
             
         </table>
@@ -439,7 +457,7 @@
                 <td><code>astroid-error</code></td>
                 <td>F0002</td>
                 <td></td>
-                <td><pre>agentlib/modules/communicator/communicator.py: Fatal error while checking &#39;agentlib/modules/communicator/communicator.py&#39;. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in &#39;/home/runner/.cache/pylint/pylint-crash-2026-07-30-07-09-02.txt&#39;.</pre></td>
+                <td><pre>agentlib/modules/communicator/communicator.py: Fatal error while checking &#39;agentlib/modules/communicator/communicator.py&#39;. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in &#39;/home/runner/.cache/pylint/pylint-crash-2026-08-13-10-22-51.txt&#39;.</pre></td>
             </tr>
             
         </table>
@@ -507,7 +525,7 @@
                 <td><code>astroid-error</code></td>
                 <td>F0002</td>
                 <td></td>
-                <td><pre>agentlib/modules/communicator/local_broadcast.py: Fatal error while checking &#39;agentlib/modules/communicator/local_broadcast.py&#39;. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in &#39;/home/runner/.cache/pylint/pylint-crash-2026-07-30-07-08-59.txt&#39;.</pre></td>
+                <td><pre>agentlib/modules/communicator/local_broadcast.py: Fatal error while checking &#39;agentlib/modules/communicator/local_broadcast.py&#39;. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in &#39;/home/runner/.cache/pylint/pylint-crash-2026-08-13-10-22-48.txt&#39;.</pre></td>
             </tr>
             
         </table>
@@ -625,7 +643,7 @@
                 <td><code>astroid-error</code></td>
                 <td>F0002</td>
                 <td></td>
-                <td><pre>agentlib/modules/communicator/mqtt.py: Fatal error while checking &#39;agentlib/modules/communicator/mqtt.py&#39;. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in &#39;/home/runner/.cache/pylint/pylint-crash-2026-07-30-07-09-03.txt&#39;.</pre></td>
+                <td><pre>agentlib/modules/communicator/mqtt.py: Fatal error while checking &#39;agentlib/modules/communicator/mqtt.py&#39;. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in &#39;/home/runner/.cache/pylint/pylint-crash-2026-08-13-10-22-51.txt&#39;.</pre></td>
             </tr>
             
         </table>
@@ -717,7 +735,7 @@
                 <td><code>astroid-error</code></td>
                 <td>F0002</td>
                 <td></td>
-                <td><pre>agentlib/modules/controller/controller.py: Fatal error while checking &#39;agentlib/modules/controller/controller.py&#39;. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in &#39;/home/runner/.cache/pylint/pylint-crash-2026-07-30-07-09-02.txt&#39;.</pre></td>
+                <td><pre>agentlib/modules/controller/controller.py: Fatal error while checking &#39;agentlib/modules/controller/controller.py&#39;. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in &#39;/home/runner/.cache/pylint/pylint-crash-2026-08-13-10-22-51.txt&#39;.</pre></td>
             </tr>
             
         </table>
@@ -751,7 +769,7 @@
                 <td><code>astroid-error</code></td>
                 <td>F0002</td>
                 <td></td>
-                <td><pre>agentlib/modules/controller/pid.py: Fatal error while checking &#39;agentlib/modules/controller/pid.py&#39;. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in &#39;/home/runner/.cache/pylint/pylint-crash-2026-07-30-07-09-02.txt&#39;.</pre></td>
+                <td><pre>agentlib/modules/controller/pid.py: Fatal error while checking &#39;agentlib/modules/controller/pid.py&#39;. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in &#39;/home/runner/.cache/pylint/pylint-crash-2026-08-13-10-22-51.txt&#39;.</pre></td>
             </tr>
             
         </table>
@@ -809,7 +827,7 @@
                 <td><code>astroid-error</code></td>
                 <td>F0002</td>
                 <td></td>
-                <td><pre>agentlib/modules/simulation/csv_data_source.py: Fatal error while checking &#39;agentlib/modules/simulation/csv_data_source.py&#39;. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in &#39;/home/runner/.cache/pylint/pylint-crash-2026-07-30-07-09-02.txt&#39;.</pre></td>
+                <td><pre>agentlib/modules/simulation/csv_data_source.py: Fatal error while checking &#39;agentlib/modules/simulation/csv_data_source.py&#39;. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in &#39;/home/runner/.cache/pylint/pylint-crash-2026-08-13-10-22-51.txt&#39;.</pre></td>
             </tr>
             
             <tr>
@@ -843,7 +861,7 @@
                 <td><code>astroid-error</code></td>
                 <td>F0002</td>
                 <td></td>
-                <td><pre>agentlib/modules/simulation/simulator.py: Fatal error while checking &#39;agentlib/modules/simulation/simulator.py&#39;. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in &#39;/home/runner/.cache/pylint/pylint-crash-2026-07-30-07-08-59.txt&#39;.</pre></td>
+                <td><pre>agentlib/modules/simulation/simulator.py: Fatal error while checking &#39;agentlib/modules/simulation/simulator.py&#39;. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in &#39;/home/runner/.cache/pylint/pylint-crash-2026-08-13-10-22-48.txt&#39;.</pre></td>
             </tr>
             
         </table>
@@ -867,7 +885,7 @@
                 <td><code>astroid-error</code></td>
                 <td>F0002</td>
                 <td></td>
-                <td><pre>agentlib/modules/utils/agent_logger.py: Fatal error while checking &#39;agentlib/modules/utils/agent_logger.py&#39;. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in &#39;/home/runner/.cache/pylint/pylint-crash-2026-07-30-07-09-02.txt&#39;.</pre></td>
+                <td><pre>agentlib/modules/utils/agent_logger.py: Fatal error while checking &#39;agentlib/modules/utils/agent_logger.py&#39;. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in &#39;/home/runner/.cache/pylint/pylint-crash-2026-08-13-10-22-50.txt&#39;.</pre></td>
             </tr>
             
             <tr>
@@ -941,7 +959,7 @@
                 <td><code>astroid-error</code></td>
                 <td>F0002</td>
                 <td></td>
-                <td><pre>agentlib/modules/utils/try_sensor.py: Fatal error while checking &#39;agentlib/modules/utils/try_sensor.py&#39;. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in &#39;/home/runner/.cache/pylint/pylint-crash-2026-07-30-07-09-01.txt&#39;.</pre></td>
+                <td><pre>agentlib/modules/utils/try_sensor.py: Fatal error while checking &#39;agentlib/modules/utils/try_sensor.py&#39;. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in &#39;/home/runner/.cache/pylint/pylint-crash-2026-08-13-10-22-50.txt&#39;.</pre></td>
             </tr>
             
         </table>
@@ -1057,7 +1075,7 @@
                 <td><code>astroid-error</code></td>
                 <td>F0002</td>
                 <td></td>
-                <td><pre>agentlib/utils/fuzzy_matching.py: Fatal error while checking &#39;agentlib/utils/fuzzy_matching.py&#39;. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in &#39;/home/runner/.cache/pylint/pylint-crash-2026-07-30-07-09-01.txt&#39;.</pre></td>
+                <td><pre>agentlib/utils/fuzzy_matching.py: Fatal error while checking &#39;agentlib/utils/fuzzy_matching.py&#39;. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in &#39;/home/runner/.cache/pylint/pylint-crash-2026-08-13-10-22-50.txt&#39;.</pre></td>
             </tr>
             
         </table>
@@ -1091,7 +1109,7 @@
                 <td><code>astroid-error</code></td>
                 <td>F0002</td>
                 <td></td>
-                <td><pre>agentlib/utils/load_config.py: Fatal error while checking &#39;agentlib/utils/load_config.py&#39;. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in &#39;/home/runner/.cache/pylint/pylint-crash-2026-07-30-07-09-01.txt&#39;.</pre></td>
+                <td><pre>agentlib/utils/load_config.py: Fatal error while checking &#39;agentlib/utils/load_config.py&#39;. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in &#39;/home/runner/.cache/pylint/pylint-crash-2026-08-13-10-22-49.txt&#39;.</pre></td>
             </tr>
             
         </table>
@@ -1115,7 +1133,7 @@
                 <td><code>astroid-error</code></td>
                 <td>F0002</td>
                 <td></td>
-                <td><pre>agentlib/utils/local_broadcast_broker.py: Fatal error while checking &#39;agentlib/utils/local_broadcast_broker.py&#39;. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in &#39;/home/runner/.cache/pylint/pylint-crash-2026-07-30-07-09-00.txt&#39;.</pre></td>
+                <td><pre>agentlib/utils/local_broadcast_broker.py: Fatal error while checking &#39;agentlib/utils/local_broadcast_broker.py&#39;. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in &#39;/home/runner/.cache/pylint/pylint-crash-2026-08-13-10-22-49.txt&#39;.</pre></td>
             </tr>
             
         </table>
@@ -1139,7 +1157,7 @@
                 <td><code>astroid-error</code></td>
                 <td>F0002</td>
                 <td></td>
-                <td><pre>agentlib/utils/local_broker.py: Fatal error while checking &#39;agentlib/utils/local_broker.py&#39;. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in &#39;/home/runner/.cache/pylint/pylint-crash-2026-07-30-07-09-01.txt&#39;.</pre></td>
+                <td><pre>agentlib/utils/local_broker.py: Fatal error while checking &#39;agentlib/utils/local_broker.py&#39;. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in &#39;/home/runner/.cache/pylint/pylint-crash-2026-08-13-10-22-50.txt&#39;.</pre></td>
             </tr>
             
         </table>
@@ -1163,7 +1181,7 @@
                 <td><code>astroid-error</code></td>
                 <td>F0002</td>
                 <td></td>
-                <td><pre>agentlib/utils/multi_agent_system.py: Fatal error while checking &#39;agentlib/utils/multi_agent_system.py&#39;. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in &#39;/home/runner/.cache/pylint/pylint-crash-2026-07-30-07-09-01.txt&#39;.</pre></td>
+                <td><pre>agentlib/utils/multi_agent_system.py: Fatal error while checking &#39;agentlib/utils/multi_agent_system.py&#39;. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in &#39;/home/runner/.cache/pylint/pylint-crash-2026-08-13-10-22-49.txt&#39;.</pre></td>
             </tr>
             
             <tr>
@@ -1187,13 +1205,23 @@
             </tr>
             
             <tr>
-                <td>219</td>
+                <td>239</td>
                 <td>0</td>
                 <td>convention</td>
-                <td><code>line-too-long</code></td>
-                <td>C0301</td>
+                <td><code>trailing-whitespace</code></td>
+                <td>C0303</td>
                 <td></td>
-                <td><pre>Line too long (107/100)</pre></td>
+                <td><pre>Trailing whitespace</pre></td>
+            </tr>
+            
+            <tr>
+                <td>240</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>trailing-whitespace</code></td>
+                <td>C0303</td>
+                <td></td>
+                <td><pre>Trailing whitespace</pre></td>
             </tr>
             
         </table>
@@ -1217,7 +1245,121 @@
                 <td><code>astroid-error</code></td>
                 <td>F0002</td>
                 <td></td>
-                <td><pre>agentlib/utils/multi_processing_broker.py: Fatal error while checking &#39;agentlib/utils/multi_processing_broker.py&#39;. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in &#39;/home/runner/.cache/pylint/pylint-crash-2026-07-30-07-09-00.txt&#39;.</pre></td>
+                <td><pre>agentlib/utils/multi_processing_broker.py: Fatal error while checking &#39;agentlib/utils/multi_processing_broker.py&#39;. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in &#39;/home/runner/.cache/pylint/pylint-crash-2026-08-13-10-22-49.txt&#39;.</pre></td>
+            </tr>
+            
+        </table>
+        
+        <h3>Module <code>agentlib.utils.plotting.dependency_graph</code> (<code>agentlib/utils/plotting/dependency_graph.py</code>)</h3>
+        <table>
+            <tr>
+                <th>Line</th>
+                <th>Col.</th>
+                <th>Type</th>
+                <th>Symbol</th>
+                <th>ID</th>
+                <th>Obj</th>
+                <th>Message</th>
+            </tr>
+            
+            <tr>
+                <td>1</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>missing-module-docstring</code></td>
+                <td>C0114</td>
+                <td></td>
+                <td><pre>Missing module docstring</pre></td>
+            </tr>
+            
+            <tr>
+                <td>1</td>
+                <td>0</td>
+                <td>fatal</td>
+                <td><code>astroid-error</code></td>
+                <td>F0002</td>
+                <td></td>
+                <td><pre>agentlib/utils/plotting/dependency_graph.py: Fatal error while checking &#39;agentlib/utils/plotting/dependency_graph.py&#39;. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in &#39;/home/runner/.cache/pylint/pylint-crash-2026-08-13-10-22-50.txt&#39;.</pre></td>
+            </tr>
+            
+            <tr>
+                <td>319</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>line-too-long</code></td>
+                <td>C0301</td>
+                <td></td>
+                <td><pre>Line too long (104/100)</pre></td>
+            </tr>
+            
+            <tr>
+                <td>341</td>
+                <td>11</td>
+                <td>convention</td>
+                <td><code>trailing-whitespace</code></td>
+                <td>C0303</td>
+                <td></td>
+                <td><pre>Trailing whitespace</pre></td>
+            </tr>
+            
+            <tr>
+                <td>458</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>line-too-long</code></td>
+                <td>C0301</td>
+                <td></td>
+                <td><pre>Line too long (103/100)</pre></td>
+            </tr>
+            
+            <tr>
+                <td>459</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>line-too-long</code></td>
+                <td>C0301</td>
+                <td></td>
+                <td><pre>Line too long (118/100)</pre></td>
+            </tr>
+            
+            <tr>
+                <td>476</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>trailing-whitespace</code></td>
+                <td>C0303</td>
+                <td></td>
+                <td><pre>Trailing whitespace</pre></td>
+            </tr>
+            
+            <tr>
+                <td>479</td>
+                <td>29</td>
+                <td>convention</td>
+                <td><code>trailing-whitespace</code></td>
+                <td>C0303</td>
+                <td></td>
+                <td><pre>Trailing whitespace</pre></td>
+            </tr>
+            
+            <tr>
+                <td>482</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>trailing-whitespace</code></td>
+                <td>C0303</td>
+                <td></td>
+                <td><pre>Trailing whitespace</pre></td>
+            </tr>
+            
+            <tr>
+                <td>485</td>
+                <td>0</td>
+                <td>convention</td>
+                <td><code>missing-final-newline</code></td>
+                <td>C0304</td>
+                <td></td>
+                <td><pre>Final newline missing</pre></td>
             </tr>
             
         </table>
@@ -1251,7 +1393,7 @@
                 <td><code>astroid-error</code></td>
                 <td>F0002</td>
                 <td></td>
-                <td><pre>agentlib/utils/plotting/simulator_dashboard.py: Fatal error while checking &#39;agentlib/utils/plotting/simulator_dashboard.py&#39;. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in &#39;/home/runner/.cache/pylint/pylint-crash-2026-07-30-07-09-01.txt&#39;.</pre></td>
+                <td><pre>agentlib/utils/plotting/simulator_dashboard.py: Fatal error while checking &#39;agentlib/utils/plotting/simulator_dashboard.py&#39;. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in &#39;/home/runner/.cache/pylint/pylint-crash-2026-08-13-10-22-50.txt&#39;.</pre></td>
             </tr>
             
         </table>
@@ -1319,7 +1461,7 @@
                 <td><code>astroid-error</code></td>
                 <td>F0002</td>
                 <td></td>
-                <td><pre>agentlib/utils/validators.py: Fatal error while checking &#39;agentlib/utils/validators.py&#39;. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in &#39;/home/runner/.cache/pylint/pylint-crash-2026-07-30-07-09-01.txt&#39;.</pre></td>
+                <td><pre>agentlib/utils/validators.py: Fatal error while checking &#39;agentlib/utils/validators.py&#39;. Please open an issue in our bug tracker so we address this. There is a pre-filled template that you can use in &#39;/home/runner/.cache/pylint/pylint-crash-2026-08-13-10-22-49.txt&#39;.</pre></td>
             </tr>
             
         </table>
@@ -2071,7 +2213,7 @@
             
             <tr>
                 <td>refactor</td>
-                <td>70</td>
+                <td>71</td>
             </tr>
             
             <tr>
@@ -2081,7 +2223,7 @@
             
             <tr>
                 <td>fatal</td>
-                <td>28</td>
+                <td>29</td>
             </tr>
             
             <tr>
@@ -2091,7 +2233,7 @@
             
             <tr>
                 <td>convention</td>
-                <td>36</td>
+                <td>46</td>
             </tr>
             
         </table>
@@ -2116,7 +2258,7 @@
             
             <tr>
                 <td>astroid-error</td>
-                <td>28</td>
+                <td>29</td>
             </tr>
             
             <tr>
@@ -2141,17 +2283,22 @@
             
             <tr>
                 <td>line-too-long</td>
-                <td>8</td>
+                <td>10</td>
             </tr>
             
             <tr>
                 <td>missing-module-docstring</td>
-                <td>12</td>
+                <td>13</td>
             </tr>
             
             <tr>
                 <td>trailing-whitespace</td>
-                <td>2</td>
+                <td>8</td>
+            </tr>
+            
+            <tr>
+                <td>missing-final-newline</td>
+                <td>1</td>
             </tr>
             
             <tr>
@@ -2181,6 +2328,11 @@
             
             <tr>
                 <td>wrong-import-order</td>
+                <td>1</td>
+            </tr>
+            
+            <tr>
+                <td>duplicate-code</td>
                 <td>1</td>
             </tr>
             
@@ -2251,7 +2403,7 @@
             
             <tr>
                 <td>agentlib.utils.multi_agent_system</td>
-                <td>4</td>
+                <td>5</td>
             </tr>
             
             <tr>
@@ -2272,6 +2424,11 @@
             <tr>
                 <td>agentlib.utils.broker</td>
                 <td>1</td>
+            </tr>
+            
+            <tr>
+                <td>agentlib.utils.plotting.dependency_graph</td>
+                <td>10</td>
             </tr>
             
             <tr>
@@ -2381,7 +2538,7 @@
             
             <tr>
                 <td>agentlib.core.logging_</td>
-                <td>2</td>
+                <td>3</td>
             </tr>
             
         </table>
@@ -2446,7 +2603,7 @@
             
             <tr>
                 <td>agentlib/utils/multi_agent_system.py</td>
-                <td>4</td>
+                <td>5</td>
             </tr>
             
             <tr>
@@ -2467,6 +2624,11 @@
             <tr>
                 <td>agentlib/utils/broker.py</td>
                 <td>1</td>
+            </tr>
+            
+            <tr>
+                <td>agentlib/utils/plotting/dependency_graph.py</td>
+                <td>10</td>
             </tr>
             
             <tr>
@@ -2576,7 +2738,7 @@
             
             <tr>
                 <td>agentlib/core/logging_.py</td>
-                <td>2</td>
+                <td>3</td>
             </tr>
             
         </table>
