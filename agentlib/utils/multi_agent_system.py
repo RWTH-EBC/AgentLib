@@ -176,19 +176,17 @@ class LocalMASAgency(MAS):
         Blocks the script until the user presses Enter, then safely 
         terminates the Dash GUI process.
         """
-
-        if hasattr(self, '_gui_process') and self._gui_process is not None:
-            try:
-                if prompt:
-                    time.sleep(3)
-                    input(f"\n{prompt}\n")
-            except KeyboardInterrupt:
-                pass
-            finally:
-                self._gui_process.terminate()
-                self._gui_process.join()
-                self._gui_process = None
-                print("Terminated GUI.")
+        try:
+            if prompt:
+                time.sleep(3)
+                input(f"\n{prompt}\n")
+        except KeyboardInterrupt:
+            pass
+        finally:
+            self._gui_process.terminate()
+            self._gui_process.join()
+            self._gui_process = None
+            print("Terminated GUI.")
 
     def run(self, until):
         """Execute the LocalMASAgency and terminate it after run is finished"""
