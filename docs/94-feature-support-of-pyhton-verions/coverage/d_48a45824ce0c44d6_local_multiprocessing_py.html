@@ -65,7 +65,7 @@
             <a id="nextFileLink" class="nav" href="d_48a45824ce0c44d6_mqtt_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.4.4">coverage.py v7.4.4</a>,
-            created at 2026-10-21 21:17 +0000
+            created at 2026-10-21 21:30 +0000
         </p>
         <aside class="hidden">
             <button type="button" class="button_next_chunk" data-shortcut="j"/>
@@ -167,7 +167,7 @@
     <p class="run"><span class="n"><a id="t85" href="#t85">85</a></span><span class="t">        <span class="key">while</span> <span class="key">True</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t86" href="#t86">86</a></span><span class="t">            <span class="key">try</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t87" href="#t87">87</a></span><span class="t">                <span class="nam">msg</span> <span class="op">=</span> <span class="nam">self</span><span class="op">.</span><span class="nam">_client_read</span><span class="op">.</span><span class="nam">recv</span><span class="op">(</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p class="exc show_exc"><span class="n"><a id="t88" href="#t88">88</a></span><span class="t">            <span class="key">except</span> <span class="nam">EOFError</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p class="exc show_exc"><span class="n"><a id="t88" href="#t88">88</a></span><span class="t">            <span class="key">except</span> <span class="op">(</span><span class="nam">EOFError</span><span class="op">,</span> <span class="nam">OSError</span><span class="op">)</span><span class="op">:</span>  <span class="com"># broker gone or connection closed in terminate()</span>&nbsp;</span><span class="r"></span></p>
     <p class="exc show_exc"><span class="n"><a id="t89" href="#t89">89</a></span><span class="t">                <span class="key">break</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t90" href="#t90">90</a></span><span class="t">            <span class="nam">variable</span> <span class="op">=</span> <span class="nam">AgentVariable</span><span class="op">.</span><span class="nam">from_json</span><span class="op">(</span><span class="nam">msg</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t91" href="#t91">91</a></span><span class="t">            <span class="nam">self</span><span class="op">.</span><span class="nam">logger</span><span class="op">.</span><span class="nam">debug</span><span class="op">(</span><span class="fst">f"</span><span class="fst">Received variable </span><span class="op">{</span><span class="nam">variable</span><span class="op">.</span><span class="nam">name</span><span class="op">}</span><span class="fst">.</span><span class="fst">"</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
@@ -200,7 +200,7 @@
             <a id="nextFileLink" class="nav" href="d_48a45824ce0c44d6_mqtt_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.4.4">coverage.py v7.4.4</a>,
-            created at 2026-10-21 21:17 +0000
+            created at 2026-10-21 21:30 +0000
         </p>
     </div>
 </footer>
