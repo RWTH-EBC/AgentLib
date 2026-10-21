@@ -12,17 +12,17 @@ maintainers = [
 ]
 description = "Framework for development and execution of agents for control and simulation of energy systems."
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.11"
 keywords = [
     "agents", "modular",
     "control", "distributed", "digital twin"
 ]
 license = { text = "BSD-3-Clause" }
 classifiers = [
-    'Programming Language :: Python :: 3.9',
-    'Programming Language :: Python :: 3.10',
     'Programming Language :: Python :: 3.11',
     'Programming Language :: Python :: 3.12',
+    'Programming Language :: Python :: 3.13',
+    'Programming Language :: Python :: 3.14',
 ]
 dependencies = [
     'numpy>=1.17.4',

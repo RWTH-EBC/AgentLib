@@ -208,7 +208,8 @@ class AgentLogger(BaseModule):
                 except TypeError:
                     pass
 
-            df = df.applymap(_load_agent_variable)
+            # DataFrame.map exists since pandas 2.1, applymap was removed in pandas 3
+            df = df.map(_load_agent_variable) if hasattr(df, "map") else df.applymap(_load_agent_variable)
 
         if merge_sources:
             df = df.droplevel(1, axis=1)

@@ -4,6 +4,7 @@ executable."""
 import unittest
 import os
 import subprocess
+import sys
 import logging
 import pathlib
 
@@ -34,7 +35,7 @@ class TestExamples(unittest.TestCase):
         )
         try:
             subprocess.check_output(
-                ["python", ex_py], stderr=subprocess.STDOUT, timeout=timeout
+                [sys.executable, ex_py], stderr=subprocess.STDOUT, timeout=timeout
             )
         except subprocess.TimeoutExpired:
             pass
