@@ -12,7 +12,7 @@ agentlib/core/__init__.py:13:33: F401 [*] `.module.BaseModuleConfig` imported bu
 agentlib/core/__init__.py:14:20: F401 [*] `.agent.Agent` imported but unused
 agentlib/core/__init__.py:15:20: F401 [*] `.model.Model` imported but unused
 agentlib/core/__init__.py:15:27: F401 [*] `.model.ModelConfig` imported but unused
-agentlib/core/datamodels.py:736:17: F402 Import `field` from line 21 shadowed by loop variable
+agentlib/core/datamodels.py:739:17: F402 Import `field` from line 22 shadowed by loop variable
 agentlib/core/logging_.py:38:31: F541 [*] f-string without any placeholders
 agentlib/modules/communicator/clonemap.py:226:9: F841 Local variable `agent` is assigned to but never used
 agentlib/modules/controller/__init__.py:2:25: F401 [*] `.controller.Controller` imported but unused

@@ -92,19 +92,19 @@
 
 
 <div class="viewcode-block" id="LocalClient"><a class="viewcode-back" href="../../../../code/agentlib.modules.communicator.html#agentlib.modules.communicator.local.LocalClient">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">LocalClient</span><span class="p">(</span><span class="n">LocalCommunicator</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    This communicator implements the communication between agents via a</span>
 <span class="sd">    central process broker.</span>
 <span class="sd">    Note: The broker is implemented as singleton this means that all agents must</span>
 <span class="sd">    be in the same process!</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="n">config</span><span class="p">:</span> <span class="n">LocalSubscriptionCommunicatorConfig</span>
     <span class="n">broker</span><span class="p">:</span> <span class="n">LocalBroker</span>
 
 <div class="viewcode-block" id="LocalClient.setup_broker"><a class="viewcode-back" href="../../../../code/agentlib.modules.communicator.html#agentlib.modules.communicator.local.LocalClient.setup_broker">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">setup_broker</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Use the LocalBroker&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Use the LocalBroker"""</span>
         <span class="k">return</span> <span class="n">LocalBroker</span><span class="p">()</span></div>
 
     <span class="nd">@property</span>
@@ -113,13 +113,13 @@
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_send</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">payload</span><span class="p">:</span> <span class="n">CommunicationDict</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">parse_json</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">broker</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">agent_id</span><span class="o">=</span><span class="n">payload</span><span class="p">[</span><span class="s2">&quot;source&quot;</span><span class="p">],</span> <span class="n">message</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">payload</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">broker</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">agent_id</span><span class="o">=</span><span class="n">payload</span><span class="p">[</span><span class="s2">"source"</span><span class="p">],</span> <span class="n">message</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">payload</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="c1"># we have to create the AgentVariable new here, because we modified the</span>
-            <span class="c1"># source, and don&#39;t want to modify the original variable</span>
-            <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;alias&quot;</span><span class="p">]</span>
+            <span class="c1"># source, and don't want to modify the original variable</span>
+            <span class="n">payload</span><span class="p">[</span><span class="s2">"name"</span><span class="p">]</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="s2">"alias"</span><span class="p">]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">broker</span><span class="o">.</span><span class="n">send</span><span class="p">(</span>
-                <span class="n">agent_id</span><span class="o">=</span><span class="n">payload</span><span class="p">[</span><span class="s2">&quot;source&quot;</span><span class="p">],</span> <span class="n">message</span><span class="o">=</span><span class="n">AgentVariable</span><span class="p">(</span><span class="o">**</span><span class="n">payload</span><span class="p">)</span>
+                <span class="n">agent_id</span><span class="o">=</span><span class="n">payload</span><span class="p">[</span><span class="s2">"source"</span><span class="p">],</span> <span class="n">message</span><span class="o">=</span><span class="n">AgentVariable</span><span class="p">(</span><span class="o">**</span><span class="n">payload</span><span class="p">)</span>
             <span class="p">)</span></div>
 </pre></div>
 

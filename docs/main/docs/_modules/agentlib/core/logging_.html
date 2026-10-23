@@ -85,10 +85,10 @@
 
 
 <div class="viewcode-block" id="CustomLogger"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.core.logging_.CustomLogger">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">CustomLogger</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">Logger</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Subclass of Logger that adds the env_time to the record, allowing it to print</span>
-<span class="sd">    the current time.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Subclass of Logger that adds the env_time to the record, allowing it to print</span>
+<span class="sd">    the current time."""</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">env</span><span class="p">:</span> <span class="s2">&quot;Environment&quot;</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">NOTSET</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">env</span><span class="p">:</span> <span class="s2">"Environment"</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">NOTSET</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">level</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">env</span> <span class="o">=</span> <span class="n">env</span>
 
@@ -111,23 +111,23 @@
         <span class="n">_until</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">pretty_until</span><span class="p">()</span>
         <span class="n">_time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">pretty_time</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">_until</span> <span class="ow">is</span> <span class="n">environment</span><span class="o">.</span><span class="n">UNTIL_UNSET</span><span class="p">:</span>
-            <span class="c1"># Add &quot;INIT&quot; prefix to clearly indicate initialization phase</span>
-            <span class="n">record</span><span class="o">.</span><span class="n">env_time</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&lt;INIT&gt;&quot;</span>
+            <span class="c1"># Add "INIT" prefix to clearly indicate initialization phase</span>
+            <span class="n">record</span><span class="o">.</span><span class="n">env_time</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"&lt;INIT&gt;"</span>
         <span class="k">elif</span> <span class="n">_until</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">record</span><span class="o">.</span><span class="n">env_time</span> <span class="o">=</span> <span class="n">_time</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">record</span><span class="o">.</span><span class="n">env_time</span> <span class="o">=</span> <span class="n">_time</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">_until</span>
+            <span class="n">record</span><span class="o">.</span><span class="n">env_time</span> <span class="o">=</span> <span class="n">_time</span> <span class="o">+</span> <span class="s2">"/"</span> <span class="o">+</span> <span class="n">_until</span>
         <span class="k">return</span> <span class="n">record</span></div></div>
 
 
-<div class="viewcode-block" id="create_logger"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.core.logging_.create_logger">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">create_logger</span><span class="p">(</span><span class="n">env</span><span class="p">:</span> <span class="s2">&quot;Environment&quot;</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CustomLogger</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Creates a logger that displays the environment time when logging.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="create_logger"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.core.logging_.create_logger">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">create_logger</span><span class="p">(</span><span class="n">env</span><span class="p">:</span> <span class="s2">"Environment"</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CustomLogger</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Creates a logger that displays the environment time when logging."""</span>
     <span class="c1"># Create a custom logger</span>
     <span class="n">custom_logger</span> <span class="o">=</span> <span class="n">CustomLogger</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">env</span><span class="o">=</span><span class="n">env</span><span class="p">)</span>
     <span class="n">custom_logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">getEffectiveLevel</span><span class="p">())</span>
 
     <span class="c1"># Create a formatter</span>
-    <span class="n">formatter</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%(env_time)s</span><span class="s2"> </span><span class="si">%(levelname)s</span><span class="s2">: </span><span class="si">%(name)s</span><span class="s2">: </span><span class="si">%(message)s</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">formatter</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span><span class="s2">"</span><span class="si">%(env_time)s</span><span class="s2"> </span><span class="si">%(levelname)s</span><span class="s2">: </span><span class="si">%(name)s</span><span class="s2">: </span><span class="si">%(message)s</span><span class="s2">"</span><span class="p">)</span>
 
     <span class="c1"># Create a StreamHandler and add it to the logger</span>
     <span class="n">stream_handler</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">()</span>

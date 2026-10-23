@@ -119,7 +119,7 @@ Here is an example how a corresponding Dockerfile could look like:</p>
 <div class="highlight-Docker notranslate"><div class="highlight"><pre><span></span><span class="k">FROM</span><span class="w"> </span><span class="s">registry.git.rwth-aachen.de/ebc/ebc_all/github_ci/agentlib:latest</span>
 
 <span class="k">COPY</span><span class="w"> </span>my_module.py<span class="w"> </span>my_module.py
-<span class="k">CMD</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;python&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;-u&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;agentlib/modules/communicator/clonemap.py&quot;</span><span class="p">]</span>
+<span class="k">CMD</span><span class="w"> </span><span class="p">[</span><span class="s2">"python"</span><span class="p">,</span><span class="w"> </span><span class="s2">"-u"</span><span class="p">,</span><span class="w"> </span><span class="s2">"agentlib/modules/communicator/clonemap.py"</span><span class="p">]</span>
 </pre></div>
 </div>
 <p>You start from the standard AgentLib image, add your custom module and set the entry point to the clonemap communicator.</p>
@@ -134,40 +134,40 @@ This corresponds to the image you created in the previous step.</p>
 This agent only has a clonemap communicator as module.
 This is mandator to start agents with clonemap.</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;config&quot;</span><span class="p">:{</span>
-<span class="w">        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;test&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;agentsperagency&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;mqtt&quot;</span><span class="p">:{</span>
-<span class="w">            </span><span class="nt">&quot;active&quot;</span><span class="p">:</span><span class="kc">true</span>
+<span class="w">    </span><span class="nt">"config"</span><span class="p">:{</span>
+<span class="w">        </span><span class="nt">"name"</span><span class="p">:</span><span class="s2">"test"</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">"agentsperagency"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">"mqtt"</span><span class="p">:{</span>
+<span class="w">            </span><span class="nt">"active"</span><span class="p">:</span><span class="kc">true</span>
 <span class="w">        </span><span class="p">},</span>
-<span class="w">        </span><span class="nt">&quot;df&quot;</span><span class="p">:{</span>
-<span class="w">            </span><span class="nt">&quot;active&quot;</span><span class="p">:</span><span class="kc">false</span>
+<span class="w">        </span><span class="nt">"df"</span><span class="p">:{</span>
+<span class="w">            </span><span class="nt">"active"</span><span class="p">:</span><span class="kc">false</span>
 <span class="w">        </span><span class="p">},</span>
-<span class="w">        </span><span class="nt">&quot;logger&quot;</span><span class="p">:{</span>
-<span class="w">            </span><span class="nt">&quot;active&quot;</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;msg&quot;</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;app&quot;</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;debug&quot;</span><span class="p">:</span><span class="kc">true</span>
+<span class="w">        </span><span class="nt">"logger"</span><span class="p">:{</span>
+<span class="w">            </span><span class="nt">"active"</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"msg"</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"app"</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">"debug"</span><span class="p">:</span><span class="kc">true</span>
 <span class="w">        </span><span class="p">}</span>
 <span class="w">    </span><span class="p">},</span>
-<span class="w">    </span><span class="nt">&quot;imagegroups&quot;</span><span class="p">:[</span>
+<span class="w">    </span><span class="nt">"imagegroups"</span><span class="p">:[</span>
 <span class="w">        </span><span class="p">{</span>
-<span class="w">            </span><span class="nt">&quot;config&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                </span><span class="nt">&quot;image&quot;</span><span class="p">:</span><span class="s2">&quot;agentlibtest&quot;</span>
+<span class="w">            </span><span class="nt">"config"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">"image"</span><span class="p">:</span><span class="s2">"agentlibtest"</span>
 <span class="w">            </span><span class="p">},</span>
-<span class="w">            </span><span class="nt">&quot;agents&quot;</span><span class="p">:[</span>
+<span class="w">            </span><span class="nt">"agents"</span><span class="p">:[</span>
 <span class="w">                </span><span class="p">{</span>
-<span class="w">                    </span><span class="nt">&quot;nodeid&quot;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;FirstAgent&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="s2">&quot;test&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;custom&quot;</span><span class="p">:</span><span class="s2">&quot;{\&quot;id\&quot;:\&quot;FirstAgent\&quot;, \&quot;modules\&quot;:[{\&quot;module_id\&quot;:\&quot;AgCom\&quot;, \&quot;type\&quot;:\&quot;clonemap\&quot;, \&quot;subtopics\&quot;:[\&quot;/agentlib/SecondAgent/#\&quot;]}]}&quot;</span>
+<span class="w">                    </span><span class="nt">"nodeid"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">"name"</span><span class="p">:</span><span class="s2">"FirstAgent"</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">"type"</span><span class="p">:</span><span class="s2">"test"</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">"custom"</span><span class="p">:</span><span class="s2">"{\"id\":\"FirstAgent\", \"modules\":[{\"module_id\":\"AgCom\", \"type\":\"clonemap\", \"subtopics\":[\"/agentlib/SecondAgent/#\"]}]}"</span>
 <span class="w">                </span><span class="p">}</span>
 <span class="w">            </span><span class="p">]</span>
 <span class="w">        </span><span class="p">}</span>
 <span class="w">    </span><span class="p">],</span>
-<span class="w">    </span><span class="nt">&quot;graph&quot;</span><span class="p">:{</span>
-<span class="w">        </span><span class="nt">&quot;node&quot;</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;edge&quot;</span><span class="p">:</span><span class="kc">null</span>
+<span class="w">    </span><span class="nt">"graph"</span><span class="p">:{</span>
+<span class="w">        </span><span class="nt">"node"</span><span class="p">:</span><span class="kc">null</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">"edge"</span><span class="p">:</span><span class="kc">null</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -194,7 +194,7 @@ The list of groups, the names of the images and the list of agents per image gro
 Look at the <a class="reference external" href="https://github.com/RWTH-ACS/clonemap/blob/develop/api/ams/openapi.yaml">api specification</a> for the correct path and method to be used.
 Subsequently the AMS will start all agencies which then will start the single agents.
 Depending on the size the creation of a MAS might take a few seconds.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>-X<span class="w"> </span><span class="s2">&quot;POST&quot;</span><span class="w"> </span>-d<span class="w"> </span>@clonemap_config.yaml<span class="w"> </span>&lt;ip-address&gt;:30009/api/clonemap/mas
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>-X<span class="w"> </span><span class="s2">"POST"</span><span class="w"> </span>-d<span class="w"> </span>@clonemap_config.yaml<span class="w"> </span>&lt;ip-address&gt;:30009/api/clonemap/mas
 </pre></div>
 </div>
 <p>The AMS is made available to the outside world via NodePort on port 30009.

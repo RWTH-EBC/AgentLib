@@ -208,16 +208,16 @@ link to simulator Reference <span class="xref std std-doc">Simulator</span></p>
 <p>When using modules, they are identified by the <code class="docutils literal notranslate"><span class="pre">&quot;type&quot;</span></code> keyword in the configuration, which should include an identifier from this table, or a custom injection (combination of file and class name).
 For example, to run an agent with a simulator and an FMU model, the config should look like this:</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;myAgent&quot;</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">&quot;modules&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"myAgent"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"modules"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 <span class="w">    </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;simulator&quot;</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">&quot;model&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;fmu&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;path&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;path/toFMU.fmu&quot;</span>
+<span class="w">      </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"simulator"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"model"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fmu"</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">"path"</span><span class="p">:</span><span class="w"> </span><span class="s2">"path/toFMU.fmu"</span>
 <span class="w">      </span><span class="p">},</span>
 <span class="w">      </span>
-<span class="w">      </span><span class="nt">&quot;...&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;remaining simulator config goes here&quot;</span>
+<span class="w">      </span><span class="nt">"..."</span><span class="p">:</span><span class="w"> </span><span class="s2">"remaining simulator config goes here"</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="w">  </span><span class="p">}</span>
 </pre></div>

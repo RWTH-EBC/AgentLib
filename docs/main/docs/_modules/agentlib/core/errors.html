@@ -75,28 +75,28 @@
            <div itemprop="articleBody">
              
   <h1>Source code for agentlib.core.errors</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;This module implements custom errors to ensure</span>
-<span class="sd">a better understand of errors in the agentlib&quot;&quot;&quot;</span>
+<span></span><span class="sd">"""This module implements custom errors to ensure</span>
+<span class="sd">a better understand of errors in the agentlib"""</span>
 
 
 <div class="viewcode-block" id="InitializationError"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.core.errors.InitializationError">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">InitializationError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Exception raised for errors due to wrong initialization of modules.</span>
-<span class="sd">    &quot;&quot;&quot;</span></div>
+<span class="sd">    """</span></div>
 
 
 <div class="viewcode-block" id="ConfigurationError"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.core.errors.ConfigurationError">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">ConfigurationError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Exception raised for errors due to wrong configuration of modules.</span>
-<span class="sd">    &quot;&quot;&quot;</span></div>
+<span class="sd">    """</span></div>
 
 
 <div class="viewcode-block" id="OptionalDependencyError"><a class="viewcode-back" href="../../../code/agentlib.core.html#agentlib.core.errors.OptionalDependencyError">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">OptionalDependencyError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Exception to indicate that an optional dependency is missing</span>
 <span class="sd">    which can always be fixed by installing the missing</span>
 <span class="sd">    dependency.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
@@ -105,16 +105,16 @@
         <span class="n">dependency_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="n">message</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">used_object</span><span class="si">}</span><span class="s2"> is an optional dependency which you did not &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;install yet. Install the missing dependency &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;using `pip install </span><span class="si">{</span><span class="n">dependency_install</span><span class="si">}</span><span class="s2">`&quot;</span>
+            <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">used_object</span><span class="si">}</span><span class="s2"> is an optional dependency which you did not "</span>
+            <span class="sa">f</span><span class="s2">"install yet. Install the missing dependency "</span>
+            <span class="sa">f</span><span class="s2">"using `pip install </span><span class="si">{</span><span class="n">dependency_install</span><span class="si">}</span><span class="s2">`"</span>
         <span class="p">)</span>
         <span class="k">if</span> <span class="n">dependency_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">message</span> <span class="o">+=</span> <span class="p">(</span>
-                <span class="s2">&quot;, or by re-installing the agentlib using &quot;</span>
-                <span class="s2">&quot;`pip install agentlib[full]` or just the &quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;key (e.g. for </span><span class="si">{</span><span class="n">dependency_name</span><span class="si">}</span><span class="s2">: &quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;`pip install agentlib[</span><span class="si">{</span><span class="n">dependency_name</span><span class="si">}</span><span class="s2">]`&quot;</span>
+                <span class="s2">", or by re-installing the agentlib using "</span>
+                <span class="s2">"`pip install agentlib[full]` or just the "</span>
+                <span class="sa">f</span><span class="s2">"key (e.g. for </span><span class="si">{</span><span class="n">dependency_name</span><span class="si">}</span><span class="s2">: "</span>
+                <span class="sa">f</span><span class="s2">"`pip install agentlib[</span><span class="si">{</span><span class="n">dependency_name</span><span class="si">}</span><span class="s2">]`"</span>
             <span class="p">)</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 </pre></div>

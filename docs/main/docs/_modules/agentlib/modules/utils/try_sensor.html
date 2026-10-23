@@ -76,8 +76,8 @@
            <div itemprop="articleBody">
              
   <h1>Source code for agentlib.modules.utils.try_sensor</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;This module contains a SensorModule which reads a .dat file</span>
-<span class="sd">from the Deutsche Wetterdienst (DWD).&quot;&quot;&quot;</span>
+<span></span><span class="sd">"""This module contains a SensorModule which reads a .dat file</span>
+<span class="sd">from the Deutsche Wetterdienst (DWD)."""</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">io</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Union</span><span class="p">,</span> <span class="n">List</span>
@@ -94,72 +94,72 @@
 
 
 <div class="viewcode-block" id="TRYSensorConfig"><a class="viewcode-back" href="../../../../code/agentlib.modules.utils.html#agentlib.modules.utils.try_sensor.TRYSensorConfig">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">TRYSensorConfig</span><span class="p">(</span><span class="n">BaseModuleConfig</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Define parameters for the TRYSensor&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Define parameters for the TRYSensor"""</span>
 
     <span class="n">outputs</span><span class="p">:</span> <span class="n">AgentVariables</span> <span class="o">=</span> <span class="p">[</span>
         <span class="n">AgentVariable</span><span class="p">(</span>
-            <span class="n">name</span><span class="o">=</span><span class="s2">&quot;T_oda&quot;</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;K&quot;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Air temperature 2m over ground [K]&quot;</span>
+            <span class="n">name</span><span class="o">=</span><span class="s2">"T_oda"</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s2">"K"</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">"Air temperature 2m over ground [K]"</span>
         <span class="p">),</span>
         <span class="n">AgentVariable</span><span class="p">(</span>
-            <span class="n">name</span><span class="o">=</span><span class="s2">&quot;pressure&quot;</span><span class="p">,</span>
-            <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;hPa&quot;</span><span class="p">,</span>
-            <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Air pressure in standard height [hPa]&quot;</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="s2">"pressure"</span><span class="p">,</span>
+            <span class="n">unit</span><span class="o">=</span><span class="s2">"hPa"</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="s2">"Air pressure in standard height [hPa]"</span><span class="p">,</span>
         <span class="p">),</span>
         <span class="n">AgentVariable</span><span class="p">(</span>
-            <span class="n">name</span><span class="o">=</span><span class="s2">&quot;wind_direction&quot;</span><span class="p">,</span>
-            <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;°&quot;</span><span class="p">,</span>
-            <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Wind direction 10 m above gorund &quot;</span> <span class="s2">&quot;[Grad] {0..360;999}&quot;</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="s2">"wind_direction"</span><span class="p">,</span>
+            <span class="n">unit</span><span class="o">=</span><span class="s2">"°"</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="s2">"Wind direction 10 m above gorund "</span> <span class="s2">"[Grad] {0..360;999}"</span><span class="p">,</span>
         <span class="p">),</span>
         <span class="n">AgentVariable</span><span class="p">(</span>
-            <span class="n">name</span><span class="o">=</span><span class="s2">&quot;wind_speed&quot;</span><span class="p">,</span>
-            <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;m/s&quot;</span><span class="p">,</span>
-            <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Wind speed 10 m above ground [m/s]&quot;</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="s2">"wind_speed"</span><span class="p">,</span>
+            <span class="n">unit</span><span class="o">=</span><span class="s2">"m/s"</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="s2">"Wind speed 10 m above ground [m/s]"</span><span class="p">,</span>
         <span class="p">),</span>
-        <span class="n">AgentVariable</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;coverage&quot;</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;eighth&quot;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;[eighth]  {0..8;9}&quot;</span><span class="p">),</span>
-        <span class="n">AgentVariable</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;absolute_humidity&quot;</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;g/kg&quot;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;[g/kg]&quot;</span><span class="p">),</span>
+        <span class="n">AgentVariable</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"coverage"</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s2">"eighth"</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">"[eighth]  {0..8;9}"</span><span class="p">),</span>
+        <span class="n">AgentVariable</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"absolute_humidity"</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s2">"g/kg"</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">"[g/kg]"</span><span class="p">),</span>
         <span class="n">AgentVariable</span><span class="p">(</span>
-            <span class="n">name</span><span class="o">=</span><span class="s2">&quot;relative_humidity&quot;</span><span class="p">,</span>
-            <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;%&quot;</span><span class="p">,</span>
-            <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Relative humidity 2 m above ground &quot;</span> <span class="s2">&quot;[%] {1..100}&quot;</span><span class="p">,</span>
-        <span class="p">),</span>
-        <span class="n">AgentVariable</span><span class="p">(</span>
-            <span class="n">name</span><span class="o">=</span><span class="s2">&quot;beam_direct&quot;</span><span class="p">,</span>
-            <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;W/m^2&quot;</span><span class="p">,</span>
-            <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Direct beam of sun (hor. plane) &quot;</span>
-            <span class="s2">&quot;[W/m^2] downwards: positive&quot;</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="s2">"relative_humidity"</span><span class="p">,</span>
+            <span class="n">unit</span><span class="o">=</span><span class="s2">"%"</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="s2">"Relative humidity 2 m above ground "</span> <span class="s2">"[%] {1..100}"</span><span class="p">,</span>
         <span class="p">),</span>
         <span class="n">AgentVariable</span><span class="p">(</span>
-            <span class="n">name</span><span class="o">=</span><span class="s2">&quot;beam_diffuse&quot;</span><span class="p">,</span>
-            <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;/m^2&quot;</span><span class="p">,</span>
-            <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Diffuse beam of sun (hor. plane) &quot;</span>
-            <span class="s2">&quot;[W/m^2] downwards: positive&quot;</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="s2">"beam_direct"</span><span class="p">,</span>
+            <span class="n">unit</span><span class="o">=</span><span class="s2">"W/m^2"</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="s2">"Direct beam of sun (hor. plane) "</span>
+            <span class="s2">"[W/m^2] downwards: positive"</span><span class="p">,</span>
         <span class="p">),</span>
         <span class="n">AgentVariable</span><span class="p">(</span>
-            <span class="n">name</span><span class="o">=</span><span class="s2">&quot;beam_atm&quot;</span><span class="p">,</span>
-            <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;/m^2&quot;</span><span class="p">,</span>
-            <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Beam of atmospheric heat (hor. plane) &quot;</span>
-            <span class="s2">&quot;[W/m^2] downwards: positive&quot;</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="s2">"beam_diffuse"</span><span class="p">,</span>
+            <span class="n">unit</span><span class="o">=</span><span class="s2">"/m^2"</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="s2">"Diffuse beam of sun (hor. plane) "</span>
+            <span class="s2">"[W/m^2] downwards: positive"</span><span class="p">,</span>
         <span class="p">),</span>
         <span class="n">AgentVariable</span><span class="p">(</span>
-            <span class="n">name</span><span class="o">=</span><span class="s2">&quot;beam_terr&quot;</span><span class="p">,</span>
-            <span class="n">unit</span><span class="o">=</span><span class="s2">&quot;/m^2&quot;</span><span class="p">,</span>
-            <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Beam of terrestrial heat &quot;</span> <span class="s2">&quot;[W/m^2] upwards: negative&quot;</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="s2">"beam_atm"</span><span class="p">,</span>
+            <span class="n">unit</span><span class="o">=</span><span class="s2">"/m^2"</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="s2">"Beam of atmospheric heat (hor. plane) "</span>
+            <span class="s2">"[W/m^2] downwards: positive"</span><span class="p">,</span>
+        <span class="p">),</span>
+        <span class="n">AgentVariable</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="s2">"beam_terr"</span><span class="p">,</span>
+            <span class="n">unit</span><span class="o">=</span><span class="s2">"/m^2"</span><span class="p">,</span>
+            <span class="n">description</span><span class="o">=</span><span class="s2">"Beam of terrestrial heat "</span> <span class="s2">"[W/m^2] upwards: negative"</span><span class="p">,</span>
         <span class="p">),</span>
     <span class="p">]</span>
 
     <span class="n">filename</span><span class="p">:</span> <span class="n">FilePath</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
-        <span class="n">title</span><span class="o">=</span><span class="s2">&quot;filename&quot;</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;The filepath to the data.&quot;</span>
+        <span class="n">title</span><span class="o">=</span><span class="s2">"filename"</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">"The filepath to the data."</span>
     <span class="p">)</span>
     <span class="n">t_sample</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
-        <span class="n">title</span><span class="o">=</span><span class="s2">&quot;t_sample&quot;</span><span class="p">,</span>
+        <span class="n">title</span><span class="o">=</span><span class="s2">"t_sample"</span><span class="p">,</span>
         <span class="n">default</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Sample time of sensor. As TRY are hourly, &quot;</span> <span class="s2">&quot;default is 1 h&quot;</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">"Sample time of sensor. As TRY are hourly, "</span> <span class="s2">"default is 1 h"</span><span class="p">,</span>
     <span class="p">)</span>
-    <span class="n">shared_variable_fields</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;outputs&quot;</span><span class="p">]</span></div>
+    <span class="n">shared_variable_fields</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"outputs"</span><span class="p">]</span></div>
 
 
 <div class="viewcode-block" id="TRYSensor"><a class="viewcode-back" href="../../../../code/agentlib.modules.utils.html#agentlib.modules.utils.try_sensor.TRYSensor">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">TRYSensor</span><span class="p">(</span><span class="n">BaseModule</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;A module that emulates a sensor using the TRY</span>
+<span class="w">    </span><span class="sd">"""A module that emulates a sensor using the TRY</span>
 <span class="sd">    data of the DWD.</span>
 <span class="sd">    The module casts the following AgentVariables into the data_broker:</span>
 
@@ -174,13 +174,13 @@
 <span class="sd">    - beam_diffuse:        Diffuse beam of sun (hor. plane) [W/m^2] downwards: positive</span>
 <span class="sd">    - beam_atm:            Beam of atmospheric heat (hor. plane)    [W/m^2] downwards: positive</span>
 <span class="sd">    - beam_terr:           Beam of terrestrial heat [W/m^2] upwards: negative</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="n">config</span><span class="p">:</span> <span class="n">TRYSensorConfig</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">agent</span><span class="p">:</span> <span class="n">Agent</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Overwrite init to enable a custom default filename</span>
-<span class="sd">        which uses the agent_id.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Overwrite init to enable a custom default filename</span>
+<span class="sd">        which uses the agent_id."""</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">,</span> <span class="n">agent</span><span class="o">=</span><span class="n">agent</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">one_year</span> <span class="o">=</span> <span class="mi">86400</span> <span class="o">*</span> <span class="mi">365</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="n">read_dat_file</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">)</span>
@@ -191,33 +191,33 @@
         <span class="n">_names</span> <span class="o">=</span> <span class="p">[</span><span class="n">v</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">variables</span><span class="p">]</span>
         <span class="k">if</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="n">_names</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span>
-                <span class="s2">&quot;The internal variables differ from the &quot;</span>
-                <span class="s2">&quot;supported data in a TRY dataset.&quot;</span>
+                <span class="s2">"The internal variables differ from the "</span>
+                <span class="s2">"supported data in a TRY dataset."</span>
             <span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">filename</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the filename.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Return the filename."""</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">filename</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">t_sample</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the sample rate.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Return the sample rate."""</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">t_sample</span>
 
 <div class="viewcode-block" id="TRYSensor.process"><a class="viewcode-back" href="../../../../code/agentlib.modules.utils.html#agentlib.modules.utils.try_sensor.TRYSensor.process">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Write the current TRY values into data_broker every other t_sample&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Write the current TRY values into data_broker every other t_sample"""</span>
         <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
             <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_data_now</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Sending </span><span class="si">%s</span><span class="s2"> TRY measurements into databroker&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">"Sending </span><span class="si">%s</span><span class="s2"> TRY measurements into databroker"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
             <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">val</span><span class="p">)</span>
             <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">timeout</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">t_sample</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TRYSensor.get_data_now"><a class="viewcode-back" href="../../../../code/agentlib.modules.utils.html#agentlib.modules.utils.try_sensor.TRYSensor.get_data_now">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">get_data_now</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the data at the current env time.</span>
+<span class="w">        </span><span class="sd">"""Get the data at the current env time.</span>
 <span class="sd">        Reiterate the year if necessary.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">now</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">now</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">one_year</span>
         <span class="k">if</span> <span class="n">now</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">now</span><span class="p">]</span>
@@ -227,33 +227,33 @@
         <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span><span class="o">.</span><span class="n">interpolate</span><span class="p">()</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">now</span><span class="p">]</span></div>
 
 <div class="viewcode-block" id="TRYSensor.register_callbacks"><a class="viewcode-back" href="../../../../code/agentlib.modules.utils.html#agentlib.modules.utils.try_sensor.TRYSensor.register_callbacks">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">register_callbacks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Dont do anything as this BaseModule is not event-triggered&quot;&quot;&quot;</span></div></div>
+<span class="w">        </span><span class="sd">"""Dont do anything as this BaseModule is not event-triggered"""</span></div></div>
 
 
 <div class="viewcode-block" id="read_dat_file"><a class="viewcode-back" href="../../../../code/agentlib.modules.utils.html#agentlib.modules.utils.try_sensor.read_dat_file">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">read_dat_file</span><span class="p">(</span><span class="n">dat_file</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Read a .dat file from the DWD&#39;s TRY data from the given .dat-file</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Read a .dat file from the DWD's TRY data from the given .dat-file</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        dat_file (str): The file to read</span>
 <span class="sd">    Returns:</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="c1"># pylint: disable=raise-missing-from</span>
-    <span class="n">_sep</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;\s+&quot;</span>
+    <span class="n">_sep</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">"\s+"</span>
 
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">dat_file</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">dat_file</span><span class="p">,</span> <span class="s2">"r"</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
         <span class="c1"># First try for 2012 dataset:</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">data_lines</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">readlines</span><span class="p">()[</span><span class="mi">32</span><span class="p">:]</span>
-            <span class="n">data_lines</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;*** </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>  <span class="c1"># Remove line &quot;*** &quot;</span>
+            <span class="n">data_lines</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">"*** </span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>  <span class="c1"># Remove line "*** "</span>
         <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
             <span class="c1"># Now for 2007 dataset:</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">data_lines</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">readlines</span><span class="p">()[</span><span class="mi">36</span><span class="p">:]</span>
-                <span class="n">data_lines</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;***</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>  <span class="c1"># Remove line &quot;***&quot;</span>
+                <span class="n">data_lines</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">"***</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>  <span class="c1"># Remove line "***"</span>
             <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Given .dat file could not be loaded.&quot;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"Given .dat file could not be loaded."</span><span class="p">)</span>
 
         <span class="n">output</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">StringIO</span><span class="p">()</span>
         <span class="n">output</span><span class="o">.</span><span class="n">writelines</span><span class="p">(</span><span class="n">data_lines</span><span class="p">)</span>
@@ -262,22 +262,22 @@
         <span class="c1"># Convert the ours to seconds</span>
         <span class="n">df</span><span class="o">.</span><span class="n">index</span> <span class="o">*=</span> <span class="mi">3600</span>
     <span class="n">_key_map</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;t&quot;</span><span class="p">:</span> <span class="s2">&quot;T_oda&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;p&quot;</span><span class="p">:</span> <span class="s2">&quot;pressure&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;WR&quot;</span><span class="p">:</span> <span class="s2">&quot;wind_direction&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;WG&quot;</span><span class="p">:</span> <span class="s2">&quot;wind_speed&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;N&quot;</span><span class="p">:</span> <span class="s2">&quot;coverage&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="s2">&quot;absolute_humidity&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;RF&quot;</span><span class="p">:</span> <span class="s2">&quot;relative_humidity&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;B&quot;</span><span class="p">:</span> <span class="s2">&quot;beam_direct&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;D&quot;</span><span class="p">:</span> <span class="s2">&quot;beam_diffuse&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;A:&quot;</span><span class="p">:</span> <span class="s2">&quot;beam_atm&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;E&quot;</span><span class="p">:</span> <span class="s2">&quot;beam_terr&quot;</span><span class="p">,</span>
+        <span class="s2">"t"</span><span class="p">:</span> <span class="s2">"T_oda"</span><span class="p">,</span>
+        <span class="s2">"p"</span><span class="p">:</span> <span class="s2">"pressure"</span><span class="p">,</span>
+        <span class="s2">"WR"</span><span class="p">:</span> <span class="s2">"wind_direction"</span><span class="p">,</span>
+        <span class="s2">"WG"</span><span class="p">:</span> <span class="s2">"wind_speed"</span><span class="p">,</span>
+        <span class="s2">"N"</span><span class="p">:</span> <span class="s2">"coverage"</span><span class="p">,</span>
+        <span class="s2">"x"</span><span class="p">:</span> <span class="s2">"absolute_humidity"</span><span class="p">,</span>
+        <span class="s2">"RF"</span><span class="p">:</span> <span class="s2">"relative_humidity"</span><span class="p">,</span>
+        <span class="s2">"B"</span><span class="p">:</span> <span class="s2">"beam_direct"</span><span class="p">,</span>
+        <span class="s2">"D"</span><span class="p">:</span> <span class="s2">"beam_diffuse"</span><span class="p">,</span>
+        <span class="s2">"A:"</span><span class="p">:</span> <span class="s2">"beam_atm"</span><span class="p">,</span>
+        <span class="s2">"E"</span><span class="p">:</span> <span class="s2">"beam_terr"</span><span class="p">,</span>
     <span class="p">}</span>
     <span class="c1"># Rename df for easier later usage.</span>
     <span class="n">df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">_key_map</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">_key_map</span><span class="o">.</span><span class="n">values</span><span class="p">())]</span>
-    <span class="n">df</span><span class="p">[</span><span class="s2">&quot;T_oda&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="mf">273.15</span>  <span class="c1"># To Kelvin</span>
+    <span class="n">df</span><span class="p">[</span><span class="s2">"T_oda"</span><span class="p">]</span> <span class="o">+=</span> <span class="mf">273.15</span>  <span class="c1"># To Kelvin</span>
     <span class="k">return</span> <span class="n">df</span></div>
 </pre></div>
 

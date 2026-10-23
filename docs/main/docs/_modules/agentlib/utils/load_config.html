@@ -84,20 +84,20 @@
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">agentlib.core.errors</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConfigurationError</span>
 
-<span class="n">ConfigT</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;ConfigT&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="n">BaseModel</span><span class="p">)</span>
+<span class="n">ConfigT</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">"ConfigT"</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="n">BaseModel</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="load_config"><a class="viewcode-back" href="../../../code/agentlib.utils.html#agentlib.utils.load_config.load_config">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">load_config</span><span class="p">(</span>
     <span class="n">config</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">ConfigT</span><span class="p">,</span> <span class="n">FilePath</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">],</span> <span class="n">config_type</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">ConfigT</span><span class="p">]</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ConfigT</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generic config loader, either accepting a path to a json file, a json string, a</span>
-<span class="sd">    dict or passing through a valid config object.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Generic config loader, either accepting a path to a json file, a json string, a</span>
+<span class="sd">    dict or passing through a valid config object."""</span>
 
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">)):</span>
         <span class="c1"># if we have a str / path, we need to check whether it is a file or a json string</span>
         <span class="k">if</span> <span class="n">Path</span><span class="p">(</span><span class="n">config</span><span class="p">)</span><span class="o">.</span><span class="n">is_file</span><span class="p">():</span>
             <span class="c1"># if we have a valid file pointer, we load it</span>
-            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="s2">"r"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
                 <span class="n">config</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="c1"># since the str is not a file path, we assume it is json and try to load it</span>
@@ -106,8 +106,8 @@
             <span class="k">except</span> <span class="n">json</span><span class="o">.</span><span class="n">JSONDecodeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                 <span class="c1"># if we failed, we raise an error notifying the user of possibilities</span>
                 <span class="k">raise</span> <span class="n">ConfigurationError</span><span class="p">(</span>
-                    <span class="sa">f</span><span class="s2">&quot;The config &#39;</span><span class="si">{</span><span class="n">config</span><span class="si">:</span><span class="s2">.100</span><span class="si">}</span><span class="s2">&#39; is neither an existing file path, nor a &quot;</span>
-                    <span class="sa">f</span><span class="s2">&quot;valid json document.&quot;</span>
+                    <span class="sa">f</span><span class="s2">"The config '</span><span class="si">{</span><span class="n">config</span><span class="si">:</span><span class="s2">.100</span><span class="si">}</span><span class="s2">' is neither an existing file path, nor a "</span>
+                    <span class="sa">f</span><span class="s2">"valid json document."</span>
                 <span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>
     <span class="k">return</span> <span class="n">config_type</span><span class="o">.</span><span class="n">model_validate</span><span class="p">(</span><span class="n">config</span><span class="p">)</span></div>
 </pre></div>

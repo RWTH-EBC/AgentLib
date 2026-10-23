@@ -75,7 +75,7 @@
            <div itemprop="articleBody">
              
   <h1>Source code for agentlib.models</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;Package with available models for the agentlib&quot;&quot;&quot;</span>
+<span></span><span class="sd">"""Package with available models for the agentlib"""</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">agentlib.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">plugin_import</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">agentlib.utils.fuzzy_matching</span><span class="w"> </span><span class="kn">import</span> <span class="n">fuzzy_match</span>
@@ -85,18 +85,18 @@
 
 <span class="n">MODEL_TYPES</span> <span class="o">=</span> <span class="n">plugin_import</span><span class="o">.</span><span class="n">SaveUpdateDict</span><span class="p">(</span>
     <span class="o">**</span><span class="p">{</span>
-        <span class="s2">&quot;statespace&quot;</span><span class="p">:</span> <span class="n">ModuleImport</span><span class="p">(</span>
-            <span class="n">import_path</span><span class="o">=</span><span class="s2">&quot;agentlib.models.scipy_model&quot;</span><span class="p">,</span> <span class="n">class_name</span><span class="o">=</span><span class="s2">&quot;ScipyStateSpaceModel&quot;</span>
+        <span class="s2">"statespace"</span><span class="p">:</span> <span class="n">ModuleImport</span><span class="p">(</span>
+            <span class="n">import_path</span><span class="o">=</span><span class="s2">"agentlib.models.scipy_model"</span><span class="p">,</span> <span class="n">class_name</span><span class="o">=</span><span class="s2">"ScipyStateSpaceModel"</span>
         <span class="p">),</span>
-        <span class="s2">&quot;fmu&quot;</span><span class="p">:</span> <span class="n">ModuleImport</span><span class="p">(</span>
-            <span class="n">import_path</span><span class="o">=</span><span class="s2">&quot;agentlib.models.fmu_model&quot;</span><span class="p">,</span> <span class="n">class_name</span><span class="o">=</span><span class="s2">&quot;FmuModel&quot;</span>
+        <span class="s2">"fmu"</span><span class="p">:</span> <span class="n">ModuleImport</span><span class="p">(</span>
+            <span class="n">import_path</span><span class="o">=</span><span class="s2">"agentlib.models.fmu_model"</span><span class="p">,</span> <span class="n">class_name</span><span class="o">=</span><span class="s2">"FmuModel"</span>
         <span class="p">),</span>
     <span class="p">}</span>
 <span class="p">)</span>
 
 
 <div class="viewcode-block" id="get_model_type"><a class="viewcode-back" href="../../code/agentlib.models.html#agentlib.models.get_model_type">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">get_model_type</span><span class="p">(</span><span class="n">model_type</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">type</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Return and load the given module type</span>
 
 <span class="sd">    Args:</span>
@@ -105,13 +105,13 @@
 
 <span class="sd">    Returns:</span>
 <span class="sd">        module BaseModelType:</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># Check if it&#39;s a plugin</span>
-    <span class="k">if</span> <span class="s2">&quot;.&quot;</span> <span class="ow">in</span> <span class="n">model_type</span><span class="p">:</span>
+<span class="sd">    """</span>
+    <span class="c1"># Check if it's a plugin</span>
+    <span class="k">if</span> <span class="s2">"."</span> <span class="ow">in</span> <span class="n">model_type</span><span class="p">:</span>
         <span class="n">plugin_import</span><span class="o">.</span><span class="n">load_plugin</span><span class="p">(</span>
-            <span class="n">name</span><span class="o">=</span><span class="n">model_type</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span>
+            <span class="n">name</span><span class="o">=</span><span class="n">model_type</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"."</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span>
             <span class="n">loaded_classes</span><span class="o">=</span><span class="n">MODEL_TYPES</span><span class="p">,</span>
-            <span class="n">plugin_types_name</span><span class="o">=</span><span class="s2">&quot;MODEL_TYPES&quot;</span><span class="p">,</span>
+            <span class="n">plugin_types_name</span><span class="o">=</span><span class="s2">"MODEL_TYPES"</span><span class="p">,</span>
         <span class="p">)</span>
     <span class="c1"># Load the core and plugin modules</span>
     <span class="k">if</span> <span class="n">model_type</span> <span class="ow">in</span> <span class="n">MODEL_TYPES</span><span class="p">:</span>
@@ -119,11 +119,11 @@
 
     <span class="n">matches</span> <span class="o">=</span> <span class="n">fuzzy_match</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">model_type</span><span class="p">,</span> <span class="n">choices</span><span class="o">=</span><span class="n">MODEL_TYPES</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
     <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="sa">f</span><span class="s2">&quot;Given model_type &#39;</span><span class="si">{</span><span class="n">model_type</span><span class="si">}</span><span class="s2">&#39; is neither in the AgentLib nor in &quot;</span>
-        <span class="sa">f</span><span class="s2">&quot;installed plugins. &quot;</span>
+        <span class="sa">f</span><span class="s2">"Given model_type '</span><span class="si">{</span><span class="n">model_type</span><span class="si">}</span><span class="s2">' is neither in the AgentLib nor in "</span>
+        <span class="sa">f</span><span class="s2">"installed plugins. "</span>
     <span class="p">)</span>
     <span class="k">if</span> <span class="n">matches</span><span class="p">:</span>
-        <span class="n">msg</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;Did you mean one of these? </span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">matches</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">msg</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">"Did you mean one of these? </span><span class="si">{</span><span class="s1">', '</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">matches</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span>
     <span class="k">raise</span> <span class="ne">ModuleNotFoundError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span></div>
 </pre></div>
 

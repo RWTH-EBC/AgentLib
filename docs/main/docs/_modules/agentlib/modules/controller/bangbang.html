@@ -83,16 +83,16 @@
 
 
 <div class="viewcode-block" id="BangBangConfig"><a class="viewcode-back" href="../../../../code/agentlib.modules.controller.html#agentlib.modules.controller.bangbang.BangBangConfig">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">BangBangConfig</span><span class="p">(</span><span class="n">SISOControllerConfig</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Special config for a BangBang-Controller&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Special config for a BangBang-Controller"""</span>
 
-    <span class="n">gain</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Gain of output&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></div>
+    <span class="n">gain</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">"Gain of output"</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="BangBang"><a class="viewcode-back" href="../../../../code/agentlib.modules.controller.html#agentlib.modules.controller.bangbang.BangBang">[docs]</a><span class="k">class</span><span class="w"> </span><span class="nc">BangBang</span><span class="p">(</span><span class="n">SISOController</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    A bang–bang controller (2 step or on–off controller), also known as a</span>
 <span class="sd">    hysteresis controller, that switches abruptly between two states.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="n">config</span><span class="p">:</span> <span class="n">BangBangConfig</span>
 
@@ -102,17 +102,17 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">gain</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the gain of the BangBang controller&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Get the gain of the BangBang controller"""</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">gain</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">last_out_val</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Last output value of the controller&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Last output value of the controller"""</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_last_out_val</span>
 
     <span class="nd">@last_out_val</span><span class="o">.</span><span class="n">setter</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">last_out_val</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">out_val</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Set the last output value of the controller&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Set the last output value of the controller"""</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_last_out_val</span> <span class="o">=</span> <span class="n">out_val</span>
 
 <div class="viewcode-block" id="BangBang.loop_sim"><a class="viewcode-back" href="../../../../code/agentlib.modules.controller.html#agentlib.modules.controller.bangbang.BangBang.loop_sim">[docs]</a>    <span class="k">def</span><span class="w"> </span><span class="nf">loop_sim</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>

@@ -75,13 +75,13 @@
            <div itemprop="articleBody">
              
   <h1>Source code for agentlib.utils</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span></span><span class="sd">"""</span>
 <span class="sd">Module containing all util</span>
 <span class="sd">functions for the agentlib.</span>
 
 <span class="sd">Most notably, the custom injection enabling</span>
 <span class="sd">dynamic loading of custom models and modules.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">importlib.util</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
@@ -96,7 +96,7 @@
 
 
 <div class="viewcode-block" id="custom_injection"><a class="viewcode-back" href="../../code/agentlib.utils.html#agentlib.utils.custom_injection">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">custom_injection</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">module_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Function to dynamically load new python files into</span>
 <span class="sd">    the agentlib. Using this, users may use custom modules</span>
 <span class="sd">    oder custom models together with the existing agentlib objects.</span>
@@ -114,32 +114,32 @@
 
 <span class="sd">    Returns:</span>
 <span class="sd">        class (object): The class object specified by class_name</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">assert</span> <span class="s2">&quot;file&quot;</span> <span class="ow">in</span> <span class="n">config</span><span class="p">,</span> <span class="p">(</span>
-        <span class="s2">&quot;For custom module injection, the config type dict has to &quot;</span>
-        <span class="s2">&quot;contain a &#39;file&#39;-key with an existing python file as value&quot;</span>
+<span class="sd">    """</span>
+    <span class="k">assert</span> <span class="s2">"file"</span> <span class="ow">in</span> <span class="n">config</span><span class="p">,</span> <span class="p">(</span>
+        <span class="s2">"For custom module injection, the config type dict has to "</span>
+        <span class="s2">"contain a 'file'-key with an existing python file as value"</span>
     <span class="p">)</span>
-    <span class="k">assert</span> <span class="s2">&quot;class_name&quot;</span> <span class="ow">in</span> <span class="n">config</span><span class="p">,</span> <span class="p">(</span>
-        <span class="s2">&quot;For custom module injection, the config type dict has to &quot;</span>
-        <span class="s2">&quot;contain a &#39;class_name&#39;-key with a string as value &quot;</span>
-        <span class="s2">&quot;specifying the class to inject&quot;</span>
+    <span class="k">assert</span> <span class="s2">"class_name"</span> <span class="ow">in</span> <span class="n">config</span><span class="p">,</span> <span class="p">(</span>
+        <span class="s2">"For custom module injection, the config type dict has to "</span>
+        <span class="s2">"contain a 'class_name'-key with a string as value "</span>
+        <span class="s2">"specifying the class to inject"</span>
     <span class="p">)</span>
-    <span class="n">file</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;file&quot;</span><span class="p">)</span>
-    <span class="n">class_name</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;class_name&quot;</span><span class="p">)</span>
+    <span class="n">file</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"file"</span><span class="p">)</span>
+    <span class="n">class_name</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"class_name"</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">)):</span>
-        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Given file is not a string but </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">file</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Given file is not a string but </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">file</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
     <span class="c1"># Convert to Path object</span>
     <span class="n">file</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
     <span class="c1"># Check if file is a valid filepath</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">file</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;Given file &#39;</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">file</span><span class="p">)</span><span class="si">}</span><span class="s2">&#39; was not found on your device.&quot;</span>
+            <span class="sa">f</span><span class="s2">"Given file '</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">file</span><span class="p">)</span><span class="si">}</span><span class="s2">' was not found on your device."</span>
         <span class="p">)</span>
 
     <span class="c1"># Build module_name if not given:</span>
     <span class="k">if</span> <span class="n">module_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="c1"># Build a unique module_name to be imported based on the path</span>
-        <span class="n">module_name</span> <span class="o">=</span> <span class="s2">&quot;.&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">p</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">file</span><span class="o">.</span><span class="n">parents</span><span class="p">][:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">file</span><span class="o">.</span><span class="n">stem</span><span class="p">])</span>
+        <span class="n">module_name</span> <span class="o">=</span> <span class="s2">"."</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">p</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">file</span><span class="o">.</span><span class="n">parents</span><span class="p">][:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="n">file</span><span class="o">.</span><span class="n">stem</span><span class="p">])</span>
 
     <span class="c1"># Custom file import</span>
     <span class="k">try</span><span class="p">:</span>
@@ -153,22 +153,22 @@
             <span class="n">spec</span><span class="o">.</span><span class="n">loader</span><span class="o">.</span><span class="n">exec_module</span><span class="p">(</span><span class="n">custom_module</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">ImportError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;Could not inject given module &#39;</span><span class="si">{</span><span class="n">class_name</span><span class="si">}</span><span class="s2">&#39; at &#39;</span><span class="si">{</span><span class="n">file</span><span class="si">}</span><span class="s2">&#39; due to import &quot;</span>
-            <span class="s2">&quot;error. Carefully check for circular imports and partially &quot;</span>
-            <span class="s2">&quot;imported objects based on the following error message: &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">err</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">"Could not inject given module '</span><span class="si">{</span><span class="n">class_name</span><span class="si">}</span><span class="s2">' at '</span><span class="si">{</span><span class="n">file</span><span class="si">}</span><span class="s2">' due to import "</span>
+            <span class="s2">"error. Carefully check for circular imports and partially "</span>
+            <span class="s2">"imported objects based on the following error message: "</span>
+            <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">err</span><span class="si">}</span><span class="s2">"</span>
         <span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">err</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">custom_module</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">class_name</span><span class="p">]</span>
     <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;Given module &#39;</span><span class="si">{</span><span class="n">custom_module</span><span class="si">}</span><span class="s2">&#39; does not &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;contain the specified class </span><span class="si">{</span><span class="n">class_name</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">"Given module '</span><span class="si">{</span><span class="n">custom_module</span><span class="si">}</span><span class="s2">' does not "</span>
+            <span class="sa">f</span><span class="s2">"contain the specified class </span><span class="si">{</span><span class="n">class_name</span><span class="si">}</span><span class="s2">"</span>
         <span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="create_time_samples"><a class="viewcode-back" href="../../code/agentlib.utils.html#agentlib.utils.create_time_samples">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">create_time_samples</span><span class="p">(</span><span class="n">dt</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">t_end</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Function to generate an array of time steps</span>
 <span class="sd">    using the dt object.</span>
 <span class="sd">    Note that, if dt is not a true divider of t_end,</span>
@@ -180,7 +180,7 @@
 
 <span class="sd">    Returns:</span>
 <span class="sd">        np.ndarray: Array of time samples from 0 to t_end with step size dt, ensuring t_end is always included.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">t_end</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">samples</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">t_end</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">samples</span>

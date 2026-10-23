@@ -125,7 +125,7 @@ sufficient to know their file path. Here, we only import it so we can
 access its file path conveniently using the <code class="docutils literal notranslate"><span class="pre">__file__</span></code> attribute.</p>
 <p>After setting the log_level, we set up the environment config.
 A config can be a path to a .json file, or a python dictionary.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">env_config</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;rt&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">&quot;factor&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">env_config</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"rt"</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">"factor"</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
 </pre></div>
 </div>
 <p>In this case, we set “rt” to true, meaning the
@@ -135,15 +135,15 @@ simulation goes faster, a factor larger than 1 means the simulation goes
 slower.</p>
 <p>Now we setup the config of our first agent. An agent config always consists
 of an “id” and a list of “modules”.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">agent_config1</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;FirstAgent&quot;</span><span class="p">,</span> 
- <span class="s2">&quot;modules&quot;</span><span class="p">:</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">agent_config1</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"id"</span><span class="p">:</span> <span class="s2">"FirstAgent"</span><span class="p">,</span> 
+ <span class="s2">"modules"</span><span class="p">:</span>
      <span class="p">[</span>
-         <span class="p">{</span><span class="s2">&quot;module_id&quot;</span><span class="p">:</span> <span class="s2">&quot;Ag1Com&quot;</span><span class="p">,</span>
-          <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;local_broadcast&quot;</span><span class="p">},</span>
-<span class="p">{</span><span class="s2">&quot;module_id&quot;</span><span class="p">:</span> <span class="s2">&quot;Ping&quot;</span><span class="p">,</span>
- <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;file&quot;</span><span class="p">:</span> <span class="n">pingpong_module</span><span class="o">.</span><span class="vm">__file__</span><span class="p">,</span>
-          <span class="s2">&quot;class_name&quot;</span><span class="p">:</span> <span class="s2">&quot;PingPong&quot;</span><span class="p">},</span>
- <span class="s2">&quot;start&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
+         <span class="p">{</span><span class="s2">"module_id"</span><span class="p">:</span> <span class="s2">"Ag1Com"</span><span class="p">,</span>
+          <span class="s2">"type"</span><span class="p">:</span> <span class="s2">"local_broadcast"</span><span class="p">},</span>
+<span class="p">{</span><span class="s2">"module_id"</span><span class="p">:</span> <span class="s2">"Ping"</span><span class="p">,</span>
+ <span class="s2">"type"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"file"</span><span class="p">:</span> <span class="n">pingpong_module</span><span class="o">.</span><span class="vm">__file__</span><span class="p">,</span>
+          <span class="s2">"class_name"</span><span class="p">:</span> <span class="s2">"PingPong"</span><span class="p">},</span>
+ <span class="s2">"start"</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
 </pre></div>
 </div>
 <p>The id is a string and has to be unique within the multi-agent-system. Next, we specify a list of modules.
@@ -176,7 +176,7 @@ has to start the match.</p>
 <p>The second agent’s config looks similar to the first one. Here, we skip
 setting the <code class="docutils literal notranslate"><span class="pre">start</span></code> parameter, as it defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code>. After setting
 all the configs, we can start the actual script.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">'__main__'</span><span class="p">:</span>
     <span class="n">env</span> <span class="o">=</span> <span class="n">Environment</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">env_config</span><span class="p">)</span>
     <span class="n">agent1</span> <span class="o">=</span> <span class="n">Agent</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">agent_config1</span><span class="p">,</span> <span class="n">env</span><span class="o">=</span><span class="n">env</span><span class="p">)</span>
     <span class="n">agent2</span> <span class="o">=</span> <span class="n">Agent</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">agent_config2</span><span class="p">,</span> <span class="n">env</span><span class="o">=</span><span class="n">env</span><span class="p">)</span>
@@ -221,11 +221,11 @@ should be sent to other agents. We will look at <code class="docutils literal no
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">PingPongConfig</span><span class="p">(</span><span class="n">BaseModuleConfig</span><span class="p">):</span>
     <span class="n">start</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
         <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Indicates if the agent should start communication&quot;</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">"Indicates if the agent should start communication"</span>
     <span class="p">)</span>
     <span class="n">initial_wait</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
         <span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Wait the given amount of seconds before starting.&quot;</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">"Wait the given amount of seconds before starting."</span>
     <span class="p">)</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">PingPong</span><span class="p">(</span><span class="n">BaseModule</span><span class="p">):</span>
@@ -253,10 +253,10 @@ to the event manager of the environment. However in this example, the only
 function of the process is to start the pingpong game.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="k">def</span><span class="w"> </span><span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">start</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Waiting </span><span class="si">%s</span><span class="s2"> s before starting&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">"Waiting </span><span class="si">%s</span><span class="s2"> s before starting"</span><span class="p">,</span>
                               <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">initial_wait</span><span class="p">)</span>
             <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">timeout</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">initial_wait</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Sending first message: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">"Sending first message: </span><span class="si">%s</span><span class="s2">"</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">data_broker</span><span class="o">.</span><span class="n">send_variable</span><span class="p">(</span>
                 <span class="n">AgentVariable</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
                               <span class="n">value</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
@@ -281,10 +281,10 @@ Pingpong, we want to answer when we receive a message.
 Let’s look at the second method we
 need to overwrite, <code class="docutils literal notranslate"><span class="pre">register_callbacks()</span></code>.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">register_callbacks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="s2">&quot;Ping&quot;</span><span class="p">:</span>
-        <span class="n">alias</span> <span class="o">=</span> <span class="s2">&quot;Pong&quot;</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="s2">"Ping"</span><span class="p">:</span>
+        <span class="n">alias</span> <span class="o">=</span> <span class="s2">"Pong"</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">alias</span> <span class="o">=</span> <span class="s2">&quot;Ping&quot;</span>
+        <span class="n">alias</span> <span class="o">=</span> <span class="s2">"Ping"</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">data_broker</span><span class="o">.</span><span class="n">register_callback</span><span class="p">(</span>
         <span class="n">alias</span><span class="o">=</span><span class="n">alias</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_callback</span>
     <span class="p">)</span>
@@ -302,7 +302,7 @@ function always takes an AgentVariable as its single argument. This function
 logs the received variable to the console, waits a second and then also
 sends a variable.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">variable</span><span class="p">:</span> <span class="n">AgentVariable</span><span class="p">):</span>
-    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> received: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"</span><span class="si">%s</span><span class="s2"> received: </span><span class="si">%s</span><span class="s2">"</span><span class="p">,</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">variable</span><span class="o">.</span><span class="n">json</span><span class="p">())</span>
     <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
     <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
