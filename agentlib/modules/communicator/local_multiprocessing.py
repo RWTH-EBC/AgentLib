@@ -85,7 +85,7 @@ class MultiProcessingBroadcastClient(Communicator):
         while True:
             try:
                 msg = self._client_read.recv()
-            except EOFError:
+            except (EOFError, OSError):  # broker gone or connection closed in terminate()
                 break
             variable = AgentVariable.from_json(msg)
             self.logger.debug(f"Received variable {variable.name}.")

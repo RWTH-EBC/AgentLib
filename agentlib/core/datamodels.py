@@ -13,7 +13,8 @@ from copy import copy, deepcopy
 from enum import Enum
 from io import StringIO
 from itertools import chain
-from typing import Union, Any, List, Optional, TypeVar, Set, Container, get_args
+import types
+from typing import Union, Any, List, Optional, TypeVar, Set, Container, get_args, get_origin
 
 import attrs
 import numpy as np
@@ -192,14 +193,14 @@ class AttrsToPydanticAdaptor(abc.ABC):
                 return _get_type_schema(_type)
 
             # If it's not a type object, it currently is always a typing object,
-            # which indicates the actual type using __origin__.
-            # We could also use `get_origin` from typing.
-            if isinstance(_type.__origin__, type):
-                return _get_type_schema(_type.__origin__)
+            # which indicates the actual type using its origin.
+            # Unions are checked first: since Python 3.14, typing.Union is a class
+            # itself and would otherwise be treated like a plain type.
+            _origin = get_origin(_type)
             _types = get_args(_type)
-            if type(None) in _types:  # Is optional
-                return _get_typing_schema(_types[0])  # 2nd entry will be None
-            if _type.__origin__ == Union:
+            if _origin in (Union, getattr(types, "UnionType", Union)):
+                if type(None) in _types:  # Is optional
+                    return _get_typing_schema(_types[0])  # 2nd entry will be None
                 refs = []
                 _any_of_types = []
                 for _type in _types:
@@ -207,6 +208,8 @@ class AttrsToPydanticAdaptor(abc.ABC):
                     refs.append(_ref)
                     _any_of_types.append(_any_of_type)
                 return {"anyOf": _any_of_types}, refs
+            if isinstance(_origin, type):
+                return _get_type_schema(_origin)
             raise TypeError(
                 f"Given type '{_type}' is not supported for JSONSchema export"
             )

@@ -4,6 +4,9 @@
 #
 #    pip-compile --extra=full --output-file=requirements.txt setup.py
 #
+# Pins without wheels for Python 3.13/3.14 were raised by hand to the first version that has wheels
+# for CPython 3.11-3.14 (CI matrix), building them from source fails in CI (e.g. lxml).
+#
 annotated-types==0.6.0
     # via pydantic
 attrs==23.1.0
@@ -36,17 +39,17 @@ importlib-resources==6.1.1
     # via matplotlib
 jinja2==3.1.2
     # via fmpy
-kiwisolver==1.4.5
+kiwisolver==1.4.9
     # via matplotlib
 lark==1.1.8
     # via fmpy
-lxml==4.9.3
+lxml==6.0.1
     # via fmpy
-markupsafe==2.1.3
+markupsafe==3.0.3
     # via jinja2
 matplotlib >= 3.7 # relax to 3.7 for python 38 ==3.8.1
     # via agentlib (setup.py)
-msgpack==1.0.7
+msgpack==1.1.2
     # via fmpy
 numpy>= 1.25  # ==1.26.1
     # via
@@ -56,7 +59,7 @@ numpy>= 1.25  # ==1.26.1
     #   matplotlib
     #   pandas
     #   scipy
-orjson==3.9.10
+orjson==3.11.4
     # via agentlib (setup.py)
 packaging==23.2
     # via matplotlib
@@ -64,13 +67,13 @@ paho-mqtt==2.0.0
     # via
     #   agentlib (setup.py)
     #   clonemapy
-pandas==2.1.2
+pandas==2.3.3
     # via agentlib (setup.py)
-pillow==10.1.0
+pillow==11.3.0
     # via matplotlib
-pydantic==2.5.1
+pydantic==2.12.0
     # via agentlib (setup.py)
-pydantic-core==2.14.3
+pydantic-core==2.41.1
     # via pydantic
 pyparsing==3.1.1
     # via matplotlib
@@ -84,20 +87,22 @@ pytz==2023.3.post1
     #   pandas
 # do not explicitly require pywin, as it fails on linux pywin32==306
     # via fmpy
-rapidfuzz==3.5.2
+rapidfuzz==3.14.1
     # via agentlib (setup.py)
 requests==2.31.0
     # via clonemapy
-scipy==1.11.3
+scipy==1.16.1
     # via agentlib (setup.py)
 simpy==4.1.0
     # via agentlib (setup.py)
 six==1.16.0
     # via python-dateutil
-typing-extensions==4.8.0
+typing-extensions==4.14.1
     # via
     #   pydantic
     #   pydantic-core
+typing-inspection==0.4.2
+    # via pydantic
 tzdata==2023.3
     # via pandas
 urllib3==2.0.7

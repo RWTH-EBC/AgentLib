@@ -138,7 +138,9 @@ class MultiProcessingBroker(Broker):
         while True:
             try:
                 client = signup_queue.get()
-            except ConnectionResetError:
+            except (EOFError, OSError):
+                # The server process is gone, e.g. terminated at interpreter shutdown.
+                # Windows raises ConnectionResetError (an OSError), Linux EOFError.
                 logger.info("Multiprocessing Broker disconnected.")
                 break
 
@@ -159,7 +161,7 @@ class MultiProcessingBroker(Broker):
         while True:
             try:
                 msg: Message = client.read.recv()
-            except EOFError:
+            except (EOFError, OSError):
                 with self.lock:
                     self._clients.remove(client)
                 break

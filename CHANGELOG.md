@@ -1,7 +1,10 @@
 # Changelog
 
 ## 0.9.0
+- Add support for Python 3.13 and 3.14. Python 3.9 and 3.10 are no longer supported (requires Python >= 3.11).
 - Add an interactive GUI which shows a representation of the Multi-Agent-System and the communicated variables
+- Fix JSONSchema export of union types for Python 3.14, where ``typing.Union`` is a class itself.
+- Use ``DataFrame.map`` instead of the removed ``DataFrame.applymap`` in ``AgentLogger.load_from_file`` when available (pandas >= 2.1).
 
 ## 0.8.9
 - Improve error message to include agent and module id in validation errors
