@@ -62,6 +62,6 @@ This project is licensed under the BSD 3 Clause License - see the [LICENSE](LICE
 
 ## Acknowledgments
 
-We gratefully acknowledge the financial support by Federal Ministry \\ for Economic Affairs and Climate Action (BMWK), promotional references 03ET1495A and 03EN1006A.
+We gratefully acknowledge the financial support by Federal Ministry \\ for Economic Affairs and Climate Action (BMWK), promotional references 03ET1495A and 03EN1066A.
 
 <img src="./docs/images/logos/BMWK_logo.png" alt="BMWK" width="200"/>
