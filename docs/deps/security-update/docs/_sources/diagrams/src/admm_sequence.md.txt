@@ -1,0 +1,23 @@
+[![](https://mermaid.ink/img/eyJjb2RlIjoic2VxdWVuY2VEaWFncmFtIFxuICAgIHBhcnRpY2lwYW50IEFwIGFzIHByb2Nlc3MgQVxuICAgIHBhcnRpY2lwYW50IEEgYXMgb3B0aW1pemVyIEFcbiAgICBwYXJ0aWNpcGFudCBPIGFzIG90aGVyIG9wdGltaXplcnNcbiAgICBBcC0-PkE6IHN0YXJ0IHRocmVhZFxuICAgIGxvb3AgQ29udHJvbCBzdGVwc1xuICAgICAgICBBcC0-PkE6IHNpZ25hbCBvcHRpbWl6YXRpb24gc3RhcnQgXG4gICAgICAgIGFjdGl2YXRlIEFcbiAgICAgICAgICAgICAgICAgICAgcGFyIFxuICAgICAgICAgICAgICAgIEEtPj5POiBTZW5kIGNvdXBsaW5nIHZhcmlhYmxlc1xuICAgICAgICAgICAgYW5kIFxuICAgICAgICAgICAgICAgIE8tPj5BOiBTZW5kIGNvdXBsaW5nIHZhcmlhYmxlc1xuICAgICAgICAgICAgZW5kXG4gICAgICAgIGxvb3AgaW5uZXIgQURNTSBpdGVyYXRpb25zXG4gICAgICAgICAgICBhY3RpdmF0ZSBBXG4gICAgICAgICAgICBOb3RlIHJpZ2h0IG9mIEE6IHBlcmZvcm1pbmcgbG9jYWwgb3B0aW1pemF0aW9uXG4gICAgICAgICAgICBkZWFjdGl2YXRlIEFcbiAgICAgICAgICAgIHBhciBcbiAgICAgICAgICAgICAgICBBLT4-TzogU2VuZCBjb3VwbGluZyB2YXJpYWJsZXNcbiAgICAgICAgICAgIGFuZCBcbiAgICAgICAgICAgICAgICBPLT4-QTogU2VuZCBjb3VwbGluZyB2YXJpYWJsZXNcbiAgICAgICAgICAgIGVuZFxuICAgICAgICAgICAgYWN0aXZhdGUgQVxuICAgICAgICAgICAgTm90ZSByaWdodCBvZiBBOiB1cGRhdGUgZ2xvYmFsIHZhbHVlcywgbXVsdGlwbGllcnNcbiAgICAgICAgICAgIGRlYWN0aXZhdGUgQVxuICAgICAgICBlbmRcbiAgICAgICAgZGVhY3RpdmF0ZSBBXG4gICAgZW5kXG4iLCJtZXJtYWlkIjp7InRoZW1lIjoiZGVmYXVsdCJ9LCJ1cGRhdGVFZGl0b3IiOmZhbHNlfQ)](https://mermaid-js.github.io/mermaid-live-editor/#/edit/eyJjb2RlIjoic2VxdWVuY2VEaWFncmFtIFxuICAgIHBhcnRpY2lwYW50IEFwIGFzIHByb2Nlc3MgQVxuICAgIHBhcnRpY2lwYW50IEEgYXMgb3B0aW1pemVyIEFcbiAgICBwYXJ0aWNpcGFudCBPIGFzIG90aGVyIG9wdGltaXplcnNcbiAgICBBcC0-PkE6IHN0YXJ0IHRocmVhZFxuICAgIGxvb3AgQ29udHJvbCBzdGVwc1xuICAgICAgICBBcC0-PkE6IHNpZ25hbCBvcHRpbWl6YXRpb24gc3RhcnQgXG4gICAgICAgIGFjdGl2YXRlIEFcbiAgICAgICAgICAgICAgICAgICAgcGFyIFxuICAgICAgICAgICAgICAgIEEtPj5POiBTZW5kIGNvdXBsaW5nIHZhcmlhYmxlc1xuICAgICAgICAgICAgYW5kIFxuICAgICAgICAgICAgICAgIE8tPj5BOiBTZW5kIGNvdXBsaW5nIHZhcmlhYmxlc1xuICAgICAgICAgICAgZW5kXG4gICAgICAgIGxvb3AgaW5uZXIgQURNTSBpdGVyYXRpb25zXG4gICAgICAgICAgICBhY3RpdmF0ZSBBXG4gICAgICAgICAgICBOb3RlIHJpZ2h0IG9mIEE6IHBlcmZvcm1pbmcgbG9jYWwgb3B0aW1pemF0aW9uXG4gICAgICAgICAgICBkZWFjdGl2YXRlIEFcbiAgICAgICAgICAgIHBhciBcbiAgICAgICAgICAgICAgICBBLT4-TzogU2VuZCBjb3VwbGluZyB2YXJpYWJsZXNcbiAgICAgICAgICAgIGFuZCBcbiAgICAgICAgICAgICAgICBPLT4-QTogU2VuZCBjb3VwbGluZyB2YXJpYWJsZXNcbiAgICAgICAgICAgIGVuZFxuICAgICAgICAgICAgYWN0aXZhdGUgQVxuICAgICAgICAgICAgTm90ZSByaWdodCBvZiBBOiB1cGRhdGUgZ2xvYmFsIHZhbHVlcywgbXVsdGlwbGllcnNcbiAgICAgICAgICAgIGRlYWN0aXZhdGUgQVxuICAgICAgICBlbmRcbiAgICAgICAgZGVhY3RpdmF0ZSBBXG4gICAgZW5kXG4iLCJtZXJtYWlkIjp7InRoZW1lIjoiZGVmYXVsdCJ9LCJ1cGRhdGVFZGl0b3IiOmZhbHNlfQ)
+
+sequenceDiagram 
+    participant Ap as process A
+    participant A as optimizer A
+    participant O as other optimizers
+    Ap->>A: start thread
+    loop Control steps
+        Ap->>A: signal optimization start 
+        activate A
+        loop inner ADMM iterations
+            par 
+                A->>O: Send coupling variables
+            and 
+                O->>A: Send coupling variables
+            end
+            activate A
+            Note over A,O: update global values, multipliers
+            Note over A,O: perform local optimization
+            deactivate A
+        end
+        deactivate A
+    end
