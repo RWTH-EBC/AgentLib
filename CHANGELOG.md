@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.9.1
+- Regenerate ``requirements.txt`` with ``uv pip compile --universal`` for Python 3.11 to 3.14 to resolve known vulnerabilities in pinned (mostly transitive) dependencies, e.g. pillow, urllib3, requests, jinja2, certifi. ``clonemapy`` is now listed in ``requirements.in``.
+- Raise minimum versions in ``pyproject.toml`` to releases supporting Python 3.11 and without known security advisories (numpy, pandas, pydantic, scipy, matplotlib, orjson, rapidfuzz, dash).
+- Add the missing ``dash-cytoscape`` dependency to the ``interactive`` extra, which is required by ``LocalMASAgency.show_gui``.
+
 ## 0.9.0
 - Add support for Python 3.13 and 3.14. Python 3.9 and 3.10 are no longer supported (requires Python >= 3.11).
 - Add an interactive GUI which shows a representation of the Multi-Agent-System and the communicated variables
