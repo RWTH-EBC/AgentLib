@@ -1,0 +1,3 @@
+# Extra inputs for requirements.txt that are not part of pyproject.toml.
+# clonemapy is not available on PyPI, so it is only installed through requirements.txt.
+clonemapy @ git+https://github.com/RWTH-ACS/clonemapy@develop
