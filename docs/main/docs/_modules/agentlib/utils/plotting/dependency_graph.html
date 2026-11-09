@@ -1,0 +1,600 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>agentlib.utils.plotting.dependency_graph &mdash; agentlib 0.9.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/autodoc_pydantic.css" />
+
+  
+      <script src="../../../../_static/jquery.js"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+      <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+      <script src="../../../../_static/doctools.js"></script>
+      <script src="../../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            agentlib
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Tutorials/tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../ModulesList.html">List of standard modules and models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../AgentVariable.html">AgentVariables and ModelVariables</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../agentlib.html">agentlib package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">agentlib</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+          <li class="breadcrumb-item"><a href="../../utils.html">agentlib.utils</a></li>
+      <li class="breadcrumb-item active">agentlib.utils.plotting.dependency_graph</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for agentlib.utils.plotting.dependency_graph</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">socket</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">webbrowser</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">defaultdict</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">TYPE_CHECKING</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">agentlib.core.datamodels</span><span class="w"> </span><span class="kn">import</span> <span class="n">AgentVariable</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">agentlib.core.errors</span><span class="w"> </span><span class="kn">import</span> <span class="n">OptionalDependencyError</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">dash</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">dash</span><span class="w"> </span><span class="kn">import</span> <span class="n">html</span><span class="p">,</span> <span class="n">dcc</span><span class="p">,</span> <span class="n">Input</span><span class="p">,</span> <span class="n">Output</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">dash_cytoscape</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cyto</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="n">OptionalDependencyError</span><span class="p">(</span><span class="s2">"mas_dependency_graph"</span><span class="p">,</span> <span class="s2">"dash dash-cytoscape"</span><span class="p">,</span> <span class="s2">"interactive"</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">agentlib.utils.multi_agent_system</span><span class="w"> </span><span class="kn">import</span> <span class="n">LocalMASAgency</span>
+
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="get_port"><a class="viewcode-back" href="../../../../code/agentlib.utils.plotting.html#agentlib.utils.plotting.dependency_graph.get_port">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">get_port</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">"""Find a free port on localhost."""</span>
+    <span class="n">port</span> <span class="o">=</span> <span class="mi">8050</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">with</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span> <span class="k">as</span> <span class="n">s</span><span class="p">:</span>
+            <span class="n">is_free</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">connect_ex</span><span class="p">((</span><span class="s2">"localhost"</span><span class="p">,</span> <span class="n">port</span><span class="p">))</span> <span class="o">!=</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="n">is_free</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">port</span>
+        <span class="n">port</span> <span class="o">+=</span> <span class="mi">1</span></div>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_get_var_mechanism</span><span class="p">(</span><span class="n">var</span><span class="p">:</span> <span class="n">AgentVariable</span><span class="p">,</span> <span class="n">cfg</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Determine which mechanism made a variable shared.</span>
+
+<span class="sd">    Returns 'svf' if the variable's field is in shared_variable_fields,</span>
+<span class="sd">    'shared' otherwise (i.e. the variable itself was configured as shared).</span>
+<span class="sd">    """</span>
+    <span class="n">svf</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">cfg</span><span class="o">.</span><span class="n">shared_variable_fields</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">field_name</span> <span class="ow">in</span> <span class="n">cfg</span><span class="o">.</span><span class="n">model_fields</span><span class="p">:</span>
+        <span class="n">field_val</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">cfg</span><span class="p">,</span> <span class="n">field_name</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">field_val</span><span class="p">,</span> <span class="n">AgentVariable</span><span class="p">)</span> <span class="ow">and</span> <span class="n">field_val</span> <span class="ow">is</span> <span class="n">var</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">"svf"</span> <span class="k">if</span> <span class="n">field_name</span> <span class="ow">in</span> <span class="n">svf</span> <span class="k">else</span> <span class="s2">"shared"</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">field_val</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">field_val</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">AgentVariable</span><span class="p">)</span> <span class="ow">and</span> <span class="n">item</span> <span class="ow">is</span> <span class="n">var</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="s2">"svf"</span> <span class="k">if</span> <span class="n">field_name</span> <span class="ow">in</span> <span class="n">svf</span> <span class="k">else</span> <span class="s2">"shared"</span>
+    <span class="k">return</span> <span class="s2">"shared"</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_extract_consumers</span><span class="p">(</span>
+    <span class="n">mas</span><span class="p">:</span> <span class="s2">"LocalMASAgency"</span><span class="p">,</span>
+    <span class="n">shared_vars</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]],</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">set</span><span class="p">]],</span> <span class="nb">set</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">"""Determine which agents consume the shared variables of each producer.</span>
+
+<span class="sd">    Consumers are derived from each agent's DataBroker callbacks matched against the</span>
+<span class="sd">    producers' shared variables by alias, which also captures consumers that were not</span>
+<span class="sd">    declared via ``subscriptions`` or a ``source``.</span>
+
+<span class="sd">    Returns ``(producer_agent -&gt; {alias -&gt; {consumer_agent, ...}}, ambiguous_aliases)``</span>
+<span class="sd">    where ``ambiguous_aliases`` are published by more than one producer, so an implicit</span>
+<span class="sd">    consumer cannot be attributed to a single one.</span>
+<span class="sd">    """</span>
+
+    <span class="n">alias_producer_scope</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">producer</span><span class="p">,</span> <span class="n">prod_vars</span> <span class="ow">in</span> <span class="n">shared_vars</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">alias</span> <span class="ow">in</span> <span class="n">prod_vars</span><span class="p">:</span>
+            <span class="n">alias_producer_scope</span><span class="p">[</span><span class="n">alias</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">producer</span><span class="p">)</span>
+
+    <span class="n">consumers</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">set</span><span class="p">]]</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">agent_id</span><span class="p">,</span> <span class="n">agent</span> <span class="ow">in</span> <span class="n">mas</span><span class="o">.</span><span class="n">_agents</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">data_broker</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">data_broker</span>
+        <span class="n">callbacks</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">data_broker</span><span class="p">,</span> <span class="s2">"_unmapped_callbacks"</span><span class="p">,</span> <span class="p">[]))</span>
+        <span class="k">for</span> <span class="n">callback_list</span> <span class="ow">in</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">data_broker</span><span class="p">,</span> <span class="s2">"_mapped_callbacks"</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="n">callbacks</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">callback_list</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">cb</span> <span class="ow">in</span> <span class="n">callbacks</span><span class="p">:</span>
+            <span class="n">alias</span> <span class="o">=</span> <span class="n">cb</span><span class="o">.</span><span class="n">alias</span>
+            <span class="k">if</span> <span class="n">alias</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">alias</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">alias_producer_scope</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="c1"># Link the consumer to every producer of this alias. The edge is flagged</span>
+            <span class="c1"># ambiguous if more than one producer publishes the alias.</span>
+            <span class="k">for</span> <span class="n">producer</span> <span class="ow">in</span> <span class="n">alias_producer_scope</span><span class="p">[</span><span class="n">alias</span><span class="p">]:</span>
+                <span class="k">if</span> <span class="n">producer</span> <span class="o">!=</span> <span class="n">agent_id</span><span class="p">:</span>
+                    <span class="n">consumers</span><span class="p">[</span><span class="n">producer</span><span class="p">]</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">alias</span><span class="p">,</span> <span class="nb">set</span><span class="p">())</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">agent_id</span><span class="p">)</span>
+
+    <span class="n">ambiguous_aliases</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">alias</span> <span class="k">for</span> <span class="n">alias</span><span class="p">,</span> <span class="n">producers</span> <span class="ow">in</span> <span class="n">alias_producer_scope</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">producers</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">consumers</span><span class="p">,</span> <span class="n">ambiguous_aliases</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_extract_dependencies</span><span class="p">(</span>
+    <span class="n">mas</span><span class="p">:</span> <span class="s2">"LocalMASAgency"</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">"""Extract individual variable dependencies between agents.</span>
+
+<span class="sd">    Returns a list of tuples</span>
+<span class="sd">    ``(producer_agent, subscriber_agent, variable_label, mechanism_tag, is_ambiguous)``</span>
+<span class="sd">    where mechanism_tag is one of "shared+sub", "svf+sub", "source", "shared+consumer" or</span>
+<span class="sd">    "svf+consumer", and is_ambiguous marks edges whose source could not be pinned to a</span>
+<span class="sd">    single producer (multiple agents publish the same alias).</span>
+<span class="sd">    """</span>
+    <span class="n">shared_vars</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">agent_id</span><span class="p">,</span> <span class="n">agent</span> <span class="ow">in</span> <span class="n">mas</span><span class="o">.</span><span class="n">_agents</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">module</span> <span class="ow">in</span> <span class="n">agent</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">module</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get_variables</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">var</span><span class="o">.</span><span class="n">shared</span><span class="p">:</span>
+                    <span class="n">label</span> <span class="o">=</span> <span class="n">var</span><span class="o">.</span><span class="n">alias</span> <span class="ow">or</span> <span class="n">var</span><span class="o">.</span><span class="n">name</span>
+                    <span class="k">if</span> <span class="n">label</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">shared_vars</span><span class="p">[</span><span class="n">agent_id</span><span class="p">]:</span>
+                        <span class="n">shared_vars</span><span class="p">[</span><span class="n">agent_id</span><span class="p">][</span><span class="n">label</span><span class="p">]</span> <span class="o">=</span> <span class="n">_get_var_mechanism</span><span class="p">(</span><span class="n">var</span><span class="p">,</span> <span class="n">module</span><span class="o">.</span><span class="n">config</span><span class="p">)</span>
+
+    <span class="c1"># 1) Explicit subscription configuration.</span>
+    <span class="n">subs</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">agent_id</span><span class="p">,</span> <span class="n">agent</span> <span class="ow">in</span> <span class="n">mas</span><span class="o">.</span><span class="n">_agents</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">module</span> <span class="ow">in</span> <span class="n">agent</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
+            <span class="n">subscriptions</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">module</span><span class="o">.</span><span class="n">config</span><span class="p">,</span> <span class="s2">"subscriptions"</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">subscriptions</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">sub_agent_id</span> <span class="ow">in</span> <span class="n">subscriptions</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">sub_agent_id</span> <span class="o">!=</span> <span class="n">agent_id</span> <span class="ow">and</span> <span class="n">sub_agent_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">subs</span><span class="p">[</span><span class="n">agent_id</span><span class="p">]:</span>
+                        <span class="n">subs</span><span class="p">[</span><span class="n">agent_id</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sub_agent_id</span><span class="p">)</span>
+
+    <span class="n">deps</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">seen</span><span class="p">:</span> <span class="nb">set</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">subscriber</span><span class="p">,</span> <span class="n">producers</span> <span class="ow">in</span> <span class="n">subs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">producer</span> <span class="ow">in</span> <span class="n">producers</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">var_label</span><span class="p">,</span> <span class="n">mech</span> <span class="ow">in</span> <span class="n">shared_vars</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">producer</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">key</span> <span class="o">=</span> <span class="p">(</span><span class="n">producer</span><span class="p">,</span> <span class="n">subscriber</span><span class="p">,</span> <span class="n">var_label</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">seen</span><span class="p">:</span>
+                    <span class="n">seen</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+                    <span class="n">deps</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">producer</span><span class="p">,</span> <span class="n">subscriber</span><span class="p">,</span> <span class="n">var_label</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">mech</span><span class="si">}</span><span class="s2">+sub"</span><span class="p">,</span> <span class="kc">False</span><span class="p">))</span>
+
+    <span class="c1"># 2) Variables consumed via the DataBroker. This covers subscription/transport-free</span>
+    <span class="c1">#    dependencies and is the mechanism that makes shared variables show up even when</span>
+    <span class="c1">#    no "subscriptions" block is declared.</span>
+    <span class="n">consumers</span><span class="p">,</span> <span class="n">ambiguous_aliases</span> <span class="o">=</span> <span class="n">_extract_consumers</span><span class="p">(</span><span class="n">mas</span><span class="p">,</span> <span class="n">shared_vars</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">producer</span><span class="p">,</span> <span class="n">vars_consumed</span> <span class="ow">in</span> <span class="n">consumers</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">alias</span><span class="p">,</span> <span class="n">consumer_set</span> <span class="ow">in</span> <span class="n">vars_consumed</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">consumer_agent</span> <span class="ow">in</span> <span class="n">consumer_set</span><span class="p">:</span>
+                <span class="n">key</span> <span class="o">=</span> <span class="p">(</span><span class="n">producer</span><span class="p">,</span> <span class="n">consumer_agent</span><span class="p">,</span> <span class="n">alias</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">seen</span><span class="p">:</span>
+                    <span class="k">continue</span>
+                <span class="n">seen</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+                <span class="n">mech</span> <span class="o">=</span> <span class="n">shared_vars</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">producer</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">alias</span><span class="p">,</span> <span class="s2">"shared"</span><span class="p">)</span>
+                <span class="n">is_ambiguous</span> <span class="o">=</span> <span class="n">alias</span> <span class="ow">in</span> <span class="n">ambiguous_aliases</span>
+                <span class="n">deps</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="p">(</span><span class="n">producer</span><span class="p">,</span> <span class="n">consumer_agent</span><span class="p">,</span> <span class="n">alias</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">mech</span><span class="si">}</span><span class="s2">+consumer"</span><span class="p">,</span> <span class="n">is_ambiguous</span><span class="p">)</span>
+                <span class="p">)</span>
+
+    <span class="c1"># 3) Variables with a source pointing to a producer.</span>
+    <span class="k">for</span> <span class="n">agent_id</span><span class="p">,</span> <span class="n">agent</span> <span class="ow">in</span> <span class="n">mas</span><span class="o">.</span><span class="n">_agents</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">module</span> <span class="ow">in</span> <span class="n">agent</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">module</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get_variables</span><span class="p">():</span>
+                <span class="n">src_agent</span> <span class="o">=</span> <span class="n">var</span><span class="o">.</span><span class="n">source</span><span class="o">.</span><span class="n">agent_id</span>
+                <span class="k">if</span> <span class="n">src_agent</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">src_agent</span> <span class="o">!=</span> <span class="n">agent_id</span><span class="p">:</span>
+                    <span class="n">label</span> <span class="o">=</span> <span class="n">var</span><span class="o">.</span><span class="n">alias</span> <span class="ow">or</span> <span class="n">var</span><span class="o">.</span><span class="n">name</span>
+                    <span class="n">key</span> <span class="o">=</span> <span class="p">(</span><span class="n">src_agent</span><span class="p">,</span> <span class="n">agent_id</span><span class="p">,</span> <span class="n">label</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">seen</span><span class="p">:</span>
+                        <span class="n">seen</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+                        <span class="n">deps</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">src_agent</span><span class="p">,</span> <span class="n">agent_id</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="s2">"source"</span><span class="p">,</span> <span class="kc">False</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">deps</span>
+
+
+<div class="viewcode-block" id="run_dashboard"><a class="viewcode-back" href="../../../../code/agentlib.utils.plotting.html#agentlib.utils.plotting.dependency_graph.run_dashboard">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">run_dashboard</span><span class="p">(</span><span class="n">deps</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]],</span> <span class="n">agent_ids</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]):</span>
+
+    <span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">"werkzeug"</span><span class="p">)</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">ERROR</span><span class="p">)</span>
+
+<span class="w">    </span><span class="sd">"""Bootstraps the Dash application."""</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">dash</span><span class="o">.</span><span class="n">Dash</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+    <span class="n">unique_vars</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">label</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">deps</span><span class="p">)))</span>
+    <span class="n">dropdown_options</span> <span class="o">=</span> <span class="p">[{</span><span class="s2">"label"</span><span class="p">:</span> <span class="n">v</span><span class="p">,</span> <span class="s2">"value"</span><span class="p">:</span> <span class="n">v</span><span class="p">}</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">unique_vars</span><span class="p">]</span>
+
+    <span class="c1"># Define base stylesheet</span>
+    <span class="n">BASE_STYLESHEET</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="s1">'selector'</span><span class="p">:</span> <span class="s1">'.agent'</span><span class="p">,</span>
+            <span class="s1">'style'</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">'content'</span><span class="p">:</span> <span class="s1">'data(label)'</span><span class="p">,</span>
+                <span class="s1">'text-valign'</span><span class="p">:</span> <span class="s1">'center'</span><span class="p">,</span>
+                <span class="s1">'text-halign'</span><span class="p">:</span> <span class="s1">'center'</span><span class="p">,</span>
+                <span class="s1">'background-color'</span><span class="p">:</span> <span class="s2">"#0F4877"</span><span class="p">,</span>
+                <span class="s1">'color'</span><span class="p">:</span> <span class="s1">'#FFFFFF'</span><span class="p">,</span>
+                <span class="s1">'shape'</span><span class="p">:</span> <span class="s1">'round-rectangle'</span><span class="p">,</span>
+                <span class="s1">'width'</span><span class="p">:</span> <span class="s1">'150px'</span><span class="p">,</span>
+                <span class="s1">'height'</span><span class="p">:</span> <span class="s1">'50px'</span><span class="p">,</span>
+                <span class="s1">'font-weight'</span><span class="p">:</span> <span class="s1">'bold'</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s1">'selector'</span><span class="p">:</span> <span class="s1">'.dependency'</span><span class="p">,</span>
+            <span class="s1">'style'</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">'curve-style'</span><span class="p">:</span> <span class="s1">'bezier'</span><span class="p">,</span>
+                <span class="s1">'control-point-distance'</span><span class="p">:</span> <span class="mi">35</span><span class="p">,</span>
+                <span class="s1">'target-arrow-shape'</span><span class="p">:</span> <span class="s1">'triangle'</span><span class="p">,</span>
+                <span class="s1">'font-size'</span><span class="p">:</span> <span class="s1">'12px'</span><span class="p">,</span>
+                <span class="s1">'text-rotation'</span><span class="p">:</span> <span class="s1">'autorotate'</span><span class="p">,</span>
+                <span class="s1">'text-margin-y'</span><span class="p">:</span> <span class="s1">'-15px'</span><span class="p">,</span>
+                <span class="s1">'text-background-opacity'</span><span class="p">:</span> <span class="mf">0.7</span><span class="p">,</span>
+                <span class="s1">'text-background-color'</span><span class="p">:</span> <span class="s1">'#FFFFFF'</span><span class="p">,</span>
+                <span class="s1">'text-background-padding'</span><span class="p">:</span> <span class="s1">'2px'</span><span class="p">,</span>
+                <span class="s1">'text-background-shape'</span><span class="p">:</span> <span class="s1">'roundrectangle'</span><span class="p">,</span>
+                <span class="s1">'transition-property'</span><span class="p">:</span> <span class="s1">'opacity, line-color, target-arrow-color, width'</span><span class="p">,</span>
+                <span class="s1">'transition-duration'</span><span class="p">:</span> <span class="s1">'0.15s'</span>
+            <span class="p">},</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s1">'selector'</span><span class="p">:</span> <span class="s1">'.standard-dependency'</span><span class="p">,</span>
+            <span class="s1">'style'</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">'content'</span><span class="p">:</span> <span class="s1">'data(label)'</span><span class="p">,</span>
+                <span class="s1">'width'</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+                <span class="s1">'line-color'</span><span class="p">:</span> <span class="s2">"#4E4E4E"</span><span class="p">,</span>
+                <span class="s1">'target-arrow-color'</span><span class="p">:</span> <span class="s2">"#4E4E4E"</span><span class="p">,</span>
+            <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s1">'selector'</span><span class="p">:</span> <span class="s1">'.summary-dependency'</span><span class="p">,</span>
+            <span class="s1">'style'</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">'content'</span><span class="p">:</span> <span class="s1">'data(label)'</span><span class="p">,</span>
+                <span class="s1">'width'</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+                <span class="s1">'line-color'</span><span class="p">:</span> <span class="s2">"#0F4877"</span><span class="p">,</span>
+                <span class="s1">'target-arrow-color'</span><span class="p">:</span> <span class="s2">"#0F4877"</span><span class="p">,</span>
+                <span class="s1">'line-style'</span><span class="p">:</span> <span class="s1">'dashed'</span><span class="p">,</span>
+            <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s1">'selector'</span><span class="p">:</span> <span class="s1">'.ambiguous-dependency'</span><span class="p">,</span>
+            <span class="s1">'style'</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">'content'</span><span class="p">:</span> <span class="s1">'data(label)'</span><span class="p">,</span>
+                <span class="s1">'width'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+                <span class="s1">'line-color'</span><span class="p">:</span> <span class="s2">"#B0B0B0"</span><span class="p">,</span>
+                <span class="s1">'target-arrow-color'</span><span class="p">:</span> <span class="s2">"#B0B0B0"</span><span class="p">,</span>
+                <span class="s1">'line-style'</span><span class="p">:</span> <span class="s1">'dotted'</span><span class="p">,</span>
+                <span class="s1">'opacity'</span><span class="p">:</span> <span class="mf">0.45</span><span class="p">,</span>
+            <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s1">'selector'</span><span class="p">:</span> <span class="s1">'.highlighted-dependency'</span><span class="p">,</span>
+            <span class="s1">'style'</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">'content'</span><span class="p">:</span> <span class="s1">'data(label)'</span><span class="p">,</span>
+                <span class="s1">'line-color'</span><span class="p">:</span> <span class="s2">"#D88A30"</span><span class="p">,</span>
+                <span class="s1">'target-arrow-color'</span><span class="p">:</span> <span class="s1">'#D88A30'</span><span class="p">,</span>
+                <span class="s1">'width'</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
+                <span class="s1">'opacity'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                <span class="s1">'z-index'</span><span class="p">:</span> <span class="mi">9000</span>
+            <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s1">'selector'</span><span class="p">:</span> <span class="s1">'.dimmed'</span><span class="p">,</span>
+            <span class="s1">'style'</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">'opacity'</span><span class="p">:</span> <span class="mf">0.15</span>
+            <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+            <span class="s1">'selector'</span><span class="p">:</span> <span class="s1">'edge:selected'</span><span class="p">,</span>
+            <span class="s1">'style'</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">'width'</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span>
+                <span class="s1">'line-color'</span><span class="p">:</span> <span class="s1">'#D88A30'</span><span class="p">,</span>
+                <span class="s1">'target-arrow-color'</span><span class="p">:</span> <span class="s1">'#D88A30'</span><span class="p">,</span>
+                <span class="s1">'opacity'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                <span class="s1">'z-index'</span><span class="p">:</span> <span class="mi">9999</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+
+    <span class="n">app</span><span class="o">.</span><span class="n">layout</span> <span class="o">=</span> <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span>
+        <span class="n">html</span><span class="o">.</span><span class="n">H2</span><span class="p">(</span><span class="s2">"AgentLib MAS Dependency Graph"</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="p">{</span><span class="s2">"fontFamily"</span><span class="p">:</span> <span class="s2">"sans-serif"</span><span class="p">}),</span>
+
+        <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span>
+            <span class="n">dcc</span><span class="o">.</span><span class="n">Dropdown</span><span class="p">(</span>
+                <span class="nb">id</span><span class="o">=</span><span class="s1">'variable-dropdown'</span><span class="p">,</span>
+                <span class="n">options</span><span class="o">=</span><span class="n">dropdown_options</span><span class="p">,</span>
+                <span class="n">clearable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">placeholder</span><span class="o">=</span><span class="s2">"Select a variable to highlight..."</span>
+            <span class="p">),</span>
+        <span class="p">],</span> <span class="n">style</span><span class="o">=</span><span class="p">{</span><span class="s1">'width'</span><span class="p">:</span> <span class="s1">'350px'</span><span class="p">,</span> <span class="s1">'marginBottom'</span><span class="p">:</span> <span class="s1">'10px'</span><span class="p">,</span> <span class="s1">'fontFamily'</span><span class="p">:</span> <span class="s1">'sans-serif'</span><span class="p">}),</span>
+
+        <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span>
+
+            <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span>
+                <span class="nb">id</span><span class="o">=</span><span class="s1">'hover-info-box'</span><span class="p">,</span>
+                <span class="n">children</span><span class="o">=</span><span class="s2">""</span><span class="p">,</span>
+                <span class="n">style</span><span class="o">=</span><span class="p">{</span><span class="s1">'opacity'</span><span class="p">:</span> <span class="s1">'0'</span><span class="p">}</span>
+            <span class="p">),</span>
+
+            <span class="n">cyto</span><span class="o">.</span><span class="n">Cytoscape</span><span class="p">(</span>
+                <span class="nb">id</span><span class="o">=</span><span class="s1">'mas-dependency-graph'</span><span class="p">,</span>
+                <span class="n">layout</span><span class="o">=</span><span class="p">{</span><span class="s1">'name'</span><span class="p">:</span> <span class="s1">'breadthfirst'</span><span class="p">,</span> <span class="s1">'directed'</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
+                <span class="n">style</span><span class="o">=</span><span class="p">{</span><span class="s1">'width'</span><span class="p">:</span> <span class="s1">'100%'</span><span class="p">,</span> <span class="s1">'height'</span><span class="p">:</span> <span class="s1">'800px'</span><span class="p">},</span>
+                <span class="n">stylesheet</span><span class="o">=</span><span class="n">BASE_STYLESHEET</span>
+            <span class="p">),</span>
+
+        <span class="p">],</span> <span class="n">style</span><span class="o">=</span><span class="p">{</span><span class="s1">'position'</span><span class="p">:</span> <span class="s1">'relative'</span><span class="p">,</span> <span class="s1">'border'</span><span class="p">:</span> <span class="s1">'1px solid #eee'</span><span class="p">,</span> <span class="s1">'borderRadius'</span><span class="p">:</span> <span class="s1">'5px'</span><span class="p">}),</span>
+
+        <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span>
+
+            <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">(</span><span class="s2">"Legend:"</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="p">{</span><span class="s1">'fontWeight'</span><span class="p">:</span> <span class="s1">'bold'</span><span class="p">,</span> <span class="s1">'marginBottom'</span><span class="p">:</span> <span class="s1">'4px'</span><span class="p">}),</span>
+
+            <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span>
+                <span class="n">html</span><span class="o">.</span><span class="n">Span</span><span class="p">(</span><span class="s2">"[shared+sub]"</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="p">{</span><span class="s1">'marginRight'</span><span class="p">:</span> <span class="s1">'5px'</span><span class="p">,</span> <span class="s1">'fontFamily'</span><span class="p">:</span> <span class="s1">'monospace'</span><span class="p">}),</span>
+                <span class="n">html</span><span class="o">.</span><span class="n">Span</span><span class="p">(</span><span class="s2">"variable marked shared: true, received via subscription"</span><span class="p">),</span>
+            <span class="p">],</span> <span class="n">style</span><span class="o">=</span><span class="p">{</span><span class="s1">'marginBottom'</span><span class="p">:</span> <span class="s1">'4px'</span><span class="p">}),</span>
+
+            <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span>
+                <span class="n">html</span><span class="o">.</span><span class="n">Span</span><span class="p">(</span><span class="s2">"[svf+sub]"</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="p">{</span><span class="s1">'marginRight'</span><span class="p">:</span> <span class="s1">'5px'</span><span class="p">,</span> <span class="s1">'fontFamily'</span><span class="p">:</span> <span class="s1">'monospace'</span><span class="p">}),</span>
+                <span class="n">html</span><span class="o">.</span><span class="n">Span</span><span class="p">(</span><span class="s2">"field in shared_variable_fields, received via subscription"</span><span class="p">),</span>
+            <span class="p">],</span> <span class="n">style</span><span class="o">=</span><span class="p">{</span><span class="s1">'marginBottom'</span><span class="p">:</span> <span class="s1">'4px'</span><span class="p">}),</span>
+
+            <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span>
+                <span class="n">html</span><span class="o">.</span><span class="n">Span</span><span class="p">(</span><span class="s2">"[source]"</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="p">{</span><span class="s1">'marginRight'</span><span class="p">:</span> <span class="s1">'5px'</span><span class="p">,</span> <span class="s1">'fontFamily'</span><span class="p">:</span> <span class="s1">'monospace'</span><span class="p">}),</span>
+                <span class="n">html</span><span class="o">.</span><span class="n">Span</span><span class="p">(</span><span class="s2">"variable source.agent_id points to another agent"</span><span class="p">),</span>
+            <span class="p">]),</span>
+
+            <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span>
+                <span class="n">html</span><span class="o">.</span><span class="n">Span</span><span class="p">(</span><span class="s2">"[shared+consumer]"</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="p">{</span><span class="s1">'marginRight'</span><span class="p">:</span> <span class="s1">'5px'</span><span class="p">,</span> <span class="s1">'fontFamily'</span><span class="p">:</span> <span class="s1">'monospace'</span><span class="p">}),</span>
+                <span class="n">html</span><span class="o">.</span><span class="n">Span</span><span class="p">(</span><span class="s2">"shared variable consumed via DataBroker callbacks"</span><span class="p">),</span>
+            <span class="p">]),</span>
+
+            <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span>
+                <span class="n">html</span><span class="o">.</span><span class="n">Span</span><span class="p">(</span><span class="s2">"[ambiguous]"</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="p">{</span>
+                    <span class="s1">'marginRight'</span><span class="p">:</span> <span class="s1">'5px'</span><span class="p">,</span> <span class="s1">'fontFamily'</span><span class="p">:</span> <span class="s1">'monospace'</span><span class="p">,</span>
+                    <span class="s1">'color'</span><span class="p">:</span> <span class="s1">'#B0B0B0'</span><span class="p">,</span> <span class="s1">'textDecoration'</span><span class="p">:</span> <span class="s1">'underline'</span><span class="p">,</span>
+                    <span class="s1">'textDecorationStyle'</span><span class="p">:</span> <span class="s1">'dotted'</span>
+                <span class="p">}),</span>
+                <span class="n">html</span><span class="o">.</span><span class="n">Span</span><span class="p">(</span><span class="s2">"same alias published by multiple agents; "</span>
+                          <span class="s2">"consumer may receive from any of them (last-write-wins)"</span><span class="p">),</span>
+            <span class="p">],</span> <span class="n">style</span><span class="o">=</span><span class="p">{</span><span class="s1">'marginBottom'</span><span class="p">:</span> <span class="s1">'4px'</span><span class="p">}),</span>
+
+        <span class="p">],</span> <span class="n">style</span><span class="o">=</span><span class="p">{</span>
+
+            <span class="s1">'fontFamily'</span><span class="p">:</span> <span class="s1">'sans-serif'</span><span class="p">,</span> <span class="s1">'fontSize'</span><span class="p">:</span> <span class="s1">'13px'</span><span class="p">,</span>
+
+            <span class="s1">'padding'</span><span class="p">:</span> <span class="s1">'10px'</span><span class="p">,</span> <span class="s1">'marginTop'</span><span class="p">:</span> <span class="s1">'8px'</span><span class="p">,</span>
+
+            <span class="s1">'backgroundColor'</span><span class="p">:</span> <span class="s1">'#f9f9f9'</span><span class="p">,</span> <span class="s1">'border'</span><span class="p">:</span> <span class="s1">'1px solid #eee'</span><span class="p">,</span> <span class="s1">'borderRadius'</span><span class="p">:</span> <span class="s1">'5px'</span>
+
+        <span class="p">}),</span> 
+
+    <span class="p">])</span>
+
+    <span class="nd">@app</span><span class="o">.</span><span class="n">callback</span><span class="p">(</span>
+        <span class="n">Output</span><span class="p">(</span><span class="s1">'mas-dependency-graph'</span><span class="p">,</span> <span class="s1">'elements'</span><span class="p">),</span>
+        <span class="n">Input</span><span class="p">(</span><span class="s1">'variable-dropdown'</span><span class="p">,</span> <span class="s1">'value'</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">update_elements</span><span class="p">(</span><span class="n">selected_variable</span><span class="p">):</span>
+        <span class="n">elements</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">agent_id</span> <span class="ow">in</span> <span class="n">agent_ids</span><span class="p">:</span>
+            <span class="n">elements</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+                <span class="s2">"data"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"id"</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">agent_id</span><span class="p">),</span> <span class="s2">"label"</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">agent_id</span><span class="p">)},</span>
+                <span class="s2">"classes"</span><span class="p">:</span> <span class="s2">"agent"</span>
+            <span class="p">})</span>
+
+        <span class="n">edges_by_pair</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">src</span><span class="p">,</span> <span class="n">tgt</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">tag</span><span class="p">,</span> <span class="n">is_ambiguous</span> <span class="ow">in</span> <span class="n">deps</span><span class="p">:</span>
+            <span class="n">edges_by_pair</span><span class="p">[(</span><span class="n">src</span><span class="p">,</span> <span class="n">tgt</span><span class="p">)]</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">label</span><span class="p">,</span> <span class="n">tag</span><span class="p">,</span> <span class="n">is_ambiguous</span><span class="p">))</span>
+
+        <span class="n">edge_id_counter</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">for</span> <span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">tgt</span><span class="p">),</span> <span class="n">label_tags</span> <span class="ow">in</span> <span class="n">edges_by_pair</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">remaining</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">label_tags</span><span class="p">)</span>
+            <span class="n">dim_class</span> <span class="o">=</span> <span class="s2">" dimmed"</span> <span class="k">if</span> <span class="n">selected_variable</span> <span class="k">else</span> <span class="s2">""</span>
+
+            <span class="k">if</span> <span class="n">selected_variable</span><span class="p">:</span>
+                <span class="n">matching</span> <span class="o">=</span> <span class="p">[(</span><span class="n">l</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span> <span class="k">for</span> <span class="n">l</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">remaining</span> <span class="k">if</span> <span class="n">l</span> <span class="o">==</span> <span class="n">selected_variable</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">matching</span><span class="p">:</span>
+                    <span class="n">l</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">a</span> <span class="o">=</span> <span class="n">matching</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                    <span class="n">elements</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+                        <span class="s2">"data"</span><span class="p">:</span> <span class="p">{</span>
+                            <span class="s2">"id"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"e</span><span class="si">{</span><span class="n">edge_id_counter</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
+                            <span class="s2">"source"</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">src</span><span class="p">),</span>
+                            <span class="s2">"target"</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">tgt</span><span class="p">),</span>
+                            <span class="s2">"label"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">l</span><span class="si">}</span><span class="s2"> [</span><span class="si">{</span><span class="n">t</span><span class="si">}</span><span class="s2">]"</span><span class="p">,</span>
+                            <span class="s2">"hover_details"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">l</span><span class="si">}</span><span class="s2"> [</span><span class="si">{</span><span class="n">t</span><span class="si">}</span><span class="s2">]"</span>
+                        <span class="p">},</span>
+                        <span class="s2">"classes"</span><span class="p">:</span> <span class="s2">"dependency highlighted-dependency"</span>
+                    <span class="p">})</span>
+                    <span class="n">edge_id_counter</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="n">remaining</span><span class="o">.</span><span class="n">remove</span><span class="p">((</span><span class="n">l</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">a</span><span class="p">))</span>
+
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">remaining</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">:</span>
+                <span class="n">summary_text</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">remaining</span><span class="p">)</span><span class="si">}</span><span class="s2"> variables...(click for details)"</span>
+                <span class="n">elements</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+                    <span class="s2">"data"</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s2">"id"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"e</span><span class="si">{</span><span class="n">edge_id_counter</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
+                        <span class="s2">"source"</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">src</span><span class="p">),</span>
+                        <span class="s2">"target"</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">tgt</span><span class="p">),</span>
+                        <span class="s2">"label"</span><span class="p">:</span> <span class="n">summary_text</span><span class="p">,</span>
+                        <span class="s2">"hover_details"</span><span class="p">:</span> <span class="s2">", "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">l</span><span class="si">}</span><span class="s2"> [</span><span class="si">{</span><span class="n">t</span><span class="si">}</span><span class="s2">]"</span> <span class="k">for</span> <span class="n">l</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">remaining</span><span class="p">)</span>
+                    <span class="p">},</span>
+                    <span class="s2">"classes"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"dependency summary-dependency</span><span class="si">{</span><span class="n">dim_class</span><span class="si">}</span><span class="s2">"</span>
+                <span class="p">})</span>
+                <span class="n">edge_id_counter</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">lbl</span><span class="p">,</span> <span class="n">tag</span><span class="p">,</span> <span class="n">is_ambiguous</span> <span class="ow">in</span> <span class="n">remaining</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">is_ambiguous</span><span class="p">:</span>
+                        <span class="n">edge_class</span> <span class="o">=</span> <span class="s2">"ambiguous-dependency"</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">edge_class</span> <span class="o">=</span> <span class="s2">"standard-dependency"</span>
+                    <span class="n">elements</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+                        <span class="s2">"data"</span><span class="p">:</span> <span class="p">{</span>
+                            <span class="s2">"id"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"e</span><span class="si">{</span><span class="n">edge_id_counter</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
+                            <span class="s2">"source"</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">src</span><span class="p">),</span>
+                            <span class="s2">"target"</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">tgt</span><span class="p">),</span>
+                            <span class="s2">"label"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">lbl</span><span class="si">}</span><span class="s2"> [</span><span class="si">{</span><span class="n">tag</span><span class="si">}</span><span class="s2">]"</span><span class="p">,</span>
+                            <span class="s2">"hover_details"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">lbl</span><span class="si">}</span><span class="s2"> [</span><span class="si">{</span><span class="n">tag</span><span class="si">}</span><span class="s2">]"</span>
+                        <span class="p">},</span>
+                        <span class="s2">"classes"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"dependency </span><span class="si">{</span><span class="n">edge_class</span><span class="si">}{</span><span class="n">dim_class</span><span class="si">}</span><span class="s2">"</span>
+                    <span class="p">})</span>
+                    <span class="n">edge_id_counter</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">return</span> <span class="n">elements</span>
+
+    <span class="nd">@app</span><span class="o">.</span><span class="n">callback</span><span class="p">(</span>
+        <span class="n">Output</span><span class="p">(</span><span class="s1">'hover-info-box'</span><span class="p">,</span> <span class="s1">'style'</span><span class="p">),</span>
+        <span class="n">Output</span><span class="p">(</span><span class="s1">'hover-info-box'</span><span class="p">,</span> <span class="s1">'children'</span><span class="p">),</span>
+        <span class="n">Input</span><span class="p">(</span><span class="s1">'mas-dependency-graph'</span><span class="p">,</span> <span class="s1">'selectedEdgeData'</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">display_selected_data</span><span class="p">(</span><span class="n">selected_edges</span><span class="p">):</span>
+        <span class="n">base_hud_style</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">'position'</span><span class="p">:</span> <span class="s1">'absolute'</span><span class="p">,</span>
+            <span class="s1">'top'</span><span class="p">:</span> <span class="s1">'20px'</span><span class="p">,</span>
+            <span class="s1">'right'</span><span class="p">:</span> <span class="s1">'20px'</span><span class="p">,</span>
+            <span class="s1">'zIndex'</span><span class="p">:</span> <span class="mi">1000</span><span class="p">,</span>
+            <span class="s1">'backgroundColor'</span><span class="p">:</span> <span class="s1">'rgba(255, 255, 255, 0.95)'</span><span class="p">,</span>
+            <span class="s1">'border'</span><span class="p">:</span> <span class="s1">'1px solid #ccc'</span><span class="p">,</span>
+            <span class="s1">'borderRadius'</span><span class="p">:</span> <span class="s1">'8px'</span><span class="p">,</span>
+            <span class="s1">'padding'</span><span class="p">:</span> <span class="s1">'15px'</span><span class="p">,</span>
+            <span class="s1">'boxShadow'</span><span class="p">:</span> <span class="s1">'0px 4px 10px rgba(0,0,0,0.1)'</span><span class="p">,</span>
+            <span class="s1">'width'</span><span class="p">:</span> <span class="s1">'250px'</span><span class="p">,</span>
+            <span class="s1">'maxHeight'</span><span class="p">:</span> <span class="s1">'400px'</span><span class="p">,</span>
+            <span class="s1">'overflowY'</span><span class="p">:</span> <span class="s1">'auto'</span><span class="p">,</span>
+            <span class="s1">'fontFamily'</span><span class="p">:</span> <span class="s1">'sans-serif'</span><span class="p">,</span>
+            <span class="s1">'fontSize'</span><span class="p">:</span> <span class="s1">'14px'</span><span class="p">,</span>
+            <span class="s1">'pointerEvents'</span><span class="p">:</span> <span class="s1">'none'</span><span class="p">,</span>
+            <span class="s1">'transition'</span><span class="p">:</span> <span class="s1">'opacity 0.2s ease-in-out'</span>
+        <span class="p">}</span>
+
+        <span class="n">hidden_style</span> <span class="o">=</span> <span class="n">base_hud_style</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">hidden_style</span><span class="p">[</span><span class="s1">'opacity'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'0'</span>
+
+        <span class="n">visible_style</span> <span class="o">=</span> <span class="n">base_hud_style</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">visible_style</span><span class="p">[</span><span class="s1">'opacity'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'1'</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">selected_edges</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">hidden_style</span><span class="p">,</span> <span class="s2">""</span>
+
+        <span class="n">edge_data</span> <span class="o">=</span> <span class="n">selected_edges</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="n">details</span> <span class="o">=</span> <span class="n">edge_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'hover_details'</span><span class="p">,</span> <span class="s1">'Unknown'</span><span class="p">)</span>
+        <span class="n">var_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">v</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">details</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">","</span><span class="p">)]</span>
+
+        <span class="n">content</span> <span class="o">=</span> <span class="n">html</span><span class="o">.</span><span class="n">Div</span><span class="p">([</span>
+            <span class="n">html</span><span class="o">.</span><span class="n">Strong</span><span class="p">(</span><span class="s2">"Variables in this link:"</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="p">{</span><span class="s1">'display'</span><span class="p">:</span> <span class="s1">'block'</span><span class="p">,</span> <span class="s1">'marginBottom'</span><span class="p">:</span> <span class="s1">'10px'</span><span class="p">}),</span>
+            <span class="n">html</span><span class="o">.</span><span class="n">Ul</span><span class="p">([</span><span class="n">html</span><span class="o">.</span><span class="n">Li</span><span class="p">(</span><span class="n">var</span><span class="p">)</span> <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">var_list</span><span class="p">],</span> <span class="n">style</span><span class="o">=</span><span class="p">{</span><span class="s1">'margin'</span><span class="p">:</span> <span class="s1">'0'</span><span class="p">,</span> <span class="s1">'paddingLeft'</span><span class="p">:</span> <span class="s1">'20px'</span><span class="p">,</span> <span class="s1">'color'</span><span class="p">:</span> <span class="s1">'#333'</span><span class="p">})</span>
+        <span class="p">])</span>
+
+        <span class="k">return</span> <span class="n">visible_style</span><span class="p">,</span> <span class="n">content</span>
+
+    <span class="n">port</span> <span class="o">=</span> <span class="n">get_port</span><span class="p">()</span>
+    <span class="n">webbrowser</span><span class="o">.</span><span class="n">open_new_tab</span><span class="p">(</span><span class="sa">f</span><span class="s2">"http://localhost:</span><span class="si">{</span><span class="n">port</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="n">port</span><span class="p">,</span> <span class="n">use_reloader</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
+
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">multiprocessing</span>
+
+<div class="viewcode-block" id="show_dependency_graph"><a class="viewcode-back" href="../../../../code/agentlib.utils.plotting.html#agentlib.utils.plotting.dependency_graph.show_dependency_graph">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">show_dependency_graph</span><span class="p">(</span><span class="n">mas</span><span class="p">:</span> <span class="s2">"LocalMASAgency"</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Starts the visualizer in a background process and returns the process."""</span>
+    <span class="c1"># 1. Extract data BEFORE creating the process to avoid Pickling errors</span>
+    <span class="n">deps</span> <span class="o">=</span> <span class="n">_extract_dependencies</span><span class="p">(</span><span class="n">mas</span><span class="p">)</span>
+    <span class="n">agent_ids</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">mas</span><span class="o">.</span><span class="n">_agents</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+    
+    <span class="c1"># 2. Spawn the process with simple, picklable data</span>
+    <span class="n">process</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span>
+        <span class="n">target</span><span class="o">=</span><span class="n">run_dashboard</span><span class="p">,</span> 
+        <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">deps</span><span class="p">,</span> <span class="n">agent_ids</span><span class="p">)</span>
+    <span class="p">)</span>
+    
+    <span class="c1"># 3. Start and return the process</span>
+    <span class="n">process</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">process</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, AGENT-Project Associates.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+   
+  
+    <p class="maintainer">
+      <strong>Maintained by:</strong> Institute for Energy Efficient Buildings and Indoor Climate, RWTH Aachen University
+    </p>
+  
+
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
